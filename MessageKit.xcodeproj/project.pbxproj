@@ -515,6 +515,7 @@
 				B011FD721F1D48E700CE0D6A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B011FD731F1D48E700CE0D6A /* Build configuration list for PBXNativeTarget "MessageKitTests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +524,7 @@
 				B011FD751F1D48E700CE0D6A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name = "MessageKit"
-  s.version = "1.0"
+  s.version = "0.1"
   s.summary = "Super easy to use client for Hacker News API"
   s.license = { :type => "MIT", :file => "LICENSE" }
   s.homepage = "https://github.com/SD10/MessageKit"

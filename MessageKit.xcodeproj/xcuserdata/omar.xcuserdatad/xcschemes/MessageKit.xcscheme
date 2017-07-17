@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0830"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3924731F44E2A01DC4083016A144F1EE"
-               BuildableName = "Pods_MessageKitTests.framework"
-               BlueprintName = "Pods-MessageKitTests"
-               ReferencedContainer = "container:Pods.xcodeproj">
+               BlueprintIdentifier = "B011FD5B1F1D48E600CE0D6A"
+               BuildableName = "MessageKit.framework"
+               BlueprintName = "MessageKit"
+               ReferencedContainer = "container:MessageKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B011FD641F1D48E700CE0D6A"
+               BuildableName = "MessageKitTests.xctest"
+               BlueprintName = "MessageKitTests"
+               ReferencedContainer = "container:MessageKit.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B011FD5B1F1D48E600CE0D6A"
+            BuildableName = "MessageKit.framework"
+            BlueprintName = "MessageKit"
+            ReferencedContainer = "container:MessageKit.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -45,10 +64,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3924731F44E2A01DC4083016A144F1EE"
-            BuildableName = "Pods_MessageKitTests.framework"
-            BlueprintName = "Pods-MessageKitTests"
-            ReferencedContainer = "container:Pods.xcodeproj">
+            BlueprintIdentifier = "B011FD5B1F1D48E600CE0D6A"
+            BuildableName = "MessageKit.framework"
+            BlueprintName = "MessageKit"
+            ReferencedContainer = "container:MessageKit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -60,6 +79,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B011FD5B1F1D48E600CE0D6A"
+            BuildableName = "MessageKit.framework"
+            BlueprintName = "MessageKit"
+            ReferencedContainer = "container:MessageKit.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
