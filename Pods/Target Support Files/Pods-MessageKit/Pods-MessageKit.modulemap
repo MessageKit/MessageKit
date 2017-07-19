@@ -1,6 +1,0 @@
-framework module Pods_MessageKit {
-  umbrella header "Pods-MessageKit-umbrella.h"
-
-  export *
-  module * { export * }
-}
