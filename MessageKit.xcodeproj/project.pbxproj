@@ -10,6 +10,15 @@
 		B011FD661F1D48E700CE0D6A /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B011FD5C1F1D48E600CE0D6A /* MessageKit.framework */; };
 		B011FD6B1F1D48E700CE0D6A /* MessageKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B011FD6A1F1D48E700CE0D6A /* MessageKitTests.swift */; };
 		B011FD6D1F1D48E700CE0D6A /* MessageKit.h in Headers */ = {isa = PBXBuildFile; fileRef = B011FD5F1F1D48E600CE0D6A /* MessageKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B04FA5241F1F287B00149F7B /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04FA5231F1F287B00149F7B /* MessagesViewController.swift */; };
+		B04FA5261F1F28E000149F7B /* MessagesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04FA5251F1F28E000149F7B /* MessagesCollectionView.swift */; };
+		B04FA5281F1F298A00149F7B /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04FA5271F1F298A00149F7B /* Sender.swift */; };
+		B04FA52A1F1F571F00149F7B /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04FA5291F1F571F00149F7B /* MessageType.swift */; };
+		B04FA52C1F1F57CF00149F7B /* MessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04FA52B1F1F57CF00149F7B /* MessageData.swift */; };
+		B04FA52E1F1F586200149F7B /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04FA52D1F1F586200149F7B /* MessageBubble.swift */; };
+		B04FA5301F1F58CC00149F7B /* Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04FA52F1F1F58CC00149F7B /* Avatar.swift */; };
+		B04FA5321F1F594400149F7B /* MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04FA5311F1F594400149F7B /* MessagesDataSource.swift */; };
+		B04FA5341F1F598700149F7B /* MessagesDisplayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04FA5331F1F598700149F7B /* MessagesDisplayDataSource.swift */; };
 		BC45179D4196151E0FD7A189 /* Pods_MessageKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5ED3F40490956A74E35BFD58 /* Pods_MessageKitTests.framework */; };
 		D6AE5064A8D0E2FD15DB2F3F /* Pods_MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A7B19053F1302354AE9741 /* Pods_MessageKit.framework */; };
 /* End PBXBuildFile section */
@@ -36,6 +45,15 @@
 		B011FD651F1D48E700CE0D6A /* MessageKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessageKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B011FD6A1F1D48E700CE0D6A /* MessageKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitTests.swift; sourceTree = "<group>"; };
 		B011FD6C1F1D48E700CE0D6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B04FA5231F1F287B00149F7B /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		B04FA5251F1F28E000149F7B /* MessagesCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionView.swift; sourceTree = "<group>"; };
+		B04FA5271F1F298A00149F7B /* Sender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
+		B04FA5291F1F571F00149F7B /* MessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
+		B04FA52B1F1F57CF00149F7B /* MessageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageData.swift; sourceTree = "<group>"; };
+		B04FA52D1F1F586200149F7B /* MessageBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
+		B04FA52F1F1F58CC00149F7B /* Avatar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Avatar.swift; sourceTree = "<group>"; };
+		B04FA5311F1F594400149F7B /* MessagesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDataSource.swift; sourceTree = "<group>"; };
+		B04FA5331F1F598700149F7B /* MessagesDisplayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDisplayDataSource.swift; sourceTree = "<group>"; };
 		CE5C38D25AA833DD1F0F3CDD /* Pods-MessageKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MessageKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MessageKit/Pods-MessageKit.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,6 +121,15 @@
 		B011FD5E1F1D48E600CE0D6A /* MessageKit */ = {
 			isa = PBXGroup;
 			children = (
+				B04FA5231F1F287B00149F7B /* MessagesViewController.swift */,
+				B04FA5251F1F28E000149F7B /* MessagesCollectionView.swift */,
+				B04FA5291F1F571F00149F7B /* MessageType.swift */,
+				B04FA52B1F1F57CF00149F7B /* MessageData.swift */,
+				B04FA52D1F1F586200149F7B /* MessageBubble.swift */,
+				B04FA5311F1F594400149F7B /* MessagesDataSource.swift */,
+				B04FA5331F1F598700149F7B /* MessagesDisplayDataSource.swift */,
+				B04FA52F1F1F58CC00149F7B /* Avatar.swift */,
+				B04FA5271F1F298A00149F7B /* Sender.swift */,
 				B011FD5F1F1D48E600CE0D6A /* MessageKit.h */,
 				B011FD601F1D48E700CE0D6A /* Info.plist */,
 			);
@@ -185,6 +212,7 @@
 				TargetAttributes = {
 					B011FD5B1F1D48E600CE0D6A = {
 						CreatedOnToolsVersion = 8.3.2;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 					B011FD641F1D48E700CE0D6A = {
@@ -311,6 +339,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B04FA52C1F1F57CF00149F7B /* MessageData.swift in Sources */,
+				B04FA52E1F1F586200149F7B /* MessageBubble.swift in Sources */,
+				B04FA5261F1F28E000149F7B /* MessagesCollectionView.swift in Sources */,
+				B04FA5281F1F298A00149F7B /* Sender.swift in Sources */,
+				B04FA5341F1F598700149F7B /* MessagesDisplayDataSource.swift in Sources */,
+				B04FA5301F1F58CC00149F7B /* Avatar.swift in Sources */,
+				B04FA5241F1F287B00149F7B /* MessagesViewController.swift in Sources */,
+				B04FA5321F1F594400149F7B /* MessagesDataSource.swift in Sources */,
+				B04FA52A1F1F571F00149F7B /* MessageType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +475,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CE5C38D25AA833DD1F0F3CDD /* Pods-MessageKit.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -449,6 +487,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = MessageKit.MessageKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -457,6 +496,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 37685864038ED9ED95D54A6B /* Pods-MessageKit.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -476,6 +516,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 15F571E7B0E9FFD6A34E4E39 /* Pods-MessageKitTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = MessageKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MessageKit.MessageKitTests;
@@ -488,6 +529,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 90AE798D8AF4DF5A08FA0857 /* Pods-MessageKitTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = MessageKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MessageKit.MessageKitTests;
