@@ -24,16 +24,19 @@
 
 import UIKit
 
-open class MessagesCollectionView: UICollectionView {
+open class MessageInputBar: UIView {
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
     
-    open weak var messagesDataSource: MessagesDataSource?
-    
-    override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
-        super.init(frame: frame, collectionViewLayout: layout)
+    convenience init() {
+        self.init(frame: .zero)
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+
 }

@@ -18,6 +18,7 @@
 		B0655A2A1F23D77200542A83 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A291F23D77200542A83 /* Sender.swift */; };
 		B0655A2C1F23D81600542A83 /* MessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A2B1F23D81600542A83 /* MessageData.swift */; };
 		B0655A2E1F23D8BC00542A83 /* MessagesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A2D1F23D8BC00542A83 /* MessagesCollectionView.swift */; };
+		B0655A381F23EE8B00542A83 /* MessageInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A371F23EE8B00542A83 /* MessageInputBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		B0655A291F23D77200542A83 /* Sender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
 		B0655A2B1F23D81600542A83 /* MessageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageData.swift; sourceTree = "<group>"; };
 		B0655A2D1F23D8BC00542A83 /* MessagesCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionView.swift; sourceTree = "<group>"; };
+		B0655A371F23EE8B00542A83 /* MessageInputBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageInputBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				B0655A251F23D6C500542A83 /* Avatar.swift */,
 				B0655A271F23D71400542A83 /* MessageBubble.swift */,
 				B0655A2B1F23D81600542A83 /* MessageData.swift */,
+				B0655A371F23EE8B00542A83 /* MessageInputBar.swift */,
 				88916B461CF0DFE600469F91 /* MessageType.swift */,
 				B0655A2D1F23D8BC00542A83 /* MessagesCollectionView.swift */,
 				882D75831DE507320033F95F /* MessagesDataSource.swift */,
@@ -226,6 +229,7 @@
 				B0655A261F23D6C500542A83 /* Avatar.swift in Sources */,
 				B0655A2A1F23D77200542A83 /* Sender.swift in Sources */,
 				B0655A2E1F23D8BC00542A83 /* MessagesCollectionView.swift in Sources */,
+				B0655A381F23EE8B00542A83 /* MessageInputBar.swift in Sources */,
 				88916B471CF0DFE600469F91 /* MessageType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -26,14 +26,67 @@
 import UIKit
 import Foundation
 
-public class MessagesViewController: UIViewController {
+open class MessagesViewController: UIViewController {
     
-    var messagesCollectionView: MessagesCollectionView?
+    // MARK: - Properties
+    
+    open var messagesCollectionView: MessagesCollectionView = {
+        
+        let messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        messagesCollectionView.backgroundColor = .gray // color for testing
+        return messagesCollectionView
+    }()
+    
+    open var messageInputBar: MessageInputBar = {
+        
+        let messageInputBar = MessageInputBar(frame: .zero)
+        messageInputBar.backgroundColor = .lightGray // color for testing
+        return messageInputBar
+    }()
+    
+    // MARK: - View Life Cycle
 
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
-        messagesCollectionView?.delegate = self
-        messagesCollectionView?.dataSource = self
+        
+        tabBarController?.tabBar.isHidden = true
+        
+        setupSubviews()
+        setupConstraints()
+        
+        messagesCollectionView.delegate = self
+        messagesCollectionView.dataSource = self
+        
+    }
+    
+    override open func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        tabBarController?.tabBar.isHidden = false
+        
+    }
+    
+    // MARK: - Methods
+    
+    func setupSubviews() {
+        view.addSubview(messagesCollectionView)
+        view.addSubview(messageInputBar)
+    }
+    
+    func setupConstraints() {
+
+        messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .bottom, relatedBy: .equal, toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
+
+        messageInputBar.translatesAutoresizingMaskIntoConstraints = false
+        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .bottom, relatedBy: .equal, toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 48))
+
     }
 
 }
@@ -47,11 +100,11 @@ extension MessagesViewController: UICollectionViewDelegate {}
 extension MessagesViewController: UICollectionViewDataSource {
 
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return messagesCollectionView?.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
+        return messagesCollectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let messageCount = messagesCollectionView?.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
+        let messageCount = messagesCollectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
         return messageCount > 0 ? 1 : 0
     }
     
