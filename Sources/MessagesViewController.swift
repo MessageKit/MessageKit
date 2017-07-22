@@ -26,10 +26,37 @@
 import UIKit
 import Foundation
 
-
 public class MessagesViewController: UIViewController {
+    
+    var messagesCollectionView: MessagesCollectionView?
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+        messagesCollectionView?.delegate = self
+        messagesCollectionView?.dataSource = self
     }
+
+}
+
+// MARK: - UICollectionViewDelegate Conformance
+
+extension MessagesViewController: UICollectionViewDelegate {}
+
+// MARK: - UICollectionViewDataSource Conformance
+
+extension MessagesViewController: UICollectionViewDataSource {
+
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return messagesCollectionView?.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let messageCount = messagesCollectionView?.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
+        return messageCount > 0 ? 1 : 0
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell()
+    }
+
 }

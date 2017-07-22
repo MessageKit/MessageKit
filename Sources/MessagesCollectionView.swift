@@ -22,19 +22,10 @@
  SOFTWARE.
  */
 
-import Foundation
+import UIKit
 
-public struct Sender {
+class MessagesCollectionView: UICollectionView {
     
-    public let id: String
+    weak var messagesDataSource: MessagesDataSource?
     
-    public let displayName: String
-}
-
-// MARK: - Equatable Conformance
-
-extension Sender: Equatable {
-    static public func ==(left: Sender, right: Sender) -> Bool {
-        return left.id == right.id
-    }
 }

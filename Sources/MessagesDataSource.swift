@@ -24,11 +24,13 @@
 
 import UIKit
 
-public protocol MessagesDataSource {
+public protocol MessagesDataSource: class {
 
-    var currentSender: Sender { get }
+    var currentSender: Sender { get } // if this is a function we can conform via extension
 
     func messageForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> MessageType
+    
+    func numberOfMessages(in collectionView: UICollectionView) -> Int
 }
 
 
