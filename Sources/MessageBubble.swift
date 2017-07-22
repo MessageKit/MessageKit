@@ -19,17 +19,18 @@
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE. 
+ SOFTWARE.
  */
 
-
-import UIKit
 import Foundation
 
-
-public class MessagesViewController: UIViewController {
-
-    override public func viewDidLoad() {
-        super.viewDidLoad()
+public struct MessageBubble {
+    
+    public let image: UIImage
+    
+    public let highlightedImage: UIImage
+    
+    public func image(highlighted: Bool) -> UIImage {
+        return highlighted ? image : highlightedImage
     }
 }

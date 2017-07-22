@@ -19,17 +19,21 @@
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE. 
+ SOFTWARE.
  */
 
-
-import UIKit
 import Foundation
 
+public struct Sender {
+    
+    public let id: String
+    
+    public let displayName: String
+}
 
-public class MessagesViewController: UIViewController {
 
-    override public func viewDidLoad() {
-        super.viewDidLoad()
+extension Sender: Equatable {
+    static public func ==(left: Sender, right: Sender) -> Bool {
+        return left.id == right.id
     }
 }

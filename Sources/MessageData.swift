@@ -19,17 +19,29 @@
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE. 
+ SOFTWARE.
  */
 
-
-import UIKit
 import Foundation
+import class CoreLocation.CLLocation
 
-
-public class MessagesViewController: UIViewController {
-
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-    }
+public enum MessageData {
+    
+    case text(String)
+    
+    case attributedText(NSAttributedString)
+    
+    case audio(Data)
+    
+    case location(CLLocation)
+    
+    case photo(UIImage)
+    
+    case video(file: NSURL, thumbnail: UIImage)
+    
+    case system(String)
+    
+    case custom(Any)
+    
+    case placeholder
 }

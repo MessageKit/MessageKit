@@ -19,17 +19,18 @@
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE. 
+ SOFTWARE.
  */
 
-
-import UIKit
 import Foundation
 
+public protocol MessageType {
 
-public class MessagesViewController: UIViewController {
+    var sender: Sender { get }
 
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    var messageId: String { get }
+
+    var sentDate: Date { get }
+
+    var data: MessageData { get }
 }
