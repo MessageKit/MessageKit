@@ -39,14 +39,13 @@ public struct Avatar {
     }
     
     public func image(highlighted: Bool) -> UIImage {
-        guard let image = image else {
-            return placeholderImage
+        
+        switch highlighted {
+        case true:
+            return highlightedImage ?? image ?? placeholderImage
+        case false:
+            return image ?? placeholderImage
         }
         
-        guard let highlightedImage = highlightedImage else {
-            return image
-        }
-        
-        return highlighted ? image : highlightedImage
     }
 }

@@ -31,6 +31,6 @@ public struct MessageBubble {
     public let highlightedImage: UIImage
     
     public func image(highlighted: Bool) -> UIImage {
-        return highlighted ? image : highlightedImage
+        return highlighted ? highlightedImage : image
     }
 }
