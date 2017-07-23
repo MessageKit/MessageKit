@@ -34,3 +34,10 @@ public struct MessageBubble {
         return highlighted ? highlightedImage : image
     }
 }
+
+public enum MessageDirection {
+
+    case incoming
+    case outgoing
+
+}

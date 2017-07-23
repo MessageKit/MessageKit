@@ -24,13 +24,47 @@
 
 import UIKit
 
-class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
+open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
+    
+    // MARK: - Properties
 
+    var messageFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
     
+    var avatarSize = CGSize(width: 30.0, height: 30.0)
     
+    // Constant right now
+    var avatarToEdgePadding: CGFloat = 4
+    var avatarBottomPadding: CGFloat = 4
+    var avatarToContainerPadding: CGFloat = 2
     
+    var messageContainerSize: CGSize = .zero
     
+    var messageLeftRightPadding: CGFloat = 16
     
+    var direction: MessageDirection = .outgoing
     
+    // MARK: - Methods
+    
+    override open func copy(with zone: NSZone? = nil) -> Any {
+        let copy = super.copy(with: zone) as! MessagesCollectionViewLayoutAttributes
+        copy.messageFont = messageFont
+        copy.avatarSize = avatarSize
+        copy.avatarToEdgePadding = avatarToEdgePadding
+        copy.avatarBottomPadding = avatarBottomPadding
+        copy.avatarToContainerPadding = avatarToContainerPadding
+        copy.messageContainerSize = messageContainerSize
+        copy.messageLeftRightPadding = messageLeftRightPadding
+        copy.direction = direction
+        return copy
+    }
+    
+    override open func isEqual(_ object: Any?) -> Bool {
+        guard let attributes = object as? MessagesCollectionViewLayoutAttributes else { return false }
+        
+        return attributes.messageFont == messageFont && attributes.avatarSize == avatarSize &&
+            attributes.avatarToEdgePadding == avatarToEdgePadding && attributes.avatarBottomPadding == avatarBottomPadding &&
+            attributes.avatarToContainerPadding == avatarToContainerPadding && attributes.messageLeftRightPadding == messageLeftRightPadding &&
+            attributes.direction == direction
+    }
     
 }

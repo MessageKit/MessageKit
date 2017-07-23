@@ -62,4 +62,26 @@ class MessageCollectionViewCell: UICollectionViewCell {
         addSubview(avatarImageView)
     }
     
+    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else { return }
+        print(attributes.avatarSize)
+        print(attributes.messageContainerSize)
+        let avatarWidth = attributes.avatarSize.width
+        let avatarHeight = attributes.avatarSize.height
+        
+        let containerHeight = attributes.messageContainerSize.height
+        let containerWidth = attributes.messageContainerSize.width
+        
+        switch attributes.direction {
+        case .incoming, .outgoing:
+            let avatarX = attributes.avatarToEdgePadding
+            let avatarY = contentView.frame.height - attributes.avatarBottomPadding - attributes.avatarSize.height
+            avatarImageView.frame = CGRect(x: avatarX, y: avatarY, width: avatarWidth, height: avatarHeight)
+            
+            let containerX = contentView.frame.width - attributes.messageLeftRightPadding - containerWidth
+            let containerY: CGFloat = 0
+            messageContainerView.frame = CGRect(x: containerX, y: containerY, width: containerWidth, height: containerHeight)
+        }
+    }
+    
 }

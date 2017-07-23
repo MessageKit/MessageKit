@@ -14,6 +14,8 @@
 		88916B451CF0DF5900469F91 /* MessageKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88916B431CF0DF5900469F91 /* MessageKitTests.swift */; };
 		88916B471CF0DFE600469F91 /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88916B461CF0DFE600469F91 /* MessageType.swift */; };
 		B015E8191F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */; };
+		B015E81B1F24835D007EDFB6 /* MessageContainerSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E81A1F24835D007EDFB6 /* MessageContainerSizeCalculator.swift */; };
+		B015E81D1F2487EA007EDFB6 /* AvatarSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E81C1F2487EA007EDFB6 /* AvatarSizeCalculator.swift */; };
 		B0655A261F23D6C500542A83 /* Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A251F23D6C500542A83 /* Avatar.swift */; };
 		B0655A281F23D71400542A83 /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A271F23D71400542A83 /* MessageBubble.swift */; };
 		B0655A2A1F23D77200542A83 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A291F23D77200542A83 /* Sender.swift */; };
@@ -45,6 +47,8 @@
 		88916B431CF0DF5900469F91 /* MessageKitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageKitTests.swift; sourceTree = "<group>"; };
 		88916B461CF0DFE600469F91 /* MessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
 		B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
+		B015E81A1F24835D007EDFB6 /* MessageContainerSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageContainerSizeCalculator.swift; sourceTree = "<group>"; };
+		B015E81C1F2487EA007EDFB6 /* AvatarSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarSizeCalculator.swift; sourceTree = "<group>"; };
 		B0655A251F23D6C500542A83 /* Avatar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Avatar.swift; sourceTree = "<group>"; };
 		B0655A271F23D71400542A83 /* MessageBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
 		B0655A291F23D77200542A83 /* Sender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
@@ -96,8 +100,10 @@
 			isa = PBXGroup;
 			children = (
 				B0655A251F23D6C500542A83 /* Avatar.swift */,
+				B015E81C1F2487EA007EDFB6 /* AvatarSizeCalculator.swift */,
 				B0655A271F23D71400542A83 /* MessageBubble.swift */,
 				B0655A4C1F244C0600542A83 /* MessageCollectionViewCell.swift */,
+				B015E81A1F24835D007EDFB6 /* MessageContainerSizeCalculator.swift */,
 				B0655A2B1F23D81600542A83 /* MessageData.swift */,
 				B0655A371F23EE8B00542A83 /* MessageInputBar.swift */,
 				88916B461CF0DFE600469F91 /* MessageType.swift */,
@@ -238,7 +244,9 @@
 				B0655A281F23D71400542A83 /* MessageBubble.swift in Sources */,
 				B0655A261F23D6C500542A83 /* Avatar.swift in Sources */,
 				B0655A2A1F23D77200542A83 /* Sender.swift in Sources */,
+				B015E81D1F2487EA007EDFB6 /* AvatarSizeCalculator.swift in Sources */,
 				B0655A4D1F244C0600542A83 /* MessageCollectionViewCell.swift in Sources */,
+				B015E81B1F24835D007EDFB6 /* MessageContainerSizeCalculator.swift in Sources */,
 				B0655A2E1F23D8BC00542A83 /* MessagesCollectionView.swift in Sources */,
 				B0655A381F23EE8B00542A83 /* MessageInputBar.swift in Sources */,
 				88916B471CF0DFE600469F91 /* MessageType.swift in Sources */,
