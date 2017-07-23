@@ -32,6 +32,8 @@ class MessageCollectionViewCell: UICollectionViewCell {
         
         let messageContainerView = UIView()
         messageContainerView.backgroundColor = .green
+        messageContainerView.layer.cornerRadius = 12.0
+        messageContainerView.layer.masksToBounds = true
         return messageContainerView
     }()
     
