@@ -25,28 +25,72 @@
 import UIKit
 import MessageKit
 
-class ConversationViewController: MessagesViewController {
-
+class ConversationViewController: MessagesViewController, MessagesDataSource {
+    
+    var currentSender: Sender = Sender(id: "123", displayName: "Steven")
+    
+    var messages: [MessageType] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        addSampleData()
+        messagesCollectionView.messagesDataSource = self
         // Do any additional setup after loading the view.
     }
+    
+    func addSampleData() {
+        
+        let sender1 = Sender(id: "123456", displayName: "Bobby")
+        let sender2 = Sender(id: "654321", displayName: "Steven")
+        let sender3 = Sender(id: "777999", displayName: "Omar")
+        
+        let msg1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
+                   "Pellentesque venenatis, ante et hendrerit rutrum" +
+                   "Quam erat vehicula metus, et condimentum ante tellus augue."
+        
+        let msg2 = "Cras efficitur bibendum mauris sed ultrices." +
+                   "Phasellus tellus nisl, ullamcorper quis erat."
+        
+        let msg3 = "Maecenas finibus porta lacinia."
+        
+        let msg4 = "Pellentesque venenatis, ante et hendrerit rutrum" +
+                   "Quam erat vehicula metus, et condimentum ante tellus augue."
+        
+        let msg5 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
+                   "Pellentesque venenatis, ante et hendrerit rutrum" +
+                   "Quam erat vehicula metus, et condimentum ante tellus augue."
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        messages.append(MockMessage(text: msg1, sender: currentSender, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg3, sender: sender1, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg2, sender: sender2, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg4, sender: currentSender, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg5, sender: sender3, id: NSUUID().uuidString))
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func numberOfMessages(in collectionView: UICollectionView) -> Int {
+        return messages.count
     }
-    */
+    
+    func messageForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> MessageType {
+        return messages[indexPath.section]
+    }
+    
+}
 
+struct MockMessage: MessageType {
+    
+    var messageId: String
+    var sender: Sender
+    var sentDate: Date
+    var data: MessageData
+    
+    init(text: String, sender: Sender, id: String) {
+        data = .text(text)
+        self.sender = sender
+        self.messageId = id
+        self.sentDate = Date()
+    }
+    
+    
 }

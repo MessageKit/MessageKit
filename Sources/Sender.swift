@@ -29,6 +29,11 @@ public struct Sender {
     public let id: String
     
     public let displayName: String
+    
+    public init(id: String, displayName: String) {
+        self.id = id
+        self.displayName = displayName
+    }
 }
 
 // MARK: - Equatable Conformance

@@ -24,15 +24,14 @@
 
 
 import UIKit
-import Foundation
 
 open class MessagesViewController: UIViewController {
     
     // MARK: - Properties
     
     open var messagesCollectionView: MessagesCollectionView = {
-        
-        let messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let flowLayout = MessagesCollectionViewFlowLayout()
+        let messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: flowLayout)
         messagesCollectionView.backgroundColor = .gray // color for testing
         return messagesCollectionView
     }()
@@ -53,6 +52,8 @@ open class MessagesViewController: UIViewController {
         
         setupSubviews()
         setupConstraints()
+        
+        messagesCollectionView.register(MessageCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         
         messagesCollectionView.delegate = self
         messagesCollectionView.dataSource = self
@@ -91,9 +92,17 @@ open class MessagesViewController: UIViewController {
 
 }
 
-// MARK: - UICollectionViewDelegate Conformance
+// MARK: - UICollectionViewDelegate & UICollectionViewDelegateFlowLayout Conformance
 
-extension MessagesViewController: UICollectionViewDelegate {}
+extension MessagesViewController: UICollectionViewDelegateFlowLayout {
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let messagesFlowLayout = collectionViewLayout as? MessagesCollectionViewFlowLayout else { return .zero }
+        print(collectionView.numberOfSections)
+        return messagesFlowLayout.sizeForItem(at: indexPath)
+    }
+
+}
 
 // MARK: - UICollectionViewDataSource Conformance
 
@@ -109,7 +118,29 @@ extension MessagesViewController: UICollectionViewDataSource {
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return cell }
+        
+        guard let messageType = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: collectionView) else { return cell }
+        
+        return cell
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

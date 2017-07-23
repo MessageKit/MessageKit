@@ -24,8 +24,13 @@
 
 import UIKit
 
-open class MessagesCollectionView: UICollectionView {
+class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
+
     
-    open weak var messagesDataSource: MessagesDataSource?
+    
+    
+    
+    
+    
     
 }
