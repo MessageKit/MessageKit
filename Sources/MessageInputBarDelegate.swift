@@ -23,27 +23,9 @@
  */
 
 import Foundation
-import class CoreLocation.CLLocation
 
-public enum MessageData {
-    
-    case text(String)
-    
-    // MARK: - Not supported yet
-    
-//    case attributedText(NSAttributedString)
-//    
-//    case audio(Data)
-//    
-//    case location(CLLocation)
-//    
-//    case photo(UIImage)
-//    
-//    case video(file: NSURL, thumbnail: UIImage)
-//    
-//    case system(String)
-//    
-//    case custom(Any)
-//    
-//    case placeholder
+protocol MessageInputBarDelegate: class {
+
+    func sendButtonPressed(sender: UIButton)
+
 }

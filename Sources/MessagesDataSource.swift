@@ -31,14 +31,31 @@ public protocol MessagesDataSource: class {
     func messageForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> MessageType
     
     func numberOfMessages(in collectionView: UICollectionView) -> Int
+    
+    func headerForMessage(at indexPath: IndexPath, ofKind kind: String, in collectionView: UICollectionView) -> UICollectionReusableView
+
+    func footerForMessage(at indexPath: IndexPath, ofKind kind: String, in collectionView: UICollectionView) -> UICollectionReusableView
 }
 
+public extension MessagesDataSource {
 
-extension MessagesDataSource {
-
+    
+    // Pros and cons of not having this defined in the protocol? No idea yet.
+    
     func isFromCurrentSender(message: MessageType) -> Bool {
         return message.sender == currentSender
     }
+    
+    // Automatically pass message in here or only by indexPath?
+    
+    func headerForMessage(at indexPath: IndexPath, ofKind kind: String, in collectionView: UICollectionView) -> UICollectionReusableView {
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as! MessageReusableHeaderView
+    }
+    
+    func footerForMessage(at indexPath: IndexPath, ofKind kind: String, in collectionView: UICollectionView) -> UICollectionReusableView {
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath) as! MessageReusableFooterView
+    }
+    
 }
 
 

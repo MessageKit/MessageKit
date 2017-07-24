@@ -31,17 +31,26 @@ class MessageCollectionViewCell: UICollectionViewCell {
     let messageContainerView: UIView = {
         
         let messageContainerView = UIView()
-        messageContainerView.backgroundColor = .green
         messageContainerView.layer.cornerRadius = 12.0
         messageContainerView.layer.masksToBounds = true
+        messageContainerView.translatesAutoresizingMaskIntoConstraints = false
         return messageContainerView
     }()
     
     let avatarImageView: UIImageView = {
         
         let avatarImageView = UIImageView()
-        avatarImageView.backgroundColor = .red
+        avatarImageView.backgroundColor = .lightGray
+        avatarImageView.layer.masksToBounds = true
+        avatarImageView.clipsToBounds = true
+        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         return avatarImageView
+    }()
+    
+    let messageLabel: UILabel = {
+        let messageLabel = UILabel()
+        messageLabel.numberOfLines = 0
+        return messageLabel
     }()
     
     // MARK: - Initializer
@@ -50,7 +59,8 @@ class MessageCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
-        backgroundColor = .purple
+        //self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        contentView.backgroundColor = .purple
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -60,30 +70,88 @@ class MessageCollectionViewCell: UICollectionViewCell {
     // MARK: - Methods
     
     func setupSubviews() {
-        addSubview(messageContainerView)
-        addSubview(avatarImageView)
+        contentView.addSubview(messageContainerView)
+        contentView.addSubview(avatarImageView)
+        messageContainerView.addSubview(messageLabel)
     }
     
     override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+        super.apply(layoutAttributes)
+        
+        print("THE GIVEN FRAME IS: \(layoutAttributes.frame)")
+        
         guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else { return }
-        print(attributes.avatarSize)
-        print(attributes.messageContainerSize)
+        
+        print("THE GIVEN FRAME IS: \(attributes.frame)")
+        
         let avatarWidth = attributes.avatarSize.width
         let avatarHeight = attributes.avatarSize.height
         
         let containerHeight = attributes.messageContainerSize.height
         let containerWidth = attributes.messageContainerSize.width
         
+        let avatarY = contentView.frame.height - avatarHeight - attributes.avatarBottomPadding
+        let containerY: CGFloat = 0
+        
         switch attributes.direction {
-        case .incoming, .outgoing:
-            let avatarX = attributes.avatarToEdgePadding
-            let avatarY = contentView.frame.height - attributes.avatarBottomPadding - attributes.avatarSize.height
-            avatarImageView.frame = CGRect(x: avatarX, y: avatarY, width: avatarWidth, height: avatarHeight)
             
-            let containerX = contentView.frame.width - attributes.messageLeftRightPadding - containerWidth
-            let containerY: CGFloat = 0
+        case .incoming:
+            
+                        constraints.forEach { removeConstraint($0) }
+            
+            messageLabel.backgroundColor = .magenta
+            
+            let avatarX = attributes.messageLeftRightPadding
+            let containerX = avatarWidth + attributes.messageLeftRightPadding + attributes.avatarToContainerPadding
+            
+            avatarImageView.frame = CGRect(x: avatarX, y: avatarY, width: avatarWidth, height: avatarHeight)
             messageContainerView.frame = CGRect(x: containerX, y: containerY, width: containerWidth, height: containerHeight)
+            
+            messageLabel.font = attributes.messageFont
+            messageLabel.frame = CGRect(x: 0, y: 0, width: containerWidth, height: containerHeight)
+            
+            
+                        addConstraint(NSLayoutConstraint(item: avatarImageView, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: attributes.messageLeftRightPadding))
+                        addConstraint(NSLayoutConstraint(item: avatarImageView, attribute: .bottom, relatedBy: .equal, toItem: contentView, attribute: .bottom, multiplier: 1, constant: -attributes.avatarBottomPadding))
+                        addConstraint(NSLayoutConstraint(item: avatarImageView, attribute: .trailing, relatedBy: .equal, toItem: messageContainerView, attribute: .leading, multiplier: 1, constant: -attributes.avatarToContainerPadding))
+                        addConstraint(NSLayoutConstraint(item: avatarImageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: avatarHeight))
+                        addConstraint(NSLayoutConstraint(item: avatarImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: avatarWidth))
+            
+                        addConstraint(NSLayoutConstraint(item: messageContainerView, attribute: .trailing, relatedBy: .equal, toItem: contentView, attribute: .trailing, multiplier: 1, constant: 0))
+                        addConstraint(NSLayoutConstraint(item: messageContainerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: containerHeight))
+            
+        case .outgoing:
+            
+            constraints.forEach { removeConstraint($0) }
+            
+
+            
+            messageLabel.backgroundColor = .cyan
+            
+            let avatarX = contentView.frame.width - attributes.messageLeftRightPadding - avatarWidth
+            let containerX = contentView.frame.width - avatarWidth - attributes.messageLeftRightPadding - attributes.avatarToContainerPadding - containerWidth
+            
+            avatarImageView.frame = CGRect(x: avatarX, y: avatarY, width: avatarWidth, height: avatarHeight)
+            messageContainerView.frame = CGRect(x: containerX, y: containerY, width: containerWidth, height: containerHeight)
+            
+            messageLabel.font = attributes.messageFont
+            messageLabel.frame = CGRect(x: 0, y: 0, width: containerWidth, height: containerHeight)
+            
+            addConstraint(NSLayoutConstraint(item: avatarImageView, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: avatarX))
+            addConstraint(NSLayoutConstraint(item: avatarImageView, attribute: .bottom, relatedBy: .equal, toItem: contentView, attribute: .bottom, multiplier: 1, constant: -attributes.avatarBottomPadding))
+            addConstraint(NSLayoutConstraint(item: avatarImageView, attribute: .trailing, relatedBy: .equal, toItem: messageContainerView, attribute: .leading, multiplier: 1, constant: attributes.avatarToContainerPadding))
+            addConstraint(NSLayoutConstraint(item: avatarImageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: avatarHeight))
+            addConstraint(NSLayoutConstraint(item: avatarImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: avatarWidth))
+            
+            addConstraint(NSLayoutConstraint(item: messageContainerView, attribute: .trailing, relatedBy: .equal, toItem: avatarImageView, attribute: .leading, multiplier: 1, constant: -attributes.avatarToContainerPadding))
+            addConstraint(NSLayoutConstraint(item: messageContainerView, attribute: .leading, relatedBy: .equal, toItem: contentView, attribute: .leading, multiplier: 1, constant: 0))
+            addConstraint(NSLayoutConstraint(item: messageContainerView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: containerHeight))
+
+            
+            
         }
-    }
     
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2
+        
+    }
 }

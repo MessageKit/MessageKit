@@ -22,28 +22,16 @@
  SOFTWARE.
  */
 
-import Foundation
-import class CoreLocation.CLLocation
+import UIKit
 
-public enum MessageData {
+class MessageReusableHeaderView: UICollectionReusableView {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .red
+    }
     
-    case text(String)
-    
-    // MARK: - Not supported yet
-    
-//    case attributedText(NSAttributedString)
-//    
-//    case audio(Data)
-//    
-//    case location(CLLocation)
-//    
-//    case photo(UIImage)
-//    
-//    case video(file: NSURL, thumbnail: UIImage)
-//    
-//    case system(String)
-//    
-//    case custom(Any)
-//    
-//    case placeholder
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
+

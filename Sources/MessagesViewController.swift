@@ -31,6 +31,7 @@ open class MessagesViewController: UIViewController {
     
     open var messagesCollectionView: MessagesCollectionView = {
         let flowLayout = MessagesCollectionViewFlowLayout()
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         let messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: flowLayout)
         messagesCollectionView.backgroundColor = .gray // color for testing
         return messagesCollectionView
@@ -48,22 +49,28 @@ open class MessagesViewController: UIViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         
-        tabBarController?.tabBar.isHidden = true
+        automaticallyAdjustsScrollViewInsets = false
+        
+        tabBarController?.tabBar.isHidden = true // remove this
+        tabBarController?.tabBar.removeFromSuperview()
         
         setupSubviews()
         setupConstraints()
         
         messagesCollectionView.register(MessageCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        messagesCollectionView.register(MessageReusableHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
+        messagesCollectionView.register(MessageReusableFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "Footer")
         
         messagesCollectionView.delegate = self
         messagesCollectionView.dataSource = self
         
+        if #available(iOS 10.0, *) {
+            messagesCollectionView.isPrefetchingEnabled = false
+        }
     }
     
     override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        tabBarController?.tabBar.isHidden = false
         
     }
     
@@ -98,7 +105,6 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let messagesFlowLayout = collectionViewLayout as? MessagesCollectionViewFlowLayout else { return .zero }
-        print(collectionView.numberOfSections)
         return messagesFlowLayout.sizeForItem(at: indexPath)
     }
 
@@ -109,6 +115,7 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
 extension MessagesViewController: UICollectionViewDataSource {
 
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        // Each message == 1 section
         return messagesCollectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
     }
     
@@ -119,14 +126,40 @@ extension MessagesViewController: UICollectionViewDataSource {
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MessageCollectionViewCell
         
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return cell }
         
         guard let messageType = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: collectionView) else { return cell }
         
-        return cell
+        switch messageType.data {
+        case .text(let text):
+            cell.messageLabel.text = text
+            return cell
+        }
     }
+    
+//    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//        
+//        switch kind {
+//        case UICollectionElementKindSectionHeader:
+//            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as! MessageReusableHeaderView
+//        case UICollectionElementKindSectionFooter:
+//            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath) as! MessageReusableFooterView
+//        default:
+//            fatalError("Invalid identifier String for viewForSupplementaryElementOfKind")
+//        }
+//    }
+//    
+//    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+//        guard let layout = collectionViewLayout as? MessagesCollectionViewFlowLayout else { return .zero }
+//        return CGSize(width: layout.itemWidth, height: 4)
+//    }
+//    
+//    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+//        guard let layout = collectionViewLayout as? MessagesCollectionViewFlowLayout else { return .zero }
+//        return CGSize(width: layout.itemWidth, height: 4)
+//    }
 
 }
 

@@ -33,9 +33,8 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
     var avatarSize = CGSize(width: 30.0, height: 30.0)
     
     // Constant right now
-    var avatarToEdgePadding: CGFloat = 4
     var avatarBottomPadding: CGFloat = 4
-    var avatarToContainerPadding: CGFloat = 2
+    var avatarToContainerPadding: CGFloat = 4
     
     var messageContainerSize: CGSize = .zero
     
@@ -49,7 +48,6 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
         let copy = super.copy(with: zone) as! MessagesCollectionViewLayoutAttributes
         copy.messageFont = messageFont
         copy.avatarSize = avatarSize
-        copy.avatarToEdgePadding = avatarToEdgePadding
         copy.avatarBottomPadding = avatarBottomPadding
         copy.avatarToContainerPadding = avatarToContainerPadding
         copy.messageContainerSize = messageContainerSize
@@ -59,12 +57,17 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
     }
     
     override open func isEqual(_ object: Any?) -> Bool {
+
         guard let attributes = object as? MessagesCollectionViewLayoutAttributes else { return false }
-        
-        return attributes.messageFont == messageFont && attributes.avatarSize == avatarSize &&
-            attributes.avatarToEdgePadding == avatarToEdgePadding && attributes.avatarBottomPadding == avatarBottomPadding &&
-            attributes.avatarToContainerPadding == avatarToContainerPadding && attributes.messageLeftRightPadding == messageLeftRightPadding &&
-            attributes.direction == direction
+        return super.isEqual(object)
+//        return
+//            attributes.messageFont == messageFont &&
+//            attributes.avatarSize == avatarSize &&
+//            attributes.avatarBottomPadding == avatarBottomPadding &&
+//            attributes.avatarToContainerPadding == avatarToContainerPadding &&
+//            attributes.messageContainerSize == attributes.messageContainerSize &&
+//            attributes.messageLeftRightPadding == messageLeftRightPadding &&
+//            attributes.direction == direction
     }
     
 }

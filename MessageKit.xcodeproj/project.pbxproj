@@ -16,6 +16,9 @@
 		B015E8191F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */; };
 		B015E81B1F24835D007EDFB6 /* MessageContainerSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E81A1F24835D007EDFB6 /* MessageContainerSizeCalculator.swift */; };
 		B015E81D1F2487EA007EDFB6 /* AvatarSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E81C1F2487EA007EDFB6 /* AvatarSizeCalculator.swift */; };
+		B015E81F1F259D8E007EDFB6 /* MessageInputBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E81E1F259D8E007EDFB6 /* MessageInputBarDelegate.swift */; };
+		B015E8211F259F2F007EDFB6 /* MessageReusableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E8201F259F2F007EDFB6 /* MessageReusableHeaderView.swift */; };
+		B015E8231F259F50007EDFB6 /* MessageReusableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E8221F259F50007EDFB6 /* MessageReusableFooterView.swift */; };
 		B0655A261F23D6C500542A83 /* Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A251F23D6C500542A83 /* Avatar.swift */; };
 		B0655A281F23D71400542A83 /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A271F23D71400542A83 /* MessageBubble.swift */; };
 		B0655A2A1F23D77200542A83 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A291F23D77200542A83 /* Sender.swift */; };
@@ -49,6 +52,9 @@
 		B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
 		B015E81A1F24835D007EDFB6 /* MessageContainerSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageContainerSizeCalculator.swift; sourceTree = "<group>"; };
 		B015E81C1F2487EA007EDFB6 /* AvatarSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarSizeCalculator.swift; sourceTree = "<group>"; };
+		B015E81E1F259D8E007EDFB6 /* MessageInputBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageInputBarDelegate.swift; sourceTree = "<group>"; };
+		B015E8201F259F2F007EDFB6 /* MessageReusableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageReusableHeaderView.swift; sourceTree = "<group>"; };
+		B015E8221F259F50007EDFB6 /* MessageReusableFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageReusableFooterView.swift; sourceTree = "<group>"; };
 		B0655A251F23D6C500542A83 /* Avatar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Avatar.swift; sourceTree = "<group>"; };
 		B0655A271F23D71400542A83 /* MessageBubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
 		B0655A291F23D77200542A83 /* Sender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
@@ -106,6 +112,9 @@
 				B015E81A1F24835D007EDFB6 /* MessageContainerSizeCalculator.swift */,
 				B0655A2B1F23D81600542A83 /* MessageData.swift */,
 				B0655A371F23EE8B00542A83 /* MessageInputBar.swift */,
+				B015E81E1F259D8E007EDFB6 /* MessageInputBarDelegate.swift */,
+				B015E8221F259F50007EDFB6 /* MessageReusableFooterView.swift */,
+				B015E8201F259F2F007EDFB6 /* MessageReusableHeaderView.swift */,
 				88916B461CF0DFE600469F91 /* MessageType.swift */,
 				B0655A2D1F23D8BC00542A83 /* MessagesCollectionView.swift */,
 				B0655A4E1F245C5A00542A83 /* MessagesCollectionViewFlowLayout.swift */,
@@ -243,9 +252,12 @@
 				B0655A2C1F23D81600542A83 /* MessageData.swift in Sources */,
 				B0655A281F23D71400542A83 /* MessageBubble.swift in Sources */,
 				B0655A261F23D6C500542A83 /* Avatar.swift in Sources */,
+				B015E8211F259F2F007EDFB6 /* MessageReusableHeaderView.swift in Sources */,
+				B015E81F1F259D8E007EDFB6 /* MessageInputBarDelegate.swift in Sources */,
 				B0655A2A1F23D77200542A83 /* Sender.swift in Sources */,
 				B015E81D1F2487EA007EDFB6 /* AvatarSizeCalculator.swift in Sources */,
 				B0655A4D1F244C0600542A83 /* MessageCollectionViewCell.swift in Sources */,
+				B015E8231F259F50007EDFB6 /* MessageReusableFooterView.swift in Sources */,
 				B015E81B1F24835D007EDFB6 /* MessageContainerSizeCalculator.swift in Sources */,
 				B0655A2E1F23D8BC00542A83 /* MessagesCollectionView.swift in Sources */,
 				B0655A381F23EE8B00542A83 /* MessageInputBar.swift in Sources */,

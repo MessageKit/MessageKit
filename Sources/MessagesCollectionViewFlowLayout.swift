@@ -40,9 +40,12 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     var messageLeftRightPadding: CGFloat = 16
     
-    let avatarToEdgePadding: CGFloat = 4
     let avatarBottomPadding: CGFloat = 4
-    let avatarToContainerPadding: CGFloat = 2
+    let avatarToContainerPadding: CGFloat = 4
+    
+    var contentHeight: CGFloat = 0
+    
+    var scrollPadding = 100
     
     override class var layoutAttributesClass: AnyClass {
         return MessagesCollectionViewLayoutAttributes.self
@@ -51,6 +54,10 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     var itemWidth: CGFloat {
         guard let collectionView = collectionView else { return 0 }
         return collectionView.frame.width - self.sectionInset.left - self.sectionInset.right
+    }
+    
+    override var collectionViewContentSize: CGSize {
+        return CGSize(width: collectionView!.frame.width, height: 1000)
     }
     
     // MARK: - Methods
@@ -62,19 +69,57 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         
         let containerHeight = messageContainerSizeCalculator.messageContainerSizeFor(messageType: messageType, with: self).height
         
-        return CGSize(width: itemWidth, height: containerHeight)
+        let minimumCellHeight = max(incomingAvatarSize.height, outgoingAvatarSize.height) + avatarBottomPadding
+        
+        if containerHeight <  minimumCellHeight {
+            return CGSize(width: itemWidth, height: minimumCellHeight.rounded())
+        } else {
+            return CGSize(width: itemWidth, height: containerHeight.rounded())
+        }
   
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        guard let attributesArray = super.layoutAttributesForElements(in: rect) as? [MessagesCollectionViewLayoutAttributes] else { return nil }
-        attributesArray.forEach { configureLayoutAttributes($0) }
-        return attributesArray
+        guard let attributesArray = super.layoutAttributesForElements(in: rect) else { return nil }
+        //attributesArray.forEach { configureLayoutAttributes($0) }
+        print("THERE ARE \(attributesArray.count) ATTRIBUTES")
+        
+
+        guard let attrCopy = NSArray(array: attributesArray, copyItems: true) as? [UICollectionViewLayoutAttributes] else { return nil }
+        
+        attrCopy.forEach { attr in
+        
+            if attr.representedElementCategory == UICollectionElementCategory.cell {
+                self.configureLayoutAttributes(attr as! MessagesCollectionViewLayoutAttributes)
+            } else {
+                attr.zIndex = -1
+            }
+        
+        }
+        
+        
+        attrCopy.forEach {
+            
+            print(
+            "MESSAGE NUMBER \($0.indexPath.section)",
+            "IndexPath: \($0.indexPath)",
+            "Frame: \($0.frame)",
+            "Bounds: \($0.bounds)",
+            "Center: \($0.center)",
+            "zIndex: \($0.zIndex)",
+            "Hidden: \($0.isHidden)", separator: "\n", terminator: "\n ==================== \n")
+        }
+        return attrCopy
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         guard let attributes = super.layoutAttributesForItem(at: indexPath) as? MessagesCollectionViewLayoutAttributes else { return nil }
-        configureLayoutAttributes(attributes)
+        
+        if attributes.representedElementCategory == UICollectionElementCategory.cell {
+            
+            configureLayoutAttributes(attributes)
+        }
+
         return attributes
     }
     
@@ -89,6 +134,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         let messageDirection: MessageDirection = messagesDataSource.isFromCurrentSender(message: messageType) ? .outgoing : .incoming
         
         // Maybe we can cache this somewhere? It seems like we're calculating it a lot
+        // TODO: Attribute caching
         let messageContainerSize = messageContainerSizeCalculator.messageContainerSizeFor(messageType: messageType, with: self)
         let avatarSize = avatarSizeCalculator.avatarSizeFor(messageType: messageType, with: self)
         
@@ -97,9 +143,15 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         layoutAttributes.messageLeftRightPadding = messageLeftRightPadding
         layoutAttributes.avatarSize = avatarSize
         layoutAttributes.messageContainerSize = messageContainerSize
+        layoutAttributes.avatarBottomPadding = avatarBottomPadding
+        layoutAttributes.avatarToContainerPadding = avatarToContainerPadding
 
     }
-
+    
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        return collectionView?.bounds != newBounds
+    }
+    
 }
 
 

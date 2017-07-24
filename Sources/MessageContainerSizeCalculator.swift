@@ -29,16 +29,22 @@ class MessageContainerSizeCalculator {
     func messageContainerSizeFor(messageType: MessageType, with layout: MessagesCollectionViewFlowLayout) -> CGSize {
         
         let avatarWidth = layout.avatarSizeCalculator.avatarSizeFor(messageType: messageType, with: layout).width
-        let horizontalOffsets = layout.avatarToEdgePadding + layout.avatarToContainerPadding + layout.messageLeftRightPadding
-        let messageContainerWidth = layout.itemWidth - avatarWidth - horizontalOffsets
+        let horizontalOffsets = layout.avatarToContainerPadding + layout.messageLeftRightPadding
+        let messageContainerWidthMax = layout.itemWidth - avatarWidth - horizontalOffsets
         
         switch messageType.data {
         case .text(let text):
-            let messageContainerHeight = text.height(considering: messageContainerWidth, font: layout.messageFont)
-            return CGSize(width: messageContainerWidth, height: messageContainerHeight)
-        default:
-            // TODO: Heights for other types of message data
-            fatalError("Currently .text(String) is the only supported message type")
+            let messageContainerHeight = text.height(considering: messageContainerWidthMax, font: layout.messageFont)
+            let messageContainerEstWidth = text.width(considering: messageContainerHeight, font: layout.messageFont)
+            if messageContainerEstWidth > messageContainerWidthMax {
+                return CGSize(width: messageContainerWidthMax, height: messageContainerHeight)
+            } else {
+                return CGSize(width: messageContainerEstWidth, height: messageContainerHeight)
+            }
+
+//        default:
+//            // TODO: Heights for other types of message data
+//            fatalError("Currently .text(String) is the only supported message type")
         }
     }
 
@@ -50,6 +56,12 @@ fileprivate extension String {
         let constraintBox = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundRect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
         return boundRect.height
+    }
+    
+    func width(considering height: CGFloat, font: UIFont) -> CGFloat {
+        let constraintBox = CGSize(width: .greatestFiniteMagnitude, height: height)
+        let boundRect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
+        return boundRect.width
     }
     
 }

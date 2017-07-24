@@ -45,12 +45,15 @@ open class MessageInputBar: UIView {
         return sendButton
     }()
     
+    weak var delegate: MessageInputBarDelegate?
+    
     // MARK: - Initializers
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
         setupConstraints()
+        registerSelector()
     }
     
     convenience init() {
@@ -83,6 +86,14 @@ open class MessageInputBar: UIView {
         addConstraint(NSLayoutConstraint(item: sendButton, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: sendButton, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
 
+    }
+    
+    func registerSelector() {
+        sendButton.addTarget(self, action: #selector(MessageInputBar.sendButtonPressed), for: .touchUpInside)
+    }
+    
+    func sendButtonPressed() {
+        delegate?.sendButtonPressed(sender: sendButton)
     }
 
 
