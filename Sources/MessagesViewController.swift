@@ -53,10 +53,7 @@ open class MessagesViewController: UIViewController {
         setupSubviews()
         setupConstraints()
         
-        messagesCollectionView.register(MessageCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        
-        messagesCollectionView.delegate = self
-        messagesCollectionView.dataSource = self
+        setupMessagesCollectionView()
         
     }
     
@@ -72,6 +69,13 @@ open class MessagesViewController: UIViewController {
     func setupSubviews() {
         view.addSubview(messagesCollectionView)
         view.addSubview(messageInputBar)
+    }
+    
+    func setupMessagesCollectionView() {
+        messagesCollectionView.register(MessageCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        
+        messagesCollectionView.delegate = self
+        messagesCollectionView.dataSource = self
     }
     
     func setupConstraints() {

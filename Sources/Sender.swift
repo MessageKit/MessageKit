@@ -43,3 +43,10 @@ extension Sender: Equatable {
         return left.id == right.id
     }
 }
+
+// MARK: - Hashable Conformance
+extension Sender: Hashable {
+    public var hashValue: Int {
+        return id.hashValue
+    }
+}

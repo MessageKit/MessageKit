@@ -40,10 +40,9 @@ public struct Avatar {
     
     public func image(highlighted: Bool) -> UIImage {
         
-        switch highlighted {
-        case true:
+        if highlighted {
             return highlightedImage ?? image ?? placeholderImage
-        case false:
+        } else {
             return image ?? placeholderImage
         }
         
