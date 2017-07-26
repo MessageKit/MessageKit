@@ -61,24 +61,38 @@ open class MessagesViewController: UIViewController {
     
     // MARK: - Methods
     
+    override open var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
+    override open var inputAccessoryView: UIView? {
+        messageInputBar.bounds.size = CGSize(width: messagesCollectionView.frame.width, height: 48)
+        return messageInputBar
+    }
+    
     func setupSubviews() {
         view.addSubview(messagesCollectionView)
-        view.addSubview(messageInputBar)
+        //view.addSubview(messageInputBar)
+    }
+    
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+        resignFirstResponder()
     }
     
     func setupConstraints() {
 
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .bottom, relatedBy: .equal, toItem: messageInputBar, attribute: .top, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .bottom, relatedBy: .equal, toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: -48))
         view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
 
-        messageInputBar.translatesAutoresizingMaskIntoConstraints = false
-        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .bottom, relatedBy: .equal, toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 48))
+//        messageInputBar.translatesAutoresizingMaskIntoConstraints = false
+//        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
+//        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
+//        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .bottom, relatedBy: .equal, toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0))
+//        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 48))
 
     }
 
