@@ -1,3 +1,5 @@
+## MessageKit Vision
+
 ### Goals
 - Provide a suitable a replacement (but not absolute mirror image) of JSQMessagesViewController.
 - Provide “sensible defaults, but also customization hooks" - @jessesquires
