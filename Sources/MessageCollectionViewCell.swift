@@ -33,7 +33,6 @@ class MessageCollectionViewCell: UICollectionViewCell {
         let messageContainerView = UIView()
         messageContainerView.layer.cornerRadius = 12.0
         messageContainerView.layer.masksToBounds = true
-        messageContainerView.backgroundColor = .green
         messageContainerView.translatesAutoresizingMaskIntoConstraints = false
         return messageContainerView
     }()
@@ -41,6 +40,7 @@ class MessageCollectionViewCell: UICollectionViewCell {
     let avatarImageView: UIImageView = {
         
         let avatarImageView = UIImageView()
+        avatarImageView.contentMode = .scaleAspectFill
         avatarImageView.backgroundColor = .lightGray
         avatarImageView.layer.masksToBounds = true
         avatarImageView.clipsToBounds = true
@@ -50,10 +50,9 @@ class MessageCollectionViewCell: UICollectionViewCell {
     
     let messageLabel: UILabel = {
         let messageLabel = UILabel()
-//        messageLabel.layer.cornerRadius = 12.0
-//        messageLabel.layer.masksToBounds = true
         messageLabel.numberOfLines = 0
         messageLabel.backgroundColor = .clear
+        messageLabel.isOpaque = false
         return messageLabel
     }()
     
@@ -64,7 +63,7 @@ class MessageCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         setupSubviews()
         //setupConstraints()
-        contentView.backgroundColor = .purple
+        //contentView.backgroundColor = .purple
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -89,10 +88,9 @@ class MessageCollectionViewCell: UICollectionViewCell {
             setAvatarFrameFor(attributes: attributes)
             setMessageContainerFrameFor(attributes: attributes)
             setMessageLabelFor(attributes: attributes)
-            
 
         }
-        
+
     }
     
     func setMessageContainerFrameFor(attributes: MessagesCollectionViewLayoutAttributes) {

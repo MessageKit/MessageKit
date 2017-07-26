@@ -18,6 +18,7 @@
 		882B5EA01CF7D8D100B6E160 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882B5E9D1CF7D8CA00B6E160 /* MessageKit.framework */; };
 		882B5EA11CF7D8D100B6E160 /* MessageKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 882B5E9D1CF7D8CA00B6E160 /* MessageKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B0655A331F23E90800542A83 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A321F23E90800542A83 /* ConversationViewController.swift */; };
+		B096438B1F288D47004D0129 /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B096438A1F288D47004D0129 /* MockMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		882B5E941CF7D56E00B6E160 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		882B5E971CF7D8CA00B6E160 /* MessageKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MessageKit.xcodeproj; path = ../MessageKit.xcodeproj; sourceTree = "<group>"; };
 		B0655A321F23E90800542A83 /* ConversationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
+		B096438A1F288D47004D0129 /* MockMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 				882B5E781CF7D53600B6E160 /* AppDelegate.swift */,
 				B0655A321F23E90800542A83 /* ConversationViewController.swift */,
 				882B5E7E1CF7D53600B6E160 /* InboxViewController.swift */,
+				B096438A1F288D47004D0129 /* MockMessage.swift */,
 				882B5E801CF7D53600B6E160 /* SettingsViewController.swift */,
 				882B5E791CF7D53600B6E160 /* Assets.xcassets */,
 				882B5E7F1CF7D53600B6E160 /* Info.plist */,
@@ -339,6 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				882B5E871CF7D53600B6E160 /* SettingsViewController.swift in Sources */,
+				B096438B1F288D47004D0129 /* MockMessage.swift in Sources */,
 				882B5E811CF7D53600B6E160 /* AppDelegate.swift in Sources */,
 				B0655A331F23E90800542A83 /* ConversationViewController.swift in Sources */,
 				882B5E851CF7D53600B6E160 /* InboxViewController.swift in Sources */,

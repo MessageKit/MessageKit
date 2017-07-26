@@ -57,6 +57,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         outgoingAvatarSize = CGSize(width: 30, height: 30)
         messageContainerInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
         super.init()
+        sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -148,14 +149,15 @@ extension MessagesCollectionViewFlowLayout {
     func containerHeightForMessage(message: MessageType) -> CGFloat {
         
         let avatarSize = avatarSizeFor(message: message)
-        let availableWidth = itemWidth - avatarSize.width - messageContainerInsets.left - messageContainerInsets.right
+        let insets = messageContainerInsets.left + messageContainerInsets.right
+        let availableWidth = itemWidth - avatarSize.width - avatarContainerSpacing - insets
         
         // This is a switch because support for more messages are to come
         switch message.data {
         case .text(let text):
             let estimatedHeight = text.height(considering: availableWidth, and: messageFont)
             let insets = messageContainerInsets.top + messageContainerInsets.bottom
-            return estimatedHeight.rounded() + insets
+            return estimatedHeight.rounded(.up) + insets //+ 1
         }
         
     }
@@ -165,15 +167,16 @@ extension MessagesCollectionViewFlowLayout {
         let containerHeight = containerHeightForMessage(message: message)
         
         let avatarSize = avatarSizeFor(message: message)
-        let availableWidth = itemWidth - avatarSize.width - messageContainerInsets.left - messageContainerInsets.right
+        let insets = messageContainerInsets.left + messageContainerInsets.right
+        let availableWidth = itemWidth - avatarSize.width - avatarContainerSpacing - insets
         
         // This is a switch because support for more messages are to come
         switch message.data {
         case .text(let text):
-            let estimatedWidth = text.width(considering: containerHeight, and: messageFont)
+            let estimatedWidth = text.width(considering: containerHeight, and: messageFont).rounded(.up)
             let insets = messageContainerInsets.left + messageContainerInsets.right
             let finalWidth = estimatedWidth > availableWidth ? availableWidth : estimatedWidth
-            return finalWidth.rounded() + insets
+            return finalWidth + insets
         }
         
     }
@@ -181,7 +184,7 @@ extension MessagesCollectionViewFlowLayout {
     func estimatedCellHeightForMessage(message: MessageType) -> CGFloat {
         
         let messageContainerHeight = containerHeightForMessage(message: message)
-        return messageContainerHeight + messageContainerInsets.top + messageContainerInsets.bottom
+        return messageContainerHeight
         
     }
     

@@ -25,18 +25,19 @@
 import UIKit
 import MessageKit
 
-class ConversationViewController: MessagesViewController, MessagesDataSource {
-    
-    var currentSender: Sender = Sender(id: "123", displayName: "Steven")
+class ConversationViewController: MessagesViewController, MessagesDataSource, MessagesDisplayDataSource {
     
     var messages: [MessageType] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         addSampleData()
+        
         messagesCollectionView.messagesDataSource = self
-            tabBarController?.tabBar.isHidden = true
-        // Do any additional setup after loading the view.
+        messagesCollectionView.messagesDisplayDataSource = self
+        
+        tabBarController?.tabBar.isHidden = true
     }
     
     func addSampleData() {
@@ -62,25 +63,29 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
                    "Quam erat vehicula metus, et condimentum ante tellus augue."
 
         messages.append(MockMessage(text: msg2, sender: sender2, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg4, sender: currentSender, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg4, sender: currentSender(), id: NSUUID().uuidString))
         messages.append(MockMessage(text: msg5, sender: sender3, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg1, sender: currentSender, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg1, sender: currentSender(), id: NSUUID().uuidString))
         messages.append(MockMessage(text: msg3, sender: sender1, id: NSUUID().uuidString))
         messages.append(MockMessage(text: msg3, sender: sender1, id: NSUUID().uuidString))
         messages.append(MockMessage(text: msg2, sender: sender2, id: NSUUID().uuidString))
         messages.append(MockMessage(text: msg2, sender: sender2, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg1, sender: currentSender, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg1, sender: currentSender(), id: NSUUID().uuidString))
         messages.append(MockMessage(text: msg3, sender: sender1, id: NSUUID().uuidString))
         messages.append(MockMessage(text: msg2, sender: sender2, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg4, sender: currentSender, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg4, sender: currentSender(), id: NSUUID().uuidString))
         messages.append(MockMessage(text: msg5, sender: sender3, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg4, sender: currentSender, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg4, sender: currentSender(), id: NSUUID().uuidString))
         messages.append(MockMessage(text: msg5, sender: sender3, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg4, sender: currentSender, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg4, sender: currentSender(), id: NSUUID().uuidString))
         messages.append(MockMessage(text: msg5, sender: sender3, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg1, sender: currentSender, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg1, sender: currentSender, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg1, sender: currentSender(), id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg1, sender: currentSender(), id: NSUUID().uuidString))
         messages.append(MockMessage(text: msg3, sender: sender1, id: NSUUID().uuidString))
+    }
+    
+    func currentSender() -> Sender {
+        return Sender(id: "123", displayName: "Steven")
     }
     
     func numberOfMessages(in collectionView: UICollectionView) -> Int {
@@ -91,21 +96,11 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         return messages[indexPath.section]
     }
     
-}
-
-struct MockMessage: MessageType {
-    
-    var messageId: String
-    var sender: Sender
-    var sentDate: Date
-    var data: MessageData
-    
-    init(text: String, sender: Sender, id: String) {
-        data = .text(text)
-        self.sender = sender
-        self.messageId = id
-        self.sentDate = Date()
+    func avatarForMessage(_ message: MessageType, at indexPath: IndexPath, in collectionView: UICollectionView) -> Avatar {
+        let image = isFromCurrentSender(message: message) ? #imageLiteral(resourceName: "Steve-Jobs") : #imageLiteral(resourceName: "Tim-Cook")
+        return Avatar(placeholderImage: image)
     }
     
-    
 }
+
+

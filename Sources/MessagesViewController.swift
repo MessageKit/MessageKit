@@ -30,17 +30,12 @@ open class MessagesViewController: UIViewController {
     // MARK: - Properties
     
     open var messagesCollectionView: MessagesCollectionView = {
-        let flowLayout = MessagesCollectionViewFlowLayout()
-        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
-        let messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        messagesCollectionView.backgroundColor = .gray // color for testing
+        let messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
         return messagesCollectionView
     }()
     
     open var messageInputBar: MessageInputBar = {
-        
         let messageInputBar = MessageInputBar(frame: .zero)
-        messageInputBar.backgroundColor = .lightGray // color for testing
         return messageInputBar
     }()
     
@@ -54,16 +49,14 @@ open class MessagesViewController: UIViewController {
         setupSubviews()
         setupConstraints()
         
-        messagesCollectionView.register(MessageCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        messagesCollectionView.register(MessageReusableHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "Header")
-        messagesCollectionView.register(MessageReusableFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, withReuseIdentifier: "Footer")
+        messagesCollectionView.register(MessageCollectionViewCell.self, forCellWithReuseIdentifier: "MessageCell")
         
         messagesCollectionView.delegate = self
         messagesCollectionView.dataSource = self
         
-        if #available(iOS 10.0, *) {
-            messagesCollectionView.isPrefetchingEnabled = false
-        }
+//        if #available(iOS 10.0, *) {
+//            messagesCollectionView.isPrefetchingEnabled = false
+//        }
     }
     
     // MARK: - Methods
@@ -121,44 +114,26 @@ extension MessagesViewController: UICollectionViewDataSource {
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MessageCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MessageCell", for: indexPath) as! MessageCollectionViewCell
         
-        if let messagesCollectionView = collectionView as? MessagesCollectionView, let dataSource = messagesCollectionView.messagesDataSource {
+        if let messagesCollectionView = collectionView as? MessagesCollectionView,
+           let dataSource = messagesCollectionView.messagesDataSource,
+           let displayDataSource = messagesCollectionView.messagesDisplayDataSource {
             
             let message = dataSource.messageForItem(at: indexPath, in: collectionView)
-            let isOutgoingMessage = dataSource.isFromCurrentSender(message: message)
+            let messageColor = displayDataSource.messageColorFor(message, at: indexPath, in: collectionView)
+            let avatar = displayDataSource.avatarForMessage(message, at: indexPath, in: collectionView)
             
-            // Configure message here
-            
+            cell.avatarImageView.image = avatar.image(highlighted: false)
+            cell.avatarImageView.highlightedImage = avatar.image(highlighted: true)
+            cell.messageContainerView.backgroundColor = messageColor
             cell.configure(with: message)
-            
+
         }
         
         return cell
 
     }
-    
-//    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        
-//        switch kind {
-//        case UICollectionElementKindSectionHeader:
-//            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as! MessageReusableHeaderView
-//        case UICollectionElementKindSectionFooter:
-//            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath) as! MessageReusableFooterView
-//        default:
-//            fatalError("Invalid identifier String for viewForSupplementaryElementOfKind")
-//        }
-//    }
-//    
-//    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        guard let layout = collectionViewLayout as? MessagesCollectionViewFlowLayout else { return .zero }
-//        return CGSize(width: layout.itemWidth, height: 4)
-//    }
-//    
-//    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-//        guard let layout = collectionViewLayout as? MessagesCollectionViewFlowLayout else { return .zero }
-//        return CGSize(width: layout.itemWidth, height: 4)
-//    }
 
 }
 

@@ -31,8 +31,14 @@ open class MessageInputBar: UIView {
     let inputTextView: UITextView = {
     
         let inputTextView = UITextView(frame: .zero)
-        inputTextView.text = "Some example text for testing"
+        inputTextView.font = UIFont.preferredFont(forTextStyle: .body)
+        inputTextView.text = "New Message"
+        inputTextView.textColor = .lightGray
         inputTextView.backgroundColor = .white
+        inputTextView.layer.borderColor = UIColor.lightGray.cgColor
+        inputTextView.layer.borderWidth = 1.0
+        inputTextView.layer.cornerRadius = 3.0
+        inputTextView.layer.masksToBounds = true
         return inputTextView
     }()
     
@@ -41,7 +47,6 @@ open class MessageInputBar: UIView {
         let sendButton = UIButton()
         sendButton.setTitle("Send", for: .normal)
         sendButton.setTitleColor(.lightGray, for: .normal)
-        sendButton.backgroundColor = .red
         return sendButton
     }()
     
@@ -54,6 +59,7 @@ open class MessageInputBar: UIView {
         setupSubviews()
         setupConstraints()
         registerSelector()
+        backgroundColor = .inputBarGray
     }
     
     convenience init() {
@@ -83,7 +89,7 @@ open class MessageInputBar: UIView {
 
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         addConstraint(NSLayoutConstraint(item: sendButton, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: sendButton, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: sendButton, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: -4))
         addConstraint(NSLayoutConstraint(item: sendButton, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
 
     }

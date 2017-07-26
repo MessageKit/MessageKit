@@ -22,15 +22,22 @@
  SOFTWARE.
  */
 
-import UIKit
+import Foundation
+import MessageKit
 
-class MessageReusableFooterView: UICollectionReusableView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .orange
+struct MockMessage: MessageType {
+    
+    var messageId: String
+    var sender: Sender
+    var sentDate: Date
+    var data: MessageData
+    
+    init(text: String, sender: Sender, id: String) {
+        data = .text(text)
+        self.sender = sender
+        self.messageId = id
+        self.sentDate = Date()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    
 }

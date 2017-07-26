@@ -24,15 +24,12 @@
 
 import Foundation
 
-class AvatarSizeCalculator {
-
-    func avatarSizeFor(messageType: MessageType, with layout: MessagesCollectionViewFlowLayout) -> CGSize {
-
-        guard let messagesCollectionView = layout.collectionView as? MessagesCollectionView else { return .zero }
-        guard let isOutgoingMessage = messagesCollectionView.messagesDataSource?.isFromCurrentSender(message: messageType) else { return .zero }
-        
-        return isOutgoingMessage ? layout.outgoingAvatarSize : layout.incomingAvatarSize
-
-    }
-
+public extension UIColor {
+    
+    static let incomingGray = UIColor(colorLiteralRed: 230/255, green: 230/255, blue: 235/255, alpha: 1.0)
+    
+    static let outgoingGreen = UIColor(colorLiteralRed: 69/255, green: 214/255, blue: 93/255, alpha: 1.0)
+    
+    static let inputBarGray = UIColor(colorLiteralRed: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
+    
 }

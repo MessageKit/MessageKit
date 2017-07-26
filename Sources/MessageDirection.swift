@@ -22,16 +22,9 @@
  SOFTWARE.
  */
 
-import UIKit
+public enum MessageDirection {
 
-class MessageReusableHeaderView: UICollectionReusableView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        backgroundColor = .red
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    case incoming
+    case outgoing
+
 }
-

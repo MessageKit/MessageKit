@@ -26,7 +26,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="LtQ-vq-faA" kind="show" identifier="showMessages" id="ROB-l7-fNn"/>
+                                    <segue destination="liE-CN-1Q3" kind="show" id="4X0-1b-yom"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -42,22 +42,22 @@
             <point key="canvasLocation" x="1067" y="-252"/>
         </scene>
         <!--Conversation View Controller-->
-        <scene sceneID="fFZ-kM-xpx">
+        <scene sceneID="DNz-5r-g7p">
             <objects>
-                <viewController id="LtQ-vq-faA" customClass="ConversationViewController" customModule="ChatExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="liE-CN-1Q3" customClass="ConversationViewController" customModule="ChatExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="xCM-lV-Tv3"/>
-                        <viewControllerLayoutGuide type="bottom" id="gUh-ko-5eE"/>
+                        <viewControllerLayoutGuide type="top" id="X1Z-Rt-oge"/>
+                        <viewControllerLayoutGuide type="bottom" id="jTg-1r-P9t"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="qgq-52-AA7">
+                    <view key="view" contentMode="scaleToFill" id="YUH-C1-4hJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0bu-Aa-D9t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wuy-lF-2nR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1865" y="-252"/>
+            <point key="canvasLocation" x="1817" y="-249"/>
         </scene>
         <!--Item-->
         <scene sceneID="RIX-3V-AwK">
