@@ -59,9 +59,9 @@ public extension MessagesDataSource {
 }
 
 
-public protocol MessagesDisplayDataSource {
-
-    func bubbleForMessage(_ message: MessageType, at indexPath: IndexPath, in collectionView: UICollectionView) -> MessageBubble
-
-    func avatarForMessage(_ message: MessageType, at indexPath: IndexPath, in collectionView: UICollectionView) -> Avatar
-}
+//public protocol MessagesDisplayDataSource {
+//
+//    func bubbleForMessage(_ message: MessageType, at indexPath: IndexPath, in collectionView: UICollectionView) -> MessageBubble
+//
+//    func avatarForMessage(_ message: MessageType, at indexPath: IndexPath, in collectionView: UICollectionView) -> Avatar
+//}

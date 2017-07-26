@@ -27,47 +27,42 @@ import UIKit
 open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
     
     // MARK: - Properties
+    
+    var direction: MessageDirection = .outgoing
 
     var messageFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
     
-    var avatarSize = CGSize(width: 30.0, height: 30.0)
-    
-    // Constant right now
-    var avatarBottomPadding: CGFloat = 4
-    var avatarToContainerPadding: CGFloat = 4
-    
     var messageContainerSize: CGSize = .zero
     
-    var messageLeftRightPadding: CGFloat = 16
+    var messageContainerInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
     
-    var direction: MessageDirection = .outgoing
+    var avatarSize: CGSize = CGSize(width: 30, height: 30)
+    
+    var avatarBottomSpacing: CGFloat = 4
+    
+    var avatarContainerSpacing: CGFloat = 4
     
     // MARK: - Methods
     
     override open func copy(with zone: NSZone? = nil) -> Any {
         let copy = super.copy(with: zone) as! MessagesCollectionViewLayoutAttributes
-        copy.messageFont = messageFont
-        copy.avatarSize = avatarSize
-        copy.avatarBottomPadding = avatarBottomPadding
-        copy.avatarToContainerPadding = avatarToContainerPadding
-        copy.messageContainerSize = messageContainerSize
-        copy.messageLeftRightPadding = messageLeftRightPadding
         copy.direction = direction
+        copy.messageFont = messageFont
+        copy.messageContainerSize = messageContainerSize
+        copy.avatarSize = avatarSize
+        copy.messageContainerInsets = messageContainerInsets
+        copy.avatarBottomSpacing = avatarBottomSpacing
+        copy.avatarContainerSpacing = avatarContainerSpacing
         return copy
     }
-    
-    override open func isEqual(_ object: Any?) -> Bool {
 
-        guard let attributes = object as? MessagesCollectionViewLayoutAttributes else { return false }
-        return super.isEqual(object)
-//        return
-//            attributes.messageFont == messageFont &&
-//            attributes.avatarSize == avatarSize &&
-//            attributes.avatarBottomPadding == avatarBottomPadding &&
-//            attributes.avatarToContainerPadding == avatarToContainerPadding &&
-//            attributes.messageContainerSize == attributes.messageContainerSize &&
-//            attributes.messageLeftRightPadding == messageLeftRightPadding &&
-//            attributes.direction == direction
+    override open func isEqual(_ object: Any?) -> Bool {
+        // MARK: - LEAVE this as is
+        if let _ = object as? MessagesCollectionViewLayoutAttributes {
+            return super.isEqual(object)
+        } else {
+            return false
+        }
     }
-    
+
 }

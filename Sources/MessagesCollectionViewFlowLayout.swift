@@ -28,129 +28,191 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     // MARK: - Properties
     
-    let avatarSizeCalculator = AvatarSizeCalculator()
+    var messageFont: UIFont
     
-    let messageContainerSizeCalculator = MessageContainerSizeCalculator()
+    var incomingAvatarSize: CGSize
     
-    var messageFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
+    var outgoingAvatarSize: CGSize
     
-    var incomingAvatarSize: CGSize = CGSize(width: 30, height: 30)
+    var messageContainerInsets: UIEdgeInsets
     
-    var outgoingAvatarSize: CGSize = CGSize(width: 30, height: 30)
+    fileprivate let avatarBottomSpacing: CGFloat = 4
     
-    var messageLeftRightPadding: CGFloat = 16
+    fileprivate let avatarContainerSpacing: CGFloat = 4
     
-    let avatarBottomPadding: CGFloat = 4
-    let avatarToContainerPadding: CGFloat = 4
-    
-    var contentHeight: CGFloat = 0
-    
-    var scrollPadding = 100
+    var itemWidth: CGFloat {
+        guard let collectionView = collectionView else { return 0 }
+        return collectionView.frame.width - sectionInset.left - sectionInset.right
+    }
     
     override class var layoutAttributesClass: AnyClass {
         return MessagesCollectionViewLayoutAttributes.self
     }
     
-    var itemWidth: CGFloat {
-        guard let collectionView = collectionView else { return 0 }
-        return collectionView.frame.width - self.sectionInset.left - self.sectionInset.right
+    // MARK: - Initializers
+    
+    override init() {
+        messageFont = UIFont.preferredFont(forTextStyle: .body)
+        incomingAvatarSize = CGSize(width: 30, height: 30)
+        outgoingAvatarSize = CGSize(width: 30, height: 30)
+        messageContainerInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+        super.init()
     }
     
-    override var collectionViewContentSize: CGSize {
-        return CGSize(width: collectionView!.frame.width, height: 1000)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Methods
     
-    func sizeForItem(at indexPath: IndexPath) -> CGSize {
-
-        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return .zero }
-        guard let messageType = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) else { return .zero }
-        
-        let containerHeight = messageContainerSizeCalculator.messageContainerSizeFor(messageType: messageType, with: self).height
-        
-        let minimumCellHeight = max(incomingAvatarSize.height, outgoingAvatarSize.height) + avatarBottomPadding
-        
-        if containerHeight <  minimumCellHeight {
-            return CGSize(width: itemWidth, height: minimumCellHeight.rounded())
-        } else {
-            return CGSize(width: itemWidth, height: containerHeight.rounded())
-        }
-  
-    }
-    
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        guard let attributesArray = super.layoutAttributesForElements(in: rect) else { return nil }
-        //attributesArray.forEach { configureLayoutAttributes($0) }
-        print("THERE ARE \(attributesArray.count) ATTRIBUTES")
         
-
-        guard let attrCopy = NSArray(array: attributesArray, copyItems: true) as? [UICollectionViewLayoutAttributes] else { return nil }
+        guard let attributesArray = super.layoutAttributesForElements(in: rect) as? [MessagesCollectionViewLayoutAttributes] else { return nil }
         
-        attrCopy.forEach { attr in
-        
-            if attr.representedElementCategory == UICollectionElementCategory.cell {
-                self.configureLayoutAttributes(attr as! MessagesCollectionViewLayoutAttributes)
-            } else {
-                attr.zIndex = -1
+        attributesArray.forEach { attributes in
+            if attributes.representedElementCategory == UICollectionElementCategory.cell {
+                configure(attributes: attributes)
             }
-        
         }
         
-        
-        attrCopy.forEach {
-            
-            print(
-            "MESSAGE NUMBER \($0.indexPath.section)",
-            "IndexPath: \($0.indexPath)",
-            "Frame: \($0.frame)",
-            "Bounds: \($0.bounds)",
-            "Center: \($0.center)",
-            "zIndex: \($0.zIndex)",
-            "Hidden: \($0.isHidden)", separator: "\n", terminator: "\n ==================== \n")
-        }
-        return attrCopy
+        return attributesArray
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        
         guard let attributes = super.layoutAttributesForItem(at: indexPath) as? MessagesCollectionViewLayoutAttributes else { return nil }
         
         if attributes.representedElementCategory == UICollectionElementCategory.cell {
-            
-            configureLayoutAttributes(attributes)
+            configure(attributes: attributes)
         }
-
+        
         return attributes
+
     }
     
-    func configureLayoutAttributes(_ layoutAttributes: MessagesCollectionViewLayoutAttributes) {
-
-        let indexPath = layoutAttributes.indexPath
-
-        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return }
-        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return }
+    func configure(attributes: MessagesCollectionViewLayoutAttributes) {
         
-        let messageType = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        let messageDirection: MessageDirection = messagesDataSource.isFromCurrentSender(message: messageType) ? .outgoing : .incoming
+        guard let collectionView = collectionView as? MessagesCollectionView, let dataSource = collectionView.messagesDataSource else { return }
         
-        // Maybe we can cache this somewhere? It seems like we're calculating it a lot
-        // TODO: Attribute caching
-        let messageContainerSize = messageContainerSizeCalculator.messageContainerSizeFor(messageType: messageType, with: self)
-        let avatarSize = avatarSizeCalculator.avatarSizeFor(messageType: messageType, with: self)
+        let indexPath = attributes.indexPath
+        let message = dataSource.messageForItem(at: indexPath, in: collectionView)
         
-        layoutAttributes.direction = messageDirection
-        layoutAttributes.messageFont = messageFont
-        layoutAttributes.messageLeftRightPadding = messageLeftRightPadding
-        layoutAttributes.avatarSize = avatarSize
-        layoutAttributes.messageContainerSize = messageContainerSize
-        layoutAttributes.avatarBottomPadding = avatarBottomPadding
-        layoutAttributes.avatarToContainerPadding = avatarToContainerPadding
+        let direction: MessageDirection = dataSource.isFromCurrentSender(message: message) ? .outgoing : .incoming
+        let avatarSize = avatarSizeFor(message: message)
+        let messageContainerSize = containerSizeFor(message: message)
+        
+        attributes.direction = direction
+        attributes.messageFont = messageFont
+        attributes.messageContainerSize = messageContainerSize
+        attributes.messageContainerInsets = messageContainerInsets
+        attributes.avatarSize = avatarSize
+        attributes.avatarBottomSpacing = avatarBottomSpacing
+        attributes.avatarContainerSpacing = avatarContainerSpacing
+        
 
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return collectionView?.bounds != newBounds
+        
+        return collectionView?.bounds.width != newBounds.width
+        
     }
+    
+}
+
+extension MessagesCollectionViewFlowLayout {
+    
+    func avatarSizeFor(message: MessageType) -> CGSize {
+        
+        guard let collectionView = collectionView as? MessagesCollectionView, let dataSource = collectionView.messagesDataSource else { return .zero }
+        
+        return dataSource.isFromCurrentSender(message: message) ? outgoingAvatarSize : incomingAvatarSize
+        
+    }
+    
+    func minimumCellHeightFor(message: MessageType) -> CGFloat {
+        
+        guard let collectionView = collectionView as? MessagesCollectionView, let dataSource = collectionView.messagesDataSource else { return 0 }
+        
+        let messageDirection: MessageDirection = dataSource.isFromCurrentSender(message: message) ? .outgoing : .incoming
+        
+        switch messageDirection {
+        case .incoming:
+            return incomingAvatarSize.height + avatarBottomSpacing
+        case .outgoing:
+            return outgoingAvatarSize.height + avatarBottomSpacing
+        }
+        
+    }
+    
+    func containerHeightForMessage(message: MessageType) -> CGFloat {
+        
+        let avatarSize = avatarSizeFor(message: message)
+        let availableWidth = itemWidth - avatarSize.width - messageContainerInsets.left - messageContainerInsets.right
+        
+        // This is a switch because support for more messages are to come
+        switch message.data {
+        case .text(let text):
+            let estimatedHeight = text.height(considering: availableWidth, and: messageFont)
+            let insets = messageContainerInsets.top + messageContainerInsets.bottom
+            return estimatedHeight.rounded() + insets
+        }
+        
+    }
+    
+    func containerWidthForMessage(message: MessageType) -> CGFloat {
+        
+        let containerHeight = containerHeightForMessage(message: message)
+        
+        let avatarSize = avatarSizeFor(message: message)
+        let availableWidth = itemWidth - avatarSize.width - messageContainerInsets.left - messageContainerInsets.right
+        
+        // This is a switch because support for more messages are to come
+        switch message.data {
+        case .text(let text):
+            let estimatedWidth = text.width(considering: containerHeight, and: messageFont)
+            let insets = messageContainerInsets.left + messageContainerInsets.right
+            let finalWidth = estimatedWidth > availableWidth ? availableWidth : estimatedWidth
+            return finalWidth.rounded() + insets
+        }
+        
+    }
+    
+    func estimatedCellHeightForMessage(message: MessageType) -> CGFloat {
+        
+        let messageContainerHeight = containerHeightForMessage(message: message)
+        return messageContainerHeight + messageContainerInsets.top + messageContainerInsets.bottom
+        
+    }
+    
+    func containerSizeFor(message: MessageType) -> CGSize {
+        
+        let containerHeight = containerHeightForMessage(message: message)
+        let containerWidth = containerWidthForMessage(message: message)
+        
+        return CGSize(width: containerWidth, height: containerHeight)
+        
+    }
+    
+    func sizeForItem(at indexPath: IndexPath) -> CGSize {
+        
+        guard let collectionView = collectionView as? MessagesCollectionView, let dataSource = collectionView.messagesDataSource else { return .zero }
+        
+        let message = dataSource.messageForItem(at: indexPath, in: collectionView)
+        
+        let minHeight = minimumCellHeightFor(message: message)
+        let estimatedHeight = estimatedCellHeightForMessage(message: message)
+        let actualHeight = estimatedHeight < minHeight ? minHeight : estimatedHeight
+        
+        return CGSize(width: itemWidth, height: actualHeight)
+        
+    }
+    
+    
+    
+    
+    
+    
     
 }
 

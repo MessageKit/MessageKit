@@ -51,9 +51,6 @@ open class MessagesViewController: UIViewController {
         
         automaticallyAdjustsScrollViewInsets = false
         
-        tabBarController?.tabBar.isHidden = true // remove this
-        tabBarController?.tabBar.removeFromSuperview()
-        
         setupSubviews()
         setupConstraints()
         
@@ -69,11 +66,6 @@ open class MessagesViewController: UIViewController {
         }
     }
     
-    override open func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-    }
-    
     // MARK: - Methods
     
     func setupSubviews() {
@@ -85,7 +77,7 @@ open class MessagesViewController: UIViewController {
 
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .bottom, relatedBy: .equal, toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .bottom, relatedBy: .equal, toItem: messageInputBar, attribute: .top, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
 
@@ -115,28 +107,35 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
 extension MessagesViewController: UICollectionViewDataSource {
 
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // Each message == 1 section
-        return messagesCollectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
+        guard let collectionView = collectionView as? MessagesCollectionView else { return 0 }
+        // Each message is its own section
+        return collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let messageCount = messagesCollectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
+        guard let collectionView = collectionView as? MessagesCollectionView else { return 0 }
+        let messageCount = collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
+        // There will only ever be 1 message per section
         return messageCount > 0 ? 1 : 0
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MessageCollectionViewCell
         
-        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return cell }
-        
-        guard let messageType = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: collectionView) else { return cell }
-        
-        switch messageType.data {
-        case .text(let text):
-            cell.messageLabel.text = text
-            return cell
+        if let messagesCollectionView = collectionView as? MessagesCollectionView, let dataSource = messagesCollectionView.messagesDataSource {
+            
+            let message = dataSource.messageForItem(at: indexPath, in: collectionView)
+            let isOutgoingMessage = dataSource.isFromCurrentSender(message: message)
+            
+            // Configure message here
+            
+            cell.configure(with: message)
+            
         }
+        
+        return cell
+
     }
     
 //    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

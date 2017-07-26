@@ -35,6 +35,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource {
         super.viewDidLoad()
         addSampleData()
         messagesCollectionView.messagesDataSource = self
+            tabBarController?.tabBar.isHidden = true
         // Do any additional setup after loading the view.
     }
     

@@ -49,3 +49,47 @@ public struct Avatar {
         
     }
 }
+
+//    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+//        guard let attributesArray = super.layoutAttributesForElements(in: rect) else { return nil }
+//        //attributesArray.forEach { configureLayoutAttributes($0) }
+//        print("THERE ARE \(attributesArray.count) ATTRIBUTES")
+//
+//
+//        guard let attrCopy = NSArray(array: attributesArray, copyItems: true) as? [UICollectionViewLayoutAttributes] else { return nil }
+//
+//        attrCopy.forEach { attr in
+//
+//            if attr.representedElementCategory == UICollectionElementCategory.cell {
+//                self.configureLayoutAttributes(attr as! MessagesCollectionViewLayoutAttributes)
+//            } else {
+//                attr.zIndex = -1
+//            }
+//
+//        }
+//
+//
+//        attrCopy.forEach {
+//
+//            print(
+//            "MESSAGE NUMBER \($0.indexPath.section)",
+//            "IndexPath: \($0.indexPath)",
+//            "Frame: \($0.frame)",
+//            "Bounds: \($0.bounds)",
+//            "Center: \($0.center)",
+//            "zIndex: \($0.zIndex)",
+//            "Hidden: \($0.isHidden)", separator: "\n", terminator: "\n ==================== \n")
+//        }
+//        return attrCopy
+//    }
+
+//    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+//        guard let attributes = super.layoutAttributesForItem(at: indexPath) as? MessagesCollectionViewLayoutAttributes else { return nil }
+//
+//        if attributes.representedElementCategory == UICollectionElementCategory.cell {
+//
+//            configureLayoutAttributes(attributes)
+//        }
+//
+//        return attributes
+//    }
