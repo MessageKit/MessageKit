@@ -105,13 +105,13 @@ class ConversationViewController: MessagesViewController, MessagesDataSource, Me
 }
 
 extension ConversationViewController: MessageInputBarDelegate {
-
     
-    func sendButtonPressed(sender: UIButton) {
-        // Maybe we should pass the UITextView or text with the sender?
-        guard let message = messageInputBar.inputTextView.text else { return }
-        
+    func sendButtonPressed(sender: UIButton, textView: UITextView) {
+
+        guard let message = textView.text else { return }
+
         messages.append(MockMessage(text: message, sender: currentSender(), id: NSUUID().uuidString))
+    
         messagesCollectionView.reloadData()
         
     }

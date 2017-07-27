@@ -56,10 +56,13 @@ open class MessageInputBar: UIView {
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
+        
         setupSubviews()
         setupConstraints()
         registerSelector()
+        
         backgroundColor = .inputBarGray
+
     }
     
     convenience public init() {
@@ -101,6 +104,4 @@ open class MessageInputBar: UIView {
     func sendButtonPressed() {
         delegate?.sendButtonPressed(sender: sendButton, textView: inputTextView)
     }
-
-
 }

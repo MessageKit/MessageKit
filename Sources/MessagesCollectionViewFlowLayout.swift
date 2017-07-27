@@ -109,7 +109,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         attributes.avatarSize = avatarSize
         attributes.avatarBottomSpacing = avatarBottomSpacing
         attributes.avatarContainerSpacing = avatarContainerSpacing
-        
 
     }
     
@@ -128,7 +127,7 @@ extension MessagesCollectionViewFlowLayout {
         guard let collectionView = collectionView as? MessagesCollectionView, let dataSource = collectionView.messagesDataSource else { return .zero }
         
         return dataSource.isFromCurrentSender(message: message) ? outgoingAvatarSize : incomingAvatarSize
-        
+
     }
     
     func minimumCellHeightFor(message: MessageType) -> CGFloat {
@@ -143,7 +142,7 @@ extension MessagesCollectionViewFlowLayout {
         case .outgoing:
             return outgoingAvatarSize.height + avatarBottomSpacing
         }
-        
+
     }
     
     func containerHeightForMessage(message: MessageType) -> CGFloat {
@@ -159,7 +158,7 @@ extension MessagesCollectionViewFlowLayout {
             let insets = messageContainerInsets.top + messageContainerInsets.bottom
             return estimatedHeight.rounded(.up) + insets //+ 1
         }
-        
+
     }
     
     func containerWidthForMessage(message: MessageType) -> CGFloat {
@@ -178,14 +177,14 @@ extension MessagesCollectionViewFlowLayout {
             let finalWidth = estimatedWidth > availableWidth ? availableWidth : estimatedWidth
             return finalWidth + insets
         }
-        
+
     }
     
     func estimatedCellHeightForMessage(message: MessageType) -> CGFloat {
         
         let messageContainerHeight = containerHeightForMessage(message: message)
         return messageContainerHeight
-        
+
     }
     
     func containerSizeFor(message: MessageType) -> CGSize {
@@ -210,7 +209,6 @@ extension MessagesCollectionViewFlowLayout {
         return CGSize(width: itemWidth, height: actualHeight)
         
     }
-
 }
 
 

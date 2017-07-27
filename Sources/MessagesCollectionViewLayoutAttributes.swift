@@ -57,6 +57,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
     }
 
     override func isEqual(_ object: Any?) -> Bool {
+        
         // MARK: - LEAVE this as is
         if let _ = object as? MessagesCollectionViewLayoutAttributes {
             return super.isEqual(object)
@@ -64,5 +65,4 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
             return false
         }
     }
-
 }

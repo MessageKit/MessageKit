@@ -49,6 +49,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     }()
     
     open let messageLabel: UILabel = {
+
         let messageLabel = UILabel()
         messageLabel.numberOfLines = 0
         messageLabel.backgroundColor = .clear
@@ -62,8 +63,6 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     override public init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
-        //setupConstraints()
-        //contentView.backgroundColor = .purple
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -73,15 +72,17 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     // MARK: - Methods
     
     private func setupSubviews() {
+        
         contentView.addSubview(messageContainerView)
         contentView.addSubview(avatarImageView)
         messageContainerView.addSubview(messageLabel)
+
     }
     
     override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
         
-        if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
+        guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else { return }
             
             messageLabel.font = attributes.messageFont
             
@@ -89,11 +90,10 @@ open class MessageCollectionViewCell: UICollectionViewCell {
             setMessageContainerFrameFor(attributes: attributes)
             setMessageLabelFor(attributes: attributes)
 
-        }
-
     }
     
     private func setMessageContainerFrameFor(attributes: MessagesCollectionViewLayoutAttributes) {
+        
         switch attributes.direction {
         case .incoming:
             let x = attributes.avatarSize.width + attributes.avatarContainerSpacing
@@ -102,9 +102,11 @@ open class MessageCollectionViewCell: UICollectionViewCell {
             let x = contentView.frame.width - attributes.avatarSize.width - attributes.avatarContainerSpacing - attributes.messageContainerSize.width
             messageContainerView.frame = CGRect(x: x, y: 0, width: attributes.messageContainerSize.width, height: attributes.messageContainerSize.height)
         }
+
     }
     
     private func setAvatarFrameFor(attributes: MessagesCollectionViewLayoutAttributes) {
+        
         switch attributes.direction {
         case .incoming:
             let y = frame.height - attributes.avatarSize.height - attributes.avatarBottomSpacing
@@ -114,20 +116,25 @@ open class MessageCollectionViewCell: UICollectionViewCell {
             let x = contentView.frame.width - attributes.avatarSize.width
             avatarImageView.frame = CGRect(x: x, y: y, width: attributes.avatarSize.width, height: attributes.avatarSize.height)
         }
+        
         avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2
+
     }
     
     private func setMessageLabelFor(attributes: MessagesCollectionViewLayoutAttributes) {
+        
         let frame =  CGRect(x: 0, y: 0, width: attributes.messageContainerSize.width, height: attributes.messageContainerSize.height)
         let insetFrame = UIEdgeInsetsInsetRect(frame, attributes.messageContainerInsets)
         messageLabel.frame = insetFrame
+
     }
     
     func configure(with message: MessageType) {
+        
         switch message.data {
         case .text(let text):
             messageLabel.text = text
         }
-    }
 
+    }
 }

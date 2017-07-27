@@ -46,6 +46,6 @@ public struct Avatar {
         case false:
             return image ?? placeholderImage
         }
-        
+
     }
 }

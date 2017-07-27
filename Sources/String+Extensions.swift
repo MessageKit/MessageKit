@@ -27,15 +27,18 @@ import Foundation
 extension String {
     
     func height(considering width: CGFloat, and font: UIFont) -> CGFloat {
+        
         let constraintBox = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundRect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
         return boundRect.height
+
     }
     
     func width(considering height: CGFloat, and font: UIFont) -> CGFloat {
+        
         let constraintBox = CGSize(width: .greatestFiniteMagnitude, height: height)
         let boundRect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
         return boundRect.width
+
     }
-    
 }

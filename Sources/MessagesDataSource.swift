@@ -40,7 +40,6 @@ public extension MessagesDataSource {
     func isFromCurrentSender(message: MessageType) -> Bool {
         return message.sender == currentSender()
     }
-    
 }
 
 

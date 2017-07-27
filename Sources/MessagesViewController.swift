@@ -97,19 +97,24 @@ open class MessagesViewController: UIViewController {
     }
     
     func handleKeyboardWillShow(_ notification: Notification) {
+        
         guard let keyboardSizeValue = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue else { return }
+        
         let keyboardRect = keyboardSizeValue.cgRectValue
         let messageInputBarHeight = inputAccessoryView?.bounds.size.height ?? 0
         let keyboardHeight = keyboardRect.height - messageInputBarHeight
         collectionViewBottomConstraint.constant -= keyboardHeight
+        
     }
     
     func handleKeyboardWillHide(_ notification: Notification) {
         guard let keyboardSizeValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
+        
         let keyboardRect = keyboardSizeValue.cgRectValue
         let messageInputBarHeight = inputAccessoryView?.bounds.size.height ?? 0
         let keyboardHeight = keyboardRect.height - messageInputBarHeight
         collectionViewBottomConstraint.constant += keyboardHeight
+
     }
     
 
@@ -132,15 +137,18 @@ extension MessagesViewController: UICollectionViewDataSource {
 
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         guard let collectionView = collectionView as? MessagesCollectionView else { return 0 }
+        
         // Each message is its own section
         return collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let collectionView = collectionView as? MessagesCollectionView else { return 0 }
+        
         let messageCount = collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
         // There will only ever be 1 message per section
         return messageCount > 0 ? 1 : 0
+        
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -161,11 +169,10 @@ extension MessagesViewController: UICollectionViewDataSource {
             cell.configure(with: message)
 
         }
-        
+
         return cell
 
     }
-
 }
 
 
