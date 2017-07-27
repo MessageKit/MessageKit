@@ -24,7 +24,7 @@
 
 import Foundation
 
-protocol MessageInputBarDelegate: class {
+public protocol MessageInputBarDelegate: class {
 
     func sendButtonPressed(sender: UIButton)
 

@@ -36,6 +36,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource, Me
         
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesDisplayDataSource = self
+        messageInputBar.delegate = self
         
         tabBarController?.tabBar.isHidden = true
     }
@@ -101,6 +102,20 @@ class ConversationViewController: MessagesViewController, MessagesDataSource, Me
         return Avatar(placeholderImage: image)
     }
     
+}
+
+extension ConversationViewController: MessageInputBarDelegate {
+
+    
+    func sendButtonPressed(sender: UIButton) {
+        // Maybe we should pass the UITextView or text with the sender?
+        guard let message = messageInputBar.inputTextView.text else { return }
+        
+        messages.append(MockMessage(text: message, sender: currentSender(), id: NSUUID().uuidString))
+        messagesCollectionView.reloadData()
+        
+    }
+
 }
 
 

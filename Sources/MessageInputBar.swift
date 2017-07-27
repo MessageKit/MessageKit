@@ -28,7 +28,7 @@ open class MessageInputBar: UIView {
     
     // MARK: - Properties
     
-    let inputTextView: UITextView = {
+    open let inputTextView: UITextView = {
     
         let inputTextView = UITextView(frame: .zero)
         inputTextView.font = UIFont.preferredFont(forTextStyle: .body)
@@ -42,7 +42,7 @@ open class MessageInputBar: UIView {
         return inputTextView
     }()
     
-    let sendButton: UIButton = {
+    open let sendButton: UIButton = {
     
         let sendButton = UIButton()
         sendButton.setTitle("Send", for: .normal)
@@ -50,7 +50,7 @@ open class MessageInputBar: UIView {
         return sendButton
     }()
     
-    weak var delegate: MessageInputBarDelegate?
+    open weak var delegate: MessageInputBarDelegate?
     
     // MARK: - Initializers
 
@@ -99,6 +99,7 @@ open class MessageInputBar: UIView {
     }
     
     func sendButtonPressed() {
+        print("We got called")
         delegate?.sendButtonPressed(sender: sendButton)
     }
 

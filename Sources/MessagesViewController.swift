@@ -31,6 +31,8 @@ open class MessagesViewController: UIViewController {
     
     open var messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
     
+    var collectionViewBottomConstraint = NSLayoutConstraint()
+    
     open var messageInputBar = MessageInputBar()
     
     override open var canBecomeFirstResponder: Bool {
@@ -56,6 +58,11 @@ open class MessagesViewController: UIViewController {
 
     }
     
+    open override func viewDidAppear(_ animated: Bool) {
+        // depends on inputAccessoryView frame thus must be called here
+        addKeyboardObservers()
+    }
+    
     // MARK: - Methods
     
     func setupDelegates() {
@@ -75,17 +82,36 @@ open class MessagesViewController: UIViewController {
 
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .bottom, relatedBy: .equal, toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: -48))
         view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
+        collectionViewBottomConstraint = NSLayoutConstraint(item: messagesCollectionView, attribute: .bottom, relatedBy: .equal, toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: -48)
+        view.addConstraint(collectionViewBottomConstraint)
 
     }
     
     func addKeyboardObservers() {
     
-        NotificationCenter.default.addObserver(self, selector: <#T##Selector#>, name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: <#T##Selector#>, name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleKeyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleKeyboardWillHide), name: .UIKeyboardWillHide, object: nil)
         
+    }
+    
+    func handleKeyboardWillShow(_ notification: Notification) {
+        print("We were called 1")
+        guard let keyboardSizeValue = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue else { return }
+        let keyboardRect = keyboardSizeValue.cgRectValue
+        let messageInputBarHeight = inputAccessoryView?.bounds.size.height ?? 0
+        let keyboardHeight = keyboardRect.height - messageInputBarHeight
+        collectionViewBottomConstraint.constant -= keyboardHeight
+    }
+    
+    func handleKeyboardWillHide(_ notification: Notification) {
+        print("We were called 1")
+        guard let keyboardSizeValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
+        let keyboardRect = keyboardSizeValue.cgRectValue
+        let messageInputBarHeight = inputAccessoryView?.bounds.size.height ?? 0
+        let keyboardHeight = keyboardRect.height - messageInputBarHeight
+        collectionViewBottomConstraint.constant += keyboardHeight
     }
     
 
