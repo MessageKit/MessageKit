@@ -22,14 +22,10 @@
  SOFTWARE.
  */
 
-import UIKit
-import MessageKit
+import Foundation
 
+public protocol MessageInputBarDelegate: class {
 
-final class SettingsViewController: UITableViewController {
+    func sendButtonPressed(sender: UIButton, textView: UITextView)
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
 }
-

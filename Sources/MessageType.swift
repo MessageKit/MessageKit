@@ -22,14 +22,15 @@
  SOFTWARE.
  */
 
-import UIKit
-import MessageKit
+import Foundation
 
+public protocol MessageType {
 
-final class SettingsViewController: UITableViewController {
+    var sender: Sender { get }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    var messageId: String { get }
+
+    var sentDate: Date { get }
+
+    var data: MessageData { get }
 }
-

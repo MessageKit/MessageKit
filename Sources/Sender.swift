@@ -22,14 +22,24 @@
  SOFTWARE.
  */
 
-import UIKit
-import MessageKit
+import Foundation
 
-
-final class SettingsViewController: UITableViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+public struct Sender {
+    
+    public let id: String
+    
+    public let displayName: String
+    
+    public init(id: String, displayName: String) {
+        self.id = id
+        self.displayName = displayName
     }
 }
 
+// MARK: - Equatable Conformance
+
+extension Sender: Equatable {
+    static public func ==(left: Sender, right: Sender) -> Bool {
+        return left.id == right.id
+    }
+}

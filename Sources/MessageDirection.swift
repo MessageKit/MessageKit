@@ -22,14 +22,9 @@
  SOFTWARE.
  */
 
-import UIKit
-import MessageKit
+public enum MessageDirection {
 
+    case incoming
+    case outgoing
 
-final class SettingsViewController: UITableViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
 }
-

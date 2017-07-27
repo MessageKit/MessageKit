@@ -23,13 +23,23 @@
  */
 
 import UIKit
-import MessageKit
 
-
-final class SettingsViewController: UITableViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+open class MessagesCollectionView: UICollectionView {
+    
+    // MARK: - Properties
+    
+    open weak var messagesDataSource: MessagesDataSource?
+    
+    open weak var messagesDisplayDataSource: MessagesDisplayDataSource?
+    
+    // MARK: - Initializers
+    
+    override public init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(frame: frame, collectionViewLayout: layout)
+        backgroundColor = .white
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
-

@@ -19,17 +19,33 @@
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
+ SOFTWARE. 
  */
 
-import UIKit
-import MessageKit
+import Foundation
 
+public struct Avatar {
+    
+    public let image: UIImage?
+    
+    public let highlightedImage: UIImage?
+    
+    public let placeholderImage: UIImage
+    
+    public init(image: UIImage? = nil, highlightedImage: UIImage? = nil, placeholderImage: UIImage) {
+        self.image = image
+        self.highlightedImage = highlightedImage
+        self.placeholderImage = placeholderImage
+    }
+    
+    public func image(highlighted: Bool) -> UIImage {
+        
+        switch highlighted {
+        case true:
+            return highlightedImage ?? image ?? placeholderImage
+        case false:
+            return image ?? placeholderImage
+        }
 
-final class SettingsViewController: UITableViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
     }
 }
-

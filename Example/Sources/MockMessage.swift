@@ -22,14 +22,22 @@
  SOFTWARE.
  */
 
-import UIKit
+import Foundation
 import MessageKit
 
-
-final class SettingsViewController: UITableViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+struct MockMessage: MessageType {
+    
+    var messageId: String
+    var sender: Sender
+    var sentDate: Date
+    var data: MessageData
+    
+    init(text: String, sender: Sender, id: String) {
+        data = .text(text)
+        self.sender = sender
+        self.messageId = id
+        self.sentDate = Date()
     }
+    
+    
 }
-

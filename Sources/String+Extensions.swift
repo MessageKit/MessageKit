@@ -22,14 +22,23 @@
  SOFTWARE.
  */
 
-import UIKit
-import MessageKit
+import Foundation
 
+extension String {
+    
+    func height(considering width: CGFloat, and font: UIFont) -> CGFloat {
+        
+        let constraintBox = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundRect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
+        return boundRect.height
 
-final class SettingsViewController: UITableViewController {
+    }
+    
+    func width(considering height: CGFloat, and font: UIFont) -> CGFloat {
+        
+        let constraintBox = CGSize(width: .greatestFiniteMagnitude, height: height)
+        let boundRect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
+        return boundRect.width
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
     }
 }
-
