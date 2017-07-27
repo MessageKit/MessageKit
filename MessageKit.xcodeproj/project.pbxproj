@@ -103,24 +103,13 @@
 		88916B3C1CF0DF5100469F91 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				B0655A251F23D6C500542A83 /* Avatar.swift */,
-				B0655A291F23D77200542A83 /* Sender.swift */,
-				B09643851F286C9E004D0129 /* String+Extensions.swift */,
-				B0655A2D1F23D8BC00542A83 /* MessagesCollectionView.swift */,
-				B0655A4C1F244C0600542A83 /* MessageCollectionViewCell.swift */,
-				B0655A2B1F23D81600542A83 /* MessageData.swift */,
-				B0655A271F23D71400542A83 /* MessageDirection.swift */,
-				B0655A371F23EE8B00542A83 /* MessageInputBar.swift */,
-				B015E81E1F259D8E007EDFB6 /* MessageInputBarDelegate.swift */,
-				88916B461CF0DFE600469F91 /* MessageType.swift */,
-				B0655A4E1F245C5A00542A83 /* MessagesCollectionViewFlowLayout.swift */,
-				B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */,
-				882D75831DE507320033F95F /* MessagesDataSource.swift */,
-				B096438D1F2890FB004D0129 /* MessagesDisplayDataSource.swift */,
-				888CEBFB1D3FD525005178DE /* MessagesViewController.swift */,
-				B096438F1F289142004D0129 /* UIColor+Extensions.swift */,
-				88916B3D1CF0DF5100469F91 /* Info.plist */,
-				88916B3E1CF0DF5100469F91 /* MessageKit.h */,
+				B096439D1F295DC3004D0129 /* Layout */,
+				B09643991F295D58004D0129 /* Models */,
+				B096439A1F295D68004D0129 /* Views */,
+				B096439C1F295DA9004D0129 /* Controllers */,
+				B096439B1F295D82004D0129 /* Protocols */,
+				B09643981F295D43004D0129 /* Extensions */,
+				B096439E1F295DD7004D0129 /* Supporting */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -133,6 +122,73 @@
 			);
 			path = Tests;
 			sourceTree = SOURCE_ROOT;
+		};
+		B09643981F295D43004D0129 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B09643851F286C9E004D0129 /* String+Extensions.swift */,
+				B096438F1F289142004D0129 /* UIColor+Extensions.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		B09643991F295D58004D0129 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B0655A251F23D6C500542A83 /* Avatar.swift */,
+				B0655A291F23D77200542A83 /* Sender.swift */,
+				B0655A2B1F23D81600542A83 /* MessageData.swift */,
+				B0655A271F23D71400542A83 /* MessageDirection.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		B096439A1F295D68004D0129 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B0655A2D1F23D8BC00542A83 /* MessagesCollectionView.swift */,
+				B0655A4C1F244C0600542A83 /* MessageCollectionViewCell.swift */,
+				B0655A371F23EE8B00542A83 /* MessageInputBar.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		B096439B1F295D82004D0129 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				B015E81E1F259D8E007EDFB6 /* MessageInputBarDelegate.swift */,
+				88916B461CF0DFE600469F91 /* MessageType.swift */,
+				882D75831DE507320033F95F /* MessagesDataSource.swift */,
+				B096438D1F2890FB004D0129 /* MessagesDisplayDataSource.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		B096439C1F295DA9004D0129 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				888CEBFB1D3FD525005178DE /* MessagesViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		B096439D1F295DC3004D0129 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				B0655A4E1F245C5A00542A83 /* MessagesCollectionViewFlowLayout.swift */,
+				B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */,
+			);
+			name = Layout;
+			sourceTree = "<group>";
+		};
+		B096439E1F295DD7004D0129 /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				88916B3D1CF0DF5100469F91 /* Info.plist */,
+				88916B3E1CF0DF5100469F91 /* MessageKit.h */,
+			);
+			name = Supporting;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 

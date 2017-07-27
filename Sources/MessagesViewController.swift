@@ -29,37 +29,9 @@ open class MessagesViewController: UIViewController {
     
     // MARK: - Properties
     
-    open var messagesCollectionView: MessagesCollectionView = {
-        let messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
-        return messagesCollectionView
-    }()
+    open var messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
     
-    open var messageInputBar: MessageInputBar = {
-        let messageInputBar = MessageInputBar(frame: .zero)
-        return messageInputBar
-    }()
-    
-    // MARK: - View Life Cycle
-
-    override open func viewDidLoad() {
-        super.viewDidLoad()
-        
-        automaticallyAdjustsScrollViewInsets = false
-        
-        setupSubviews()
-        setupConstraints()
-        
-        messagesCollectionView.register(MessageCollectionViewCell.self, forCellWithReuseIdentifier: "MessageCell")
-        
-        messagesCollectionView.delegate = self
-        messagesCollectionView.dataSource = self
-        
-//        if #available(iOS 10.0, *) {
-//            messagesCollectionView.isPrefetchingEnabled = false
-//        }
-    }
-    
-    // MARK: - Methods
+    open var messageInputBar = MessageInputBar()
     
     override open var canBecomeFirstResponder: Bool {
         return true
@@ -70,14 +42,33 @@ open class MessagesViewController: UIViewController {
         return messageInputBar
     }
     
-    func setupSubviews() {
-        view.addSubview(messagesCollectionView)
-        //view.addSubview(messageInputBar)
+    // MARK: - View Life Cycle
+
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        
+        automaticallyAdjustsScrollViewInsets = false
+        
+        setupSubviews()
+        setupConstraints()
+        registerReusableViews()
+        setupDelegates()
+
     }
     
-    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-        resignFirstResponder()
+    // MARK: - Methods
+    
+    func setupDelegates() {
+        messagesCollectionView.delegate = self
+        messagesCollectionView.dataSource = self
+    }
+    
+    func registerReusableViews() {
+        messagesCollectionView.register(MessageCollectionViewCell.self, forCellWithReuseIdentifier: "MessageCell")
+    }
+    
+    func setupSubviews() {
+        view.addSubview(messagesCollectionView)
     }
     
     func setupConstraints() {
@@ -88,13 +79,15 @@ open class MessagesViewController: UIViewController {
         view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
 
-//        messageInputBar.translatesAutoresizingMaskIntoConstraints = false
-//        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0))
-//        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
-//        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .bottom, relatedBy: .equal, toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0))
-//        view.addConstraint(NSLayoutConstraint(item: messageInputBar, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 48))
-
     }
+    
+    func addKeyboardObservers() {
+    
+        NotificationCenter.default.addObserver(self, selector: <#T##Selector#>, name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: <#T##Selector#>, name: .UIKeyboardWillHide, object: nil)
+        
+    }
+    
 
 }
 

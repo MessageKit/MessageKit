@@ -55,7 +55,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         messageFont = UIFont.preferredFont(forTextStyle: .body)
         incomingAvatarSize = CGSize(width: 30, height: 30)
         outgoingAvatarSize = CGSize(width: 30, height: 30)
-        messageContainerInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+        messageContainerInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
         super.init()
         sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
     }
@@ -210,13 +210,7 @@ extension MessagesCollectionViewFlowLayout {
         return CGSize(width: itemWidth, height: actualHeight)
         
     }
-    
-    
-    
-    
-    
-    
-    
+
 }
 
 
