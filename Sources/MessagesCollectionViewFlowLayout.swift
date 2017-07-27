@@ -24,34 +24,34 @@
 
 import UIKit
 
-class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
+open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     // MARK: - Properties
     
-    var messageFont: UIFont
+    open var messageFont: UIFont
     
-    var incomingAvatarSize: CGSize
+    open var incomingAvatarSize: CGSize
     
-    var outgoingAvatarSize: CGSize
+    open var outgoingAvatarSize: CGSize
     
-    var messageContainerInsets: UIEdgeInsets
+    open var messageContainerInsets: UIEdgeInsets
     
     fileprivate let avatarBottomSpacing: CGFloat = 4
     
     fileprivate let avatarContainerSpacing: CGFloat = 4
     
-    var itemWidth: CGFloat {
+    fileprivate var itemWidth: CGFloat {
         guard let collectionView = collectionView else { return 0 }
         return collectionView.frame.width - sectionInset.left - sectionInset.right
     }
     
-    override class var layoutAttributesClass: AnyClass {
+    override open class var layoutAttributesClass: AnyClass {
         return MessagesCollectionViewLayoutAttributes.self
     }
     
     // MARK: - Initializers
     
-    override init() {
+    override public init() {
         messageFont = UIFont.preferredFont(forTextStyle: .body)
         incomingAvatarSize = CGSize(width: 30, height: 30)
         outgoingAvatarSize = CGSize(width: 30, height: 30)
@@ -60,13 +60,13 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Methods
     
-    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
         guard let attributesArray = super.layoutAttributesForElements(in: rect) as? [MessagesCollectionViewLayoutAttributes] else { return nil }
         
@@ -79,7 +79,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return attributesArray
     }
     
-    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    override open func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         
         guard let attributes = super.layoutAttributesForItem(at: indexPath) as? MessagesCollectionViewLayoutAttributes else { return nil }
         
@@ -91,7 +91,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     }
     
-    func configure(attributes: MessagesCollectionViewLayoutAttributes) {
+    private func configure(attributes: MessagesCollectionViewLayoutAttributes) {
         
         guard let collectionView = collectionView as? MessagesCollectionView, let dataSource = collectionView.messagesDataSource else { return }
         
@@ -113,7 +113,7 @@ class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     }
     
-    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+    override open func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         
         return collectionView?.bounds.width != newBounds.width
         

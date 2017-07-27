@@ -54,7 +54,7 @@ open class MessageInputBar: UIView {
     
     // MARK: - Initializers
 
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
         setupConstraints()
@@ -62,7 +62,7 @@ open class MessageInputBar: UIView {
         backgroundColor = .inputBarGray
     }
     
-    convenience init() {
+    convenience public init() {
         self.init(frame: .zero)
     }
     
@@ -72,14 +72,14 @@ open class MessageInputBar: UIView {
     
     // MARK: - Methods
     
-    func setupSubviews() {
+    private func setupSubviews() {
         
         addSubview(inputTextView)
         addSubview(sendButton)
         
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
 
         inputTextView.translatesAutoresizingMaskIntoConstraints = false
         addConstraint(NSLayoutConstraint(item: inputTextView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 4))
@@ -94,13 +94,12 @@ open class MessageInputBar: UIView {
 
     }
     
-    func registerSelector() {
+    private func registerSelector() {
         sendButton.addTarget(self, action: #selector(MessageInputBar.sendButtonPressed), for: .touchUpInside)
     }
     
     func sendButtonPressed() {
-        print("We got called")
-        delegate?.sendButtonPressed(sender: sendButton)
+        delegate?.sendButtonPressed(sender: sendButton, textView: inputTextView)
     }
 
 

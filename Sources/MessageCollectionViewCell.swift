@@ -24,11 +24,11 @@
 
 import UIKit
 
-class MessageCollectionViewCell: UICollectionViewCell {
+open class MessageCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
-    let messageContainerView: UIView = {
+    open let messageContainerView: UIView = {
         
         let messageContainerView = UIView()
         messageContainerView.layer.cornerRadius = 12.0
@@ -37,7 +37,7 @@ class MessageCollectionViewCell: UICollectionViewCell {
         return messageContainerView
     }()
     
-    let avatarImageView: UIImageView = {
+    open let avatarImageView: UIImageView = {
         
         let avatarImageView = UIImageView()
         avatarImageView.contentMode = .scaleAspectFill
@@ -48,7 +48,7 @@ class MessageCollectionViewCell: UICollectionViewCell {
         return avatarImageView
     }()
     
-    let messageLabel: UILabel = {
+    open let messageLabel: UILabel = {
         let messageLabel = UILabel()
         messageLabel.numberOfLines = 0
         messageLabel.backgroundColor = .clear
@@ -59,26 +59,26 @@ class MessageCollectionViewCell: UICollectionViewCell {
     // MARK: - Initializer
     
     
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
         //setupConstraints()
         //contentView.backgroundColor = .purple
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Methods
     
-    func setupSubviews() {
+    private func setupSubviews() {
         contentView.addSubview(messageContainerView)
         contentView.addSubview(avatarImageView)
         messageContainerView.addSubview(messageLabel)
     }
     
-    override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+    override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
         
         if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
@@ -93,7 +93,7 @@ class MessageCollectionViewCell: UICollectionViewCell {
 
     }
     
-    func setMessageContainerFrameFor(attributes: MessagesCollectionViewLayoutAttributes) {
+    private func setMessageContainerFrameFor(attributes: MessagesCollectionViewLayoutAttributes) {
         switch attributes.direction {
         case .incoming:
             let x = attributes.avatarSize.width + attributes.avatarContainerSpacing
@@ -104,7 +104,7 @@ class MessageCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func setAvatarFrameFor(attributes: MessagesCollectionViewLayoutAttributes) {
+    private func setAvatarFrameFor(attributes: MessagesCollectionViewLayoutAttributes) {
         switch attributes.direction {
         case .incoming:
             let y = frame.height - attributes.avatarSize.height - attributes.avatarBottomSpacing
@@ -117,7 +117,7 @@ class MessageCollectionViewCell: UICollectionViewCell {
         avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2
     }
     
-    func setMessageLabelFor(attributes: MessagesCollectionViewLayoutAttributes) {
+    private func setMessageLabelFor(attributes: MessagesCollectionViewLayoutAttributes) {
         let frame =  CGRect(x: 0, y: 0, width: attributes.messageContainerSize.width, height: attributes.messageContainerSize.height)
         let insetFrame = UIEdgeInsetsInsetRect(frame, attributes.messageContainerInsets)
         messageLabel.frame = insetFrame

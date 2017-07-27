@@ -31,9 +31,9 @@ open class MessagesViewController: UIViewController {
     
     open var messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
     
-    var collectionViewBottomConstraint = NSLayoutConstraint()
-    
     open var messageInputBar = MessageInputBar()
+    
+    private var collectionViewBottomConstraint = NSLayoutConstraint()
     
     override open var canBecomeFirstResponder: Bool {
         return true
@@ -46,7 +46,7 @@ open class MessagesViewController: UIViewController {
     
     // MARK: - View Life Cycle
 
-    override open func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
         automaticallyAdjustsScrollViewInsets = false
@@ -65,20 +65,20 @@ open class MessagesViewController: UIViewController {
     
     // MARK: - Methods
     
-    func setupDelegates() {
+    private func setupDelegates() {
         messagesCollectionView.delegate = self
         messagesCollectionView.dataSource = self
     }
     
-    func registerReusableViews() {
+    private func registerReusableViews() {
         messagesCollectionView.register(MessageCollectionViewCell.self, forCellWithReuseIdentifier: "MessageCell")
     }
     
-    func setupSubviews() {
+    private func setupSubviews() {
         view.addSubview(messagesCollectionView)
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
 
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .top, relatedBy: .equal, toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
@@ -89,7 +89,7 @@ open class MessagesViewController: UIViewController {
 
     }
     
-    func addKeyboardObservers() {
+    private func addKeyboardObservers() {
     
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleKeyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleKeyboardWillHide), name: .UIKeyboardWillHide, object: nil)
@@ -97,7 +97,6 @@ open class MessagesViewController: UIViewController {
     }
     
     func handleKeyboardWillShow(_ notification: Notification) {
-        print("We were called 1")
         guard let keyboardSizeValue = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue else { return }
         let keyboardRect = keyboardSizeValue.cgRectValue
         let messageInputBarHeight = inputAccessoryView?.bounds.size.height ?? 0
@@ -106,7 +105,6 @@ open class MessagesViewController: UIViewController {
     }
     
     func handleKeyboardWillHide(_ notification: Notification) {
-        print("We were called 1")
         guard let keyboardSizeValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardRect = keyboardSizeValue.cgRectValue
         let messageInputBarHeight = inputAccessoryView?.bounds.size.height ?? 0

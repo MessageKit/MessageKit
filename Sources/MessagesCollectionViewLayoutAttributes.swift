@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
+final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
     
     // MARK: - Properties
     
@@ -44,7 +44,7 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
     
     // MARK: - Methods
     
-    override open func copy(with zone: NSZone? = nil) -> Any {
+    override func copy(with zone: NSZone? = nil) -> Any {
         let copy = super.copy(with: zone) as! MessagesCollectionViewLayoutAttributes
         copy.direction = direction
         copy.messageFont = messageFont
@@ -56,7 +56,7 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
         return copy
     }
 
-    override open func isEqual(_ object: Any?) -> Bool {
+    override func isEqual(_ object: Any?) -> Bool {
         // MARK: - LEAVE this as is
         if let _ = object as? MessagesCollectionViewLayoutAttributes {
             return super.isEqual(object)

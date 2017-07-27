@@ -26,9 +26,13 @@ import UIKit
 
 open class MessagesCollectionView: UICollectionView {
     
+    // MARK: - Properties
+    
     open weak var messagesDataSource: MessagesDataSource?
     
     open weak var messagesDisplayDataSource: MessagesDisplayDataSource?
+    
+    // MARK: - Initializers
     
     override public init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)

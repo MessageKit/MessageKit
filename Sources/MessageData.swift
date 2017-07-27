@@ -23,7 +23,7 @@
  */
 
 import Foundation
-import class CoreLocation.CLLocation
+//import class CoreLocation.CLLocation
 
 public enum MessageData {
     
