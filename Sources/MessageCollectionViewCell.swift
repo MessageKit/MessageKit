@@ -33,7 +33,6 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         let messageContainerView = UIView()
         messageContainerView.layer.cornerRadius = 12.0
         messageContainerView.layer.masksToBounds = true
-        messageContainerView.translatesAutoresizingMaskIntoConstraints = false
         return messageContainerView
     }()
     
@@ -44,7 +43,6 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         avatarImageView.backgroundColor = .lightGray
         avatarImageView.layer.masksToBounds = true
         avatarImageView.clipsToBounds = true
-        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         return avatarImageView
     }()
     
