@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/MessageKit/MessageKit.svg)](https://travis-ci.org/MessageKit/MessageKit) [![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
 
-**In-progress**, this project is intended to be a Swift rewrite of the recently deprecated [JSQMessagesViewController](https://github.com/jessesquires/JSQMessagesViewController) in Swift.
+**In-progress**, this project is intended to be a Swift rewrite of the recently deprecated [JSQMessagesViewController](https://github.com/jessesquires/JSQMessagesViewController).
 
 ## Want to contribute?
 
