@@ -57,7 +57,6 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Initializer
     
-    
     override public init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
@@ -95,10 +94,16 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         switch attributes.direction {
         case .incoming:
             let x = attributes.avatarSize.width + attributes.avatarContainerSpacing
-            messageContainerView.frame = CGRect(x: x, y: 0, width: attributes.messageContainerSize.width, height: attributes.messageContainerSize.height)
+            messageContainerView.frame = CGRect(x: x,
+                                                y: 0,
+                                                width: attributes.messageContainerSize.width,
+                                                height: attributes.messageContainerSize.height)
         case .outgoing:
             let x = contentView.frame.width - attributes.avatarSize.width - attributes.avatarContainerSpacing - attributes.messageContainerSize.width
-            messageContainerView.frame = CGRect(x: x, y: 0, width: attributes.messageContainerSize.width, height: attributes.messageContainerSize.height)
+            messageContainerView.frame = CGRect(x: x,
+                                                y: 0,
+                                                width: attributes.messageContainerSize.width,
+                                                height: attributes.messageContainerSize.height)
         }
 
     }
@@ -108,11 +113,17 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         switch attributes.direction {
         case .incoming:
             let y = frame.height - attributes.avatarSize.height - attributes.avatarBottomSpacing
-            avatarImageView.frame = CGRect(x: 0, y: y, width: attributes.avatarSize.width, height: attributes.avatarSize.height)
+            avatarImageView.frame = CGRect(x: 0,
+                                           y: y,
+                                           width: attributes.avatarSize.width,
+                                           height: attributes.avatarSize.height)
         case .outgoing:
             let y = frame.height - attributes.avatarSize.height - attributes.avatarBottomSpacing
             let x = contentView.frame.width - attributes.avatarSize.width
-            avatarImageView.frame = CGRect(x: x, y: y, width: attributes.avatarSize.width, height: attributes.avatarSize.height)
+            avatarImageView.frame = CGRect(x: x,
+                                           y: y,
+                                           width: attributes.avatarSize.width,
+                                           height: attributes.avatarSize.height)
         }
         
         avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2
@@ -121,7 +132,11 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     
     private func setMessageLabelFor(attributes: MessagesCollectionViewLayoutAttributes) {
         
-        let frame =  CGRect(x: 0, y: 0, width: attributes.messageContainerSize.width, height: attributes.messageContainerSize.height)
+        let frame = CGRect(x: 0,
+                           y: 0,
+                           width: attributes.messageContainerSize.width,
+                           height: attributes.messageContainerSize.height)
+        
         let insetFrame = UIEdgeInsetsInsetRect(frame, attributes.messageContainerInsets)
         messageLabel.frame = insetFrame
 

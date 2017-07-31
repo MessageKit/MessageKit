@@ -36,10 +36,12 @@ public struct Sender {
     }
 }
 
-// MARK: - Equatable Conformance
+// MARK: - Equatable
 
 extension Sender: Equatable {
+    
     static public func ==(left: Sender, right: Sender) -> Bool {
         return left.id == right.id
     }
+    
 }

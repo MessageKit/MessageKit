@@ -32,6 +32,15 @@ open class MessagesCollectionView: UICollectionView {
     
     open weak var messagesDisplayDataSource: MessagesDisplayDataSource?
     
+    var indexPathForLastItem: IndexPath? {
+        
+        let lastSection = numberOfSections > 0 ? numberOfSections - 1 : 0
+        let numberOfItemsInLastSection = numberOfItems(inSection: lastSection)
+        guard numberOfItemsInLastSection > 0 else { return nil }
+        return IndexPath(item: numberOfItemsInLastSection - 1, section: lastSection)
+        
+    }
+    
     // MARK: - Initializers
     
     override public init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
@@ -43,12 +52,4 @@ open class MessagesCollectionView: UICollectionView {
         fatalError("init(coder:) has not been implemented")
     }
 
-	
-	var indexPathForLastItem: IndexPath? {
-		
-		let lastSection = numberOfSections > 0 ? numberOfSections - 1 : 0
-		guard numberOfItems(inSection: lastSection) > 0 else { return nil }
-		return IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
-		
-	}
 }

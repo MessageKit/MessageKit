@@ -32,6 +32,14 @@ final class InboxViewController: UITableViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let row = tableView.indexPathForSelectedRow {
+            self.tableView.deselectRow(at: row, animated: false)
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }

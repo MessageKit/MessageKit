@@ -32,7 +32,10 @@ public struct Avatar {
     
     public let placeholderImage: UIImage
     
-    public init(image: UIImage? = nil, highlightedImage: UIImage? = nil, placeholderImage: UIImage) {
+    public init(image: UIImage? = nil,
+                highlightedImage: UIImage? = nil,
+                placeholderImage: UIImage) {
+        
         self.image = image
         self.highlightedImage = highlightedImage
         self.placeholderImage = placeholderImage
