@@ -26,10 +26,10 @@ import Foundation
 
 extension UIColor {
     
-    static let incomingGray = UIColor(colorLiteralRed: 230/255, green: 230/255, blue: 235/255, alpha: 1.0)
+    static let incomingGray = #colorLiteral(red: 0.9019607843, green: 0.9019607843, blue: 0.9215686275, alpha: 1) // #E6E6EB
     
-    static let outgoingGreen = UIColor(colorLiteralRed: 69/255, green: 214/255, blue: 93/255, alpha: 1.0)
+    static let outgoingGreen = #colorLiteral(red: 0.2705882353, green: 0.8392156863, blue: 0.3647058824, alpha: 1) // #45D65D
     
-    static let inputBarGray = UIColor(colorLiteralRed: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
+    static let inputBarGray = #colorLiteral(red: 0.968627451, green: 0.968627451, blue: 0.968627451, alpha: 1) // #F7F7F7
     
 }

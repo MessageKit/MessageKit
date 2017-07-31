@@ -28,13 +28,16 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     // MARK: - Properties
     
-    open var messageFont: UIFont
+    open var messageFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
     
-    open var incomingAvatarSize: CGSize
+    open var incomingAvatarSize: CGSize = CGSize(width: 30, height: 30)
     
-    open var outgoingAvatarSize: CGSize
+    open var outgoingAvatarSize: CGSize = CGSize(width: 30, height: 30)
     
-    open var messageContainerInsets: UIEdgeInsets
+    open var messageContainerInsets: UIEdgeInsets = UIEdgeInsets(top: 7,
+                                                                 left: 14,
+                                                                 bottom: 7,
+                                                                 right: 14)
     
     fileprivate let avatarBottomSpacing: CGFloat = 4
     
@@ -52,10 +55,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     // MARK: - Initializers
     
     override public init() {
-        messageFont = UIFont.preferredFont(forTextStyle: .body)
-        incomingAvatarSize = CGSize(width: 30, height: 30)
-        outgoingAvatarSize = CGSize(width: 30, height: 30)
-        messageContainerInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
         super.init()
         sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
     }
@@ -70,9 +69,9 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         
         guard let attributesArray = super.layoutAttributesForElements(in: rect) as? [MessagesCollectionViewLayoutAttributes] else { return nil }
         
-        attributesArray.forEach { attributes in
-            if attributes.representedElementCategory == UICollectionElementCategory.cell {
-                configure(attributes: attributes)
+        attributesArray.forEach {
+            if $0.representedElementCategory == UICollectionElementCategory.cell {
+                configure(attributes: $0)
             }
         }
         
@@ -93,7 +92,8 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     private func configure(attributes: MessagesCollectionViewLayoutAttributes) {
         
-        guard let collectionView = collectionView as? MessagesCollectionView, let dataSource = collectionView.messagesDataSource else { return }
+        guard let collectionView = collectionView as? MessagesCollectionView,
+            let dataSource = collectionView.messagesDataSource else { return }
         
         let indexPath = attributes.indexPath
         let message = dataSource.messageForItem(at: indexPath, in: collectionView)
@@ -124,7 +124,8 @@ extension MessagesCollectionViewFlowLayout {
     
     func avatarSizeFor(message: MessageType) -> CGSize {
         
-        guard let collectionView = collectionView as? MessagesCollectionView, let dataSource = collectionView.messagesDataSource else { return .zero }
+        guard let collectionView = collectionView as? MessagesCollectionView,
+            let dataSource = collectionView.messagesDataSource else { return .zero }
         
         return dataSource.isFromCurrentSender(message: message) ? outgoingAvatarSize : incomingAvatarSize
 
@@ -132,7 +133,8 @@ extension MessagesCollectionViewFlowLayout {
     
     func minimumCellHeightFor(message: MessageType) -> CGFloat {
         
-        guard let collectionView = collectionView as? MessagesCollectionView, let dataSource = collectionView.messagesDataSource else { return 0 }
+        guard let collectionView = collectionView as? MessagesCollectionView,
+            let dataSource = collectionView.messagesDataSource else { return 0 }
         
         let messageDirection: MessageDirection = dataSource.isFromCurrentSender(message: message) ? .outgoing : .incoming
         
@@ -182,8 +184,7 @@ extension MessagesCollectionViewFlowLayout {
     
     func estimatedCellHeightForMessage(message: MessageType) -> CGFloat {
         
-        let messageContainerHeight = containerHeightForMessage(message: message)
-        return messageContainerHeight
+        return containerHeightForMessage(message: message)
 
     }
     
@@ -198,7 +199,8 @@ extension MessagesCollectionViewFlowLayout {
     
     func sizeForItem(at indexPath: IndexPath) -> CGSize {
         
-        guard let collectionView = collectionView as? MessagesCollectionView, let dataSource = collectionView.messagesDataSource else { return .zero }
+        guard let collectionView = collectionView as? MessagesCollectionView,
+            let dataSource = collectionView.messagesDataSource else { return .zero }
         
         let message = dataSource.messageForItem(at: indexPath, in: collectionView)
         
