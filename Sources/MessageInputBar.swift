@@ -28,7 +28,7 @@ open class MessageInputBar: UIView, UITextViewDelegate {
 
     // MARK: - Properties
 
-    open let inputTextView: InputTextView = {
+    open let inputTextView: UITextView = {
 
         let inputTextView = InputTextView(frame: .zero)
         inputTextView.font = UIFont.preferredFont(forTextStyle: .body)
