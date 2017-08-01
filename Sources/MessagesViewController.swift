@@ -54,13 +54,23 @@ open class MessagesViewController: UIViewController {
 		setupConstraints()
 		registerReusableViews()
 		setupDelegates()
+        
+        //messageInputBar.inputTextView.delegate = self
+        
+        inputAccessoryView?.autoresizingMask = .flexibleHeight
 		
 	}
+    
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        messagesCollectionView.scrollToBottom(animated: true)
+    }
 	
 	open override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		// depends on inputAccessoryView frame thus must be called here
 		addKeyboardObservers()
+        messagesCollectionView.scrollToBottom(animated: false)
 	}
 	
 	open override func viewWillDisappear(_ animated: Bool) {
@@ -157,32 +167,23 @@ extension MessagesViewController: UICollectionViewDataSource {
 extension MessagesViewController {
 	
 	fileprivate func addKeyboardObservers() {
-		
-		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidShow), name: .UIKeyboardDidShow, object: nil)
+
 		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: .UIKeyboardWillHide, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
 		
 	}
 	
 	fileprivate func removeKeyboardObservers() {
-		
-		NotificationCenter.default.removeObserver(self, name: .UIKeyboardDidShow, object: nil)
+
 		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
 		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
-	}
-	
-	func handleKeyboardDidShow(_ notification: Notification) {
-		
-		guard let indexPath = messagesCollectionView.indexPathForLastItem else { return }
-		
-		if messageInputBar.inputTextView.isFirstResponder {
-			messagesCollectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
-		}
+
 	}
 	
 	func handleKeyboardWillHide(_ notification: Notification) {
 		
 		messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+
 	}
 	
 	
@@ -194,6 +195,7 @@ extension MessagesViewController {
 		let messageInputBarHeight = inputAccessoryView?.bounds.size.height ?? 0
 		let keyboardHeight = keyboardRect.height - messageInputBarHeight
 		messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+
 	}
 	
 }
