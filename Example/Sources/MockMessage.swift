@@ -35,7 +35,7 @@ struct MockMessage: MessageType {
     init(text: String, sender: Sender, messageId: String) {
         data = .text(text)
         self.sender = sender
-        self.messageId = id
+        self.messageId = messageId
         self.sentDate = Date()
     }
 
