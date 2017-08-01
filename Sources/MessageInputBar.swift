@@ -32,7 +32,7 @@ open class MessageInputBar: UIView, UITextViewDelegate {
 
         let inputTextView = InputTextView(frame: .zero)
         inputTextView.font = UIFont.preferredFont(forTextStyle: .body)
-        inputTextView.tintColor = .black
+        inputTextView.textColor = .black
         inputTextView.placeholder = "New Message"
         inputTextView.placeholderColor = .lightGray
         inputTextView.backgroundColor = .white
