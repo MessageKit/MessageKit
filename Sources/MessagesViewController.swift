@@ -82,10 +82,9 @@ open class MessagesViewController: UIViewController {
         }
         if messageLayout.shouldInvalidateLayout(forBoundsChange: self.view.bounds) {
             messageLayout.invalidateLayout()
-            messagesCollectionView.reloadData()
         }
     }
-
+    
 	// MARK: - Methods
 
 	private func setupDelegates() {
