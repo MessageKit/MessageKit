@@ -122,7 +122,7 @@ open class MessageInputBar: UIView, UITextViewDelegate {
         sendButton.translatesAutoresizingMaskIntoConstraints = false
 
         addConstraint(NSLayoutConstraint(item: sendButton, attribute: .bottom, relatedBy: .equal,
-                                         toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
+                                         toItem: inputTextView, attribute: .bottom, multiplier: 1, constant: 0))
 
         addConstraint(NSLayoutConstraint(item: sendButton, attribute: .trailing, relatedBy: .equal,
                                          toItem: self, attribute: .trailing, multiplier: 1, constant: -4))
