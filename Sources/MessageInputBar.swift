@@ -47,11 +47,20 @@ open class MessageInputBar: UIView, UITextViewDelegate {
 
         let sendButton = UIButton()
         sendButton.setTitle("Send", for: .normal)
-        sendButton.setTitleColor(.lightGray, for: .normal)
+        sendButton.setTitleColor(.sendButtonBlue, for: .normal)
+        sendButton.setTitleColor(UIColor.sendButtonBlue.darker(by: 30), for: .highlighted)
+        sendButton.setTitleColor(.lightGray, for: .disabled)
+        sendButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
         return sendButton
     }()
 
     open weak var delegate: MessageInputBarDelegate?
+
+    override open var intrinsicContentSize: CGSize {
+        let sizeToFit = inputTextView.sizeThatFits(CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude))
+        let heightToFit = sizeToFit.height.rounded(.up)
+        return CGSize(width: bounds.width, height: heightToFit + 8)
+    }
 
     // MARK: - Initializers
 
@@ -82,12 +91,6 @@ open class MessageInputBar: UIView, UITextViewDelegate {
 
     public func textViewDidChange(_ textView: UITextView) {
         invalidateIntrinsicContentSize()
-    }
-
-    override open var intrinsicContentSize: CGSize {
-        let sizeToFit = inputTextView.sizeThatFits(CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude))
-        let heightToFit = sizeToFit.height.rounded(.up)
-        return CGSize(width: bounds.width, height: heightToFit + 8)
     }
 
     private func setupSubviews() {
