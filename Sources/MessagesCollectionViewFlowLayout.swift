@@ -58,10 +58,15 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         messageContainerInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
         super.init()
         sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
+        NotificationCenter.default.addObserver(self, selector: #selector(invalidateLayoutForOrientationChange), name: .UIDeviceOrientationDidChange, object: nil)
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .UIDeviceOrientationDidChange, object: nil)
     }
 
     // MARK: - Methods
@@ -116,6 +121,10 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
         return collectionView?.bounds.width != newBounds.width
 
+    }
+
+    func invalidateLayoutForOrientationChange() {
+        invalidateLayout()
     }
 
 }

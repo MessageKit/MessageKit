@@ -60,6 +60,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     override public init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
 
     required public init?(coder aDecoder: NSCoder) {
