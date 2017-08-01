@@ -52,6 +52,7 @@ open class MessageInputBar: UIView, UITextViewDelegate {
         sendButton.setTitleColor(UIColor.sendButtonBlue.darker(by: 30), for: .highlighted)
         sendButton.setTitleColor(.lightGray, for: .disabled)
         sendButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        sendButton.isEnabled = false
         return sendButton
     }()
 
@@ -91,6 +92,7 @@ open class MessageInputBar: UIView, UITextViewDelegate {
     // MARK: - Methods
 
     public func textViewDidChange(_ textView: UITextView) {
+        sendButton.isEnabled = !textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         invalidateIntrinsicContentSize()
     }
 
