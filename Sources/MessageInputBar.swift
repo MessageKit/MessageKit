@@ -141,5 +141,6 @@ open class MessageInputBar: UIView, UITextViewDelegate {
 
     func sendButtonPressed() {
         delegate?.sendButtonPressed(sender: sendButton, textView: inputTextView)
+        inputTextView.text = ""
     }
 }
