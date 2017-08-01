@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class MessageInputBar: UIView {
+open class MessageInputBar: UIView, UITextViewDelegate {
     
     // MARK: - Properties
     
@@ -39,8 +39,11 @@ open class MessageInputBar: UIView {
         inputTextView.layer.borderWidth = 1.0
         inputTextView.layer.cornerRadius = 3.0
         inputTextView.layer.masksToBounds = true
+        inputTextView.isScrollEnabled = false
         return inputTextView
     }()
+    
+    var textViewHeightConstraint: NSLayoutConstraint?
     
     open let sendButton: UIButton = {
     
@@ -61,7 +64,11 @@ open class MessageInputBar: UIView {
         setupConstraints()
         registerSelector()
         
+        inputTextView.delegate = self
+        
         backgroundColor = .inputBarGray
+        
+        autoresizingMask = .flexibleHeight
 
     }
     
@@ -74,6 +81,17 @@ open class MessageInputBar: UIView {
     }
     
     // MARK: - Methods
+    
+    public func textViewDidChange(_ textView: UITextView) {
+        invalidateIntrinsicContentSize()
+    }
+    
+    override open var intrinsicContentSize: CGSize {
+        let sizeToFit = inputTextView.sizeThatFits(CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude))
+        let heightToFit = sizeToFit.height.rounded(.up)
+        return CGSize(width: bounds.width, height: heightToFit + 8)
+    }
+    
     
     private func setupSubviews() {
         
@@ -89,12 +107,14 @@ open class MessageInputBar: UIView {
         addConstraint(NSLayoutConstraint(item: inputTextView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: -4))
         addConstraint(NSLayoutConstraint(item: inputTextView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 4))
         addConstraint(NSLayoutConstraint(item: inputTextView, attribute: .trailing, relatedBy: .equal, toItem: sendButton, attribute: .leading, multiplier: 1, constant: -4))
-
+        //addConstraint(NSLayoutConstraint(item: inputTextView, attribute: .width, relatedBy: ., toItem: <#T##Any?#>, attribute: <#T##NSLayoutAttribute#>, multiplier: <#T##CGFloat#>, constant: <#T##CGFloat#>))
+        
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         addConstraint(NSLayoutConstraint(item: sendButton, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: sendButton, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: -4))
-        addConstraint(NSLayoutConstraint(item: sendButton, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
-
+        addConstraint(NSLayoutConstraint(item: sendButton, attribute: .top, relatedBy: .greaterThanOrEqual, toItem: self, attribute: .top, multiplier: 1, constant: 0))
+        addConstraint(NSLayoutConstraint(item: sendButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 60))
+    
     }
     
     private func registerSelector() {
