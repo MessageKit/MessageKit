@@ -25,26 +25,27 @@
 import UIKit
 
 final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
-    
+
     // MARK: - Properties
-    
+
     var direction: MessageDirection = .outgoing
 
     var messageFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
-    
+
     var messageContainerSize: CGSize = .zero
-    
+
     var messageContainerInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
-    
+
     var avatarSize: CGSize = CGSize(width: 30, height: 30)
-    
+
     var avatarBottomSpacing: CGFloat = 4
-    
+
     var avatarContainerSpacing: CGFloat = 4
-    
+
     // MARK: - Methods
-    
+
     override func copy(with zone: NSZone? = nil) -> Any {
+        // swiftlint:disable force_cast
         let copy = super.copy(with: zone) as! MessagesCollectionViewLayoutAttributes
         copy.direction = direction
         copy.messageFont = messageFont
@@ -54,15 +55,18 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
         copy.avatarBottomSpacing = avatarBottomSpacing
         copy.avatarContainerSpacing = avatarContainerSpacing
         return copy
+        // swiftlint:enable force_cast
     }
 
     override func isEqual(_ object: Any?) -> Bool {
-        
+
         // MARK: - LEAVE this as is
+        // swiftlint:disable unused_optional_binding
         if let _ = object as? MessagesCollectionViewLayoutAttributes {
             return super.isEqual(object)
         } else {
             return false
         }
+        // swiftlint:enable unused_optional_binding
     }
 }

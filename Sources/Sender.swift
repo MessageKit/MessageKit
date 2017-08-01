@@ -25,11 +25,11 @@
 import Foundation
 
 public struct Sender {
-    
+
     public let id: String
-    
+
     public let displayName: String
-    
+
     public init(id: String, displayName: String) {
         self.id = id
         self.displayName = displayName
@@ -39,7 +39,7 @@ public struct Sender {
 // MARK: - Equatable Conformance
 
 extension Sender: Equatable {
-    static public func ==(left: Sender, right: Sender) -> Bool {
+    static public func == (left: Sender, right: Sender) -> Bool {
         return left.id == right.id
     }
 }
