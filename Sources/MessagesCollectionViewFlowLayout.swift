@@ -58,15 +58,10 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         messageContainerInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
         super.init()
         sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
-        NotificationCenter.default.addObserver(self, selector: #selector(invalidateLayoutForOrientationChange), name: .UIDeviceOrientationDidChange, object: nil)
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: .UIDeviceOrientationDidChange, object: nil)
     }
 
     // MARK: - Methods
@@ -119,12 +114,15 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     override open func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
 
-        return collectionView?.bounds.width != newBounds.width
+        return collectionView?.bounds.width != newBounds.width || collectionView?.bounds.height != newBounds.height
 
     }
 
-    func invalidateLayoutForOrientationChange() {
-        invalidateLayout()
+    open override func invalidationContext(forBoundsChange newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
+        let context = super.invalidationContext(forBoundsChange: newBounds)
+        guard let flowLayoutContext = context as? UICollectionViewFlowLayoutInvalidationContext else { return context }
+        flowLayoutContext.invalidateFlowLayoutDelegateMetrics = shouldInvalidateLayout(forBoundsChange: newBounds)
+        return flowLayoutContext
     }
 
 }
