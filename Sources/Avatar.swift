@@ -25,21 +25,21 @@
 import Foundation
 
 public struct Avatar {
-    
+
     public let image: UIImage?
-    
+
     public let highlightedImage: UIImage?
-    
+
     public let placeholderImage: UIImage
-    
+
     public init(image: UIImage? = nil, highlightedImage: UIImage? = nil, placeholderImage: UIImage) {
         self.image = image
         self.highlightedImage = highlightedImage
         self.placeholderImage = placeholderImage
     }
-    
+
     public func image(highlighted: Bool) -> UIImage {
-        
+
         switch highlighted {
         case true:
             return highlightedImage ?? image ?? placeholderImage
