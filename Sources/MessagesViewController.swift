@@ -37,9 +37,12 @@ open class MessagesViewController: UIViewController {
 	}
 
 	override open var inputAccessoryView: UIView? {
-		messageInputBar.bounds.size = CGSize(width: messagesCollectionView.frame.width, height: 48)
 		return messageInputBar
 	}
+    
+    open override var shouldAutorotate: Bool {
+        return false
+    }
 
 	// MARK: - View Life Cycle
 
@@ -52,10 +55,6 @@ open class MessagesViewController: UIViewController {
 		setupConstraints()
 		registerReusableViews()
 		setupDelegates()
-
-        //messageInputBar.inputTextView.delegate = self
-
-        inputAccessoryView?.autoresizingMask = .flexibleHeight
 
 	}
 
