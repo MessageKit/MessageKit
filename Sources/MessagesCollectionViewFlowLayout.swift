@@ -114,8 +114,15 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     override open func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
 
-        return collectionView?.bounds.width != newBounds.width
+        return collectionView?.bounds.width != newBounds.width || collectionView?.bounds.height != newBounds.height
 
+    }
+
+    open override func invalidationContext(forBoundsChange newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
+        let context = super.invalidationContext(forBoundsChange: newBounds)
+        guard let flowLayoutContext = context as? UICollectionViewFlowLayoutInvalidationContext else { return context }
+        flowLayoutContext.invalidateFlowLayoutDelegateMetrics = shouldInvalidateLayout(forBoundsChange: newBounds)
+        return flowLayoutContext
     }
 
 }

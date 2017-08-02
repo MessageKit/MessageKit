@@ -63,26 +63,26 @@ class ConversationViewController: MessagesViewController, MessagesDataSource, Me
                    "Pellentesque venenatis, ante et hendrerit rutrum" +
                    "Quam erat vehicula metus, et condimentum ante tellus augue."
 
-        messages.append(MockMessage(text: msg2, sender: sender2, messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg4, sender: currentSender(), messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg5, sender: sender3, messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg1, sender: currentSender(), messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg3, sender: sender1, messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg3, sender: sender1, messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg2, sender: sender2, messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg2, sender: sender2, messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg1, sender: currentSender(), messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg3, sender: sender1, messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg2, sender: sender2, messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg4, sender: currentSender(), messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg5, sender: sender3, messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg4, sender: currentSender(), messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg5, sender: sender3, messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg4, sender: currentSender(), messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg5, sender: sender3, messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg1, sender: currentSender(), messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg1, sender: currentSender(), messageId: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg3, sender: sender1, messageId: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg2, sender: sender2, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg4, sender: currentSender(), id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg5, sender: sender3, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg1, sender: currentSender(), id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg3, sender: sender1, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg3, sender: sender1, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg2, sender: sender2, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg2, sender: sender2, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg1, sender: currentSender(), id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg3, sender: sender1, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg2, sender: sender2, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg4, sender: currentSender(), id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg5, sender: sender3, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg4, sender: currentSender(), id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg5, sender: sender3, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg4, sender: currentSender(), id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg5, sender: sender3, id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg1, sender: currentSender(), id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg1, sender: currentSender(), id: NSUUID().uuidString))
+        messages.append(MockMessage(text: msg3, sender: sender1, id: NSUUID().uuidString))
     }
 
     func currentSender() -> Sender {
@@ -110,7 +110,7 @@ extension ConversationViewController: MessageInputBarDelegate {
 
         guard let message = textView.text else { return }
 
-        messages.append(MockMessage(text: message, sender: currentSender(), messageId: NSUUID().uuidString))
+        messages.append(MockMessage(text: message, sender: currentSender(), id: NSUUID().uuidString))
 
         messagesCollectionView.reloadData()
 

@@ -60,7 +60,7 @@ open class MessageInputBar: UIView, UITextViewDelegate {
 
     override open var intrinsicContentSize: CGSize {
         let sizeToFit = inputTextView.sizeThatFits(CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude))
-        let heightToFit = sizeToFit.height.rounded(.up)
+        let heightToFit = sizeToFit.height.rounded()
         return CGSize(width: bounds.width, height: heightToFit + 8)
     }
 
@@ -79,6 +79,8 @@ open class MessageInputBar: UIView, UITextViewDelegate {
 
         autoresizingMask = .flexibleHeight
 
+        NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange), name: .UIDeviceOrientationDidChange, object: nil)
+
     }
 
     convenience public init() {
@@ -89,7 +91,15 @@ open class MessageInputBar: UIView, UITextViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     // MARK: - Methods
+
+    func orientationDidChange(_ notification: Notification) {
+        invalidateIntrinsicContentSize()
+    }
 
     public func textViewDidChange(_ textView: UITextView) {
         sendButton.isEnabled = !textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
