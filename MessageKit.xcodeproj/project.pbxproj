@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1746F21D1F3105BB005060B9 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1746F21C1F3105BB005060B9 /* InputTextView.swift */; };
 		882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882D75831DE507320033F95F /* MessagesDataSource.swift */; };
 		888CEBFC1D3FD525005178DE /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888CEBFB1D3FD525005178DE /* MessagesViewController.swift */; };
 		88916B2D1CF0DF2F00469F91 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88916B221CF0DF2F00469F91 /* MessageKit.framework */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1746F21C1F3105BB005060B9 /* InputTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
 		882D75831DE507320033F95F /* MessagesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDataSource.swift; sourceTree = "<group>"; };
 		888CEBFB1D3FD525005178DE /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		88916B221CF0DF2F00469F91 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,6 +151,7 @@
 				B0655A2D1F23D8BC00542A83 /* MessagesCollectionView.swift */,
 				B0655A4C1F244C0600542A83 /* MessageCollectionViewCell.swift */,
 				B0655A371F23EE8B00542A83 /* MessageInputBar.swift */,
+				1746F21C1F3105BB005060B9 /* InputTextView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				B0655A2C1F23D81600542A83 /* MessageData.swift in Sources */,
 				B09643861F286C9E004D0129 /* String+Extensions.swift in Sources */,
 				B0655A281F23D71400542A83 /* MessageDirection.swift in Sources */,
+				1746F21D1F3105BB005060B9 /* InputTextView.swift in Sources */,
 				B0655A261F23D6C500542A83 /* Avatar.swift in Sources */,
 				B015E81F1F259D8E007EDFB6 /* MessageInputBarDelegate.swift in Sources */,
 				B0655A2A1F23D77200542A83 /* Sender.swift in Sources */,

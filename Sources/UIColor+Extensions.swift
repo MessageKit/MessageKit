@@ -26,10 +26,43 @@ import Foundation
 
 extension UIColor {
 
-    static let incomingGray = UIColor(colorLiteralRed: 230/255, green: 230/255, blue: 235/255, alpha: 1.0)
+    static let incomingGray = #colorLiteral(red: 0.9019607843, green: 0.9019607843, blue: 0.9215686275, alpha: 1) // # E6E6EB
 
-    static let outgoingGreen = UIColor(colorLiteralRed: 69/255, green: 214/255, blue: 93/255, alpha: 1.0)
+    static let outgoingGreen = #colorLiteral(red: 0.2705882353, green: 0.8392156863, blue: 0.3647058824, alpha: 1) // # 45D65D
 
-    static let inputBarGray = UIColor(colorLiteralRed: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
+    static let inputBarGray = #colorLiteral(red: 0.968627451, green: 0.968627451, blue: 0.968627451, alpha: 1) // # F7F7F7
+
+    static let sendButtonBlue = #colorLiteral(red: 0.06, green: 0.53, blue: 1, alpha: 1) // # 0F87FF
+
+    /**
+     Create a ligher color
+     */
+    func lighter(by percentage: CGFloat) -> UIColor {
+        return self.adjustBrightness(by: abs(percentage))
+    }
+
+    /**
+     Create a darker color
+     */
+    func darker(by percentage: CGFloat) -> UIColor {
+        return self.adjustBrightness(by: -abs(percentage))
+    }
+
+    /**
+     Try to increase brightness or decrease saturation
+     */
+    func adjustBrightness(by percentage: CGFloat) -> UIColor {
+        var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        if self.getHue(&h, saturation: &s, brightness: &b, alpha: &a) {
+            if b < 1.0 {
+                let newB: CGFloat = max(min(b + (percentage/100.0)*b, 1.0), 0, 0)
+                return UIColor(hue: h, saturation: s, brightness: newB, alpha: a)
+            } else {
+                let newS: CGFloat = min(max(s - (percentage/100.0)*s, 0.0), 1.0)
+                return UIColor(hue: h, saturation: newS, brightness: b, alpha: a)
+            }
+        }
+        return self
+    }
 
 }

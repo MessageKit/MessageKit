@@ -39,7 +39,7 @@ open class MessagesViewController: UIViewController {
 	override open var inputAccessoryView: UIView? {
 		return messageInputBar
 	}
-    
+
     open override var shouldAutorotate: Bool {
         return false
     }
