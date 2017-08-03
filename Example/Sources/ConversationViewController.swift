@@ -35,7 +35,6 @@ class ConversationViewController: MessagesViewController, MessagesDataSource, Me
         addSampleData()
 
         messagesCollectionView.messagesDataSource = self
-        messagesCollectionView.messagesDisplayDataSource = self
         messageInputBar.delegate = self
 
         tabBarController?.tabBar.isHidden = true
@@ -100,6 +99,14 @@ class ConversationViewController: MessagesViewController, MessagesDataSource, Me
     func avatarForMessage(_ message: MessageType, at indexPath: IndexPath, in collectionView: UICollectionView) -> Avatar {
         let image = isFromCurrentSender(message: message) ? #imageLiteral(resourceName: "Steve-Jobs") : #imageLiteral(resourceName: "Tim-Cook")
         return Avatar(placeholderImage: image)
+    }
+
+    override func didTapAvatar(in cell: MessageCollectionViewCell) {
+        print("Avatar tapped")
+    }
+
+    override func didTapMessage(in cell: MessageCollectionViewCell) {
+        print("Message tapped")
     }
 
 }

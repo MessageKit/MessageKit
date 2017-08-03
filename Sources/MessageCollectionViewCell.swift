@@ -55,11 +55,14 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         return messageLabel
     }()
 
+    open weak var delegate: MessageCellDelegate?
+
     // MARK: - Initializer
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
+        setupGestureRecognizers()
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
 
@@ -140,5 +143,26 @@ open class MessageCollectionViewCell: UICollectionViewCell {
             messageLabel.text = text
         }
 
+    }
+
+    func setupGestureRecognizers() {
+
+        let avatarTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
+        avatarImageView.addGestureRecognizer(avatarTapGesture)
+        avatarImageView.isUserInteractionEnabled = true
+
+        let messageTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapMessage))
+        messageContainerView.addGestureRecognizer(messageTapGesture)
+
+    }
+
+    // MARK: - Delegate Methods
+
+    func didTapAvatar() {
+        delegate?.didTapAvatar(in: self)
+    }
+
+    func didTapMessage() {
+        delegate?.didTapMessage(in: self)
     }
 }

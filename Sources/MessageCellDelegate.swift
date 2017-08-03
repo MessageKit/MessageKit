@@ -22,23 +22,12 @@
  SOFTWARE.
  */
 
-import UIKit
+import Foundation
 
-public protocol MessagesDataSource: class {
+public protocol MessageCellDelegate: class {
 
-    func currentSender() -> Sender
+    func didTapMessage(in cell: MessageCollectionViewCell)
 
-    func messageForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> MessageType
-
-    func numberOfMessages(in collectionView: UICollectionView) -> Int
-
-}
-
-public extension MessagesDataSource {
-
-    // Pros and cons of not having this defined in the protocol? No idea yet.
-    func isFromCurrentSender(message: MessageType) -> Bool {
-        return message.sender == currentSender()
-    }
+    func didTapAvatar(in cell: MessageCollectionViewCell)
 
 }

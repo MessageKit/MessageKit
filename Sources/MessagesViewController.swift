@@ -39,7 +39,7 @@ open class MessagesViewController: UIViewController {
 	override open var inputAccessoryView: UIView? {
 		return messageInputBar
 	}
-    
+
     open override var shouldAutorotate: Bool {
         return false
     }
@@ -152,9 +152,11 @@ extension MessagesViewController: UICollectionViewDataSource {
 
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MessageCell", for: indexPath) as? MessageCollectionViewCell ?? MessageCollectionViewCell()
 
+        cell.delegate = self
+
 		if let messagesCollectionView = collectionView as? MessagesCollectionView,
 			let dataSource = messagesCollectionView.messagesDataSource,
-			let displayDataSource = messagesCollectionView.messagesDisplayDataSource {
+			let displayDataSource = dataSource as? MessagesDisplayDataSource {
 
 			let message = dataSource.messageForItem(at: indexPath, in: collectionView)
 			let messageColor = displayDataSource.messageColorFor(message, at: indexPath, in: collectionView)
@@ -175,7 +177,7 @@ extension MessagesViewController: UICollectionViewDataSource {
 
 }
 
-// MARK: - Keyboard methods
+// MARK: - Keyboard Handling
 extension MessagesViewController {
 
 	fileprivate func addKeyboardObservers() {
@@ -183,14 +185,14 @@ extension MessagesViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: .UIKeyboardWillHide, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
 
-	}
+    }
 
-	fileprivate func removeKeyboardObservers() {
+    fileprivate func removeKeyboardObservers() {
 
-		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
-		NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
 
-	}
+    }
 
 	func handleKeyboardWillHide(_ notification: Notification) {
 
@@ -208,5 +210,15 @@ extension MessagesViewController {
 		messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
 
 	}
+
+}
+
+// MARK: - MessageCellDelegate Conformance
+
+extension MessagesViewController: MessageCellDelegate {
+
+    open func didTapMessage(in cell: MessageCollectionViewCell) { /* No-Op Default */ }
+
+    open func didTapAvatar(in cell: MessageCollectionViewCell) { /* No-Op Default */ }
 
 }
