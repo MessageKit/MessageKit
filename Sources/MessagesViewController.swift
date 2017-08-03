@@ -79,7 +79,8 @@ open class MessagesViewController: UIViewController {
 
 	private func setupDelegates() {
 		messagesCollectionView.delegate = self
-		messagesCollectionView.dataSource = self
+        messagesCollectionView.dataSource = self
+        messageInputBar.inputTextView.delegate = self
 	}
 
 	private func registerReusableViews() {
@@ -173,6 +174,25 @@ extension MessagesViewController: UICollectionViewDataSource {
 
     //swiftlint:enable line_length
 
+}
+
+// MARK: - UITextFieldDelegate Methods
+
+extension MessagesViewController: UITextViewDelegate {
+    
+    public func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    public func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "New Message"
+            textView.textColor = UIColor.lightGray
+        }
+    }
 }
 
 // MARK: - Keyboard methods

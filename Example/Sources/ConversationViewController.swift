@@ -105,15 +105,19 @@ class ConversationViewController: MessagesViewController, MessagesDataSource, Me
 }
 
 extension ConversationViewController: MessageInputBarDelegate {
-
+    
     func sendButtonPressed(sender: UIButton, textView: UITextView) {
-
+        
         guard let message = textView.text else { return }
-
+        
+        if message.characters.count == 0 { return }
+        
         messages.append(MockMessage(text: message, sender: currentSender(), id: NSUUID().uuidString))
-
+        
+        textView.text = ""
+        
         messagesCollectionView.reloadData()
-
+        
     }
-
+    
 }
