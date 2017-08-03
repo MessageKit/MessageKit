@@ -74,7 +74,16 @@ open class MessagesViewController: UIViewController {
 		super.viewWillDisappear(animated)
 		removeKeyboardObservers()
 	}
-
+    
+    open override func viewWillLayoutSubviews() {
+        guard let messageLayout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout else {
+            return
+        }
+        if messageLayout.shouldInvalidateLayout(forBoundsChange: self.view.bounds) {
+            messageLayout.invalidateLayout()
+        }
+    }
+    
 	// MARK: - Methods
 
 	private func setupDelegates() {
