@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		379C38541F3516B10070A16B /* AvatarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379C38531F3516B10070A16B /* AvatarTests.swift */; };
 		882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882D75831DE507320033F95F /* MessagesDataSource.swift */; };
 		888CEBFC1D3FD525005178DE /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888CEBFB1D3FD525005178DE /* MessagesViewController.swift */; };
 		88916B2D1CF0DF2F00469F91 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88916B221CF0DF2F00469F91 /* MessageKit.framework */; };
@@ -43,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		379C38531F3516B10070A16B /* AvatarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarTests.swift; sourceTree = "<group>"; };
+		379D48AF1F34F2E1008FB0D8 /* Avatar.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Avatar.playground; sourceTree = "<group>"; };
 		882D75831DE507320033F95F /* MessagesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDataSource.swift; sourceTree = "<group>"; };
 		888CEBFB1D3FD525005178DE /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		88916B221CF0DF2F00469F91 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +130,7 @@
 			children = (
 				88916B421CF0DF5900469F91 /* Info.plist */,
 				88916B431CF0DF5900469F91 /* MessageKitTests.swift */,
+				379C38531F3516B10070A16B /* AvatarTests.swift */,
 			);
 			path = Tests;
 			sourceTree = SOURCE_ROOT;
@@ -143,7 +147,6 @@
 		B09643991F295D58004D0129 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B0655A251F23D6C500542A83 /* Avatar.swift */,
 				B0655A291F23D77200542A83 /* Sender.swift */,
 				B0655A2B1F23D81600542A83 /* MessageData.swift */,
 				B0655A271F23D71400542A83 /* MessageDirection.swift */,
@@ -156,6 +159,8 @@
 			children = (
 				B0655A2D1F23D8BC00542A83 /* MessagesCollectionView.swift */,
 				B0655A4C1F244C0600542A83 /* MessageCollectionViewCell.swift */,
+				B0655A251F23D6C500542A83 /* Avatar.swift */,
+				379D48AF1F34F2E1008FB0D8 /* Avatar.playground */,
 				B0655A371F23EE8B00542A83 /* MessageInputBar.swift */,
 				B074EE921F35587100ABB8C8 /* MessageHeaderView.swift */,
 				B074EE941F35588A00ABB8C8 /* MessageFooterView.swift */,
@@ -355,6 +360,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				379C38541F3516B10070A16B /* AvatarTests.swift in Sources */,
 				88916B451CF0DF5900469F91 /* MessageKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

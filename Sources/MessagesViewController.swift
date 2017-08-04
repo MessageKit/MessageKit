@@ -169,17 +169,13 @@ extension MessagesViewController: UICollectionViewDataSource {
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return cell }
         guard let displayDataSource = messagesDataSource as? MessagesDisplayDataSource else { return cell }
 
-        let message = displayDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        let messageColor = displayDataSource.messageColorFor(message, at: indexPath, in: messagesCollectionView)
-        let avatar = displayDataSource.avatarForMessage(message, at: indexPath, in: messagesCollectionView)
+            //TODO: Replace avatarImageView with an Avatar class
+			cell.avatarImageView.image =  avatar.getImage()
+			cell.messageContainerView.backgroundColor = messageColor
+			cell.configure(with: message)
 
-        cell.avatarImageView.image = avatar.image(highlighted: false)
-        cell.avatarImageView.highlightedImage = avatar.image(highlighted: true)
-        cell.messageContainerView.backgroundColor = messageColor
-        cell.configure(with: message)
-
+		}
 		return cell
-
 	}
 
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
