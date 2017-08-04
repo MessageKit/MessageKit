@@ -98,7 +98,7 @@ class ConversationViewController: MessagesViewController, MessagesDataSource, Me
 
     func avatarForMessage(_ message: MessageType, at indexPath: IndexPath, in collectionView: UICollectionView) -> Avatar {
         let image = isFromCurrentSender(message: message) ? #imageLiteral(resourceName: "Steve-Jobs") : #imageLiteral(resourceName: "Tim-Cook")
-        return Avatar(placeholderImage: image)
+        return Avatar(image: image)
     }
 
     override func didTapAvatar(in cell: MessageCollectionViewCell) {
