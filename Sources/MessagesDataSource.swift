@@ -28,15 +28,16 @@ public protocol MessagesDataSource: class {
 
     func currentSender() -> Sender
 
-    func messageForItem(at indexPath: IndexPath, in collectionView: UICollectionView) -> MessageType
+    func isFromCurrentSender(message: MessageType) -> Bool
 
-    func numberOfMessages(in collectionView: UICollectionView) -> Int
+    func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType
+
+    func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int
 
 }
 
 public extension MessagesDataSource {
 
-    // Pros and cons of not having this defined in the protocol? No idea yet.
     func isFromCurrentSender(message: MessageType) -> Bool {
         return message.sender == currentSender()
     }

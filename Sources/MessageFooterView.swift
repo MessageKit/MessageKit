@@ -22,20 +22,16 @@
  SOFTWARE.
  */
 
-import Foundation
+import UIKit
 
-public protocol MessageCellDelegate: class {
+open class MessageFooterView: UICollectionReusableView {
 
-    func didTapMessage(in cell: MessageCollectionViewCell)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
 
-    func didTapAvatar(in cell: MessageCollectionViewCell)
-
-}
-
-extension MessageCellDelegate {
-
-    func didTapMessage(in cell: MessageCollectionViewCell) {}
-
-    func didTapAvatar(in cell: MessageCollectionViewCell) {}
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
 }

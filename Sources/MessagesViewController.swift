@@ -83,7 +83,16 @@ open class MessagesViewController: UIViewController {
 	}
 
 	private func registerReusableViews() {
+
 		messagesCollectionView.register(MessageCollectionViewCell.self, forCellWithReuseIdentifier: "MessageCell")
+
+        messagesCollectionView.register(MessageHeaderView.self,
+                                        forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                                        withReuseIdentifier: "MessageHeader")
+
+        messagesCollectionView.register(MessageFooterView.self,
+                                        forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
+                                        withReuseIdentifier: "MessageFooter")
 	}
 
 	private func setupSubviews() {
@@ -152,26 +161,64 @@ extension MessagesViewController: UICollectionViewDataSource {
 
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MessageCell", for: indexPath) as? MessageCollectionViewCell ?? MessageCollectionViewCell()
 
-        cell.delegate = self
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return cell }
+        guard let messageCellDelegate = messagesCollectionView.messageCellDelegate else { return cell }
 
-		if let messagesCollectionView = collectionView as? MessagesCollectionView,
-			let dataSource = messagesCollectionView.messagesDataSource,
-			let displayDataSource = dataSource as? MessagesDisplayDataSource {
+        cell.delegate = messageCellDelegate
 
-			let message = dataSource.messageForItem(at: indexPath, in: collectionView)
-			let messageColor = displayDataSource.messageColorFor(message, at: indexPath, in: collectionView)
-			let avatar = displayDataSource.avatarForMessage(message, at: indexPath, in: collectionView)
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return cell }
+        guard let displayDataSource = messagesDataSource as? MessagesDisplayDataSource else { return cell }
 
-			cell.avatarImageView.image = avatar.image(highlighted: false)
-			cell.avatarImageView.highlightedImage = avatar.image(highlighted: true)
-			cell.messageContainerView.backgroundColor = messageColor
-			cell.configure(with: message)
+        let message = displayDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        let messageColor = displayDataSource.messageColorFor(message, at: indexPath, in: messagesCollectionView)
+        let avatar = displayDataSource.avatarForMessage(message, at: indexPath, in: messagesCollectionView)
 
-		}
+        cell.avatarImageView.image = avatar.image(highlighted: false)
+        cell.avatarImageView.highlightedImage = avatar.image(highlighted: true)
+        cell.messageContainerView.backgroundColor = messageColor
+        cell.configure(with: message)
 
 		return cell
 
 	}
+
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return UICollectionReusableView() }
+        guard let displayDataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDataSource else { return UICollectionReusableView() }
+
+        let message = displayDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+
+        switch kind {
+        case UICollectionElementKindSectionHeader:
+            return displayDataSource.headerForMessage(message, at: indexPath, in: messagesCollectionView) ?? MessageHeaderView()
+        case UICollectionElementKindSectionFooter:
+            return displayDataSource.footerForMessage(message, at: indexPath, in: messagesCollectionView) ?? MessageFooterView()
+        default:
+            fatalError("Unrecognized element of kind: \(kind)")
+        }
+
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return .zero }
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return .zero }
+        guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
+         // Could pose a problem if subclass behaviors allows more than one item per section
+        let indexPath = IndexPath(item: 0, section: section)
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        return messagesLayoutDelegate.headerSizeFor(message, at: indexPath, in: messagesCollectionView)
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return .zero }
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return .zero }
+        guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
+        // Could pose a problem if subclass behaviors allows more than one item per section
+        let indexPath = IndexPath(item: 0, section: section)
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        return messagesLayoutDelegate.footerSizeFor(message, at: indexPath, in: messagesCollectionView)
+    }
 
     //swiftlint:enable line_length
 
@@ -210,15 +257,5 @@ extension MessagesViewController {
 		messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
 
 	}
-
-}
-
-// MARK: - MessageCellDelegate Conformance
-
-extension MessagesViewController: MessageCellDelegate {
-
-    open func didTapMessage(in cell: MessageCollectionViewCell) { /* No-Op Default */ }
-
-    open func didTapAvatar(in cell: MessageCollectionViewCell) { /* No-Op Default */ }
 
 }

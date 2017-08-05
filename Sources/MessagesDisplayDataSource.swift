@@ -26,14 +26,28 @@ import Foundation
 
 public protocol MessagesDisplayDataSource: class, MessagesDataSource {
 
-    func avatarForMessage(_ message: MessageType, at indexPath: IndexPath, in collectionView: UICollectionView) -> Avatar
+    func messageColorFor(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
+
+    func avatarForMessage(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar
+
+    func headerForMessage(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView?
+
+    func footerForMessage(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView?
 
 }
 
 public extension MessagesDisplayDataSource {
 
-    func messageColorFor(_ message: MessageType, at indexPath: IndexPath, in collectionView: UICollectionView) -> UIColor {
+    func messageColorFor(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
+    }
+
+    func headerForMessage(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
+        return nil
+    }
+
+    func footerForMessage(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView? {
+        return nil
     }
 
 }

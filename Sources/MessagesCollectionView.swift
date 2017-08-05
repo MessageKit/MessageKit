@@ -30,7 +30,9 @@ open class MessagesCollectionView: UICollectionView {
 
     open weak var messagesDataSource: MessagesDataSource?
 
-    open weak var messagesDelegate: MessageCellDelegate?
+    open weak var messagesLayoutDelegate: MessagesLayoutDelegate?
+
+    open weak var messageCellDelegate: MessageCellDelegate?
 
     //open weak var messagesDisplayDataSource: MessagesDisplayDataSource?
 
@@ -58,6 +60,16 @@ open class MessagesCollectionView: UICollectionView {
     func scrollToBottom(animated: Bool = false) {
         guard let indexPath = indexPathForLastItem else { return }
         scrollToItem(at: indexPath, at: .bottom, animated: animated)
+    }
+
+    open func dequeueMessageHeaderView(withReuseIdentifier identifier: String = "MessageHeader", for indexPath: IndexPath) -> MessageHeaderView {
+        let header = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: identifier, for: indexPath)
+        return header as? MessageHeaderView ?? MessageHeaderView()
+    }
+
+    open func dequeueMessageFooterView(withReuseIdentifier identifier: String = "MessageFooter", for indexPath: IndexPath) -> MessageFooterView {
+        let footer = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: identifier, for: indexPath)
+        return footer as? MessageFooterView ?? MessageFooterView()
     }
 
 }

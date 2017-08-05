@@ -24,18 +24,22 @@
 
 import Foundation
 
-public protocol MessageCellDelegate: class {
+public protocol MessagesLayoutDelegate: class {
 
-    func didTapMessage(in cell: MessageCollectionViewCell)
+    func headerSizeFor(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
-    func didTapAvatar(in cell: MessageCollectionViewCell)
+    func footerSizeFor(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
 }
 
-extension MessageCellDelegate {
+extension MessagesLayoutDelegate {
 
-    func didTapMessage(in cell: MessageCollectionViewCell) {}
+    func headerSizeFor(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return .zero
+    }
 
-    func didTapAvatar(in cell: MessageCollectionViewCell) {}
+    func footerSizeFor(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return .zero
+    }
 
 }
