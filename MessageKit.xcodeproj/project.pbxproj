@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		379C38541F3516B10070A16B /* AvatarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379C38531F3516B10070A16B /* AvatarTests.swift */; };
+		379C38541F3516B10070A16B /* AvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379C38531F3516B10070A16B /* AvatarViewTests.swift */; };
 		882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882D75831DE507320033F95F /* MessagesDataSource.swift */; };
 		888CEBFC1D3FD525005178DE /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888CEBFB1D3FD525005178DE /* MessagesViewController.swift */; };
 		88916B2D1CF0DF2F00469F91 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88916B221CF0DF2F00469F91 /* MessageKit.framework */; };
@@ -44,7 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		379C38531F3516B10070A16B /* AvatarTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarTests.swift; sourceTree = "<group>"; };
+		379C38531F3516B10070A16B /* AvatarViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarViewTests.swift; sourceTree = "<group>"; };
 		379D48AF1F34F2E1008FB0D8 /* Avatar.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Avatar.playground; sourceTree = "<group>"; };
 		882D75831DE507320033F95F /* MessagesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDataSource.swift; sourceTree = "<group>"; };
 		888CEBFB1D3FD525005178DE /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 			children = (
 				88916B421CF0DF5900469F91 /* Info.plist */,
 				88916B431CF0DF5900469F91 /* MessageKitTests.swift */,
-				379C38531F3516B10070A16B /* AvatarTests.swift */,
+				379C38531F3516B10070A16B /* AvatarViewTests.swift */,
 			);
 			path = Tests;
 			sourceTree = SOURCE_ROOT;
@@ -360,7 +360,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				379C38541F3516B10070A16B /* AvatarTests.swift in Sources */,
+				379C38541F3516B10070A16B /* AvatarViewTests.swift in Sources */,
 				88916B451CF0DF5900469F91 /* MessageKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

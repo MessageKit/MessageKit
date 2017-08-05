@@ -24,19 +24,21 @@
 
 import Foundation
 
-open class Avatar: UIView {
+open class AvatarView: UIView {
+
     // MARK: - Properties
+
     internal var initalsLabel = UILabel()
     internal var imageView = UIImageView()
     internal var initals: String = "?"
-    
+
     // MARK: - initializers
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         prepareView()
     }
-    
-    // swiftlint:disable line_length
+
     convenience public init(size: CGFloat = 30, image: UIImage? = nil, highlightedImage: UIImage? = nil, initals inInitals: String = "?", cornerRounding: CGFloat? = nil) {
         let frame = CGRect(x: 0, y: 0, width: size, height: size)
         self.init(frame: frame)
@@ -47,7 +49,7 @@ open class Avatar: UIView {
         initals = inInitals
         prepareView()
     }
-    
+
     convenience public init() {
         let frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         self.init(frame: frame)
@@ -55,19 +57,19 @@ open class Avatar: UIView {
         roundCorners(by: nil)
         prepareView()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    //MARK: - internal methods
-    
+
+    // MARK: - Internal methods
+
     internal func prepareView() {
         prepareInitalsLabel()
         prepareImageView()
         imageView.isHidden = imageView.image == nil
     }
-    
+
     internal func prepareInitalsLabel() {
         initalsLabel.text = initals
         initalsLabel.textAlignment = .center
@@ -76,7 +78,7 @@ open class Avatar: UIView {
         initalsLabel.center = center
         initalsLabel.frame = frame
     }
-    
+
     internal func prepareImageView() {
         contentMode = .scaleAspectFill
         layer.masksToBounds = true
@@ -85,32 +87,28 @@ open class Avatar: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.frame = frame
     }
-    
-    //MARK: - Open methods
-    
+
+    // MARK: - Open methods
+
     open func set(image: UIImage) {
         imageView.image = image
     }
-    
+
     open func setInitalsFont(size: CGFloat = 16, color: UIColor = .white) {
         initalsLabel.font = UIFont.systemFont(ofSize: size)
         initalsLabel.textColor = color
     }
-    
+
     open func setBackground(color: UIColor) {
         backgroundColor = color
     }
-    
-    open func getImage() -> UIImage {
-        return imageView.image ?? UIImage()
+
+    open func getImage() -> UIImage? {
+        return imageView.image
     }
-    
-    open func roundCorners(by: CGFloat?) {
-        guard let radius = by else {
-            //if corner radius not set default to Circle
-            layer.cornerRadius = frame.height/2
-            return
-        }
-        layer.cornerRadius = radius
+
+    open func roundCorners(by radius: CGFloat?) {
+        //if corner radius not set default to Circle
+        layer.cornerRadius = radius ?? frame.height/2
     }
 }
