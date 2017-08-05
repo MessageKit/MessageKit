@@ -105,17 +105,13 @@ extension ConversationViewController: MessagesDataSource {
         return messages[indexPath.section]
     }
 
-<<<<<<< HEAD
 }
 
 // MARK: - MessagesDisplayDataSource
 
 extension ConversationViewController: MessagesDisplayDataSource {
 
-    func avatarForMessage(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
-=======
     func avatarForMessage(_ message: MessageType, at indexPath: IndexPath, in collectionView: UICollectionView) -> AvatarView {
->>>>>>> Fix failing test and minor changes
         let image = isFromCurrentSender(message: message) ? #imageLiteral(resourceName: "Steve-Jobs") : #imageLiteral(resourceName: "Tim-Cook")
         return AvatarView(image: image)
     }
