@@ -30,10 +30,10 @@ open class MessageInputBar: UIView, UITextViewDelegate {
 
     open let inputTextView: UITextView = {
 
-        let inputTextView = UITextView(frame: .zero)
+        let inputTextView = InputTextView(frame: .zero)
         inputTextView.font = UIFont.preferredFont(forTextStyle: .body)
-        inputTextView.text = "New Message"
-        inputTextView.textColor = .lightGray
+        inputTextView.textColor = .black
+        inputTextView.placeholder = "New Message"
         inputTextView.backgroundColor = .white
         inputTextView.layer.borderColor = UIColor.lightGray.cgColor
         inputTextView.layer.borderWidth = 1.0
@@ -97,7 +97,7 @@ open class MessageInputBar: UIView, UITextViewDelegate {
 
     public func textViewDidChange(_ textView: UITextView) {
         let trimmedText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        sendButton.isEnabled = !trimmedText.isEmpty && textView.text != "New Message"
+        sendButton.isEnabled = !trimmedText.isEmpty
         invalidateIntrinsicContentSize()
     }
 
