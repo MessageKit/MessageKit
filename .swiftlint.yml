@@ -1,6 +1,4 @@
-line_length:
-  warning: 150
-  ignores_comments: true
-
 disabled_rules:
-  identifier_name
+- identifier_name
+- line_length
+- todo
