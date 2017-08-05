@@ -22,14 +22,16 @@
  SOFTWARE.
  */
 
-import Foundation
+import UIKit
 
-extension UIColor {
+open class MessageFooterView: UICollectionReusableView {
 
-    static let incomingGray = UIColor(colorLiteralRed: 230/255, green: 230/255, blue: 235/255, alpha: 1.0)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
 
-    static let outgoingGreen = UIColor(colorLiteralRed: 69/255, green: 214/255, blue: 93/255, alpha: 1.0)
-
-    static let inputBarGray = UIColor(colorLiteralRed: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
 }

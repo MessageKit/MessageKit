@@ -24,12 +24,18 @@
 
 import Foundation
 
-extension UIColor {
+public protocol MessageCellDelegate: class {
 
-    static let incomingGray = UIColor(colorLiteralRed: 230/255, green: 230/255, blue: 235/255, alpha: 1.0)
+    func didTapMessage(in cell: MessageCollectionViewCell)
 
-    static let outgoingGreen = UIColor(colorLiteralRed: 69/255, green: 214/255, blue: 93/255, alpha: 1.0)
+    func didTapAvatar(in cell: MessageCollectionViewCell)
 
-    static let inputBarGray = UIColor(colorLiteralRed: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
+}
+
+extension MessageCellDelegate {
+
+    func didTapMessage(in cell: MessageCollectionViewCell) {}
+
+    func didTapAvatar(in cell: MessageCollectionViewCell) {}
 
 }

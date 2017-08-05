@@ -26,11 +26,11 @@ import Foundation
 //import class CoreLocation.CLLocation
 
 public enum MessageData {
-    
+
     case text(String)
-    
+
     // MARK: - Not supported yet
-    
+
 //    case attributedText(NSAttributedString)
 //    
 //    case audio(Data)

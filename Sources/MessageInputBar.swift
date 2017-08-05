@@ -24,12 +24,12 @@
 
 import UIKit
 
-open class MessageInputBar: UIView {
-    
+open class MessageInputBar: UIView, UITextViewDelegate {
+
     // MARK: - Properties
-    
+
     open let inputTextView: UITextView = {
-    
+
         let inputTextView = UITextView(frame: .zero)
         inputTextView.font = UIFont.preferredFont(forTextStyle: .body)
         inputTextView.text = "New Message"
@@ -39,68 +39,110 @@ open class MessageInputBar: UIView {
         inputTextView.layer.borderWidth = 1.0
         inputTextView.layer.cornerRadius = 3.0
         inputTextView.layer.masksToBounds = true
+        inputTextView.isScrollEnabled = false
         return inputTextView
     }()
-    
+
     open let sendButton: UIButton = {
-    
+
         let sendButton = UIButton()
         sendButton.setTitle("Send", for: .normal)
         sendButton.setTitleColor(.lightGray, for: .normal)
         return sendButton
     }()
-    
+
     open weak var delegate: MessageInputBarDelegate?
-    
+
     // MARK: - Initializers
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         setupSubviews()
         setupConstraints()
         registerSelector()
-        
+
+        inputTextView.delegate = self
+
         backgroundColor = .inputBarGray
 
+        autoresizingMask = .flexibleHeight
+
+        NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange), name: .UIDeviceOrientationDidChange, object: nil)
+
     }
-    
+
     convenience public init() {
         self.init(frame: .zero)
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     // MARK: - Methods
-    
+
+    func orientationDidChange(_ notification: Notification) {
+        invalidateIntrinsicContentSize()
+    }
+
+    public func textViewDidChange(_ textView: UITextView) {
+        invalidateIntrinsicContentSize()
+    }
+
+    override open var intrinsicContentSize: CGSize {
+        let sizeToFit = inputTextView.sizeThatFits(CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude))
+        let heightToFit = sizeToFit.height.rounded()
+        return CGSize(width: bounds.width, height: heightToFit + 8)
+    }
+
     private func setupSubviews() {
-        
+
         addSubview(inputTextView)
         addSubview(sendButton)
-        
+
     }
-    
+
     private func setupConstraints() {
 
         inputTextView.translatesAutoresizingMaskIntoConstraints = false
-        addConstraint(NSLayoutConstraint(item: inputTextView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 4))
-        addConstraint(NSLayoutConstraint(item: inputTextView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: -4))
-        addConstraint(NSLayoutConstraint(item: inputTextView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 4))
-        addConstraint(NSLayoutConstraint(item: inputTextView, attribute: .trailing, relatedBy: .equal, toItem: sendButton, attribute: .leading, multiplier: 1, constant: -4))
+
+        addConstraint(NSLayoutConstraint(item: inputTextView, attribute: .top, relatedBy: .equal,
+                                         toItem: self, attribute: .top, multiplier: 1, constant: 4))
+
+        addConstraint(NSLayoutConstraint(item: inputTextView, attribute: .bottom, relatedBy: .equal,
+                                         toItem: self, attribute: .bottom, multiplier: 1, constant: -4))
+
+        addConstraint(NSLayoutConstraint(item: inputTextView, attribute: .leading, relatedBy: .equal,
+                                         toItem: self, attribute: .leading, multiplier: 1, constant: 4))
+
+        addConstraint(NSLayoutConstraint(item: inputTextView, attribute: .trailing, relatedBy: .equal,
+                                         toItem: sendButton, attribute: .leading, multiplier: 1, constant: -4))
 
         sendButton.translatesAutoresizingMaskIntoConstraints = false
-        addConstraint(NSLayoutConstraint(item: sendButton, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0))
-        addConstraint(NSLayoutConstraint(item: sendButton, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: -4))
-        addConstraint(NSLayoutConstraint(item: sendButton, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0))
+
+        addConstraint(NSLayoutConstraint(item: sendButton, attribute: .bottom, relatedBy: .equal,
+                                         toItem: inputTextView, attribute: .bottom, multiplier: 1, constant: 0))
+
+        addConstraint(NSLayoutConstraint(item: sendButton, attribute: .trailing, relatedBy: .equal,
+                                         toItem: self, attribute: .trailing, multiplier: 1, constant: -4))
+
+        addConstraint(NSLayoutConstraint(item: sendButton, attribute: .top, relatedBy: .greaterThanOrEqual,
+                                         toItem: self, attribute: .top, multiplier: 1, constant: 0))
+
+        addConstraint(NSLayoutConstraint(item: sendButton, attribute: .width, relatedBy: .equal,
+                                         toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 60))
 
     }
-    
+
     private func registerSelector() {
         sendButton.addTarget(self, action: #selector(MessageInputBar.sendButtonPressed), for: .touchUpInside)
     }
-    
+
     func sendButtonPressed() {
         delegate?.sendButtonPressed(sender: sendButton, textView: inputTextView)
     }

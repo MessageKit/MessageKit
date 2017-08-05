@@ -25,30 +25,51 @@
 import UIKit
 
 open class MessagesCollectionView: UICollectionView {
-    
+
     // MARK: - Properties
-    
+
     open weak var messagesDataSource: MessagesDataSource?
-    
-    open weak var messagesDisplayDataSource: MessagesDisplayDataSource?
-    
+
+    open weak var messagesLayoutDelegate: MessagesLayoutDelegate?
+
+    open weak var messageCellDelegate: MessageCellDelegate?
+
+    //open weak var messagesDisplayDataSource: MessagesDisplayDataSource?
+
+    var indexPathForLastItem: IndexPath? {
+
+        let lastSection = numberOfSections > 0 ? numberOfSections - 1 : 0
+        guard numberOfItems(inSection: lastSection) > 0 else { return nil }
+        return IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
+
+    }
+
     // MARK: - Initializers
-    
+
     override public init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         backgroundColor = .white
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-	
-	var indexPathForLastItem: IndexPath? {
-		
-		let lastSection = numberOfSections > 0 ? numberOfSections - 1 : 0
-		guard numberOfItems(inSection: lastSection) > 0 else { return nil }
-		return IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
-		
-	}
+    // MARK: - Methods
+
+    func scrollToBottom(animated: Bool = false) {
+        guard let indexPath = indexPathForLastItem else { return }
+        scrollToItem(at: indexPath, at: .bottom, animated: animated)
+    }
+
+    open func dequeueMessageHeaderView(withReuseIdentifier identifier: String = "MessageHeader", for indexPath: IndexPath) -> MessageHeaderView {
+        let header = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: identifier, for: indexPath)
+        return header as? MessageHeaderView ?? MessageHeaderView()
+    }
+
+    open func dequeueMessageFooterView(withReuseIdentifier identifier: String = "MessageFooter", for indexPath: IndexPath) -> MessageFooterView {
+        let footer = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: identifier, for: indexPath)
+        return footer as? MessageFooterView ?? MessageFooterView()
+    }
+
 }
