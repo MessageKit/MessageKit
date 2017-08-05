@@ -47,7 +47,12 @@ open class MessageInputBar: UIView, UITextViewDelegate {
 
         let sendButton = UIButton()
         sendButton.setTitle("Send", for: .normal)
-        sendButton.setTitleColor(.lightGray, for: .normal)
+        sendButton.setTitleColor(.sendButtonBlue, for: .normal)
+        sendButton.setTitleColor(UIColor.sendButtonBlue.withAlphaComponent(0.3), for: .highlighted)
+        sendButton.setTitleColor(.lightGray, for: .disabled)
+        sendButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        sendButton.isEnabled = false
+
         return sendButton
     }()
 
@@ -91,6 +96,8 @@ open class MessageInputBar: UIView, UITextViewDelegate {
     }
 
     public func textViewDidChange(_ textView: UITextView) {
+        let trimmedText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        sendButton.isEnabled = !trimmedText.isEmpty && textView.text != "New Message"
         invalidateIntrinsicContentSize()
     }
 
