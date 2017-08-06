@@ -59,7 +59,7 @@ open class AvatarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - internal methods
+    // MARK: - internal methods
     
     internal func prepareView() {
         prepareInitalsLabel()
@@ -85,7 +85,7 @@ open class AvatarView: UIView {
         imageView.frame = frame
     }
     
-    //MARK: - Open methods
+    // MARK: - Open methods
     
     open func set(image: UIImage) {
         imageView.image = image
