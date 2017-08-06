@@ -18,7 +18,6 @@
 		B015E8191F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */; };
 		B015E81F1F259D8E007EDFB6 /* MessageInputBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E81E1F259D8E007EDFB6 /* MessageInputBarDelegate.swift */; };
 		B03FF9AF1F31BB1200754FE5 /* MessageCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03FF9AE1F31BB1200754FE5 /* MessageCellDelegate.swift */; };
-		B0655A261F23D6C500542A83 /* Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A251F23D6C500542A83 /* Avatar.swift */; };
 		B0655A281F23D71400542A83 /* MessageDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A271F23D71400542A83 /* MessageDirection.swift */; };
 		B0655A2A1F23D77200542A83 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A291F23D77200542A83 /* Sender.swift */; };
 		B0655A2C1F23D81600542A83 /* MessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A2B1F23D81600542A83 /* MessageData.swift */; };
@@ -60,7 +59,6 @@
 		B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
 		B015E81E1F259D8E007EDFB6 /* MessageInputBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageInputBarDelegate.swift; sourceTree = "<group>"; };
 		B03FF9AE1F31BB1200754FE5 /* MessageCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCellDelegate.swift; sourceTree = "<group>"; };
-		B0655A251F23D6C500542A83 /* Avatar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Avatar.swift; sourceTree = "<group>"; };
 		B0655A271F23D71400542A83 /* MessageDirection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDirection.swift; sourceTree = "<group>"; };
 		B0655A291F23D77200542A83 /* Sender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
 		B0655A2B1F23D81600542A83 /* MessageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageData.swift; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 		B09643991F295D58004D0129 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B0655A251F23D6C500542A83 /* Avatar.swift */,
 				B0655A291F23D77200542A83 /* Sender.swift */,
 				B0655A2B1F23D81600542A83 /* MessageData.swift */,
 				B0655A271F23D71400542A83 /* MessageDirection.swift */,
@@ -343,7 +340,6 @@
 				B0655A2C1F23D81600542A83 /* MessageData.swift in Sources */,
 				B09643861F286C9E004D0129 /* String+Extensions.swift in Sources */,
 				B0655A281F23D71400542A83 /* MessageDirection.swift in Sources */,
-				B0655A261F23D6C500542A83 /* Avatar.swift in Sources */,
 				B015E81F1F259D8E007EDFB6 /* MessageInputBarDelegate.swift in Sources */,
 				B0655A2A1F23D77200542A83 /* Sender.swift in Sources */,
 				B074EE931F35587100ABB8C8 /* MessageHeaderView.swift in Sources */,
