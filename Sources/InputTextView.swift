@@ -52,16 +52,18 @@ open class InputTextView: UITextView {
         }
     }
 
+    private var isPlaceholderVisibile = false
+
     // MARK: - Initializers
 
     override public init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
-        commonInit()
+        addObservers()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit()
+        addObservers()
     }
 
     deinit {
@@ -91,19 +93,26 @@ open class InputTextView: UITextView {
 
     }
 
-    fileprivate func commonInit() {
+    fileprivate func addObservers() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(textDidBeginEdit),
+                                               name: Notification.Name.UITextViewTextDidBeginEditing,
+                                               object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(textDidChange),
-                                               name: NSNotification.Name.UITextViewTextDidChange,
-                                               object: self)
+                                               name: Notification.Name.UITextViewTextDidChange,
+                                               object: nil)
+    }
+
+    func textDidBeginEdit(notification: Notification) {
+        guard text.isEmpty else { return }
+        isPlaceholderVisibile = true
     }
 
     func textDidChange(notification: Notification) {
-        guard let notificationObject = notification.object as? InputTextView,
-            notificationObject === self else { return }
-
+        guard text.isEmpty || isPlaceholderVisibile else { return }
         setNeedsDisplay()
-
+        isPlaceholderVisibile = false
     }
 
 }
