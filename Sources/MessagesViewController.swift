@@ -172,9 +172,8 @@ extension MessagesViewController: UICollectionViewDataSource {
         let message = displayDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         let messageColor = displayDataSource.messageColorFor(message, at: indexPath, in: messagesCollectionView)
         let avatar = displayDataSource.avatarForMessage(message, at: indexPath, in: messagesCollectionView)
-
-        cell.avatarImageView.image = avatar.image(highlighted: false)
-        cell.avatarImageView.highlightedImage = avatar.image(highlighted: true)
+        //TODO: replace this completely
+        cell.avatarImageView.image = avatar.getImage()
         cell.messageContainerView.backgroundColor = messageColor
         cell.configure(with: message)
 
