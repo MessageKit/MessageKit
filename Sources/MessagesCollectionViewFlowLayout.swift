@@ -36,6 +36,8 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     open var messageContainerInsets: UIEdgeInsets
 
+    open var messageToEdgePadding: CGFloat
+
     fileprivate let avatarBottomSpacing: CGFloat = 4
 
     fileprivate let avatarContainerSpacing: CGFloat = 4
@@ -56,6 +58,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         incomingAvatarSize = CGSize(width: 30, height: 30)
         outgoingAvatarSize = CGSize(width: 30, height: 30)
         messageContainerInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
+        messageToEdgePadding = 30.0
         super.init()
         sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
     }
@@ -154,9 +157,9 @@ extension MessagesCollectionViewFlowLayout {
 
     func containerHeightForMessage(message: MessageType) -> CGFloat {
 
-        let avatarSize = avatarSizeFor(message: message)
+        let avatarWidth = avatarSizeFor(message: message).width
         let insets = messageContainerInsets.left + messageContainerInsets.right
-        let availableWidth = itemWidth - avatarSize.width - avatarContainerSpacing - insets
+        let availableWidth = itemWidth - avatarWidth - avatarContainerSpacing - messageToEdgePadding - insets
 
         // This is a switch because support for more messages are to come
         switch message.data {
@@ -172,9 +175,9 @@ extension MessagesCollectionViewFlowLayout {
 
         let containerHeight = containerHeightForMessage(message: message)
 
-        let avatarSize = avatarSizeFor(message: message)
+        let avatarWidth = avatarSizeFor(message: message).width
         let insets = messageContainerInsets.left + messageContainerInsets.right
-        let availableWidth = itemWidth - avatarSize.width - avatarContainerSpacing - insets
+        let availableWidth = itemWidth - avatarWidth - avatarContainerSpacing - messageToEdgePadding - insets
 
         // This is a switch because support for more messages are to come
         switch message.data {
