@@ -29,25 +29,15 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
 
     open let messageContainerView: UIView = {
-
         let messageContainerView = UIView()
         messageContainerView.layer.cornerRadius = 12.0
         messageContainerView.layer.masksToBounds = true
         return messageContainerView
     }()
 
-    open let avatarImageView: UIImageView = {
-
-        let avatarImageView = UIImageView()
-        avatarImageView.contentMode = .scaleAspectFill
-        avatarImageView.backgroundColor = .lightGray
-        avatarImageView.layer.masksToBounds = true
-        avatarImageView.clipsToBounds = true
-        return avatarImageView
-    }()
+    open var avatarImageView: AvatarView = AvatarView()
 
     open let messageLabel: UILabel = {
-
         let messageLabel = UILabel()
         messageLabel.numberOfLines = 0
         messageLabel.backgroundColor = .clear
