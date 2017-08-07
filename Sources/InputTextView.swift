@@ -90,23 +90,16 @@ open class InputTextView: UITextView {
 
         placeholder.draw(in: UIEdgeInsetsInsetRect(rect, placeholderInsets),
                          withAttributes: attributes)
+        
+        isPlaceholderVisibile = true
 
     }
 
     fileprivate func addObservers() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(textDidBeginEdit),
-                                               name: Notification.Name.UITextViewTextDidBeginEditing,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
                                                selector: #selector(textDidChange),
                                                name: Notification.Name.UITextViewTextDidChange,
                                                object: nil)
-    }
-
-    func textDidBeginEdit(notification: Notification) {
-        guard text.isEmpty else { return }
-        isPlaceholderVisibile = true
     }
 
     func textDidChange(notification: Notification) {
