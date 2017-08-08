@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		171D5AB91F36712B0053DF69 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171D5AB81F36712B0053DF69 /* InputTextView.swift */; };
 		372F6AEB1F36C15600B57FBD /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372F6AEA1F36C15600B57FBD /* AvatarView.swift */; };
 		372F6AEF1F36C61000B57FBD /* AvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372F6AEE1F36C61000B57FBD /* AvatarViewTests.swift */; };
 		882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882D75831DE507320033F95F /* MessagesDataSource.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		171D5AB81F36712B0053DF69 /* InputTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
 		372F6AEA1F36C15600B57FBD /* AvatarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		372F6AED1F36C1C100B57FBD /* AvatarView.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = AvatarView.playground; sourceTree = "<group>"; };
 		372F6AEE1F36C61000B57FBD /* AvatarViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarViewTests.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				372F6AEA1F36C15600B57FBD /* AvatarView.swift */,
 				372F6AED1F36C1C100B57FBD /* AvatarView.playground */,
 				B0655A371F23EE8B00542A83 /* MessageInputBar.swift */,
+				171D5AB81F36712B0053DF69 /* InputTextView.swift */,
 				B074EE921F35587100ABB8C8 /* MessageHeaderView.swift */,
 				B074EE941F35588A00ABB8C8 /* MessageFooterView.swift */,
 			);
@@ -333,6 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				171D5AB91F36712B0053DF69 /* InputTextView.swift in Sources */,
 				B074EE971F355FBC00ABB8C8 /* MessagesLayoutDelegate.swift in Sources */,
 				882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */,
 				888CEBFC1D3FD525005178DE /* MessagesViewController.swift in Sources */,
