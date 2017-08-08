@@ -37,13 +37,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     open var avatarImageView: AvatarView = AvatarView()
 
-    open let messageLabel: UILabel = {
-        let messageLabel = UILabel()
-        messageLabel.numberOfLines = 0
-        messageLabel.backgroundColor = .clear
-        messageLabel.isOpaque = false
-        return messageLabel
-    }()
+    open var messageLabel: MessageLabel = MessageLabel()
 
     open weak var delegate: MessageCellDelegate?
 
@@ -120,9 +114,9 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     private func setMessageLabelFor(attributes: MessagesCollectionViewLayoutAttributes) {
 
-        let frame =  CGRect(x: 0, y: 0, width: attributes.messageContainerSize.width, height: attributes.messageContainerSize.height)
-        let insetFrame = UIEdgeInsetsInsetRect(frame, attributes.messageContainerInsets)
-        messageLabel.frame = insetFrame
+        let frame = CGRect(origin: .zero, size: CGSize(width: attributes.messageContainerSize.width, height: attributes.messageContainerSize.height))
+        messageLabel.frame = frame
+        messageLabel.textInsets = attributes.messageContainerInsets
 
     }
 
