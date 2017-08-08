@@ -34,6 +34,10 @@ public protocol MessagesDisplayDataSource: class, MessagesDataSource {
 
     func footerForMessage(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView?
 
+    func cellTopLabelTextForMessage(_ message: MessageType, at indexPath: IndexPath) -> String?
+
+    func cellBottomLabelTextForMessage(_ message: MessageType, at indexPath: IndexPath) -> String?
+
 }
 
 public extension MessagesDisplayDataSource {
@@ -47,6 +51,14 @@ public extension MessagesDisplayDataSource {
     }
 
     func footerForMessage(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView? {
+        return nil
+    }
+
+    func cellTopLabelTextForMessage(_ message: MessageType, at indexPath: IndexPath) -> String? {
+        return nil
+    }
+
+    func cellBottomLabelTextForMessage(_ message: MessageType, at indexPath: IndexPath) -> String? {
         return nil
     }
 

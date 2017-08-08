@@ -35,9 +35,13 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         return messageContainerView
     }()
 
-    open var avatarImageView: AvatarView = AvatarView()
+    open var avatarView: AvatarView = AvatarView()
+
+    open var cellTopLabel: MessageLabel = MessageLabel()
 
     open var messageLabel: MessageLabel = MessageLabel()
+
+    open var cellBottomLabel: MessageLabel = MessageLabel()
 
     open weak var delegate: MessageCellDelegate?
 
@@ -59,7 +63,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     private func setupSubviews() {
 
         contentView.addSubview(messageContainerView)
-        contentView.addSubview(avatarImageView)
+        contentView.addSubview(avatarView)
         messageContainerView.addSubview(messageLabel)
 
     }
@@ -69,54 +73,80 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else { return }
 
-            messageLabel.font = attributes.messageFont
+        cellTopLabel.font = attributes.cellTopLabelFont
+        cellTopLabel.frame = cellTopLabelFrame(for: attributes)
+        //cellTopLabel.textInsets = attributes.cellTopLabelInsets
 
-            setAvatarFrameFor(attributes: attributes)
-            setMessageContainerFrameFor(attributes: attributes)
-            setMessageLabelFor(attributes: attributes)
+        messageContainerView.frame = messageContainerFrame(for: attributes)
+        messageLabel.frame = CGRect(origin: .zero, size: attributes.messageContainerSize)
+        messageLabel.textInsets = attributes.messageLabelInsets
+
+        avatarView.frame = avatarViewFrame(for: attributes)
+
+        cellBottomLabel.font = attributes.cellBottomLabelFont
+        cellBottomLabel.frame = cellTopLabelFrame(for: attributes)
+        //cellBottomLabel.textInsets = attributes.cellBottomLabelInsets
+
+
 
     }
 
-    private func setMessageContainerFrameFor(attributes: MessagesCollectionViewLayoutAttributes) {
+    func cellTopLabelFrame(for attributes: MessagesCollectionViewLayoutAttributes) -> CGRect {
 
-        switch attributes.direction {
-        case .incoming:
-            let x = attributes.avatarSize.width + attributes.avatarContainerSpacing
-            messageContainerView.frame = CGRect(x: x,
-                                                y: 0,
-                                                width: attributes.messageContainerSize.width,
-                                                height: attributes.messageContainerSize.height)
-        case .outgoing:
-            let x = contentView.frame.width - attributes.avatarSize.width - attributes.avatarContainerSpacing - attributes.messageContainerSize.width
-            messageContainerView.frame = CGRect(x: x,
-                                                y: 0,
-                                                width: attributes.messageContainerSize.width,
-                                                height: attributes.messageContainerSize.height)
+        var origin: CGPoint = .zero
+
+        if attributes.topLabelBeginsAfterAvatar {
+            origin = CGPoint(x: 0, y: attributes.avatarSize.width)
         }
 
+        return CGRect(origin: origin, size: attributes.cellTopLabelSize)
     }
 
-    private func setAvatarFrameFor(attributes: MessagesCollectionViewLayoutAttributes) {
+    func cellBottomLabelFrame(for attributes: MessagesCollectionViewLayoutAttributes) -> CGRect {
 
-        switch attributes.direction {
-        case .incoming:
-            let y = frame.height - attributes.avatarSize.height - attributes.avatarBottomSpacing
-            avatarImageView.frame = CGRect(x: 0, y: y, width: attributes.avatarSize.width, height: attributes.avatarSize.height)
-        case .outgoing:
-            let y = frame.height - attributes.avatarSize.height - attributes.avatarBottomSpacing
-            let x = contentView.frame.width - attributes.avatarSize.width
-            avatarImageView.frame = CGRect(x: x, y: y, width: attributes.avatarSize.width, height: attributes.avatarSize.height)
+        var origin: CGPoint = .zero
+
+        if attributes.bottomLabelBeginsAfterAvatar {
+            origin = CGPoint(x: 0, y: attributes.avatarSize.width)
         }
 
-        avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2
+        return CGRect(origin: origin, size: attributes.cellBottomLabelSize)
+    }
+
+    func messageContainerFrame(for attributes: MessagesCollectionViewLayoutAttributes) -> CGRect {
+
+        var origin: CGPoint = .zero
+
+        let yPosition = attributes.cellTopLabelSize.height
+
+        switch attributes.direction {
+        case .outgoing:
+            let xPosition = contentView.frame.width - attributes.avatarSize.width - attributes.avatarMessagePadding - attributes.messageContainerSize.width
+            origin = CGPoint(x: xPosition, y: yPosition)
+        case .incoming:
+            let xPosition = attributes.avatarSize.width + attributes.avatarMessagePadding
+            origin = CGPoint(x: xPosition, y: yPosition)
+        }
+
+        return CGRect(origin: origin, size: attributes.messageContainerSize)
 
     }
 
-    private func setMessageLabelFor(attributes: MessagesCollectionViewLayoutAttributes) {
+    func avatarViewFrame(for attributes: MessagesCollectionViewLayoutAttributes) -> CGRect {
 
-        let frame = CGRect(origin: .zero, size: CGSize(width: attributes.messageContainerSize.width, height: attributes.messageContainerSize.height))
-        messageLabel.frame = frame
-        messageLabel.textInsets = attributes.messageContainerInsets
+        var origin: CGPoint = .zero
+
+        let yPosition = contentView.frame.height - attributes.avatarSize.height - attributes.avatarBottomPadding
+
+        switch attributes.direction {
+        case .outgoing:
+            let xPosition = contentView.frame.width - attributes.avatarSize.width
+            origin = CGPoint(x: xPosition, y: yPosition)
+        case .incoming:
+            origin = CGPoint(x: 0, y: yPosition)
+        }
+
+        return CGRect(origin: origin, size: attributes.avatarSize)
 
     }
 
@@ -132,8 +162,8 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     func setupGestureRecognizers() {
 
         let avatarTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
-        avatarImageView.addGestureRecognizer(avatarTapGesture)
-        avatarImageView.isUserInteractionEnabled = true
+        avatarView.addGestureRecognizer(avatarTapGesture)
+        avatarView.isUserInteractionEnabled = true
 
         let messageTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapMessage))
         messageContainerView.addGestureRecognizer(messageTapGesture)
