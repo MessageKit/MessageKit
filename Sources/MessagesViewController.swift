@@ -25,7 +25,7 @@ SOFTWARE.
 import UIKit
 
 open class MessagesViewController: UIViewController {
-
+    
 	// MARK: - Properties
 
 	open var messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
@@ -172,8 +172,7 @@ extension MessagesViewController: UICollectionViewDataSource {
         let message = displayDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         let messageColor = displayDataSource.messageColorFor(message, at: indexPath, in: messagesCollectionView)
         let avatar = displayDataSource.avatarForMessage(message, at: indexPath, in: messagesCollectionView)
-        //TODO: replace this completely
-        cell.avatarImageView.image = avatar.getImage()
+        cell.avatarImageView.set(avatar: avatar)
         cell.messageContainerView.backgroundColor = messageColor
         cell.configure(with: message)
 
