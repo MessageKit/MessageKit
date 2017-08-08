@@ -67,13 +67,13 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         messageLabelInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
         messageToViewEdgePadding = 30.0
 
-        cellTopLabelFont = UIFont.preferredFont(forTextStyle: .caption2)
+        cellTopLabelFont = UIFont.preferredFont(forTextStyle: .caption1)
         cellTopLabelInsets = .zero
-        topLabelBeginsAfterAvatar = false
+        topLabelBeginsAfterAvatar = true
 
-        cellBottomLabelFont = UIFont.preferredFont(forTextStyle: .caption1)
+        cellBottomLabelFont = UIFont.preferredFont(forTextStyle: .caption2)
         cellBottomLabelInsets = .zero
-        bottomLabelBeginsAfterAvatar = false
+        bottomLabelBeginsAfterAvatar = true
 
         incomingAvatarSize = CGSize(width: 30, height: 30)
         outgoingAvatarSize = CGSize(width: 30, height: 30)
@@ -203,7 +203,6 @@ extension MessagesCollectionViewFlowLayout {
 
     // MARK: - Width Calculations
 
-
     func cellTopLabelWidth(for message: MessageType) -> CGFloat {
         if topLabelBeginsAfterAvatar {
             return itemWidth - avatarSize(for: message).width
@@ -270,7 +269,7 @@ extension MessagesCollectionViewFlowLayout {
 
     }
 
-    func messageContainerHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat{
+    func messageContainerHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         // This is a switch because we will support other message types in the future
         switch message.data {
@@ -326,7 +325,6 @@ extension MessagesCollectionViewFlowLayout {
         let finalHeight = estimatedHeight < minimumHeight ? minimumHeight : estimatedHeight
 
         return CGSize(width: itemWidth, height: finalHeight)
-
 
     }
 

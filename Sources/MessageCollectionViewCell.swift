@@ -62,9 +62,11 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     private func setupSubviews() {
 
+        contentView.addSubview(cellTopLabel)
         contentView.addSubview(messageContainerView)
-        contentView.addSubview(avatarView)
         messageContainerView.addSubview(messageLabel)
+        contentView.addSubview(avatarView)
+        contentView.addSubview(cellBottomLabel)
 
     }
 
@@ -75,7 +77,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         cellTopLabel.font = attributes.cellTopLabelFont
         cellTopLabel.frame = cellTopLabelFrame(for: attributes)
-        //cellTopLabel.textInsets = attributes.cellTopLabelInsets
+        cellTopLabel.textInsets = attributes.cellTopLabelInsets
 
         messageContainerView.frame = messageContainerFrame(for: attributes)
         messageLabel.frame = CGRect(origin: .zero, size: attributes.messageContainerSize)
@@ -84,10 +86,8 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         avatarView.frame = avatarViewFrame(for: attributes)
 
         cellBottomLabel.font = attributes.cellBottomLabelFont
-        cellBottomLabel.frame = cellTopLabelFrame(for: attributes)
-        //cellBottomLabel.textInsets = attributes.cellBottomLabelInsets
-
-
+        cellBottomLabel.frame = cellBottomLabelFrame(for: attributes)
+        cellBottomLabel.textInsets = attributes.cellBottomLabelInsets
 
     }
 
@@ -96,7 +96,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         var origin: CGPoint = .zero
 
         if attributes.topLabelBeginsAfterAvatar {
-            origin = CGPoint(x: 0, y: attributes.avatarSize.width)
+            origin = CGPoint(x: attributes.avatarSize.width + attributes.avatarMessagePadding, y: 0)
         }
 
         return CGRect(origin: origin, size: attributes.cellTopLabelSize)
@@ -104,10 +104,10 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     func cellBottomLabelFrame(for attributes: MessagesCollectionViewLayoutAttributes) -> CGRect {
 
-        var origin: CGPoint = .zero
+        var origin: CGPoint = CGPoint(x: 0, y: contentView.frame.height - attributes.cellBottomLabelSize.height)
 
         if attributes.bottomLabelBeginsAfterAvatar {
-            origin = CGPoint(x: 0, y: attributes.avatarSize.width)
+            origin.x = attributes.avatarSize.width + attributes.avatarMessagePadding
         }
 
         return CGRect(origin: origin, size: attributes.cellBottomLabelSize)
@@ -136,7 +136,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         var origin: CGPoint = .zero
 
-        let yPosition = contentView.frame.height - attributes.avatarSize.height - attributes.avatarBottomPadding
+        let yPosition = contentView.frame.height - attributes.avatarSize.height - attributes.avatarBottomPadding - attributes.cellBottomLabelSize.height
 
         switch attributes.direction {
         case .outgoing:

@@ -74,6 +74,16 @@ extension ConversationViewController: MessagesDisplayDataSource {
         return messagesCollectionView.dequeueMessageFooterView(for: indexPath)
     }
 
+    func cellTopLabelTextForMessage(_ message: MessageType, at indexPath: IndexPath) -> String? {
+        return message.sender.displayName
+    }
+
+    func cellBottomLabelTextForMessage(_ message: MessageType, at indexPath: IndexPath) -> String? {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter.string(from: message.sentDate)
+    }
+
 }
 
 // MARK: - MessagesLayoutDelegate
