@@ -114,7 +114,7 @@ open class MessagesViewController: UIViewController {
 		                                      toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
 
 		view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .bottom, relatedBy: .equal,
-		                                      toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: -48))
+		                                      toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: -46))
 
 	}
 
