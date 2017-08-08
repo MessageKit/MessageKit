@@ -43,17 +43,13 @@ open class AvatarView: UIView {
     
     func getImageFrom(initals: String, withColor color: UIColor = UIColor.white, fontSize: CGFloat = 14) -> UIImage {
         _ = UIGraphicsBeginImageContext(CGSize(width: 30, height: 30))
-        //// General Declarations
         let context = UIGraphicsGetCurrentContext()!
-        
-        //// Color Declarations
-        let white = UIColor.white
         
         //// Text Drawing
         let textRect = CGRect(x: 5, y: 6, width: 20, height: 20)
         let textStyle = NSMutableParagraphStyle()
         textStyle.alignment = .center
-        let textFontAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: fontSize), NSForegroundColorAttributeName: white, NSParagraphStyleAttributeName: textStyle]
+        let textFontAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: fontSize), NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: textStyle]
         
         let textTextHeight: CGFloat = initals.boundingRect(with: CGSize(width: textRect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes, context: nil).height
         context.saveGState()

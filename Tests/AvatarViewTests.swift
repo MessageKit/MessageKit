@@ -20,61 +20,51 @@ class AvatarViewTests: XCTestCase {
     }
     
     func testNoParams() {
-        let avatar = AvatarView()
-        XCTAssertEqual(avatar.initals, "?")
-        XCTAssertEqual(avatar.initalsLabel.text, "?")
-        XCTAssertEqual(avatar.layer.cornerRadius, 15.0)
-        XCTAssertNil(avatar.imageView.image)
-        XCTAssertTrue(avatar.imageView.isHidden)
-        XCTAssertEqual(avatar.initalsLabel.textColor, UIColor.white)
+        let avatarView = AvatarView()
+        XCTAssertEqual(avatarView.avatar.initals, "?")
+        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
+        XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
     }
     
     func testWithImage() {
-        let avatar = AvatarView(image: UIImage())
+        let avatarView = AvatarView()
+        let avatar = Avatar(image: UIImage())
+        avatarView.set(avatar: avatar)
         XCTAssertEqual(avatar.initals, "?")
-        XCTAssertEqual(avatar.initalsLabel.text, "?")
-        XCTAssertEqual(avatar.layer.cornerRadius, 15.0)
-        XCTAssertFalse(avatar.imageView.isHidden)
-        XCTAssertEqual(avatar.initalsLabel.textColor, UIColor.white)
-        XCTAssertEqual(avatar.backgroundColor, UIColor.gray)
+        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
+        XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
     }
     
-    func testCustom() {
-        let avatar = AvatarView(size: 50, image: UIImage(), highlightedImage: nil, initals: "lol", cornerRounding: 6)
-        XCTAssertEqual(avatar.initals, "lol")
-        XCTAssertEqual(avatar.initalsLabel.text, "lol")
-        XCTAssertEqual(avatar.layer.cornerRadius, 6.0)
-        XCTAssertFalse(avatar.imageView.isHidden)
-        XCTAssertEqual(avatar.initalsLabel.textColor, UIColor.white)
-        XCTAssertEqual(avatar.backgroundColor, UIColor.gray)
+    func testInitalsOnly() {
+        let avatarView = AvatarView()
+        let avatar = Avatar(initals: "DL")
+        avatarView.set(avatar: avatar)
+        XCTAssertEqual(avatar.initals, "DL")
+        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
+        XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
     }
     
     func testSetBackground() {
-        let avatar = AvatarView(image: UIImage())
-        XCTAssertEqual(avatar.backgroundColor, UIColor.gray)
-        avatar.setBackground(color: UIColor.red)
-        XCTAssertEqual(avatar.backgroundColor, UIColor.red)
+        let avatarView = AvatarView()
+        XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
+        avatarView.setBackground(color: UIColor.red)
+        XCTAssertEqual(avatarView.backgroundColor, UIColor.red)
     }
     
     func testGetImage() {
         let image = UIImage()
-        let avatar = AvatarView(image: image)
-        XCTAssertEqual(avatar.getImage(), image)
+        let avatar = Avatar(image: image)
+        let avatarView = AvatarView()
+        avatarView.set(avatar: avatar)
+        XCTAssertEqual(avatarView.getImage(), image)
     }
     
     func testRoundedCorners() {
-        let avatar = AvatarView(image: UIImage())
-        XCTAssertEqual(avatar.layer.cornerRadius, 15.0)
-        avatar.setCorner(radius: 2)
-        XCTAssertEqual(avatar.layer.cornerRadius, 2.0)
-    }
-    
-    func testInitalsFont() {
-        let avatar = AvatarView(image: UIImage())
-        XCTAssertEqual(avatar.initalsLabel.textColor, UIColor.white)
-        XCTAssertEqual(avatar.initalsLabel.font.pointSize, 16)
-        avatar.setInitalsFont(size: 20, color: UIColor.blue)
-        XCTAssertEqual(avatar.initalsLabel.textColor, UIColor.blue)
-        XCTAssertEqual(avatar.initalsLabel.font.pointSize, 20)
+        let avatarView = AvatarView()
+        let avatar = Avatar(image: UIImage())
+        avatarView.set(avatar: avatar)
+        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
+        avatarView.setCorner(radius: 2)
+        XCTAssertEqual(avatarView.layer.cornerRadius, 2.0)
     }
 }
