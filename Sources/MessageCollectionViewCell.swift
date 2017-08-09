@@ -89,13 +89,22 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         cellBottomLabel.frame = cellBottomLabelFrame(for: attributes)
         cellBottomLabel.textInsets = attributes.cellBottomLabelInsets
 
+        switch attributes.direction {
+        case .incoming:
+            cellTopLabel.textAlignment = .left
+            cellBottomLabel.textAlignment = .right
+        case .outgoing:
+            cellTopLabel.textAlignment = .right
+            cellBottomLabel.textAlignment = .left
+        }
+
     }
 
     func cellTopLabelFrame(for attributes: MessagesCollectionViewLayoutAttributes) -> CGRect {
 
         var origin: CGPoint = .zero
 
-        if attributes.topLabelBeginsAfterAvatar {
+        if attributes.topLabelPinnedUnderMessage {
             origin = CGPoint(x: attributes.avatarSize.width + attributes.avatarMessagePadding, y: 0)
         }
 
@@ -106,7 +115,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         var origin: CGPoint = CGPoint(x: 0, y: contentView.frame.height - attributes.cellBottomLabelSize.height)
 
-        if attributes.bottomLabelBeginsAfterAvatar {
+        if attributes.bottomLabelPinnedUnderMessage {
             origin.x = attributes.avatarSize.width + attributes.avatarMessagePadding
         }
 

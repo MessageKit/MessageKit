@@ -103,8 +103,8 @@ open class MessageInputBar: UIView, UITextViewDelegate {
 
     override open var intrinsicContentSize: CGSize {
         let sizeToFit = inputTextView.sizeThatFits(CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude))
-        let heightToFit = sizeToFit.height.rounded()
-        return CGSize(width: bounds.width, height: heightToFit + 8)
+        let heightToFit = sizeToFit.height.rounded() + 8 // constraint padding
+        return CGSize(width: bounds.width, height: heightToFit)
     }
 
     private func setupSubviews() {

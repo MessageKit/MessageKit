@@ -34,11 +34,11 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     open var cellTopLabelFont: UIFont
     open var cellTopLabelInsets: UIEdgeInsets
-    open var topLabelBeginsAfterAvatar: Bool
+    open var topLabelPinnedUnderMessage: Bool
 
     open var cellBottomLabelFont: UIFont
     open var cellBottomLabelInsets: UIEdgeInsets
-    open var bottomLabelBeginsAfterAvatar: Bool
+    open var bottomLabelPinnedUnderMessage: Bool
 
     open var incomingAvatarSize: CGSize
     open var outgoingAvatarSize: CGSize
@@ -69,11 +69,11 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
         cellTopLabelFont = UIFont.preferredFont(forTextStyle: .caption1)
         cellTopLabelInsets = .zero
-        topLabelBeginsAfterAvatar = true
+        topLabelPinnedUnderMessage = true
 
         cellBottomLabelFont = UIFont.preferredFont(forTextStyle: .caption2)
         cellBottomLabelInsets = .zero
-        bottomLabelBeginsAfterAvatar = true
+        bottomLabelPinnedUnderMessage = true
 
         incomingAvatarSize = CGSize(width: 30, height: 30)
         outgoingAvatarSize = CGSize(width: 30, height: 30)
@@ -131,12 +131,12 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         attributes.cellTopLabelSize = cellTopLabelSize(for: message, at: indexPath)
         attributes.cellTopLabelFont = cellTopLabelFont
         attributes.cellTopLabelInsets = cellTopLabelInsets
-        attributes.topLabelBeginsAfterAvatar = topLabelBeginsAfterAvatar
+        attributes.topLabelPinnedUnderMessage = topLabelPinnedUnderMessage
 
         attributes.cellBottomLabelSize = cellBottomLabelSize(for: message, at: indexPath)
         attributes.cellBottomLabelFont = cellBottomLabelFont
         attributes.cellBottomLabelInsets = cellBottomLabelInsets
-        attributes.bottomLabelBeginsAfterAvatar = bottomLabelBeginsAfterAvatar
+        attributes.bottomLabelPinnedUnderMessage = bottomLabelPinnedUnderMessage
 
         attributes.avatarSize = avatarSize(for: message)
         attributes.avatarBottomPadding = avatarBottomPadding
@@ -204,16 +204,16 @@ extension MessagesCollectionViewFlowLayout {
     // MARK: - Width Calculations
 
     func cellTopLabelWidth(for message: MessageType) -> CGFloat {
-        if topLabelBeginsAfterAvatar {
-            return itemWidth - avatarSize(for: message).width
+        if topLabelPinnedUnderMessage {
+            return itemWidth - avatarSize(for: message).width - avatarMessagePadding - messageToViewEdgePadding
         } else {
             return itemWidth
         }
     }
 
     func cellBottomLabelWidth(for message: MessageType) -> CGFloat {
-        if bottomLabelBeginsAfterAvatar {
-            return itemWidth - avatarSize(for: message).width
+        if bottomLabelPinnedUnderMessage {
+            return itemWidth - avatarSize(for: message).width - avatarMessagePadding - messageToViewEdgePadding
         } else {
             return itemWidth
         }

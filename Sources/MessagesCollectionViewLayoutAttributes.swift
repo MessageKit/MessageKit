@@ -36,12 +36,12 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
     var cellTopLabelSize: CGSize = .zero
     var cellTopLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .caption1)
     var cellTopLabelInsets: UIEdgeInsets = .zero
-    var topLabelBeginsAfterAvatar = false
+    var topLabelPinnedUnderMessage = true
 
     var cellBottomLabelSize: CGSize = .zero
     var cellBottomLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .caption2)
     var cellBottomLabelInsets: UIEdgeInsets = .zero
-    var bottomLabelBeginsAfterAvatar = false
+    var bottomLabelPinnedUnderMessage = true
 
     var avatarSize: CGSize = CGSize(width: 30, height: 30)
     var avatarBottomPadding: CGFloat = 4.0
@@ -61,11 +61,11 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
         copy.cellTopLabelSize = cellTopLabelSize
         copy.cellTopLabelFont = cellTopLabelFont
         copy.cellTopLabelInsets = cellTopLabelInsets
-        copy.topLabelBeginsAfterAvatar = topLabelBeginsAfterAvatar
+        copy.topLabelPinnedUnderMessage = topLabelPinnedUnderMessage
         copy.cellBottomLabelSize = cellBottomLabelSize
         copy.cellBottomLabelFont = cellBottomLabelFont
         copy.cellBottomLabelInsets = cellBottomLabelInsets
-        copy.bottomLabelBeginsAfterAvatar = bottomLabelBeginsAfterAvatar
+        copy.bottomLabelPinnedUnderMessage = bottomLabelPinnedUnderMessage
         copy.avatarSize = avatarSize
         copy.avatarBottomPadding = avatarBottomPadding
         copy.avatarMessagePadding = avatarMessagePadding

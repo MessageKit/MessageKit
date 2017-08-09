@@ -65,15 +65,14 @@ open class MessagesViewController: UIViewController {
 
 	open override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		// depends on inputAccessoryView frame thus must be called here
 		addKeyboardObservers()
-        messagesCollectionView.scrollToBottom(animated: false)
 	}
 
-	open override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
-		removeKeyboardObservers()
-	}
+    // MARK: - Initializers
+
+    deinit {
+        removeKeyboardObservers()
+    }
 
 	// MARK: - Methods
 
@@ -133,8 +132,6 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
 
 }
 
-//swiftlint:enable line_length
-
 // MARK: - UICollectionViewDataSource Conformance
 
 extension MessagesViewController: UICollectionViewDataSource {
@@ -154,8 +151,6 @@ extension MessagesViewController: UICollectionViewDataSource {
 		return messageCount > 0 ? 1 : 0
 
 	}
-
-    //swiftlint:disable line_length
 
 	public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
@@ -222,8 +217,6 @@ extension MessagesViewController: UICollectionViewDataSource {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         return messagesLayoutDelegate.footerSizeFor(message, at: indexPath, in: messagesCollectionView)
     }
-
-    //swiftlint:enable line_length
 
 }
 
