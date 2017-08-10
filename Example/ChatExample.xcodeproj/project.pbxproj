@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37D3EAC41F390E5F00DD6A55 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D3EAC31F390E5F00DD6A55 /* SampleData.swift */; };
 		882B5E811CF7D53600B6E160 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E781CF7D53600B6E160 /* AppDelegate.swift */; };
 		882B5E821CF7D53600B6E160 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 882B5E791CF7D53600B6E160 /* Assets.xcassets */; };
 		882B5E831CF7D53600B6E160 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 882B5E7A1CF7D53600B6E160 /* LaunchScreen.storyboard */; };
@@ -74,6 +75,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		37D3EAC31F390E5F00DD6A55 /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		37F8BCD41F38F3A8003C12C2 /* Avatar.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Avatar.playground; path = Playgrounds/Avatar.playground; sourceTree = "<group>"; };
 		882B5E331CF7D4B900B6E160 /* ChatExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		882B5E491CF7D4B900B6E160 /* ChatExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		882B5E541CF7D4B900B6E160 /* ChatExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,7 +148,9 @@
 			children = (
 				882B5E781CF7D53600B6E160 /* AppDelegate.swift */,
 				B0655A321F23E90800542A83 /* ConversationViewController.swift */,
+				37D3EAC31F390E5F00DD6A55 /* SampleData.swift */,
 				882B5E7E1CF7D53600B6E160 /* InboxViewController.swift */,
+				37F8BCD41F38F3A8003C12C2 /* Avatar.playground */,
 				B096438A1F288D47004D0129 /* MockMessage.swift */,
 				882B5E801CF7D53600B6E160 /* SettingsViewController.swift */,
 				882B5E791CF7D53600B6E160 /* Assets.xcassets */,
@@ -249,7 +254,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0810;
-				ORGANIZATIONNAME = "Hexed Bits";
+				ORGANIZATIONNAME = MessageKit;
 				TargetAttributes = {
 					882B5E321CF7D4B900B6E160 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -342,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				882B5E871CF7D53600B6E160 /* SettingsViewController.swift in Sources */,
+				37D3EAC41F390E5F00DD6A55 /* SampleData.swift in Sources */,
 				B096438B1F288D47004D0129 /* MockMessage.swift in Sources */,
 				882B5E811CF7D53600B6E160 /* AppDelegate.swift in Sources */,
 				B0655A331F23E90800542A83 /* ConversationViewController.swift in Sources */,

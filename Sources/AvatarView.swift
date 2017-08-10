@@ -26,9 +26,8 @@ import Foundation
 
 open class AvatarView: UIView {
     // MARK: - Properties
-    internal var initalsLabel = UILabel()
+    internal var avatar: Avatar = Avatar()
     internal var imageView = UIImageView()
-    internal var initals: String = "?"
     
     // MARK: - initializers
     override init(frame: CGRect) {
@@ -36,23 +35,29 @@ open class AvatarView: UIView {
         prepareView()
     }
     
-    convenience public init(size: CGFloat = 30, image: UIImage? = nil, highlightedImage: UIImage? = nil, initals inInitals: String = "?", cornerRounding: CGFloat? = nil) {
-        let frame = CGRect(x: 0, y: 0, width: size, height: size)
-        self.init(frame: frame)
-        setCorner(radius: cornerRounding)
-        setBackground(color: UIColor.gray)
-        imageView.image = image
-        imageView.highlightedImage = highlightedImage
-        initals = inInitals
-        prepareView()
-    }
-    
     convenience public init() {
         let frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         self.init(frame: frame)
-        setBackground(color: UIColor.gray)
-        setCorner(radius: nil)
         prepareView()
+    }
+    
+    func getImageFrom(initals: String, withColor color: UIColor = UIColor.white, fontSize: CGFloat = 14) -> UIImage {
+        _ = UIGraphicsBeginImageContext(CGSize(width: 30, height: 30))
+        let context = UIGraphicsGetCurrentContext()!
+        
+        //// Text Drawing
+        let textRect = CGRect(x: 5, y: 6, width: 20, height: 20)
+        let textStyle = NSMutableParagraphStyle()
+        textStyle.alignment = .center
+        let textFontAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: fontSize), NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: textStyle]
+        
+        let textTextHeight: CGFloat = initals.boundingRect(with: CGSize(width: textRect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes, context: nil).height
+        context.saveGState()
+        context.clip(to: textRect)
+        initals.draw(in: CGRect(x: textRect.minX, y: textRect.minY + (textRect.height - textTextHeight) / 2, width: textRect.width, height: textTextHeight), withAttributes: textFontAttributes)
+        context.restoreGState()
+        guard let renderedImage = UIGraphicsGetImageFromCurrentImageContext() else { assertionFailure("Could not create image from context"); return UIImage()}
+        return renderedImage
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -62,46 +67,25 @@ open class AvatarView: UIView {
     // MARK: - internal methods
     
     internal func prepareView() {
-        prepareInitalsLabel()
-        prepareImageView()
-        imageView.isHidden = imageView.image == nil
-    }
-    
-    internal func prepareInitalsLabel() {
-        initalsLabel.text = initals
-        initalsLabel.textAlignment = .center
-        setInitalsFont()
-        addSubview(initalsLabel)
-        initalsLabel.center = center
-        initalsLabel.frame = frame
-    }
-    
-    internal func prepareImageView() {
+        setBackground(color: UIColor.gray)
         contentMode = .scaleAspectFill
         layer.masksToBounds = true
         clipsToBounds = true
         addSubview(imageView)
         imageView.contentMode = .scaleAspectFill
         imageView.frame = frame
+        imageView.image = avatar.image ?? getImageFrom(initals: avatar.initals)
+        setCorner(radius: nil)
     }
     
-    // MARK: - Open methods
+    // MARK: - Open setters
     
-    open func set(image: UIImage) {
-        imageView.image = image
-    }
-    
-    open func setInitalsFont(size: CGFloat = 16, color: UIColor = .white) {
-        initalsLabel.font = UIFont.systemFont(ofSize: size)
-        initalsLabel.textColor = color
+    open func set(avatar: Avatar) {
+        imageView.image = avatar.image ?? getImageFrom(initals: avatar.initals)
     }
     
     open func setBackground(color: UIColor) {
         backgroundColor = color
-    }
-    
-    open func getImage() -> UIImage? {
-        return imageView.image
     }
     
     open func setCorner(radius: CGFloat?) {
@@ -111,5 +95,11 @@ open class AvatarView: UIView {
             return
         }
         layer.cornerRadius = radius
+    }
+    
+    // MARK: - Open getters
+    
+    open func getImage() -> UIImage? {
+        return imageView.image
     }
 }

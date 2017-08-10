@@ -27,66 +27,17 @@ import MessageKit
 
 class ConversationViewController: MessagesViewController {
 
-    var messages: [MessageType] = []
+    var messageList: [MockMessage] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        addSampleData()
-
+        messageList = SampleData().getMessages()
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messageCellDelegate = self
         messagesCollectionView.messagesLayoutDelegate = self
         messageInputBar.delegate = self
-
-        tabBarController?.tabBar.isHidden = true
     }
-
-    func addSampleData() {
-
-        let sender1 = Sender(id: "123456", displayName: "Bobby")
-        let sender2 = Sender(id: "654321", displayName: "Steven")
-        let sender3 = Sender(id: "777999", displayName: "Omar")
-
-        let msg1 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
-            "Pellentesque venenatis, ante et hendrerit rutrum" +
-        "Quam erat vehicula metus, et condimentum ante tellus augue."
-
-        let msg2 = "Cras efficitur bibendum mauris sed ultrices." +
-        "Phasellus tellus nisl, ullamcorper quis erat."
-
-        let msg3 = "Maecenas."
-
-        let msg4 = "Pellentesque venenatis, ante et hendrerit rutrum" +
-        "Quam erat vehicula metus, et condimentum ante tellus augue."
-
-        let msg5 = "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
-            "Pellentesque venenatis, ante et hendrerit rutrum" +
-        "Quam erat vehicula metus, et condimentum ante tellus augue."
-
-        messages.append(MockMessage(text: msg2, sender: sender2, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg4, sender: currentSender(), id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg5, sender: sender3, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg1, sender: currentSender(), id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg3, sender: sender1, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg3, sender: sender1, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg2, sender: sender2, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg2, sender: sender2, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg1, sender: currentSender(), id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg3, sender: sender1, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg2, sender: sender2, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg4, sender: currentSender(), id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg5, sender: sender3, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg4, sender: currentSender(), id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg5, sender: sender3, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg4, sender: currentSender(), id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg5, sender: sender3, id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg1, sender: currentSender(), id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg1, sender: currentSender(), id: NSUUID().uuidString))
-        messages.append(MockMessage(text: msg3, sender: sender1, id: NSUUID().uuidString))
-
-    }
-
 }
 
 // MARK: - MessagesDataSource
@@ -94,15 +45,15 @@ class ConversationViewController: MessagesViewController {
 extension ConversationViewController: MessagesDataSource {
 
     func currentSender() -> Sender {
-        return Sender(id: "123", displayName: "Steven")
+        return SampleData().getCurrentSender()
     }
 
     func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int {
-        return messages.count
+        return messageList.count
     }
 
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
-        return messages[indexPath.section]
+        return messageList[indexPath.section]
     }
 
 }
@@ -111,9 +62,8 @@ extension ConversationViewController: MessagesDataSource {
 
 extension ConversationViewController: MessagesDisplayDataSource {
 
-    func avatarForMessage(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarView {
-        let image = isFromCurrentSender(message: message) ? #imageLiteral(resourceName: "Steve-Jobs") : #imageLiteral(resourceName: "Tim-Cook")
-        return AvatarView(image: image)
+    func avatarForMessage(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
+        return SampleData().getAvatarFor(sender: message.sender)
     }
 
     func headerForMessage(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
@@ -122,6 +72,18 @@ extension ConversationViewController: MessagesDisplayDataSource {
 
     func footerForMessage(_ message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView? {
         return messagesCollectionView.dequeueMessageFooterView(for: indexPath)
+    }
+
+    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        let name = message.sender.displayName
+        return NSAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.preferredFont(forTextStyle: .caption1)])
+    }
+
+    func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        let dateString = formatter.string(from: message.sentDate)
+        return NSAttributedString(string: dateString, attributes: [NSFontAttributeName: UIFont.preferredFont(forTextStyle: .caption2)])
     }
 
 }
@@ -159,13 +121,9 @@ extension ConversationViewController: MessageCellDelegate {
 extension ConversationViewController: MessageInputBarDelegate {
 
     func sendButtonPressed(sender: UIButton, textView: UITextView) {
-
         guard let message = textView.text else { return }
-
-        messages.append(MockMessage(text: message, sender: currentSender(), id: NSUUID().uuidString))
-
+        messageList.append(MockMessage(text: message, sender: currentSender(), messageId: UUID().uuidString))
         messagesCollectionView.reloadData()
-
     }
 
 }

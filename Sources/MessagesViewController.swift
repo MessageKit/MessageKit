@@ -25,7 +25,7 @@ SOFTWARE.
 import UIKit
 
 open class MessagesViewController: UIViewController {
-
+    
 	// MARK: - Properties
 
 	open var messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
@@ -65,15 +65,14 @@ open class MessagesViewController: UIViewController {
 
 	open override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		// depends on inputAccessoryView frame thus must be called here
 		addKeyboardObservers()
-        messagesCollectionView.scrollToBottom(animated: false)
 	}
 
-	open override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
-		removeKeyboardObservers()
-	}
+    // MARK: - Initializers
+
+    deinit {
+        removeKeyboardObservers()
+    }
 
 	// MARK: - Methods
 
@@ -114,7 +113,7 @@ open class MessagesViewController: UIViewController {
 		                                      toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
 
 		view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .bottom, relatedBy: .equal,
-		                                      toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: -48))
+		                                      toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: -46))
 
 	}
 
@@ -132,8 +131,6 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
 	}
 
 }
-
-//swiftlint:enable line_length
 
 // MARK: - UICollectionViewDataSource Conformance
 
@@ -155,8 +152,6 @@ extension MessagesViewController: UICollectionViewDataSource {
 
 	}
 
-    //swiftlint:disable line_length
-
 	public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MessageCell", for: indexPath) as? MessageCollectionViewCell ?? MessageCollectionViewCell()
@@ -172,8 +167,12 @@ extension MessagesViewController: UICollectionViewDataSource {
         let message = displayDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         let messageColor = displayDataSource.messageColorFor(message, at: indexPath, in: messagesCollectionView)
         let avatar = displayDataSource.avatarForMessage(message, at: indexPath, in: messagesCollectionView)
-        //TODO: replace this completely
-        cell.avatarImageView.image = avatar.getImage()
+        let topLabelText = displayDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
+        let bottomLabelText = displayDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
+
+        cell.cellTopLabel.attributedText = topLabelText
+        cell.cellBottomLabel.attributedText = bottomLabelText
+        cell.avatarView.set(avatar: avatar)
         cell.messageContainerView.backgroundColor = messageColor
         cell.configure(with: message)
 
@@ -219,8 +218,6 @@ extension MessagesViewController: UICollectionViewDataSource {
         return messagesLayoutDelegate.footerSizeFor(message, at: indexPath, in: messagesCollectionView)
     }
 
-    //swiftlint:enable line_length
-
 }
 
 // MARK: - Keyboard Handling
@@ -252,7 +249,8 @@ extension MessagesViewController {
 
 		let keyboardRect = keyboardSizeValue.cgRectValue
 		let messageInputBarHeight = inputAccessoryView?.bounds.size.height ?? 0
-		let keyboardHeight = keyboardRect.height - messageInputBarHeight
+        let keyboardHeight = keyboardRect.height - messageInputBarHeight
+        print(keyboardHeight)
 		messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
 
 	}

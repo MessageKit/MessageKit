@@ -28,11 +28,10 @@ import Foundation
 public enum MessageData {
 
     case text(String)
+    case attributedText(NSAttributedString)
 
     // MARK: - Not supported yet
 
-//    case attributedText(NSAttributedString)
-//    
 //    case audio(Data)
 //    
 //    case location(CLLocation)

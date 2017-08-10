@@ -30,10 +30,10 @@ open class MessageInputBar: UIView, UITextViewDelegate {
 
     open let inputTextView: UITextView = {
 
-        let inputTextView = UITextView(frame: .zero)
+        let inputTextView = InputTextView(frame: .zero)
         inputTextView.font = UIFont.preferredFont(forTextStyle: .body)
-        inputTextView.text = "New Message"
-        inputTextView.textColor = .lightGray
+        inputTextView.textColor = .black
+        inputTextView.placeholder = "New Message"
         inputTextView.backgroundColor = .white
         inputTextView.layer.borderColor = UIColor.lightGray.cgColor
         inputTextView.layer.borderWidth = 1.0
@@ -47,7 +47,12 @@ open class MessageInputBar: UIView, UITextViewDelegate {
 
         let sendButton = UIButton()
         sendButton.setTitle("Send", for: .normal)
-        sendButton.setTitleColor(.lightGray, for: .normal)
+        sendButton.setTitleColor(.sendButtonBlue, for: .normal)
+        sendButton.setTitleColor(UIColor.sendButtonBlue.withAlphaComponent(0.3), for: .highlighted)
+        sendButton.setTitleColor(.lightGray, for: .disabled)
+        sendButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        sendButton.isEnabled = false
+
         return sendButton
     }()
 
@@ -91,13 +96,15 @@ open class MessageInputBar: UIView, UITextViewDelegate {
     }
 
     public func textViewDidChange(_ textView: UITextView) {
+        let trimmedText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        sendButton.isEnabled = !trimmedText.isEmpty
         invalidateIntrinsicContentSize()
     }
 
     override open var intrinsicContentSize: CGSize {
         let sizeToFit = inputTextView.sizeThatFits(CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude))
-        let heightToFit = sizeToFit.height.rounded()
-        return CGSize(width: bounds.width, height: heightToFit + 8)
+        let heightToFit = sizeToFit.height.rounded() + 8 // constraint padding
+        return CGSize(width: bounds.width, height: heightToFit)
     }
 
     private func setupSubviews() {

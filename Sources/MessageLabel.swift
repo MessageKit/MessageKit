@@ -1,18 +1,18 @@
 /*
  MIT License
- 
+
  Copyright (c) 2017 MessageKit
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,16 +22,32 @@
  SOFTWARE.
  */
 
-import Foundation
+import UIKit
 
-extension UIColor {
+open class MessageLabel: UILabel {
 
-    static let incomingGray = UIColor(colorLiteralRed: 230/255, green: 230/255, blue: 235/255, alpha: 1.0)
+    // MARK: - Properties
 
-    static let outgoingGreen = UIColor(colorLiteralRed: 69/255, green: 214/255, blue: 93/255, alpha: 1.0)
+    open var textInsets: UIEdgeInsets = .zero {
+        didSet {
+            guard textInsets != oldValue else { return }
+            setNeedsDisplay()
+        }
+    }
 
-    static let inputBarGray = UIColor(colorLiteralRed: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        numberOfLines = 0
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-    static let sendButtonBlue = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+    // MARK: - Methods
+
+    open override func draw(_ rect: CGRect) {
+        super.drawText(in: UIEdgeInsetsInsetRect(rect, textInsets))
+    }
 
 }

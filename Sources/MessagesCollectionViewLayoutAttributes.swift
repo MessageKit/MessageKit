@@ -28,32 +28,44 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
 
     // MARK: - Properties
 
-    var direction: MessageDirection = .outgoing
-
-    var messageFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
-
     var messageContainerSize: CGSize = .zero
+    var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
+    var messageLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
+    var messageToViewEdgePadding: CGFloat = 30.0
 
-    var messageContainerInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+    var cellTopLabelSize: CGSize = .zero
+    var cellTopLabelInsets: UIEdgeInsets = .zero
+    var topLabelPinnedUnderMessage = true
+
+    var cellBottomLabelSize: CGSize = .zero
+    var cellBottomLabelInsets: UIEdgeInsets = .zero
+    var bottomLabelPinnedUnderMessage = true
 
     var avatarSize: CGSize = CGSize(width: 30, height: 30)
+    var avatarBottomPadding: CGFloat = 4.0
+    var avatarMessagePadding: CGFloat = 4.0
 
-    var avatarBottomSpacing: CGFloat = 4
-
-    var avatarContainerSpacing: CGFloat = 4
+    var direction: MessageDirection = .incoming
 
     // MARK: - Methods
 
     override func copy(with zone: NSZone? = nil) -> Any {
         // swiftlint:disable force_cast
         let copy = super.copy(with: zone) as! MessagesCollectionViewLayoutAttributes
-        copy.direction = direction
-        copy.messageFont = messageFont
         copy.messageContainerSize = messageContainerSize
+        copy.messageLabelFont = messageLabelFont
+        copy.messageLabelInsets = messageLabelInsets
+        copy.messageToViewEdgePadding = messageToViewEdgePadding
+        copy.cellTopLabelSize = cellTopLabelSize
+        copy.cellTopLabelInsets = cellTopLabelInsets
+        copy.topLabelPinnedUnderMessage = topLabelPinnedUnderMessage
+        copy.cellBottomLabelSize = cellBottomLabelSize
+        copy.cellBottomLabelInsets = cellBottomLabelInsets
+        copy.bottomLabelPinnedUnderMessage = bottomLabelPinnedUnderMessage
         copy.avatarSize = avatarSize
-        copy.messageContainerInsets = messageContainerInsets
-        copy.avatarBottomSpacing = avatarBottomSpacing
-        copy.avatarContainerSpacing = avatarContainerSpacing
+        copy.avatarBottomPadding = avatarBottomPadding
+        copy.avatarMessagePadding = avatarMessagePadding
+        copy.direction = direction
         return copy
         // swiftlint:enable force_cast
     }

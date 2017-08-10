@@ -27,18 +27,33 @@ import MessageKit
 
 final class InboxViewController: UITableViewController {
 
+    let cells = ["Test", "Settings"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return cells.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell()
-        cell.textLabel?.text = "Test"
+        cell.textLabel?.text = cells[indexPath.row]
         return cell
     }
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = cells[indexPath.row]
+        switch cell {
+        case "Test":
+            navigationController?.pushViewController(ConversationViewController(), animated: true)
+        case "Settings":
+            navigationController?.pushViewController(SettingsViewController(), animated: true)
+        default:
+            assertionFailure("You need to impliment the action for this cell: \(cell)")
+            return
+        }
+    }
 }
