@@ -2,7 +2,7 @@
 
 ## Why?
 
-UX is important, but people often forget about Developer UX. MessageKit is a framework geared towards making a chat interface easy for both users and developers.
+UX is important-- but people often forget about Developer UX. MessageKit is a framework geared towards making a chat interface easy for both users and developers.
 
 ## What is it?
 
