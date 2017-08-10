@@ -4,6 +4,15 @@
 
 **In-progress**, this project is intended to be a Swift rewrite of the recently deprecated [JSQMessagesViewController](https://github.com/jessesquires/JSQMessagesViewController).
 
+## Installation
+
+### [CocoaPods](https://cocoapods.org/?q=messagekit) (recommended)
+
+````ruby
+# For latest release in cocoapods
+pod 'MessageKit'
+````
+
 ## Want to contribute?
 
 Great! :+1: Because we could really use the help of the iOS community.
