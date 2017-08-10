@@ -1,8 +1,14 @@
 # MessageKit
 
-[![Build Status](https://travis-ci.org/MessageKit/MessageKit.svg)](https://travis-ci.org/MessageKit/MessageKit) [![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
+## Why?
 
-**In-progress**, this project is intended to be a Swift rewrite of the recently deprecated [JSQMessagesViewController](https://github.com/jessesquires/JSQMessagesViewController).
+UX is important-- but people often forget about Developer UX. MessageKit is a framework geared towards making a chat interface easy for both users and developers.
+
+## What is it?
+
+The project started when [JSQMessagesViewController](https://github.com/jessesquires/JSQMessagesViewController) was deprecated. This project is still **in progress** and intended to be a complete overhaul of [JSQMessagesViewController](https://github.com/jessesquires/JSQMessagesViewController) written entirely in Swift.
+
+[![Build Status](https://travis-ci.org/MessageKit/MessageKit.svg)](https://travis-ci.org/MessageKit/MessageKit) [![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
 
 ## Want to contribute?
 
