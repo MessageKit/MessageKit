@@ -265,15 +265,20 @@ extension MessagesCollectionViewFlowLayout {
 
     func messageContainerHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
-        // This is a switch because we will support other message types in the future
+        let availableWidth = availableWidthForMessageContainer(considering: message)
+        let verticalMessageInsets = messageLabelInsets.top + messageLabelInsets.bottom
+        var estimatedHeight: CGFloat = 0
+
         switch message.data {
         case .text(let text):
-            let availableWidth = availableWidthForMessageContainer(considering: message)
-            let estimatedHeight = text.height(considering: availableWidth, and: messageLabelFont)
-            let verticalMessageInsets = messageLabelInsets.top + messageLabelInsets.bottom
-            let finalHeight = estimatedHeight.rounded(.up) + verticalMessageInsets
-            return finalHeight
+            estimatedHeight = text.height(considering: availableWidth, and: messageLabelFont)
+        case .attributedText(let text):
+            estimatedHeight = text.height(considering: availableWidth)
         }
+
+        let finalHeight = estimatedHeight.rounded(.up) + verticalMessageInsets
+
+        return finalHeight
 
     }
 
@@ -281,17 +286,23 @@ extension MessagesCollectionViewFlowLayout {
 
     func messageContainerWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
-        // This is a switch because we will support other message types in the future
+        let containerHeight = messageContainerHeight(for: message, at: indexPath)
+        let availableWidth = availableWidthForMessageContainer(considering: message)
+        let horizontalMessageInsets = messageLabelInsets.left + messageLabelInsets.right
+        var estimatedWidth: CGFloat = 0
+
         switch message.data {
         case .text(let text):
-            let containerHeight = messageContainerHeight(for: message, at: indexPath)
-            let estimatedWidth = text.width(considering: containerHeight, and: messageLabelFont)
-            let availableWidth = availableWidthForMessageContainer(considering: message)
-            let horizontalMessageInsets = messageLabelInsets.left + messageLabelInsets.right
-            let widthToUse = estimatedWidth.rounded(.up) > availableWidth ? availableWidth : estimatedWidth
-            let finalWidth = widthToUse + horizontalMessageInsets
-            return finalWidth
+            estimatedWidth = text.width(considering: containerHeight, and: messageLabelFont)
+        case .attributedText(let text):
+            estimatedWidth = text.width(considering: containerHeight)
         }
+
+        let widthToUse = estimatedWidth.rounded(.up) > availableWidth ? availableWidth : estimatedWidth
+
+        let finalWidth = widthToUse + horizontalMessageInsets
+
+        return finalWidth
 
     }
 

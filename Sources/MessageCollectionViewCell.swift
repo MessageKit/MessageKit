@@ -162,6 +162,8 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         switch message.data {
         case .text(let text):
             messageLabel.text = text
+        case .attributedText(let text):
+            messageLabel.attributedText = text
         }
 
     }

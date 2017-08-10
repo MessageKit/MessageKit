@@ -34,7 +34,7 @@ extension NSAttributedString {
 
     }
 
-    func width(considering height: CGFloat, and font: UIFont) -> CGFloat {
+    func width(considering height: CGFloat) -> CGFloat {
 
         let constraintBox = CGSize(width: .greatestFiniteMagnitude, height: height)
         let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, context: nil)
