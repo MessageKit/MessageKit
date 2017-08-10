@@ -31,12 +31,20 @@ struct MockMessage: MessageType {
     var sender: Sender
     var sentDate: Date
     var data: MessageData
+	
+	private init(data: MessageData, sender: Sender, messageId: String) {
+		self.data = data
+		self.sender = sender
+		self.messageId = messageId
+		self.sentDate = Date()
+	}
 
     init(text: String, sender: Sender, messageId: String) {
-        data = .text(text)
-        self.sender = sender
-        self.messageId = messageId
-        self.sentDate = Date()
+		self.init(data: .text(text), sender: sender, messageId: messageId)
     }
+	
+	init(attributedText: NSAttributedString, sender: Sender, messageId: String) {
+		self.init(data: .attributedText(attributedText), sender: sender, messageId: messageId)
+	}
 
 }
