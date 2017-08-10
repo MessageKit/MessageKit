@@ -222,37 +222,40 @@ extension MessagesViewController: UICollectionViewDataSource {
 
 // MARK: - Keyboard Handling
 extension MessagesViewController {
-
-	fileprivate func addKeyboardObservers() {
-
-		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: .UIKeyboardWillHide, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
-
+    
+    fileprivate func addKeyboardObservers() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        
     }
-
+    
     fileprivate func removeKeyboardObservers() {
-
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
-
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
     }
-
-	func handleKeyboardWillHide(_ notification: Notification) {
-
-		messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-
-	}
-
-	func handleKeyboardWillChangeFrame(_ notification: Notification) {
-
-		guard let keyboardSizeValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
-
-		let keyboardRect = keyboardSizeValue.cgRectValue
-		let messageInputBarHeight = inputAccessoryView?.bounds.size.height ?? 0
-        let keyboardHeight = keyboardRect.height - messageInputBarHeight
-        print(keyboardHeight)
-		messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
-
-	}
-
+    
+    func handleKeyboardWillShow(_ notification: Notification) {
+        guard let keyboardEndSizeValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
+        
+        let keyboardFrame = keyboardEndSizeValue.cgRectValue
+        let keyboard = self.view.convert(keyboardFrame, from: self.view.window)
+        let height = self.view.frame.size.height
+        let messageInputBarHeight = inputAccessoryView?.bounds.size.height ?? 0
+        let keyboardHeight = keyboardFrame.height - messageInputBarHeight
+        
+        if (keyboard.origin.y + keyboard.size.height) > height {
+            // Hardware keyboard is found
+            messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            
+        } else {
+            // Software keyboard is found
+            messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+        }
+    }
+    
+    func handleKeyboardWillHide(_ notification: Notification) {
+        messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    
 }
