@@ -100,12 +100,20 @@ open class InputTextView: UITextView {
                                                selector: #selector(textDidChange),
                                                name: Notification.Name.UITextViewTextDidChange,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.orientationChanged(notification:)),
+                                               name: Notification.Name.UIDeviceOrientationDidChange,
+                                               object: nil)
     }
 
     func textDidChange(notification: Notification) {
         guard text.isEmpty || isPlaceholderVisibile else { return }
         setNeedsDisplay()
         isPlaceholderVisibile = false
+    }
+    
+    func orientationChanged(notification: Notification) {
+        setNeedsDisplay()
     }
 
 }
