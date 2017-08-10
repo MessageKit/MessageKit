@@ -34,12 +34,10 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
     var messageToViewEdgePadding: CGFloat = 30.0
 
     var cellTopLabelSize: CGSize = .zero
-    var cellTopLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .caption1)
     var cellTopLabelInsets: UIEdgeInsets = .zero
     var topLabelPinnedUnderMessage = true
 
     var cellBottomLabelSize: CGSize = .zero
-    var cellBottomLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .caption2)
     var cellBottomLabelInsets: UIEdgeInsets = .zero
     var bottomLabelPinnedUnderMessage = true
 
@@ -59,11 +57,9 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
         copy.messageLabelInsets = messageLabelInsets
         copy.messageToViewEdgePadding = messageToViewEdgePadding
         copy.cellTopLabelSize = cellTopLabelSize
-        copy.cellTopLabelFont = cellTopLabelFont
         copy.cellTopLabelInsets = cellTopLabelInsets
         copy.topLabelPinnedUnderMessage = topLabelPinnedUnderMessage
         copy.cellBottomLabelSize = cellBottomLabelSize
-        copy.cellBottomLabelFont = cellBottomLabelFont
         copy.cellBottomLabelInsets = cellBottomLabelInsets
         copy.bottomLabelPinnedUnderMessage = bottomLabelPinnedUnderMessage
         copy.avatarSize = avatarSize

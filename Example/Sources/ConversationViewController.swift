@@ -74,14 +74,16 @@ extension ConversationViewController: MessagesDisplayDataSource {
         return messagesCollectionView.dequeueMessageFooterView(for: indexPath)
     }
 
-    func cellTopLabelTextForMessage(_ message: MessageType, at indexPath: IndexPath) -> String? {
-        return message.sender.displayName
+    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        let name = message.sender.displayName
+        return NSAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.preferredFont(forTextStyle: .caption1)])
     }
 
-    func cellBottomLabelTextForMessage(_ message: MessageType, at indexPath: IndexPath) -> String? {
+    func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
-        return formatter.string(from: message.sentDate)
+        let dateString = formatter.string(from: message.sentDate)
+        return NSAttributedString(string: dateString, attributes: [NSFontAttributeName: UIFont.preferredFont(forTextStyle: .caption2)])
     }
 
 }

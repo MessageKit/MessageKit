@@ -167,11 +167,11 @@ extension MessagesViewController: UICollectionViewDataSource {
         let message = displayDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         let messageColor = displayDataSource.messageColorFor(message, at: indexPath, in: messagesCollectionView)
         let avatar = displayDataSource.avatarForMessage(message, at: indexPath, in: messagesCollectionView)
-        let topLabelText = displayDataSource.cellTopLabelTextForMessage(message, at: indexPath)
-        let bottomLabelText = displayDataSource.cellBottomLabelTextForMessage(message, at: indexPath)
+        let topLabelText = displayDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
+        let bottomLabelText = displayDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
 
-        cell.cellTopLabel.text = topLabelText
-        cell.cellBottomLabel.text = bottomLabelText
+        cell.cellTopLabel.attributedText = topLabelText
+        cell.cellBottomLabel.attributedText = bottomLabelText
         cell.avatarView.set(avatar: avatar)
         cell.messageContainerView.backgroundColor = messageColor
         cell.configure(with: message)
@@ -249,7 +249,8 @@ extension MessagesViewController {
 
 		let keyboardRect = keyboardSizeValue.cgRectValue
 		let messageInputBarHeight = inputAccessoryView?.bounds.size.height ?? 0
-		let keyboardHeight = keyboardRect.height - messageInputBarHeight
+        let keyboardHeight = keyboardRect.height - messageInputBarHeight
+        print(keyboardHeight)
 		messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
 
 	}

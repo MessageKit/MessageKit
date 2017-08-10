@@ -32,11 +32,9 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     open var messageLabelInsets: UIEdgeInsets
     open var messageToViewEdgePadding: CGFloat
 
-    open var cellTopLabelFont: UIFont
     open var cellTopLabelInsets: UIEdgeInsets
     open var topLabelPinnedUnderMessage: Bool
 
-    open var cellBottomLabelFont: UIFont
     open var cellBottomLabelInsets: UIEdgeInsets
     open var bottomLabelPinnedUnderMessage: Bool
 
@@ -67,11 +65,9 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         messageLabelInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
         messageToViewEdgePadding = 30.0
 
-        cellTopLabelFont = UIFont.preferredFont(forTextStyle: .caption1)
         cellTopLabelInsets = .zero
         topLabelPinnedUnderMessage = true
 
-        cellBottomLabelFont = UIFont.preferredFont(forTextStyle: .caption2)
         cellBottomLabelInsets = .zero
         bottomLabelPinnedUnderMessage = true
 
@@ -129,12 +125,10 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         attributes.messageToViewEdgePadding = messageToViewEdgePadding
 
         attributes.cellTopLabelSize = cellTopLabelSize(for: message, at: indexPath)
-        attributes.cellTopLabelFont = cellTopLabelFont
         attributes.cellTopLabelInsets = cellTopLabelInsets
         attributes.topLabelPinnedUnderMessage = topLabelPinnedUnderMessage
 
         attributes.cellBottomLabelSize = cellBottomLabelSize(for: message, at: indexPath)
-        attributes.cellBottomLabelFont = cellBottomLabelFont
         attributes.cellBottomLabelInsets = cellBottomLabelInsets
         attributes.bottomLabelPinnedUnderMessage = bottomLabelPinnedUnderMessage
 
@@ -233,11 +227,11 @@ extension MessagesCollectionViewFlowLayout {
 
         guard let messagesCollectionView = messagesCollectionView else { return 0 }
         guard let displayDataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDataSource else { return 0 }
-        guard let topLabelText = displayDataSource.cellTopLabelTextForMessage(message, at: indexPath) else { return 0 }
+        guard let topLabelText = displayDataSource.cellTopLabelAttributedText(for: message, at: indexPath) else { return 0 }
 
         let availableWidth = cellTopLabelWidth(for: message)
 
-        let estimatedHeight = topLabelText.height(considering: availableWidth, and: cellTopLabelFont)
+        let estimatedHeight = topLabelText.height(considering: availableWidth)
 
         return estimatedHeight.rounded(.up)
 
@@ -247,11 +241,11 @@ extension MessagesCollectionViewFlowLayout {
 
         guard let messagesCollectionView = messagesCollectionView else { return 0 }
         guard let displayDataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDataSource else { return 0 }
-        guard let bottomLabelText = displayDataSource.cellBottomLabelTextForMessage(message, at: indexPath) else { return 0 }
+        guard let bottomLabelText = displayDataSource.cellBottomLabelAttributedText(for: message, at: indexPath) else { return 0 }
 
         let availableWidth = cellBottomLabelWidth(for: message)
 
-        let estimatedHeight = bottomLabelText.height(considering: availableWidth, and: cellBottomLabelFont)
+        let estimatedHeight = bottomLabelText.height(considering: availableWidth)
 
         return estimatedHeight.rounded(.up)
     }

@@ -75,7 +75,6 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else { return }
 
-        cellTopLabel.font = attributes.cellTopLabelFont
         cellTopLabel.frame = cellTopLabelFrame(for: attributes)
         cellTopLabel.textInsets = attributes.cellTopLabelInsets
 
@@ -85,7 +84,6 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         avatarView.frame = avatarViewFrame(for: attributes)
 
-        cellBottomLabel.font = attributes.cellBottomLabelFont
         cellBottomLabel.frame = cellBottomLabelFrame(for: attributes)
         cellBottomLabel.textInsets = attributes.cellBottomLabelInsets
 
