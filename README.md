@@ -34,13 +34,10 @@ See [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) 
 
 
 ### `Getting started`
-**Recomended**
-## [CocoaPods](https://cocoapods.org/)
-    Use `CocoaPods` add
+## [CocoaPods](https://cocoapods.org/) **Recomended**
 ````ruby
 pod 'MessageKit'
 ````
-to your `Podfile` and run `pod update`
 
 
 ## Requirements
@@ -50,12 +47,13 @@ to your `Podfile` and run `pod update`
 
 ## Contributing
 
-- This is great that you want to contribute :100:. Your what makes this possible, We would appriciate if you would look over these [Contributing Guide Lines](https://cocoapods.org/) to help us keep this community awesome.
-- Then come join us on [Slack](https://join.slack.com/t/messagekit/shared_invite/MjI0NDkxNjgwMzA3LTE1MDIzMTU0MjUtMzJhZDZlNTkxMA) and 🗣 don't be a stranger. 
-    - The Projcet is in active development and the branches my not be in sync so speak up in `SLACK` and communicate with what you are or want to work on. 
-- Check out the current [issues](https://github.com/MessageKit/MessageKit/issues) and see if you can tackle any of those. 
-- Check out the current code base and suggest any improvements you would like to work on by creating a `New Issue`. 
+Great! Look over these things first. 
+- [Contributing Guide Lines](https://cocoapods.org/).
+- Come join us on [Slack](https://join.slack.com/t/messagekit/shared_invite/MjI0NDkxNjgwMzA3LTE1MDIzMTU0MjUtMzJhZDZlNTkxMA) and 🗣 don't be a stranger. 
+- Check out the [current issues](https://github.com/MessageKit/MessageKit/issues) and see if you can tackle any of those. 
+- Download the project and check out the current code base. Suggest any improvements by creating a `New Issue`. 
 - Check out the [What's Next](#what's-next) section :point_down: to see where we are headed.
+- Check [StackOverflow](https://stackoverflow.com/questions/tagged/messagekit)
 - Install [SwiftLint] too keep yourself in :neckbeard: style. 
 - Be Kind and 🤓helpful.  
 
