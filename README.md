@@ -2,30 +2,73 @@
 
 [![Build Status](https://travis-ci.org/MessageKit/MessageKit.svg)](https://travis-ci.org/MessageKit/MessageKit) [![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
 
-**In-progress**, this project is intended to be a Swift rewrite of the recently deprecated [JSQMessagesViewController](https://github.com/jessesquires/JSQMessagesViewController).
 
-## Installation
+<!---->Insert Banner
 
-### [CocoaPods](https://cocoapods.org/?q=messagekit) (recommended)
+Welcome to MessagesKit. 
 
+## Table of Contents
+
+* [**Goal**](#Goal)📈
+* [**Contributing**](#Contributing)
+* [**Getting started**](#Getting-started)
+* [**Requirements**](#Requirements)
+* [**Code of Conduct**](#Code-of-Conduct)
+* [**What's Next**](#What's-Next)
+* [**Apps using this library**](#Apps-using-this-library)
+* [**License**](#License)
+
+
+### `Goal`
+
+- Provide a safe 👩‍🚒 enviroment for others to learn an grow through Open Source.
+- Make adding `Chat` to a project easy.💬
+- Enable beautiful Chat UI's.
+- Provide an awesome Open Source project for people by people.
+- Help others learn.
+
+#### Vision
+See [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) for Goals, Scope, & Technical Considerations.
+
+### `Getting started`
+**Recomended**
+## [CocoaPods](https://cocoapods.org/)
+    Use `CocoaPods` add
 ````ruby
-# For latest release in cocoapods
 pod 'MessageKit'
 ````
+to your `Podfile` and run `pod update`
 
-## Want to contribute?
 
-Great! :+1: Because we could really use the help of the iOS community.
+## `Requirements`
 
-See [#1](https://github.com/MessageKit/MessageKit/issues/1) to familiarize yourself with the effort.
+* iOS10 or later
 
-See [#12](https://github.com/MessageKit/MessageKit/issues/12) to discuss v0.2.0.
+## `Contributing`
 
-## Submitting a Pull Request
+- This is great that you want to contribute 💯. Your what makes this possible, We would appriciate if you would look over these [Contributing Guide Lines](https://cocoapods.org/) to help us keep this community awesome.
+- Then come join us on [Slack](https://join.slack.com/t/messagekit/shared_invite/MjI0NDkxNjgwMzA3LTE1MDIzMTU0MjUtMzJhZDZlNTkxMA) and 🗣 don't be a stranger. 
+    - The Projcet is in active development and the branches my not be in sync so speak up in `SLACK` and communicate with what you are or want to work on. 
+- Check out the current [issues](https://github.com/MessageKit/MessageKit/issues) and see if you can tackle any of those. 
+- Check out the current code base and suggest any improvements you would like to work on by creating a `New Issue`. 
+- Check out the [**What's Next**](#What's-Next) section 👇 to see where we are headed.
+- Install [SwiftLint] too keep yourself in 👨‍🎤style. 
+- Be Kind and 🤓helpful.  
 
-This project is in active development and branches are likely out of sync with their local counterparts. 
-If you want to submit a pull request, please join our [Slack channel](https://github.com/MessageKit/MessageKit/issues/22) to discuss your proposed changes.
+##`What's Next`
 
-## Vision
+Check out the [Releases](https://github.com/MessageKit/MessageKit/releases) to see what we are working on next.
 
-See [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) for Goals, Scope, & Technical Considerations.
+#Apps using this library#
+
+Add your app to the list of apps using this library and make a pull request. We appriciate you and hope you contribute. *Please provide attribution, it is greatly appreciated.*
+
+## `License`
+
+`MessageKit` is released under an [MIT License][mitLink].🤓
+* Many thanks to [**the contributors**](https://github.com/MessageKit/MessageKit/graphs/contributors) of this project.
+
+[mitLink]:http://opensource.org/licenses/MIT
+*Please provide attribution, it is greatly appreciated.*
+
+Inspired by [JSQMessagesViewController](https://github.com/jessesquires/JSQMessagesViewController) 👈 💯
