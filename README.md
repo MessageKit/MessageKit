@@ -16,8 +16,7 @@ Welcome to MessagesKit.
 * [**Code of Conduct**](#code-of-conduct)
 * [**What's Next**](#what's-next)
 * [**Apps using this library**](#apps-using-this-library)
-
-*[**License**](#license)
+* [**License**](#license)
 
 
 ## Goal
