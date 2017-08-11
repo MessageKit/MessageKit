@@ -55,7 +55,7 @@ to your `Podfile` and run `pod update`
     - The Projcet is in active development and the branches my not be in sync so speak up in `SLACK` and communicate with what you are or want to work on. 
 - Check out the current [issues](https://github.com/MessageKit/MessageKit/issues) and see if you can tackle any of those. 
 - Check out the current code base and suggest any improvements you would like to work on by creating a `New Issue`. 
-- Check out the [**What's Next**](#What's-Next) section :point_down: to see where we are headed.
+- Check out the [What's Next](#what's-next) section :point_down: to see where we are headed.
 - Install [SwiftLint] too keep yourself in :neckbeard: style. 
 - Be Kind and 🤓helpful.  
 
@@ -71,7 +71,7 @@ Add your app to the list of apps using this library and make a pull request. We 
 
 ## License
 
-`MessageKit` is released under an [MIT License][mitLink].🤓
+`MessageKit` is released under an [MIT License][mitLink]🤓.
 * Many thanks to [**the contributors**](https://github.com/MessageKit/MessageKit/graphs/contributors) of this project.
 
 [mitLink]:http://opensource.org/licenses/MIT
