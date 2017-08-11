@@ -22,19 +22,19 @@ Welcome to MessagesKit.
 
 ## Goal
 
-- Provide a safe :rotating_light: enviroment for others to learn an grow through Open Source.
-- Make adding `Chat` to a project easy.:speech_balloon:
+- Provide a :rotating_light:safe:rotating_light: enviroment for others to learn an grow through Open Source.
+- Make adding `Chat`:speech_balloon: to a project easy.
 - Enable beautiful Chat UI's.
 - Provide an awesome Open Source project for people by people.
 - Help others learn.
-
 
 #### Vision
 See [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) for Goals, Scope, & Technical Considerations.
 
 
-### `Getting started`
-## [CocoaPods](https://cocoapods.org/) **Recomended**
+
+## `Getting started`
+### [CocoaPods](https://cocoapods.org/) **Recomended**
 ````ruby
 pod 'MessageKit'
 ````
@@ -55,7 +55,7 @@ Great! Look over these things first.
 - Check out the [What's Next](#what's-next) section :point_down: to see where we are headed.
 - Check [StackOverflow](https://stackoverflow.com/questions/tagged/messagekit)
 - Install [SwiftLint] too keep yourself in :neckbeard: style. 
-- Be Kind and 🤓helpful.  
+- Be Kind and helpful.  
 
 
 ## What's Next
@@ -69,12 +69,10 @@ Add your app to the list of apps using this library and make a pull request. We 
 
 ## License
 
-`MessageKit` is released under an [MIT License][mitLink]🤓.
+🤓 `MessageKit` is released under the  [MIT License][mitLink].
 * Many thanks to [**the contributors**](https://github.com/MessageKit/MessageKit/graphs/contributors) of this project.
-
 [mitLink]:http://opensource.org/licenses/MIT
-*Please provide attribution, it is greatly appreciated.*
 
 Inspired by [JSQMessagesViewController](https://github.com/jessesquires/JSQMessagesViewController) :point_left: :100:
 
-
+*Please provide attribution, it is greatly appreciated.*
