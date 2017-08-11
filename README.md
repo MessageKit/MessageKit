@@ -8,7 +8,7 @@
 Welcome to MessagesKit. 
 
 ## Table of Contents
-
+[**Goal**](#Goal)
 * [**Goal**](#Goal)📈
 * [**Contributing**](#Contributing)
 * [**Getting started**](#Getting-started)
@@ -19,8 +19,7 @@ Welcome to MessagesKit.
 * [**License**](#License)
 [**Installation Options**](#font-installation)
 
-
-### `Goal`
+## Goal
 
 - Provide a safe 👩‍🚒 enviroment for others to learn an grow through Open Source.
 - Make adding `Chat` to a project easy.💬
@@ -78,6 +77,4 @@ Inspired by [JSQMessagesViewController](https://github.com/jessesquires/JSQMessa
 
 ### `Option 1: Download and Install Manually`
 
-> Best option for **quickly** getting a specific **individual font**.
 
-Download the specific [patched font](#patched-fonts) of your choice
