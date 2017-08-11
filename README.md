@@ -62,7 +62,7 @@ Check out the [Releases](https://github.com/MessageKit/MessageKit/releases) to s
 #Apps using this library#
 
 Add your app to the list of apps using this library and make a pull request. We appriciate you and hope you contribute. *Please provide attribution, it is greatly appreciated.*
-
+## License
 ## `License`
 
 `MessageKit` is released under an [MIT License][mitLink].🤓
