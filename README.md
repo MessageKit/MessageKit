@@ -17,9 +17,8 @@ Welcome to MessagesKit.
 * [**What's Next**](#What's-Next)
 * [**Apps using this library**](#Apps-using-this-library)
 
-[**License**](#font-installation)
+[**License**](#font-License)
 
-[**Installation Options**](#font-installation)
 
 ## Goal
 
@@ -65,7 +64,7 @@ Check out the [Releases](https://github.com/MessageKit/MessageKit/releases) to s
 
 Add your app to the list of apps using this library and make a pull request. We appriciate you and hope you contribute. *Please provide attribution, it is greatly appreciated.*
 
-## License in
+## Font License
 
 `MessageKit` is released under an [MIT License][mitLink].🤓
 * Many thanks to [**the contributors**](https://github.com/MessageKit/MessageKit/graphs/contributors) of this project.
@@ -74,7 +73,5 @@ Add your app to the list of apps using this library and make a pull request. We 
 *Please provide attribution, it is greatly appreciated.*
 
 Inspired by [JSQMessagesViewController](https://github.com/jessesquires/JSQMessagesViewController) 👈 💯
-
-## Font Installation
 
 
