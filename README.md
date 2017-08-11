@@ -9,15 +9,15 @@ Welcome to MessagesKit.
 
 ## Table of Contents
 
-* [**Goal**](#Goal)📈
-* [**Contributing**](#Contributing)
-* [**Getting started**](#Getting-started)
-* [**Requirements**](#Requirements)
-* [**Code of Conduct**](#Code-of-Conduct)
-* [**What's Next**](#What's-Next)
-* [**Apps using this library**](#Apps-using-this-library)
+* [**Goal**](#goal)📈
+* [**Contributing**](#contributing)
+* [**Getting started**](#getting-started)
+* [**Requirements**](#requirements)
+* [**Code of Conduct**](#code-of-conduct)
+* [**What's Next**](#what's-next)
+* [**Apps using this library**](#apps-using-this-library)
 
-[**License**](#font-license)
+[**License**](#f-license)
 
 
 ## Goal
@@ -64,7 +64,7 @@ Check out the [Releases](https://github.com/MessageKit/MessageKit/releases) to s
 
 Add your app to the list of apps using this library and make a pull request. We appriciate you and hope you contribute. *Please provide attribution, it is greatly appreciated.*
 
-## Font license
+## F license
 
 `MessageKit` is released under an [MIT License][mitLink].🤓
 * Many thanks to [**the contributors**](https://github.com/MessageKit/MessageKit/graphs/contributors) of this project.
