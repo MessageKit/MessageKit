@@ -79,6 +79,4 @@ Inspired by [JSQMessagesViewController](https://github.com/jessesquires/JSQMessa
 
 ## Font Installation
 
-### `Option 1: Download and Install Manually`
-
 
