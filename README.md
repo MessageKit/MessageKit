@@ -17,7 +17,7 @@ Welcome to MessagesKit.
 * [**What's Next**](#What's-Next)
 * [**Apps using this library**](#Apps-using-this-library)
 
-[**License**](#License-in)
+[**License**](#font-installation)
 
 [**Installation Options**](#font-installation)
 
