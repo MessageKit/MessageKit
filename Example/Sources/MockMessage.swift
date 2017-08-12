@@ -39,4 +39,11 @@ struct MockMessage: MessageType {
         self.sentDate = Date()
     }
 
+    init(text: NSAttributedString, sender: Sender, messageId: String) {
+        data = .attributedText(text)
+        self.sender = sender
+        self.messageId = messageId
+        self.sentDate = Date()
+    }
+
 }

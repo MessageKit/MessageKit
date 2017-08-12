@@ -40,7 +40,27 @@ struct SampleData {
         let msg7 = MockMessage(text: "Remembering that I'll be dead soon is the most important tool I've ever encountered to help me make the big choices in life. Because almost everything - all external expectations, all pride, all fear of embarrassment or failure - these things just fall away in the face of death, leaving only what is truly important.", sender: Jobs, messageId: UUID().uuidString)
         let msg8 = MockMessage(text: "Price is rarely the most important thing. A cheap product might sell some units. Somebody gets it home and they feel great when they pay the money, but then they get it home and use it and the joy is gone.", sender: Cook, messageId: UUID().uuidString)
 
-        return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8]
+        let msg9Text = NSString(string: "Use .attributedText() to add bold, italic, colored text and more...")
+        let msg9AttributedText = NSMutableAttributedString(string: String(msg9Text))
+
+        if #available(iOS 9.0, *) {
+            msg9AttributedText.addAttributes([NSFontAttributeName: UIFont.monospacedDigitSystemFont(ofSize: UIFont.systemFontSize, weight: UIFontWeightBold)], range: msg9Text.range(of: ".attributedText()"))
+        } else {
+            msg9AttributedText.addAttributes([NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle], range: msg9Text.range(of: ".attributedText()"))
+        }
+
+        msg9AttributedText.addAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)],
+                                         range: msg9Text.range(of: "bold"))
+
+        msg9AttributedText.addAttributes([NSFontAttributeName: UIFont.italicSystemFont(ofSize: UIFont.systemFontSize)],
+                                         range: msg9Text.range(of: "italic"))
+
+        msg9AttributedText.addAttributes([NSForegroundColorAttributeName: UIColor.red],
+                                         range: msg9Text.range(of: "colored"))
+
+        let msg9 = MockMessage(text: msg9AttributedText, sender: Jobs, messageId: UUID().uuidString)
+        
+        return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9]
     }
     
     func getCurrentSender() -> Sender {
