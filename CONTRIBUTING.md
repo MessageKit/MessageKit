@@ -2,7 +2,8 @@
 
 ### Code of Conduct
 
-Please read our Code of Conduct. The MessageKit maintainers take this Code of Conduct very seriously. Intolereance, disrespect, harassment, and any form of negavity will not be tolerated.
+Please read our [Code of Conduct](https://github.com/MessageKit/MessageKit/blob/974cb068f40a4959ec3b7bbf5894d405925079e4/Code_of_Conduct.md). 
+The MessageKit maintainers take this Code of Conduct very seriously. Intolereance, disrespect, harassment, and any form of negavity will not be tolerated.
 
 ### Ways to Contribute
 
@@ -16,7 +17,7 @@ You can contribute to MessageKit in a variety of ways:
 
 If you're new to Open Source or Swift, the MessageKit community is a great place to get involved.
 
-*Your contributions are always welcome, no contribution is too small.*
+**Your contributions are always welcome, no contribution is too small.**
 
 ### Opening a New Issue
 
@@ -44,10 +45,10 @@ The more information you can provide, the easier it will be for us to resolve yo
 - We strongly encourage you to open an issue discussing any potential new features before an implementation is provided. 
     - This ensures the feature is in scope and no ones time is wasted.
 
-- *Please DO NOT submit pull requests to the `master` branch*
+- **Please DO NOT submit pull requests to the `master` branch**
     - This branch is always stable and represents a relase.
 
-- *Please DO submit your pull request to the branch repersenting the next release version*
+- **Please DO submit your pull request to the branch repersenting the next release version**
 
 1. Link to any issues the pull request resolves. If none exist, create one.
 2. Write unit tests for new functionality or fix any broken by your changes. 
@@ -55,7 +56,7 @@ The more information you can provide, the easier it will be for us to resolve yo
 4. Avoid pull requests with a large number of commits.
 5. Write clean code and follow the MessageKit [style guidelines](#style-guidelines).
 
-*You should submit one pull request per feature, the smaller the pull request the better chances it will be merged.*
+**You should submit one pull request per feature, the smaller the pull request the better chances it will be merged.**
 Enormous pull requests take a signficant time to review and understand their implications on the existing codebase.
 
 ### Style Guidelines
@@ -71,4 +72,4 @@ Writing clean code and upholding project standards is as important as adding new
 If any of the sections above are unclear and require further explanation, *do not hesitate to reach out*.
 MessageKit strives to build an inclusive open source community and to make contributing as easy as possible for memebers of all experience levels.
 
-*You can get in touch with the MessageKit core team directly by joining our open Slack community channel: [here](https://join.slack.com/t/messagekit/shared_invite/MjI0NDkxNjgwMzA3LTE1MDIzMTU0MjUtMzJhZDZlNTkxMA).*
+**You can get in touch with the MessageKit core team directly by joining our open Slack community channel: [here](https://join.slack.com/t/messagekit/shared_invite/MjI0NDkxNjgwMzA3LTE1MDIzMTU0MjUtMzJhZDZlNTkxMA).**
