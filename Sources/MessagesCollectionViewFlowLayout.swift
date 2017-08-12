@@ -57,6 +57,13 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return MessagesCollectionViewLayoutAttributes.self
     }
 
+    fileprivate static let placeholderMessageLabel: MessageLabel = MessageLabel()
+
+    fileprivate static func sizeThatFits(text: NSAttributedString, and size: CGSize) -> CGSize {
+        placeholderMessageLabel.attributedText = text
+        return placeholderMessageLabel.sizeThatFits(size)
+    }
+
     // MARK: - Initializers
 
     override public init() {
@@ -273,7 +280,7 @@ extension MessagesCollectionViewFlowLayout {
         case .text(let text):
             estimatedHeight = text.height(considering: availableWidth, and: messageLabelFont)
         case .attributedText(let text):
-            estimatedHeight = text.height(considering: availableWidth)
+            estimatedHeight = MessagesCollectionViewFlowLayout.sizeThatFits(text: text, and: CGSize(width: availableWidth, height: .greatestFiniteMagnitude)).height
         }
 
         let finalHeight = estimatedHeight.rounded(.up) + verticalMessageInsets
@@ -295,7 +302,7 @@ extension MessagesCollectionViewFlowLayout {
         case .text(let text):
             estimatedWidth = text.width(considering: containerHeight, and: messageLabelFont)
         case .attributedText(let text):
-            estimatedWidth = text.width(considering: containerHeight)
+            estimatedWidth = MessagesCollectionViewFlowLayout.sizeThatFits(text: text, and: CGSize(width: .greatestFiniteMagnitude, height: containerHeight)).width
         }
 
         let widthToUse = estimatedWidth.rounded(.up) > availableWidth ? availableWidth : estimatedWidth
