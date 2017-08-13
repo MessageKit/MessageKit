@@ -16,8 +16,8 @@
                 <text id="MessageKit" font-family="SFProDisplay-Regular, SF Pro Display" font-size="55" font-weight="normal">
                     <tspan x="0" y="52">MessageKit</tspan>
                 </text>
-                <text id="An-elegant-messges-U" font-family="SFProDisplay-Thin, SF Pro Display" font-size="25" font-style="condensed" font-weight="300">
-                    <tspan x="0" y="86">An elegant messges UI library for iOS</tspan>
+                <text id="An-elegant-messages-U" font-family="SFProDisplay-Thin, SF Pro Display" font-size="25" font-style="condensed" font-weight="300">
+                    <tspan x="0" y="86">An elegant messages UI library for iOS</tspan>
                 </text>
             </g>
             <g id="Rectangle-3" transform="translate(175.000000, 39.000000)">
