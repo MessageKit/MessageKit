@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-public enum MessageDirection {
+enum MessageDirection {
 
     case incoming
     case outgoing

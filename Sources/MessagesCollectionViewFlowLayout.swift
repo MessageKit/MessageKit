@@ -1,18 +1,18 @@
 /*
  MIT License
- 
+
  Copyright (c) 2017 MessageKit
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,10 +33,10 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     open var messageToViewEdgePadding: CGFloat
 
     open var cellTopLabelInsets: UIEdgeInsets
-    open var topLabelPinnedUnderMessage: Bool
+    open var topLabelExtendsPastAvatar: Bool
 
     open var cellBottomLabelInsets: UIEdgeInsets
-    open var bottomLabelPinnedUnderMessage: Bool
+    open var bottomLabelExtendsPastAvatar: Bool
 
     open var incomingAvatarSize: CGSize
     open var outgoingAvatarSize: CGSize
@@ -66,10 +66,10 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         messageToViewEdgePadding = 30.0
 
         cellTopLabelInsets = .zero
-        topLabelPinnedUnderMessage = true
+        topLabelExtendsPastAvatar = false
 
         cellBottomLabelInsets = .zero
-        bottomLabelPinnedUnderMessage = true
+        bottomLabelExtendsPastAvatar = false
 
         incomingAvatarSize = CGSize(width: 30, height: 30)
         outgoingAvatarSize = CGSize(width: 30, height: 30)
@@ -126,11 +126,11 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
         attributes.cellTopLabelSize = cellTopLabelSize(for: message, at: indexPath)
         attributes.cellTopLabelInsets = cellTopLabelInsets
-        attributes.topLabelPinnedUnderMessage = topLabelPinnedUnderMessage
+        attributes.topLabelExtendsPastAvatar = topLabelExtendsPastAvatar
 
         attributes.cellBottomLabelSize = cellBottomLabelSize(for: message, at: indexPath)
         attributes.cellBottomLabelInsets = cellBottomLabelInsets
-        attributes.bottomLabelPinnedUnderMessage = bottomLabelPinnedUnderMessage
+        attributes.bottomLabelExtendsPastAvatar = bottomLabelExtendsPastAvatar
 
         attributes.avatarSize = avatarSize(for: message)
         attributes.avatarBottomPadding = avatarBottomPadding
@@ -159,7 +159,7 @@ extension MessagesCollectionViewFlowLayout {
 
     // MARK: - Size Calculations
 
-    func avatarSize(for message: MessageType) -> CGSize {
+    fileprivate func avatarSize(for message: MessageType) -> CGSize {
 
         guard let messagesCollectionView = messagesCollectionView else { return .zero }
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return .zero }
@@ -169,7 +169,7 @@ extension MessagesCollectionViewFlowLayout {
         return isOutgoingMessage ? outgoingAvatarSize : incomingAvatarSize
     }
 
-    func messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    fileprivate func messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
 
         let messageWidth = messageContainerWidth(for: message, at: indexPath)
         let messageHeight = messageContainerHeight(for: message, at: indexPath)
@@ -177,7 +177,7 @@ extension MessagesCollectionViewFlowLayout {
         return CGSize(width: messageWidth, height: messageHeight)
     }
 
-    func cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    fileprivate func cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
 
         let topLabelWidth = cellTopLabelWidth(for: message)
         let topLabelHeight = cellTopLabelHeight(for: message, at: indexPath)
@@ -186,7 +186,7 @@ extension MessagesCollectionViewFlowLayout {
 
     }
 
-    func cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    fileprivate func cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
 
         let bottomLabelWidth = cellBottomLabelWidth(for: message)
         let bottomLabelHeight = cellBottomLabelHeight(for: message, at: indexPath)
@@ -197,23 +197,24 @@ extension MessagesCollectionViewFlowLayout {
 
     // MARK: - Width Calculations
 
-    func cellTopLabelWidth(for message: MessageType) -> CGFloat {
-        if topLabelPinnedUnderMessage {
-            return itemWidth - avatarSize(for: message).width - avatarMessagePadding - messageToViewEdgePadding
-        } else {
+    private func cellTopLabelWidth(for message: MessageType) -> CGFloat {
+        if topLabelExtendsPastAvatar {
             return itemWidth
+        } else {
+            return itemWidth - avatarSize(for: message).width - avatarMessagePadding - messageToViewEdgePadding
         }
     }
 
-    func cellBottomLabelWidth(for message: MessageType) -> CGFloat {
-        if bottomLabelPinnedUnderMessage {
-            return itemWidth - avatarSize(for: message).width - avatarMessagePadding - messageToViewEdgePadding
-        } else {
+    private func cellBottomLabelWidth(for message: MessageType) -> CGFloat {
+        if bottomLabelExtendsPastAvatar {
             return itemWidth
+        } else {
+            return itemWidth - avatarSize(for: message).width - avatarMessagePadding - messageToViewEdgePadding
+
         }
     }
 
-    func availableWidthForMessageContainer(considering message: MessageType) -> CGFloat {
+    private func availableWidthForMessageContainer(considering message: MessageType) -> CGFloat {
         let avatarWidth = avatarSize(for: message).width
         let avatarWidthPlusPadding = avatarWidth == 0 ? 0 : avatarWidth + avatarMessagePadding
         let horizontalMessageInsets = messageLabelInsets.left + messageLabelInsets.right
@@ -223,7 +224,7 @@ extension MessagesCollectionViewFlowLayout {
 
     // MARK: - View Height Calculations
 
-    func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
+    private func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         guard let messagesCollectionView = messagesCollectionView else { return 0 }
         guard let displayDataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDataSource else { return 0 }
@@ -237,7 +238,7 @@ extension MessagesCollectionViewFlowLayout {
 
     }
 
-    func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
+    private func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         guard let messagesCollectionView = messagesCollectionView else { return 0 }
         guard let displayDataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDataSource else { return 0 }
@@ -250,7 +251,7 @@ extension MessagesCollectionViewFlowLayout {
         return estimatedHeight.rounded(.up)
     }
 
-    func minimumCellHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
+    private func minimumCellHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         let size = avatarSize(for: message)
         let avatarHeightPlusBottomPadding = size.height == 0 ? 0 : size.height + avatarBottomPadding
@@ -263,7 +264,7 @@ extension MessagesCollectionViewFlowLayout {
 
     }
 
-    func messageContainerHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
+    private func messageContainerHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         let availableWidth = availableWidthForMessageContainer(considering: message)
         let verticalMessageInsets = messageLabelInsets.top + messageLabelInsets.bottom
@@ -284,7 +285,7 @@ extension MessagesCollectionViewFlowLayout {
 
     // MARK: - View Width Calculations
 
-    func messageContainerWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
+    private func messageContainerWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         let containerHeight = messageContainerHeight(for: message, at: indexPath)
         let availableWidth = availableWidthForMessageContainer(considering: message)
@@ -308,7 +309,7 @@ extension MessagesCollectionViewFlowLayout {
 
     // MARK: - Cell Size Calculations
 
-    func estimatedCellHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
+    private func estimatedCellHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         let containerHeight = messageContainerHeight(for: message, at: indexPath)
         let topLabelHeight = cellTopLabelHeight(for: message, at: indexPath)
@@ -318,19 +319,19 @@ extension MessagesCollectionViewFlowLayout {
 
     }
 
-    func sizeForItem(at indexPath: IndexPath) -> CGSize {
-
+    open func sizeForItem(at indexPath: IndexPath) -> CGSize {
+        
         guard let messagesCollectionView = messagesCollectionView else { return .zero }
         guard let dataSource = messagesCollectionView.messagesDataSource else { return .zero }
-
+        
         let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-
+        
         let minimumHeight = minimumCellHeight(for: message, at: indexPath)
         let estimatedHeight = estimatedCellHeight(for: message, at: indexPath)
         let finalHeight = estimatedHeight < minimumHeight ? minimumHeight : estimatedHeight
-
+        
         return CGSize(width: itemWidth, height: finalHeight)
-
+        
     }
-
+    
 }

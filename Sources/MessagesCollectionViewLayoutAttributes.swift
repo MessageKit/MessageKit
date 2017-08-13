@@ -35,11 +35,11 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
 
     var cellTopLabelSize: CGSize = .zero
     var cellTopLabelInsets: UIEdgeInsets = .zero
-    var topLabelPinnedUnderMessage = true
+    var topLabelExtendsPastAvatar = false
 
     var cellBottomLabelSize: CGSize = .zero
     var cellBottomLabelInsets: UIEdgeInsets = .zero
-    var bottomLabelPinnedUnderMessage = true
+    var bottomLabelExtendsPastAvatar = false
 
     var avatarSize: CGSize = CGSize(width: 30, height: 30)
     var avatarBottomPadding: CGFloat = 4.0
@@ -58,10 +58,10 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
         copy.messageToViewEdgePadding = messageToViewEdgePadding
         copy.cellTopLabelSize = cellTopLabelSize
         copy.cellTopLabelInsets = cellTopLabelInsets
-        copy.topLabelPinnedUnderMessage = topLabelPinnedUnderMessage
+        copy.topLabelExtendsPastAvatar = topLabelExtendsPastAvatar
         copy.cellBottomLabelSize = cellBottomLabelSize
         copy.cellBottomLabelInsets = cellBottomLabelInsets
-        copy.bottomLabelPinnedUnderMessage = bottomLabelPinnedUnderMessage
+        copy.bottomLabelExtendsPastAvatar = bottomLabelExtendsPastAvatar
         copy.avatarSize = avatarSize
         copy.avatarBottomPadding = avatarBottomPadding
         copy.avatarMessagePadding = avatarMessagePadding

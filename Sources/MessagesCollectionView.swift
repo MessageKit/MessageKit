@@ -34,9 +34,7 @@ open class MessagesCollectionView: UICollectionView {
 
     open weak var messageCellDelegate: MessageCellDelegate?
 
-    //open weak var messagesDisplayDataSource: MessagesDisplayDataSource?
-
-    var indexPathForLastItem: IndexPath? {
+    private var indexPathForLastItem: IndexPath? {
 
         let lastSection = numberOfSections > 0 ? numberOfSections - 1 : 0
         guard numberOfItems(inSection: lastSection) > 0 else { return nil }
@@ -57,7 +55,7 @@ open class MessagesCollectionView: UICollectionView {
 
     // MARK: - Methods
 
-    func scrollToBottom(animated: Bool = false) {
+    public func scrollToBottom(animated: Bool = false) {
         guard let indexPath = indexPathForLastItem else { return }
         scrollToItem(at: indexPath, at: .bottom, animated: animated)
     }

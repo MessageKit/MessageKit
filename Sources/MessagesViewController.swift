@@ -165,8 +165,8 @@ extension MessagesViewController: UICollectionViewDataSource {
         guard let displayDataSource = messagesDataSource as? MessagesDisplayDataSource else { return cell }
 
         let message = displayDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        let messageColor = displayDataSource.messageColorFor(message, at: indexPath, in: messagesCollectionView)
-        let avatar = displayDataSource.avatarForMessage(message, at: indexPath, in: messagesCollectionView)
+        let messageColor = displayDataSource.messageColor(for: message, at: indexPath, in: messagesCollectionView)
+        let avatar = displayDataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
         let topLabelText = displayDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
         let bottomLabelText = displayDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
 
@@ -189,9 +189,9 @@ extension MessagesViewController: UICollectionViewDataSource {
 
         switch kind {
         case UICollectionElementKindSectionHeader:
-            return displayDataSource.headerForMessage(message, at: indexPath, in: messagesCollectionView) ?? MessageHeaderView()
+            return displayDataSource.messageHeaderView(for: message, at: indexPath, in: messagesCollectionView) ?? MessageHeaderView()
         case UICollectionElementKindSectionFooter:
-            return displayDataSource.footerForMessage(message, at: indexPath, in: messagesCollectionView) ?? MessageFooterView()
+            return displayDataSource.messageFooterView(for: message, at: indexPath, in: messagesCollectionView) ?? MessageFooterView()
         default:
             fatalError("Unrecognized element of kind: \(kind)")
         }
@@ -205,7 +205,7 @@ extension MessagesViewController: UICollectionViewDataSource {
          // Could pose a problem if subclass behaviors allows more than one item per section
         let indexPath = IndexPath(item: 0, section: section)
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        return messagesLayoutDelegate.headerSizeFor(message, at: indexPath, in: messagesCollectionView)
+        return messagesLayoutDelegate.headerViewSize(for: message, at: indexPath, in: messagesCollectionView)
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
@@ -215,7 +215,7 @@ extension MessagesViewController: UICollectionViewDataSource {
         // Could pose a problem if subclass behaviors allows more than one item per section
         let indexPath = IndexPath(item: 0, section: section)
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        return messagesLayoutDelegate.footerSizeFor(message, at: indexPath, in: messagesCollectionView)
+        return messagesLayoutDelegate.footerViewSize(for: message, at: indexPath, in: messagesCollectionView)
     }
 
 }
