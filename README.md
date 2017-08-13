@@ -1,7 +1,7 @@
 # MessageKit
 
 <p align="center">
-  <img src="https://github.com/MessageKit/MessageKit/master/Assets/logo.svg" title="MessageKit logo">
+  <img src="https://github.com/MessageKit/MessageKit/blob/master/Assets/logo.svg" title="MessageKit logo">
 </p>
 
 [![Build Status](https://travis-ci.org/MessageKit/MessageKit.svg)](https://travis-ci.org/MessageKit/MessageKit) [![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
