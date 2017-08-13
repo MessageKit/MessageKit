@@ -28,7 +28,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Properties
 
-    open let messageContainerView: UIView = {
+    open var messageContainerView: UIView = {
         let messageContainerView = UIView()
         messageContainerView.layer.cornerRadius = 12.0
         messageContainerView.layer.masksToBounds = true
@@ -98,29 +98,29 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     }
 
-    func cellTopLabelFrame(for attributes: MessagesCollectionViewLayoutAttributes) -> CGRect {
+    private func cellTopLabelFrame(for attributes: MessagesCollectionViewLayoutAttributes) -> CGRect {
 
         var origin: CGPoint = .zero
 
-        if attributes.topLabelPinnedUnderMessage {
+        if !attributes.topLabelExtendsPastAvatar {
             origin = CGPoint(x: attributes.avatarSize.width + attributes.avatarMessagePadding, y: 0)
         }
 
         return CGRect(origin: origin, size: attributes.cellTopLabelSize)
     }
 
-    func cellBottomLabelFrame(for attributes: MessagesCollectionViewLayoutAttributes) -> CGRect {
+    private func cellBottomLabelFrame(for attributes: MessagesCollectionViewLayoutAttributes) -> CGRect {
 
         var origin: CGPoint = CGPoint(x: 0, y: contentView.frame.height - attributes.cellBottomLabelSize.height)
 
-        if attributes.bottomLabelPinnedUnderMessage {
+        if !attributes.bottomLabelExtendsPastAvatar {
             origin.x = attributes.avatarSize.width + attributes.avatarMessagePadding
         }
 
         return CGRect(origin: origin, size: attributes.cellBottomLabelSize)
     }
 
-    func messageContainerFrame(for attributes: MessagesCollectionViewLayoutAttributes) -> CGRect {
+    private func messageContainerFrame(for attributes: MessagesCollectionViewLayoutAttributes) -> CGRect {
 
         var origin: CGPoint = .zero
 
@@ -139,7 +139,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     }
 
-    func avatarViewFrame(for attributes: MessagesCollectionViewLayoutAttributes) -> CGRect {
+    private func avatarViewFrame(for attributes: MessagesCollectionViewLayoutAttributes) -> CGRect {
 
         var origin: CGPoint = .zero
 
@@ -157,7 +157,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     }
 
-    func configure(with message: MessageType) {
+    public func configure(with message: MessageType) {
 
         switch message.data {
         case .text(let text):
@@ -168,7 +168,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     }
 
-    func setupGestureRecognizers() {
+    private func setupGestureRecognizers() {
 
         let avatarTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
         avatarView.addGestureRecognizer(avatarTapGesture)

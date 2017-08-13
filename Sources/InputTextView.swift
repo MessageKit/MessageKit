@@ -95,7 +95,7 @@ open class InputTextView: UITextView {
 
     }
 
-    fileprivate func addObservers() {
+    private func addObservers() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(textDidChange),
                                                name: Notification.Name.UITextViewTextDidChange,
