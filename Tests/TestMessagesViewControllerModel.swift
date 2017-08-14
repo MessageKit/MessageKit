@@ -21,7 +21,7 @@ class TestMessagesViewControllerModel: MessagesViewController, MessagesDisplayDa
     override func viewDidLoad() {
         super.viewDidLoad()
         messageList = [testMessage1, testMessage2]
-        self.messagesCollectionView.messagesDisplayDataSource = self
+        self.messagesCollectionView.messagesDataSource = self
     }
 }
 
