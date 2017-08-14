@@ -33,6 +33,8 @@ open class MessagesCollectionView: UICollectionView {
     open weak var messagesLayoutDelegate: MessagesLayoutDelegate?
 
     open weak var messageCellDelegate: MessageCellDelegate?
+    
+    open weak var messagesDisplayDataSource: MessagesDisplayDataSource?
 
     private var indexPathForLastItem: IndexPath? {
 
