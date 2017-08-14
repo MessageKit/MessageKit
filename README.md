@@ -1,5 +1,5 @@
 <p>
-  <img src="https://cdn.rawgit.com/MessageKit/MessageKit/f9e95233/Assets/mklogo.svg" title="MessageKit logo">
+  <img src="https://cdn.rawgit.com/MessageKit/MessageKit/master/Assets/mklogo.svg" title="MessageKit logo">
 </p>
 
 [![Build Status](https://travis-ci.org/MessageKit/MessageKit.svg)](https://travis-ci.org/MessageKit/MessageKit) [![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
