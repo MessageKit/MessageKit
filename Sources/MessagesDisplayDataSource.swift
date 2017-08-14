@@ -25,41 +25,52 @@
 import Foundation
 
 public protocol MessagesDisplayDataSource: class, MessagesDataSource {
-
-    func messageColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
-
-    func avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar
-
+    
+    func textColor(for message: MessageType, at indexPath: IndexPath) -> UIColor
+    
+    func backgroundColor(for message: MessageType, at  indexPath: IndexPath) -> UIColor
+    
+    func avatar(for message: MessageType) -> Avatar
+    
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView?
-
+    
     func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView?
-
+    
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
-
+    
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
-
+    
 }
 
-public extension MessagesDisplayDataSource {
-
-    func messageColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+// "where Self: MessagesViewController" make these methods a `default` implimentation for any view that subclasses of MessagesViewController
+public extension MessagesDisplayDataSource where Self: MessagesViewController {
+    
+    func textColor(for message: MessageType, at indexPath: IndexPath) -> UIColor {
+        return isFromCurrentSender(message: message) ? .white : .black
+    }
+    
+    func backgroundColor(for message: MessageType, at  indexPath: IndexPath) -> UIColor {
         return isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
     }
-
+    
+    func avatar(for message: MessageType) -> Avatar {
+        return Avatar()
+    }
+    
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
         return nil
     }
-
+    
     func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView? {
         return nil
     }
-
+    
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         return nil
     }
-
+    
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         return nil
     }
-
+    
 }

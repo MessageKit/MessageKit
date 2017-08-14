@@ -10,6 +10,8 @@
 		171D5AB91F36712B0053DF69 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171D5AB81F36712B0053DF69 /* InputTextView.swift */; };
 		372F6AEB1F36C15600B57FBD /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372F6AEA1F36C15600B57FBD /* AvatarView.swift */; };
 		372F6AEF1F36C61000B57FBD /* AvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372F6AEE1F36C61000B57FBD /* AvatarViewTests.swift */; };
+		376AD1821F4258D80083072A /* TestMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376AD1811F4258D80083072A /* TestMessageModel.swift */; };
+		376AD1861F4259270083072A /* MessagesDisplayDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376AD1851F4259270083072A /* MessagesDisplayDataSourceTests.swift */; };
 		37C936981F38F6AC00853DF2 /* Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C936971F38F6AC00853DF2 /* Avatar.swift */; };
 		882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882D75831DE507320033F95F /* MessagesDataSource.swift */; };
 		888CEBFC1D3FD525005178DE /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888CEBFB1D3FD525005178DE /* MessagesViewController.swift */; };
@@ -51,6 +53,8 @@
 		171D5AB81F36712B0053DF69 /* InputTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
 		372F6AEA1F36C15600B57FBD /* AvatarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		372F6AEE1F36C61000B57FBD /* AvatarViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarViewTests.swift; sourceTree = "<group>"; };
+		376AD1811F4258D80083072A /* TestMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMessageModel.swift; sourceTree = "<group>"; };
+		376AD1851F4259270083072A /* MessagesDisplayDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDisplayDataSourceTests.swift; sourceTree = "<group>"; };
 		37C936971F38F6AC00853DF2 /* Avatar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Avatar.swift; sourceTree = "<group>"; };
 		882D75831DE507320033F95F /* MessagesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDataSource.swift; sourceTree = "<group>"; };
 		888CEBFB1D3FD525005178DE /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +104,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		376AD1801F4258C50083072A /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				376AD1811F4258D80083072A /* TestMessageModel.swift */,
+			);
+			name = "Support Files";
+			sourceTree = "<group>";
+		};
 		88916B181CF0DF2F00469F91 = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +150,8 @@
 				88916B421CF0DF5900469F91 /* Info.plist */,
 				88916B431CF0DF5900469F91 /* MessageKitTests.swift */,
 				372F6AEE1F36C61000B57FBD /* AvatarViewTests.swift */,
+				376AD1851F4259270083072A /* MessagesDisplayDataSourceTests.swift */,
+				376AD1801F4258C50083072A /* Support Files */,
 			);
 			path = Tests;
 			sourceTree = SOURCE_ROOT;
@@ -355,6 +369,7 @@
 				B015E81F1F259D8E007EDFB6 /* MessageInputBarDelegate.swift in Sources */,
 				B0655A2A1F23D77200542A83 /* Sender.swift in Sources */,
 				B074EE931F35587100ABB8C8 /* MessageHeaderView.swift in Sources */,
+				376AD1821F4258D80083072A /* TestMessageModel.swift in Sources */,
 				B0655A4D1F244C0600542A83 /* MessageCollectionViewCell.swift in Sources */,
 				B0655A2E1F23D8BC00542A83 /* MessagesCollectionView.swift in Sources */,
 				B074EE951F35588A00ABB8C8 /* MessageFooterView.swift in Sources */,
@@ -375,6 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88916B451CF0DF5900469F91 /* MessageKitTests.swift in Sources */,
+				376AD1861F4259270083072A /* MessagesDisplayDataSourceTests.swift in Sources */,
 				372F6AEF1F36C61000B57FBD /* AvatarViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
