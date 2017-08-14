@@ -10,6 +10,9 @@
 		171D5AB91F36712B0053DF69 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171D5AB81F36712B0053DF69 /* InputTextView.swift */; };
 		372F6AEB1F36C15600B57FBD /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372F6AEA1F36C15600B57FBD /* AvatarView.swift */; };
 		372F6AEF1F36C61000B57FBD /* AvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372F6AEE1F36C61000B57FBD /* AvatarViewTests.swift */; };
+		376CECBA1F422D9D002A647C /* MessagesDisplayDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376CECB91F422D9D002A647C /* MessagesDisplayDataSourceTests.swift */; };
+		376CECBE1F42427C002A647C /* TestMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376CECBD1F42427C002A647C /* TestMessage.swift */; };
+		376CECC01F4242D8002A647C /* TestMessageViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376CECBF1F4242D8002A647C /* TestMessageViewControllerModel.swift */; };
 		37C936981F38F6AC00853DF2 /* Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C936971F38F6AC00853DF2 /* Avatar.swift */; };
 		882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882D75831DE507320033F95F /* MessagesDataSource.swift */; };
 		888CEBFC1D3FD525005178DE /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888CEBFB1D3FD525005178DE /* MessagesViewController.swift */; };
@@ -51,6 +54,9 @@
 		171D5AB81F36712B0053DF69 /* InputTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
 		372F6AEA1F36C15600B57FBD /* AvatarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		372F6AEE1F36C61000B57FBD /* AvatarViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarViewTests.swift; sourceTree = "<group>"; };
+		376CECB91F422D9D002A647C /* MessagesDisplayDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDisplayDataSourceTests.swift; sourceTree = "<group>"; };
+		376CECBD1F42427C002A647C /* TestMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMessage.swift; sourceTree = "<group>"; };
+		376CECBF1F4242D8002A647C /* TestMessageViewControllerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMessageViewControllerModel.swift; sourceTree = "<group>"; };
 		37C936971F38F6AC00853DF2 /* Avatar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Avatar.swift; sourceTree = "<group>"; };
 		882D75831DE507320033F95F /* MessagesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDataSource.swift; sourceTree = "<group>"; };
 		888CEBFB1D3FD525005178DE /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +106,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		375742D61F42475C0077EB2D /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				376CECBD1F42427C002A647C /* TestMessage.swift */,
+				376CECBF1F4242D8002A647C /* TestMessageViewControllerModel.swift */,
+			);
+			name = SupportingFiles;
+			sourceTree = "<group>";
+		};
 		88916B181CF0DF2F00469F91 = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +153,8 @@
 				88916B421CF0DF5900469F91 /* Info.plist */,
 				88916B431CF0DF5900469F91 /* MessageKitTests.swift */,
 				372F6AEE1F36C61000B57FBD /* AvatarViewTests.swift */,
+				376CECB91F422D9D002A647C /* MessagesDisplayDataSourceTests.swift */,
+				375742D61F42475C0077EB2D /* SupportingFiles */,
 			);
 			path = Tests;
 			sourceTree = SOURCE_ROOT;
@@ -345,6 +362,7 @@
 			files = (
 				171D5AB91F36712B0053DF69 /* InputTextView.swift in Sources */,
 				B074EEAA1F3BE8F500ABB8C8 /* NSAttributedString+Extensions.swift in Sources */,
+				376CECBE1F42427C002A647C /* TestMessage.swift in Sources */,
 				B074EE971F355FBC00ABB8C8 /* MessagesLayoutDelegate.swift in Sources */,
 				882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */,
 				888CEBFC1D3FD525005178DE /* MessagesViewController.swift in Sources */,
@@ -360,6 +378,7 @@
 				B074EE951F35588A00ABB8C8 /* MessageFooterView.swift in Sources */,
 				B09643901F289142004D0129 /* UIColor+Extensions.swift in Sources */,
 				B0655A381F23EE8B00542A83 /* MessageInputBar.swift in Sources */,
+				376CECC01F4242D8002A647C /* TestMessageViewControllerModel.swift in Sources */,
 				B074EEA81F3971A600ABB8C8 /* MessageLabel.swift in Sources */,
 				372F6AEB1F36C15600B57FBD /* AvatarView.swift in Sources */,
 				88916B471CF0DFE600469F91 /* MessageType.swift in Sources */,
@@ -375,6 +394,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88916B451CF0DF5900469F91 /* MessageKitTests.swift in Sources */,
+				376CECBA1F422D9D002A647C /* MessagesDisplayDataSourceTests.swift in Sources */,
 				372F6AEF1F36C61000B57FBD /* AvatarViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
