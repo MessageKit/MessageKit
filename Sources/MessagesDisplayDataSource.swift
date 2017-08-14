@@ -26,11 +26,11 @@ import Foundation
 
 public protocol MessagesDisplayDataSource: class, MessagesDataSource {
     
-    func textColor(for message: MessageType, at indexPath: IndexPath) -> UIColor
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
     
-    func backgroundColor(for message: MessageType, at  indexPath: IndexPath) -> UIColor
+    func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
     
-    func avatar(for message: MessageType) -> Avatar
+    func avatar(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar
     
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView?
     
@@ -45,15 +45,15 @@ public protocol MessagesDisplayDataSource: class, MessagesDataSource {
 // "where Self: MessagesViewController" make these methods a `default` implimentation for any view that subclasses of MessagesViewController
 public extension MessagesDisplayDataSource where Self: MessagesViewController {
     
-    func textColor(for message: MessageType, at indexPath: IndexPath) -> UIColor {
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? .white : .black
     }
     
-    func backgroundColor(for message: MessageType, at  indexPath: IndexPath) -> UIColor {
+    func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
     }
     
-    func avatar(for message: MessageType) -> Avatar {
+    func avatar(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
         return Avatar()
     }
     

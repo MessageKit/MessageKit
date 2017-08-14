@@ -28,22 +28,19 @@ class MessagesDisplayDataSourceTests: XCTestCase {
     }
     
     func testMessageTextColorDefaultState() {
-        XCTAssertEqual(testClass.textColor(for: testClass.messageList[0], at: IndexPath(item: 0, section: 0)), UIColor.white)
-        XCTAssertEqual(testClass.textColor(for: testClass.messageList[1], at: IndexPath(item: 1, section: 0)), UIColor.black)
+        XCTAssertEqual(testClass.textColor(for: testClass.messageList[0], at: IndexPath(item: 0, section: 0), in: testClass.messagesCollectionView), UIColor.white)
+        XCTAssertEqual(testClass.textColor(for: testClass.messageList[1], at: IndexPath(item: 1, section: 0), in: testClass.messagesCollectionView), UIColor.black)
     }
     
     func testBackGroundColorDefaultState() {
-        XCTAssertEqual(testClass.backgroundColor(for: testClass.messageList[0], at:  IndexPath(item: 0, section: 0)), UIColor.outgoingGreen)
-        XCTAssertNotEqual(testClass.backgroundColor(for: testClass.messageList[0], at:  IndexPath(item: 0, section: 0)), UIColor.incomingGray)
-        XCTAssertEqual(testClass.backgroundColor(for: testClass.messageList[1], at:  IndexPath(item: 1, section: 0)), UIColor.incomingGray)
-        XCTAssertNotEqual(testClass.backgroundColor(for: testClass.messageList[1], at:  IndexPath(item: 1, section: 0)), UIColor.outgoingGreen)
+        XCTAssertEqual(testClass.backgroundColor(for: testClass.messageList[0], at:  IndexPath(item: 0, section: 0), in: testClass.messagesCollectionView), UIColor.outgoingGreen)
+        XCTAssertNotEqual(testClass.backgroundColor(for: testClass.messageList[0], at:  IndexPath(item: 0, section: 0), in: testClass.messagesCollectionView), UIColor.incomingGray)
+        XCTAssertEqual(testClass.backgroundColor(for: testClass.messageList[1], at:  IndexPath(item: 1, section: 0), in: testClass.messagesCollectionView), UIColor.incomingGray)
+        XCTAssertNotEqual(testClass.backgroundColor(for: testClass.messageList[1], at:  IndexPath(item: 1, section: 0), in: testClass.messagesCollectionView), UIColor.outgoingGreen)
     }
     
     func testAvatarDefaultState() {
-        XCTAssertNotNil(testClass.avatar(for: testClass.messageList[0]).initals)
-        XCTAssertNotNil(testClass.avatar(for: testClass.messageList[1]).initals)
-        XCTAssertEqual(testClass.avatar(for: testClass.messageList[0]).initals, "?")
-        XCTAssertEqual(testClass.avatar(for: testClass.messageList[1]).initals, "?")
+        XCTAssertNotNil(testClass.avatar(for: testClass.messageList[0], at: IndexPath(item: 0, section: 0), in: testClass.messagesCollectionView).initals)
     }
     
     func testCellTopLabelDefaultState() {
