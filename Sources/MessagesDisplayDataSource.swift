@@ -27,11 +27,10 @@ import Foundation
 public protocol MessagesDisplayDataSource: class, MessagesDataSource {
 
     func textColorFor(_ message: MessageType) -> UIColor
-    
     func backgroundColorFor(_ message: MessageType) -> UIColor
     func messageColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
 
-    func avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar
+    func avatarForMessage(_ message: MessageType) -> Avatar
 
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView?
 
@@ -51,8 +50,6 @@ public extension MessagesDisplayDataSource where Self: MessagesViewController {
     }
     
     func backgroundColorFor(_ message: MessageType) -> UIColor {
-
-    func messageColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
     }
     

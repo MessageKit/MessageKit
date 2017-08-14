@@ -165,8 +165,7 @@ extension MessagesViewController: UICollectionViewDataSource {
         guard let displayDataSource = messagesDataSource as? MessagesDisplayDataSource else { return cell }
 
         let message = displayDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        let messageColor = displayDataSource.messageColor(for: message, at: indexPath, in: messagesCollectionView)
-        let avatar = displayDataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
+        let messageColor = displayDataSource.backgroundColorFor(message)
         let messageTextColor = displayDataSource.textColorFor(message)
         let avatar = displayDataSource.avatarForMessage(message)
         let topLabelText = displayDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
