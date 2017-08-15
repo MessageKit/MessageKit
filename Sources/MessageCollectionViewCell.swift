@@ -102,7 +102,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         var origin: CGPoint = .zero
 
-        if !attributes.topLabelExtendsPastAvatar {
+        if attributes.topLabelExtendsPastAvatar == false {
             origin = CGPoint(x: attributes.avatarSize.width + attributes.avatarMessagePadding, y: 0)
         }
 
@@ -113,7 +113,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         var origin: CGPoint = CGPoint(x: 0, y: contentView.frame.height - attributes.cellBottomLabelSize.height)
 
-        if !attributes.bottomLabelExtendsPastAvatar {
+        if attributes.bottomLabelExtendsPastAvatar == false {
             origin.x = attributes.avatarSize.width + attributes.avatarMessagePadding
         }
 
@@ -143,14 +143,22 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         var origin: CGPoint = .zero
 
-        let yPosition = contentView.frame.height - attributes.avatarSize.height - attributes.avatarBottomPadding - attributes.cellBottomLabelSize.height
+        switch attributes.avatarPosition {
+        case .cellTop:
+            origin.y = attributes.cellTopLabelSize.height
+        case .messageCenter:
+            let messageMidY = (attributes.messageContainerSize.height / 2)
+            let avatarMidY = (attributes.avatarSize.height / 2)
+            origin.y = contentView.frame.height - attributes.cellTopLabelSize.height - messageMidY - avatarMidY
+        case .cellBottom:
+            origin.y = contentView.frame.height - attributes.avatarSize.height - attributes.cellBottomLabelSize.height
+        }
 
         switch attributes.direction {
         case .outgoing:
-            let xPosition = contentView.frame.width - attributes.avatarSize.width
-            origin = CGPoint(x: xPosition, y: yPosition)
+            origin.x = contentView.frame.width - attributes.avatarSize.width
         case .incoming:
-            origin = CGPoint(x: 0, y: yPosition)
+            origin.x = 0
         }
 
         return CGRect(origin: origin, size: attributes.avatarSize)

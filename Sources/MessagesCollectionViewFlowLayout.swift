@@ -43,7 +43,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     fileprivate var placeholderLabel = MessageLabel()
 
-    fileprivate var avatarBottomPadding: CGFloat = 2
+    //fileprivate var avatarBottomPadding: CGFloat = 2
     fileprivate var avatarMessagePadding: CGFloat = 4
 
     fileprivate var messagesCollectionView: MessagesCollectionView? {
@@ -116,6 +116,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
         guard let messagesCollectionView = messagesCollectionView else { return }
         guard let dataSource = messagesCollectionView.messagesDataSource else { return }
+        guard let displayDataSource = dataSource as? MessagesDisplayDataSource else { return }
 
         let indexPath = attributes.indexPath
 
@@ -135,8 +136,10 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         attributes.bottomLabelExtendsPastAvatar = bottomLabelExtendsPastAvatar
 
         attributes.avatarSize = avatarSize(for: message)
-        attributes.avatarBottomPadding = avatarBottomPadding
         attributes.avatarMessagePadding = avatarMessagePadding
+
+        let avatarPosition = displayDataSource.avatarPosition(for: message, at: indexPath, in: messagesCollectionView)
+        attributes.avatarPosition = avatarPosition
 
         attributes.direction = dataSource.isFromCurrentSender(message: message) ? .outgoing : .incoming
 
@@ -260,11 +263,11 @@ extension MessagesCollectionViewFlowLayout {
     private func minimumCellHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         let size = avatarSize(for: message)
-        let avatarHeightPlusBottomPadding = size.height == 0 ? 0 : size.height + avatarBottomPadding
+        let avatarHeight = size.height
         let bottomLabelHeight = cellBottomLabelHeight(for: message, at: indexPath)
         let topLabelHeight = cellTopLabelHeight(for: message, at: indexPath)
 
-        let minimumHeight = topLabelHeight + avatarHeightPlusBottomPadding + bottomLabelHeight
+        let minimumHeight = topLabelHeight + avatarHeight + bottomLabelHeight
 
         return minimumHeight
 

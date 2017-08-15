@@ -66,6 +66,10 @@ extension ConversationViewController: MessagesDisplayDataSource {
         return SampleData().getAvatarFor(sender: message.sender)
     }
 
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
+        return .cellTop
+    }
+
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
         return messagesCollectionView.dequeueMessageHeaderView(for: indexPath)
     }
