@@ -27,7 +27,9 @@ import Foundation
 public enum AvatarPosition {
 
     case cellTop
+    case messageTop
     case messageCenter
+    case messageBottom
     case cellBottom
 
 }

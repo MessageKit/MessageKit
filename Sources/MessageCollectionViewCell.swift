@@ -145,13 +145,25 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         switch attributes.avatarPosition {
         case .cellTop:
+            if attributes.topLabelExtendsPastAvatar {
+                origin.y = attributes.cellTopLabelSize.height
+            } else {
+                origin.y = 0
+            }
+        case .cellBottom:
+            if attributes.bottomLabelExtendsPastAvatar {
+                origin.y = contentView.frame.height - attributes.avatarSize.height - attributes.cellBottomLabelSize.height
+            } else {
+                origin.y = contentView.frame.height - attributes.avatarSize.height
+            }
+        case .messageTop:
             origin.y = attributes.cellTopLabelSize.height
+        case .messageBottom:
+            origin.y = contentView.frame.height - attributes.avatarSize.height - attributes.cellBottomLabelSize.height
         case .messageCenter:
             let messageMidY = (attributes.messageContainerSize.height / 2)
             let avatarMidY = (attributes.avatarSize.height / 2)
             origin.y = contentView.frame.height - attributes.cellTopLabelSize.height - messageMidY - avatarMidY
-        case .cellBottom:
-            origin.y = contentView.frame.height - attributes.avatarSize.height - attributes.cellBottomLabelSize.height
         }
 
         switch attributes.direction {
