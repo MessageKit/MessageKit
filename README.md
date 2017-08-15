@@ -7,19 +7,18 @@
 
 ## Table of Contents
 
-* [**Goal**](#goal)📈
+* [**Goal**](#goals)📈
 * [**Contributing**](#contributing)
-* [**Getting started**](#getting-started)
 * [**Requirements**](#requirements)
-* [**Code of Conduct**](#code-of-conduct)
-* [**What's Next**](#what's-next)
+* [**Code of Conduct**](https://github.com/MessageKit/MessageKit/blob/master/Code_of_Conduct.md)
+* [**What's Next**](#whats-next)
 * [**Apps using this library**](#apps-using-this-library)
 * [**License**](#license)
 
 
 ## Goals
 
-- Provide a :rotating_light:safe:rotating_light: enviroment for others to learn an grow through Open Source.
+- Provide a :rotating_light:safe:rotating_light: enviroment for others to learn and grow through Open Source.
 - Make adding Chat:speech_balloon: to a project easy.
 - Enable beautiful and customizable Chat UI's.
 - Provide an awesome Open Source project for the iOS open source community.
@@ -49,7 +48,7 @@ Great! Look over these things first.
 - Come join us on [Slack](https://join.slack.com/t/messagekit/shared_invite/MjI0NDkxNjgwMzA3LTE1MDIzMTU0MjUtMzJhZDZlNTkxMA) and 🗣 don't be a stranger. 
 - Check out the [current issues](https://github.com/MessageKit/MessageKit/issues) and see if you can tackle any of those. 
 - Download the project and check out the current code base. Suggest any improvements by opening a new issue. 
-- Check out the [What's Next](#what's-next) section :point_down: to see where we are headed.
+- Check out the [What's Next](#whats-next) section :point_down: to see where we are headed.
 - Check [StackOverflow](https://stackoverflow.com/questions/tagged/messagekit)
 - Install [SwiftLint](https://github.com/realm/SwiftLint) too keep yourself in :neckbeard: style. 
 - Be kind and helpful.  
@@ -70,7 +69,7 @@ Add your app to the list of apps using this library and make a pull request.
 Many thanks to [**the contributors**](https://github.com/MessageKit/MessageKit/graphs/contributors) of this project.
 
 ## License
-MessageKit is released under the [MIT License]().
+MessageKit is released under the [MIT License](https://github.com/MessageKit/MessageKit/blob/master/LICENSE.md).
 
 ## Inspiration
 Inspired by [JSQMessagesViewController](https://github.com/jessesquires/JSQMessagesViewController) :point_left: :100:
