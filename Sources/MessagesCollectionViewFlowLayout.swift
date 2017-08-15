@@ -41,6 +41,8 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     open var incomingAvatarSize: CGSize
     open var outgoingAvatarSize: CGSize
 
+    fileprivate var placeholderLabel = MessageLabel()
+
     fileprivate var avatarBottomPadding: CGFloat = 2
     fileprivate var avatarMessagePadding: CGFloat = 4
 
@@ -230,9 +232,11 @@ extension MessagesCollectionViewFlowLayout {
         guard let displayDataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDataSource else { return 0 }
         guard let topLabelText = displayDataSource.cellTopLabelAttributedText(for: message, at: indexPath) else { return 0 }
 
-        let availableWidth = cellTopLabelWidth(for: message)
+        let availableWidth = cellTopLabelWidth(for: message) - cellTopLabelInsets.left - cellTopLabelInsets.right
 
-        let estimatedHeight = topLabelText.height(considering: availableWidth)
+        placeholderLabel.attributedText = topLabelText
+
+        let estimatedHeight = placeholderLabel.sizeThatFits(CGSize(width: availableWidth, height: .greatestFiniteMagnitude)).height
 
         return estimatedHeight.rounded(.up)
 
@@ -244,9 +248,11 @@ extension MessagesCollectionViewFlowLayout {
         guard let displayDataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDataSource else { return 0 }
         guard let bottomLabelText = displayDataSource.cellBottomLabelAttributedText(for: message, at: indexPath) else { return 0 }
 
-        let availableWidth = cellBottomLabelWidth(for: message)
+        let availableWidth = cellBottomLabelWidth(for: message) - cellBottomLabelInsets.left - cellBottomLabelInsets.right
 
-        let estimatedHeight = bottomLabelText.height(considering: availableWidth)
+        placeholderLabel.attributedText = bottomLabelText
+
+        let estimatedHeight = placeholderLabel.sizeThatFits(CGSize(width: availableWidth, height: .greatestFiniteMagnitude)).height
 
         return estimatedHeight.rounded(.up)
     }
@@ -274,7 +280,8 @@ extension MessagesCollectionViewFlowLayout {
         case .text(let text):
             estimatedHeight = text.height(considering: availableWidth, and: messageLabelFont)
         case .attributedText(let text):
-            estimatedHeight = text.height(considering: availableWidth)
+            placeholderLabel.attributedText = text
+            estimatedHeight = placeholderLabel.sizeThatFits(CGSize(width: availableWidth, height: .greatestFiniteMagnitude)).height
         }
 
         let finalHeight = estimatedHeight.rounded(.up) + verticalMessageInsets
@@ -296,7 +303,8 @@ extension MessagesCollectionViewFlowLayout {
         case .text(let text):
             estimatedWidth = text.width(considering: containerHeight, and: messageLabelFont).rounded(.up)
         case .attributedText(let text):
-            estimatedWidth = text.width(considering: containerHeight).rounded(.up)
+            placeholderLabel.attributedText = text
+            estimatedWidth = placeholderLabel.sizeThatFits(CGSize(width: .greatestFiniteMagnitude, height: containerHeight)).width.rounded(.up)
         }
 
         let widthToUse = estimatedWidth > availableWidth ? availableWidth : estimatedWidth

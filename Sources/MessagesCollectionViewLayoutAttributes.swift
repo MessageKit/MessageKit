@@ -42,7 +42,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
     var bottomLabelExtendsPastAvatar = false
 
     var avatarSize: CGSize = CGSize(width: 30, height: 30)
-    var avatarBottomPadding: CGFloat = 4.0
+    var avatarBottomPadding: CGFloat = 2.0
     var avatarMessagePadding: CGFloat = 4.0
 
     var direction: MessageDirection = .incoming

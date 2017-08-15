@@ -31,7 +31,6 @@
 		B074EE951F35588A00ABB8C8 /* MessageFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B074EE941F35588A00ABB8C8 /* MessageFooterView.swift */; };
 		B074EE971F355FBC00ABB8C8 /* MessagesLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B074EE961F355FBC00ABB8C8 /* MessagesLayoutDelegate.swift */; };
 		B074EEA81F3971A600ABB8C8 /* MessageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B074EEA71F3971A600ABB8C8 /* MessageLabel.swift */; };
-		B074EEAA1F3BE8F500ABB8C8 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B074EEA91F3BE8F300ABB8C8 /* NSAttributedString+Extensions.swift */; };
 		B09643861F286C9E004D0129 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09643851F286C9E004D0129 /* String+Extensions.swift */; };
 		B096438E1F2890FB004D0129 /* MessagesDisplayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B096438D1F2890FB004D0129 /* MessagesDisplayDataSource.swift */; };
 		B09643901F289142004D0129 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B096438F1F289142004D0129 /* UIColor+Extensions.swift */; };
@@ -75,7 +74,6 @@
 		B074EE941F35588A00ABB8C8 /* MessageFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageFooterView.swift; sourceTree = "<group>"; };
 		B074EE961F355FBC00ABB8C8 /* MessagesLayoutDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesLayoutDelegate.swift; sourceTree = "<group>"; };
 		B074EEA71F3971A600ABB8C8 /* MessageLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageLabel.swift; sourceTree = "<group>"; };
-		B074EEA91F3BE8F300ABB8C8 /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 		B09643851F286C9E004D0129 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		B096438D1F2890FB004D0129 /* MessagesDisplayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDisplayDataSource.swift; sourceTree = "<group>"; };
 		B096438F1F289142004D0129 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -147,7 +145,6 @@
 			children = (
 				B09643851F286C9E004D0129 /* String+Extensions.swift */,
 				B096438F1F289142004D0129 /* UIColor+Extensions.swift */,
-				B074EEA91F3BE8F300ABB8C8 /* NSAttributedString+Extensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -344,7 +341,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				171D5AB91F36712B0053DF69 /* InputTextView.swift in Sources */,
-				B074EEAA1F3BE8F500ABB8C8 /* NSAttributedString+Extensions.swift in Sources */,
 				B074EE971F355FBC00ABB8C8 /* MessagesLayoutDelegate.swift in Sources */,
 				882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */,
 				888CEBFC1D3FD525005178DE /* MessagesViewController.swift in Sources */,

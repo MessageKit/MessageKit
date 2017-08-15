@@ -121,8 +121,6 @@ open class MessagesViewController: UIViewController {
 
 // MARK: - UICollectionViewDelegate & UICollectionViewDelegateFlowLayout Conformance
 
-//swiftlint:disable line_length
-
 extension MessagesViewController: UICollectionViewDelegateFlowLayout {
 
 	public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
