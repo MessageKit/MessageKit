@@ -294,12 +294,12 @@ extension MessagesCollectionViewFlowLayout {
 
         switch message.data {
         case .text(let text):
-            estimatedWidth = text.width(considering: containerHeight, and: messageLabelFont)
+            estimatedWidth = text.width(considering: containerHeight, and: messageLabelFont).rounded(.up)
         case .attributedText(let text):
-            estimatedWidth = text.width(considering: containerHeight)
+            estimatedWidth = text.width(considering: containerHeight).rounded(.up)
         }
 
-        let widthToUse = estimatedWidth.rounded(.up) > availableWidth ? availableWidth : estimatedWidth
+        let widthToUse = estimatedWidth > availableWidth ? availableWidth : estimatedWidth
 
         let finalWidth = widthToUse + horizontalMessageInsets
 
