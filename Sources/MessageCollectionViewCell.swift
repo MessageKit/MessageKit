@@ -177,6 +177,14 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         let messageTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapMessage))
         messageContainerView.addGestureRecognizer(messageTapGesture)
 
+        let topLabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapTopLabel))
+        cellTopLabel.addGestureRecognizer(topLabelTapGesture)
+        cellTopLabel.isUserInteractionEnabled = true
+
+        let bottomlabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBottomLabel))
+        cellBottomLabel.addGestureRecognizer(bottomlabelTapGesture)
+        cellBottomLabel.isUserInteractionEnabled = true
+
     }
 
     // MARK: - Delegate Methods
@@ -187,5 +195,13 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     func didTapMessage() {
         delegate?.didTapMessage(in: self)
+    }
+
+    func didTapTopLabel() {
+        delegate?.didTapTopLabel(in: self)
+    }
+
+    func didTapBottomLabel() {
+        delegate?.didTapBottomLabel(in: self)
     }
 }

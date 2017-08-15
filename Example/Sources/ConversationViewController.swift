@@ -114,6 +114,14 @@ extension ConversationViewController: MessageCellDelegate {
         print("Message tapped")
     }
 
+    func didTapTopLabel(in cell: MessageCollectionViewCell) {
+        print("Top label tapped")
+    }
+
+    func didTapBottomLabel(in cell: MessageCollectionViewCell) {
+        print("Bottom label tapped")
+    }
+
 }
 
 // MARK: - MessageInputBarDelegate
