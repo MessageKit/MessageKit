@@ -35,6 +35,7 @@
 		B096438E1F2890FB004D0129 /* MessagesDisplayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B096438D1F2890FB004D0129 /* MessagesDisplayDataSource.swift */; };
 		B09643901F289142004D0129 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B096438F1F289142004D0129 /* UIColor+Extensions.swift */; };
 		B0AA1F511F42E91A00BAE583 /* AvatarPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AA1F501F42E91A00BAE583 /* AvatarPosition.swift */; };
+		B0AA1F531F44388C00BAE583 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AA1F521F44388900BAE583 /* NSAttributedString+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		B096438D1F2890FB004D0129 /* MessagesDisplayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDisplayDataSource.swift; sourceTree = "<group>"; };
 		B096438F1F289142004D0129 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		B0AA1F501F42E91A00BAE583 /* AvatarPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarPosition.swift; sourceTree = "<group>"; };
+		B0AA1F521F44388900BAE583 /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 			children = (
 				B09643851F286C9E004D0129 /* String+Extensions.swift */,
 				B096438F1F289142004D0129 /* UIColor+Extensions.swift */,
+				B0AA1F521F44388900BAE583 /* NSAttributedString+Extensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				B074EE931F35587100ABB8C8 /* MessageHeaderView.swift in Sources */,
 				B0655A4D1F244C0600542A83 /* MessageCollectionViewCell.swift in Sources */,
 				B0655A2E1F23D8BC00542A83 /* MessagesCollectionView.swift in Sources */,
+				B0AA1F531F44388C00BAE583 /* NSAttributedString+Extensions.swift in Sources */,
 				B074EE951F35588A00ABB8C8 /* MessageFooterView.swift in Sources */,
 				B09643901F289142004D0129 /* UIColor+Extensions.swift in Sources */,
 				B0655A381F23EE8B00542A83 /* MessageInputBar.swift in Sources */,
