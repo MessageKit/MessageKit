@@ -135,7 +135,10 @@ extension ConversationViewController: MessageInputBarDelegate {
     func sendButtonPressed(sender: UIButton, textView: UITextView) {
         guard let message = textView.text else { return }
         messageList.append(MockMessage(text: message, sender: currentSender(), messageId: UUID().uuidString))
+        textView.resignFirstResponder()
+        textView.text = ""
         messagesCollectionView.reloadData()
+        messagesCollectionView.scrollToBottom(animated: true)
     }
 
 }
