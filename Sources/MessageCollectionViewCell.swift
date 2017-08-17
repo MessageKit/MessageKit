@@ -28,12 +28,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Properties
 
-    open var messageContainerView: UIView = {
-        let messageContainerView = UIView()
-        messageContainerView.layer.cornerRadius = 12.0
-        messageContainerView.layer.masksToBounds = true
-        return messageContainerView
-    }()
+    open var messageContainerView: MessageContainerView = MessageContainerView()
 
     open var avatarView: AvatarView = AvatarView()
 

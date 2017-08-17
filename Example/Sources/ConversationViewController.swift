@@ -70,6 +70,10 @@ extension ConversationViewController: MessagesDisplayDataSource {
         return .messageTop
     }
 
+    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
+        return .bubbleOutline(thickness: 2.0, color: .red, cornerRadius: 12.0)
+    }
+
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
         return messagesCollectionView.dequeueMessageHeaderView(for: indexPath)
     }

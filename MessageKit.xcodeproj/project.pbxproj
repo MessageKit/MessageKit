@@ -36,6 +36,7 @@
 		B09643901F289142004D0129 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B096438F1F289142004D0129 /* UIColor+Extensions.swift */; };
 		B0AA1F511F42E91A00BAE583 /* AvatarPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AA1F501F42E91A00BAE583 /* AvatarPosition.swift */; };
 		B0AA1F531F44388C00BAE583 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AA1F521F44388900BAE583 /* NSAttributedString+Extensions.swift */; };
+		B0AA1F571F4557E600BAE583 /* MessageContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AA1F561F4557E600BAE583 /* MessageContainerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		B096438F1F289142004D0129 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		B0AA1F501F42E91A00BAE583 /* AvatarPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarPosition.swift; sourceTree = "<group>"; };
 		B0AA1F521F44388900BAE583 /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
+		B0AA1F561F4557E600BAE583 /* MessageContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageContainerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +179,7 @@
 				B074EE921F35587100ABB8C8 /* MessageHeaderView.swift */,
 				B074EE941F35588A00ABB8C8 /* MessageFooterView.swift */,
 				B074EEA71F3971A600ABB8C8 /* MessageLabel.swift */,
+				B0AA1F561F4557E600BAE583 /* MessageContainerView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 				171D5AB91F36712B0053DF69 /* InputTextView.swift in Sources */,
 				B074EE971F355FBC00ABB8C8 /* MessagesLayoutDelegate.swift in Sources */,
 				882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */,
+				B0AA1F571F4557E600BAE583 /* MessageContainerView.swift in Sources */,
 				888CEBFC1D3FD525005178DE /* MessagesViewController.swift in Sources */,
 				B0655A4F1F245C5A00542A83 /* MessagesCollectionViewFlowLayout.swift in Sources */,
 				B0655A2C1F23D81600542A83 /* MessageData.swift in Sources */,
