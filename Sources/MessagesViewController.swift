@@ -1,26 +1,27 @@
 /*
-MIT License
+ MIT License
+ 
+ Copyright (c) 2017 MessageKit
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 
-Copyright (c) 2017 MessageKit
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
 
 import UIKit
 
@@ -163,7 +164,8 @@ extension MessagesViewController: UICollectionViewDataSource {
         guard let displayDataSource = messagesDataSource as? MessagesDisplayDataSource else { return cell }
 
         let message = displayDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        let messageColor = displayDataSource.messageColor(for: message, at: indexPath, in: messagesCollectionView)
+        let messageColor = displayDataSource.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
+        let textColor = displayDataSource.textColor(for: message, at: indexPath, in: messagesCollectionView)
         let avatar = displayDataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
         let topLabelText = displayDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
         let bottomLabelText = displayDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
@@ -171,6 +173,7 @@ extension MessagesViewController: UICollectionViewDataSource {
         cell.cellTopLabel.attributedText = topLabelText
         cell.cellBottomLabel.attributedText = bottomLabelText
         cell.avatarView.set(avatar: avatar)
+        cell.messageLabel.textColor = textColor
         cell.messageContainerView.backgroundColor = messageColor
         cell.configure(with: message)
 
