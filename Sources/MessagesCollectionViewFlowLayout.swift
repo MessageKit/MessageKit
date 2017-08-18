@@ -41,7 +41,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     open var incomingAvatarSize: CGSize
     open var outgoingAvatarSize: CGSize
 
-    fileprivate var avatarBottomPadding: CGFloat = 2
     fileprivate var avatarMessagePadding: CGFloat = 4
 
     fileprivate var messagesCollectionView: MessagesCollectionView? {
@@ -114,6 +113,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
         guard let messagesCollectionView = messagesCollectionView else { return }
         guard let dataSource = messagesCollectionView.messagesDataSource else { return }
+        guard let displayDataSource = dataSource as? MessagesDisplayDataSource else { return }
 
         let indexPath = attributes.indexPath
 
@@ -133,8 +133,10 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         attributes.bottomLabelExtendsPastAvatar = bottomLabelExtendsPastAvatar
 
         attributes.avatarSize = avatarSize(for: message)
-        attributes.avatarBottomPadding = avatarBottomPadding
         attributes.avatarMessagePadding = avatarMessagePadding
+
+        let avatarPosition = displayDataSource.avatarPosition(for: message, at: indexPath, in: messagesCollectionView)
+        attributes.avatarPosition = avatarPosition
 
         attributes.direction = dataSource.isFromCurrentSender(message: message) ? .outgoing : .incoming
 
@@ -230,7 +232,7 @@ extension MessagesCollectionViewFlowLayout {
         guard let displayDataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDataSource else { return 0 }
         guard let topLabelText = displayDataSource.cellTopLabelAttributedText(for: message, at: indexPath) else { return 0 }
 
-        let availableWidth = cellTopLabelWidth(for: message)
+        let availableWidth = cellTopLabelWidth(for: message) - cellTopLabelInsets.left - cellTopLabelInsets.right
 
         let estimatedHeight = topLabelText.height(considering: availableWidth)
 
@@ -244,7 +246,7 @@ extension MessagesCollectionViewFlowLayout {
         guard let displayDataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDataSource else { return 0 }
         guard let bottomLabelText = displayDataSource.cellBottomLabelAttributedText(for: message, at: indexPath) else { return 0 }
 
-        let availableWidth = cellBottomLabelWidth(for: message)
+        let availableWidth = cellBottomLabelWidth(for: message) - cellBottomLabelInsets.left - cellBottomLabelInsets.right
 
         let estimatedHeight = bottomLabelText.height(considering: availableWidth)
 
@@ -254,11 +256,11 @@ extension MessagesCollectionViewFlowLayout {
     private func minimumCellHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         let size = avatarSize(for: message)
-        let avatarHeightPlusBottomPadding = size.height == 0 ? 0 : size.height + avatarBottomPadding
+        let avatarHeight = size.height
         let bottomLabelHeight = cellBottomLabelHeight(for: message, at: indexPath)
         let topLabelHeight = cellTopLabelHeight(for: message, at: indexPath)
 
-        let minimumHeight = topLabelHeight + avatarHeightPlusBottomPadding + bottomLabelHeight
+        let minimumHeight = topLabelHeight + avatarHeight + bottomLabelHeight
 
         return minimumHeight
 
@@ -294,12 +296,12 @@ extension MessagesCollectionViewFlowLayout {
 
         switch message.data {
         case .text(let text):
-            estimatedWidth = text.width(considering: containerHeight, and: messageLabelFont)
+            estimatedWidth = text.width(considering: containerHeight, and: messageLabelFont).rounded(.up)
         case .attributedText(let text):
-            estimatedWidth = text.width(considering: containerHeight)
+            estimatedWidth = text.width(considering: containerHeight).rounded(.up)
         }
 
-        let widthToUse = estimatedWidth.rounded(.up) > availableWidth ? availableWidth : estimatedWidth
+        let widthToUse = estimatedWidth > availableWidth ? availableWidth : estimatedWidth
 
         let finalWidth = widthToUse + horizontalMessageInsets
 

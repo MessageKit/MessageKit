@@ -39,9 +39,11 @@ struct SampleData {
         let msg6 =  MockMessage(text: "I think if you do something and it turns out pretty good, then you should go do something else wonderful, not dwell on it for too long. Just figure out what’s next.", sender: Jobs, messageId: UUID().uuidString)
         let msg7 = MockMessage(text: "Remembering that I'll be dead soon is the most important tool I've ever encountered to help me make the big choices in life. Because almost everything - all external expectations, all pride, all fear of embarrassment or failure - these things just fall away in the face of death, leaving only what is truly important.", sender: Jobs, messageId: UUID().uuidString)
         let msg8 = MockMessage(text: "Price is rarely the most important thing. A cheap product might sell some units. Somebody gets it home and they feel great when they pay the money, but then they get it home and use it and the joy is gone.", sender: Cook, messageId: UUID().uuidString)
-		
-		let msg9Text = NSString(string: "Use .attributedText() to add bold, italic, colored text and more...")
+
+        let msg9String = "Use .attributedText() to add bold, italic, colored text and more..."
+		let msg9Text = NSString(string: msg9String)
 		let msg9AttributedText = NSMutableAttributedString(string: String(msg9Text))
+        msg9AttributedText.addAttribute(NSFontAttributeName, value: UIFont.preferredFont(forTextStyle: .body), range: NSRange(location: 0, length: msg9Text.length))
 		
 		if #available(iOS 9.0, *) {
 			msg9AttributedText.addAttributes([NSFontAttributeName: UIFont.monospacedDigitSystemFont(ofSize: UIFont.systemFontSize, weight: UIFontWeightBold)], range: msg9Text.range(of: ".attributedText()"))

@@ -32,6 +32,8 @@ public protocol MessagesDisplayDataSource: class, MessagesDataSource {
     
     func avatar(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar
     
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition
+    
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView?
     
     func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView?
@@ -42,8 +44,7 @@ public protocol MessagesDisplayDataSource: class, MessagesDataSource {
     
 }
 
-// "where Self: MessagesViewController" make these methods a `default` implimentation for any view that subclasses of MessagesViewController
-public extension MessagesDisplayDataSource where Self: MessagesViewController {
+public extension MessagesDisplayDataSource {
     
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? .white : .black
@@ -53,6 +54,10 @@ public extension MessagesDisplayDataSource where Self: MessagesViewController {
         return isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
     }
     
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
+        return .cellBottom
+    }
+
     func avatar(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
         return Avatar()
     }

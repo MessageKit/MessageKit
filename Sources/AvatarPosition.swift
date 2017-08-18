@@ -24,21 +24,12 @@
 
 import Foundation
 
-extension NSAttributedString {
+public enum AvatarPosition {
 
-    func height(considering width: CGFloat) -> CGFloat {
+    case cellTop
+    case messageTop
+    case messageCenter
+    case messageBottom
+    case cellBottom
 
-        let constraintBox = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, context: nil)
-        return rect.height
-
-    }
-
-    func width(considering height: CGFloat) -> CGFloat {
-
-        let constraintBox = CGSize(width: .greatestFiniteMagnitude, height: height)
-        let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, context: nil)
-        return rect.width
-        
-    }
 }

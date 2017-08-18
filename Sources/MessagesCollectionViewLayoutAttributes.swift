@@ -42,7 +42,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
     var bottomLabelExtendsPastAvatar = false
 
     var avatarSize: CGSize = CGSize(width: 30, height: 30)
-    var avatarBottomPadding: CGFloat = 4.0
+    var avatarPosition: AvatarPosition = .cellBottom
     var avatarMessagePadding: CGFloat = 4.0
 
     var direction: MessageDirection = .incoming
@@ -63,7 +63,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
         copy.cellBottomLabelInsets = cellBottomLabelInsets
         copy.bottomLabelExtendsPastAvatar = bottomLabelExtendsPastAvatar
         copy.avatarSize = avatarSize
-        copy.avatarBottomPadding = avatarBottomPadding
+        copy.avatarPosition = avatarPosition
         copy.avatarMessagePadding = avatarMessagePadding
         copy.direction = direction
         return copy

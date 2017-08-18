@@ -66,6 +66,10 @@ extension ConversationViewController: MessagesDisplayDataSource {
         return SampleData().getAvatarFor(sender: message.sender)
     }
 
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
+        return .messageTop
+    }
+
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
         return messagesCollectionView.dequeueMessageHeaderView(for: indexPath)
     }
@@ -112,6 +116,14 @@ extension ConversationViewController: MessageCellDelegate {
 
     func didTapMessage(in cell: MessageCollectionViewCell) {
         print("Message tapped")
+    }
+
+    func didTapTopLabel(in cell: MessageCollectionViewCell) {
+        print("Top label tapped")
+    }
+
+    func didTapBottomLabel(in cell: MessageCollectionViewCell) {
+        print("Bottom label tapped")
     }
 
 }
