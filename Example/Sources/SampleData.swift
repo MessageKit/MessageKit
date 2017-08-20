@@ -61,8 +61,11 @@ struct SampleData {
 		                                 range: msg9Text.range(of: "colored"))
 		
 		let msg9 = MockMessage(attributedText: msg9AttributedText, sender: Jobs, messageId: UUID().uuidString)
+
+        let msg10 = MockMessage(text: "1-800-555-0000", sender: Steven, messageId: UUID().uuidString)
+        let msg11 = MockMessage(text: "One Infinite Loop Cupertino, CA 95014", sender: Cook, messageId: UUID().uuidString)
 		
-        return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9]
+        return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11]
     }
     
     func getCurrentSender() -> Sender {

@@ -22,8 +22,6 @@
  SOFTWARE.
  */
 
-
-
 import Foundation
 
 class TestMessagesViewControllerModel: MessagesViewController, MessagesDisplayDataSource {

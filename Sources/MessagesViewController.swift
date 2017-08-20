@@ -22,7 +22,6 @@
  SOFTWARE.
  */
 
-
 import UIKit
 
 open class MessagesViewController: UIViewController {
