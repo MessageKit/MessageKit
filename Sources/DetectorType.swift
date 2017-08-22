@@ -27,18 +27,22 @@ import Foundation
 public enum DetectorType {
 
     case address
-//    case date
+    case date
     case phoneNumber
-//    case url
+    case url
 
-//    case mention
-//    case hashtag
-//    case custom
+    // MARK: - Not supported yet
+
+    //case mention
+    //case hashtag
+    //case custom
 
     var textCheckingType: NSTextCheckingResult.CheckingType {
         switch self {
         case .address: return .address
+        case .date: return .date
         case .phoneNumber: return .phoneNumber
+        case .url: return .link
         }
     }
 

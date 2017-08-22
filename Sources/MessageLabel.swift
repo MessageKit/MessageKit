@@ -112,7 +112,7 @@ open class MessageLabel: UILabel {
 
     // MARK: DetectorType Properties
 
-    open var enabledDetectors: [DetectorType] = [.phoneNumber, .address]
+    open var enabledDetectors: [DetectorType] = [.phoneNumber, .address, .date, .url]
 
     open var addressAttributes: [String: Any] = [:] {
         didSet {
@@ -121,9 +121,23 @@ open class MessageLabel: UILabel {
         }
     }
 
+    open var dateAttributes: [String: Any] = [:] {
+        didSet {
+            updateAttributes(for: .date)
+            setNeedsDisplay()
+        }
+    }
+
     open var phoneNumberAttributes: [String: Any] = [:] {
         didSet {
             updateAttributes(for: .phoneNumber)
+            setNeedsDisplay()
+        }
+    }
+
+    open var urlAttributes: [String: Any] = [:] {
+        didSet {
+            updateAttributes(for: .url)
             setNeedsDisplay()
         }
     }
@@ -145,7 +159,9 @@ open class MessageLabel: UILabel {
         ]
 
         self.addressAttributes = defaultAttributes
+        self.dateAttributes = defaultAttributes
         self.phoneNumberAttributes = defaultAttributes
+        self.urlAttributes = defaultAttributes
 
     }
 
@@ -170,13 +186,14 @@ open class MessageLabel: UILabel {
     // MARK: - Private Methods
 
     private func addDetectorAttributes(to text: NSAttributedString) -> NSMutableAttributedString {
+
+        let mutableAttributedString = NSMutableAttributedString(attributedString: text)
+
         guard let checkingResults = parse(text: text, for: enabledDetectors), checkingResults.isEmpty == false else {
-            return NSMutableAttributedString(attributedString: text)
+            return mutableAttributedString
         }
 
         setRangesForActiveDetectors(from: checkingResults)
-
-        let mutableAttributedString = NSMutableAttributedString(attributedString: text)
 
         checkingResults.forEach { result in
             let detectorTypeAttributes = attributes(for: result.resultType)
@@ -187,19 +204,33 @@ open class MessageLabel: UILabel {
     }
 
     private func updateAttributes(for detectorType: DetectorType) {
+
         guard let attributedText = attributedText, attributedText.length > 0 else { return }
         let mutableAttributedString = NSMutableAttributedString(attributedString: attributedText)
 
-        switch detectorType {
-        case .address:
-            guard let ranges = activeDetectorRanges[.address] else { return }
-            ranges.forEach { mutableAttributedString.addAttributes(addressAttributes, range: $0) }
-        case .phoneNumber:
-            guard let ranges = activeDetectorRanges[.phoneNumber] else { return }
-            ranges.forEach { mutableAttributedString.addAttributes(phoneNumberAttributes, range: $0) }
+        guard let ranges = activeDetectorRanges[detectorType] else { return }
+
+        ranges.forEach { range in
+            let detectorAttributes = attributes(for: detectorType)
+            mutableAttributedString.addAttributes(detectorAttributes, range: range)
         }
 
         textStorage.setAttributedString(mutableAttributedString)
+
+    }
+
+    private func attributes(for detectorType: DetectorType) -> [String: Any] {
+
+        switch detectorType {
+        case .address:
+            return addressAttributes
+        case .date:
+            return dateAttributes
+        case .phoneNumber:
+            return phoneNumberAttributes
+        case .url:
+            return urlAttributes
+        }
 
     }
 
@@ -222,6 +253,8 @@ open class MessageLabel: UILabel {
             return
         }
 
+        activeDetectorRanges.removeAll()
+
         var mutableAttributedString = NSMutableAttributedString(attributedString: attributedText)
 
         mutableAttributedString = addDetectorAttributes(to: mutableAttributedString)
@@ -236,14 +269,19 @@ open class MessageLabel: UILabel {
         switch checkingResultType {
         case NSTextCheckingResult.CheckingType.address:
             return addressAttributes
+        case NSTextCheckingResult.CheckingType.date:
+            return dateAttributes
         case NSTextCheckingResult.CheckingType.phoneNumber:
             return phoneNumberAttributes
+        case NSTextCheckingResult.CheckingType.link:
+            return urlAttributes
         default:
             fatalError("Received an unrecognized NSTextCheckingResult.CheckingType")
         }
     }
 
     private func setRangesForActiveDetectors(from checkingResults: [NSTextCheckingResult]) {
+
         checkingResults.forEach { result in
 
             switch result.resultType {
@@ -251,10 +289,18 @@ open class MessageLabel: UILabel {
                 var ranges = activeDetectorRanges[.address] ?? []
                 ranges.append(result.range)
                 activeDetectorRanges.updateValue(ranges, forKey: .address)
+            case NSTextCheckingResult.CheckingType.date:
+                var ranges = activeDetectorRanges[.date] ?? []
+                ranges.append(result.range)
+                activeDetectorRanges.updateValue(ranges, forKey: .date)
             case NSTextCheckingResult.CheckingType.phoneNumber:
                 var ranges = activeDetectorRanges[.phoneNumber] ?? []
                 ranges.append(result.range)
                 activeDetectorRanges.updateValue(ranges, forKey: .phoneNumber)
+            case NSTextCheckingResult.CheckingType.link:
+                var ranges = activeDetectorRanges[.url] ?? []
+                ranges.append(result.range)
+                activeDetectorRanges.updateValue(ranges, forKey: .url)
             default:
                 fatalError("Received an unrecognized NSTextCheckingResult.CheckingType")
             }
