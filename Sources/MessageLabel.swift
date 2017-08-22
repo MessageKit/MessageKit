@@ -189,9 +189,9 @@ open class MessageLabel: UILabel {
 
         let mutableAttributedString = NSMutableAttributedString(attributedString: text)
 
-        guard let checkingResults = parse(text: text, for: enabledDetectors), checkingResults.isEmpty == false else {
-            return mutableAttributedString
-        }
+        guard enabledDetectors.isEmpty == false else { return mutableAttributedString }
+        guard let checkingResults = parse(text: text, for: enabledDetectors) else { return mutableAttributedString }
+        guard checkingResults.isEmpty == false else { return mutableAttributedString }
 
         setRangesForActiveDetectors(from: checkingResults)
 

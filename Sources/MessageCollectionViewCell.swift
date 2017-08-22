@@ -37,11 +37,19 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     open var avatarView: AvatarView = AvatarView()
 
-    open var cellTopLabel: MessageLabel = MessageLabel()
+    open var cellTopLabel: MessageLabel = {
+        let topLabel = MessageLabel()
+        topLabel.enabledDetectors = []
+        return topLabel
+    }()
 
     open var messageLabel: MessageLabel = MessageLabel()
 
-    open var cellBottomLabel: MessageLabel = MessageLabel()
+    open var cellBottomLabel: MessageLabel = {
+        let bottomLabel = MessageLabel()
+        bottomLabel.enabledDetectors = []
+        return bottomLabel
+    }()
 
     open weak var delegate: MessageCellDelegate?
 

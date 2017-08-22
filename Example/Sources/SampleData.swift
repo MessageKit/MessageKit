@@ -63,8 +63,8 @@ struct SampleData {
 		let msg9 = MockMessage(attributedText: msg9AttributedText, sender: Jobs, messageId: UUID().uuidString)
 
         let msg10 = MockMessage(text: "1-800-555-0000", sender: Steven, messageId: UUID().uuidString)
-        let msg11 = MockMessage(text: "One Infinite Loop Cupertino, CA 95014 this is some extra text to make sure it is not detected", sender: Cook, messageId: UUID().uuidString)
-        let msg12 = MockMessage(text: "This is Christmas Day 12-25-2000, will February 22nd be recognized? How about 11/11/2017? This Friday. Sunday, April 1st at 11:37pm ", sender: Steven, messageId: UUID().uuidString)
+        let msg11 = MockMessage(text: "One Infinite Loop Cupertino, CA 95014 This is some extra text that should not be detected.", sender: Cook, messageId: UUID().uuidString)
+        let msg12 = MockMessage(text: "This is an example of the date detector 11/11/2017. April 1st is April Fools Day. Next Friday is not Friday the 13th.", sender: Steven, messageId: UUID().uuidString)
         let msg13 = MockMessage(text: "https//:github.com/SD10", sender: Steven, messageId: UUID().uuidString)
 		
         return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11, msg12, msg13]
