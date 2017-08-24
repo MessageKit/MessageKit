@@ -204,6 +204,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         let messageTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapMessage))
         messageContainerView.addGestureRecognizer(messageTapGesture)
+        messageTapGesture.delegate = messageLabel
 
         let topLabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapTopLabel))
         cellTopLabel.addGestureRecognizer(topLabelTapGesture)

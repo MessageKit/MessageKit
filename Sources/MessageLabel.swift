@@ -193,16 +193,19 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
 
         let touchLocation = touch.location(in: self)
-        guard let index = stringIndex(at: touchLocation) else { return false }
 
-        for (_, ranges) in rangesForDetectors {
-            for nsRange in ranges {
-                guard let range = nsRange.toRange() else { return false }
-                if range.contains(index) { return true }
+        if let index = stringIndex(at: touchLocation) {
+            for (_, ranges) in rangesForDetectors {
+                for nsRange in ranges {
+                    guard let range = nsRange.toRange() else { return false }
+                    if range.contains(index) {
+                        return gestureRecognizer.view == self
+                    }
+                }
             }
         }
 
-        return false
+        return gestureRecognizer.view != self
         
     }
 
