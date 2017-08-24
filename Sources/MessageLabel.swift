@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class MessageLabel: UILabel {
+open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
     // MARK: - Private Properties
 
@@ -49,11 +49,13 @@ open class MessageLabel: UILabel {
         return textStorage
     }()
 
-    private lazy var activeDetectorRanges = [DetectorType: [NSRange]]()
+    private lazy var rangesForDetectors: [DetectorType: [NSRange]] = [:]
 
     // MARK: - Public Properties
 
-    // MARK: Text Properties
+    open var delegate: MessageLabelDelegate?
+
+    open var enabledDetectors: [DetectorType] = [.phoneNumber, .address, .date, .url]
 
     open override var attributedText: NSAttributedString? {
         didSet {
@@ -110,10 +112,6 @@ open class MessageLabel: UILabel {
         }
     }
 
-    // MARK: DetectorType Properties
-
-    open var enabledDetectors: [DetectorType] = [.phoneNumber, .address, .date, .url]
-
     open var addressAttributes: [String: Any] = [:] {
         didSet {
             updateAttributes(for: .address)
@@ -150,7 +148,6 @@ open class MessageLabel: UILabel {
         // Message Label Specific
         self.numberOfLines = 0
         self.lineBreakMode = .byWordWrapping
-        // End
 
         let defaultAttributes: [String: Any] = [
             NSForegroundColorAttributeName: self.textColor,
@@ -163,13 +160,15 @@ open class MessageLabel: UILabel {
         self.phoneNumberAttributes = defaultAttributes
         self.urlAttributes = defaultAttributes
 
+        setupGestureRecognizers()
+
     }
 
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // MARK: - Public Methods
+    // MARK: - Open Methods
 
     open override func drawText(in rect: CGRect) {
 
@@ -183,9 +182,52 @@ open class MessageLabel: UILabel {
         layoutManager.drawGlyphs(forGlyphRange: range, at: origin)
     }
 
+    // MARK: - Public Methods
+
+    // MARK: UIGestureRecognizer Delegate
+
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+
+        let touchLocation = touch.location(in: self)
+        guard let index = stringIndex(at: touchLocation) else { return false }
+
+        for (_, ranges) in rangesForDetectors {
+            for nsRange in ranges {
+                guard let range = nsRange.toRange() else { return false }
+                if range.contains(index) { return true }
+            }
+        }
+
+        return false
+        
+    }
+
     // MARK: - Private Methods
 
-    private func addDetectorAttributes(to text: NSAttributedString) -> NSMutableAttributedString {
+    private func setTextStorage() {
+
+        // Anytime we update the text storage we need to clear the previous ranges
+        rangesForDetectors.removeAll()
+
+        guard let attributedText = attributedText, attributedText.length > 0 else {
+            textStorage.setAttributedString(NSAttributedString())
+            setNeedsDisplay()
+            return
+        }
+
+        let textWithDetectorAttributes = addDetectorAttributes(to: attributedText)
+
+        textStorage.setAttributedString(textWithDetectorAttributes)
+        
+        setNeedsDisplay()
+        
+    }
+
+    private func addDetectorAttributes(to text: NSAttributedString) -> NSAttributedString {
 
         let mutableAttributedString = NSMutableAttributedString(attributedString: text)
 
@@ -193,11 +235,9 @@ open class MessageLabel: UILabel {
         guard let checkingResults = parse(text: text, for: enabledDetectors) else { return mutableAttributedString }
         guard checkingResults.isEmpty == false else { return mutableAttributedString }
 
-        setRangesForActiveDetectors(from: checkingResults)
-
         checkingResults.forEach { result in
-            let detectorTypeAttributes = attributes(for: result.resultType)
-            mutableAttributedString.addAttributes(detectorTypeAttributes, range: result.range)
+            let attributes = detectorAttributes(for: result.resultType)
+            mutableAttributedString.addAttributes(attributes, range: result.range)
         }
 
         return mutableAttributedString
@@ -208,18 +248,18 @@ open class MessageLabel: UILabel {
         guard let attributedText = attributedText, attributedText.length > 0 else { return }
         let mutableAttributedString = NSMutableAttributedString(attributedString: attributedText)
 
-        guard let ranges = activeDetectorRanges[detectorType] else { return }
+        guard let ranges = rangesForDetectors[detectorType] else { return }
 
         ranges.forEach { range in
-            let detectorAttributes = attributes(for: detectorType)
-            mutableAttributedString.addAttributes(detectorAttributes, range: range)
+            let attributes = detectorAttributes(for: detectorType)
+            mutableAttributedString.addAttributes(attributes, range: range)
         }
 
         textStorage.setAttributedString(mutableAttributedString)
-
+        
     }
 
-    private func attributes(for detectorType: DetectorType) -> [String: Any] {
+    private func detectorAttributes(for detectorType: DetectorType) -> [String: Any] {
 
         switch detectorType {
         case .address:
@@ -234,38 +274,7 @@ open class MessageLabel: UILabel {
 
     }
 
-    // MARK: - Text Parsing
-
-    private func parse(text: NSAttributedString, for detectorTypes: [DetectorType]) -> [NSTextCheckingResult]? {
-
-        let checkingTypes = detectorTypes.reduce(0) { $0 | $1.textCheckingType.rawValue }
-        let detector = try? NSDataDetector(types: checkingTypes)
-
-        return detector?.matches(in: text.string, options: [], range: NSRange(location: 0, length: text.length))
-    }
-
-    private func setTextStorage() {
-
-        guard let attributedText = attributedText, attributedText.length > 0 else {
-            activeDetectorRanges.removeAll()
-            textStorage.setAttributedString(NSAttributedString())
-            setNeedsDisplay()
-            return
-        }
-
-        activeDetectorRanges.removeAll()
-
-        var mutableAttributedString = NSMutableAttributedString(attributedString: attributedText)
-
-        mutableAttributedString = addDetectorAttributes(to: mutableAttributedString)
-
-        textStorage.setAttributedString(mutableAttributedString)
-
-        setNeedsDisplay()
-        
-    }
-
-    private func attributes(for checkingResultType: NSTextCheckingResult.CheckingType) -> [String: Any] {
+    private func detectorAttributes(for checkingResultType: NSTextCheckingResult.CheckingType) -> [String: Any] {
         switch checkingResultType {
         case NSTextCheckingResult.CheckingType.address:
             return addressAttributes
@@ -280,31 +289,125 @@ open class MessageLabel: UILabel {
         }
     }
 
-    private func setRangesForActiveDetectors(from checkingResults: [NSTextCheckingResult]) {
+    // MARK: - Parsing Text
 
-        checkingResults.forEach { result in
+    private func parse(text: NSAttributedString, for detectorTypes: [DetectorType]) -> [NSTextCheckingResult]? {
+
+        let checkingTypes = detectorTypes.reduce(0) { $0 | $1.textCheckingType.rawValue }
+        let detector = try? NSDataDetector(types: checkingTypes)
+
+        return detector?.matches(in: text.string, options: [], range: NSRange(location: 0, length: text.length))
+    }
+
+    private func setRangesForDetectors(in checkingResults: [NSTextCheckingResult]) {
+
+        for result in checkingResults {
 
             switch result.resultType {
             case NSTextCheckingResult.CheckingType.address:
-                var ranges = activeDetectorRanges[.address] ?? []
+                var ranges = rangesForDetectors[.address] ?? []
                 ranges.append(result.range)
-                activeDetectorRanges.updateValue(ranges, forKey: .address)
+                rangesForDetectors.updateValue(ranges, forKey: .address)
             case NSTextCheckingResult.CheckingType.date:
-                var ranges = activeDetectorRanges[.date] ?? []
+                var ranges = rangesForDetectors[.date] ?? []
                 ranges.append(result.range)
-                activeDetectorRanges.updateValue(ranges, forKey: .date)
+                rangesForDetectors.updateValue(ranges, forKey: .date)
             case NSTextCheckingResult.CheckingType.phoneNumber:
-                var ranges = activeDetectorRanges[.phoneNumber] ?? []
+                var ranges = rangesForDetectors[.phoneNumber] ?? []
                 ranges.append(result.range)
-                activeDetectorRanges.updateValue(ranges, forKey: .phoneNumber)
+                rangesForDetectors.updateValue(ranges, forKey: .phoneNumber)
             case NSTextCheckingResult.CheckingType.link:
-                var ranges = activeDetectorRanges[.url] ?? []
+                var ranges = rangesForDetectors[.url] ?? []
                 ranges.append(result.range)
-                activeDetectorRanges.updateValue(ranges, forKey: .url)
+                rangesForDetectors.updateValue(ranges, forKey: .url)
             default:
                 fatalError("Received an unrecognized NSTextCheckingResult.CheckingType")
             }
+
         }
+        
+    }
+
+    // MARK: - Gesture Handling
+
+    private func stringIndex(at location: CGPoint) -> Int? {
+        guard textStorage.length > 0 else { return nil }
+
+        var location = location
+        let textOffset = CGPoint(x: textInsets.left, y: textInsets.right)
+
+        location.x -= textOffset.x
+        location.y -= textOffset.y
+
+        let glyphIndex = layoutManager.glyphIndex(for: location, in: textContainer)
+
+        let lineRect = layoutManager.lineFragmentUsedRect(forGlyphAt: glyphIndex, effectiveRange: nil)
+
+        if lineRect.contains(location) {
+            return layoutManager.characterIndexForGlyph(at: glyphIndex)
+        } else {
+            return nil
+        }
+        
+    }
+
+    private func setupGestureRecognizers() {
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
+        addGestureRecognizer(tapGesture)
+        tapGesture.delegate = self
+
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
+        addGestureRecognizer(longPressGesture)
+        tapGesture.delegate = self
+
+        isUserInteractionEnabled = true
+    }
+
+    func handleGesture(_ gesture: UIGestureRecognizer) {
+
+        let touchLocation = gesture.location(ofTouch: 0, in: self)
+        guard let index = stringIndex(at: touchLocation) else { return }
+
+        for (detectorType, ranges) in rangesForDetectors {
+            for nsRange in ranges {
+                guard let range = nsRange.toRange() else { return }
+                if range.contains(index) {
+                    guard let text = attributedText?.attributedSubstring(from: nsRange) else { return }
+                    handleGesture(for: detectorType, text: text)
+
+                }
+            }
+        }
+    }
+
+    private func handleGesture(for detectorType: DetectorType, text: NSAttributedString) {
+        switch detectorType {
+        case .address:
+            handleAddress(address: text)
+        case .phoneNumber:
+            handlePhoneNumber(phoneNumber: text)
+        case .date:
+            handleDate(date: text)
+        case .url:
+            handleURL(url: text)
+        }
+    }
+
+    private func handleAddress(address: NSAttributedString) {
+        delegate?.didSelectAddress(address.string)
+    }
+
+    private func handleDate(date: NSAttributedString) {
+        delegate?.didSelectDate(date.string)
+    }
+
+    private func handleURL(url: NSAttributedString) {
+        delegate?.didSelectURL(url.string)
+    }
+
+    private func handlePhoneNumber(phoneNumber: NSAttributedString) {
+        delegate?.didSelectPhoneNumber(phoneNumber.string)
     }
 
 }

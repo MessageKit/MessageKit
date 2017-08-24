@@ -22,8 +22,8 @@
  SOFTWARE.
  */
 
-
 import XCTest
+
 @testable import MessageKit
 
 class MessagesDisplayDataSourceTests: XCTestCase {

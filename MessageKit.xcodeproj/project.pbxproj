@@ -20,6 +20,7 @@
 		88916B401CF0DF5100469F91 /* MessageKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 88916B3E1CF0DF5100469F91 /* MessageKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		88916B451CF0DF5900469F91 /* MessageKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88916B431CF0DF5900469F91 /* MessageKitTests.swift */; };
 		88916B471CF0DFE600469F91 /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88916B461CF0DFE600469F91 /* MessageType.swift */; };
+		B01280F31F4E8798004BCD3E /* MessageLabelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01280F21F4E8798004BCD3E /* MessageLabelDelegate.swift */; };
 		B015E8191F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */; };
 		B015E81F1F259D8E007EDFB6 /* MessageInputBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E81E1F259D8E007EDFB6 /* MessageInputBarDelegate.swift */; };
 		B03FF9AF1F31BB1200754FE5 /* MessageCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03FF9AE1F31BB1200754FE5 /* MessageCellDelegate.swift */; };
@@ -69,6 +70,7 @@
 		88916B421CF0DF5900469F91 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88916B431CF0DF5900469F91 /* MessageKitTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageKitTests.swift; sourceTree = "<group>"; };
 		88916B461CF0DFE600469F91 /* MessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
+		B01280F21F4E8798004BCD3E /* MessageLabelDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageLabelDelegate.swift; sourceTree = "<group>"; };
 		B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
 		B015E81E1F259D8E007EDFB6 /* MessageInputBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageInputBarDelegate.swift; sourceTree = "<group>"; };
 		B03FF9AE1F31BB1200754FE5 /* MessageCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCellDelegate.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				B096438D1F2890FB004D0129 /* MessagesDisplayDataSource.swift */,
 				B03FF9AE1F31BB1200754FE5 /* MessageCellDelegate.swift */,
 				B074EE961F355FBC00ABB8C8 /* MessagesLayoutDelegate.swift */,
+				B01280F21F4E8798004BCD3E /* MessageLabelDelegate.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				B09643861F286C9E004D0129 /* String+Extensions.swift in Sources */,
 				B0655A281F23D71400542A83 /* MessageDirection.swift in Sources */,
 				B015E81F1F259D8E007EDFB6 /* MessageInputBarDelegate.swift in Sources */,
+				B01280F31F4E8798004BCD3E /* MessageLabelDelegate.swift in Sources */,
 				376AD1881F4259D20083072A /* TestMessagesViewControllerModel.swift in Sources */,
 				B0655A2A1F23D77200542A83 /* Sender.swift in Sources */,
 				B074EE931F35587100ABB8C8 /* MessageHeaderView.swift in Sources */,
