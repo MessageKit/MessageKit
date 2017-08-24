@@ -155,14 +155,21 @@ extension MessagesViewController: UICollectionViewDataSource {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MessageCell", for: indexPath) as? MessageCollectionViewCell ?? MessageCollectionViewCell()
 
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return cell }
-        guard let messageCellDelegate = messagesCollectionView.messageCellDelegate else { return cell }
-
-        cell.delegate = messageCellDelegate
-
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return cell }
+
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        cell.configure(with: message)
+
+        if let cellDelegate = messagesCollectionView.messageCellDelegate {
+            cell.delegate = cellDelegate
+        }
+
+        if let messageLabelDelegate = messagesCollectionView.messageLabelDelegate {
+            cell.messageLabel.delegate = messageLabelDelegate
+        }
+
         guard let displayDataSource = messagesDataSource as? MessagesDisplayDataSource else { return cell }
 
-        let message = displayDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         let messageColor = displayDataSource.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
         let textColor = displayDataSource.textColor(for: message, at: indexPath, in: messagesCollectionView)
         let avatar = displayDataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
@@ -174,7 +181,6 @@ extension MessagesViewController: UICollectionViewDataSource {
         cell.avatarView.set(avatar: avatar)
         cell.messageLabel.textColor = textColor
         cell.messageContainerView.backgroundColor = messageColor
-        cell.configure(with: message)
 
 		return cell
 

@@ -34,8 +34,10 @@ class ConversationViewController: MessagesViewController {
 
         messageList = SampleData().getMessages()
         messagesCollectionView.messagesDataSource = self
-        messagesCollectionView.messageCellDelegate = self
         messagesCollectionView.messagesLayoutDelegate = self
+
+        messagesCollectionView.messageCellDelegate = self
+        messagesCollectionView.messageLabelDelegate = self
         messageInputBar.delegate = self
     }
 }
