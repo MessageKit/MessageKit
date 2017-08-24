@@ -53,7 +53,7 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
     // MARK: - Public Properties
 
-    open var delegate: MessageLabelDelegate?
+    open weak var delegate: MessageLabelDelegate?
 
     open var enabledDetectors: [DetectorType] = [.phoneNumber, .address, .date, .url]
 
@@ -219,7 +219,15 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
             return
         }
 
-        let textWithDetectorAttributes = addDetectorAttributes(to: attributedText)
+        guard let checkingResults = parse(text: attributedText, for: enabledDetectors), checkingResults.isEmpty == false else {
+            textStorage.setAttributedString(attributedText)
+            setNeedsDisplay()
+            return
+        }
+
+        setRangesForDetectors(in: checkingResults)
+
+        let textWithDetectorAttributes = addDetectorAttributes(to: attributedText, for: checkingResults)
 
         textStorage.setAttributedString(textWithDetectorAttributes)
         
@@ -227,13 +235,9 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         
     }
 
-    private func addDetectorAttributes(to text: NSAttributedString) -> NSAttributedString {
+    private func addDetectorAttributes(to text: NSAttributedString, for checkingResults: [NSTextCheckingResult]) -> NSAttributedString {
 
         let mutableAttributedString = NSMutableAttributedString(attributedString: text)
-
-        guard enabledDetectors.isEmpty == false else { return mutableAttributedString }
-        guard let checkingResults = parse(text: text, for: enabledDetectors) else { return mutableAttributedString }
-        guard checkingResults.isEmpty == false else { return mutableAttributedString }
 
         checkingResults.forEach { result in
             let attributes = detectorAttributes(for: result.resultType)
@@ -292,7 +296,7 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
     // MARK: - Parsing Text
 
     private func parse(text: NSAttributedString, for detectorTypes: [DetectorType]) -> [NSTextCheckingResult]? {
-
+        guard detectorTypes.isEmpty == false else { return nil }
         let checkingTypes = detectorTypes.reduce(0) { $0 | $1.textCheckingType.rawValue }
         let detector = try? NSDataDetector(types: checkingTypes)
 
@@ -353,6 +357,8 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
     private func setupGestureRecognizers() {
 
+        print("Setting up gesture recognizers")
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
         addGestureRecognizer(tapGesture)
         tapGesture.delegate = self
@@ -365,6 +371,8 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
     }
 
     func handleGesture(_ gesture: UIGestureRecognizer) {
+
+        print("Handling gesture")
 
         let touchLocation = gesture.location(ofTouch: 0, in: self)
         guard let index = stringIndex(at: touchLocation) else { return }
@@ -382,6 +390,8 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
     }
 
     private func handleGesture(for detectorType: DetectorType, text: NSAttributedString) {
+
+        print("Detector routing")
         switch detectorType {
         case .address:
             handleAddress(address: text)
@@ -395,6 +405,7 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
     }
 
     private func handleAddress(address: NSAttributedString) {
+        print("Ok")
         delegate?.didSelectAddress(address.string)
     }
 

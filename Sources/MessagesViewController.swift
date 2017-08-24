@@ -166,6 +166,7 @@ extension MessagesViewController: UICollectionViewDataSource {
 
         if let messageLabelDelegate = messagesCollectionView.messageLabelDelegate {
             cell.messageLabel.delegate = messageLabelDelegate
+            print("Setting delegate")
         }
 
         guard let displayDataSource = messagesDataSource as? MessagesDisplayDataSource else { return cell }
