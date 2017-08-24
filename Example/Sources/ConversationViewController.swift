@@ -128,6 +128,28 @@ extension ConversationViewController: MessageCellDelegate {
 
 }
 
+// MARK: - MessageLabelDelegate
+
+extension ConversationViewController: MessageLabelDelegate {
+
+    func didSelectAddress(_ address: String) {
+        print("Address Selected: \(address)")
+    }
+
+    func didSelectDate(_ date: String) {
+        print("Date Selected: \(date)")
+    }
+
+    func didSelectPhoneNumber(_ phoneNumber: String) {
+        print("Phone Number Selected: \(phoneNumber)")
+    }
+
+    func didSelectURL(_ url: String) {
+        print("URL Selected: \(url)")
+    }
+
+}
+
 // MARK: - MessageInputBarDelegate
 
 extension ConversationViewController: MessageInputBarDelegate {
