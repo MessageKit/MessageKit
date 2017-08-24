@@ -49,7 +49,7 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         return textStorage
     }()
 
-    private lazy var rangesForDetectors: [DetectorType: [NSRange]] = [:]
+    private lazy var rangesForDetectors: [DetectorType: [(NSRange, Any?)]] = [:]
 
     // MARK: - Public Properties
 
@@ -190,23 +190,37 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         return true
     }
 
+    //swiftlint:disable cyclomatic_complexity
+    // Yeah we're disabling this because the whole file is a mess :D
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
 
         let touchLocation = touch.location(in: self)
 
-        if let index = stringIndex(at: touchLocation) {
+        switch true {
+        case gestureRecognizer.view != self.superview && gestureRecognizer.view != self:
+            return true
+        case gestureRecognizer.view == self.superview:
+            guard let index = stringIndex(at: touchLocation) else { return true }
             for (_, ranges) in rangesForDetectors {
-                for nsRange in ranges {
-                    guard let range = nsRange.toRange() else { return false }
-                    if range.contains(index) {
-                        return gestureRecognizer.view == self
-                    }
+                for (nsRange, _) in ranges {
+                    guard let range = nsRange.toRange() else { return true }
+                    if range.contains(index) { return false }
                 }
             }
+            return true
+        case gestureRecognizer.view == self:
+            guard let index = stringIndex(at: touchLocation) else { return false }
+            for (_, ranges) in rangesForDetectors {
+                for (nsRange, _) in ranges {
+                    guard let range = nsRange.toRange() else { return false }
+                    if range.contains(index) { return true }
+                }
+            }
+            return false
+        default:
+            return true
         }
 
-        return gestureRecognizer.view != self
-        
     }
 
     // MARK: - Private Methods
@@ -233,9 +247,9 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         let textWithDetectorAttributes = addDetectorAttributes(to: attributedText, for: checkingResults)
 
         textStorage.setAttributedString(textWithDetectorAttributes)
-        
+
         setNeedsDisplay()
-        
+
     }
 
     private func addDetectorAttributes(to text: NSAttributedString, for checkingResults: [NSTextCheckingResult]) -> NSAttributedString {
@@ -257,13 +271,13 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
         guard let ranges = rangesForDetectors[detectorType] else { return }
 
-        ranges.forEach { range in
+        ranges.forEach { (range, _) in
             let attributes = detectorAttributes(for: detectorType)
             mutableAttributedString.addAttributes(attributes, range: range)
         }
 
         textStorage.setAttributedString(mutableAttributedString)
-        
+
     }
 
     private func detectorAttributes(for detectorType: DetectorType) -> [String: Any] {
@@ -313,26 +327,30 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
             switch result.resultType {
             case NSTextCheckingResult.CheckingType.address:
                 var ranges = rangesForDetectors[.address] ?? []
-                ranges.append(result.range)
+                let tuple = (result.range, result.addressComponents) as (NSRange, Any?)
+                ranges.append(tuple)
                 rangesForDetectors.updateValue(ranges, forKey: .address)
             case NSTextCheckingResult.CheckingType.date:
                 var ranges = rangesForDetectors[.date] ?? []
-                ranges.append(result.range)
+                let tuple = (result.range, result.date) as (NSRange, Any?)
+                ranges.append(tuple)
                 rangesForDetectors.updateValue(ranges, forKey: .date)
             case NSTextCheckingResult.CheckingType.phoneNumber:
                 var ranges = rangesForDetectors[.phoneNumber] ?? []
-                ranges.append(result.range)
+                let tuple = (result.range, result.phoneNumber) as (NSRange, Any?)
+                ranges.append(tuple)
                 rangesForDetectors.updateValue(ranges, forKey: .phoneNumber)
             case NSTextCheckingResult.CheckingType.link:
                 var ranges = rangesForDetectors[.url] ?? []
-                ranges.append(result.range)
+                let tuple = (result.range, result.url) as (NSRange, Any?)
+                ranges.append(tuple)
                 rangesForDetectors.updateValue(ranges, forKey: .url)
             default:
                 fatalError("Received an unrecognized NSTextCheckingResult.CheckingType")
             }
 
         }
-        
+
     }
 
     // MARK: - Gesture Handling
@@ -355,7 +373,7 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         } else {
             return nil
         }
-        
+
     }
 
     private func setupGestureRecognizers() {
@@ -377,45 +395,47 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         guard let index = stringIndex(at: touchLocation) else { return }
 
         for (detectorType, ranges) in rangesForDetectors {
-            for nsRange in ranges {
+            for (nsRange, value) in ranges {
                 guard let range = nsRange.toRange() else { return }
                 if range.contains(index) {
-                    guard let text = attributedText?.attributedSubstring(from: nsRange) else { return }
-                    handleGesture(for: detectorType, text: text)
-
+                    handleGesture(for: detectorType, value: value)
                 }
             }
         }
     }
 
-    private func handleGesture(for detectorType: DetectorType, text: NSAttributedString) {
+    private func handleGesture(for detectorType: DetectorType, value: Any?) {
 
         switch detectorType {
         case .address:
-            handleAddress(address: text)
+            guard let addressComponents = value as? [String: String] else { return }
+            handleAddress(addressComponents)
         case .phoneNumber:
-            handlePhoneNumber(phoneNumber: text)
+            guard let phoneNumber = value as? String else { return }
+            handlePhoneNumber(phoneNumber)
         case .date:
-            handleDate(date: text)
+            guard let date = value as? Date else { return }
+            handleDate(date)
         case .url:
-            handleURL(url: text)
+            guard let url = value as? URL else { return }
+            handleURL(url)
         }
     }
-
-    private func handleAddress(address: NSAttributedString) {
-        delegate?.didSelectAddress(address.string)
+    
+    private func handleAddress(_ addressComponents: [String: String]) {
+        delegate?.didSelectAddress(addressComponents)
     }
-
-    private func handleDate(date: NSAttributedString) {
-        delegate?.didSelectDate(date.string)
+    
+    private func handleDate(_ date: Date) {
+        delegate?.didSelectDate(date)
     }
-
-    private func handleURL(url: NSAttributedString) {
-        delegate?.didSelectURL(url.string)
+    
+    private func handleURL(_ url: URL) {
+        delegate?.didSelectURL(url)
     }
-
-    private func handlePhoneNumber(phoneNumber: NSAttributedString) {
-        delegate?.didSelectPhoneNumber(phoneNumber.string)
+    
+    private func handlePhoneNumber(_ phoneNumber: String) {
+        delegate?.didSelectPhoneNumber(phoneNumber)
     }
-
+    
 }

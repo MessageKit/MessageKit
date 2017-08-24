@@ -134,11 +134,11 @@ extension ConversationViewController: MessageCellDelegate {
 
 extension ConversationViewController: MessageLabelDelegate {
 
-    func didSelectAddress(_ address: String) {
-        print("Address Selected: \(address)")
+    func didSelectAddress(_ addressComponents: [String : String]) {
+        print("Address Selected: \(addressComponents)")
     }
 
-    func didSelectDate(_ date: String) {
+    func didSelectDate(_ date: Date) {
         print("Date Selected: \(date)")
     }
 
@@ -146,7 +146,7 @@ extension ConversationViewController: MessageLabelDelegate {
         print("Phone Number Selected: \(phoneNumber)")
     }
 
-    func didSelectURL(_ url: String) {
+    func didSelectURL(_ url: URL) {
         print("URL Selected: \(url)")
     }
 

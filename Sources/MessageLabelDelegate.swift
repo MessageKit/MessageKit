@@ -26,24 +26,24 @@ import Foundation
 
 public protocol MessageLabelDelegate: class {
 
-    func didSelectAddress(_ address: String)
+    func didSelectAddress(_ addressComponents: [String: String])
 
-    func didSelectDate(_ date: String)
+    func didSelectDate(_ date: Date)
 
     func didSelectPhoneNumber(_ phoneNumber: String)
 
-    func didSelectURL(_ url: String) // Maybe convert to URL here
+    func didSelectURL(_ url: URL)
 
 }
 
 extension MessageLabelDelegate {
 
-    func didSelectAddress(_ address: String) {}
+    func didSelectAddress(_ addressComponents: [String: String]) {}
 
-    func didSelectDate(_ date: String) {}
+    func didSelectDate(_ date: Date) {}
 
     func didSelectPhoneNumber(_ phoneNumber: String) {}
 
-    func didSelectURL(_ url: String) {}
+    func didSelectURL(_ url: URL) {}
 
 }
