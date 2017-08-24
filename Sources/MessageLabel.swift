@@ -357,8 +357,6 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
     private func setupGestureRecognizers() {
 
-        print("Setting up gesture recognizers")
-
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
         addGestureRecognizer(tapGesture)
         tapGesture.delegate = self
@@ -371,8 +369,6 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
     }
 
     func handleGesture(_ gesture: UIGestureRecognizer) {
-
-        print("Handling gesture")
 
         let touchLocation = gesture.location(ofTouch: 0, in: self)
         guard let index = stringIndex(at: touchLocation) else { return }
@@ -391,7 +387,6 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
     private func handleGesture(for detectorType: DetectorType, text: NSAttributedString) {
 
-        print("Detector routing")
         switch detectorType {
         case .address:
             handleAddress(address: text)
@@ -405,7 +400,6 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
     }
 
     private func handleAddress(address: NSAttributedString) {
-        print("Ok")
         delegate?.didSelectAddress(address.string)
     }
 
