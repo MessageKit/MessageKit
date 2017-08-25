@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="1000px" height="232px" viewBox="0 0 1000 232" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
-    <title>Group 3</title>
+<svg width="1000px" height="230px" viewBox="0 0 1000 230" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
+    <title>mklogo</title>
     <desc>Created with Sketch.</desc>
     <defs>
-        <linearGradient x1="50%" y1="11.1221082%" x2="50%" y2="93.9816776%" id="linearGradient-1">
-            <stop stop-color="#4DF169" offset="0%"></stop>
-            <stop stop-color="#3CBD52" offset="100%"></stop>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#4DF069" offset="0%"></stop>
+            <stop stop-color="#3CBD51" offset="100%"></stop>
         </linearGradient>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Artboard">
-            <g id="Group-3">
-                <rect id="Background" fill="url(#linearGradient-1)" x="0" y="0" width="1000" height="232"></rect>
-                <g id="Group-2" transform="translate(84.000000, 0.000000)">
-                    <image id="MessageKit" x="0" y="0" width="232" height="232" xlink:href="data:image/png;base64,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"></image>
-                    <g id="Group" transform="translate(166.000000, 21.000000)" font-family="HelveticaNeue, Helvetica Neue" fill="#FFFFFF" font-weight="normal">
-                        <text id="MessageKit" font-size="100">
-                            <tspan x="69.7851562" y="95">MessageKit</tspan>
-                        </text>
-                        <text id="An-elegant-messages" font-size="30">
-                            <tspan x="74.37" y="149">An elegant messages UI library for iOS</tspan>
-                        </text>
-                    </g>
+        <g id="mklogo">
+            <rect id="Rectangle-4" fill="url(#linearGradient-1)" x="0" y="0" width="1000" height="230"></rect>
+            <g id="Group-2" transform="translate(122.000000, 31.000000)" fill="#FFFFFF">
+                <g id="Rectangle-3" transform="translate(0.000000, 22.000000)">
+                    <path d="M62.5,1.62400475e-13 L109.194404,1.62400475e-13 L109.194404,1.63424829e-13 C143.436059,1.57134722e-13 171.194404,27.7583455 171.194404,62 L171.194404,75.8404657 C171.470654,87.6565945 173.311485,96.6656226 176.716899,102.86755 C180.122313,109.069477 186.550013,116.44696 196,125 L171.194404,125 L62.5,125 L62.5,125 C27.9822031,125 4.22721094e-15,97.0177969 0,62.5 L0,62.5 L0,62.5 C-4.22721094e-15,27.9822031 27.9822031,1.69765677e-13 62.5,1.63424829e-13 L62.5,1.62400475e-13 Z M54.8403497,36.2318841 L54.8403497,45.2898551 L131.331467,45.2898551 L131.331467,36.2318841 L54.8403497,36.2318841 Z M36.5262602,57.9710145 L36.5262602,67.0289855 L113.017377,67.0289855 L113.017377,57.9710145 L36.5262602,57.9710145 Z M54.8403497,79.7101449 L54.8403497,88.7681159 L131.331467,88.7681159 L131.331467,79.7101449 L54.8403497,79.7101449 Z" id="Combined-Shape"></path>
+                </g>
+                <g id="Group" transform="translate(232.000000, 0.000000)">
+                    <text id="MessageKit" font-family="SFProDisplay-Regular, SF Pro Display" font-size="100" font-weight="normal" letter-spacing="3.0999999">
+                        <tspan x="0" y="95">MessageKi</tspan>
+                        <tspan x="493.573827" y="95">t</tspan>
+                    </text>
+                    <text id="An-elegant-messages" font-family="SFProDisplay-Light, SF Pro Display" font-size="33.5" font-weight="300">
+                        <tspan x="0" y="148">An elegant messages UI library for iOS</tspan>
+                    </text>
                 </g>
             </g>
         </g>
