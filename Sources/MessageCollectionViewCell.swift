@@ -37,11 +37,19 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     open var avatarView: AvatarView = AvatarView()
 
-    open var cellTopLabel: MessageLabel = MessageLabel()
+    open var cellTopLabel: MessageLabel = {
+        let topLabel = MessageLabel()
+        topLabel.enabledDetectors = []
+        return topLabel
+    }()
 
     open var messageLabel: MessageLabel = MessageLabel()
 
-    open var cellBottomLabel: MessageLabel = MessageLabel()
+    open var cellBottomLabel: MessageLabel = {
+        let bottomLabel = MessageLabel()
+        bottomLabel.enabledDetectors = []
+        return bottomLabel
+    }()
 
     open weak var delegate: MessageCellDelegate?
 
@@ -102,7 +110,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         var origin: CGPoint = .zero
 
-        if !attributes.topLabelExtendsPastAvatar {
+        if attributes.topLabelExtendsPastAvatar == false {
             origin = CGPoint(x: attributes.avatarSize.width + attributes.avatarMessagePadding, y: 0)
         }
 
@@ -113,7 +121,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         var origin: CGPoint = CGPoint(x: 0, y: contentView.frame.height - attributes.cellBottomLabelSize.height)
 
-        if !attributes.bottomLabelExtendsPastAvatar {
+        if attributes.bottomLabelExtendsPastAvatar == false {
             origin.x = attributes.avatarSize.width + attributes.avatarMessagePadding
         }
 
@@ -143,14 +151,34 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         var origin: CGPoint = .zero
 
-        let yPosition = contentView.frame.height - attributes.avatarSize.height - attributes.avatarBottomPadding - attributes.cellBottomLabelSize.height
+        switch attributes.avatarPosition {
+        case .cellTop:
+            if attributes.topLabelExtendsPastAvatar {
+                origin.y = attributes.cellTopLabelSize.height
+            } else {
+                origin.y = 0
+            }
+        case .cellBottom:
+            if attributes.bottomLabelExtendsPastAvatar {
+                origin.y = contentView.frame.height - attributes.avatarSize.height - attributes.cellBottomLabelSize.height
+            } else {
+                origin.y = contentView.frame.height - attributes.avatarSize.height
+            }
+        case .messageTop:
+            origin.y = attributes.cellTopLabelSize.height
+        case .messageBottom:
+            origin.y = contentView.frame.height - attributes.avatarSize.height - attributes.cellBottomLabelSize.height
+        case .messageCenter:
+            let messageMidY = (attributes.messageContainerSize.height / 2)
+            let avatarMidY = (attributes.avatarSize.height / 2)
+            origin.y = contentView.frame.height - attributes.cellTopLabelSize.height - messageMidY - avatarMidY
+        }
 
         switch attributes.direction {
         case .outgoing:
-            let xPosition = contentView.frame.width - attributes.avatarSize.width
-            origin = CGPoint(x: xPosition, y: yPosition)
+            origin.x = contentView.frame.width - attributes.avatarSize.width
         case .incoming:
-            origin = CGPoint(x: 0, y: yPosition)
+            origin.x = 0
         }
 
         return CGRect(origin: origin, size: attributes.avatarSize)
@@ -176,6 +204,15 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         let messageTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapMessage))
         messageContainerView.addGestureRecognizer(messageTapGesture)
+        messageTapGesture.delegate = messageLabel
+
+        let topLabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapTopLabel))
+        cellTopLabel.addGestureRecognizer(topLabelTapGesture)
+        cellTopLabel.isUserInteractionEnabled = true
+
+        let bottomlabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBottomLabel))
+        cellBottomLabel.addGestureRecognizer(bottomlabelTapGesture)
+        cellBottomLabel.isUserInteractionEnabled = true
 
     }
 
@@ -187,5 +224,13 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     func didTapMessage() {
         delegate?.didTapMessage(in: self)
+    }
+
+    func didTapTopLabel() {
+        delegate?.didTapTopLabel(in: self)
+    }
+
+    func didTapBottomLabel() {
+        delegate?.didTapBottomLabel(in: self)
     }
 }

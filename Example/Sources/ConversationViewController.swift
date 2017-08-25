@@ -34,8 +34,10 @@ class ConversationViewController: MessagesViewController {
 
         messageList = SampleData().getMessages()
         messagesCollectionView.messagesDataSource = self
-        messagesCollectionView.messageCellDelegate = self
         messagesCollectionView.messagesLayoutDelegate = self
+
+        messagesCollectionView.messageCellDelegate = self
+        messagesCollectionView.messageLabelDelegate = self
         messageInputBar.delegate = self
     }
 }
@@ -64,6 +66,10 @@ extension ConversationViewController: MessagesDisplayDataSource {
 
     func avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
         return SampleData().getAvatarFor(sender: message.sender)
+    }
+
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
+        return .messageTop
     }
 
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
@@ -112,6 +118,36 @@ extension ConversationViewController: MessageCellDelegate {
 
     func didTapMessage(in cell: MessageCollectionViewCell) {
         print("Message tapped")
+    }
+
+    func didTapTopLabel(in cell: MessageCollectionViewCell) {
+        print("Top label tapped")
+    }
+
+    func didTapBottomLabel(in cell: MessageCollectionViewCell) {
+        print("Bottom label tapped")
+    }
+
+}
+
+// MARK: - MessageLabelDelegate
+
+extension ConversationViewController: MessageLabelDelegate {
+
+    func didSelectAddress(_ addressComponents: [String : String]) {
+        print("Address Selected: \(addressComponents)")
+    }
+
+    func didSelectDate(_ date: Date) {
+        print("Date Selected: \(date)")
+    }
+
+    func didSelectPhoneNumber(_ phoneNumber: String) {
+        print("Phone Number Selected: \(phoneNumber)")
+    }
+
+    func didSelectURL(_ url: URL) {
+        print("URL Selected: \(url)")
     }
 
 }

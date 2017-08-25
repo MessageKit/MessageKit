@@ -34,10 +34,12 @@ open class MessagesCollectionView: UICollectionView {
 
     open weak var messageCellDelegate: MessageCellDelegate?
 
+    open weak var messageLabelDelegate: MessageLabelDelegate?
+
     private var indexPathForLastItem: IndexPath? {
 
         let lastSection = numberOfSections > 0 ? numberOfSections - 1 : 0
-        guard numberOfItems(inSection: lastSection) > 0 else { return nil }
+        guard lastSection > 0, numberOfItems(inSection: lastSection) > 0 else { return nil }
         return IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
 
     }

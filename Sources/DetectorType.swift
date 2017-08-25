@@ -24,21 +24,26 @@
 
 import Foundation
 
-extension NSAttributedString {
+public enum DetectorType {
 
-    func height(considering width: CGFloat) -> CGFloat {
+    case address
+    case date
+    case phoneNumber
+    case url
 
-        let constraintBox = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, context: nil)
-        return rect.height
+    // MARK: - Not supported yet
 
+    //case mention
+    //case hashtag
+    //case custom
+
+    var textCheckingType: NSTextCheckingResult.CheckingType {
+        switch self {
+        case .address: return .address
+        case .date: return .date
+        case .phoneNumber: return .phoneNumber
+        case .url: return .link
+        }
     }
 
-    func width(considering height: CGFloat) -> CGFloat {
-
-        let constraintBox = CGSize(width: .greatestFiniteMagnitude, height: height)
-        let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, context: nil)
-        return rect.width
-        
-    }
 }

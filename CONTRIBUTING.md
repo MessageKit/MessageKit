@@ -24,7 +24,7 @@ If you're new to Open Source or Swift, the MessageKit community is a great place
 - Please check the [README](https://github.com/MessageKit/MessageKit/blob/master/README.md) to see if your question is answered there.
 - Search [open issues](https://github.com/MessageKit/MessageKit/issues?q=is%3Aopen+is%3Aissue) and [closed issues](https://github.com/MessageKit/MessageKit/issues?q=is%3Aissue+is%3Aclosed) to avoid opening a duplicate issue.
 - Avoiding duplicate issues organizes all relevant information for project maintainers and other users.
-- If no issues represent your problem, please open a new issue with a good tile and useful description.
+- If no issues represent your problem, please open a new issue with a good title and useful description.
 
 - Information to Provide When Opening an Issue: 
     - MessageKit version(s)

@@ -39,9 +39,11 @@ struct SampleData {
         let msg6 =  MockMessage(text: "I think if you do something and it turns out pretty good, then you should go do something else wonderful, not dwell on it for too long. Just figure out what’s next.", sender: Jobs, messageId: UUID().uuidString)
         let msg7 = MockMessage(text: "Remembering that I'll be dead soon is the most important tool I've ever encountered to help me make the big choices in life. Because almost everything - all external expectations, all pride, all fear of embarrassment or failure - these things just fall away in the face of death, leaving only what is truly important.", sender: Jobs, messageId: UUID().uuidString)
         let msg8 = MockMessage(text: "Price is rarely the most important thing. A cheap product might sell some units. Somebody gets it home and they feel great when they pay the money, but then they get it home and use it and the joy is gone.", sender: Cook, messageId: UUID().uuidString)
-		
-		let msg9Text = NSString(string: "Use .attributedText() to add bold, italic, colored text and more...")
+
+        let msg9String = "Use .attributedText() to add bold, italic, colored text and more..."
+		let msg9Text = NSString(string: msg9String)
 		let msg9AttributedText = NSMutableAttributedString(string: String(msg9Text))
+        msg9AttributedText.addAttribute(NSFontAttributeName, value: UIFont.preferredFont(forTextStyle: .body), range: NSRange(location: 0, length: msg9Text.length))
 		
 		if #available(iOS 9.0, *) {
 			msg9AttributedText.addAttributes([NSFontAttributeName: UIFont.monospacedDigitSystemFont(ofSize: UIFont.systemFontSize, weight: UIFontWeightBold)], range: msg9Text.range(of: ".attributedText()"))
@@ -59,8 +61,13 @@ struct SampleData {
 		                                 range: msg9Text.range(of: "colored"))
 		
 		let msg9 = MockMessage(attributedText: msg9AttributedText, sender: Jobs, messageId: UUID().uuidString)
+
+        let msg10 = MockMessage(text: "1-800-555-0000", sender: Steven, messageId: UUID().uuidString)
+        let msg11 = MockMessage(text: "One Infinite Loop Cupertino, CA 95014 This is some extra text that should not be detected.", sender: Cook, messageId: UUID().uuidString)
+        let msg12 = MockMessage(text: "This is an example of the date detector 11/11/2017. April 1st is April Fools Day. Next Friday is not Friday the 13th.", sender: Steven, messageId: UUID().uuidString)
+        let msg13 = MockMessage(text: "https//:github.com/SD10", sender: Steven, messageId: UUID().uuidString)
 		
-        return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9]
+        return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11, msg12, msg13]
     }
     
     func getCurrentSender() -> Sender {

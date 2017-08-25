@@ -24,21 +24,26 @@
 
 import Foundation
 
-extension NSAttributedString {
+public protocol MessageLabelDelegate: class {
 
-    func height(considering width: CGFloat) -> CGFloat {
+    func didSelectAddress(_ addressComponents: [String: String])
 
-        let constraintBox = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, context: nil)
-        return rect.height
+    func didSelectDate(_ date: Date)
 
-    }
+    func didSelectPhoneNumber(_ phoneNumber: String)
 
-    func width(considering height: CGFloat) -> CGFloat {
+    func didSelectURL(_ url: URL)
 
-        let constraintBox = CGSize(width: .greatestFiniteMagnitude, height: height)
-        let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, context: nil)
-        return rect.width
-        
-    }
+}
+
+extension MessageLabelDelegate {
+
+    func didSelectAddress(_ addressComponents: [String: String]) {}
+
+    func didSelectDate(_ date: Date) {}
+
+    func didSelectPhoneNumber(_ phoneNumber: String) {}
+
+    func didSelectURL(_ url: URL) {}
+
 }

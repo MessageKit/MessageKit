@@ -30,6 +30,10 @@ public protocol MessageCellDelegate: class {
 
     func didTapAvatar(in cell: MessageCollectionViewCell)
 
+    func didTapBottomLabel(in cell: MessageCollectionViewCell)
+
+    func didTapTopLabel(in cell: MessageCollectionViewCell)
+
 }
 
 extension MessageCellDelegate {
@@ -37,5 +41,9 @@ extension MessageCellDelegate {
     func didTapMessage(in cell: MessageCollectionViewCell) {}
 
     func didTapAvatar(in cell: MessageCollectionViewCell) {}
+
+    func didTapBottomLabel(in cell: MessageCollectionViewCell) {}
+
+    func didTapTopLabel(in cell: MessageCollectionViewCell) {}
 
 }
