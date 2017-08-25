@@ -24,8 +24,14 @@
 
 import Foundation
 
+@objc
 public protocol MessageInputBarDelegate: class {
-
-    func sendButtonPressed(sender: UIButton, textView: UITextView)
-
+    
+    @objc optional func inputBar(_ inputBar: MessageInputBar, didSelectSendButtonWith text: String)
+    
+    @objc optional func inputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize)
+    
+    @objc optional func inputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String)
+    
+    @objc optional func inputBar(_ inputBar: MessageInputBar, didSwipeTextViewWith gesture: UISwipeGestureRecognizer)
 }
