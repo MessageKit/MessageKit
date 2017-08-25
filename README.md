@@ -35,6 +35,13 @@ See [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) 
 pod 'MessageKit'
 ````
 
+### [Carthage](https://github.com/Carthage/Carthage)
+
+To integrate MessageKit using Carthage, add the following to your `Cartfile`:
+
+````ruby
+github "MessageKit/MessageKit"
+````
 
 ## Requirements
 
