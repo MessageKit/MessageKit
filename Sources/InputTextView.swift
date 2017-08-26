@@ -28,11 +28,17 @@ open class InputTextView: UITextView {
     
     // MARK: - Properties
     
+    open override var text: String! {
+        didSet {
+            placeholderLabel.isHidden = !text.isEmpty
+        }
+    }
+    
     open let placeholderLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .lightGray
-        label.text = "Aa"
+        label.text = "New Message"
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -40,21 +46,15 @@ open class InputTextView: UITextView {
     
     private var placeholderLabelConstraintSet: NSLayoutConstraintSet?
     
-    open var placeholder: String? {
-        get {
-            return placeholderLabel.text
-        }
-        set {
-            placeholderLabel.text = newValue
+    open var placeholder: String? = "New Message" {
+        didSet {
+            placeholderLabel.text = placeholder
         }
     }
     
-    open var placeholderTextColor: UIColor {
-        get {
-            return placeholderLabel.textColor
-        }
-        set {
-            placeholderLabel.textColor = newValue
+    open var placeholderTextColor: UIColor? = .lightGray {
+        didSet {
+            placeholderLabel.textColor = placeholderTextColor
         }
     }
     
@@ -76,7 +76,7 @@ open class InputTextView: UITextView {
         }
     }
     
-    public weak var inputBarAccessoryView: MessageInputBar?
+    public weak var messageInputBar: MessageInputBar?
     
     // MARK: - Initializers
     

@@ -32,12 +32,12 @@ open class InputBarButtonItem: UIButton {
         case none
     }
     
-    public typealias InputBarButtonItemAction = ((InputBarButtonItem) -> Void)?
+    public typealias InputBarButtonItemAction = ((InputBarButtonItem) -> Void)
     
     // MARK: - Properties
     
     /// Set automatically when using the InputBarAccessoryView method 'setStackViewItems'
-    open weak var inputBarAccessoryView: MessageInputBar?
+    open weak var messageInputBar: MessageInputBar?
     
     public var spacing: Spacing = .none {
         didSet {
@@ -120,15 +120,15 @@ open class InputBarButtonItem: UIButton {
     
     // MARK: - Hooks
     
-    private var onTouchUpInsideAction: InputBarButtonItemAction
-    private var onKeyboardEditingBeginsAction: InputBarButtonItemAction
-    private var onKeyboardEditingEndsAction: InputBarButtonItemAction
+    private var onTouchUpInsideAction: InputBarButtonItemAction?
+    private var onKeyboardEditingBeginsAction: InputBarButtonItemAction?
+    private var onKeyboardEditingEndsAction: InputBarButtonItemAction?
     private var onKeyboardSwipeGestureAction: ((InputBarButtonItem, UISwipeGestureRecognizer) -> Void)?
     private var onTextViewDidChangeAction: ((InputBarButtonItem, InputTextView) -> Void)?
-    private var onSelectedAction: InputBarButtonItemAction
-    private var onDeselectedAction: InputBarButtonItemAction
-    private var onEnabledAction: InputBarButtonItemAction
-    private var onDisabledAction: InputBarButtonItemAction
+    private var onSelectedAction: InputBarButtonItemAction?
+    private var onDeselectedAction: InputBarButtonItemAction?
+    private var onEnabledAction: InputBarButtonItemAction?
+    private var onDisabledAction: InputBarButtonItemAction?
     
     // MARK: - Initialization
     
@@ -162,18 +162,18 @@ open class InputBarButtonItem: UIButton {
     
     @discardableResult
     open func configure(_ setup: InputBarButtonItemAction) -> Self {
-        setup?(self)
+        setup(self)
         return self
     }
     
     @discardableResult
-    open func onKeyboardEditingBegins(_ action: InputBarButtonItemAction) -> Self {
+    open func onKeyboardEditingBegins(_ action: @escaping InputBarButtonItemAction) -> Self {
         onKeyboardEditingBeginsAction = action
         return self
     }
     
     @discardableResult
-    open func onKeyboardEditingEnds(_ action: InputBarButtonItemAction) -> Self {
+    open func onKeyboardEditingEnds(_ action: @escaping InputBarButtonItemAction) -> Self {
         onKeyboardEditingEndsAction = action
         return self
     }
@@ -191,31 +191,31 @@ open class InputBarButtonItem: UIButton {
     }
     
     @discardableResult
-    open func onTouchUpInside(_ action: InputBarButtonItemAction) -> Self {
+    open func onTouchUpInside(_ action: @escaping InputBarButtonItemAction) -> Self {
         onTouchUpInsideAction = action
         return self
     }
     
     @discardableResult
-    open func onSelected(_ action: InputBarButtonItemAction) -> Self {
+    open func onSelected(_ action: @escaping InputBarButtonItemAction) -> Self {
         onSelectedAction = action
         return self
     }
     
     @discardableResult
-    open func onDeselected(_ action: InputBarButtonItemAction) -> Self {
+    open func onDeselected(_ action: @escaping InputBarButtonItemAction) -> Self {
         onDeselectedAction = action
         return self
     }
     
     @discardableResult
-    open func onEnabled(_ action: InputBarButtonItemAction) -> Self {
+    open func onEnabled(_ action: @escaping InputBarButtonItemAction) -> Self {
         onEnabledAction = action
         return self
     }
     
     @discardableResult
-    open func onDisabled(_ action: InputBarButtonItemAction) -> Self {
+    open func onDisabled(_ action: @escaping InputBarButtonItemAction) -> Self {
         onDisabledAction = action
         return self
     }
@@ -242,7 +242,7 @@ open class InputBarButtonItem: UIButton {
         onTouchUpInsideAction?(self)
     }
     
-    // MARK: - Static vars
+    // MARK: - Static
     
     open static var flexibleSpace: InputBarButtonItem {
         let item = InputBarButtonItem()

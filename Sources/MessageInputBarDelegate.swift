@@ -23,15 +23,27 @@
  */
 
 import Foundation
+import UIKit
 
-@objc
 public protocol MessageInputBarDelegate: class {
     
-    @objc optional func inputBar(_ inputBar: MessageInputBar, didSelectSendButtonWith text: String)
+    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String)
     
-    @objc optional func inputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize)
+    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize)
     
-    @objc optional func inputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String)
+    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String)
     
-    @objc optional func inputBar(_ inputBar: MessageInputBar, didSwipeTextViewWith gesture: UISwipeGestureRecognizer)
+    func messageInputBar(_ inputBar: MessageInputBar, didSwipeTextViewWith gesture: UISwipeGestureRecognizer)
 }
+
+public extension MessageInputBarDelegate {
+    
+    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {}
+    
+    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize) {}
+    
+    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String) {}
+    
+    func messageInputBar(_ inputBar: MessageInputBar, didSwipeTextViewWith gesture: UISwipeGestureRecognizer) {}
+}
+

@@ -22,6 +22,7 @@
  SOFTWARE.
  */
 
+import Foundation
 import UIKit
 
 open class MessageInputBar: UIView {
@@ -89,10 +90,10 @@ open class MessageInputBar: UIView {
         return view
     }()
     
-    open lazy var textView: InputTextView = { [unowned self] in
+    open lazy var textView: InputTextView = { [weak self] in
         let textView = InputTextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.inputBarAccessoryView = self
+        textView.messageInputBar = self
         return textView
         }()
     
@@ -106,18 +107,17 @@ open class MessageInputBar: UIView {
         }
     }
     
-    open lazy var sendButton: InputBarButtonItem = { [unowned self] in
+    open lazy var sendButton: InputBarButtonItem = { [weak self] in
         return InputBarButtonItem()
             .configure {
                 $0.size = CGSize(width: 52, height: 36)
-                $0.spacing = .fixed(4)
                 $0.isEnabled = false
                 $0.title = "Send"
                 $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
             }.onTextViewDidChange({ (item, textView) in
                 item.isEnabled = !textView.text.isEmpty
             }).onTouchUpInside {
-                $0.inputBarAccessoryView?.didSelectSendButton()
+                $0.messageInputBar?.didSelectSendButton()
         }
         }()
     
@@ -139,45 +139,51 @@ open class MessageInputBar: UIView {
         }
         let size = CGSize(width: bounds.width, height: heightToFit)
         if previousIntrinsicContentSize != size {
-            delegate?.inputBar?(self, didChangeIntrinsicContentTo: size)
+            delegate?.messageInputBar(self, didChangeIntrinsicContentTo: size)
         }
         previousIntrinsicContentSize = size
         return size
     }
     
     /// The maximum intrinsicContentSize height. When reached the delegate 'didChangeIntrinsicContentTo' will be called.
-    open var maxHeight: CGFloat = 288 {
+    open var maxHeight: CGFloat = UIScreen.main.bounds.height / 3 {
         didSet {
             invalidateIntrinsicContentSize()
         }
     }
     
     /// The fixed widthAnchor constant of the leftStackView
-    open var leftStackViewWidthContant: CGFloat = 0 {
+    private(set) var leftStackViewWidthContant: CGFloat = 0 {
         didSet {
             leftStackViewLayoutSet?.width?.constant = leftStackViewWidthContant
         }
     }
     
     /// The fixed widthAnchor constant of the rightStackView
-    open var rightStackViewWidthContant: CGFloat = 52 {
+    private(set) var rightStackViewWidthContant: CGFloat = 52 {
         didSet {
             rightStackViewLayoutSet?.width?.constant = rightStackViewWidthContant
         }
     }
     
+    /// When set to TRUE and the swipe gesture direction on the InputTextView is down the first responder will be resigned
+    open var shouldDismissOnSwipe: Bool = true
+    
     /// The InputBarItems held in the leftStackView
-    open var leftStackViewItems: [InputBarButtonItem] = []
+    private(set) var leftStackViewItems: [InputBarButtonItem] = []
     
     /// The InputBarItems held in the rightStackView
-    open var rightStackViewItems: [InputBarButtonItem] = []
+    private(set) var rightStackViewItems: [InputBarButtonItem] = []
     
     /// The InputBarItems held in the bottomStackView
-    open var bottomStackViewItems: [InputBarButtonItem] = []
+    private(set) var bottomStackViewItems: [InputBarButtonItem] = []
+    
+    /// The InputBarItems held to make use of their hooks but they are not automatically added to a UIStackView
+    open var nonStackViewItems: [InputBarButtonItem] = []
     
     /// Returns a flatMap of all the items in each of the UIStackViews
     public var items: [InputBarButtonItem] {
-        return [leftStackViewItems, rightStackViewItems, bottomStackViewItems].flatMap { $0 }
+        return [leftStackViewItems, rightStackViewItems, bottomStackViewItems, nonStackViewItems].flatMap { $0 }
     }
     
     // MARK: - Auto-Layout Management
@@ -352,7 +358,7 @@ open class MessageInputBar: UIView {
                 leftStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
                 leftStackViewItems = items
                 leftStackViewItems.forEach {
-                    $0.inputBarAccessoryView = self
+                    $0.messageInputBar = self
                     leftStackView.addArrangedSubview($0)
                 }
                 leftStackView.layoutIfNeeded()
@@ -360,7 +366,7 @@ open class MessageInputBar: UIView {
                 rightStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
                 rightStackViewItems = items
                 rightStackViewItems.forEach {
-                    $0.inputBarAccessoryView = self
+                    $0.messageInputBar = self
                     rightStackView.addArrangedSubview($0)
                 }
                 rightStackView.layoutIfNeeded()
@@ -368,7 +374,7 @@ open class MessageInputBar: UIView {
                 bottomStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
                 bottomStackViewItems = items
                 bottomStackViewItems.forEach {
-                    $0.inputBarAccessoryView = self
+                    $0.messageInputBar = self
                     bottomStackView.addArrangedSubview($0)
                 }
                 bottomStackView.layoutIfNeeded()
@@ -416,7 +422,7 @@ open class MessageInputBar: UIView {
             self.items.forEach { $0.textViewDidChangeAction(with: self.textView) }
             self.layoutStackViews()
         }
-        delegate?.inputBar?(self, textViewTextDidChangeTo: trimmedText)
+        delegate?.messageInputBar(self, textViewTextDidChangeTo: trimmedText)
         invalidateIntrinsicContentSize()
     }
     
@@ -437,17 +443,21 @@ open class MessageInputBar: UIView {
     // MARK: - User Actions
     
     open func didSwipeTextView(_ gesture: UISwipeGestureRecognizer) {
+        
         performLayout(true) {
             self.items.forEach { $0.keyboardSwipeGestureAction(with: gesture) }
             self.layoutStackViews()
         }
-        delegate?.inputBar?(self, didSwipeTextViewWith: gesture)
+        delegate?.messageInputBar(self, didSwipeTextViewWith: gesture)
+        
+        if shouldDismissOnSwipe && gesture.direction == .down {
+            textView.resignFirstResponder()
+        }
     }
     
     open func didSelectSendButton() {
-        delegate?.inputBar?(self, didSelectSendButtonWith: textView.text)
+        delegate?.messageInputBar(self, didPressSendButtonWith: textView.text)
         textViewDidChange()
-        invalidateIntrinsicContentSize()
     }
     
     open func didSelectInputBarItem(_ item: InputBarButtonItem) {
