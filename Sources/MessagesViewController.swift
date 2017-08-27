@@ -60,7 +60,17 @@ open class MessagesViewController: UIViewController {
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        messagesCollectionView.scrollToBottom(animated: true)
+    }
+    
+    private var isFirstLayout = true
+    open override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if isFirstLayout {
+            messagesCollectionView.contentInset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: bottomBarsHeight, right: 0)
+            //Collection View has data only after layout. So this is when we should call scroll to bottom
+            messagesCollectionView.scrollToBottom()
+            isFirstLayout = false
+        }
     }
 
 	open override func viewDidAppear(_ animated: Bool) {
@@ -104,7 +114,7 @@ open class MessagesViewController: UIViewController {
 		messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
 
 		view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .top, relatedBy: .equal,
-		                                      toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
+		                                      toItem: view, attribute: .top, multiplier: 1, constant: 0))
 
 		view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .leading, relatedBy: .equal,
 		                                      toItem: view, attribute: .leading, multiplier: 1, constant: 0))
@@ -113,7 +123,7 @@ open class MessagesViewController: UIViewController {
 		                                      toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
 
 		view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .bottom, relatedBy: .equal,
-		                                      toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: -46))
+		                                      toItem: view, attribute: .bottom, multiplier: 1, constant: 0))
 
 	}
 
@@ -246,26 +256,35 @@ extension MessagesViewController {
     }
     
     func handleKeyboardWillShow(_ notification: Notification) {
-        guard let keyboardEndSizeValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
+        guard let keyboardFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
         
-        let keyboardFrame = keyboardEndSizeValue.cgRectValue
-        let keyboard = self.view.convert(keyboardFrame, from: self.view.window)
-        let height = self.view.frame.size.height
-        let messageInputBarHeight = inputAccessoryView?.bounds.size.height ?? 0
-        let keyboardHeight = keyboardFrame.height - messageInputBarHeight
+        let messagesInset = messagesCollectionView.contentInset
+        let messageInputBarHeight = inputAccessoryView?.bounds.height ?? 0
         
-        if (keyboard.origin.y + keyboard.size.height) > height {
-            // Hardware keyboard is found
-            messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            
-        } else {
-            // Software keyboard is found
-            messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+        //This should work for both hardware and software keyboards
+        messagesCollectionView.contentInset = UIEdgeInsets(top: messagesInset.top, left: 0, bottom: keyboardFrame.height + bottomLayoutGuide.length, right: 0)
+
+        if keyboardFrame.size.height != messageInputBarHeight {
+            //scroll to bottom only if keyboard is on screen
+            //This also scrolls when screen rotates
+            messagesCollectionView.scrollToBottom()
         }
     }
     
     func handleKeyboardWillHide(_ notification: Notification) {
-        messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let messagesInset = messagesCollectionView.contentInset
+        messagesCollectionView.contentInset = UIEdgeInsets(top: messagesInset.top, left: 0, bottom: bottomBarsHeight, right: 0)
     }
     
+}
+
+// MARK: - Helpers
+extension MessagesViewController {
+    /// Accesory view plus bottom layout guide length
+    var bottomBarsHeight: CGFloat {
+        get {
+            let accesoryHeight = inputAccessoryView?.bounds.height ?? 0
+            return accesoryHeight + bottomLayoutGuide.length
+        }
+    }
 }
