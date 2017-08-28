@@ -1,18 +1,18 @@
 /*
  MIT License
- 
+
  Copyright (c) 2017 MessageKit
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,10 +28,17 @@ import MessageKit
 final class InboxViewController: UITableViewController {
 
     let cells = ["Test", "Settings"]
-    
+
+    private var hasPresentedConversationViewController: Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presentConversationViewControllerAtStart()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -43,17 +50,31 @@ final class InboxViewController: UITableViewController {
         cell.textLabel?.text = cells[indexPath.row]
         return cell
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = cells[indexPath.row]
         switch cell {
         case "Test":
-            navigationController?.pushViewController(ConversationViewController(), animated: true)
+            pushConversationViewController()
         case "Settings":
-            navigationController?.pushViewController(SettingsViewController(), animated: true)
+            pushSettingsViewController()
         default:
             assertionFailure("You need to impliment the action for this cell: \(cell)")
             return
         }
+    }
+
+    private func pushConversationViewController() {
+        navigationController?.pushViewController(ConversationViewController(), animated: true)
+    }
+
+    private func pushSettingsViewController() {
+        navigationController?.pushViewController(SettingsViewController(), animated: true)
+    }
+
+    private func presentConversationViewControllerAtStart() {
+        guard !hasPresentedConversationViewController else { return }
+        hasPresentedConversationViewController = true
+        pushConversationViewController()
     }
 }
