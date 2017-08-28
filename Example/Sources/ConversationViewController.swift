@@ -225,15 +225,15 @@ extension ConversationViewController: MessageLabelDelegate {
 
 // MARK: - MessageInputBarDelegate
 
-extension ConversationViewController: MessageInputBarDelegate {
+extension ConversationViewController {
 
-    func inputBar(_ inputBar: MessageInputBar, didSelectSendButtonWith text: String) {
+    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
         messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString))
         inputBar.textView.text = String()
         messagesCollectionView.reloadData()
     }
     
-    func inputBar(_ inputBar: MessageInputBar, didSwipeTextViewWith gesture: UISwipeGestureRecognizer) {
+    func messageInputBar(_ inputBar: MessageInputBar, didSwipeTextViewWith gesture: UISwipeGestureRecognizer) {
         if gesture.direction == .down {
             inputBar.textView.resignFirstResponder()
         }

@@ -46,4 +46,3 @@ public extension MessageInputBarDelegate {
     
     func messageInputBar(_ inputBar: MessageInputBar, didSwipeTextViewWith gesture: UISwipeGestureRecognizer) {}
 }
-
