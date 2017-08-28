@@ -254,16 +254,9 @@ extension MessagesViewController {
     func handleKeyboardWillShow(_ notification: Notification) {
         guard let keyboardFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
         
-        let messageInputBarHeight = inputAccessoryView?.bounds.height ?? 0
-        
         //This should work for both hardware and software keyboards
-        messagesCollectionView.contentInset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: keyboardFrame.height + bottomLayoutGuide.length, right: 0)
-
-        if keyboardFrame.size.height != messageInputBarHeight {
-            //scroll to bottom only if keyboard is on screen
-            //This also scrolls when screen rotates
-            messagesCollectionView.scrollToBottom()
-        }
+        let bottomInset = keyboardFrame.height + bottomLayoutGuide.length
+        messagesCollectionView.contentInset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: bottomInset, right: 0)
     }
     
     func handleKeyboardWillHide(_ notification: Notification) {
