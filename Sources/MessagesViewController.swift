@@ -60,17 +60,12 @@ open class MessagesViewController: UIViewController {
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        messagesCollectionView.scrollToBottom(animated: true)
     }
     
-    private var isFirstLayout = true
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if isFirstLayout {
-            messagesCollectionView.contentInset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: bottomBarsHeight, right: 0)
-            //Collection View has data only after layout. So this is when we should call scroll to bottom
-            messagesCollectionView.scrollToBottom()
-            isFirstLayout = false
-        }
+        messagesCollectionView.contentInset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: bottomBarsHeight, right: 0)
     }
 
 	open override func viewDidAppear(_ animated: Bool) {
@@ -106,6 +101,7 @@ open class MessagesViewController: UIViewController {
 
 	private func setupSubviews() {
 		messagesCollectionView.keyboardDismissMode = .interactive
+        messagesCollectionView.contentInset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: bottomBarsHeight, right: 0)
 		view.addSubview(messagesCollectionView)
 	}
 
@@ -258,11 +254,10 @@ extension MessagesViewController {
     func handleKeyboardWillShow(_ notification: Notification) {
         guard let keyboardFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
         
-        let messagesInset = messagesCollectionView.contentInset
         let messageInputBarHeight = inputAccessoryView?.bounds.height ?? 0
         
         //This should work for both hardware and software keyboards
-        messagesCollectionView.contentInset = UIEdgeInsets(top: messagesInset.top, left: 0, bottom: keyboardFrame.height + bottomLayoutGuide.length, right: 0)
+        messagesCollectionView.contentInset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: keyboardFrame.height + bottomLayoutGuide.length, right: 0)
 
         if keyboardFrame.size.height != messageInputBarHeight {
             //scroll to bottom only if keyboard is on screen
@@ -272,8 +267,7 @@ extension MessagesViewController {
     }
     
     func handleKeyboardWillHide(_ notification: Notification) {
-        let messagesInset = messagesCollectionView.contentInset
-        messagesCollectionView.contentInset = UIEdgeInsets(top: messagesInset.top, left: 0, bottom: bottomBarsHeight, right: 0)
+        messagesCollectionView.contentInset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: bottomBarsHeight, right: 0)
     }
     
 }
@@ -282,9 +276,7 @@ extension MessagesViewController {
 extension MessagesViewController {
     /// Accesory view plus bottom layout guide length
     var bottomBarsHeight: CGFloat {
-        get {
-            let accesoryHeight = inputAccessoryView?.bounds.height ?? 0
-            return accesoryHeight + bottomLayoutGuide.length
-        }
+        let accesoryHeight = inputAccessoryView?.bounds.height ?? 0
+        return accesoryHeight + bottomLayoutGuide.length
     }
 }
