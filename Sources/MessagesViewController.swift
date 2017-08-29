@@ -29,8 +29,6 @@ open class MessagesViewController: UIViewController {
 	// MARK: - Properties
 
 	open var messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
-    
-    internal var messagesCollectionViewBottomAnchor: NSLayoutConstraint?
 
 	open var messageInputBar = MessageInputBar()
 
@@ -53,6 +51,8 @@ open class MessagesViewController: UIViewController {
 
 		automaticallyAdjustsScrollViewInsets = false
         view.backgroundColor = .white
+        messagesCollectionView.keyboardDismissMode = .interactive
+
 		setupSubviews()
 		setupConstraints()
 		registerReusableViews()
@@ -60,15 +60,14 @@ open class MessagesViewController: UIViewController {
 
 	}
 
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        messagesCollectionView.scrollToBottom(animated: true)
+    override open func viewDidLayoutSubviews() {
+        messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: messageInputBar.frame.height, right: 0)
     }
 
-	open override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		addKeyboardObservers()
-	}
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        addKeyboardObservers()
+    }
 
     // MARK: - Initializers
 
@@ -97,13 +96,24 @@ open class MessagesViewController: UIViewController {
 	}
 
 	private func setupSubviews() {
-		messagesCollectionView.keyboardDismissMode = .interactive
 		view.addSubview(messagesCollectionView)
 	}
 
 	private func setupConstraints() {
        
-        messagesCollectionViewBottomAnchor = messagesCollectionView.addConstraints(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)[2]
+        messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .top, relatedBy: .equal,
+                                              toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
+
+        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .leading, relatedBy: .equal,
+                                              toItem: view, attribute: .leading, multiplier: 1, constant: 0))
+
+        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .trailing, relatedBy: .equal,
+                                              toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
+
+        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .bottom, relatedBy: .equal,
+                                              toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0))
 	}
 
 }
@@ -220,12 +230,14 @@ extension MessagesViewController: UICollectionViewDataSource {
 }
 
 // MARK: - Keyboard Handling
+
 extension MessagesViewController {
     
     fileprivate func addKeyboardObservers() {
         
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: .UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
         
     }
     
@@ -233,41 +245,26 @@ extension MessagesViewController {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
     }
-    
-    func handleKeyboardWillShow(_ notification: Notification) {
-        guard let keyboardEndSizeValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue else { return }
-        
-        let keyboardFrame = keyboardEndSizeValue.cgRectValue
-        let keyboard = self.view.convert(keyboardFrame, from: self.view.window)
-        let height = self.view.frame.size.height
-        let messageInputBarHeight = inputAccessoryView?.bounds.size.height ?? 0
-        let keyboardHeight = keyboardFrame.height - messageInputBarHeight
-        
-        if (keyboard.origin.y + keyboard.size.height) > height {
-            // Hardware keyboard is found
-            messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            
-        } else {
-            // Software keyboard is found
-            messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+
+    func handleKeyboardDidChangeState(_ notification: Notification) {
+
+        guard let keyboardEndFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+        let keyboardFrame = self.view.convert(keyboardEndFrame, from: self.view.window)
+
+        switch notification.name {
+        case Notification.Name.UIKeyboardDidChangeFrame, Notification.Name.UIKeyboardWillShow:
+            if (keyboardFrame.origin.y + keyboardFrame.size.height) > view.frame.size.height {
+                // Hardware keyboard is found
+                messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: messageInputBar.frame.height, right: 0)
+            } else {
+                // Software keyboard is found
+                messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardEndFrame.height, right: 0)
+            }
+        case Notification.Name.UIKeyboardWillHide:
+            messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: messageInputBar.frame.height, right: 0)
+        default:
+            break
         }
     }
-    
-    func handleKeyboardWillHide(_ notification: Notification) {
-        messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    }
-    
-}
 
-// MARK: - MessageInputBarDelegate
-
-extension MessagesViewController: MessageInputBarDelegate {
-    
-    public func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize) {
-        view.layoutIfNeeded()
-        UIView.performWithoutAnimation {
-            self.messagesCollectionViewBottomAnchor?.constant = -size.height - 38
-            self.view.layoutIfNeeded()
-        }
-    }
 }

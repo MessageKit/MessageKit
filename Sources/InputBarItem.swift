@@ -64,7 +64,7 @@ open class InputBarButtonItem: UIButton {
         switch spacing {
         case .fixed(let width):
             contentSize.width += width
-        default:
+        case .flexible, .none:
             break
         }
         return contentSize

@@ -225,7 +225,7 @@ extension ConversationViewController: MessageLabelDelegate {
 
 // MARK: - MessageInputBarDelegate
 
-extension ConversationViewController {
+extension ConversationViewController: MessageInputBarDelegate {
 
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
         messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString))
