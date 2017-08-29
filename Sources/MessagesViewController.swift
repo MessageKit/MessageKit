@@ -61,7 +61,7 @@ open class MessagesViewController: UIViewController {
 	}
 
     override open func viewDidLayoutSubviews() {
-        messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: messageInputBar.frame.height, right: 0)
+        messagesCollectionView.contentInset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: messageInputBar.frame.height, right: 0)
     }
 
     open override func viewDidAppear(_ animated: Bool) {
@@ -104,7 +104,7 @@ open class MessagesViewController: UIViewController {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
 
         view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .top, relatedBy: .equal,
-                                              toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
+                                              toItem: view, attribute: .top, multiplier: 1, constant: 0))
 
         view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .leading, relatedBy: .equal,
                                               toItem: view, attribute: .leading, multiplier: 1, constant: 0))
@@ -244,6 +244,7 @@ extension MessagesViewController {
     fileprivate func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
     }
 
     func handleKeyboardDidChangeState(_ notification: Notification) {
@@ -255,13 +256,13 @@ extension MessagesViewController {
         case Notification.Name.UIKeyboardDidChangeFrame, Notification.Name.UIKeyboardWillShow:
             if (keyboardFrame.origin.y + keyboardFrame.size.height) > view.frame.size.height {
                 // Hardware keyboard is found
-                messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: messageInputBar.frame.height, right: 0)
+                messagesCollectionView.contentInset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: messageInputBar.frame.height, right: 0)
             } else {
                 // Software keyboard is found
-                messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardEndFrame.height, right: 0)
+                messagesCollectionView.contentInset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: keyboardEndFrame.height, right: 0)
             }
         case Notification.Name.UIKeyboardWillHide:
-            messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: messageInputBar.frame.height, right: 0)
+            messagesCollectionView.contentInset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: messageInputBar.frame.height, right: 0)
         default:
             break
         }
