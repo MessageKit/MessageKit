@@ -32,8 +32,7 @@ public protocol MessageInputBarDelegate: class {
     func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize)
     
     func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String)
-    
-    func messageInputBar(_ inputBar: MessageInputBar, didSwipeTextViewWith gesture: UISwipeGestureRecognizer)
+
 }
 
 public extension MessageInputBarDelegate {
@@ -43,6 +42,5 @@ public extension MessageInputBarDelegate {
     func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize) {}
     
     func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String) {}
-    
-    func messageInputBar(_ inputBar: MessageInputBar, didSwipeTextViewWith gesture: UISwipeGestureRecognizer) {}
+
 }

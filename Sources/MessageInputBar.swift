@@ -95,7 +95,7 @@ open class MessageInputBar: UIView {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.messageInputBar = self
         return textView
-        }()
+    }()
     
     /// The padding around the textView that separates it from the stackViews
     open var textViewPadding: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
@@ -166,9 +166,6 @@ open class MessageInputBar: UIView {
         }
     }
     
-    /// When set to TRUE and the swipe gesture direction on the InputTextView is down the first responder will be resigned
-    open var shouldDismissOnSwipe: Bool = true
-    
     /// The InputBarItems held in the leftStackView
     private(set) var leftStackViewItems: [InputBarButtonItem] = []
     
@@ -222,7 +219,6 @@ open class MessageInputBar: UIView {
         setupSubviews()
         setupConstraints()
         setupObservers()
-        setupGestureRecognizers()
     }
     
     private func setupSubviews() {
@@ -296,17 +292,6 @@ open class MessageInputBar: UIView {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MessageInputBar.textViewDidEndEditing),
                                                name: NSNotification.Name.UITextViewTextDidEndEditing, object: nil)
-    }
-    
-    private func setupGestureRecognizers() {
-        
-        let directions: [UISwipeGestureRecognizerDirection] = [.up, .down, .left, .right]
-        for direction in directions {
-            let gesture = UISwipeGestureRecognizer(target: self,
-                                                   action: #selector(MessageInputBar.didSwipeTextView(_:)))
-            gesture.direction = direction
-            textView.addGestureRecognizer(gesture)
-        }
     }
     
     // MARK: - Layout Helper Methods
@@ -441,19 +426,6 @@ open class MessageInputBar: UIView {
     }
     
     // MARK: - User Actions
-    
-    open func didSwipeTextView(_ gesture: UISwipeGestureRecognizer) {
-        
-        performLayout(true) {
-            self.items.forEach { $0.keyboardSwipeGestureAction(with: gesture) }
-            self.layoutStackViews()
-        }
-        delegate?.messageInputBar(self, didSwipeTextViewWith: gesture)
-        
-        if shouldDismissOnSwipe && gesture.direction == .down {
-            textView.resignFirstResponder()
-        }
-    }
     
     open func didSelectSendButton() {
         delegate?.messageInputBar(self, didPressSendButtonWith: textView.text)
