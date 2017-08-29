@@ -109,16 +109,14 @@ open class MessageInputBar: UIView {
     
     open lazy var sendButton: InputBarButtonItem = { [weak self] in
         return InputBarButtonItem()
-            .configure {
+            .configure({
                 $0.size = CGSize(width: 52, height: 36)
                 $0.isEnabled = false
                 $0.title = "Send"
                 $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-            }.onTextViewDidChange({ (item, textView) in
-                item.isEnabled = !textView.text.isEmpty
             }).onTouchUpInside {
                 $0.messageInputBar?.didSelectSendButton()
-        }
+            }
         }()
     
     /// The anchor contants used by the UIStackViews and InputTextView to create padding within the InputBarAccessoryView
@@ -408,10 +406,15 @@ open class MessageInputBar: UIView {
     
     open func textViewDidChange() {
         let trimmedText = inputTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        sendButton.isEnabled = !trimmedText.isEmpty
+        inputTextView.placeholderLabel.isHidden = !inputTextView.text.isEmpty
+
         performLayout(true) {
             self.items.forEach { $0.textViewDidChangeAction(with: self.inputTextView) }
             self.layoutStackViews()
         }
+
         delegate?.messageInputBar(self, textViewTextDidChangeTo: trimmedText)
         invalidateIntrinsicContentSize()
     }
@@ -434,7 +437,6 @@ open class MessageInputBar: UIView {
     
     open func didSelectSendButton() {
         delegate?.messageInputBar(self, didPressSendButtonWith: inputTextView.text)
-        textViewDidChange()
     }
     
     open func didSelectInputBarItem(_ item: InputBarButtonItem) {

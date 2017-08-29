@@ -28,12 +28,6 @@ open class InputTextView: UITextView {
     
     // MARK: - Properties
     
-    open override var text: String! {
-        didSet {
-            placeholderLabel.isHidden = !text.isEmpty
-        }
-    }
-    
     open let placeholderLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -102,7 +96,6 @@ open class InputTextView: UITextView {
         font = UIFont.preferredFont(forTextStyle: .body)
         isScrollEnabled = false
         addSubviews()
-        addObservers()
         addConstraints()
     }
     
@@ -128,18 +121,5 @@ open class InputTextView: UITextView {
         placeholderLabelConstraintSet?.left?.constant = placeholderLabelInsets.left
         placeholderLabelConstraintSet?.right?.constant = -placeholderLabelInsets.bottom
     }
-    
-    private func addObservers() {
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(InputTextView.textViewTextDidChange),
-                                               name: Notification.Name.UITextViewTextDidChange,
-                                               object: nil)
-    }
-    
-    // MARK: - Notifications
-    
-    func textViewTextDidChange() {
-        placeholderLabel.isHidden = !text.isEmpty
-    }
+
 }

@@ -75,8 +75,8 @@ class ConversationViewController: MessagesViewController {
         ]
         
         // We can change the container insets if we want
-        messageInputBar.textView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        messageInputBar.textView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
+        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
         
         // Adjust the padding
         messageInputBar.padding.top = 8
@@ -229,13 +229,8 @@ extension ConversationViewController {
 
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
         messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString))
-        inputBar.textView.text = String()
+        inputBar.inputTextView.text = String()
         messagesCollectionView.reloadData()
     }
-    
-    func messageInputBar(_ inputBar: MessageInputBar, didSwipeTextViewWith gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == .down {
-            inputBar.textView.resignFirstResponder()
-        }
-    }
+
 }
