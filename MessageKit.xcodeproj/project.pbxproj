@@ -14,6 +14,9 @@
 		376AD1861F4259270083072A /* MessagesDisplayDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376AD1851F4259270083072A /* MessagesDisplayDataSourceTests.swift */; };
 		376AD1881F4259D20083072A /* TestMessagesViewControllerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376AD1871F4259D20083072A /* TestMessagesViewControllerModel.swift */; };
 		37C936981F38F6AC00853DF2 /* Avatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C936971F38F6AC00853DF2 /* Avatar.swift */; };
+		38C8679A1F50EA1000811974 /* NSConstraintLayoutSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867981F50EA1000811974 /* NSConstraintLayoutSet.swift */; };
+		38C8679B1F50EA1000811974 /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867991F50EA1000811974 /* UIView+AutoLayout.swift */; };
+		38C8679E1F50EA4A00811974 /* InputBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C8679D1F50EA4A00811974 /* InputBarItem.swift */; };
 		882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882D75831DE507320033F95F /* MessagesDataSource.swift */; };
 		888CEBFC1D3FD525005178DE /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888CEBFB1D3FD525005178DE /* MessagesViewController.swift */; };
 		88916B2D1CF0DF2F00469F91 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88916B221CF0DF2F00469F91 /* MessageKit.framework */; };
@@ -61,6 +64,9 @@
 		376AD1851F4259270083072A /* MessagesDisplayDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDisplayDataSourceTests.swift; sourceTree = "<group>"; };
 		376AD1871F4259D20083072A /* TestMessagesViewControllerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMessagesViewControllerModel.swift; sourceTree = "<group>"; };
 		37C936971F38F6AC00853DF2 /* Avatar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Avatar.swift; sourceTree = "<group>"; };
+		38C867981F50EA1000811974 /* NSConstraintLayoutSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSConstraintLayoutSet.swift; sourceTree = "<group>"; };
+		38C867991F50EA1000811974 /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
+		38C8679D1F50EA4A00811974 /* InputBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarItem.swift; sourceTree = "<group>"; };
 		882D75831DE507320033F95F /* MessagesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDataSource.swift; sourceTree = "<group>"; };
 		888CEBFB1D3FD525005178DE /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		88916B221CF0DF2F00469F91 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,6 +174,8 @@
 		B09643981F295D43004D0129 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				38C867981F50EA1000811974 /* NSConstraintLayoutSet.swift */,
+				38C867991F50EA1000811974 /* UIView+AutoLayout.swift */,
 				B09643851F286C9E004D0129 /* String+Extensions.swift */,
 				B096438F1F289142004D0129 /* UIColor+Extensions.swift */,
 				B0AA1F521F44388900BAE583 /* NSAttributedString+Extensions.swift */,
@@ -195,6 +203,7 @@
 				B0655A4C1F244C0600542A83 /* MessageCollectionViewCell.swift */,
 				372F6AEA1F36C15600B57FBD /* AvatarView.swift */,
 				B0655A371F23EE8B00542A83 /* MessageInputBar.swift */,
+				38C8679D1F50EA4A00811974 /* InputBarItem.swift */,
 				171D5AB81F36712B0053DF69 /* InputTextView.swift */,
 				B074EE921F35587100ABB8C8 /* MessageHeaderView.swift */,
 				B074EE941F35588A00ABB8C8 /* MessageFooterView.swift */,
@@ -370,7 +379,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				171D5AB91F36712B0053DF69 /* InputTextView.swift in Sources */,
+				38C8679E1F50EA4A00811974 /* InputBarItem.swift in Sources */,
 				B074EE971F355FBC00ABB8C8 /* MessagesLayoutDelegate.swift in Sources */,
+				38C8679A1F50EA1000811974 /* NSConstraintLayoutSet.swift in Sources */,
 				882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */,
 				888CEBFC1D3FD525005178DE /* MessagesViewController.swift in Sources */,
 				B0655A4F1F245C5A00542A83 /* MessagesCollectionViewFlowLayout.swift in Sources */,
@@ -389,6 +400,7 @@
 				B074EE951F35588A00ABB8C8 /* MessageFooterView.swift in Sources */,
 				B09643901F289142004D0129 /* UIColor+Extensions.swift in Sources */,
 				B0655A381F23EE8B00542A83 /* MessageInputBar.swift in Sources */,
+				38C8679B1F50EA1000811974 /* UIView+AutoLayout.swift in Sources */,
 				B074EEA81F3971A600ABB8C8 /* MessageLabel.swift in Sources */,
 				372F6AEB1F36C15600B57FBD /* AvatarView.swift in Sources */,
 				B05530B51F493CFA008BB420 /* DetectorType.swift in Sources */,
@@ -462,7 +474,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -508,7 +520,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 3.0;
@@ -530,7 +542,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.messagekit.MessageKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -551,7 +563,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.messagekit.MessageKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";

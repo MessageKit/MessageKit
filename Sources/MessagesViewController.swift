@@ -29,6 +29,8 @@ open class MessagesViewController: UIViewController {
 	// MARK: - Properties
 
 	open var messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
+    
+    internal var messagesCollectionViewBottomAnchor: NSLayoutConstraint?
 
 	open var messageInputBar = MessageInputBar()
 
@@ -50,7 +52,7 @@ open class MessagesViewController: UIViewController {
 		super.viewDidLoad()
 
 		automaticallyAdjustsScrollViewInsets = false
-
+        view.backgroundColor = .white
 		setupSubviews()
 		setupConstraints()
 		registerReusableViews()
@@ -100,21 +102,8 @@ open class MessagesViewController: UIViewController {
 	}
 
 	private func setupConstraints() {
-
-		messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
-
-		view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .top, relatedBy: .equal,
-		                                      toItem: topLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0))
-
-		view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .leading, relatedBy: .equal,
-		                                      toItem: view, attribute: .leading, multiplier: 1, constant: 0))
-
-		view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .trailing, relatedBy: .equal,
-		                                      toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
-
-		view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .bottom, relatedBy: .equal,
-		                                      toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: -46))
-
+       
+        messagesCollectionViewBottomAnchor = messagesCollectionView.addConstraints(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)[2]
 	}
 
 }
@@ -268,4 +257,17 @@ extension MessagesViewController {
         messagesCollectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
+}
+
+// MARK: - MessageInputBarDelegate
+
+extension MessagesViewController: MessageInputBarDelegate {
+    
+    public func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize) {
+        view.layoutIfNeeded()
+        UIView.performWithoutAnimation {
+            self.messagesCollectionViewBottomAnchor?.constant = -size.height - 38
+            self.view.layoutIfNeeded()
+        }
+    }
 }
