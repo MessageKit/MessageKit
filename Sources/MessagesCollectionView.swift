@@ -49,6 +49,9 @@ open class MessagesCollectionView: UICollectionView {
     override public init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         backgroundColor = .white
+        // https://stackoverflow.com/questions/31049651/uitextview-as-inputaccessoryview-doesnt-render-text-until-after-animation
+        // Calling this here avoids a side effect where the inputAccessoryView dissapears after tap
+        snapshotView(afterScreenUpdates: true)
     }
 
     required public init?(coder aDecoder: NSCoder) {
