@@ -58,6 +58,8 @@ open class MessagesViewController: UIViewController {
 		registerReusableViews()
 		setupDelegates()
 
+        // https://stackoverflow.com/questions/31049651/uitextview-as-inputaccessoryview-doesnt-render-text-until-after-animation
+        inputAccessoryView?.snapshotView(afterScreenUpdates: true)
 	}
 
     override open func viewDidLayoutSubviews() {
