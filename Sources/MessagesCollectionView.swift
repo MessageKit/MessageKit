@@ -50,7 +50,7 @@ open class MessagesCollectionView: UICollectionView {
         super.init(frame: frame, collectionViewLayout: layout)
         backgroundColor = .white
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
