@@ -123,7 +123,6 @@ open class InputBarButtonItem: UIButton {
     private var onTouchUpInsideAction: InputBarButtonItemAction?
     private var onKeyboardEditingBeginsAction: InputBarButtonItemAction?
     private var onKeyboardEditingEndsAction: InputBarButtonItemAction?
-    private var onKeyboardSwipeGestureAction: ((InputBarButtonItem, UISwipeGestureRecognizer) -> Void)?
     private var onTextViewDidChangeAction: ((InputBarButtonItem, InputTextView) -> Void)?
     private var onSelectedAction: InputBarButtonItemAction?
     private var onDeselectedAction: InputBarButtonItemAction?
@@ -179,12 +178,6 @@ open class InputBarButtonItem: UIButton {
     }
     
     @discardableResult
-    open func onKeyboardSwipeGesture(_ action: @escaping (_ item: InputBarButtonItem, _ gesture: UISwipeGestureRecognizer) -> Void) -> Self {
-        onKeyboardSwipeGestureAction = action
-        return self
-    }
-    
-    @discardableResult
     open func onTextViewDidChange(_ action: @escaping (_ item: InputBarButtonItem, _ textView: InputTextView) -> Void) -> Self {
         onTextViewDidChangeAction = action
         return self
@@ -224,10 +217,6 @@ open class InputBarButtonItem: UIButton {
     
     public func textViewDidChangeAction(with textView: InputTextView) {
         onTextViewDidChangeAction?(self, textView)
-    }
-    
-    public func keyboardSwipeGestureAction(with gesture: UISwipeGestureRecognizer) {
-        onKeyboardSwipeGestureAction?(self, gesture)
     }
     
     public func keyboardEditingEndsAction() {
