@@ -216,7 +216,7 @@ open class MessageInputBar: UIView {
     
     open func setup() {
         
-        backgroundColor = .white
+        backgroundColor = .inputBarGray
         autoresizingMask = [.flexibleHeight, .flexibleBottomMargin]
         setupSubviews()
         setupConstraints()

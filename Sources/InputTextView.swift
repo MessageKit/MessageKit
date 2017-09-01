@@ -64,7 +64,7 @@ open class InputTextView: UITextView {
         }
     }
 
-    open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4) {
+    open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 7, bottom: 4, right: 4) {
         didSet {
             updateConstraintsForPlaceholderLabel()
         }
@@ -92,7 +92,9 @@ open class InputTextView: UITextView {
         font = UIFont.preferredFont(forTextStyle: .body)
         textContainerInset = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
         isScrollEnabled = false
-        backgroundColor = .purple
+        layer.cornerRadius = 5.0
+        layer.borderWidth = 1.25
+        layer.borderColor = UIColor.lightGray.cgColor
 
         addSubviews()
         addConstraints()

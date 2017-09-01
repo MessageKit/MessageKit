@@ -40,7 +40,7 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messageLabelDelegate = self
         messageInputBar.delegate = self
         
-        setupInputBar()
+        //setupInputBar()
     }
     
     func setupInputBar() {
@@ -75,9 +75,9 @@ class ConversationViewController: MessagesViewController {
             }
         ]
         
-        // We can change the container insets if we want
-//        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-//        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
+        //We can change the container insets if we want
+        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
 
         // Adjust the padding
         messageInputBar.padding.top = 8

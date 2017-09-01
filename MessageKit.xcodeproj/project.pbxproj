@@ -42,7 +42,6 @@
 		B09643861F286C9E004D0129 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09643851F286C9E004D0129 /* String+Extensions.swift */; };
 		B096438E1F2890FB004D0129 /* MessagesDisplayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B096438D1F2890FB004D0129 /* MessagesDisplayDataSource.swift */; };
 		B09643901F289142004D0129 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B096438F1F289142004D0129 /* UIColor+Extensions.swift */; };
-		B0A9B66F1F555FEA004273F1 /* KeyboardTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A9B66E1F555FEA004273F1 /* KeyboardTracker.swift */; };
 		B0AA1F511F42E91A00BAE583 /* AvatarPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AA1F501F42E91A00BAE583 /* AvatarPosition.swift */; };
 		B0AA1F531F44388C00BAE583 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0AA1F521F44388900BAE583 /* NSAttributedString+Extensions.swift */; };
 /* End PBXBuildFile section */
@@ -96,7 +95,6 @@
 		B09643851F286C9E004D0129 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		B096438D1F2890FB004D0129 /* MessagesDisplayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDisplayDataSource.swift; sourceTree = "<group>"; };
 		B096438F1F289142004D0129 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
-		B0A9B66E1F555FEA004273F1 /* KeyboardTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardTracker.swift; sourceTree = "<group>"; };
 		B0AA1F501F42E91A00BAE583 /* AvatarPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarPosition.swift; sourceTree = "<group>"; };
 		B0AA1F521F44388900BAE583 /* NSAttributedString+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -194,7 +192,6 @@
 				B0655A271F23D71400542A83 /* MessageDirection.swift */,
 				B0AA1F501F42E91A00BAE583 /* AvatarPosition.swift */,
 				B05530B41F493CFA008BB420 /* DetectorType.swift */,
-				B0A9B66E1F555FEA004273F1 /* KeyboardTracker.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -409,7 +406,6 @@
 				B05530B51F493CFA008BB420 /* DetectorType.swift in Sources */,
 				88916B471CF0DFE600469F91 /* MessageType.swift in Sources */,
 				B0AA1F511F42E91A00BAE583 /* AvatarPosition.swift in Sources */,
-				B0A9B66F1F555FEA004273F1 /* KeyboardTracker.swift in Sources */,
 				B03FF9AF1F31BB1200754FE5 /* MessageCellDelegate.swift in Sources */,
 				37C936981F38F6AC00853DF2 /* Avatar.swift in Sources */,
 				B096438E1F2890FB004D0129 /* MessagesDisplayDataSource.swift in Sources */,
