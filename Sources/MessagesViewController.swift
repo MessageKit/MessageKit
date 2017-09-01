@@ -55,7 +55,11 @@ open class MessagesViewController: UIViewController {
 
 		setupSubviews()
 		setupConstraints()
-		registerReusableViews()
+
+        registerReusableCells()
+        registerReusableHeaders()
+        registerReusableFooters()
+
 		setupDelegates()
         
         // https://stackoverflow.com/questions/31049651/uitextview-as-inputaccessoryview-doesnt-render-text-until-after-animation
@@ -86,18 +90,21 @@ open class MessagesViewController: UIViewController {
 		messagesCollectionView.dataSource = self
 	}
 
-	private func registerReusableViews() {
+    open func registerReusableCells() {
+        messagesCollectionView.register(MessageCollectionViewCell.self, forCellWithReuseIdentifier: "MessageCell")
+    }
 
-		messagesCollectionView.register(MessageCollectionViewCell.self, forCellWithReuseIdentifier: "MessageCell")
-
-        messagesCollectionView.register(MessageHeaderView.self,
-                                        forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                                        withReuseIdentifier: "MessageHeader")
-
+    open func registerReusableFooters() {
         messagesCollectionView.register(MessageFooterView.self,
                                         forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
                                         withReuseIdentifier: "MessageFooter")
-	}
+    }
+
+    open func registerReusableHeaders() {
+        messagesCollectionView.register(MessageHeaderView.self,
+                                        forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                                        withReuseIdentifier: "MessageHeader")
+    }
 
 	private func setupSubviews() {
 		view.addSubview(messagesCollectionView)
