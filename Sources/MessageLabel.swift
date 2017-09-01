@@ -105,6 +105,13 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         }
     }
 
+    open override var textAlignment: NSTextAlignment {
+        didSet {
+            guard textAlignment != oldValue else { return }
+            setTextStorage()
+        }
+    }
+
     open var textInsets: UIEdgeInsets = .zero {
         didSet {
             guard textInsets != oldValue else { return }
@@ -237,7 +244,8 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         }
 
         guard let checkingResults = parse(text: attributedText, for: enabledDetectors), checkingResults.isEmpty == false else {
-            textStorage.setAttributedString(attributedText)
+            let textWithParagraphAttributes = addParagraphStyleAttribute(to: attributedText)
+            textStorage.setAttributedString(textWithParagraphAttributes)
             setNeedsDisplay()
             return
         }
@@ -245,10 +253,26 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         setRangesForDetectors(in: checkingResults)
 
         let textWithDetectorAttributes = addDetectorAttributes(to: attributedText, for: checkingResults)
+        let textWithParagraphAttributes = addParagraphStyleAttribute(to: textWithDetectorAttributes)
 
-        textStorage.setAttributedString(textWithDetectorAttributes)
+        textStorage.setAttributedString(textWithParagraphAttributes)
 
         setNeedsDisplay()
+
+    }
+
+    private func addParagraphStyleAttribute(to text: NSAttributedString) -> NSAttributedString {
+
+        let mutableAttributedString = NSMutableAttributedString(attributedString: text)
+        var textRange = NSRange(location: 0, length: 0)
+
+        let paragraphStyle = text.attribute(NSParagraphStyleAttributeName, at: 0, effectiveRange: &textRange) as? NSMutableParagraphStyle ?? NSMutableParagraphStyle()
+        paragraphStyle.lineBreakMode = lineBreakMode
+        paragraphStyle.alignment = textAlignment
+
+        mutableAttributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: textRange)
+
+        return mutableAttributedString
 
     }
 
