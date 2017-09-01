@@ -64,7 +64,7 @@ open class InputTextView: UITextView {
         }
     }
 
-    open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4) {
+    open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4) {
         didSet {
             updateConstraintsForPlaceholderLabel()
         }
@@ -87,14 +87,13 @@ open class InputTextView: UITextView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
     open func setup() {
 
         font = UIFont.preferredFont(forTextStyle: .body)
+        textContainerInset = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
         isScrollEnabled = false
+        backgroundColor = .purple
+
         addSubviews()
         addConstraints()
     }

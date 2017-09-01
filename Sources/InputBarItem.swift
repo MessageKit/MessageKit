@@ -56,6 +56,7 @@ open class InputBarButtonItem: UIButton {
     open var size: CGSize? = CGSize(width: 20, height: 20) {
         didSet {
             invalidateIntrinsicContentSize()
+            messageInputBar?.layoutStackViews()
         }
     }
     

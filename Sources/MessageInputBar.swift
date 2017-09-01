@@ -22,7 +22,6 @@
  SOFTWARE.
  */
 
-import Foundation
 import UIKit
 
 open class MessageInputBar: UIView {
@@ -98,7 +97,7 @@ open class MessageInputBar: UIView {
     }()
     
     /// The padding around the textView that separates it from the stackViews
-    open var textViewPadding: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
+    open var textViewPadding: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8) {
         didSet {
             textViewLayoutSet?.bottom?.constant = -textViewPadding.bottom
             textViewLayoutSet?.left?.constant = textViewPadding.left
@@ -106,18 +105,18 @@ open class MessageInputBar: UIView {
             bottomStackViewLayoutSet?.top?.constant = textViewPadding.bottom
         }
     }
-    
+
     open lazy var sendButton: InputBarButtonItem = { [weak self] in
         return InputBarButtonItem()
-            .configure({
-                $0.size = CGSize(width: 52, height: 36)
+            .configure {
+                $0.size = CGSize(width: 52, height: 28)
                 $0.isEnabled = false
                 $0.title = "Send"
                 $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-            }).onTouchUpInside {
+            }.onTouchUpInside {
                 $0.messageInputBar?.didSelectSendButton()
             }
-        }()
+    }()
     
     /// The anchor contants used by the UIStackViews and InputTextView to create padding within the InputBarAccessoryView
     open var padding: UIEdgeInsets = UIEdgeInsets(top: 6, left: 12, bottom: 6, right: 12) {
@@ -300,7 +299,7 @@ open class MessageInputBar: UIView {
     // MARK: - Layout Helper Methods
     
     /// Called during the hooks so account for any size changes
-    private func layoutStackViews() {
+    public func layoutStackViews() {
         
         for stackView in [leftStackView, rightStackView, bottomStackView] {
             stackView.setNeedsLayout()
@@ -410,27 +409,18 @@ open class MessageInputBar: UIView {
         sendButton.isEnabled = !trimmedText.isEmpty
         inputTextView.placeholderLabel.isHidden = !inputTextView.text.isEmpty
 
-        performLayout(true) {
-            self.items.forEach { $0.textViewDidChangeAction(with: self.inputTextView) }
-            self.layoutStackViews()
-        }
+        items.forEach { $0.textViewDidChangeAction(with: inputTextView) }
 
         delegate?.messageInputBar(self, textViewTextDidChangeTo: trimmedText)
         invalidateIntrinsicContentSize()
     }
     
     open func textViewDidBeginEditing() {
-        performLayout(true) {
-            self.items.forEach { $0.keyboardEditingBeginsAction() }
-            self.layoutStackViews()
-        }
+        self.items.forEach { $0.keyboardEditingBeginsAction() }
     }
     
     open func textViewDidEndEditing() {
-        performLayout(true) {
-            self.items.forEach { $0.keyboardEditingEndsAction() }
-            self.layoutStackViews()
-        }
+        self.items.forEach { $0.keyboardEditingEndsAction() }
     }
     
     // MARK: - User Actions
@@ -438,9 +428,5 @@ open class MessageInputBar: UIView {
     open func didSelectSendButton() {
         delegate?.messageInputBar(self, didPressSendButtonWith: inputTextView.text)
     }
-    
-    open func didSelectInputBarItem(_ item: InputBarButtonItem) {
-        items.forEach { $0.isSelected = false }
-        item.touchUpInsideAction()
-    }
+
 }

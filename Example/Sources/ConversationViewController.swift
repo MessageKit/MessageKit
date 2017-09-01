@@ -39,6 +39,7 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messageCellDelegate = self
         messagesCollectionView.messageLabelDelegate = self
         messageInputBar.delegate = self
+        
         setupInputBar()
     }
     
@@ -75,14 +76,14 @@ class ConversationViewController: MessagesViewController {
         ]
         
         // We can change the container insets if we want
-        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
-        
+//        messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+//        messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
+
         // Adjust the padding
         messageInputBar.padding.top = 8
         messageInputBar.padding.bottom = 8
         messageInputBar.textViewPadding.bottom = 8
-        
+
         // Since we moved the send button to the bottom stack lets set the right stack width to 0
         messageInputBar.setRightStackViewWidthContant(to: 0, animated: false)
         

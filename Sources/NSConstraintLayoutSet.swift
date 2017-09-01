@@ -22,7 +22,6 @@
  SOFTWARE.
  */
 
-import Foundation
 import UIKit
 
 public class NSLayoutConstraintSet {
@@ -50,7 +49,7 @@ public class NSLayoutConstraintSet {
         self.height = height
     }
     
-    func forEach(_ body: (NSLayoutConstraint) -> Void) {
+    private func forEach(_ body: (NSLayoutConstraint) -> Void) {
         let constraints = [top, bottom, left, right, centerX, centerY, width, height]
         for constraint in constraints {
             if let constraint = constraint {
