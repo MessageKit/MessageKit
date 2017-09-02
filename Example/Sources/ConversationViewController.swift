@@ -40,7 +40,7 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messageLabelDelegate = self
         messageInputBar.delegate = self
         
-        //setupInputBar()
+        setupInputBar()
     }
     
     func setupInputBar() {
@@ -63,7 +63,7 @@ class ConversationViewController: MessagesViewController {
                     $0.layer.borderColor = $0.titleColor(for: .disabled)?.cgColor
                     $0.setTitleColor(UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0), for: .normal)
                     $0.setTitleColor(.white, for: .highlighted)
-                    $0.size = CGSize(width: 52, height: 30)
+                    $0.setSize(CGSize(width: 52, height: 30), animated: false)
                 }.onDisabled {
                     $0.layer.borderColor = $0.titleColor(for: .disabled)?.cgColor
                 }.onEnabled {
@@ -95,13 +95,13 @@ class ConversationViewController: MessagesViewController {
         return InputBarButtonItem()
             .configure {
                 $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
-                $0.size = CGSize(width: 40, height: 40)
+                $0.setSize(CGSize(width: 40, height: 40), animated: false)
                 $0.layer.cornerRadius = 8
                 $0.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
             }.onKeyboardEditingBegins {
-                $0.size = CGSize(width: 30, height: 30)
+                $0.setSize(CGSize(width: 30, height: 30), animated: true)
             }.onKeyboardEditingEnds {
-                $0.size = CGSize(width: 40, height: 40)
+                $0.setSize(CGSize(width: 40, height: 40), animated: true)
             }.onSelected {
                 $0.backgroundColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
                 $0.tintColor = .white

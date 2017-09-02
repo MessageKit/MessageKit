@@ -53,10 +53,9 @@ open class InputBarButtonItem: UIButton {
     }
     
     /// When not nil this size overrides the intrinsicContentSize
-    open var size: CGSize? = CGSize(width: 20, height: 20) {
+    private(set) var size: CGSize? = CGSize(width: 20, height: 20) {
         didSet {
             invalidateIntrinsicContentSize()
-            messageInputBar?.layoutStackViews()
         }
     }
     
@@ -70,6 +69,8 @@ open class InputBarButtonItem: UIButton {
         }
         return contentSize
     }
+    
+    internal var parentStackViewPosition: MessageInputBar.UIStackViewPosition?
     
     /// The title for the UIControlState.normal
     open var title: String? {
@@ -92,12 +93,8 @@ open class InputBarButtonItem: UIButton {
     }
     
     open override var isHighlighted: Bool {
-        get {
-            return super.isHighlighted
-        }
-        set {
-            super.isHighlighted = newValue
-            if newValue {
+        didSet {
+            if isHighlighted {
                 onSelectedAction?(self)
             } else {
                 onDeselectedAction?(self)
@@ -106,12 +103,8 @@ open class InputBarButtonItem: UIButton {
     }
     
     open override var isEnabled: Bool {
-        get {
-            return super.isEnabled
-        }
-        set {
-            super.isEnabled = newValue
-            if newValue {
+        didSet {
+            if isEnabled {
                 onEnabledAction?(self)
             } else {
                 onDisabledAction?(self)
@@ -156,6 +149,17 @@ open class InputBarButtonItem: UIButton {
         setTitleColor(.lightGray, for: .disabled)
         adjustsImageWhenHighlighted = false
         addTarget(self, action: #selector(InputBarButtonItem.touchUpInsideAction), for: .touchUpInside)
+    }
+    
+    // MARK: - Size Adjustment
+    
+    open func setSize(_ newValue: CGSize?, animated: Bool) {
+        size = newValue
+        if animated, let position = parentStackViewPosition {
+            messageInputBar?.performLayout(animated) {
+                self.messageInputBar?.layoutStackViews([position])
+            }
+        }
     }
     
     // MARK: - Hook Setup Methods

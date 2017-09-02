@@ -106,16 +106,16 @@ open class MessageInputBar: UIView {
         }
     }
 
-    open lazy var sendButton: InputBarButtonItem = { [weak self] in
+    open var sendButton: InputBarButtonItem = {
         return InputBarButtonItem()
             .configure {
-                $0.size = CGSize(width: 52, height: 28)
+                $0.setSize(CGSize(width: 52, height: 28), animated: false)
                 $0.isEnabled = false
                 $0.title = "Send"
                 $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
             }.onTouchUpInside {
                 $0.messageInputBar?.didSelectSendButton()
-            }
+        }
     }()
     
     /// The anchor contants used by the UIStackViews and InputTextView to create padding within the InputBarAccessoryView
@@ -135,6 +135,7 @@ open class MessageInputBar: UIView {
             heightToFit = maxHeight
         } else {
             inputTextView.isScrollEnabled = false
+            inputTextView.invalidateIntrinsicContentSize()
         }
 
         let size = CGSize(width: bounds.width, height: heightToFit)
@@ -298,12 +299,23 @@ open class MessageInputBar: UIView {
     
     // MARK: - Layout Helper Methods
     
-    /// Called during the hooks so account for any size changes
-    public func layoutStackViews() {
+    /// Layout the given UIStackView's
+    ///
+    /// - Parameter positions: The UIStackView's to layout
+    public func layoutStackViews(_ positions: [UIStackViewPosition] = [.left, .right, .bottom]) {
         
-        for stackView in [leftStackView, rightStackView, bottomStackView] {
-            stackView.setNeedsLayout()
-            stackView.layoutIfNeeded()
+        for position in positions {
+            switch position {
+            case .left:
+                leftStackView.setNeedsLayout()
+                leftStackView.layoutIfNeeded()
+            case .right:
+                rightStackView.setNeedsLayout()
+                rightStackView.layoutIfNeeded()
+            case .bottom:
+                bottomStackView.setNeedsLayout()
+                bottomStackView.layoutIfNeeded()
+            }
         }
     }
     
@@ -312,8 +324,9 @@ open class MessageInputBar: UIView {
     /// - Parameters:
     ///   - animated: If the layout should be animated
     ///   - animations: Code
-    private func performLayout(_ animated: Bool, _ animations: @escaping () -> Void) {
+    internal func performLayout(_ animated: Bool, _ animations: @escaping () -> Void) {
         
+        textViewLayoutSet?.deactivate()
         leftStackViewLayoutSet?.deactivate()
         rightStackViewLayoutSet?.deactivate()
         bottomStackViewLayoutSet?.deactivate()
@@ -324,6 +337,7 @@ open class MessageInputBar: UIView {
         } else {
             UIView.performWithoutAnimation { animations() }
         }
+        textViewLayoutSet?.activate()
         leftStackViewLayoutSet?.activate()
         rightStackViewLayoutSet?.activate()
         bottomStackViewLayoutSet?.activate()
@@ -346,6 +360,7 @@ open class MessageInputBar: UIView {
                 leftStackViewItems = items
                 leftStackViewItems.forEach {
                     $0.messageInputBar = self
+                    $0.parentStackViewPosition = position
                     leftStackView.addArrangedSubview($0)
                 }
                 leftStackView.layoutIfNeeded()
@@ -354,6 +369,7 @@ open class MessageInputBar: UIView {
                 rightStackViewItems = items
                 rightStackViewItems.forEach {
                     $0.messageInputBar = self
+                    $0.parentStackViewPosition = position
                     rightStackView.addArrangedSubview($0)
                 }
                 rightStackView.layoutIfNeeded()
@@ -362,6 +378,7 @@ open class MessageInputBar: UIView {
                 bottomStackViewItems = items
                 bottomStackViewItems.forEach {
                     $0.messageInputBar = self
+                    $0.parentStackViewPosition = position
                     bottomStackView.addArrangedSubview($0)
                 }
                 bottomStackView.layoutIfNeeded()
@@ -381,6 +398,7 @@ open class MessageInputBar: UIView {
     open func setLeftStackViewWidthContant(to newValue: CGFloat, animated: Bool) {
         performLayout(animated) {
             self.leftStackViewWidthContant = newValue
+            self.layoutStackViews([.left])
             self.layoutIfNeeded()
         }
     }
@@ -393,6 +411,7 @@ open class MessageInputBar: UIView {
     open func setRightStackViewWidthContant(to newValue: CGFloat, animated: Bool) {
         performLayout(animated) {
             self.rightStackViewWidthContant = newValue
+            self.layoutStackViews([.right])
             self.layoutIfNeeded()
         }
     }
@@ -427,6 +446,7 @@ open class MessageInputBar: UIView {
     
     open func didSelectSendButton() {
         delegate?.messageInputBar(self, didPressSendButtonWith: inputTextView.text)
+        textViewDidChange()
     }
 
 }
