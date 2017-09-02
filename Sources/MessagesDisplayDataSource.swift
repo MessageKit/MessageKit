@@ -27,6 +27,8 @@ import Foundation
 public protocol MessagesDisplayDataSource: class, MessagesDataSource {
     
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
+
+    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle
     
     func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
     
@@ -50,6 +52,10 @@ public extension MessagesDisplayDataSource {
         return isFromCurrentSender(message: message) ? .white : .black
     }
     
+    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
+        return .none
+    }
+
     func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
     }

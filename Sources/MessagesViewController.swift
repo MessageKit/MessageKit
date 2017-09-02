@@ -179,8 +179,11 @@ extension MessagesViewController: UICollectionViewDataSource {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
         if let displayDataSource = messagesDataSource as? MessagesDisplayDataSource {
-
-            let messageColor = displayDataSource.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
+            // MessageContainerView needs to know the color. Currently it doesn't, so we are ignoring the message color here
+            // And using an arbitrary color in the container view
+            // As of now, the background color can not be changed!
+            let messageColor = UIColor.clear
+            let messageStyle = displayDataSource.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
             let textColor = displayDataSource.textColor(for: message, at: indexPath, in: messagesCollectionView)
             let avatar = displayDataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
             let topLabelText = displayDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
@@ -189,6 +192,7 @@ extension MessagesViewController: UICollectionViewDataSource {
             cell.avatarView.set(avatar: avatar)
             cell.messageLabel.textColor = textColor
             cell.messageContainerView.backgroundColor = messageColor
+            cell.messageContainerView.style = messageStyle
             cell.cellTopLabel.attributedText = topLabelText
             cell.cellBottomLabel.attributedText = bottomLabelText
 
