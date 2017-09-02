@@ -7,6 +7,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ## Upcoming release
 ----------------
 
+## [Prerelease] 0.6.0
+
+This release closes the [0.6 milestone](https://github.com/MessageKit/MessageKit/milestone/6?closed=1).
+
 ## [Prerelease] 0.5.0
 
 This release closes the [0.5 milestone](https://github.com/MessageKit/MessageKit/milestone/5?closed=1).

@@ -23,9 +23,24 @@
  */
 
 import Foundation
+import UIKit
 
 public protocol MessageInputBarDelegate: class {
+    
+    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String)
+    
+    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize)
+    
+    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String)
 
-    func sendButtonPressed(sender: UIButton, textView: UITextView)
+}
+
+public extension MessageInputBarDelegate {
+    
+    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {}
+    
+    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize) {}
+    
+    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String) {}
 
 }

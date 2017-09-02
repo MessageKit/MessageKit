@@ -31,7 +31,7 @@ open class AvatarView: UIView {
     open var avatar: Avatar = Avatar()
     open var imageView = UIImageView()
     
-    // MARK: - initializers
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         prepareView()
@@ -66,7 +66,7 @@ open class AvatarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - internal methods
+    // MARK: - Internal methods
     
     internal func prepareView() {
         setBackground(color: UIColor.gray)

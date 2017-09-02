@@ -28,44 +28,34 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
 
     // MARK: - Properties
 
-    var messageContainerSize: CGSize = .zero
+    var direction: MessageDirection = .incoming
+
+    var avatarFrame: CGRect = .zero
+
+    var messageContainerFrame: CGRect = .zero
     var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
     var messageLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
-    var messageToViewEdgePadding: CGFloat = 30.0
 
-    var cellTopLabelSize: CGSize = .zero
+    var cellTopLabelFrame: CGRect = .zero
     var cellTopLabelInsets: UIEdgeInsets = .zero
-    var topLabelExtendsPastAvatar = false
 
-    var cellBottomLabelSize: CGSize = .zero
+    var cellBottomLabelFrame: CGRect = .zero
     var cellBottomLabelInsets: UIEdgeInsets = .zero
-    var bottomLabelExtendsPastAvatar = false
-
-    var avatarSize: CGSize = CGSize(width: 30, height: 30)
-    var avatarPosition: AvatarPosition = .cellBottom
-    var avatarMessagePadding: CGFloat = 4.0
-
-    var direction: MessageDirection = .incoming
 
     // MARK: - Methods
 
     override func copy(with zone: NSZone? = nil) -> Any {
         // swiftlint:disable force_cast
         let copy = super.copy(with: zone) as! MessagesCollectionViewLayoutAttributes
-        copy.messageContainerSize = messageContainerSize
+        copy.direction = direction
+        copy.avatarFrame = avatarFrame
+        copy.messageContainerFrame = messageContainerFrame
         copy.messageLabelFont = messageLabelFont
         copy.messageLabelInsets = messageLabelInsets
-        copy.messageToViewEdgePadding = messageToViewEdgePadding
-        copy.cellTopLabelSize = cellTopLabelSize
+        copy.cellTopLabelFrame = cellTopLabelFrame
         copy.cellTopLabelInsets = cellTopLabelInsets
-        copy.topLabelExtendsPastAvatar = topLabelExtendsPastAvatar
-        copy.cellBottomLabelSize = cellBottomLabelSize
+        copy.cellBottomLabelFrame = cellBottomLabelFrame
         copy.cellBottomLabelInsets = cellBottomLabelInsets
-        copy.bottomLabelExtendsPastAvatar = bottomLabelExtendsPastAvatar
-        copy.avatarSize = avatarSize
-        copy.avatarPosition = avatarPosition
-        copy.avatarMessagePadding = avatarMessagePadding
-        copy.direction = direction
         return copy
         // swiftlint:enable force_cast
     }

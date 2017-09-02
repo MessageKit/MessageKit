@@ -28,14 +28,22 @@ import XCTest
 
 class MessagesDisplayDataSourceTests: XCTestCase {
     
-    let testClass = TestMessagesViewControllerModel()
+    var testClass: TestMessagesViewControllerModel!
+    var window: UIWindow!
+    
     override func setUp() {
         super.setUp()
+        
+        window = UIWindow(frame: CGRect.zero)
+        testClass = TestMessagesViewControllerModel()
+        window.addSubview(testClass.view)
+        
         // Ensures that the messageList has been set.
         testClass.viewDidLoad()
     }
     
     override func tearDown() {
+        window = nil
         super.tearDown()
     }
     
