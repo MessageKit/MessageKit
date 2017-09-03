@@ -30,14 +30,15 @@ open class MessagesViewController: UIViewController {
 
 	open var messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
 
-	open var messageInputBar = MessageInputBar()
-
+    open var messageInputBar = MessageInputBar()
+    private var messageInputBarCopy: MessageInputBar?
+    
 	override open var canBecomeFirstResponder: Bool {
 		return true
 	}
 
 	override open var inputAccessoryView: UIView? {
-		return messageInputBar
+        return messageInputBar
 	}
 
     open override var shouldAutorotate: Bool {
@@ -65,7 +66,6 @@ open class MessagesViewController: UIViewController {
         // https://stackoverflow.com/questions/31049651/uitextview-as-inputaccessoryview-doesnt-render-text-until-after-animation
         // Calling this on the root view avoids a side effect where the inputAccessoryView dissapears after tap
         //view.snapshotView(afterScreenUpdates: true)
-
 	}
 
     override open func viewDidLayoutSubviews() {
@@ -75,6 +75,13 @@ open class MessagesViewController: UIViewController {
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         addKeyboardObservers()
+        messageInputBarCopy?.removeFromSuperview()
+        messageInputBarCopy = nil
+    }
+    
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupMessageInputBarCopy()
     }
 
     // MARK: - Initializers
@@ -127,6 +134,12 @@ open class MessagesViewController: UIViewController {
                                               toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0))
 	}
 
+    private func setupMessageInputBarCopy() {
+        messageInputBarCopy = messageInputBar.createCopy()
+        guard let copy = messageInputBarCopy else { return }
+        view.addSubview(copy)
+        copy.addConstraints(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+    }
 }
 
 // MARK: - UICollectionViewDelegate & UICollectionViewDelegateFlowLayout Conformance

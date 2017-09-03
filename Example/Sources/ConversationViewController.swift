@@ -40,7 +40,7 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messageLabelDelegate = self
         messageInputBar.delegate = self
         
-        setupInputBar()
+//        setupInputBar()
     }
     
     func setupInputBar() {
