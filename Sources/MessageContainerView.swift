@@ -33,12 +33,13 @@ open class MessageContainerView: UIView {
     open var style: MessageStyle = .none {
         didSet {
             imageView.image = style.image
+            updateMessageColor()
         }
     }
 
     open var messageColor: UIColor = .white {
         didSet {
-            imageView.tintColor = messageColor
+            updateMessageColor()
         }
     }
 
@@ -63,6 +64,17 @@ open class MessageContainerView: UIView {
 
     func setupConstraints() {
         imageView.fillSuperview()
+    }
+
+    private func updateMessageColor() {
+        switch style {
+        case .none:
+            backgroundColor = messageColor
+            imageView.tintColor = messageColor
+        default:
+            backgroundColor = superview?.backgroundColor
+            imageView.tintColor = messageColor
+        }
     }
 
 }

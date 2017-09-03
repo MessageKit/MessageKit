@@ -171,30 +171,6 @@ extension ConversationViewController: MessagesDisplayDataSource {
 
 }
 
-// MARK: - Helper Methods
-
-extension ConversationViewController {
-//    fileprivate func randomTailStyle() -> MessageBubbleTailStyle {
-//        let lightGray = UIColor(red: 222/255, green: 222/255, blue: 222/255, alpha: 1)
-//        let tailBorderNoColor = MessageBorder(cornerRadius: 0, color: nil, width: 0, fillColor: lightGray)
-//        let tailBorderColored = MessageBorder(cornerRadius: 0, color: UIColor.lightGray, width: 1, fillColor: UIColor.orange)
-//        let randomStyle = Int(arc4random_uniform(UInt32(MessageBubbleTailStyle.styleCount)))
-//        let isColoredBorder = Int(arc4random_uniform(2)) == 1
-//
-//        switch randomStyle {
-//        case 0: return .triangle(corner: randomCorner(), border: isColoredBorder ? tailBorderColored : tailBorderNoColor)
-//        case 1: return .tailCurved(corner: randomCorner(), border: isColoredBorder ? tailBorderColored : tailBorderNoColor)
-//        default: assert(false); break
-//        }
-//    }
-//
-    fileprivate func randomCorner() -> UIRectCorner {
-        var corners: [UIRectCorner] = [.bottomLeft, .bottomRight, .topLeft, .topRight]
-        let random = Int(arc4random_uniform(4))
-        return corners[random]
-    }
-}
-
 // MARK: - MessagesLayoutDelegate
 
 extension ConversationViewController: MessagesLayoutDelegate {
