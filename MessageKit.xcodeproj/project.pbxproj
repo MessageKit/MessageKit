@@ -26,6 +26,8 @@
 		B01280F31F4E8798004BCD3E /* MessageLabelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01280F21F4E8798004BCD3E /* MessageLabelDelegate.swift */; };
 		B015E8191F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */; };
 		B015E81F1F259D8E007EDFB6 /* MessageInputBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E81E1F259D8E007EDFB6 /* MessageInputBarDelegate.swift */; };
+		B01E2DD41F5BA48300E4FA1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B01E2DD31F5BA48300E4FA1C /* Assets.xcassets */; };
+		B01E2DD51F5BA49100E4FA1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B01E2DD31F5BA48300E4FA1C /* Assets.xcassets */; };
 		B03FF9AF1F31BB1200754FE5 /* MessageCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03FF9AE1F31BB1200754FE5 /* MessageCellDelegate.swift */; };
 		B05530B51F493CFA008BB420 /* DetectorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05530B41F493CFA008BB420 /* DetectorType.swift */; };
 		B0655A281F23D71400542A83 /* MessageDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A271F23D71400542A83 /* MessageDirection.swift */; };
@@ -55,6 +57,13 @@
 			remoteGlobalIDString = 88916B211CF0DF2F00469F91;
 			remoteInfo = MessageKit;
 		};
+		B01E2DD11F5BA3E900E4FA1C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88916B191CF0DF2F00469F91 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B01E2DCA1F5BA34700E4FA1C;
+			remoteInfo = Assets;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +89,9 @@
 		B01280F21F4E8798004BCD3E /* MessageLabelDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageLabelDelegate.swift; sourceTree = "<group>"; };
 		B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
 		B015E81E1F259D8E007EDFB6 /* MessageInputBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageInputBarDelegate.swift; sourceTree = "<group>"; };
+		B01E2DCB1F5BA34700E4FA1C /* Assets.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Assets.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		B01E2DCD1F5BA34700E4FA1C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B01E2DD31F5BA48300E4FA1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B03FF9AE1F31BB1200754FE5 /* MessageCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCellDelegate.swift; sourceTree = "<group>"; };
 		B05530B41F493CFA008BB420 /* DetectorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectorType.swift; sourceTree = "<group>"; };
 		B0655A271F23D71400542A83 /* MessageDirection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDirection.swift; sourceTree = "<group>"; };
@@ -117,6 +129,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B01E2DC81F5BA34700E4FA1C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -132,6 +151,7 @@
 		88916B181CF0DF2F00469F91 = {
 			isa = PBXGroup;
 			children = (
+				B01E2DCC1F5BA34700E4FA1C /* Assets */,
 				88916B3C1CF0DF5100469F91 /* Sources */,
 				88916B411CF0DF5900469F91 /* Tests */,
 				88916B231CF0DF2F00469F91 /* Products */,
@@ -143,6 +163,7 @@
 			children = (
 				88916B221CF0DF2F00469F91 /* MessageKit.framework */,
 				88916B2C1CF0DF2F00469F91 /* MessageKitTests.xctest */,
+				B01E2DCB1F5BA34700E4FA1C /* Assets.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -172,6 +193,15 @@
 			);
 			path = Tests;
 			sourceTree = SOURCE_ROOT;
+		};
+		B01E2DCC1F5BA34700E4FA1C /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				B01E2DCD1F5BA34700E4FA1C /* Info.plist */,
+				B01E2DD31F5BA48300E4FA1C /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
 		};
 		B09643981F295D43004D0129 /* Extensions */ = {
 			isa = PBXGroup;
@@ -282,6 +312,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B01E2DD21F5BA3E900E4FA1C /* PBXTargetDependency */,
 			);
 			name = MessageKit;
 			productName = MessageKit;
@@ -306,6 +337,23 @@
 			productReference = 88916B2C1CF0DF2F00469F91 /* MessageKitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		B01E2DCA1F5BA34700E4FA1C /* Assets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B01E2DD01F5BA34700E4FA1C /* Build configuration list for PBXNativeTarget "Assets" */;
+			buildPhases = (
+				B01E2DC71F5BA34700E4FA1C /* Sources */,
+				B01E2DC81F5BA34700E4FA1C /* Frameworks */,
+				B01E2DC91F5BA34700E4FA1C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Assets;
+			productName = Assets;
+			productReference = B01E2DCB1F5BA34700E4FA1C /* Assets.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -323,6 +371,10 @@
 					88916B2B1CF0DF2F00469F91 = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
+					B01E2DCA1F5BA34700E4FA1C = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 88916B1C1CF0DF2F00469F91 /* Build configuration list for PBXProject "MessageKit" */;
@@ -339,6 +391,7 @@
 			targets = (
 				88916B211CF0DF2F00469F91 /* MessageKit */,
 				88916B2B1CF0DF2F00469F91 /* MessageKitTests */,
+				B01E2DCA1F5BA34700E4FA1C /* Assets */,
 			);
 		};
 /* End PBXProject section */
@@ -348,6 +401,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B01E2DD51F5BA49100E4FA1C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +409,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B01E2DC91F5BA34700E4FA1C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B01E2DD41F5BA48300E4FA1C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +489,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B01E2DC71F5BA34700E4FA1C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -434,6 +503,11 @@
 			isa = PBXTargetDependency;
 			target = 88916B211CF0DF2F00469F91 /* MessageKit */;
 			targetProxy = 88916B2E1CF0DF2F00469F91 /* PBXContainerItemProxy */;
+		};
+		B01E2DD21F5BA3E900E4FA1C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B01E2DCA1F5BA34700E4FA1C /* Assets */;
+			targetProxy = B01E2DD11F5BA3E900E4FA1C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -598,6 +672,40 @@
 			};
 			name = Release;
 		};
+		B01E2DCE1F5BA34700E4FA1C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = NO;
+				INFOPLIST_FILE = Assets/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = MessageKit.Assets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		B01E2DCF1F5BA34700E4FA1C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = NO;
+				INFOPLIST_FILE = Assets/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = MessageKit.Assets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -627,6 +735,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		B01E2DD01F5BA34700E4FA1C /* Build configuration list for PBXNativeTarget "Assets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B01E2DCE1F5BA34700E4FA1C /* Debug */,
+				B01E2DCF1F5BA34700E4FA1C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
