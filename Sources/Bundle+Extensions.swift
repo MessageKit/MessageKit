@@ -22,47 +22,15 @@
  SOFTWARE.
  */
 
-import UIKit
+import Foundation
 
-open class MessageContainerView: UIView {
+extension Bundle {
 
-    // MARK: - Properties
-
-    open let imageView = UIImageView()
-
-    open var style: MessageStyle = .none {
-        didSet {
-            imageView.image = style.image
-        }
+    static func messageKitAssetBundle() -> Bundle {
+        let bundle = Bundle(for: MessagesViewController.self)
+        let resourceUrl = bundle.resourceURL!.appendingPathComponent("MessageKitAssets.bundle")
+        return Bundle(url: resourceUrl)!
     }
 
-    open var messageColor: UIColor = .white {
-        didSet {
-            imageView.tintColor = messageColor
-        }
-    }
-
-    // MARK: - Initializers
-
-    override public init(frame: CGRect) {
-        super.init(frame: frame)
-        setupSubviews()
-        setupConstraints()
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    // MARK: - Methods
-
-    func setupSubviews() {
-        imageView.isUserInteractionEnabled = true
-        addSubview(imageView)
-    }
-
-    func setupConstraints() {
-        imageView.fillSuperview()
-    }
 
 }

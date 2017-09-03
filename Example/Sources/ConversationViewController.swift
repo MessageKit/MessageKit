@@ -141,13 +141,12 @@ extension ConversationViewController: MessagesDisplayDataSource {
     }
 
     func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
-        return .messageTop
+        return .messageBottom
     }
 
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
-        let lightGray = UIColor(red: 222/255, green: 222/255, blue: 222/255, alpha: 1)
-        let bubbleBorder = MessageBorder(cornerRadius: 15, color: UIColor.clear, width: 0, fillColor: lightGray)
-        return .bubble(border: bubbleBorder, withTail: randomTailStyle())
+        let corner: UIRectCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
+        return .bubbleTail(corner)
     }
 
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
@@ -172,23 +171,23 @@ extension ConversationViewController: MessagesDisplayDataSource {
 
 }
 
-// MARK: - Helper Methods for random bubble and tail generation
+// MARK: - Helper Methods
 
 extension ConversationViewController {
-    fileprivate func randomTailStyle() -> MessageBubbleTailStyle {
-        let lightGray = UIColor(red: 222/255, green: 222/255, blue: 222/255, alpha: 1)
-        let tailBorderNoColor = MessageBorder(cornerRadius: 0, color: nil, width: 0, fillColor: lightGray)
-        let tailBorderColored = MessageBorder(cornerRadius: 0, color: UIColor.lightGray, width: 1, fillColor: UIColor.orange)
-        let randomStyle = Int(arc4random_uniform(UInt32(MessageBubbleTailStyle.styleCount)))
-        let isColoredBorder = Int(arc4random_uniform(2)) == 1
-
-        switch randomStyle {
-        case 0: return .triangle(corner: randomCorner(), border: isColoredBorder ? tailBorderColored : tailBorderNoColor)
-        case 1: return .tailCurved(corner: randomCorner(), border: isColoredBorder ? tailBorderColored : tailBorderNoColor)
-        default: assert(false); break
-        }
-    }
-
+//    fileprivate func randomTailStyle() -> MessageBubbleTailStyle {
+//        let lightGray = UIColor(red: 222/255, green: 222/255, blue: 222/255, alpha: 1)
+//        let tailBorderNoColor = MessageBorder(cornerRadius: 0, color: nil, width: 0, fillColor: lightGray)
+//        let tailBorderColored = MessageBorder(cornerRadius: 0, color: UIColor.lightGray, width: 1, fillColor: UIColor.orange)
+//        let randomStyle = Int(arc4random_uniform(UInt32(MessageBubbleTailStyle.styleCount)))
+//        let isColoredBorder = Int(arc4random_uniform(2)) == 1
+//
+//        switch randomStyle {
+//        case 0: return .triangle(corner: randomCorner(), border: isColoredBorder ? tailBorderColored : tailBorderNoColor)
+//        case 1: return .tailCurved(corner: randomCorner(), border: isColoredBorder ? tailBorderColored : tailBorderNoColor)
+//        default: assert(false); break
+//        }
+//    }
+//
     fileprivate func randomCorner() -> UIRectCorner {
         var corners: [UIRectCorner] = [.bottomLeft, .bottomRight, .topLeft, .topRight]
         let random = Int(arc4random_uniform(4))
