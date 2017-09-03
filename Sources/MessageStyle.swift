@@ -24,32 +24,13 @@
 
 import UIKit
 
-fileprivate extension UIRectCorner {
-
-    var imageOrientation: UIImageOrientation {
-        switch self {
-        case UIRectCorner.topLeft:
-            return .down
-        case UIRectCorner.bottomLeft:
-            return .upMirrored
-        case UIRectCorner.topRight:
-            return .downMirrored
-        case UIRectCorner.bottomRight:
-            return .up
-        default:
-            fatalError("Invalid UIRectCorner. Only supports: .topLeft, .bottomLeft, .topRight, .bottomRight")
-        }
-    }
-
-}
-
 public enum MessageStyle {
 
     case none
     case bubble
     case bubbleOutline
-    case bubbleTail(UIRectCorner)
-    case bubbleTailOutline(UIRectCorner)
+    case bubbleTail(TailCorner)
+    case bubbleTailOutline(TailCorner)
 
     public var image: UIImage? {
 
@@ -62,9 +43,9 @@ public enum MessageStyle {
             return nil
         case .bubble, .bubbleOutline:
             break
-        case .bubbleTail(let edge), .bubbleTailOutline(let edge):
+        case .bubbleTail(let corner), .bubbleTailOutline(let corner):
             guard let cgImage = image.cgImage else { return nil }
-            image = UIImage(cgImage: cgImage, scale: image.scale, orientation: edge.imageOrientation)
+            image = UIImage(cgImage: cgImage, scale: image.scale, orientation: corner.imageOrientation)
         }
 
         return stretch(image).withRenderingMode(.alwaysTemplate)

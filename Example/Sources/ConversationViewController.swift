@@ -145,7 +145,7 @@ extension ConversationViewController: MessagesDisplayDataSource {
     }
 
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
-        let corner: UIRectCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
+        let corner: TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
         return .bubbleTail(corner)
     }
 
