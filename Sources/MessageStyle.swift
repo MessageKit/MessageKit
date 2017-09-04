@@ -26,11 +26,52 @@ import UIKit
 
 public enum MessageStyle {
 
+    // MARK: - TailCorner
+
+    public enum TailCorner {
+
+        case topLeft
+        case bottomLeft
+        case topRight
+        case bottomRight
+
+        var imageOrientation: UIImageOrientation {
+            switch self {
+            case .bottomRight: return .up
+            case .bottomLeft: return .upMirrored
+            case .topLeft: return .down
+            case .topRight: return .downMirrored
+            }
+        }
+    }
+
+    // MARK: - TailStyle
+
+    public enum TailStyle {
+
+        case curved
+        case pointedEdge
+
+        var imageNameSuffix: String {
+            switch self {
+            case .curved:
+                return "_tail_v2"
+            case .pointedEdge:
+                return "_tail_v1"
+            }
+        }
+    }
+
+    // MARK: - MessageStyle
+
     case none
     case bubble
     case bubbleOutline
-    case bubbleTail(TailCorner)
-    case bubbleTailOutline(TailCorner)
+    case bubbleTail(TailCorner, TailStyle)
+    case bubbleTailOutline(TailCorner, TailStyle)
+
+
+    // MARK: - Public
 
     public var image: UIImage? {
 
@@ -43,7 +84,7 @@ public enum MessageStyle {
             return nil
         case .bubble, .bubbleOutline:
             break
-        case .bubbleTail(let corner), .bubbleTailOutline(let corner):
+        case .bubbleTail(let corner, _), .bubbleTailOutline(let corner, _):
             guard let cgImage = image.cgImage else { return nil }
             image = UIImage(cgImage: cgImage, scale: image.scale, orientation: corner.imageOrientation)
         }
@@ -51,9 +92,20 @@ public enum MessageStyle {
         return stretch(image).withRenderingMode(.alwaysTemplate)
     }
 
+    // MARK: - Private
+
     private var imageName: String? {
         switch self {
-        default: return "bubble_tailed"
+        case .bubble:
+            return "bubble_full"
+        case .bubbleOutline:
+            return "bubble_outlined"
+        case .bubbleTail(_, let tailStyle):
+            return "bubble_full" + tailStyle.imageNameSuffix
+        case .bubbleTailOutline(_, let tailStyle):
+            return "bubble_outlined" + tailStyle.imageNameSuffix
+        case .none:
+            return nil
         }
     }
 
