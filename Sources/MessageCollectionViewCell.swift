@@ -48,8 +48,6 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     open weak var delegate: MessageCellDelegate? {
         didSet {
-            cellTopLabel.delegate = delegate
-            cellBottomLabel.delegate = delegate
             messageLabel.delegate = delegate
         }
     }

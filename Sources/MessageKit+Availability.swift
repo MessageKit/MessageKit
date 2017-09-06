@@ -24,5 +24,14 @@
 
 import Foundation
 
-@available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use MessagesDisplayDelegate")
+@available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use MessagesDisplayDelegate.")
 public protocol MessagesDisplayDataSource {}
+
+extension MessagesCollectionView {
+
+    @available(*, deprecated: 0.7.0, message: "messageLabelDelegate is no longer available. Please use messageCellDelegate.")
+    public weak var messageLabelDelegate: MessageLabelDelegate? {
+        return nil
+    }
+
+}

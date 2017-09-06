@@ -128,27 +128,8 @@ extension ConversationViewController: MessagesDataSource {
         return messageList[indexPath.section]
     }
 
-}
-
-// MARK: - MessagesDisplayDelegate
-
-extension ConversationViewController: MessagesDisplayDelegate {
-
     func avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
         return SampleData().getAvatarFor(sender: message.sender)
-    }
-
-    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
-        return .messageBottom
-    }
-
-    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
-        let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
-        return .bubbleTail(corner, .curved)
-    }
-
-    func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView? {
-        return messagesCollectionView.dequeueMessageFooterView(for: indexPath)
     }
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
@@ -165,9 +146,32 @@ extension ConversationViewController: MessagesDisplayDelegate {
 
 }
 
+// MARK: - MessagesDisplayDelegate
+
+extension ConversationViewController: MessagesDisplayDelegate {
+
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return isFromCurrentSender(message: message) ? .white : .darkText
+    }
+
+    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
+        let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
+        return .bubbleTail(corner, .curved)
+    }
+
+    func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView? {
+        return messagesCollectionView.dequeueMessageFooterView(for: indexPath)
+    }
+
+}
+
 // MARK: - MessagesLayoutDelegate
 
 extension ConversationViewController: MessagesLayoutDelegate {
+
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
+        return .messageBottom
+    }
 
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
 

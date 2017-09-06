@@ -36,13 +36,6 @@ open class MessagesCollectionView: UICollectionView {
 
     open weak var messageCellDelegate: MessageCellDelegate?
 
-    @available(*, deprecated: 0.7.0, message: "messageLabelDelegate is no longer available. MessageCellDelegate now conforms to MessageLabelDelegate")
-    public weak var messageLabelDelegate: MessageCellDelegate? {
-        didSet {
-            messageCellDelegate = messageLabelDelegate
-        }
-    }
-
     open var showsDateHeaderAfterTimeInterval: TimeInterval = 3600
 
     private var indexPathForLastItem: IndexPath? {
