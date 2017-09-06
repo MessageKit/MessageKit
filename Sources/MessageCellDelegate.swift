@@ -36,7 +36,7 @@ public protocol MessageCellDelegate: class {
 
 }
 
-extension MessageCellDelegate {
+public extension MessageCellDelegate {
 
     func didTapMessage(in cell: MessageCollectionViewCell) {}
 
