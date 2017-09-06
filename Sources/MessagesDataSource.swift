@@ -34,12 +34,30 @@ public protocol MessagesDataSource: class {
 
     func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int
 
+    func avatar(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar
+
+    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
+
+    func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
+
 }
 
 public extension MessagesDataSource {
 
     func isFromCurrentSender(message: MessageType) -> Bool {
         return message.sender == currentSender()
+    }
+
+    func avatar(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
+        return Avatar()
+    }
+
+    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        return nil
+    }
+
+    func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        return nil
     }
 
 }

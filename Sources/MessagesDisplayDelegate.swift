@@ -32,8 +32,6 @@ public protocol MessagesDisplayDelegate: class, MessagesDataSource {
     
     func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
     
-    func avatar(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar
-    
     func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition
     
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView?
@@ -41,11 +39,7 @@ public protocol MessagesDisplayDelegate: class, MessagesDataSource {
     func shouldDisplayHeader(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Bool
     
     func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView?
-    
-    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
-    
-    func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
-    
+
 }
 
 public extension MessagesDisplayDelegate {
@@ -65,10 +59,6 @@ public extension MessagesDisplayDelegate {
     func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
         return .cellBottom
     }
-
-    func avatar(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
-        return Avatar()
-    }
     
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
         let header = messagesCollectionView.dequeueMessageHeaderView(withReuseIdentifier: "MessageDateHeaderView", for: indexPath) as? MessageDateHeaderView
@@ -86,14 +76,6 @@ public extension MessagesDisplayDelegate {
     }
 
     func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView? {
-        return nil
-    }
-    
-    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        return nil
-    }
-    
-    func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         return nil
     }
     
