@@ -37,6 +37,8 @@ public protocol MessagesDisplayDataSource: class, MessagesDataSource {
     func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition
     
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView?
+
+    func shouldDisplayHeader(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Bool
     
     func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView?
     
@@ -69,9 +71,20 @@ public extension MessagesDisplayDataSource {
     }
     
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
-        return nil
+        let header = messagesCollectionView.dequeueMessageHeaderView(withReuseIdentifier: "MessageDateHeader", for: indexPath) as? MessageDateHeader
+        header?.dateLabel.text = MessageKitDateFormatter.shared.string(from: message.sentDate)
+        return header
     }
-    
+
+    func shouldDisplayHeader(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Bool {
+        if indexPath.section == 0 { return false }
+        let previousSection = indexPath.section - 1
+        let previousIndexPath = IndexPath(item: 0, section: previousSection)
+        let previousMessage = messageForItem(at: previousIndexPath, in: messagesCollectionView)
+        let timeIntervalSinceLastMessage = message.sentDate.timeIntervalSince(previousMessage.sentDate)
+        return timeIntervalSinceLastMessage >= messagesCollectionView.showsDateHeaderAfterTimeInterval
+    }
+
     func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView? {
         return nil
     }
