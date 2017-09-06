@@ -43,7 +43,8 @@ public protocol MessagesDisplayDelegate: class {
 public extension MessagesDisplayDelegate {
     
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return .darkText
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return .darkText }
+        return dataSource.isFromCurrentSender(message: message) ? .white : .darkText
     }
     
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
