@@ -24,14 +24,34 @@
 
 import Foundation
 
+// MARK: - MessagesDisplayDataSource
+
 @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use MessagesDisplayDelegate.")
 public protocol MessagesDisplayDataSource {}
 
+// MARK: - MessagesCollectionView
+
 extension MessagesCollectionView {
 
-    @available(*, deprecated: 0.7.0, message: "messageLabelDelegate is no longer available. Please use messageCellDelegate.")
+    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use messageCellDelegate.")
     public weak var messageLabelDelegate: MessageLabelDelegate? {
         return nil
+    }
+
+}
+
+// MARK: - MessagesCollectionViewFlowLayout
+
+extension MessagesCollectionViewFlowLayout {
+
+    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use avatarSize(for:indexPath:messagesCollectionView)")
+    public var incomingAvatarSize: CGSize {
+        return .zero
+    }
+
+    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use avatarSize(for:indexPath:messagesCollectionView)")
+    public var outgoingAvatarSize: CGSize {
+        return .zero
     }
 
 }
