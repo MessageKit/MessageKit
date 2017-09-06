@@ -193,7 +193,7 @@ extension MessagesViewController: UICollectionViewDataSource {
 
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
-        if let displayDataSource = messagesDataSource as? MessagesDisplayDataSource {
+        if let displayDataSource = messagesDataSource as? MessagesDisplayDelegate {
 
             let messageColor = displayDataSource.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
             let messageStyle = displayDataSource.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
@@ -220,7 +220,7 @@ extension MessagesViewController: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return UICollectionReusableView() }
-        guard let displayDataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDataSource else { return UICollectionReusableView() }
+        guard let displayDataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDelegate else { return UICollectionReusableView() }
 
         let message = displayDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 

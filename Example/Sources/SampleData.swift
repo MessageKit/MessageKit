@@ -88,7 +88,6 @@ struct SampleData {
         return Dan
     }
 
-    
     func getAvatarFor(sender: Sender) -> Avatar {
         switch sender {
         case Dan:

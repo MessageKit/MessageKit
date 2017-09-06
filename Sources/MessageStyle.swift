@@ -70,7 +70,6 @@ public enum MessageStyle {
     case bubbleTail(TailCorner, TailStyle)
     case bubbleTailOutline(TailCorner, TailStyle)
 
-
     // MARK: - Public
 
     public var image: UIImage? {

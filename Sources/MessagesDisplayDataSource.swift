@@ -24,7 +24,7 @@
 
 import Foundation
 
-public protocol MessagesDisplayDataSource: class, MessagesDataSource {
+public protocol MessagesDisplayDelegate: class, MessagesDataSource {
     
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
 
@@ -48,7 +48,7 @@ public protocol MessagesDisplayDataSource: class, MessagesDataSource {
     
 }
 
-public extension MessagesDisplayDataSource {
+public extension MessagesDisplayDelegate {
     
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? .white : .black

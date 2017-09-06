@@ -24,24 +24,5 @@
 
 import Foundation
 
-public protocol MessagesLayoutDelegate: class {
-
-    func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
-
-    func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
-
-}
-
-public extension MessagesLayoutDelegate {
-
-    func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        guard let dataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDelegate else { return .zero }
-        let shouldDisplay = dataSource.shouldDisplayHeader(for: message, at: indexPath, in: messagesCollectionView)
-        return shouldDisplay ? CGSize(width: messagesCollectionView.bounds.width, height: 12) : .zero
-    }
-
-    func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        return .zero
-    }
-
-}
+@available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use MessagesDisplayDelegate")
+public protocol MessagesDisplayDataSource {}

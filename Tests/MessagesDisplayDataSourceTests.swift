@@ -26,7 +26,7 @@ import XCTest
 
 @testable import MessageKit
 
-class MessagesDisplayDataSourceTests: XCTestCase {
+class MessagesDisplayDelegateTests: XCTestCase {
     
     var testClass: TestMessagesViewControllerModel!
     var window: UIWindow!

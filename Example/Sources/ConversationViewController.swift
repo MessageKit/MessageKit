@@ -131,9 +131,9 @@ extension ConversationViewController: MessagesDataSource {
 
 }
 
-// MARK: - MessagesDisplayDataSource
+// MARK: - MessagesDisplayDelegate
 
-extension ConversationViewController: MessagesDisplayDataSource {
+extension ConversationViewController: MessagesDisplayDelegate {
 
     func avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
         return SampleData().getAvatarFor(sender: message.sender)
