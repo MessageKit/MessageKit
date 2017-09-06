@@ -132,8 +132,8 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         attributes.cellBottomLabelInsets = cellBottomLabelInsets
         attributes.direction = dataSource.isFromCurrentSender(message: message) ? .outgoing : .incoming
 
-        let displayDataSource = dataSource as? MessagesDisplayDelegate
-        let avatarPosition = displayDataSource?.avatarPosition(for: message, at: indexPath, in: messagesCollectionView) ?? .messageBottom
+        let layoutDelegate = messagesCollectionView.messagesLayoutDelegate
+        let avatarPosition = layoutDelegate?.avatarPosition(for: message, at: indexPath, in: messagesCollectionView) ?? .messageBottom
 
         // Now we set the origins for the frames using the attributes object that contains the calculated sizes
         attributes.messageContainerFrame.origin = messageContainerOrigin(for: attributes)
@@ -313,8 +313,8 @@ extension MessagesCollectionViewFlowLayout {
     private func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         guard let messagesCollectionView = messagesCollectionView else { return 0 }
-        guard let displayDataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDelegate else { return 0 }
-        guard let topLabelText = displayDataSource.cellTopLabelAttributedText(for: message, at: indexPath) else { return 0 }
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return 0 }
+        guard let topLabelText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath) else { return 0 }
 
         let availableWidth = cellTopLabelWidth(for: message) - cellTopLabelInsets.left - cellTopLabelInsets.right
 
@@ -360,8 +360,8 @@ extension MessagesCollectionViewFlowLayout {
     private func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         guard let messagesCollectionView = messagesCollectionView else { return 0 }
-        guard let displayDataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDelegate else { return 0 }
-        guard let bottomLabelText = displayDataSource.cellBottomLabelAttributedText(for: message, at: indexPath) else { return 0 }
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return 0 }
+        guard let bottomLabelText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath) else { return 0 }
 
         let availableWidth = cellBottomLabelWidth(for: message) - cellBottomLabelInsets.left - cellBottomLabelInsets.right
 

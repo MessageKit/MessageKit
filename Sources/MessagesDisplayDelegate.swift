@@ -24,15 +24,13 @@
 
 import Foundation
 
-public protocol MessagesDisplayDelegate: class, MessagesDataSource {
+public protocol MessagesDisplayDelegate: class {
     
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
 
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle
     
     func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
-    
-    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition
     
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView?
 
@@ -45,7 +43,7 @@ public protocol MessagesDisplayDelegate: class, MessagesDataSource {
 public extension MessagesDisplayDelegate {
     
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .white : .black
+        return .darkText
     }
     
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
@@ -53,11 +51,8 @@ public extension MessagesDisplayDelegate {
     }
 
     func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
-    }
-    
-    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
-        return .cellBottom
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return .white }
+        return dataSource.isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
     }
     
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
@@ -67,10 +62,11 @@ public extension MessagesDisplayDelegate {
     }
 
     func shouldDisplayHeader(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Bool {
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return false }
         if indexPath.section == 0 { return false }
         let previousSection = indexPath.section - 1
         let previousIndexPath = IndexPath(item: 0, section: previousSection)
-        let previousMessage = messageForItem(at: previousIndexPath, in: messagesCollectionView)
+        let previousMessage = dataSource.messageForItem(at: previousIndexPath, in: messagesCollectionView)
         let timeIntervalSinceLastMessage = message.sentDate.timeIntervalSince(previousMessage.sentDate)
         return timeIntervalSinceLastMessage >= messagesCollectionView.showsDateHeaderAfterTimeInterval
     }
