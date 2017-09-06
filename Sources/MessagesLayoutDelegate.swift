@@ -26,6 +26,8 @@ import Foundation
 
 public protocol MessagesLayoutDelegate: class {
 
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition
+
     func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
@@ -33,6 +35,10 @@ public protocol MessagesLayoutDelegate: class {
 }
 
 public extension MessagesLayoutDelegate {
+
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
+        return .cellBottom
+    }
 
     func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         guard let dataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDelegate else { return .zero }
