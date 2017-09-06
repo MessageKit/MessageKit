@@ -71,7 +71,7 @@ public extension MessagesDisplayDataSource {
     }
     
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
-        let header = messagesCollectionView.dequeueMessageHeaderView(withReuseIdentifier: "MessageDateHeader", for: indexPath) as? MessageDateHeader
+        let header = messagesCollectionView.dequeueMessageHeaderView(withReuseIdentifier: "MessageDateHeaderView", for: indexPath) as? MessageDateHeaderView
         header?.dateLabel.text = MessageKitDateFormatter.shared.string(from: message.sentDate)
         return header
     }

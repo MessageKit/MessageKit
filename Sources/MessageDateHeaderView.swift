@@ -24,13 +24,13 @@
 
 import UIKit
 
-open class MessageDateHeader: MessageHeaderView {
+open class MessageDateHeaderView: MessageHeaderView {
 
     // MARK: - Properties
 
     open let dateLabel = UILabel()
 
-    // MARK: - Initializer
+    // MARK: - Initializers
 
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -57,11 +57,7 @@ open class MessagesViewController: UIViewController {
 
 		setupSubviews()
 		setupConstraints()
-
-        registerReusableCells()
-        registerReusableHeaders()
-        registerReusableFooters()
-
+        registerReusableViews()
 		setupDelegates()
 
 	}
@@ -94,20 +90,21 @@ open class MessagesViewController: UIViewController {
 		messagesCollectionView.dataSource = self
 	}
 
-    open func registerReusableCells() {
-        messagesCollectionView.register(MessageCollectionViewCell.self, forCellWithReuseIdentifier: "MessageCell")
-    }
+    private func registerReusableViews() {
+        messagesCollectionView.register(MessageCollectionViewCell.self,
+                                        forCellWithReuseIdentifier: "MessageCell")
 
-    open func registerReusableFooters() {
         messagesCollectionView.register(MessageFooterView.self,
                                         forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
-                                        withReuseIdentifier: "MessageFooter")
-    }
+                                        withReuseIdentifier: "MessageFooterView")
 
-    open func registerReusableHeaders() {
         messagesCollectionView.register(MessageHeaderView.self,
                                         forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                                        withReuseIdentifier: "MessageHeader")
+                                        withReuseIdentifier: "MessageHeaderView")
+
+        messagesCollectionView.register(MessageDateHeaderView.self,
+                                        forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                                        withReuseIdentifier: "MessageDateHeaderView")
     }
 
 	private func setupSubviews() {

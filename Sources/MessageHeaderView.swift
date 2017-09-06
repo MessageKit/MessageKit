@@ -26,6 +26,10 @@ import UIKit
 
 open class MessageHeaderView: UICollectionReusableView {
 
+    // MARK: - Properties
+
+    static let identifier = "MessageHeaderView"
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }

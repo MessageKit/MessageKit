@@ -145,11 +145,7 @@ extension ConversationViewController: MessagesDisplayDataSource {
 
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
-        return .bubbleTail(corner, .pointedEdge)
-    }
-
-    func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
-        return messagesCollectionView.dequeueMessageHeaderView(for: indexPath)
+        return .bubbleTail(corner, .curved)
     }
 
     func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView? {
@@ -174,12 +170,9 @@ extension ConversationViewController: MessagesDisplayDataSource {
 
 extension ConversationViewController: MessagesLayoutDelegate {
 
-    func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        return CGSize(width: messagesCollectionView.bounds.width, height: 4)
-    }
-
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        return CGSize(width: messagesCollectionView.bounds.width, height: 4)
+
+        return CGSize(width: messagesCollectionView.bounds.width, height: 10)
     }
 
 }
