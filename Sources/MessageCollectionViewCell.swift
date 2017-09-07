@@ -46,7 +46,11 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         return bottomLabel
     }()
 
-    open weak var delegate: MessageCellDelegate?
+    open weak var delegate: MessageCellDelegate? {
+        didSet {
+            messageLabel.delegate = delegate
+        }
+    }
 
     // MARK: - Initializer
 
@@ -143,4 +147,5 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     func didTapBottomLabel() {
         delegate?.didTapBottomLabel(in: self)
     }
+
 }

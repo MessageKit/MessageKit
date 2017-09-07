@@ -22,26 +22,36 @@
  SOFTWARE.
  */
 
-import UIKit
+import Foundation
 
-public enum TailCorner {
+// MARK: - MessagesDisplayDataSource
 
-    case topLeft
-    case bottomLeft
-    case topRight
-    case bottomRight
+@available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use MessagesDisplayDelegate.")
+public protocol MessagesDisplayDataSource {}
 
-    var imageOrientation: UIImageOrientation {
-        switch self {
-        case .bottomRight:
-            return .up
-        case .bottomLeft:
-            return .upMirrored
-        case .topLeft:
-            return .down
-        case .topRight:
-            return .downMirrored
-        }
+// MARK: - MessagesCollectionView
+
+extension MessagesCollectionView {
+
+    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use messageCellDelegate.")
+    public weak var messageLabelDelegate: MessageLabelDelegate? {
+        return nil
     }
-    
+
+}
+
+// MARK: - MessagesCollectionViewFlowLayout
+
+extension MessagesCollectionViewFlowLayout {
+
+    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use avatarSize(for:indexPath:messagesCollectionView)")
+    public var incomingAvatarSize: CGSize {
+        return .zero
+    }
+
+    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use avatarSize(for:indexPath:messagesCollectionView)")
+    public var outgoingAvatarSize: CGSize {
+        return .zero
+    }
+
 }

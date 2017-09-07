@@ -24,7 +24,7 @@
 
 import Foundation
 
-public protocol MessagesDisplayDataSource: class, MessagesDataSource {
+public protocol MessagesDisplayDelegate: class {
     
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
 
@@ -32,24 +32,19 @@ public protocol MessagesDisplayDataSource: class, MessagesDataSource {
     
     func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
     
-    func avatar(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar
-    
-    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition
-    
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView?
+
+    func shouldDisplayHeader(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Bool
     
     func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView?
-    
-    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
-    
-    func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
-    
+
 }
 
-public extension MessagesDisplayDataSource {
+public extension MessagesDisplayDelegate {
     
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .white : .black
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return .darkText }
+        return dataSource.isFromCurrentSender(message: message) ? .white : .darkText
     }
     
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
@@ -57,30 +52,27 @@ public extension MessagesDisplayDataSource {
     }
 
     func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
-    }
-    
-    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
-        return .cellBottom
-    }
-
-    func avatar(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
-        return Avatar()
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return .white }
+        return dataSource.isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
     }
     
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
-        return nil
+        let header = messagesCollectionView.dequeueMessageHeaderView(withReuseIdentifier: "MessageDateHeaderView", for: indexPath) as? MessageDateHeaderView
+        header?.dateLabel.text = MessageKitDateFormatter.shared.string(from: message.sentDate)
+        return header
     }
-    
+
+    func shouldDisplayHeader(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Bool {
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return false }
+        if indexPath.section == 0 { return false }
+        let previousSection = indexPath.section - 1
+        let previousIndexPath = IndexPath(item: 0, section: previousSection)
+        let previousMessage = dataSource.messageForItem(at: previousIndexPath, in: messagesCollectionView)
+        let timeIntervalSinceLastMessage = message.sentDate.timeIntervalSince(previousMessage.sentDate)
+        return timeIntervalSinceLastMessage >= messagesCollectionView.showsDateHeaderAfterTimeInterval
+    }
+
     func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView? {
-        return nil
-    }
-    
-    func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        return nil
-    }
-    
-    func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         return nil
     }
     

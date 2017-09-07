@@ -26,7 +26,9 @@ import UIKit
 
 open class MessageFooterView: UICollectionReusableView {
 
-    override init(frame: CGRect) {
+    // MARK: - Initializers
+
+    public override init(frame: CGRect) {
         super.init(frame: frame)
     }
 

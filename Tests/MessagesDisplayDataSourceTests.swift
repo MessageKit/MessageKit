@@ -26,7 +26,7 @@ import XCTest
 
 @testable import MessageKit
 
-class MessagesDisplayDataSourceTests: XCTestCase {
+class MessagesDisplayDelegateTests: XCTestCase {
     
     var testClass: TestMessagesViewControllerModel!
     var window: UIWindow!
@@ -54,7 +54,7 @@ class MessagesDisplayDataSourceTests: XCTestCase {
     
     func testMessageTextColorDefaultState() {
         XCTAssertEqual(testClass.textColor(for: testClass.messageList[0], at: IndexPath(item: 0, section: 0), in: testClass.messagesCollectionView), UIColor.white)
-        XCTAssertEqual(testClass.textColor(for: testClass.messageList[1], at: IndexPath(item: 1, section: 0), in: testClass.messagesCollectionView), UIColor.black)
+        XCTAssertEqual(testClass.textColor(for: testClass.messageList[1], at: IndexPath(item: 1, section: 0), in: testClass.messagesCollectionView), UIColor.darkText)
     }
     
     func testBackGroundColorDefaultState() {

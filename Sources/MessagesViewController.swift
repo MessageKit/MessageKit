@@ -57,11 +57,7 @@ open class MessagesViewController: UIViewController {
 
 		setupSubviews()
 		setupConstraints()
-
-        registerReusableCells()
-        registerReusableHeaders()
-        registerReusableFooters()
-
+        registerReusableViews()
 		setupDelegates()
 
 	}
@@ -94,20 +90,21 @@ open class MessagesViewController: UIViewController {
 		messagesCollectionView.dataSource = self
 	}
 
-    open func registerReusableCells() {
-        messagesCollectionView.register(MessageCollectionViewCell.self, forCellWithReuseIdentifier: "MessageCell")
-    }
+    private func registerReusableViews() {
+        messagesCollectionView.register(MessageCollectionViewCell.self,
+                                        forCellWithReuseIdentifier: "MessageCell")
 
-    open func registerReusableFooters() {
         messagesCollectionView.register(MessageFooterView.self,
                                         forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
-                                        withReuseIdentifier: "MessageFooter")
-    }
+                                        withReuseIdentifier: "MessageFooterView")
 
-    open func registerReusableHeaders() {
         messagesCollectionView.register(MessageHeaderView.self,
                                         forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                                        withReuseIdentifier: "MessageHeader")
+                                        withReuseIdentifier: "MessageHeaderView")
+
+        messagesCollectionView.register(MessageDateHeaderView.self,
+                                        forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                                        withReuseIdentifier: "MessageDateHeaderView")
     }
 
 	private func setupSubviews() {
@@ -188,33 +185,27 @@ extension MessagesViewController: UICollectionViewDataSource {
             if cell.delegate == nil { cell.delegate = cellDelegate }
         }
 
-        if let messageLabelDelegate = messagesCollectionView.messageLabelDelegate {
-            if cell.messageLabel.delegate == nil { cell.messageLabel.delegate = messageLabelDelegate }
-        }
-
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return cell }
 
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        let avatar = messagesDataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
+        let topLabelText = messagesDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
+        let bottomLabelText = messagesDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
 
-        if let displayDataSource = messagesDataSource as? MessagesDisplayDataSource {
-
-            let messageColor = displayDataSource.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
-            let messageStyle = displayDataSource.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
-            let textColor = displayDataSource.textColor(for: message, at: indexPath, in: messagesCollectionView)
-            let avatar = displayDataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
-            let topLabelText = displayDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
-            let bottomLabelText = displayDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
-
-            cell.avatarView.set(avatar: avatar)
-            cell.messageLabel.textColor = textColor
-            cell.messageContainerView.messageColor = messageColor
-            cell.messageContainerView.style = messageStyle
-            cell.cellTopLabel.attributedText = topLabelText
-            cell.cellBottomLabel.attributedText = bottomLabelText
-
-        }
-
+        cell.avatarView.set(avatar: avatar)
+        cell.cellTopLabel.attributedText = topLabelText
+        cell.cellBottomLabel.attributedText = bottomLabelText
         cell.configure(with: message)
+
+        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else { return cell }
+
+        let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
+        let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
+        let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
+
+        cell.messageLabel.textColor = textColor
+        cell.messageContainerView.messageColor = messageColor
+        cell.messageContainerView.style = messageStyle
 
 		return cell
 
@@ -223,15 +214,16 @@ extension MessagesViewController: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return UICollectionReusableView() }
-        guard let displayDataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDataSource else { return UICollectionReusableView() }
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return UICollectionReusableView() }
+        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else { return UICollectionReusableView() }
 
-        let message = displayDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
         switch kind {
         case UICollectionElementKindSectionHeader:
-            return displayDataSource.messageHeaderView(for: message, at: indexPath, in: messagesCollectionView) ?? MessageHeaderView()
+            return displayDelegate.messageHeaderView(for: message, at: indexPath, in: messagesCollectionView) ?? MessageHeaderView()
         case UICollectionElementKindSectionFooter:
-            return displayDataSource.messageFooterView(for: message, at: indexPath, in: messagesCollectionView) ?? MessageFooterView()
+            return displayDelegate.messageFooterView(for: message, at: indexPath, in: messagesCollectionView) ?? MessageFooterView()
         default:
             fatalError("Unrecognized element of kind: \(kind)")
         }

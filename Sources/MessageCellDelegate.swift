@@ -24,7 +24,7 @@
 
 import Foundation
 
-public protocol MessageCellDelegate: class {
+public protocol MessageCellDelegate: class, MessageLabelDelegate {
 
     func didTapMessage(in cell: MessageCollectionViewCell)
 
@@ -36,7 +36,7 @@ public protocol MessageCellDelegate: class {
 
 }
 
-extension MessageCellDelegate {
+public extension MessageCellDelegate {
 
     func didTapMessage(in cell: MessageCollectionViewCell) {}
 
