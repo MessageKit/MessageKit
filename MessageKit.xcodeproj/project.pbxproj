@@ -28,6 +28,7 @@
 		B0147C901F5ED0810035B36E /* MessageDateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0147C8F1F5ED0810035B36E /* MessageDateHeaderView.swift */; };
 		B0147C921F6002150035B36E /* MessageKitDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0147C911F6002140035B36E /* MessageKitDateFormatter.swift */; };
 		B0147C961F600E290035B36E /* MessageKit+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0147C951F600E290035B36E /* MessageKit+Availability.swift */; };
+		B0147C981F61AF930035B36E /* CellLabelPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0147C971F61AF910035B36E /* CellLabelPosition.swift */; };
 		B015E8191F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */; };
 		B015E81F1F259D8E007EDFB6 /* MessageInputBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E81E1F259D8E007EDFB6 /* MessageInputBarDelegate.swift */; };
 		B01E2DD81F5BBDB800E4FA1C /* MessageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01E2DD71F5BBDB800E4FA1C /* MessageStyle.swift */; };
@@ -88,6 +89,7 @@
 		B0147C8F1F5ED0810035B36E /* MessageDateHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDateHeaderView.swift; sourceTree = "<group>"; };
 		B0147C911F6002140035B36E /* MessageKitDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageKitDateFormatter.swift; sourceTree = "<group>"; };
 		B0147C951F600E290035B36E /* MessageKit+Availability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageKit+Availability.swift"; sourceTree = "<group>"; };
+		B0147C971F61AF910035B36E /* CellLabelPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellLabelPosition.swift; sourceTree = "<group>"; };
 		B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
 		B015E81E1F259D8E007EDFB6 /* MessageInputBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageInputBarDelegate.swift; sourceTree = "<group>"; };
 		B01E2DD71F5BBDB800E4FA1C /* MessageStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageStyle.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				B01E2DD71F5BBDB800E4FA1C /* MessageStyle.swift */,
 				38C867981F50EA1000811974 /* NSConstraintLayoutSet.swift */,
 				B0147C911F6002140035B36E /* MessageKitDateFormatter.swift */,
+				B0147C971F61AF910035B36E /* CellLabelPosition.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 				B0655A281F23D71400542A83 /* MessageDirection.swift in Sources */,
 				B015E81F1F259D8E007EDFB6 /* MessageInputBarDelegate.swift in Sources */,
 				B01280F31F4E8798004BCD3E /* MessageLabelDelegate.swift in Sources */,
+				B0147C981F61AF930035B36E /* CellLabelPosition.swift in Sources */,
 				376AD1881F4259D20083072A /* TestMessagesViewControllerModel.swift in Sources */,
 				B0655A2A1F23D77200542A83 /* Sender.swift in Sources */,
 				B0147C961F600E290035B36E /* MessageKit+Availability.swift in Sources */,

@@ -94,9 +94,6 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         cellBottomLabel.frame = attributes.cellBottomLabelFrame
         cellBottomLabel.textInsets = attributes.cellBottomLabelInsets
 
-        cellTopLabel.textAlignment = attributes.direction == .incoming ? .left : .right
-        cellBottomLabel.textAlignment = attributes.direction == .incoming ? .right : .left
-
     }
 
     public func configure(with message: MessageType) {
