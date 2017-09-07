@@ -28,6 +28,10 @@ public protocol MessagesLayoutDelegate: class {
 
     func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition
 
+    func cellTopLabelPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellLabelPosition
+
+    func cellBottomLabelPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellLabelPosition
+
     func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
     func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
@@ -46,9 +50,19 @@ public extension MessagesLayoutDelegate {
         return CGSize(width: 30, height: 30)
     }
 
+    func cellTopLabelPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellLabelPosition {
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return .cellCenter }
+        return dataSource.isFromCurrentSender(message: message) ? .messageTrailing : .messageLeading
+    }
+
+    func cellBottomLabelPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellLabelPosition {
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return .cellCenter }
+        return dataSource.isFromCurrentSender(message: message) ? .messageLeading : .messageTrailing
+    }
+
     func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        guard let dataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDelegate else { return .zero }
-        let shouldDisplay = dataSource.shouldDisplayHeader(for: message, at: indexPath, in: messagesCollectionView)
+        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else { return .zero }
+        let shouldDisplay = displayDelegate.shouldDisplayHeader(for: message, at: indexPath, in: messagesCollectionView)
         return shouldDisplay ? CGSize(width: messagesCollectionView.bounds.width, height: 12) : .zero
     }
 
