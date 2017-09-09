@@ -51,49 +51,39 @@ struct SampleData {
 		} else {
 			msg9AttributedText.addAttributes([NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle], range: msg9Text.range(of: ".attributedText()"))
 		}
-		
-		msg9AttributedText.addAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)],
-		                                 range: msg9Text.range(of: "bold"))
-		
-		msg9AttributedText.addAttributes([NSFontAttributeName: UIFont.italicSystemFont(ofSize: UIFont.systemFontSize)],
-		                                 range: msg9Text.range(of: "italic"))
-		
-		msg9AttributedText.addAttributes([NSForegroundColorAttributeName: UIColor.red],
-		                                 range: msg9Text.range(of: "colored"))
+
+		msg9AttributedText.addAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)], range: msg9Text.range(of: "bold"))
+		msg9AttributedText.addAttributes([NSFontAttributeName: UIFont.italicSystemFont(ofSize: UIFont.systemFontSize)], range: msg9Text.range(of: "italic"))
+		msg9AttributedText.addAttributes([NSForegroundColorAttributeName: UIColor.red], range: msg9Text.range(of: "colored"))
 		
 		var msg9 = MockMessage(attributedText: msg9AttributedText, sender: Jobs, messageId: UUID().uuidString)
-
         var msg10 = MockMessage(text: "1-800-555-0000", sender: Dan, messageId: UUID().uuidString)
         var msg11 = MockMessage(text: "One Infinite Loop Cupertino, CA 95014 This is some extra text that should not be detected.", sender: Cook, messageId: UUID().uuidString)
-        var msg12 = MockMessage(text: "This is an example of the date detector 11/11/2017. April 1st is April Fools Day. Next Friday is not Friday the 13th.", sender: Dan, messageId: UUID().uuidString)
-        var msg13 = MockMessage(text: "https//:github.com/SD10", sender: Steven, messageId: UUID().uuidString)
+        let msg12 = MockMessage(text: "This is an example of the date detector 11/11/2017. April 1st is April Fools Day. Next Friday is not Friday the 13th.", sender: Dan, messageId: UUID().uuidString)
+        let msg13 = MockMessage(text: "https//:github.com/SD10", sender: Steven, messageId: UUID().uuidString)
 
         msg2.sentDate = Calendar.current.date(byAdding: .hour, value: 2, to: msg1.sentDate)!
-        msg3.sentDate = Calendar.current.date(byAdding: .hour, value: 1, to: msg2.sentDate)!
-        msg4.sentDate = Calendar.current.date(byAdding: .minute, value: 37, to: msg3.sentDate)!
-        msg5.sentDate = Calendar.current.date(byAdding: .minute, value: 3, to: msg4.sentDate)!
-        msg6.sentDate = Calendar.current.date(byAdding: .hour, value: 2, to: msg5.sentDate)!
-        msg7.sentDate = Calendar.current.date(byAdding: .minute, value: 12, to: msg6.sentDate)!
-        msg8.sentDate = Calendar.current.date(byAdding: .minute, value: 23, to: msg7.sentDate)!
-        msg9.sentDate = Calendar.current.date(byAdding: .hour, value: 300, to: msg8.sentDate)!
-        msg10.sentDate = Calendar.current.date(byAdding: .hour, value: 11, to: msg9.sentDate)!
-        msg11.sentDate = Calendar.current.date(byAdding: .hour, value: 2, to: msg10.sentDate)!
-        msg12.sentDate = Calendar.current.date(byAdding: .minute, value: 59, to: msg11.sentDate)!
-        msg13.sentDate = Calendar.current.date(byAdding: .hour, value: 7, to: msg12.sentDate)!
-		
-        let allDan = [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11, msg12].map { msg -> MockMessage in
+        msg3.sentDate = Calendar.current.date(byAdding: .minute, value: 37, to: msg2.sentDate)!
+        msg4.sentDate = Calendar.current.date(byAdding: .minute, value: 3, to: msg3.sentDate)!
+        msg5.sentDate = Calendar.current.date(byAdding: .hour, value: 2, to: msg4.sentDate)!
+        msg6.sentDate = Calendar.current.date(byAdding: .minute, value: 12, to: msg5.sentDate)!
+        msg7.sentDate = Calendar.current.date(byAdding: .minute, value: 23, to: msg6.sentDate)!
+        msg8.sentDate = Calendar.current.date(byAdding: .hour, value: 300, to: msg7.sentDate)!
+        msg9.sentDate = Calendar.current.date(byAdding: .hour, value: 2, to: msg8.sentDate)!
+        msg10.sentDate = Calendar.current.date(byAdding: .minute, value: 59, to: msg9.sentDate)!
+        msg11.sentDate = Calendar.current.date(byAdding: .hour, value: 7, to: msg10.sentDate)!
+
+        return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11, msg12, msg13].map { msg -> MockMessage in
             var msg = msg
-            msg.sender = Dan
+            if msg.sender == Dan {
+                msg.sender = Steven
+            } else {
+                msg.sender = Dan
+            }
             return msg
         }
 
-        let allSteven = [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11, msg12].map { msg -> MockMessage in
-            var msg = msg
-            msg.sender = Steven
-            return msg
-        }
-
-        return Array(allDan.dropFirst(6)) + Array(allSteven.dropFirst(6))
+        //return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11, msg12, msg13]
     }
 
     func getCurrentSender() -> Sender {

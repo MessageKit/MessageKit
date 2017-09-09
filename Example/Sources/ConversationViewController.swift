@@ -38,6 +38,7 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
+
         //setupInputBar()
     }
     
@@ -133,16 +134,14 @@ extension ConversationViewController: MessagesDataSource {
     }
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        var name = message.sender.displayName
-        //name += ";ads lf dfkl;dfjs kk jdsaf;lkjdsaf j  FDK A;FSDH dsfkl jhadg jkdsg hakj  DFGS KJAHG DKLAJH SGD jdhlkdsg jdghjsl jsah dlakjhg djka DGKJHA LGKSJ DHAKJ  sdgjka hdg djghhd jdhgj jdhg"
+        let name = message.sender.displayName
         return NSAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.preferredFont(forTextStyle: .caption1)])
     }
 
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
-        var dateString = formatter.string(from: message.sentDate)
-        //dateString += "dsfjkhdfkjahf dlkjhfdsa kljhflsakjflskajf djh sad jlk hKJDSHLKDSFAHJLF DSKHAFDSL KHFA KLHKJA FHALKFHDL hlkjdsahlfkhasdflkha slk hfdalkhfdlkafds"
+        let dateString = formatter.string(from: message.sentDate)
         return NSAttributedString(string: dateString, attributes: [NSFontAttributeName: UIFont.preferredFont(forTextStyle: .caption2)])
     }
 
@@ -178,28 +177,6 @@ extension ConversationViewController: MessagesLayoutDelegate {
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
 
         return CGSize(width: messagesCollectionView.bounds.width, height: 10)
-    }
-
-    func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
-        switch indexPath.section {
-        case 0, 6: return .cellLeading
-        case 1, 7: return .cellTrailing
-        case 2, 8: return .cellCenter
-        case 3, 9: return .messageLeading
-        case 4, 10: return .messageTrailing
-        default: return .cellCenter
-        }
-    }
-
-    func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
-        switch indexPath.section {
-        case 0, 6: return .cellLeading
-        case 1, 7: return .cellTrailing
-        case 2, 8: return .cellCenter
-        case 3, 9: return .messageLeading
-        case 4, 10: return .messageTrailing
-        default: return .cellCenter
-        }
     }
 
 }

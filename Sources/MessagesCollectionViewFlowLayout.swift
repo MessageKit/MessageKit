@@ -35,6 +35,22 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     open var cellTopLabelInsets: UIEdgeInsets
     open var cellBottomLabelInsets: UIEdgeInsets
 
+    open var avatarAlwaysLeading: Bool {
+        willSet {
+            if newValue {
+                avatarAlwaysTrailing = false
+            }
+        }
+    }
+
+    open var avatarAlwaysTrailing: Bool {
+        willSet {
+            if newValue {
+                avatarAlwaysLeading = false
+            }
+        }
+    }
+
     fileprivate var avatarMessagePadding: CGFloat = 4
 
     fileprivate var messagesCollectionView: MessagesCollectionView? {
@@ -60,6 +76,9 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
         cellTopLabelInsets = .zero
         cellBottomLabelInsets = .zero
+
+        avatarAlwaysLeading = false
+        avatarAlwaysTrailing = false
 
         super.init()
 
@@ -117,7 +136,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         attributes.messageLabelInsets = messageLabelInsets
         attributes.cellTopLabelInsets = cellTopLabelInsets
         attributes.cellBottomLabelInsets = cellBottomLabelInsets
-        attributes.avatarHorizontalAlignment = dataSource.isFromCurrentSender(message: message) ? .cellTrailing : .cellLeading
+        attributes.avatarHorizontalAlignment = avatarHorizontalAlignment(for: message)
 
         let layoutDelegate = messagesCollectionView.messagesLayoutDelegate
         let avatarAlignment = layoutDelegate?.avatarAlignment(for: message, at: indexPath, in: messagesCollectionView) ?? .messageBottom
@@ -153,6 +172,9 @@ extension MessagesCollectionViewFlowLayout {
 
     /// The horizontal alignment for the message: .cellTrailing or .cellLeading
     fileprivate func avatarHorizontalAlignment(for message: MessageType) -> AvatarHorizontalAlignment {
+
+        if avatarAlwaysTrailing { return .cellTrailing }
+        if avatarAlwaysLeading { return .cellLeading }
         
         guard let messagesCollectionView = messagesCollectionView else { return .cellLeading }
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return .cellLeading }
@@ -498,7 +520,7 @@ extension MessagesCollectionViewFlowLayout {
         case (.messageTrailing, .cellTrailing):
             origin.x = attributes.frame.width - attributes.avatarFrame.width - avatarMessagePadding - attributes.cellBottomLabelFrame.width
         case (.messageTrailing, .cellLeading):
-            origin.x = attributes.frame.width - messageToViewEdgePadding - attributes.cellBottomLabelFrame.width
+            origin.x = attributes.avatarFrame.width + avatarMessagePadding + attributes.messageContainerFrame.width - attributes.cellBottomLabelFrame.width
         }
 
         return origin
