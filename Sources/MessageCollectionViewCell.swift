@@ -35,7 +35,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     open var cellTopLabel: MessageLabel = {
         let topLabel = MessageLabel()
         topLabel.enabledDetectors = []
-        //topLabel.backgroundColor = .blue
+        topLabel.backgroundColor = .blue
         return topLabel
     }()
 

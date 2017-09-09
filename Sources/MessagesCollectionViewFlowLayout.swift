@@ -24,6 +24,13 @@
 
 import UIKit
 
+// MARK: - AvatarVerticalAlignment
+
+enum AvatarHorizontalAlignment {
+    case cellLeading
+    case cellTrailing
+}
+
 open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - Properties
@@ -117,7 +124,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         attributes.messageLabelInsets = messageLabelInsets
         attributes.cellTopLabelInsets = cellTopLabelInsets
         attributes.cellBottomLabelInsets = cellBottomLabelInsets
-        attributes.direction = dataSource.isFromCurrentSender(message: message) ? .outgoing : .incoming
+        attributes.avatarHorizontalAlignment = dataSource.isFromCurrentSender(message: message) ? .cellTrailing : .cellLeading
 
         let layoutDelegate = messagesCollectionView.messagesLayoutDelegate
         let avatarPosition = layoutDelegate?.avatarPosition(for: message, at: indexPath, in: messagesCollectionView) ?? .messageBottom
@@ -151,6 +158,15 @@ extension MessagesCollectionViewFlowLayout {
 
     // MARK: - Avatar Calculations
 
+    /// The horizontal alignment for the message: .cellTrailing or .cellLeading
+    fileprivate func avatarHorizontalAlignment(for message: MessageType) -> AvatarHorizontalAlignment {
+        
+        guard let messagesCollectionView = messagesCollectionView else { return .cellLeading }
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return .cellLeading }
+
+        return messagesDataSource.isFromCurrentSender(message: message) ? .cellTrailing : .cellLeading
+    }
+
     /// The size of the avatar view.
     fileprivate func avatarSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
 
@@ -168,10 +184,10 @@ extension MessagesCollectionViewFlowLayout {
         let contentWidth = attributes.frame.size.width
         let avatarWidth = attributes.avatarFrame.size.width
 
-        switch attributes.direction {
-        case .incoming:
+        switch attributes.avatarHorizontalAlignment {
+        case .cellLeading:
             origin.x = 0
-        case .outgoing:
+        case .cellTrailing:
             origin.x = contentWidth - avatarWidth
         }
 
@@ -239,29 +255,15 @@ extension MessagesCollectionViewFlowLayout {
         return messageLabelInsets.top + messageLabelInsets.bottom
     }
 
-    /// The total width for all of the cells content excluding the message container.
-    private func nonMessageContentWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
-
-        var reservedWidth: CGFloat = 0
-
-        let avatarWidth = avatarSize(for: message, at: indexPath).width
-
-        /// Only consider padding if the avatar exists
-        if avatarWidth > 0 {
-            reservedWidth += avatarMessagePadding
-        }
-
-        reservedWidth += avatarWidth
-        reservedWidth += messageToViewEdgePadding
-
-        return reservedWidth
-    }
-
     /// The max width available for the message container.
     private func messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
-        let reservedWidth = nonMessageContentWidth(for: message, at: indexPath) + horizontalMessageInsets
-        let availableWidth = itemWidth - reservedWidth
+        var avatarWidth = avatarSize(for: message, at: indexPath).width
+
+        // Only apply padding if avatar width is greater than zero
+        if avatarWidth > 0 { avatarWidth += avatarMessagePadding }
+
+        let availableWidth = itemWidth - avatarWidth - messageToViewEdgePadding
 
         return availableWidth
     }
@@ -289,20 +291,19 @@ extension MessagesCollectionViewFlowLayout {
     /// The origin for the message container.
     fileprivate func messageContainerOrigin(for attributes: MessagesCollectionViewLayoutAttributes) -> CGPoint {
 
-        let contentWidth = attributes.frame.width
-        let avatarWidth = attributes.avatarFrame.width
-        let messageContainerWidth = attributes.messageContainerFrame.width
-        let cellTopLabelHeight = attributes.cellTopLabelFrame.height
+        var avatarWidth = attributes.avatarFrame.width
+
+        if avatarWidth > 0 { avatarWidth += avatarMessagePadding }
 
         var origin = CGPoint.zero
 
-        switch attributes.direction {
-        case .incoming:
-            origin.x = avatarWidth + avatarMessagePadding
-            origin.y = cellTopLabelHeight
-        case .outgoing:
-            origin.x = contentWidth - avatarWidth - avatarMessagePadding - messageContainerWidth
-            origin.y = cellTopLabelHeight
+        switch attributes.avatarHorizontalAlignment {
+        case .cellLeading:
+            origin.x = avatarWidth
+            origin.y = attributes.cellTopLabelFrame.height
+        case .cellTrailing:
+            origin.x = attributes.frame.width - avatarWidth - attributes.messageContainerFrame.width
+            origin.y = attributes.cellTopLabelFrame.height
         }
 
         return origin
@@ -321,21 +322,43 @@ extension MessagesCollectionViewFlowLayout {
         return cellTopLabelInsets.top + cellTopLabelInsets.bottom
     }
 
-    /// The position for the cell top label.
-    private func cellTopLabelPosition(for message: MessageType, at indexPath: IndexPath) -> CellLabelPosition {
-        guard let messagesCollectionView = messagesCollectionView else { return .cellCenter }
-        guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .cellCenter }
-        let position = layoutDelegate.cellTopLabelPosition(for: message, at: indexPath, in: messagesCollectionView)
-        return position
-    }
-
     /// The max width available for the cell top label.
     private func topLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
-        if topLabelExtendsPastAvatar {
-            return itemWidth - topLabelHorizontalInsets
-        } else {
-            let reservedWidth = nonMessageContentWidth(for: message, at: indexPath) + topLabelHorizontalInsets
-            return itemWidth - reservedWidth
+
+        guard let messagesCollectionView = messagesCollectionView else { return 0 }
+        guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return 0 }
+
+        let labelHorizontal = layoutDelegate.cellTopLabelPosition(for: message, at: indexPath, in: messagesCollectionView)
+        let avatarVertical = layoutDelegate.avatarPosition(for: message, at: indexPath, in: messagesCollectionView)
+        let avatarHorizontal = avatarHorizontalAlignment(for: message)
+
+        var avatarWidth = layoutDelegate.avatarSize(for: message, at: indexPath, in: messagesCollectionView).width
+
+        // Only apply padding is avatar width is greater than zero
+        if avatarWidth > 0 { avatarWidth += avatarMessagePadding }
+
+        switch (labelHorizontal, avatarHorizontal, avatarVertical) {
+
+        case (.cellLeading, .cellTrailing, .cellTop), (.cellTrailing, .cellLeading, .cellTop):
+            return itemWidth - avatarWidth
+
+        case (.cellLeading, _, _), (.cellTrailing, _, _):
+            return itemWidth
+
+        case (.cellCenter, .cellLeading, .cellTop), (.cellCenter, .cellTrailing, .cellTop):
+            return itemWidth - (avatarWidth * 2)
+
+        case (.cellCenter, .cellLeading, _), (.cellCenter, .cellTrailing, _):
+            return itemWidth
+
+        case (.messageTrailing, .cellLeading, .cellTop), (.messageLeading, .cellTrailing, .cellTop):
+            return messageContainerSize(for: message, at: indexPath).width
+
+        case (.messageLeading, .cellLeading, _), (.messageTrailing, .cellTrailing, _):
+            return itemWidth - avatarWidth
+
+        case (.messageLeading, .cellTrailing, _), (.messageTrailing, .cellLeading, _):
+            return messageContainerSize(for: message, at: indexPath).width + avatarWidth
         }
     }
 
@@ -359,33 +382,31 @@ extension MessagesCollectionViewFlowLayout {
     /// The origin for the cell top label.
     fileprivate func cellTopLabelOrigin(for message: MessageType, and attributes: MessagesCollectionViewLayoutAttributes) -> CGPoint {
 
-        let position = cellTopLabelPosition(for: message, at: attributes.indexPath)
+        guard let messagesCollectionView = messagesCollectionView else { return .zero }
+        guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
 
-        var origin: CGPoint = .zero
+        let labelAlignment = layoutDelegate.cellTopLabelPosition(for: message, at: attributes.indexPath, in: messagesCollectionView)
+        let avatarAlignment = avatarHorizontalAlignment(for: message)
 
-        switch position {
-        case .cellTrailing:
-            origin.x = attributes.frame.width - attributes.cellTopLabelFrame.width
-        case .cellLeading:
+        var origin = CGPoint.zero
+
+        switch (labelAlignment, avatarAlignment) {
+        case (.cellLeading, _):
             origin.x = 0
-        case .cellCenter:
-            origin.x = itemWidth / 2 - (attributes.cellTopLabelFrame.width / 2)
-        case .messageTrailing:
-            switch attributes.direction {
-            case .incoming:
-                origin.x = attributes.avatarFrame.width + avatarMessagePadding + attributes.messageContainerFrame.width - attributes.cellTopLabelFrame.width
-            case .outgoing:
-                origin.x = attributes.frame.width - attributes.avatarFrame.width - avatarMessagePadding - attributes.cellTopLabelFrame.width
-            }
-        case .messageLeading:
-            switch attributes.direction {
-            case .incoming:
-                origin.x = attributes.avatarFrame.width + avatarMessagePadding
-            case .outgoing:
-                origin.x = attributes.frame.width - attributes.avatarFrame.width - avatarMessagePadding - attributes.messageContainerFrame.width
-            }
+        case (.cellCenter, _):
+            origin.x = attributes.frame.width / 2 - (attributes.cellTopLabelFrame.width / 2)
+        case (.cellTrailing, _):
+            origin.x = attributes.frame.width - attributes.cellTopLabelFrame.width
+        case (.messageLeading, .cellLeading):
+            origin.x = attributes.avatarFrame.width + avatarMessagePadding
+        case (.messageLeading, .cellTrailing):
+            origin.x = attributes.frame.width - attributes.avatarFrame.width - avatarMessagePadding - attributes.messageContainerFrame.width
+        case (.messageTrailing, .cellTrailing):
+            origin.x = attributes.frame.width - attributes.avatarFrame.width - avatarMessagePadding - attributes.cellTopLabelFrame.width
+        case (.messageTrailing, .cellLeading):
+            origin.x = attributes.frame.width - messageToViewEdgePadding - attributes.cellTopLabelFrame.width
         }
-        
+
         return origin
 
     }
@@ -402,68 +423,45 @@ extension MessagesCollectionViewFlowLayout {
         return cellBottomLabelInsets.top + cellBottomLabelInsets.bottom
     }
 
-    /// The position for the cell bottom label.
-    private func cellBottomLabelPosition(for message: MessageType, at indexPath: IndexPath) -> CellLabelPosition {
-        guard let messagesCollectionView = messagesCollectionView else { return .cellCenter }
-        guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .cellCenter }
-        let position = layoutDelegate.cellBottomLabelPosition(for: message, at: indexPath, in: messagesCollectionView)
-        return position
-    }
-
-    public enum AvatarSide {
-        case cellLeading
-        case cellTrailing
-    }
-
     /// The max with available for the cell bottom label.
     private func bottomLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         guard let messagesCollectionView = messagesCollectionView else { return 0 }
-        guard let dataSource = messagesCollectionView.messagesDataSource else { return 0 }
         guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return 0 }
 
-        let labelPosition = layoutDelegate.cellBottomLabelPosition(for: message, at: indexPath, in: messagesCollectionView)
-        let avatarPosition = layoutDelegate.avatarPosition(for: message, at: indexPath, in: messagesCollectionView)
-        let avatarSide: AvatarSide = dataSource.isFromCurrentSender(message: message) ? .cellTrailing : .cellLeading
-        let avatarWidth = layoutDelegate.avatarSize(for: message, at: indexPath, in: messagesCollectionView).width
+        let labelHorizontal = layoutDelegate.cellBottomLabelPosition(for: message, at: indexPath, in: messagesCollectionView)
+        let avatarVertical = layoutDelegate.avatarPosition(for: message, at: indexPath, in: messagesCollectionView)
+        let avatarHorizontal = avatarHorizontalAlignment(for: message)
 
-        switch (labelPosition, avatarSide, avatarPosition) {
+        var avatarWidth = layoutDelegate.avatarSize(for: message, at: indexPath, in: messagesCollectionView).width
 
-        // Avatar is in cell bottom alignment and on the opposing side of label alignment.
-        // We subtract the avatar width from the available width as to prevent collision.
+        // Only apply padding is avatar width is greater than zero
+        if avatarWidth > 0 { avatarWidth += avatarMessagePadding }
+
+        switch (labelHorizontal, avatarHorizontal, avatarVertical) {
+
         case (.cellLeading, .cellTrailing, .cellBottom), (.cellTrailing, .cellLeading, .cellBottom):
-            return itemWidth - avatarWidth - avatarMessagePadding
+            return itemWidth - avatarWidth
 
-        // Avatar is on same side that label is aligned to.
-        // We aren't going to prioritize the layout of one element over another
-        // -- its a user error -- we return full width.
         case (.cellLeading, _, _), (.cellTrailing, _, _):
             return itemWidth
 
-        // Avatar is in cell bottom position and label is cell centered.
-        // We need to provide equal width so we substract the avatar width from both sides.
         case (.cellCenter, .cellLeading, .cellBottom), (.cellCenter, .cellTrailing, .cellBottom):
-            return itemWidth - ((avatarWidth + avatarMessagePadding) * 2)
+            return itemWidth - (avatarWidth * 2)
 
-        // Avatar is not in cell bottom position when the label is centered.
-        // Here we capture the remaining cases for .cellCenter
         case (.cellCenter, .cellLeading, _), (.cellCenter, .cellTrailing, _):
             return itemWidth
 
-        // Available width is equal to the size of the message
         case (.messageTrailing, .cellLeading, .cellBottom), (.messageLeading, .cellTrailing, .cellBottom):
             return messageContainerSize(for: message, at: indexPath).width
 
-        // Available width begins from message container origin X or max X.
         case (.messageLeading, .cellLeading, _), (.messageTrailing, .cellTrailing, _):
-            return itemWidth - avatarWidth - avatarMessagePadding
+            return itemWidth - avatarWidth
 
-        // Available width is the width of the message + the avatar width offset
         case (.messageLeading, .cellTrailing, _), (.messageTrailing, .cellLeading, _):
-            return messageContainerSize(for: message, at: indexPath).width + avatarWidth + avatarMessagePadding
+            return messageContainerSize(for: message, at: indexPath).width + avatarWidth
 
         }
-
     }
 
     /// The size for the cell bottom label.
@@ -489,14 +487,12 @@ extension MessagesCollectionViewFlowLayout {
         guard let messagesCollectionView = messagesCollectionView else { return .zero }
         guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
 
-        let labelPosition = layoutDelegate.cellBottomLabelPosition(for: message, at: attributes.indexPath, in: messagesCollectionView)
-        let avatarSide: AvatarSide = attributes.direction == .incoming ? .cellLeading : .cellTrailing
+        let labelAlignment = layoutDelegate.cellBottomLabelPosition(for: message, at: attributes.indexPath, in: messagesCollectionView)
+        let avatarAlignment = avatarHorizontalAlignment(for: message)
 
-        var origin: CGPoint = .zero
+        var origin = CGPoint(x: 0, y: attributes.frame.height - attributes.cellBottomLabelFrame.height)
 
-        origin.y = attributes.frame.height - attributes.cellBottomLabelFrame.height
-
-        switch (labelPosition, avatarSide) {
+        switch (labelAlignment, avatarAlignment) {
         case (.cellLeading, _):
             origin.x = 0
         case (.cellCenter, _):

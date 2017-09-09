@@ -28,8 +28,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
 
     // MARK: - Properties
 
-    var direction: MessageDirection = .incoming
-
+    var avatarHorizontalAlignment = AvatarHorizontalAlignment.cellLeading
     var avatarFrame: CGRect = .zero
 
     var messageContainerFrame: CGRect = .zero
@@ -47,7 +46,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
     override func copy(with zone: NSZone? = nil) -> Any {
         // swiftlint:disable force_cast
         let copy = super.copy(with: zone) as! MessagesCollectionViewLayoutAttributes
-        copy.direction = direction
+        copy.avatarHorizontalAlignment = avatarHorizontalAlignment
         copy.avatarFrame = avatarFrame
         copy.messageContainerFrame = messageContainerFrame
         copy.messageLabelFont = messageLabelFont

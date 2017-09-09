@@ -134,7 +134,7 @@ extension ConversationViewController: MessagesDataSource {
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         var name = message.sender.displayName
-        name += ";adslfdfkl;dfjskk jdsaf;lkjdsafj  FDKJA;FSDH dsfkljhadgjkdsghakj  DFGSKJAHGDKLAJHSGD jdhlkdsgjdghjslkjsahdlakjhgdjka DGKJHALGKSJDHAKJ  sdgjkahdg djghhd jdhgj jdhg"
+        //name += ";ads lf dfkl;dfjs kk jdsaf;lkjdsaf j  FDK A;FSDH dsfkl jhadg jkdsg hakj  DFGS KJAHG DKLAJH SGD jdhlkdsg jdghjsl jsah dlakjhg djka DGKJHA LGKSJ DHAKJ  sdgjka hdg djghhd jdhgj jdhg"
         return NSAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.preferredFont(forTextStyle: .caption1)])
     }
 
@@ -181,6 +181,17 @@ extension ConversationViewController: MessagesLayoutDelegate {
     }
 
     func cellBottomLabelPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellLabelPosition {
+        switch indexPath.section {
+        case 0, 6: return .cellLeading
+        case 1, 7: return .cellTrailing
+        case 2, 8: return .cellCenter
+        case 3, 9: return .messageLeading
+        case 4, 10: return .messageTrailing
+        default: return .cellCenter
+        }
+    }
+
+    func cellTopLabelPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellLabelPosition {
         switch indexPath.section {
         case 0, 6: return .cellLeading
         case 1, 7: return .cellTrailing
