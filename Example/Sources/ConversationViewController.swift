@@ -171,7 +171,7 @@ extension ConversationViewController: MessagesDisplayDelegate {
 
 extension ConversationViewController: MessagesLayoutDelegate {
 
-    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
+    func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
         return .messageBottom
     }
 
@@ -180,7 +180,7 @@ extension ConversationViewController: MessagesLayoutDelegate {
         return CGSize(width: messagesCollectionView.bounds.width, height: 10)
     }
 
-    func cellBottomLabelPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellLabelPosition {
+    func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
         switch indexPath.section {
         case 0, 6: return .cellLeading
         case 1, 7: return .cellTrailing
@@ -191,7 +191,7 @@ extension ConversationViewController: MessagesLayoutDelegate {
         }
     }
 
-    func cellTopLabelPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellLabelPosition {
+    func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
         switch indexPath.section {
         case 0, 6: return .cellLeading
         case 1, 7: return .cellTrailing

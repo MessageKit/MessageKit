@@ -26,11 +26,11 @@ import Foundation
 
 public protocol MessagesLayoutDelegate: class {
 
-    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition
+    func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment
 
-    func cellTopLabelPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellLabelPosition
+    func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
 
-    func cellBottomLabelPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellLabelPosition
+    func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
 
     func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
@@ -42,7 +42,7 @@ public protocol MessagesLayoutDelegate: class {
 
 public extension MessagesLayoutDelegate {
 
-    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
+    func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
         return .cellBottom
     }
 
@@ -50,12 +50,12 @@ public extension MessagesLayoutDelegate {
         return CGSize(width: 30, height: 30)
     }
 
-    func cellTopLabelPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellLabelPosition {
+    func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
         guard let dataSource = messagesCollectionView.messagesDataSource else { return .cellCenter }
         return dataSource.isFromCurrentSender(message: message) ? .messageTrailing : .messageLeading
     }
 
-    func cellBottomLabelPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellLabelPosition {
+    func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
         guard let dataSource = messagesCollectionView.messagesDataSource else { return .cellCenter }
         return dataSource.isFromCurrentSender(message: message) ? .messageLeading : .messageTrailing
     }

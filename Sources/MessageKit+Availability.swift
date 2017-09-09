@@ -31,7 +31,7 @@ public protocol MessagesDisplayDataSource {}
 
 // MARK: - MessagesCollectionView
 
-extension MessagesCollectionView {
+public extension MessagesCollectionView {
 
     @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use messageCellDelegate.")
     public weak var messageLabelDelegate: MessageLabelDelegate? {
@@ -42,7 +42,7 @@ extension MessagesCollectionView {
 
 // MARK: - MessagesCollectionViewFlowLayout
 
-extension MessagesCollectionViewFlowLayout {
+public extension MessagesCollectionViewFlowLayout {
 
     @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use avatarSize(for:indexPath:messagesCollectionView)")
     public var incomingAvatarSize: CGSize {
@@ -62,6 +62,53 @@ extension MessagesCollectionViewFlowLayout {
     @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use `cellBottomLabelPosition(for:indexPath:messagesCollectionView)")
     public var bottomLabelExtendsPastAvatar: Bool {
         return false
+    }
+
+}
+
+// MARK: - CellLabelPosition
+
+@available(*, deprecated: 0.7.0, message: "Renamed to LabelAlignment in MessageKit 0.7.0")
+public enum CellLabelPosition {
+
+    case cellTrailing
+    case cellLeading
+    case cellCenter
+    case messageTrailing
+    case messageLeading
+    
+}
+
+// MARK: - Avatar Position
+
+@available(*, deprecated: 0.7.0, message: "Renamed to AvatarAlignment in MessageKit 0.7.0")
+public enum AvatarPosition {
+
+    case cellTop
+    case messageTop
+    case messageCenter
+    case messageBottom
+    case cellBottom
+    
+}
+
+// MARK: - MessagesLayoutDelegate
+
+public extension MessagesLayoutDelegate {
+
+    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use avatarAlignment(for:indexPath:messagesCollectionView)")
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
+        return .cellBottom
+    }
+
+    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use cellTopLabelAlignment(for:indexPath:messagesCollectionView)")
+    func cellTopLabelPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellLabelPosition {
+        return .cellLeading
+    }
+
+    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use cellBottomLabelAlignment(for:indexPath:messagesCollectionView)")
+    func cellBottomLabelPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellLabelPosition {
+        return .cellLeading
     }
 
 }

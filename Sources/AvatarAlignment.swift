@@ -24,7 +24,7 @@
 
 import Foundation
 
-public enum AvatarPosition {
+public enum AvatarAlignment {
 
     case cellTop
     case messageTop

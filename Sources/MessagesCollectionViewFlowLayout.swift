@@ -127,13 +127,13 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         attributes.avatarHorizontalAlignment = dataSource.isFromCurrentSender(message: message) ? .cellTrailing : .cellLeading
 
         let layoutDelegate = messagesCollectionView.messagesLayoutDelegate
-        let avatarPosition = layoutDelegate?.avatarPosition(for: message, at: indexPath, in: messagesCollectionView) ?? .messageBottom
+        let avatarAlignment = layoutDelegate?.avatarAlignment(for: message, at: indexPath, in: messagesCollectionView) ?? .messageBottom
 
         // Now we set the origins for the frames using the attributes object that contains the calculated sizes
         attributes.messageContainerFrame.origin = messageContainerOrigin(for: attributes)
         attributes.cellTopLabelFrame.origin = cellTopLabelOrigin(for: message, and: attributes)
         attributes.cellBottomLabelFrame.origin = cellBottomLabelOrigin(for: message, and: attributes)
-        attributes.avatarFrame.origin = avatarOrigin(for: attributes, with: avatarPosition)
+        attributes.avatarFrame.origin = avatarOrigin(for: attributes, with: avatarAlignment)
 
     }
 
@@ -177,7 +177,7 @@ extension MessagesCollectionViewFlowLayout {
     }
 
     /// The origin for the avatar view.
-    fileprivate func avatarOrigin(for attributes: MessagesCollectionViewLayoutAttributes, with avatarPosition: AvatarPosition) -> CGPoint {
+    fileprivate func avatarOrigin(for attributes: MessagesCollectionViewLayoutAttributes, with avatarAlignment: AvatarAlignment) -> CGPoint {
 
         var origin = CGPoint.zero
 
@@ -197,12 +197,11 @@ extension MessagesCollectionViewFlowLayout {
         let cellBottomLabelHeight = attributes.cellBottomLabelFrame.height
         let messageContainerHeight = attributes.messageContainerFrame.height
 
-        switch avatarPosition {
+        switch avatarAlignment {
         case .cellTop:
-            origin.y = topLabelExtendsPastAvatar ? cellTopLabelHeight : 0
+            origin.y = 0
         case .cellBottom:
             origin.y = contentHeight - avatarHeight
-            if bottomLabelExtendsPastAvatar { origin.y -= cellBottomLabelHeight }
         case .messageTop:
             origin.y = cellTopLabelHeight
         case .messageBottom:
@@ -328,8 +327,8 @@ extension MessagesCollectionViewFlowLayout {
         guard let messagesCollectionView = messagesCollectionView else { return 0 }
         guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return 0 }
 
-        let labelHorizontal = layoutDelegate.cellTopLabelPosition(for: message, at: indexPath, in: messagesCollectionView)
-        let avatarVertical = layoutDelegate.avatarPosition(for: message, at: indexPath, in: messagesCollectionView)
+        let labelHorizontal = layoutDelegate.cellTopLabelAlignment(for: message, at: indexPath, in: messagesCollectionView)
+        let avatarVertical = layoutDelegate.avatarAlignment(for: message, at: indexPath, in: messagesCollectionView)
         let avatarHorizontal = avatarHorizontalAlignment(for: message)
 
         var avatarWidth = layoutDelegate.avatarSize(for: message, at: indexPath, in: messagesCollectionView).width
@@ -385,7 +384,7 @@ extension MessagesCollectionViewFlowLayout {
         guard let messagesCollectionView = messagesCollectionView else { return .zero }
         guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
 
-        let labelAlignment = layoutDelegate.cellTopLabelPosition(for: message, at: attributes.indexPath, in: messagesCollectionView)
+        let labelAlignment = layoutDelegate.cellTopLabelAlignment(for: message, at: attributes.indexPath, in: messagesCollectionView)
         let avatarAlignment = avatarHorizontalAlignment(for: message)
 
         var origin = CGPoint.zero
@@ -429,8 +428,8 @@ extension MessagesCollectionViewFlowLayout {
         guard let messagesCollectionView = messagesCollectionView else { return 0 }
         guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return 0 }
 
-        let labelHorizontal = layoutDelegate.cellBottomLabelPosition(for: message, at: indexPath, in: messagesCollectionView)
-        let avatarVertical = layoutDelegate.avatarPosition(for: message, at: indexPath, in: messagesCollectionView)
+        let labelHorizontal = layoutDelegate.cellBottomLabelAlignment(for: message, at: indexPath, in: messagesCollectionView)
+        let avatarVertical = layoutDelegate.avatarAlignment(for: message, at: indexPath, in: messagesCollectionView)
         let avatarHorizontal = avatarHorizontalAlignment(for: message)
 
         var avatarWidth = layoutDelegate.avatarSize(for: message, at: indexPath, in: messagesCollectionView).width
@@ -487,7 +486,7 @@ extension MessagesCollectionViewFlowLayout {
         guard let messagesCollectionView = messagesCollectionView else { return .zero }
         guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
 
-        let labelAlignment = layoutDelegate.cellBottomLabelPosition(for: message, at: attributes.indexPath, in: messagesCollectionView)
+        let labelAlignment = layoutDelegate.cellBottomLabelAlignment(for: message, at: attributes.indexPath, in: messagesCollectionView)
         let avatarAlignment = avatarHorizontalAlignment(for: message)
 
         var origin = CGPoint(x: 0, y: attributes.frame.height - attributes.cellBottomLabelFrame.height)
@@ -521,13 +520,13 @@ extension MessagesCollectionViewFlowLayout {
         guard let messagesCollectionView = messagesCollectionView else { return 0 }
         guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return 0 }
 
-        let avatarPosition = layoutDelegate.avatarPosition(for: message, at: indexPath, in: messagesCollectionView)
+        let avatarAlignment = layoutDelegate.avatarAlignment(for: message, at: indexPath, in: messagesCollectionView)
 
         let topLabelHeight = cellTopLabelSize(for: message, at: indexPath).height
         let avatarHeight = avatarSize(for: message, at: indexPath).height
         let bottomLabelHeight = cellBottomLabelSize(for: message, at: indexPath).height
 
-        switch avatarPosition {
+        switch avatarAlignment {
         case .cellTop:
             return max(avatarHeight, topLabelHeight) + bottomLabelHeight
         case .cellBottom:

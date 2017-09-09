@@ -24,7 +24,7 @@
 
 import Foundation
 
-public enum CellLabelPosition {
+public enum LabelAlignment {
 
     case cellTrailing
     case cellLeading
