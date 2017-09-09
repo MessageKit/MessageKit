@@ -35,6 +35,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     open var cellTopLabel: MessageLabel = {
         let topLabel = MessageLabel()
         topLabel.enabledDetectors = []
+        //topLabel.backgroundColor = .blue
         return topLabel
     }()
 
@@ -43,6 +44,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     open var cellBottomLabel: MessageLabel = {
         let bottomLabel = MessageLabel()
         bottomLabel.enabledDetectors = []
+        bottomLabel.backgroundColor = .red
         return bottomLabel
     }()
 
@@ -74,6 +76,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         messageContainerView.addSubview(messageLabel)
         contentView.addSubview(avatarView)
         contentView.addSubview(cellBottomLabel)
+        avatarView.layer.zPosition = 1
 
     }
 

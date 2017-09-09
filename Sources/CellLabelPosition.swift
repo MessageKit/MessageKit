@@ -31,6 +31,5 @@ public enum CellLabelPosition {
     case cellCenter
     case messageTrailing
     case messageLeading
-    case messageCenter
 
 }

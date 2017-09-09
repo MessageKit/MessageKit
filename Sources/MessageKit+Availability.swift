@@ -54,4 +54,14 @@ extension MessagesCollectionViewFlowLayout {
         return .zero
     }
 
+    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use `cellTopLabelPosition(for:indexPath:messagesCollectionView)")
+    public var topLabelExtendsPastAvatar: Bool {
+        return false
+    }
+
+    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use `cellBottomLabelPosition(for:indexPath:messagesCollectionView)")
+    public var bottomLabelExtendsPastAvatar: Bool {
+        return false
+    }
+
 }

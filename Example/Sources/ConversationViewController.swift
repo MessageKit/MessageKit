@@ -133,14 +133,16 @@ extension ConversationViewController: MessagesDataSource {
     }
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        let name = message.sender.displayName
+        var name = message.sender.displayName
+        name += ";adslfdfkl;dfjskk jdsaf;lkjdsafj  FDKJA;FSDH dsfkljhadgjkdsghakj  DFGSKJAHGDKLAJHSGD jdhlkdsgjdghjslkjsahdlakjhgdjka DGKJHALGKSJDHAKJ  sdgjkahdg djghhd jdhgj jdhg"
         return NSAttributedString(string: name, attributes: [NSFontAttributeName: UIFont.preferredFont(forTextStyle: .caption1)])
     }
 
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
-        let dateString = formatter.string(from: message.sentDate)
+        var dateString = formatter.string(from: message.sentDate)
+        //dateString += "dsfjkhdfkjahf dlkjhfdsa kljhflsakjflskajf djh sad jlk hKJDSHLKDSFAHJLF DSKHAFDSL KHFA KLHKJA FHALKFHDL hlkjdsahlfkhasdflkha slk hfdalkhfdlkafds"
         return NSAttributedString(string: dateString, attributes: [NSFontAttributeName: UIFont.preferredFont(forTextStyle: .caption2)])
     }
 
@@ -176,6 +178,17 @@ extension ConversationViewController: MessagesLayoutDelegate {
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
 
         return CGSize(width: messagesCollectionView.bounds.width, height: 10)
+    }
+
+    func cellBottomLabelPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellLabelPosition {
+        switch indexPath.section {
+        case 0, 6: return .cellLeading
+        case 1, 7: return .cellTrailing
+        case 2, 8: return .cellCenter
+        case 3, 9: return .messageLeading
+        case 4, 10: return .messageTrailing
+        default: return .cellCenter
+        }
     }
 
 }
