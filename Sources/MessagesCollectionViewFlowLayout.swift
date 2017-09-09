@@ -246,12 +246,12 @@ extension MessagesCollectionViewFlowLayout {
     // MARK: - Message Container Calculations
 
     /// The total value of the horizontal insets for the message label.
-    private var horizontalMessageInsets: CGFloat {
+    private var messageHorizontalInsets: CGFloat {
         return messageLabelInsets.left + messageLabelInsets.right
     }
 
     /// The total value of the vertical insets for the message label.
-    private var verticalMessageInsets: CGFloat {
+    private var messageVerticalInsets: CGFloat {
         return messageLabelInsets.top + messageLabelInsets.bottom
     }
 
@@ -263,7 +263,7 @@ extension MessagesCollectionViewFlowLayout {
         // Only apply padding if avatar width is greater than zero
         if avatarWidth > 0 { avatarWidth += avatarMessagePadding }
 
-        let availableWidth = itemWidth - avatarWidth - messageToViewEdgePadding
+        let availableWidth = itemWidth - avatarWidth - messageToViewEdgePadding - messageHorizontalInsets
 
         return availableWidth
     }
@@ -282,8 +282,8 @@ extension MessagesCollectionViewFlowLayout {
             messageContainerSize = labelSize(for: text, considering: maxWidth)
         }
 
-        messageContainerSize.width += horizontalMessageInsets
-        messageContainerSize.height += verticalMessageInsets
+        messageContainerSize.width += messageHorizontalInsets
+        messageContainerSize.height += messageVerticalInsets
 
         return messageContainerSize
     }
@@ -340,25 +340,25 @@ extension MessagesCollectionViewFlowLayout {
         switch (labelHorizontal, avatarHorizontal, avatarVertical) {
 
         case (.cellLeading, .cellTrailing, .cellTop), (.cellTrailing, .cellLeading, .cellTop):
-            return itemWidth - avatarWidth
+            return itemWidth - avatarWidth - topLabelHorizontalInsets
 
         case (.cellLeading, _, _), (.cellTrailing, _, _):
-            return itemWidth
+            return itemWidth - topLabelHorizontalInsets
 
         case (.cellCenter, .cellLeading, .cellTop), (.cellCenter, .cellTrailing, .cellTop):
-            return itemWidth - (avatarWidth * 2)
+            return itemWidth - (avatarWidth * 2) - topLabelHorizontalInsets
 
         case (.cellCenter, .cellLeading, _), (.cellCenter, .cellTrailing, _):
-            return itemWidth
+            return itemWidth - topLabelHorizontalInsets
 
         case (.messageTrailing, .cellLeading, .cellTop), (.messageLeading, .cellTrailing, .cellTop):
-            return messageContainerSize(for: message, at: indexPath).width
+            return messageContainerSize(for: message, at: indexPath).width - topLabelHorizontalInsets
 
         case (.messageLeading, .cellLeading, _), (.messageTrailing, .cellTrailing, _):
-            return itemWidth - avatarWidth
+            return itemWidth - avatarWidth - topLabelHorizontalInsets
 
         case (.messageLeading, .cellTrailing, _), (.messageTrailing, .cellLeading, _):
-            return messageContainerSize(for: message, at: indexPath).width + avatarWidth
+            return messageContainerSize(for: message, at: indexPath).width + avatarWidth - topLabelHorizontalInsets
         }
     }
 
@@ -441,25 +441,25 @@ extension MessagesCollectionViewFlowLayout {
         switch (labelHorizontal, avatarHorizontal, avatarVertical) {
 
         case (.cellLeading, .cellTrailing, .cellBottom), (.cellTrailing, .cellLeading, .cellBottom):
-            return itemWidth - avatarWidth
+            return itemWidth - avatarWidth - bottomLabelHorizontalInsets
 
         case (.cellLeading, _, _), (.cellTrailing, _, _):
-            return itemWidth
+            return itemWidth - bottomLabelHorizontalInsets
 
         case (.cellCenter, .cellLeading, .cellBottom), (.cellCenter, .cellTrailing, .cellBottom):
-            return itemWidth - (avatarWidth * 2)
+            return itemWidth - (avatarWidth * 2) - bottomLabelHorizontalInsets
 
         case (.cellCenter, .cellLeading, _), (.cellCenter, .cellTrailing, _):
-            return itemWidth
+            return itemWidth - bottomLabelHorizontalInsets
 
         case (.messageTrailing, .cellLeading, .cellBottom), (.messageLeading, .cellTrailing, .cellBottom):
-            return messageContainerSize(for: message, at: indexPath).width
+            return messageContainerSize(for: message, at: indexPath).width - bottomLabelHorizontalInsets
 
         case (.messageLeading, .cellLeading, _), (.messageTrailing, .cellTrailing, _):
-            return itemWidth - avatarWidth
+            return itemWidth - avatarWidth - bottomLabelHorizontalInsets
 
         case (.messageLeading, .cellTrailing, _), (.messageTrailing, .cellLeading, _):
-            return messageContainerSize(for: message, at: indexPath).width + avatarWidth
+            return messageContainerSize(for: message, at: indexPath).width + avatarWidth - bottomLabelHorizontalInsets
 
         }
     }
