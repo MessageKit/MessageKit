@@ -115,17 +115,14 @@ open class MessagesViewController: UIViewController {
        
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
 
-        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .top, relatedBy: .equal,
-                                              toItem: view, attribute: .top, multiplier: 1, constant: 0))
+		let constraints: [NSLayoutConstraint] = [
+			messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
+			messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
-        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .leading, relatedBy: .equal,
-                                              toItem: view, attribute: .leading, multiplier: 1, constant: 0))
-
-        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .trailing, relatedBy: .equal,
-                                              toItem: view, attribute: .trailing, multiplier: 1, constant: 0))
-
-        view.addConstraint(NSLayoutConstraint(item: messagesCollectionView, attribute: .bottom, relatedBy: .equal,
-                                              toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0))
+			messagesCollectionView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor),
+		]
+		NSLayoutConstraint.activate(constraints)
 	}
 
     // MARK: - MessageInputBar
