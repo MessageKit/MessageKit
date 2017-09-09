@@ -24,13 +24,6 @@
 
 import UIKit
 
-// MARK: - AvatarVerticalAlignment
-
-enum AvatarHorizontalAlignment {
-    case cellLeading
-    case cellTrailing
-}
-
 open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - Properties
