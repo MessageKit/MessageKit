@@ -192,20 +192,23 @@ extension MessagesViewController: UICollectionViewDataSource {
         let topLabelText = messagesDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
         let bottomLabelText = messagesDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
 
+        if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {
+
+            let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
+            let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
+            let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
+
+            cell.messageLabel.textColor = textColor
+            cell.messageContainerView.messageColor = messageColor
+            cell.messageContainerView.style = messageStyle
+
+        }
+
+        // Must be set after configuring displayDelegate properties
         cell.avatarView.set(avatar: avatar)
         cell.cellTopLabel.attributedText = topLabelText
         cell.cellBottomLabel.attributedText = bottomLabelText
         cell.configure(with: message)
-
-        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else { return cell }
-
-        let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
-        let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
-        let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
-
-        cell.messageLabel.textColor = textColor
-        cell.messageContainerView.messageColor = messageColor
-        cell.messageContainerView.style = messageStyle
 
 		return cell
 

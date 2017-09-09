@@ -75,13 +75,6 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(avatarView)
         contentView.addSubview(cellBottomLabel)
 
-        cellTopLabel.backgroundColor = .blue
-        cellBottomLabel.backgroundColor = .red
-        contentView.backgroundColor = .yellow
-        messageContainerView.backgroundColor = .purple
-        avatarView.backgroundColor = .cyan
-        messageLabel.backgroundColor = .orange
-
     }
 
     override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
@@ -101,6 +94,15 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         cellBottomLabel.frame = attributes.cellBottomLabelFrame
         cellBottomLabel.textInsets = attributes.cellBottomLabelInsets
 
+    }
+
+    override open func prepareForReuse() {
+        messageLabel.text = nil
+        messageLabel.attributedText = nil
+        cellTopLabel.text = nil
+        cellTopLabel.attributedText = nil
+        cellBottomLabel.text = nil
+        cellBottomLabel.attributedText = nil
     }
 
     public func configure(with message: MessageType) {
