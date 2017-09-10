@@ -25,11 +25,20 @@
 import Foundation
 
 open class AvatarView: UIView {
-
+    
     // MARK: - Properties
-
+    
     open var avatar: Avatar = Avatar()
     open var imageView = UIImageView()
+    private var radius: CGFloat?
+    
+    // MARK: - Overrided Properties
+    open override var frame: CGRect {
+        didSet {
+            imageView.frame = bounds
+            setCorner(radius: self.radius)
+        }
+    }
     
     // MARK: - Initializers
     override init(frame: CGRect) {
@@ -38,17 +47,19 @@ open class AvatarView: UIView {
     }
     
     convenience public init() {
-        let frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        self.init(frame: frame)
-        prepareView()
+        self.init(frame: .zero)
     }
     
     private func getImageFrom(initals: String, withColor color: UIColor = UIColor.white, fontSize: CGFloat = 14) -> UIImage {
-        _ = UIGraphicsBeginImageContext(CGSize(width: 30, height: 30))
+        let width = frame.width
+        let height = frame.height
+        if width == 0 || height == 0 {return #imageLiteral(resourceName: "Steve-Jobs")}
+        
+        _ = UIGraphicsBeginImageContext(CGSize(width: width, height: height))
         let context = UIGraphicsGetCurrentContext()!
         
         //// Text Drawing
-        let textRect = CGRect(x: 5, y: 6, width: 20, height: 20)
+        let textRect = CGRect(x: 5, y: 5, width: width - 10, height: height - 10)
         let textStyle = NSMutableParagraphStyle()
         textStyle.alignment = .center
         let textFontAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: fontSize), NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: textStyle]
@@ -73,9 +84,9 @@ open class AvatarView: UIView {
         contentMode = .scaleAspectFill
         layer.masksToBounds = true
         clipsToBounds = true
-        addSubview(imageView)
         imageView.contentMode = .scaleAspectFill
         imageView.frame = frame
+        addSubview(imageView)
         imageView.image = avatar.image ?? getImageFrom(initals: avatar.initals)
         setCorner(radius: nil)
     }
@@ -96,6 +107,7 @@ open class AvatarView: UIView {
             layer.cornerRadius = frame.height/2
             return
         }
+        self.radius = radius
         layer.cornerRadius = radius
     }
     
