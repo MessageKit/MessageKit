@@ -74,7 +74,7 @@ open class MessagesViewController: UIViewController {
     }
 
     override open func viewDidLayoutSubviews() {
-        messagesCollectionView.contentInset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: messageInputBar.frame.height, right: 0)
+        messagesCollectionView.contentInset.top = topLayoutGuide.length
     }
 
     // MARK: - Initializers
@@ -260,7 +260,8 @@ extension MessagesViewController: UICollectionViewDataSource {
 extension MessagesViewController {
     
     fileprivate func addKeyboardObservers() {
-        
+
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardDidShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
@@ -271,6 +272,7 @@ extension MessagesViewController {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardDidShow, object: nil)
     }
 
     func handleKeyboardDidChangeState(_ notification: Notification) {
@@ -279,6 +281,10 @@ extension MessagesViewController {
         let keyboardFrame = self.view.convert(keyboardEndFrame, from: self.view.window)
 
         switch notification.name {
+        case Notification.Name.UIKeyboardDidShow:
+            // Only runs once
+            messagesCollectionView.contentInset =  UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: messageInputBar.frame.height, right: 0)
+            NotificationCenter.default.removeObserver(self, name: .UIKeyboardDidShow, object: nil)
         case Notification.Name.UIKeyboardDidChangeFrame, Notification.Name.UIKeyboardWillShow:
             if (keyboardFrame.origin.y + keyboardFrame.size.height) > view.frame.size.height {
                 // Hardware keyboard is found
