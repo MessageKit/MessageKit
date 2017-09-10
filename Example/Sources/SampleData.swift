@@ -44,14 +44,9 @@ struct SampleData {
         let msg9String = "Use .attributedText() to add bold, italic, colored text and more..."
 		let msg9Text = NSString(string: msg9String)
 		let msg9AttributedText = NSMutableAttributedString(string: String(msg9Text))
-        msg9AttributedText.addAttribute(NSFontAttributeName, value: UIFont.preferredFont(forTextStyle: .body), range: NSRange(location: 0, length: msg9Text.length))
-		
-		if #available(iOS 9.0, *) {
-			msg9AttributedText.addAttributes([NSFontAttributeName: UIFont.monospacedDigitSystemFont(ofSize: UIFont.systemFontSize, weight: UIFontWeightBold)], range: msg9Text.range(of: ".attributedText()"))
-		} else {
-			msg9AttributedText.addAttributes([NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle], range: msg9Text.range(of: ".attributedText()"))
-		}
 
+        msg9AttributedText.addAttribute(NSFontAttributeName, value: UIFont.preferredFont(forTextStyle: .body), range: NSRange(location: 0, length: msg9Text.length))
+        msg9AttributedText.addAttributes([NSFontAttributeName: UIFont.monospacedDigitSystemFont(ofSize: UIFont.systemFontSize, weight: UIFontWeightBold)], range: msg9Text.range(of: ".attributedText()"))
 		msg9AttributedText.addAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)], range: msg9Text.range(of: "bold"))
 		msg9AttributedText.addAttributes([NSFontAttributeName: UIFont.italicSystemFont(ofSize: UIFont.systemFontSize)], range: msg9Text.range(of: "italic"))
 		msg9AttributedText.addAttributes([NSForegroundColorAttributeName: UIColor.red], range: msg9Text.range(of: "colored"))
@@ -75,15 +70,9 @@ struct SampleData {
 
         return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11, msg12, msg13].map { msg -> MockMessage in
             var msg = msg
-            if msg.sender == Dan {
-                msg.sender = Steven
-            } else {
-                msg.sender = Dan
-            }
+            msg.sender = msg.sender == Dan ? Steven : Dan
             return msg
         }
-
-        //return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11, msg12, msg13]
     }
 
     func getCurrentSender() -> Sender {

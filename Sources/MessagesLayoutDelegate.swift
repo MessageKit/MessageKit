@@ -46,10 +46,6 @@ public extension MessagesLayoutDelegate {
         return .cellBottom
     }
 
-    func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        return CGSize(width: 30, height: 30)
-    }
-
     func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
         guard let dataSource = messagesCollectionView.messagesDataSource else { return .cellCenter }
         return dataSource.isFromCurrentSender(message: message) ? .messageTrailing : .messageLeading
@@ -58,6 +54,10 @@ public extension MessagesLayoutDelegate {
     func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
         guard let dataSource = messagesCollectionView.messagesDataSource else { return .cellCenter }
         return dataSource.isFromCurrentSender(message: message) ? .messageLeading : .messageTrailing
+    }
+
+    func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return CGSize(width: 30, height: 30)
     }
 
     func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
