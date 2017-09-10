@@ -30,11 +30,13 @@ open class MessagesCollectionView: UICollectionView {
 
     open weak var messagesDataSource: MessagesDataSource?
 
+    open weak var messagesDisplayDelegate: MessagesDisplayDelegate?
+
     open weak var messagesLayoutDelegate: MessagesLayoutDelegate?
 
     open weak var messageCellDelegate: MessageCellDelegate?
 
-    open weak var messageLabelDelegate: MessageLabelDelegate?
+    open var showsDateHeaderAfterTimeInterval: TimeInterval = 3600
 
     private var indexPathForLastItem: IndexPath? {
 
@@ -62,12 +64,12 @@ open class MessagesCollectionView: UICollectionView {
         scrollToItem(at: indexPath, at: .bottom, animated: animated)
     }
 
-    open func dequeueMessageHeaderView(withReuseIdentifier identifier: String = "MessageHeader", for indexPath: IndexPath) -> MessageHeaderView {
+    open func dequeueMessageHeaderView(withReuseIdentifier identifier: String = "MessageHeaderView", for indexPath: IndexPath) -> MessageHeaderView {
         let header = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: identifier, for: indexPath)
         return header as? MessageHeaderView ?? MessageHeaderView()
     }
 
-    open func dequeueMessageFooterView(withReuseIdentifier identifier: String = "MessageFooter", for indexPath: IndexPath) -> MessageFooterView {
+    open func dequeueMessageFooterView(withReuseIdentifier identifier: String = "MessageFooterView", for indexPath: IndexPath) -> MessageFooterView {
         let footer = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: identifier, for: indexPath)
         return footer as? MessageFooterView ?? MessageFooterView()
     }

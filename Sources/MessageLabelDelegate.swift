@@ -36,7 +36,7 @@ public protocol MessageLabelDelegate: class {
 
 }
 
-extension MessageLabelDelegate {
+public extension MessageLabelDelegate {
 
     func didSelectAddress(_ addressComponents: [String: String]) {}
 

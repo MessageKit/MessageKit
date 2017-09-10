@@ -24,12 +24,9 @@
 
 import Foundation
 
-public enum AvatarPosition {
+// MARK: - AvatarVerticalAlignment
 
-    case cellTop
-    case messageTop
-    case messageCenter
-    case messageBottom
-    case cellBottom
-
+internal enum AvatarHorizontalAlignment {
+    case cellLeading
+    case cellTrailing
 }
