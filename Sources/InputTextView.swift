@@ -1,18 +1,18 @@
 /*
  MIT License
- 
+
  Copyright (c) 2017 MessageKit
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,92 +28,99 @@ open class InputTextView: UITextView {
 
     // MARK: - Properties
 
-    open var placeholder: NSString? {
+    open let placeholderLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textColor = .lightGray
+        label.text = "New Message"
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private var placeholderLabelConstraintSet: NSLayoutConstraintSet?
+
+    open var placeholder: String? = "New Message" {
         didSet {
-            guard placeholder != oldValue else { return }
-            setNeedsDisplay()
+            placeholderLabel.text = placeholder
         }
     }
 
-    open var placeholderTextColor: UIColor = .lightGray {
+    open var placeholderTextColor: UIColor? = .lightGray {
         didSet {
-            guard placeholderTextColor != oldValue else { return }
-            setNeedsDisplay()
+            placeholderLabel.textColor = placeholderTextColor
         }
     }
 
-    open var placeholderInsets: UIEdgeInsets = UIEdgeInsets(top: 7,
-                                                            left: 5,
-                                                            bottom: 7,
-                                                            right: 5) {
+    override open var font: UIFont! {
         didSet {
-            guard placeholderInsets != oldValue else { return }
-            setNeedsDisplay()
+            placeholderLabel.font = font
         }
     }
 
-    private var isPlaceholderVisibile = false
+    override open var textAlignment: NSTextAlignment {
+        didSet {
+            placeholderLabel.textAlignment = textAlignment
+        }
+    }
+
+    open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 7, bottom: 4, right: 4) {
+        didSet {
+            updateConstraintsForPlaceholderLabel()
+        }
+    }
+
+    public weak var messageInputBar: MessageInputBar?
 
     // MARK: - Initializers
 
+    public convenience init() {
+        self.init(frame: .zero)
+    }
+
     override public init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
-        addObservers()
+        setup()
     }
 
     required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        addObservers()
+        fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+    open func setup() {
+
+        font = UIFont.preferredFont(forTextStyle: .body)
+        textContainerInset = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+        isScrollEnabled = false
+        layer.cornerRadius = 5.0
+        layer.borderWidth = 1.25
+        layer.borderColor = UIColor.lightGray.cgColor
+
+        addSubviews()
+        addConstraints()
     }
 
-    // MARK: - Methods
+    private func addSubviews() {
 
-    override open func draw(_ rect: CGRect) {
-        super.draw(rect)
-
-        guard text.isEmpty, let placeholder = placeholder else { return }
-
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = textAlignment
-
-        var attributes: [String: Any] = [
-            NSForegroundColorAttributeName: placeholderTextColor,
-            NSParagraphStyleAttributeName: paragraphStyle
-        ]
-        if let font = font {
-            attributes[NSFontAttributeName] = font
-        }
-
-        placeholder.draw(in: UIEdgeInsetsInsetRect(rect, placeholderInsets),
-                         withAttributes: attributes)
-        
-        isPlaceholderVisibile = true
-
+        addSubview(placeholderLabel)
     }
 
-    fileprivate func addObservers() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(textDidChange),
-                                               name: Notification.Name.UITextViewTextDidChange,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(self.orientationChanged(notification:)),
-                                               name: Notification.Name.UIDeviceOrientationDidChange,
-                                               object: nil)
+    private func addConstraints() {
+
+        placeholderLabelConstraintSet = NSLayoutConstraintSet(
+            top:    placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: placeholderLabelInsets.top),
+            bottom: placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -placeholderLabelInsets.bottom),
+            left:   placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderLabelInsets.left),
+            right:  placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -placeholderLabelInsets.right)
+            ).activate()
     }
 
-    func textDidChange(notification: Notification) {
-        guard text.isEmpty || isPlaceholderVisibile else { return }
-        setNeedsDisplay()
-        isPlaceholderVisibile = false
-    }
-    
-    func orientationChanged(notification: Notification) {
-        setNeedsDisplay()
+    private func updateConstraintsForPlaceholderLabel() {
+
+        placeholderLabelConstraintSet?.top?.constant = placeholderLabelInsets.top
+        placeholderLabelConstraintSet?.bottom?.constant = -placeholderLabelInsets.bottom
+        placeholderLabelConstraintSet?.left?.constant = placeholderLabelInsets.left
+        placeholderLabelConstraintSet?.right?.constant = -placeholderLabelInsets.bottom
     }
 
 }

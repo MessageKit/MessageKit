@@ -41,5 +41,4 @@ extension NSAttributedString {
         return rect.width
         
     }
-
 }

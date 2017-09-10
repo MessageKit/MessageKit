@@ -23,24 +23,36 @@
  */
 
 import Foundation
-import UIKit
 
-public protocol MessageInputBarDelegate: class {
+class TestMessagesViewControllerModel: MessagesViewController, MessagesDisplayDataSource {
     
-    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String)
+    var messageList: [TestMessage] = []
     
-    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize)
+    static let sender1 = Sender(id: "1", displayName: "Dan")
+    static let sender2 = Sender(id: "2", displayName: "jobs")
     
-    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String)
-
+    let testMessage1 = TestMessage(text: "Hi", sender: sender1, messageId: "asdf")
+    let testMessage2 = TestMessage(text: "sup", sender: sender2, messageId: "dddf")
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        messageList = [testMessage1, testMessage2]
+        self.messagesCollectionView.messagesDataSource = self
+    }
 }
 
-public extension MessageInputBarDelegate {
+// - MARK: MessagesDataSource conformace
+extension TestMessagesViewControllerModel: MessagesDataSource {
     
-    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {}
+    func currentSender() -> Sender {
+        return Sender(id: "1", displayName: "Dan")
+    }
     
-    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize) {}
+    func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int {
+        return messageList.count
+    }
     
-    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String) {}
-
+    func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
+        return messageList[indexPath.section]
+    }
 }

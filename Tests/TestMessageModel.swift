@@ -23,24 +23,18 @@
  */
 
 import Foundation
-import UIKit
 
-public protocol MessageInputBarDelegate: class {
+struct TestMessage: MessageType {
+    var messageId: String
+    var sender: Sender
+    var sentDate: Date
+    var data: MessageData
     
-    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String)
+    init(text: String, sender: Sender, messageId: String) {
+        data = .text(text)
+        self.sender = sender
+        self.messageId = messageId
+        self.sentDate = Date()
+    }
     
-    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize)
-    
-    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String)
-
-}
-
-public extension MessageInputBarDelegate {
-    
-    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {}
-    
-    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize) {}
-    
-    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String) {}
-
 }

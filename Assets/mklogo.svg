@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1000px" height="230px" viewBox="0 0 1000 230" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
+    <title>mklogo</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#4DF069" offset="0%"></stop>
+            <stop stop-color="#3CBD51" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="mklogo">
+            <rect id="Rectangle-4" fill="url(#linearGradient-1)" x="0" y="0" width="1000" height="230"></rect>
+            <g id="Group-2" transform="translate(122.000000, 31.000000)" fill="#FFFFFF">
+                <g id="Rectangle-3" transform="translate(0.000000, 22.000000)">
+                    <path d="M62.5,1.62400475e-13 L109.194404,1.62400475e-13 L109.194404,1.63424829e-13 C143.436059,1.57134722e-13 171.194404,27.7583455 171.194404,62 L171.194404,75.8404657 C171.470654,87.6565945 173.311485,96.6656226 176.716899,102.86755 C180.122313,109.069477 186.550013,116.44696 196,125 L171.194404,125 L62.5,125 L62.5,125 C27.9822031,125 4.22721094e-15,97.0177969 0,62.5 L0,62.5 L0,62.5 C-4.22721094e-15,27.9822031 27.9822031,1.69765677e-13 62.5,1.63424829e-13 L62.5,1.62400475e-13 Z M54.8403497,36.2318841 L54.8403497,45.2898551 L131.331467,45.2898551 L131.331467,36.2318841 L54.8403497,36.2318841 Z M36.5262602,57.9710145 L36.5262602,67.0289855 L113.017377,67.0289855 L113.017377,57.9710145 L36.5262602,57.9710145 Z M54.8403497,79.7101449 L54.8403497,88.7681159 L131.331467,88.7681159 L131.331467,79.7101449 L54.8403497,79.7101449 Z" id="Combined-Shape"></path>
+                </g>
+                <g id="Group" transform="translate(232.000000, 0.000000)">
+                    <text id="MessageKit" font-family="SFProDisplay-Regular, SF Pro Display" font-size="100" font-weight="normal" letter-spacing="3.0999999">
+                        <tspan x="0" y="95">MessageKi</tspan>
+                        <tspan x="493.573827" y="95">t</tspan>
+                    </text>
+                    <text id="An-elegant-messages" font-family="SFProDisplay-Light, SF Pro Display" font-size="33.5" font-weight="300">
+                        <tspan x="0" y="148">An elegant messages UI library for iOS</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

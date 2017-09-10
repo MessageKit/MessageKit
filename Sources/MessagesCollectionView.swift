@@ -34,12 +34,12 @@ open class MessagesCollectionView: UICollectionView {
 
     open weak var messageCellDelegate: MessageCellDelegate?
 
-    //open weak var messagesDisplayDataSource: MessagesDisplayDataSource?
+    open weak var messageLabelDelegate: MessageLabelDelegate?
 
-    var indexPathForLastItem: IndexPath? {
+    private var indexPathForLastItem: IndexPath? {
 
         let lastSection = numberOfSections > 0 ? numberOfSections - 1 : 0
-        guard numberOfItems(inSection: lastSection) > 0 else { return nil }
+        guard lastSection > 0, numberOfItems(inSection: lastSection) > 0 else { return nil }
         return IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
 
     }
@@ -50,14 +50,14 @@ open class MessagesCollectionView: UICollectionView {
         super.init(frame: frame, collectionViewLayout: layout)
         backgroundColor = .white
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Methods
 
-    func scrollToBottom(animated: Bool = false) {
+    public func scrollToBottom(animated: Bool = false) {
         guard let indexPath = indexPathForLastItem else { return }
         scrollToItem(at: indexPath, at: .bottom, animated: animated)
     }

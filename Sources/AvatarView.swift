@@ -25,11 +25,13 @@
 import Foundation
 
 open class AvatarView: UIView {
+
     // MARK: - Properties
-    internal var avatar: Avatar = Avatar()
-    internal var imageView = UIImageView()
+
+    open var avatar: Avatar = Avatar()
+    open var imageView = UIImageView()
     
-    // MARK: - initializers
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         prepareView()
@@ -41,7 +43,7 @@ open class AvatarView: UIView {
         prepareView()
     }
     
-    func getImageFrom(initals: String, withColor color: UIColor = UIColor.white, fontSize: CGFloat = 14) -> UIImage {
+    private func getImageFrom(initals: String, withColor color: UIColor = UIColor.white, fontSize: CGFloat = 14) -> UIImage {
         _ = UIGraphicsBeginImageContext(CGSize(width: 30, height: 30))
         let context = UIGraphicsGetCurrentContext()!
         
@@ -64,7 +66,7 @@ open class AvatarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - internal methods
+    // MARK: - Internal methods
     
     internal func prepareView() {
         setBackground(color: UIColor.gray)

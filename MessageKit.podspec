@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
    s.name = 'MessageKit'
-   s.version = '0.3.0'
+   s.version = '0.6.0'
    s.license = { :type => "MIT", :file => "LICENSE.md" }
 
    s.summary = 'An elegant messages UI library for iOS.'
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
       "SWIFT_VERSION" => "3.0",
    }
 
-   s.ios.deployment_target = '8.0'
+   s.ios.deployment_target = '9.0'
 
    s.requires_arc = true
 end

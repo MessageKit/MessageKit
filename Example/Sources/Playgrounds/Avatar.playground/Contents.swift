@@ -13,12 +13,12 @@ var avatarView = AvatarView()
 //: By default its a circlular avatar with a gray background and initals of "?"
 
 //: Create an avatar object and set it for the view.
-//var avatarObject = Avatar(image: testImage)
-//avatarView.set(avatar: avatarObject)
+var avatarObject = Avatar(image: testImage)
+avatarView.set(avatar: avatarObject)
 
 //: If you don't have a picture for the user you can pass in there initals instead.
-//avatarObject = Avatar(initals: "DL")
-//avatarView.set(avatar: avatarObject)
+avatarObject = Avatar(initals: "DL")
+avatarView.set(avatar: avatarObject)
 
 //: Want rounded squares instead of circles just adjust the radius with the method .setCorner(radius: CGFLoat)`.
 //avatarView.setCorner(radius: 5)
