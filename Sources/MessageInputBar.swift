@@ -206,7 +206,8 @@ open class MessageInputBar: UIView {
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        setup()
     }
     
     deinit {
@@ -218,7 +219,7 @@ open class MessageInputBar: UIView {
     open func setup() {
         
         backgroundColor = .inputBarGray
-        autoresizingMask = [.flexibleHeight, .flexibleBottomMargin]
+        autoresizingMask = [.flexibleHeight]
         setupSubviews()
         setupConstraints()
         setupObservers()
@@ -448,5 +449,11 @@ open class MessageInputBar: UIView {
         delegate?.messageInputBar(self, didPressSendButtonWith: inputTextView.text)
         textViewDidChange()
     }
+}
 
+extension MessageInputBar {
+    
+    func createCopy() -> MessageInputBar? {
+        return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as? MessageInputBar
+    }
 }

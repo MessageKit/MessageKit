@@ -24,7 +24,7 @@
 
 import Foundation
 
-class TestMessagesViewControllerModel: MessagesViewController, MessagesDisplayDataSource {
+class TestMessagesViewControllerModel: MessagesViewController, MessagesDisplayDelegate {
     
     var messageList: [TestMessage] = []
     

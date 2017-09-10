@@ -30,14 +30,16 @@ open class MessagesViewController: UIViewController {
 
 	open var messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
 
-	open var messageInputBar = MessageInputBar()
+    open var messageInputBar = MessageInputBar()
 
+    private var messageInputBarCopy: MessageInputBar?
+    
 	override open var canBecomeFirstResponder: Bool {
 		return true
 	}
 
 	override open var inputAccessoryView: UIView? {
-		return messageInputBar
+        return messageInputBar
 	}
 
     open override var shouldAutorotate: Bool {
@@ -55,26 +57,24 @@ open class MessagesViewController: UIViewController {
 
 		setupSubviews()
 		setupConstraints()
-
-        registerReusableCells()
-        registerReusableHeaders()
-        registerReusableFooters()
-
+        registerReusableViews()
 		setupDelegates()
-        
-        // https://stackoverflow.com/questions/31049651/uitextview-as-inputaccessoryview-doesnt-render-text-until-after-animation
-        // Calling this on the root view avoids a side effect where the inputAccessoryView dissapears after tap
-        //view.snapshotView(afterScreenUpdates: true)
 
 	}
 
-    override open func viewDidLayoutSubviews() {
-        messagesCollectionView.contentInset = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: messageInputBar.frame.height, right: 0)
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupMessageInputBarCopy()
     }
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         addKeyboardObservers()
+        removeMessageInputBarCopy()
+    }
+
+    override open func viewDidLayoutSubviews() {
+        messagesCollectionView.contentInset.top = topLayoutGuide.length
     }
 
     // MARK: - Initializers
@@ -90,20 +90,21 @@ open class MessagesViewController: UIViewController {
 		messagesCollectionView.dataSource = self
 	}
 
-    open func registerReusableCells() {
-        messagesCollectionView.register(MessageCollectionViewCell.self, forCellWithReuseIdentifier: "MessageCell")
-    }
+    private func registerReusableViews() {
+        messagesCollectionView.register(MessageCollectionViewCell.self,
+                                        forCellWithReuseIdentifier: "MessageCell")
 
-    open func registerReusableFooters() {
         messagesCollectionView.register(MessageFooterView.self,
                                         forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
-                                        withReuseIdentifier: "MessageFooter")
-    }
+                                        withReuseIdentifier: "MessageFooterView")
 
-    open func registerReusableHeaders() {
         messagesCollectionView.register(MessageHeaderView.self,
                                         forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                                        withReuseIdentifier: "MessageHeader")
+                                        withReuseIdentifier: "MessageHeaderView")
+
+        messagesCollectionView.register(MessageDateHeaderView.self,
+                                        forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
+                                        withReuseIdentifier: "MessageDateHeaderView")
     }
 
 	private func setupSubviews() {
@@ -127,6 +128,20 @@ open class MessagesViewController: UIViewController {
                                               toItem: bottomLayoutGuide, attribute: .top, multiplier: 1, constant: 0))
 	}
 
+    // MARK: - MessageInputBar
+    // Fixes bug where MessageInputBar text renders after viewDidAppear
+
+    private func setupMessageInputBarCopy() {
+        messageInputBarCopy = messageInputBar.createCopy()
+        guard let copy = messageInputBarCopy else { return }
+        view.addSubview(copy)
+        copy.addConstraints(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+    }
+
+    private func removeMessageInputBarCopy() {
+        messageInputBarCopy?.removeFromSuperview()
+        messageInputBarCopy = nil
+    }
 }
 
 // MARK: - UICollectionViewDelegate & UICollectionViewDelegateFlowLayout Conformance
@@ -170,30 +185,29 @@ extension MessagesViewController: UICollectionViewDataSource {
             if cell.delegate == nil { cell.delegate = cellDelegate }
         }
 
-        if let messageLabelDelegate = messagesCollectionView.messageLabelDelegate {
-            if cell.messageLabel.delegate == nil { cell.messageLabel.delegate = messageLabelDelegate }
-        }
-
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return cell }
 
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        let avatar = messagesDataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
+        let topLabelText = messagesDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
+        let bottomLabelText = messagesDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
 
-        if let displayDataSource = messagesDataSource as? MessagesDisplayDataSource {
+        if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {
 
-            let messageColor = displayDataSource.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
-            let textColor = displayDataSource.textColor(for: message, at: indexPath, in: messagesCollectionView)
-            let avatar = displayDataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
-            let topLabelText = displayDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
-            let bottomLabelText = displayDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
+            let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
+            let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
+            let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
 
-            cell.avatarView.set(avatar: avatar)
             cell.messageLabel.textColor = textColor
-            cell.messageContainerView.backgroundColor = messageColor
-            cell.cellTopLabel.attributedText = topLabelText
-            cell.cellBottomLabel.attributedText = bottomLabelText
+            cell.messageContainerView.messageColor = messageColor
+            cell.messageContainerView.style = messageStyle
 
         }
 
+        // Must be set after configuring displayDelegate properties
+        cell.avatarView.set(avatar: avatar)
+        cell.cellTopLabel.attributedText = topLabelText
+        cell.cellBottomLabel.attributedText = bottomLabelText
         cell.configure(with: message)
 
 		return cell
@@ -203,15 +217,16 @@ extension MessagesViewController: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return UICollectionReusableView() }
-        guard let displayDataSource = messagesCollectionView.messagesDataSource as? MessagesDisplayDataSource else { return UICollectionReusableView() }
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return UICollectionReusableView() }
+        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else { return UICollectionReusableView() }
 
-        let message = displayDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
         switch kind {
         case UICollectionElementKindSectionHeader:
-            return displayDataSource.messageHeaderView(for: message, at: indexPath, in: messagesCollectionView) ?? MessageHeaderView()
+            return displayDelegate.messageHeaderView(for: message, at: indexPath, in: messagesCollectionView) ?? MessageHeaderView()
         case UICollectionElementKindSectionFooter:
-            return displayDataSource.messageFooterView(for: message, at: indexPath, in: messagesCollectionView) ?? MessageFooterView()
+            return displayDelegate.messageFooterView(for: message, at: indexPath, in: messagesCollectionView) ?? MessageFooterView()
         default:
             fatalError("Unrecognized element of kind: \(kind)")
         }
@@ -245,7 +260,8 @@ extension MessagesViewController: UICollectionViewDataSource {
 extension MessagesViewController {
     
     fileprivate func addKeyboardObservers() {
-        
+
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardDidShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
@@ -256,6 +272,7 @@ extension MessagesViewController {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardDidShow, object: nil)
     }
 
     func handleKeyboardDidChangeState(_ notification: Notification) {
@@ -264,6 +281,10 @@ extension MessagesViewController {
         let keyboardFrame = self.view.convert(keyboardEndFrame, from: self.view.window)
 
         switch notification.name {
+        case Notification.Name.UIKeyboardDidShow:
+            // Only runs once
+            messagesCollectionView.contentInset =  UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: messageInputBar.frame.height, right: 0)
+            NotificationCenter.default.removeObserver(self, name: .UIKeyboardDidShow, object: nil)
         case Notification.Name.UIKeyboardDidChangeFrame, Notification.Name.UIKeyboardWillShow:
             if (keyboardFrame.origin.y + keyboardFrame.size.height) > view.frame.size.height {
                 // Hardware keyboard is found

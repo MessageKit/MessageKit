@@ -35,12 +35,11 @@ class ConversationViewController: MessagesViewController {
         messageList = SampleData().getMessages()
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
-
+        messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
-        messagesCollectionView.messageLabelDelegate = self
         messageInputBar.delegate = self
-        
-        setupInputBar()
+
+        //setupInputBar()
     }
     
     func setupInputBar() {
@@ -130,26 +129,8 @@ extension ConversationViewController: MessagesDataSource {
         return messageList[indexPath.section]
     }
 
-}
-
-// MARK: - MessagesDisplayDataSource
-
-extension ConversationViewController: MessagesDisplayDataSource {
-
     func avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
         return SampleData().getAvatarFor(sender: message.sender)
-    }
-
-    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
-        return .messageTop
-    }
-
-    func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
-        return messagesCollectionView.dequeueMessageHeaderView(for: indexPath)
-    }
-
-    func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView? {
-        return messagesCollectionView.dequeueMessageFooterView(for: indexPath)
     }
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
@@ -166,16 +147,36 @@ extension ConversationViewController: MessagesDisplayDataSource {
 
 }
 
+// MARK: - MessagesDisplayDelegate
+
+extension ConversationViewController: MessagesDisplayDelegate {
+
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return isFromCurrentSender(message: message) ? .white : .darkText
+    }
+
+    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
+        let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
+        return .bubbleTail(corner, .curved)
+    }
+
+    func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView? {
+        return messagesCollectionView.dequeueMessageFooterView(for: indexPath)
+    }
+
+}
+
 // MARK: - MessagesLayoutDelegate
 
 extension ConversationViewController: MessagesLayoutDelegate {
 
-    func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        return CGSize(width: messagesCollectionView.bounds.width, height: 4)
+    func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
+        return .messageBottom
     }
 
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        return CGSize(width: messagesCollectionView.bounds.width, height: 4)
+
+        return CGSize(width: messagesCollectionView.bounds.width, height: 10)
     }
 
 }

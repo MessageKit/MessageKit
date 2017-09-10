@@ -37,6 +37,12 @@ open class InputTextView: UITextView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    open override var text: String! {
+        didSet {
+            placeholderLabel.isHidden = !text.isEmpty
+        }
+    }
 
     private var placeholderLabelConstraintSet: NSLayoutConstraintSet?
 
@@ -84,7 +90,8 @@ open class InputTextView: UITextView {
     }
 
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        setup()
     }
 
     open func setup() {

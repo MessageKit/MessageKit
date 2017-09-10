@@ -28,12 +28,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Properties
 
-    open var messageContainerView: UIView = {
-        let messageContainerView = UIView()
-        messageContainerView.layer.cornerRadius = 12.0
-        messageContainerView.layer.masksToBounds = true
-        return messageContainerView
-    }()
+    open var messageContainerView: MessageContainerView = MessageContainerView()
 
     open var avatarView: AvatarView = AvatarView()
 
@@ -51,7 +46,11 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         return bottomLabel
     }()
 
-    open weak var delegate: MessageCellDelegate?
+    open weak var delegate: MessageCellDelegate? {
+        didSet {
+            messageLabel.delegate = delegate
+        }
+    }
 
     // MARK: - Initializer
 
@@ -95,9 +94,15 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         cellBottomLabel.frame = attributes.cellBottomLabelFrame
         cellBottomLabel.textInsets = attributes.cellBottomLabelInsets
 
-        cellTopLabel.textAlignment = attributes.direction == .incoming ? .left : .right
-        cellBottomLabel.textAlignment = attributes.direction == .incoming ? .right : .left
+    }
 
+    override open func prepareForReuse() {
+        messageLabel.text = nil
+        messageLabel.attributedText = nil
+        cellTopLabel.text = nil
+        cellTopLabel.attributedText = nil
+        cellBottomLabel.text = nil
+        cellBottomLabel.attributedText = nil
     }
 
     public func configure(with message: MessageType) {
@@ -148,4 +153,5 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     func didTapBottomLabel() {
         delegate?.didTapBottomLabel(in: self)
     }
+
 }
