@@ -28,7 +28,7 @@ open class AvatarView: UIView {
     
     // MARK: - Properties
     
-    var adjustsFontSizeToFitWidth = false
+    public var adjustsFontSizeToFitWidth = true
     open var avatar: Avatar = Avatar()
     open var imageView = UIImageView()
     private var radius: CGFloat?
@@ -61,8 +61,7 @@ open class AvatarView: UIView {
         let context = UIGraphicsGetCurrentContext()!
         
         //// Text Drawing
-//        let textRect = CGRect(x: 5, y: 5, width: width - 10, height: height - 10)
-        let textRect = calculateTextRect(outerViewWidth: width)
+        let textRect = calculateTextRect(outerViewWidth: width, outerViewHeight: height)
         if adjustsFontSizeToFitWidth,
             initals.width(considering: textRect.height, and: font) > textRect.width {
             let newFontSize = calculateFontSize(text: initals, font: font, width: textRect.width, height: textRect.height)
@@ -97,14 +96,20 @@ open class AvatarView: UIView {
      Calculates the inner circle's width.
      Assumption: Corner radius cannot be more than width/2 (this creates circle)
     */
-    private func calculateTextRect(outerViewWidth: CGFloat) -> CGRect {
+    private func calculateTextRect(outerViewWidth: CGFloat, outerViewHeight: CGFloat) -> CGRect {
         guard outerViewWidth > 0 else {
             return CGRect.zero
         }
+        let shortEdge = min(outerViewHeight, outerViewWidth)
         // Converts degree to radian degree and calculate the
-        let edgeLenght = outerViewWidth * sin(CGFloat(45).degreesToRadians)
-        let start = (outerViewWidth - edgeLenght)/2
-        return CGRect(x: start, y: start, width: edgeLenght, height: edgeLenght)
+        // Assumes, it is a perfect circle based on the shorter part of ellipsoid
+        // calculate a rectangle
+        let w = shortEdge * sin(CGFloat(45).degreesToRadians) * 2
+        let h = shortEdge * cos(CGFloat(45).degreesToRadians) * 2
+        let startX = (outerViewWidth - w)/2
+        let startY = (outerViewHeight - h)/2
+        // In case the font exactly fits to the region, put 2 pixel both left and right
+        return CGRect(x: startX+2, y: startY, width: w-4, height: h)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -138,7 +143,8 @@ open class AvatarView: UIView {
     open func setCorner(radius: CGFloat?) {
         guard let radius = radius else {
             //if corner radius not set default to Circle
-            layer.cornerRadius = frame.height/2
+            let cornerRadius = min(frame.width, frame.height)
+            layer.cornerRadius = cornerRadius/2
             return
         }
         self.radius = radius
