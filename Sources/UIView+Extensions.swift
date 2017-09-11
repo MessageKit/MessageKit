@@ -31,10 +31,14 @@ extension UIView {
             return
         }
         translatesAutoresizingMaskIntoConstraints = false
-        leftAnchor.constraint(equalTo: superview.leftAnchor).isActive = true
-        rightAnchor.constraint(equalTo: superview.rightAnchor).isActive = true
-        topAnchor.constraint(equalTo: superview.topAnchor).isActive = true
-        bottomAnchor.constraint(equalTo: superview.bottomAnchor).isActive = true
+
+		let constraints: [NSLayoutConstraint] = [
+			leftAnchor.constraint(equalTo: superview.leftAnchor),
+			rightAnchor.constraint(equalTo: superview.rightAnchor),
+			topAnchor.constraint(equalTo: superview.topAnchor),
+			bottomAnchor.constraint(equalTo: superview.bottomAnchor),
+			]
+		NSLayoutConstraint.activate(constraints)
     }
 
     @discardableResult
@@ -83,7 +87,7 @@ extension UIView {
             constraints.append(constraint)
         }
         
-        constraints.forEach { $0.isActive = true }
+        NSLayoutConstraint.activate(constraints)
         return constraints
     }
 }
