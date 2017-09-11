@@ -7,6 +7,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ## Upcoming release
 ----------------
 
+## [Prerelease] 0.7.1
+
+- Fixes missing asset bundle resources in framework.
+
 ## [Prerelease] 0.7.0
 
 This release closes the [0.7 milestone](https://github.com/MessageKit/MessageKit/milestone/8?closed=1)
