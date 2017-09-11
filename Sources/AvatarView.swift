@@ -28,6 +28,7 @@ open class AvatarView: UIView {
     
     // MARK: - Properties
     
+    var adjustsFontSizeToFitWidth = false
     open var avatar: Avatar = Avatar()
     open var imageView = UIImageView()
     private var radius: CGFloat?
@@ -41,7 +42,7 @@ open class AvatarView: UIView {
     }
     
     // MARK: - Initializers
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         prepareView()
     }
@@ -53,16 +54,24 @@ open class AvatarView: UIView {
     private func getImageFrom(initals: String, withColor color: UIColor = UIColor.white, fontSize: CGFloat = 14) -> UIImage {
         let width = frame.width
         let height = frame.height
-        if width == 0 || height == 0 {return #imageLiteral(resourceName: "Steve-Jobs")}
+        if width == 0 || height == 0 {return UIImage()}
+        var font = UIFont.systemFont(ofSize: fontSize)
         
         _ = UIGraphicsBeginImageContext(CGSize(width: width, height: height))
         let context = UIGraphicsGetCurrentContext()!
         
         //// Text Drawing
-        let textRect = CGRect(x: 5, y: 5, width: width - 10, height: height - 10)
+//        let textRect = CGRect(x: 5, y: 5, width: width - 10, height: height - 10)
+        let textRect = calculateTextRect(outerViewWidth: width)
+        if adjustsFontSizeToFitWidth,
+            initals.width(considering: textRect.height, and: font) > textRect.width {
+            let newFontSize = calculateFontSize(text: initals, font: font, width: textRect.width, height: textRect.height)
+            font = UIFont.systemFont(ofSize: newFontSize)
+        }
+        
         let textStyle = NSMutableParagraphStyle()
         textStyle.alignment = .center
-        let textFontAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: fontSize), NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: textStyle]
+        let textFontAttributes = [NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: textStyle]
         
         let textTextHeight: CGFloat = initals.boundingRect(with: CGSize(width: textRect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes, context: nil).height
         context.saveGState()
@@ -71,6 +80,31 @@ open class AvatarView: UIView {
         context.restoreGState()
         guard let renderedImage = UIGraphicsGetImageFromCurrentImageContext() else { assertionFailure("Could not create image from context"); return UIImage()}
         return renderedImage
+    }
+    
+    /**
+     Recursively found the biggest size that can fit to given width and height
+    */
+    private func calculateFontSize(text: String, font: UIFont, width: CGFloat, height: CGFloat) -> CGFloat {
+        if text.width(considering: height, and: font) > width {
+            let newFont = UIFont.systemFont(ofSize: (font.pointSize - 1))
+            return calculateFontSize(text: text, font: newFont, width: width, height: height)
+        }
+        return font.pointSize
+    }
+    
+    /**
+     Calculates the inner circle's width.
+     Assumption: Corner radius cannot be more than width/2 (this creates circle)
+    */
+    private func calculateTextRect(outerViewWidth: CGFloat) -> CGRect {
+        guard outerViewWidth > 0 else {
+            return CGRect.zero
+        }
+        // Converts degree to radian degree and calculate the
+        let edgeLenght = outerViewWidth * sin(CGFloat(45).degreesToRadians)
+        let start = (outerViewWidth - edgeLenght)/2
+        return CGRect(x: start, y: start, width: edgeLenght, height: edgeLenght)
     }
     
     required public init?(coder aDecoder: NSCoder) {

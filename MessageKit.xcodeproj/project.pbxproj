@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		171D5AB91F36712B0053DF69 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171D5AB81F36712B0053DF69 /* InputTextView.swift */; };
+		230610221F66C83800E92A9A /* FloatingPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230610211F66C83800E92A9A /* FloatingPoint+Extensions.swift */; };
 		372F6AEB1F36C15600B57FBD /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372F6AEA1F36C15600B57FBD /* AvatarView.swift */; };
 		372F6AEF1F36C61000B57FBD /* AvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372F6AEE1F36C61000B57FBD /* AvatarViewTests.swift */; };
 		376AD1821F4258D80083072A /* TestMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376AD1811F4258D80083072A /* TestMessageModel.swift */; };
@@ -66,6 +67,7 @@
 
 /* Begin PBXFileReference section */
 		171D5AB81F36712B0053DF69 /* InputTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
+		230610211F66C83800E92A9A /* FloatingPoint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FloatingPoint+Extensions.swift"; sourceTree = "<group>"; };
 		372F6AEA1F36C15600B57FBD /* AvatarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		372F6AEE1F36C61000B57FBD /* AvatarViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarViewTests.swift; sourceTree = "<group>"; };
 		376AD1811F4258D80083072A /* TestMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMessageModel.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				B096438F1F289142004D0129 /* UIColor+Extensions.swift */,
 				B0AA1F521F44388900BAE583 /* NSAttributedString+Extensions.swift */,
 				B0147C821F5BE9220035B36E /* Bundle+Extensions.swift */,
+				230610211F66C83800E92A9A /* FloatingPoint+Extensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				B0655A2E1F23D8BC00542A83 /* MessagesCollectionView.swift in Sources */,
 				B0AA1F531F44388C00BAE583 /* NSAttributedString+Extensions.swift in Sources */,
 				B074EE951F35588A00ABB8C8 /* MessageFooterView.swift in Sources */,
+				230610221F66C83800E92A9A /* FloatingPoint+Extensions.swift in Sources */,
 				B09643901F289142004D0129 /* UIColor+Extensions.swift in Sources */,
 				B0655A381F23EE8B00542A83 /* MessageInputBar.swift in Sources */,
 				38C8679B1F50EA1000811974 /* UIView+Extensions.swift in Sources */,
