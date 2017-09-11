@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
    s.name = 'MessageKit'
-   s.version = '0.7.0'
+   s.version = '0.7.1'
    s.license = { :type => "MIT", :file => "LICENSE.md" }
 
    s.summary = 'An elegant messages UI library for iOS.'
@@ -10,12 +10,13 @@ Pod::Spec.new do |s|
 
    s.source = { :git => 'https://github.com/MessageKit/MessageKit.git', :tag => s.version }
    s.source_files = 'Sources/*.swift'
-   
+
    s.pod_target_xcconfig = {
       "SWIFT_VERSION" => "3.0",
    }
 
    s.ios.deployment_target = '9.0'
+   s.ios.resource_bundle = { 'MessageKitAssets' => 'Assets/Images/*.png' }
 
    s.requires_arc = true
 end
