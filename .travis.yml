@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode8.1
+osx_image: xcode8.3
 
 env:
    global:
@@ -18,6 +18,14 @@ env:
 
    - DESTINATION="OS=10.0,name=iPhone 6s" SDK="$IOS_SDK" SCHEME="$IOS_SCHEME" RUN_TESTS="YES" BUILD_EXAMPLE="YES" POD_LINT="NO" RUN_UI_TESTS="YES"
    - DESTINATION="OS=10.1,name=iPhone 7"  SDK="$IOS_SDK" SCHEME="$IOS_SCHEME" RUN_TESTS="YES" BUILD_EXAMPLE="NO"  POD_LINT="NO" RUN_UI_TESTS="NO"
+
+before_install:
+   - bundle install
+   - brew update
+   - brew outdated swiftlint || brew upgrade swiftlint
+
+before_script:
+   - bundle exec danger
 
 script:
 
@@ -48,6 +56,5 @@ script:
       xcodebuild test -project MessageKit.xcodeproj -scheme MessageKit -destination "platform=iOS Simulator,name=iPhone 7" CODE_SIGNING_REQUIRED=NO;
   fi
 
-
 after_success:
-- bash <(curl -s https://codecov.io/bash)
+- bash <(curl -s https://codecov.io/bash) -J 'MessageKit'
