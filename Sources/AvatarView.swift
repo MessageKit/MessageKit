@@ -48,7 +48,7 @@ open class AvatarView: UIView {
         let context = UIGraphicsGetCurrentContext()!
         
         //// Text Drawing
-        let textRect = CGRect(x: 5, y: 6, width: 20, height: 20)
+        let textRect = CGRect(x: 0, y: 0, width: 30, height: 30)
         let textStyle = NSMutableParagraphStyle()
         textStyle.alignment = .center
         let textFontAttributes = [NSFontAttributeName: UIFont.systemFont(ofSize: fontSize), NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: textStyle]
