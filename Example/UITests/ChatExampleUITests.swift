@@ -39,13 +39,12 @@ final class ChatExampleUITests: XCTestCase {
         // The setUp method is a good place to do this.
     }
 
-    override func tearDown() {
-        super.tearDown()
-    }
-
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testExampleRuns() {
+        // Extremely simple UI test which is designed to run and display the example project
+        // This should show if there are any very obvious crashes on render
+        let app = XCUIApplication()
+        app.tables.staticTexts["Test"].tap()
+        XCTAssertTrue(app.collectionViews.staticTexts["Check out this awesome UI library for Chat"].exists)
     }
 
 }
