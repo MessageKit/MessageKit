@@ -17,6 +17,7 @@
 		38C8679A1F50EA1000811974 /* NSConstraintLayoutSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867981F50EA1000811974 /* NSConstraintLayoutSet.swift */; };
 		38C8679B1F50EA1000811974 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867991F50EA1000811974 /* UIView+Extensions.swift */; };
 		38C8679E1F50EA4A00811974 /* InputBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C8679D1F50EA4A00811974 /* InputBarItem.swift */; };
+		570B01D51F67CF5C00FE292C /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570B01D41F67CF5C00FE292C /* UIFont+Extensions.swift */; };
 		882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882D75831DE507320033F95F /* MessagesDataSource.swift */; };
 		888CEBFC1D3FD525005178DE /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888CEBFB1D3FD525005178DE /* MessagesViewController.swift */; };
 		88916B2D1CF0DF2F00469F91 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88916B221CF0DF2F00469F91 /* MessageKit.framework */; };
@@ -92,6 +93,7 @@
 		38C867981F50EA1000811974 /* NSConstraintLayoutSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSConstraintLayoutSet.swift; sourceTree = "<group>"; };
 		38C867991F50EA1000811974 /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		38C8679D1F50EA4A00811974 /* InputBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarItem.swift; sourceTree = "<group>"; };
+		570B01D41F67CF5C00FE292C /* UIFont+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		882D75831DE507320033F95F /* MessagesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDataSource.swift; sourceTree = "<group>"; };
 		888CEBFB1D3FD525005178DE /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		88916B221CF0DF2F00469F91 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -259,6 +261,7 @@
 		B09643981F295D43004D0129 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				570B01D41F67CF5C00FE292C /* UIFont+Extensions.swift */,
 				38C867991F50EA1000811974 /* UIView+Extensions.swift */,
 				B09643851F286C9E004D0129 /* String+Extensions.swift */,
 				B096438F1F289142004D0129 /* UIColor+Extensions.swift */,
@@ -506,6 +509,7 @@
 				B0147C981F61AF930035B36E /* LabelAlignment.swift in Sources */,
 				376AD1881F4259D20083072A /* TestMessagesViewControllerModel.swift in Sources */,
 				B0655A2A1F23D77200542A83 /* Sender.swift in Sources */,
+				570B01D51F67CF5C00FE292C /* UIFont+Extensions.swift in Sources */,
 				B0147C961F600E290035B36E /* MessageKit+Availability.swift in Sources */,
 				B074EE931F35587100ABB8C8 /* MessageHeaderView.swift in Sources */,
 				376AD1821F4258D80083072A /* TestMessageModel.swift in Sources */,
