@@ -35,19 +35,19 @@ script:
 
 
 - if [ $BUILD_EXAMPLE == "YES" ]; then
-      xcodebuild build analyze -project Example/ChatExample.xcodeproj -scheme ChatExample -sdk "$SDK" -destination "$DESTINATION" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | xcpretty -c;
+      xcodebuild build analyze -project Example/ChatExample.xcodeproj -scheme ChatExample -sdk "$SDK" -destination "$DESTINATION" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | XCPRETTY_JSON_FILE_OUTPUT="xcodebuild-chatexample.json" xcpretty -f `xcpretty-json-formatter`;
   fi
 
 
 - if [ $RUN_TESTS == "YES" ]; then
-      xcodebuild analyze test -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | xcpretty -c;
+      xcodebuild analyze test -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | XCPRETTY_JSON_FILE_OUTPUT="xcodebuild-tests.json" xcpretty -f `xcpretty-json-formatter`;
   else
-      xcodebuild build analyze -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | xcpretty -c;
+      xcodebuild build analyze -project "$PROJECT" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | XCPRETTY_JSON_FILE_OUTPUT="xcodebuild-build.json" xcpretty -f `xcpretty-json-formatter`;
   fi
 
 
 - if [ $RUN_UI_TESTS == "YES" ]; then
-      xcodebuild test -project Example/ChatExample.xcodeproj -scheme ChatExampleUITests -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO | xcpretty -c;
+      xcodebuild test -project Example/ChatExample.xcodeproj -scheme ChatExampleUITests -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO | XCPRETTY_JSONFILE_OUTPUT="xcodebuild-uitests.json" xcpretty -f `xcpretty-json-formatter`;
   fi
 
 
