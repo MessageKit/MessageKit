@@ -69,8 +69,8 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     // MARK: - Initializers
 
     override public init() {
-
-        messageLabelFont = UIFont.preferredFont(forTextStyle: .body)
+		
+        messageLabelFont = UIFont.defaultMessageLabelFont()
         messageLabelInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
         messageToViewEdgePadding = 30.0
 
