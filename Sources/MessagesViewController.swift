@@ -284,6 +284,7 @@ extension MessagesViewController {
         case Notification.Name.UIKeyboardDidShow:
             // Only runs once
             messagesCollectionView.contentInset =  UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: messageInputBar.frame.height, right: 0)
+			messagesCollectionView.contentOffset = CGPoint(x: 0, y: messagesCollectionView.contentSize.height-messagesCollectionView.frame.height+50)
             NotificationCenter.default.removeObserver(self, name: .UIKeyboardDidShow, object: nil)
         case Notification.Name.UIKeyboardDidChangeFrame, Notification.Name.UIKeyboardWillShow:
             if (keyboardFrame.origin.y + keyboardFrame.size.height) > view.frame.size.height {
