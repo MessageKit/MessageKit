@@ -185,19 +185,19 @@ extension ConversationViewController: MessagesLayoutDelegate {
 
 extension ConversationViewController: MessageCellDelegate {
 
-    func didTapAvatar(in cell: MessageCollectionViewCell) {
+    func didTapAvatar<T: UIView>(in cell: MessageCollectionViewCell<T>) {
         print("Avatar tapped")
     }
 
-    func didTapMessage(in cell: MessageCollectionViewCell) {
+    func didTapMessage<T: UIView>(in cell: MessageCollectionViewCell<T>) {
         print("Message tapped")
     }
 
-    func didTapTopLabel(in cell: MessageCollectionViewCell) {
+    func didTapTopLabel<T: UIView>(in cell: MessageCollectionViewCell<T>) {
         print("Top label tapped")
     }
 
-    func didTapBottomLabel(in cell: MessageCollectionViewCell) {
+    func didTapBottomLabel<T: UIView>(in cell: MessageCollectionViewCell<T>) {
         print("Bottom label tapped")
     }
 

@@ -91,8 +91,8 @@ open class MessagesViewController: UIViewController {
 	}
 
     private func registerReusableViews() {
-        messagesCollectionView.register(MessageCollectionViewCell.self,
-                                        forCellWithReuseIdentifier: "MessageCell")
+        messagesCollectionView.register(TextMessageCell.self,
+                                        forCellWithReuseIdentifier: "TextMessageCell")
 
         messagesCollectionView.register(MessageFooterView.self,
                                         forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
@@ -202,9 +202,9 @@ extension MessagesViewController: UICollectionViewDataSource {
 
                 let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
                 let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
-                //let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
 
-                //cell.messageLabel.textColor = textColor
+
+
                 cell.messageContainerView.messageColor = messageColor
                 cell.messageContainerView.style = messageStyle
 
@@ -218,7 +218,10 @@ extension MessagesViewController: UICollectionViewDataSource {
 
         switch message.data {
         case .text, .attributedText:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MessageCell", for: indexPath) as? TextMessageCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TextMessageCell", for: indexPath) as? TextMessageCell else { return UICollectionViewCell() }
+            let textColor = messagesCollectionView.messagesDisplayDelegate?.textColor(for: message, at: indexPath, in: messagesCollectionView)
+            cell.messageContentView.textColor = textColor
+            cell.configure(with: message)
             configure(cell)
             return cell
         }
