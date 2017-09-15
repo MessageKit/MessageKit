@@ -101,6 +101,14 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
         cellBottomLabel.attributedText = nil
     }
 
+    func setAvatar(_ avatar: Avatar) {
+
+    }
+
+    func setCellLabels(bottomText: NSAttributedString, topText: NSAttributedString) {
+
+    }
+
     public func configure(with message: MessageType) {
         // Provide in subclass
     }

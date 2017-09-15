@@ -172,42 +172,56 @@ extension MessagesViewController: UICollectionViewDataSource {
 
 	}
 
-	public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MessageCell", for: indexPath) as? MessageCollectionViewCell ?? MessageCollectionViewCell()
-
-        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return cell }
-
+    func configureMessageCell<T: UIView>(cell: MessageCollectionViewCell<T>) {
         if let cellDelegate = messagesCollectionView.messageCellDelegate {
             if cell.delegate == nil { cell.delegate = cellDelegate }
         }
+    }
 
-        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return cell }
+    func configureTextCell(cell: TextMessageCell) {
+        configureMessageCell(cell: cell)
+    }
+
+	public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return UICollectionViewCell() }
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { fatalError("Please set messagesDataSource") }
 
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        let avatar = messagesDataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
-        let topLabelText = messagesDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
-        let bottomLabelText = messagesDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
 
-        if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {
+        func configure<T: UIView>(_ cell: MessageCollectionViewCell<T>) {
+            if let cellDelegate = messagesCollectionView.messageCellDelegate {
+                if cell.delegate == nil { cell.delegate = cellDelegate }
+            }
 
-            let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
-            let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
-            let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
+            let avatar = messagesDataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
+            let topLabelText = messagesDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
+            let bottomLabelText = messagesDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
 
-            //cell.messageLabel.textColor = textColor
-            cell.messageContainerView.messageColor = messageColor
-            cell.messageContainerView.style = messageStyle
+            if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {
 
+                let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
+                let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
+                //let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
+
+                //cell.messageLabel.textColor = textColor
+                cell.messageContainerView.messageColor = messageColor
+                cell.messageContainerView.style = messageStyle
+
+            }
+
+            // Must be set after configuring displayDelegate properties
+            cell.avatarView.set(avatar: avatar)
+            cell.cellTopLabel.attributedText = topLabelText
+            cell.cellBottomLabel.attributedText = bottomLabelText
         }
 
-        // Must be set after configuring displayDelegate properties
-        cell.avatarView.set(avatar: avatar)
-        cell.cellTopLabel.attributedText = topLabelText
-        cell.cellBottomLabel.attributedText = bottomLabelText
-        cell.configure(with: message)
-
-		return cell
+        switch message.data {
+        case .text, .attributedText:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MessageCell", for: indexPath) as? TextMessageCell else { return UICollectionViewCell() }
+            configure(cell)
+            return cell
+        }
 
 	}
 
