@@ -195,7 +195,7 @@ extension MessagesViewController: UICollectionViewDataSource {
             let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
             let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
 
-            cell.messageLabel.textColor = textColor
+            //cell.messageLabel.textColor = textColor
             cell.messageContainerView.messageColor = messageColor
             cell.messageContainerView.style = messageStyle
 
