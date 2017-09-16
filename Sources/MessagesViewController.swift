@@ -66,7 +66,9 @@ open class MessagesViewController: UIViewController {
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupMessageInputBarCopy()
+        if isFirstLayout {
+            setupMessageInputBarCopy()
+        }
     }
 
     open override func viewDidAppear(_ animated: Bool) {
