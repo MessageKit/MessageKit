@@ -119,8 +119,7 @@ open class MessagesViewController: UIViewController {
 			messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
 			messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-
-			messagesCollectionView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor),
+			messagesCollectionView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor)
 		]
 		NSLayoutConstraint.activate(constraints)
 	}
@@ -189,40 +188,12 @@ extension MessagesViewController: UICollectionViewDataSource {
 
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
-        func configure<T: UIView>(_ cell: MessageCollectionViewCell<T>) {
-            if let cellDelegate = messagesCollectionView.messageCellDelegate {
-                if cell.delegate == nil { cell.delegate = cellDelegate }
-            }
-
-            let avatar = messagesDataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
-            let topLabelText = messagesDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
-            let bottomLabelText = messagesDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
-
-            if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {
-
-                let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
-                let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
-
-
-
-                cell.messageContainerView.messageColor = messageColor
-                cell.messageContainerView.style = messageStyle
-
-            }
-
-            // Must be set after configuring displayDelegate properties
-            cell.avatarView.set(avatar: avatar)
-            cell.cellTopLabel.attributedText = topLabelText
-            cell.cellBottomLabel.attributedText = bottomLabelText
-        }
-
         switch message.data {
         case .text, .attributedText:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TextMessageCell", for: indexPath) as? TextMessageCell else { return UICollectionViewCell() }
-            let textColor = messagesCollectionView.messagesDisplayDelegate?.textColor(for: message, at: indexPath, in: messagesCollectionView)
-            cell.messageContentView.textColor = textColor
-            cell.configure(with: message)
-            configure(cell)
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TextMessageCell", for: indexPath) as? TextMessageCell else {
+                fatalError("Unable to dequeue TextMessageCell")
+            }
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         }
 

@@ -50,6 +50,7 @@
 		B015E8191F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */; };
 		B015E81F1F259D8E007EDFB6 /* MessageInputBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B015E81E1F259D8E007EDFB6 /* MessageInputBarDelegate.swift */; };
 		B01E2DD81F5BBDB800E4FA1C /* MessageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01E2DD71F5BBDB800E4FA1C /* MessageStyle.swift */; };
+		B0291DA91F6DBB9F00BEDF03 /* TextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0291DA81F6DBB9F00BEDF03 /* TextMessageCell.swift */; };
 		B03FF9AF1F31BB1200754FE5 /* MessageCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03FF9AE1F31BB1200754FE5 /* MessageCellDelegate.swift */; };
 		B05530B51F493CFA008BB420 /* DetectorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B05530B41F493CFA008BB420 /* DetectorType.swift */; };
 		B0655A2A1F23D77200542A83 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A291F23D77200542A83 /* Sender.swift */; };
@@ -128,6 +129,7 @@
 		B015E8181F24623D007EDFB6 /* MessagesCollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
 		B015E81E1F259D8E007EDFB6 /* MessageInputBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageInputBarDelegate.swift; sourceTree = "<group>"; };
 		B01E2DD71F5BBDB800E4FA1C /* MessageStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageStyle.swift; sourceTree = "<group>"; };
+		B0291DA81F6DBB9F00BEDF03 /* TextMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageCell.swift; sourceTree = "<group>"; };
 		B03FF9AE1F31BB1200754FE5 /* MessageCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCellDelegate.swift; sourceTree = "<group>"; };
 		B05530B41F493CFA008BB420 /* DetectorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectorType.swift; sourceTree = "<group>"; };
 		B0655A291F23D77200542A83 /* Sender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				B074EEA71F3971A600ABB8C8 /* MessageLabel.swift */,
 				E8586DB41F59A1C300C9BE9D /* MessageContainerView.swift */,
 				B0147C8F1F5ED0810035B36E /* MessageDateHeaderView.swift */,
+				B0291DA81F6DBB9F00BEDF03 /* TextMessageCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				B05530B51F493CFA008BB420 /* DetectorType.swift in Sources */,
 				B01E2DD81F5BBDB800E4FA1C /* MessageStyle.swift in Sources */,
 				88916B471CF0DFE600469F91 /* MessageType.swift in Sources */,
+				B0291DA91F6DBB9F00BEDF03 /* TextMessageCell.swift in Sources */,
 				B0AA1F511F42E91A00BAE583 /* AvatarAlignment.swift in Sources */,
 				B03FF9AF1F31BB1200754FE5 /* MessageCellDelegate.swift in Sources */,
 				37C936981F38F6AC00853DF2 /* Avatar.swift in Sources */,

@@ -84,7 +84,6 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
 
         messageContainerView.frame = attributes.messageContainerFrame
         messageContentView.frame = CGRect(origin: .zero, size: attributes.messageContainerFrame.size)
-        //messageContentView.textInsets = attributes.messageLabelInsets
 
         cellTopLabel.frame = attributes.cellTopLabelFrame
         cellTopLabel.textInsets = attributes.cellTopLabelInsets
@@ -101,8 +100,29 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
         cellBottomLabel.attributedText = nil
     }
 
-    public func configure(with message: MessageType) {
-        // Provide in subclass
+    public func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+        if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {
+
+            let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
+            let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
+
+            messageContainerView.messageColor = messageColor
+            messageContainerView.style = messageStyle
+        }
+
+        // Make sure we set all data source properties after configuring display delegate properties
+        // The MessageLabel class probably has a stateful issue
+        if let dataSource = messagesCollectionView.messagesDataSource {
+
+            let avatar = dataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
+            let topLabelText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
+            let bottomLabelText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
+
+            avatarView.set(avatar: avatar)
+            cellTopLabel.attributedText = topLabelText
+            cellBottomLabel.attributedText = bottomLabelText
+        }
+
     }
 
     func setupGestureRecognizers() {

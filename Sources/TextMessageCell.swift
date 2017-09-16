@@ -69,7 +69,14 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
         cellBottomLabel.attributedText = nil
     }
 
-    override public func configure(with message: MessageType) {
+    override public func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+        super.configure(with: message, at: indexPath, and: messagesCollectionView)
+
+        if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {
+            let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
+            messageContentView.textColor = textColor
+        }
+
         switch message.data {
         case .text(let text):
             messageContentView.text = text
@@ -77,5 +84,5 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
             messageContentView.attributedText = text
         }
     }
-
+    
 }
