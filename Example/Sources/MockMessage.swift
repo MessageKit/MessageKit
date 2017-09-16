@@ -46,5 +46,9 @@ struct MockMessage: MessageType {
 	init(attributedText: NSAttributedString, sender: Sender, messageId: String) {
 		self.init(data: .attributedText(attributedText), sender: sender, messageId: messageId)
 	}
+
+    init(image: UIImage, sender: Sender, messageId: String) {
+        self.init(data: .photo(image), sender: sender, messageId: messageId)
+    }
 	
 }

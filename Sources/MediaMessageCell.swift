@@ -1,18 +1,18 @@
 /*
  MIT License
- 
+
  Copyright (c) 2017 MessageKit
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,27 +22,18 @@
  SOFTWARE.
  */
 
-import Foundation
-//import class CoreLocation.CLLocation
+import UIKit
 
-public enum MessageData {
+open class MediaMessageCell: MessageCollectionViewCell<UIImageView> {
 
-    case text(String)
-    case attributedText(NSAttributedString)
-    case photo(UIImage)
-    //    case video(file: NSURL, thumbnail: UIImage)
-
-    // MARK: - Not supported yet
-
-//    case audio(Data)
-//    
-//    case location(CLLocation)
-//
-//    
-//    case system(String)
-//    
-//    case custom(Any)
-//    
-//    case placeholder
+    override open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+        super.configure(with: message, at: indexPath, and: messagesCollectionView)
+        switch message.data {
+        case .photo(let image):
+            messageContentView.image = image
+        default:
+            break
+        }
+    }
 
 }

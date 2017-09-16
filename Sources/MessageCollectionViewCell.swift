@@ -38,7 +38,13 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
         return topLabel
     }()
 
-    open var messageContentView = ContentView()
+    open var messageContentView: ContentView = {
+        let contentView = ContentView()
+        contentView.clipsToBounds = true
+        contentView.layer.masksToBounds = true
+        contentView.isUserInteractionEnabled = true
+        return contentView
+    }()
 
     open var cellBottomLabel: MessageLabel = {
         let bottomLabel = MessageLabel()
@@ -56,6 +62,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
         super.init(frame: frame)
         setupSubviews()
         setupGestureRecognizers()
+        contentView.backgroundColor = .purple
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
 
@@ -69,7 +76,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
 
         contentView.addSubview(cellTopLabel)
         contentView.addSubview(messageContainerView)
-        messageContainerView.addSubview(messageContentView)
+        //messageContainerView.addSubview(messageContentView)
         contentView.addSubview(avatarView)
         contentView.addSubview(cellBottomLabel)
 

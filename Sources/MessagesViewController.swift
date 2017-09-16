@@ -91,8 +91,12 @@ open class MessagesViewController: UIViewController {
 	}
 
     private func registerReusableViews() {
+
         messagesCollectionView.register(TextMessageCell.self,
                                         forCellWithReuseIdentifier: "TextMessageCell")
+
+        messagesCollectionView.register(MediaMessageCell.self,
+                                        forCellWithReuseIdentifier: "MediaMessageCell")
 
         messagesCollectionView.register(MessageFooterView.self,
                                         forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
@@ -105,6 +109,7 @@ open class MessagesViewController: UIViewController {
         messagesCollectionView.register(MessageDateHeaderView.self,
                                         forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
                                         withReuseIdentifier: "MessageDateHeaderView")
+
     }
 
 	private func setupSubviews() {
@@ -192,6 +197,12 @@ extension MessagesViewController: UICollectionViewDataSource {
         case .text, .attributedText:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TextMessageCell", for: indexPath) as? TextMessageCell else {
                 fatalError("Unable to dequeue TextMessageCell")
+            }
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .photo:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaMessageCell", for: indexPath) as? MediaMessageCell else {
+                fatalError("Unable to dequeue MediaMessageCell")
             }
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell

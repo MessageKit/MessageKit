@@ -46,27 +46,13 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
         super.apply(layoutAttributes)
 
         guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else { return }
-
-        avatarView.frame = attributes.avatarFrame
-
-        messageContainerView.frame = attributes.messageContainerFrame
-        messageContentView.frame = CGRect(origin: .zero, size: attributes.messageContainerFrame.size)
         messageContentView.textInsets = attributes.messageLabelInsets
-
-        cellTopLabel.frame = attributes.cellTopLabelFrame
-        cellTopLabel.textInsets = attributes.cellTopLabelInsets
-
-        cellBottomLabel.frame = attributes.cellBottomLabelFrame
-        cellBottomLabel.textInsets = attributes.cellBottomLabelInsets
-
     }
 
     override open func prepareForReuse() {
         super.prepareForReuse()
-        cellTopLabel.text = nil
-        cellTopLabel.attributedText = nil
-        cellBottomLabel.text = nil
-        cellBottomLabel.attributedText = nil
+        messageContentView.attributedText = nil
+        messageContentView.text = nil
     }
 
     override public func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
@@ -82,6 +68,8 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
             messageContentView.text = text
         case .attributedText(let text):
             messageContentView.attributedText = text
+        default:
+            break
         }
     }
     
