@@ -34,8 +34,6 @@ open class MessagesViewController: UIViewController {
 
     private var messageInputBarCopy: MessageInputBar?
     
-    private var messageInputBarIsRendered = false
-    
 	override open var canBecomeFirstResponder: Bool {
 		return true
 	}
@@ -65,11 +63,7 @@ open class MessagesViewController: UIViewController {
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // setupMessageInputBarCopy() only needs to be called during the first time the view renders
-        if !messageInputBarIsRendered {
-            setupMessageInputBarCopy()
-        }
+        setupMessageInputBarCopy()
     }
 
     open override func viewDidAppear(_ animated: Bool) {
@@ -143,7 +137,6 @@ open class MessagesViewController: UIViewController {
     private func removeMessageInputBarCopy() {
         messageInputBarCopy?.removeFromSuperview()
         messageInputBarCopy = nil
-        messageInputBarIsRendered = true
     }
 }
 
