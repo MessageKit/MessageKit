@@ -26,64 +26,105 @@ import UIKit
 
 open class PlayButtonView: UIView {
 
+    // MARK: - Properties
+
+    open let triangleView = UIView()
+
+    private var triangleHeightConstraint: NSLayoutConstraint?
+    private var triangleWidthConstraint: NSLayoutConstraint?
+    private var triangleCenterXConstraint: NSLayoutConstraint?
+
+    private var triangleViewSize: CGSize {
+        return CGSize(width: frame.width/2, height: frame.height/2)
+    }
+
     override open var frame: CGRect {
         didSet {
-            commonSetup()
+            updateTriangleConstraints()
+            applyCornerRadius()
+            applyTriangleMask()
         }
     }
 
     override open var bounds: CGRect {
         didSet {
-            commonSetup()
+            updateTriangleConstraints()
+            applyCornerRadius()
+            applyTriangleMask()
         }
     }
 
-    open let triangleView: UIView = {
-        let triangleView = UIView()
-        triangleView.layer.masksToBounds = true
-        triangleView.clipsToBounds = true
-        return triangleView
-    }()
-
-    private func triangleMask(for frame: CGRect) -> CAShapeLayer {
-        let shapeLayer = CAShapeLayer()
-        let trianglePath = UIBezierPath()
-        let point1 = CGPoint(x: frame.minX, y: frame.minY)
-        let point2 = CGPoint(x: frame.maxX, y: frame.maxY/2)
-        let point3 = CGPoint(x: frame.minX, y: frame.maxY)
-        trianglePath .move(to: point1)
-        trianglePath .addLine(to: point2)
-        trianglePath .addLine(to: point3)
-        trianglePath .close()
-        shapeLayer.path = trianglePath.cgPath
-        return shapeLayer
-    }
+    // MARK: - Initializers
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
+
         setupSubviews()
-        commonSetup()
+        setupConstraints()
+        applyCornerRadius()
+        applyTriangleMask()
+
+        triangleView.clipsToBounds = true
+        triangleView.backgroundColor = .black
+        backgroundColor = .playButtonLightGray
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Methods
+
     private func setupSubviews() {
         addSubview(triangleView)
     }
 
-    private func commonSetup() {
+    private func setupConstraints() {
+        triangleView.translatesAutoresizingMaskIntoConstraints = false
 
-        let size = CGSize(width: frame.width/2, height: frame.height/2)
-        triangleView.bounds.size = size
-        triangleView.layer.mask = triangleMask(for: triangleView.bounds)
+        let centerX = triangleView.centerXAnchor.constraint(equalTo: centerXAnchor, constant: triangleViewSize.width/8)
+        let centerY = triangleView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        let width = triangleView.widthAnchor.constraint(equalToConstant: triangleViewSize.width)
+        let height = triangleView.heightAnchor.constraint(equalToConstant: triangleViewSize.height)
 
-        let centerOffset = triangleView.bounds.width/8
-        triangleView.center = CGPoint(x: center.x + centerOffset, y: center.y)
+        triangleWidthConstraint = width
+        triangleHeightConstraint = height
+        triangleCenterXConstraint = centerX
 
+        NSLayoutConstraint.activate([centerX, centerY, width, height])
+    }
+
+    private func triangleMask(for frame: CGRect) -> CAShapeLayer {
+        let shapeLayer = CAShapeLayer()
+        let trianglePath = UIBezierPath()
+
+        let point1 = CGPoint(x: frame.minX, y: frame.minY)
+        let point2 = CGPoint(x: frame.maxX, y: frame.maxY/2)
+        let point3 = CGPoint(x: frame.minX, y: frame.maxY)
+
+        trianglePath .move(to: point1)
+        trianglePath .addLine(to: point2)
+        trianglePath .addLine(to: point3)
+        trianglePath .close()
+
+        shapeLayer.path = trianglePath.cgPath
+
+        return shapeLayer
+    }
+
+    private func updateTriangleConstraints() {
+        triangleWidthConstraint?.constant = triangleViewSize.width
+        triangleHeightConstraint?.constant = triangleViewSize.height
+        triangleCenterXConstraint?.constant = triangleViewSize.width/8
+    }
+
+    private func applyTriangleMask() {
+        let rect = CGRect(origin: .zero, size: triangleViewSize)
+        triangleView.layer.mask = triangleMask(for: rect)
+    }
+
+    private func applyCornerRadius() {
         layer.cornerRadius = frame.width / 2
-        layer.masksToBounds = true
     }
     
 }

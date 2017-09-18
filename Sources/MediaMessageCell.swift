@@ -26,22 +26,31 @@ import UIKit
 
 open class MediaMessageCell: MessageCollectionViewCell<UIImageView> {
 
+    // MARK: - Properties
+
     open lazy var playButtonView: PlayButtonView = {
         let playButtonView = PlayButtonView()
-        playButtonView.triangleView.backgroundColor = .black
-        playButtonView.backgroundColor = .playButtonLightGray
         playButtonView.frame.size = CGSize(width: 35, height: 35)
         return playButtonView
     }()
 
+    // MARK: - Methods
+
+    private func setupConstraints() {
+        playButtonView.translatesAutoresizingMaskIntoConstraints = false
+
+        let centerX = playButtonView.centerXAnchor.constraint(equalTo: centerXAnchor)
+        let centerY = playButtonView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        let width = playButtonView.widthAnchor.constraint(equalToConstant: playButtonView.bounds.width)
+        let height = playButtonView.heightAnchor.constraint(equalToConstant: playButtonView.bounds.height)
+
+        NSLayoutConstraint.activate([centerX, centerY, width, height])
+    }
+
     override func setupSubviews() {
         super.setupSubviews()
         messageContentView.addSubview(playButtonView)
-        playButtonView.translatesAutoresizingMaskIntoConstraints = false
-        playButtonView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        playButtonView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        playButtonView.widthAnchor.constraint(equalToConstant: 35).isActive = true
-        playButtonView.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        setupConstraints()
     }
 
     override open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
