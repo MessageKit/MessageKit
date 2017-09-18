@@ -30,7 +30,7 @@ public enum MessageData {
     case text(String)
     case attributedText(NSAttributedString)
     case photo(UIImage)
-    //    case video(file: NSURL, thumbnail: UIImage)
+    case video(file: URL, thumbnail: UIImage)
 
     // MARK: - Not supported yet
 

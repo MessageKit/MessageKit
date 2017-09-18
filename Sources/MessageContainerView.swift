@@ -30,6 +30,12 @@ open class MessageContainerView: UIImageView {
 
     private let imageMask = UIImageView()
 
+    open override var frame: CGRect {
+        didSet {
+            applyMessageStyle()
+        }
+    }
+
     open var style: MessageStyle = .none {
         didSet {
             applyMessageStyle()

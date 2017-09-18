@@ -75,7 +75,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
 
     // MARK: - Methods
 
-    private func setupSubviews() {
+    internal func setupSubviews() {
 
         contentView.addSubview(cellTopLabel)
         contentView.addSubview(messageContainerView)

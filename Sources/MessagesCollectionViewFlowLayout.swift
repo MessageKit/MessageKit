@@ -295,7 +295,7 @@ extension MessagesCollectionViewFlowLayout {
             messageContainerSize = labelSize(for: text, considering: maxWidth, and: messageLabelFont)
         case .attributedText(let text):
             messageContainerSize = labelSize(for: text, considering: maxWidth)
-        case .photo(let image):
+        case .photo(let image), .video(_, let image):
             let boundingRect = CGRect(origin: .zero, size: CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
             messageContainerSize = AVMakeRect(aspectRatio: image.size, insideRect: boundingRect).size
         }

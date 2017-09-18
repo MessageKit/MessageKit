@@ -200,7 +200,7 @@ extension MessagesViewController: UICollectionViewDataSource {
             }
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
-        case .photo:
+        case .photo, .video:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaMessageCell", for: indexPath) as? MediaMessageCell else {
                 fatalError("Unable to dequeue MediaMessageCell")
             }

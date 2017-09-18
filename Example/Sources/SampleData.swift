@@ -56,6 +56,7 @@ struct SampleData {
         var msg11 = MockMessage(text: "One Infinite Loop Cupertino, CA 95014 This is some extra text that should not be detected.", sender: Cook, messageId: UUID().uuidString)
         let msg12 = MockMessage(text: "This is an example of the date detector 11/11/2017. April 1st is April Fools Day. Next Friday is not Friday the 13th.", sender: Dan, messageId: UUID().uuidString)
         let msg13 = MockMessage(text: "https//:github.com/SD10", sender: Steven, messageId: UUID().uuidString)
+        let msg14 = MockMessage(thumbnail: #imageLiteral(resourceName: "Tim-Cook"), sender: Jobs, messageId: UUID().uuidString)
 
         msg2.sentDate = Calendar.current.date(byAdding: .hour, value: 2, to: msg1.sentDate)!
         msg3.sentDate = Calendar.current.date(byAdding: .minute, value: 37, to: msg2.sentDate)!
@@ -68,7 +69,7 @@ struct SampleData {
         msg10.sentDate = Calendar.current.date(byAdding: .minute, value: 59, to: msg9.sentDate)!
         msg11.sentDate = Calendar.current.date(byAdding: .hour, value: 7, to: msg10.sentDate)!
 
-        return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11, msg12, msg13].map { msg -> MockMessage in
+        return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11, msg12, msg13, msg14].map { msg -> MockMessage in
             var msg = msg
             msg.sender = msg.sender == Dan ? Steven : Dan
             return msg

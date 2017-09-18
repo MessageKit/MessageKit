@@ -50,5 +50,10 @@ struct MockMessage: MessageType {
     init(image: UIImage, sender: Sender, messageId: String) {
         self.init(data: .photo(image), sender: sender, messageId: messageId)
     }
-	
+
+    init(thumbnail: UIImage, sender: Sender, messageId: String) {
+        let url = URL(fileURLWithPath: "")
+        self.init(data: .video(file: url, thumbnail: thumbnail), sender: sender, messageId: messageId)
+    }
+
 }
