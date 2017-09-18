@@ -98,6 +98,9 @@ open class MessagesViewController: UIViewController {
         messagesCollectionView.register(MediaMessageCell.self,
                                         forCellWithReuseIdentifier: "MediaMessageCell")
 
+        messagesCollectionView.register(LocationMessageCell.self,
+                                        forCellWithReuseIdentifier: "LocationMessageCell")
+
         messagesCollectionView.register(MessageFooterView.self,
                                         forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
                                         withReuseIdentifier: "MessageFooterView")
@@ -203,6 +206,12 @@ extension MessagesViewController: UICollectionViewDataSource {
         case .photo, .video:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaMessageCell", for: indexPath) as? MediaMessageCell else {
                 fatalError("Unable to dequeue MediaMessageCell")
+            }
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .location:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LocationMessageCell", for: indexPath) as? LocationMessageCell else {
+                fatalError("Unable to dequeue LocationMessageCell")
             }
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell

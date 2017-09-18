@@ -298,6 +298,9 @@ extension MessagesCollectionViewFlowLayout {
         case .photo(let image), .video(_, let image):
             let boundingRect = CGRect(origin: .zero, size: CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
             messageContainerSize = AVMakeRect(aspectRatio: image.size, insideRect: boundingRect).size
+        case .location:
+            let size = CGSize(width: maxWidth, height: 300)
+            messageContainerSize = size
         }
 
         messageContainerSize.width += messageHorizontalInsets

@@ -25,6 +25,30 @@
 import UIKit
 import MapKit
 
-open class LocationMessageCell: MessageCollectionViewCell<MKMapView> {
+open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
+
+    lazy var mapSnapshotOptions: MKMapSnapshotOptions = {
+        let options = MKMapSnapshotOptions()
+        options.showsBuildings = true
+        options.showsPointsOfInterest = true
+        options.scale = UIScreen.main.scale
+        return options
+    }()
+
+    override open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+        super.configure(with: message, at: indexPath, and: messagesCollectionView)
+        switch message.data {
+        case .location(let location):
+            let span = MKCoordinateSpan(latitudeDelta: 0, longitudeDelta: 0)
+            mapSnapshotOptions.region = MKCoordinateRegion(center: location.coordinate, span: span)
+            mapSnapshotOptions.size = messageContainerView.frame.size
+            let snapShotter = MKMapSnapshotter(options: mapSnapshotOptions)
+            snapShotter.start(completionHandler: { (snapshot: MKMapSnapshot?, error: Error?) in
+                self.messageContentView.image = snapshot?.image
+            })
+        default:
+            break
+        }
+    }
 
 }

@@ -23,7 +23,7 @@
  */
 
 import Foundation
-//import class CoreLocation.CLLocation
+import class CoreLocation.CLLocation
 
 public enum MessageData {
 
@@ -31,14 +31,12 @@ public enum MessageData {
     case attributedText(NSAttributedString)
     case photo(UIImage)
     case video(file: URL, thumbnail: UIImage)
+    case location(CLLocation)
 
     // MARK: - Not supported yet
 
 //    case audio(Data)
-//    
-//    case location(CLLocation)
 //
-//    
 //    case system(String)
 //    
 //    case custom(Any)

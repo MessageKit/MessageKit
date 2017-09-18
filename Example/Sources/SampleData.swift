@@ -23,6 +23,7 @@
  */
 
 import MessageKit
+import CoreLocation
 
 struct SampleData {
     let Dan = Sender(id: "123456", displayName: "Dan Leonard")
@@ -58,6 +59,9 @@ struct SampleData {
         let msg13 = MockMessage(text: "https//:github.com/SD10", sender: Steven, messageId: UUID().uuidString)
         let msg14 = MockMessage(thumbnail: #imageLiteral(resourceName: "Tim-Cook"), sender: Jobs, messageId: UUID().uuidString)
 
+        let location = CLLocation(latitude: 37.3318, longitude: -122.0312) // Apple HQ
+        let msg15 = MockMessage(location: location, sender: Jobs, messageId: UUID().uuidString)
+
         msg2.sentDate = Calendar.current.date(byAdding: .hour, value: 2, to: msg1.sentDate)!
         msg3.sentDate = Calendar.current.date(byAdding: .minute, value: 37, to: msg2.sentDate)!
         msg4.sentDate = Calendar.current.date(byAdding: .minute, value: 3, to: msg3.sentDate)!
@@ -69,7 +73,7 @@ struct SampleData {
         msg10.sentDate = Calendar.current.date(byAdding: .minute, value: 59, to: msg9.sentDate)!
         msg11.sentDate = Calendar.current.date(byAdding: .hour, value: 7, to: msg10.sentDate)!
 
-        return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11, msg12, msg13, msg14].map { msg -> MockMessage in
+        return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11, msg12, msg13, msg14, msg15].map { msg -> MockMessage in
             var msg = msg
             msg.sender = msg.sender == Dan ? Steven : Dan
             return msg
