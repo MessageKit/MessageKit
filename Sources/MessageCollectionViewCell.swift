@@ -28,7 +28,12 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
 
     // MARK: - Properties
 
-    open var messageContainerView: MessageContainerView = MessageContainerView()
+    open var messageContainerView: MessageContainerView = {
+        let messageContainerView = MessageContainerView()
+        messageContainerView.clipsToBounds = true
+        messageContainerView.layer.masksToBounds = true
+        return messageContainerView
+    }()
 
     open var avatarView: AvatarView = AvatarView()
 
@@ -41,7 +46,6 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
     open var messageContentView: ContentView = {
         let contentView = ContentView()
         contentView.clipsToBounds = true
-        contentView.layer.masksToBounds = true
         contentView.isUserInteractionEnabled = true
         return contentView
     }()
@@ -62,7 +66,6 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
         super.init(frame: frame)
         setupSubviews()
         setupGestureRecognizers()
-        contentView.backgroundColor = .purple
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
 
@@ -76,7 +79,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
 
         contentView.addSubview(cellTopLabel)
         contentView.addSubview(messageContainerView)
-        //messageContainerView.addSubview(messageContentView)
+        messageContainerView.addSubview(messageContentView)
         contentView.addSubview(avatarView)
         contentView.addSubview(cellBottomLabel)
 
@@ -90,7 +93,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
         avatarView.frame = attributes.avatarFrame
 
         messageContainerView.frame = attributes.messageContainerFrame
-        messageContentView.frame = CGRect(origin: .zero, size: attributes.messageContainerFrame.size)
+        messageContentView.frame = messageContainerView.bounds
 
         cellTopLabel.frame = attributes.cellTopLabelFrame
         cellTopLabel.textInsets = attributes.cellTopLabelInsets
@@ -108,12 +111,15 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
     }
 
     public func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+
+        // TODO: - fix delegate
+
         if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {
 
             let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
             let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
 
-            messageContainerView.messageColor = messageColor
+            messageContainerView.backgroundColor = messageColor
             messageContainerView.style = messageStyle
         }
 

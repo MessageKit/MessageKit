@@ -30,6 +30,7 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
 
     override open weak var delegate: MessageCellDelegate? {
         didSet {
+            print("Fix this never gets set")
             messageContentView.delegate = delegate
         }
     }

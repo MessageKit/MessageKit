@@ -112,3 +112,19 @@ public extension MessagesLayoutDelegate {
     }
 
 }
+
+// MARK: - MessageContainerView
+
+public extension MessageContainerView {
+
+    @available(*, deprecated: 0.8.0, message: "Removed in MessageKit 0.8.0. Please use backgroundColor instead.")
+    var messageColor: UIColor {
+        get {
+            return .white
+        }
+        set {
+            backgroundColor = messageColor
+        }
+    }
+
+}
