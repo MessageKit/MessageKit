@@ -41,6 +41,8 @@
 		989BBFFE1F6682FD0068D79A /* bubble_outlined_tail_v2.png in Resources */ = {isa = PBXBuildFile; fileRef = 989BBFEC1F6682FD0068D79A /* bubble_outlined_tail_v2.png */; };
 		989BBFFF1F6682FD0068D79A /* bubble_outlined_tail_v2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 989BBFED1F6682FD0068D79A /* bubble_outlined_tail_v2@2x.png */; };
 		989BC0001F6682FD0068D79A /* bubble_outlined_tail_v2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 989BBFEE1F6682FD0068D79A /* bubble_outlined_tail_v2@3x.png */; };
+		B01049101F6F8684008DBA58 /* PlayButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B010490F1F6F8684008DBA58 /* PlayButtonView.swift */; };
+		B01049121F6F86E8008DBA58 /* LocationMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01049111F6F86E8008DBA58 /* LocationMessageCell.swift */; };
 		B01280F31F4E8798004BCD3E /* MessageLabelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01280F21F4E8798004BCD3E /* MessageLabelDelegate.swift */; };
 		B0147C831F5BE9220035B36E /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0147C821F5BE9220035B36E /* Bundle+Extensions.swift */; };
 		B0147C901F5ED0810035B36E /* MessageDateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0147C8F1F5ED0810035B36E /* MessageDateHeaderView.swift */; };
@@ -121,6 +123,8 @@
 		989BBFEC1F6682FD0068D79A /* bubble_outlined_tail_v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble_outlined_tail_v2.png; sourceTree = "<group>"; };
 		989BBFED1F6682FD0068D79A /* bubble_outlined_tail_v2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_outlined_tail_v2@2x.png"; sourceTree = "<group>"; };
 		989BBFEE1F6682FD0068D79A /* bubble_outlined_tail_v2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_outlined_tail_v2@3x.png"; sourceTree = "<group>"; };
+		B010490F1F6F8684008DBA58 /* PlayButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayButtonView.swift; sourceTree = "<group>"; };
+		B01049111F6F86E8008DBA58 /* LocationMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMessageCell.swift; sourceTree = "<group>"; };
 		B01280F21F4E8798004BCD3E /* MessageLabelDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageLabelDelegate.swift; sourceTree = "<group>"; };
 		B0147C821F5BE9220035B36E /* Bundle+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
 		B0147C8F1F5ED0810035B36E /* MessageDateHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDateHeaderView.swift; sourceTree = "<group>"; };
@@ -305,6 +309,8 @@
 				B0147C8F1F5ED0810035B36E /* MessageDateHeaderView.swift */,
 				B0291DA81F6DBB9F00BEDF03 /* TextMessageCell.swift */,
 				B0D943BD1F6DC9AB008B7BFD /* MediaMessageCell.swift */,
+				B010490F1F6F8684008DBA58 /* PlayButtonView.swift */,
+				B01049111F6F86E8008DBA58 /* LocationMessageCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -497,6 +503,7 @@
 				171D5AB91F36712B0053DF69 /* InputTextView.swift in Sources */,
 				B0147C901F5ED0810035B36E /* MessageDateHeaderView.swift in Sources */,
 				38C8679E1F50EA4A00811974 /* InputBarItem.swift in Sources */,
+				B01049121F6F86E8008DBA58 /* LocationMessageCell.swift in Sources */,
 				B074EE971F355FBC00ABB8C8 /* MessagesLayoutDelegate.swift in Sources */,
 				38C8679A1F50EA1000811974 /* NSConstraintLayoutSet.swift in Sources */,
 				882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */,
@@ -506,6 +513,7 @@
 				B0655A4F1F245C5A00542A83 /* MessagesCollectionViewFlowLayout.swift in Sources */,
 				B0655A2C1F23D81600542A83 /* MessageData.swift in Sources */,
 				B0E1756F1F655A1600F0DEF6 /* AvatarHorizontalAlignment.swift in Sources */,
+				B01049101F6F8684008DBA58 /* PlayButtonView.swift in Sources */,
 				B09643861F286C9E004D0129 /* String+Extensions.swift in Sources */,
 				B015E81F1F259D8E007EDFB6 /* MessageInputBarDelegate.swift in Sources */,
 				B01280F31F4E8798004BCD3E /* MessageLabelDelegate.swift in Sources */,

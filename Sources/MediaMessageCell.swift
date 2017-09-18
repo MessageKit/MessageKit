@@ -24,77 +24,24 @@
 
 import UIKit
 
-open class PlayButtonView: UIView {
-
-    override open var frame: CGRect {
-        didSet {
-            commonSetup()
-        }
-    }
-
-    let triangleView: UIView = {
-        let triangleView = UIView()
-        triangleView.layer.masksToBounds = true
-        triangleView.clipsToBounds = true
-        return triangleView
-    }()
-
-    func triangleMask(for frame: CGRect) -> CAShapeLayer {
-        let shapeLayer = CAShapeLayer()
-        let trianglePath = UIBezierPath()
-        let point1 = CGPoint(x: frame.minX, y: frame.minY)
-        let point2 = CGPoint(x: frame.maxX, y: frame.maxY/2)
-        let point3 = CGPoint(x: frame.minX, y: frame.maxY)
-        trianglePath .move(to: point1)
-        trianglePath .addLine(to: point2)
-        trianglePath .addLine(to: point3)
-        trianglePath .close()
-        shapeLayer.path = trianglePath.cgPath
-        return shapeLayer
-    }
-
-    override public init(frame: CGRect) {
-        super.init(frame: frame)
-        setupSubviews()
-        commonSetup()
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func setupSubviews() {
-        addSubview(triangleView)
-    }
-
-    func commonSetup() {
-
-        let size = CGSize(width: frame.width/2, height: frame.height/2)
-        triangleView.bounds.size = size
-        triangleView.layer.mask = triangleMask(for: triangleView.bounds)
-
-        let centerOffset = triangleView.bounds.width/8
-        triangleView.center = CGPoint(x: center.x + centerOffset, y: center.y)
-
-        layer.cornerRadius = frame.width / 2
-        layer.masksToBounds = true
-    }
-
-}
-
 open class MediaMessageCell: MessageCollectionViewCell<UIImageView> {
 
     open lazy var playButtonView: PlayButtonView = {
         let playButtonView = PlayButtonView()
         playButtonView.triangleView.backgroundColor = .black
         playButtonView.backgroundColor = .playButtonLightGray
-        playButtonView.frame = CGRect(origin: .zero, size: CGSize(width: 35, height: 35))
+        playButtonView.frame.size = CGSize(width: 35, height: 35)
         return playButtonView
     }()
 
     override func setupSubviews() {
         super.setupSubviews()
         messageContentView.addSubview(playButtonView)
+        playButtonView.translatesAutoresizingMaskIntoConstraints = false
+        playButtonView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        playButtonView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        playButtonView.widthAnchor.constraint(equalToConstant: 35).isActive = true
+        playButtonView.heightAnchor.constraint(equalToConstant: 35).isActive = true
     }
 
     override open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
@@ -106,7 +53,6 @@ open class MediaMessageCell: MessageCollectionViewCell<UIImageView> {
         case .video(_, let image):
             messageContentView.image = image
             playButtonView.isHidden = false
-            playButtonView.center = messageContentView.center
         default:
             break
         }
