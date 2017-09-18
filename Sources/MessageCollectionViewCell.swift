@@ -112,7 +112,10 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
 
     public func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
 
-        // TODO: - fix delegate
+        // Check if delegate has already been set to reduce number of assignments
+        if delegate == nil, let cellDelegate = messagesCollectionView.messageCellDelegate {
+            delegate = cellDelegate
+        }
 
         if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {
 
@@ -146,6 +149,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
 
         let messageTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapMessage))
         messageContainerView.addGestureRecognizer(messageTapGesture)
+        messageContainerView.isUserInteractionEnabled = true
         self.messageTapGesture = messageTapGesture
 
         let topLabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapTopLabel))
