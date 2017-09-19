@@ -123,7 +123,7 @@ open class MessagesViewController: UIViewController {
        
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
 
-        let top = messagesCollectionView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor)
+        let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: topLayoutGuide.length)
         let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         let bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
