@@ -129,19 +129,19 @@ open class MessageInputBar: UIView {
         let maxSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
         let sizeToFit = inputTextView.sizeThatFits(maxSize)
         var heightToFit = sizeToFit.height.rounded() + padding.top + padding.bottom
-
+        
         if heightToFit >= maxHeight {
             inputTextView.isScrollEnabled = true
             heightToFit = maxHeight
         } else {
             inputTextView.isScrollEnabled = false
-            inputTextView.invalidateIntrinsicContentSize()
         }
 
         let size = CGSize(width: bounds.width, height: heightToFit)
 
         if previousIntrinsicContentSize != size {
             delegate?.messageInputBar(self, didChangeIntrinsicContentTo: size)
+            inputTextView.invalidateIntrinsicContentSize()
         }
 
         previousIntrinsicContentSize = size
@@ -192,7 +192,7 @@ open class MessageInputBar: UIView {
     private var leftStackViewLayoutSet: NSLayoutConstraintSet?
     private var rightStackViewLayoutSet: NSLayoutConstraintSet?
     private var bottomStackViewLayoutSet: NSLayoutConstraintSet?
-    private var previousIntrinsicContentSize: CGSize?
+    private var previousIntrinsicContentSize: CGSize = .zero
     
     // MARK: - Initialization
     
@@ -424,14 +424,14 @@ open class MessageInputBar: UIView {
     }
     
     open func textViewDidChange() {
-        let trimmedText = inputTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let text = inputTextView.text else { return }
 
-        sendButton.isEnabled = !trimmedText.isEmpty
+        sendButton.isEnabled = !text.isEmpty
         inputTextView.placeholderLabel.isHidden = !inputTextView.text.isEmpty
 
         items.forEach { $0.textViewDidChangeAction(with: inputTextView) }
 
-        delegate?.messageInputBar(self, textViewTextDidChangeTo: trimmedText)
+        delegate?.messageInputBar(self, textViewTextDidChangeTo: text)
         invalidateIntrinsicContentSize()
     }
     

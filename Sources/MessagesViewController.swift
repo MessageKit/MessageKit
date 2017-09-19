@@ -61,7 +61,6 @@ open class MessagesViewController: UIViewController {
 		setupConstraints()
         registerReusableViews()
 		setupDelegates()
-
 	}
 
     open override func viewWillAppear(_ animated: Bool) {
