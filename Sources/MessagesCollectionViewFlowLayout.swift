@@ -293,18 +293,25 @@ extension MessagesCollectionViewFlowLayout {
         switch message.data {
         case .text(let text):
             messageContainerSize = labelSize(for: text, considering: maxWidth, and: messageLabelFont)
+            messageContainerSize.width += messageHorizontalInsets
+            messageContainerSize.height += messageVerticalInsets
         case .attributedText(let text):
             messageContainerSize = labelSize(for: text, considering: maxWidth)
-        case .photo(let image), .video(_, let image):
-            let boundingRect = CGRect(origin: .zero, size: CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
-            messageContainerSize = AVMakeRect(aspectRatio: image.size, insideRect: boundingRect).size
+            messageContainerSize.width += messageHorizontalInsets
+            messageContainerSize.height += messageVerticalInsets
+        case .photo, .video:
+            guard let messagesCollectionView = messagesCollectionView else { return .zero }
+            guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate as? MediaMessageLayoutDelegate else { return .zero }
+            let width = layoutDelegate.widthForMedia(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
+            let height = layoutDelegate.heightForMedia(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
+            messageContainerSize = CGSize(width: width, height: height)
         case .location:
-            let size = CGSize(width: maxWidth, height: 300)
-            messageContainerSize = size
+            guard let messagesCollectionView = messagesCollectionView else { return .zero }
+            guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate as? LocationMessageLayoutDelegate else { return .zero }
+            let width = layoutDelegate.widthForLocation(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
+            let height = layoutDelegate.heightForLocation(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
+            messageContainerSize = CGSize(width: width, height: height)
         }
-
-        messageContainerSize.width += messageHorizontalInsets
-        messageContainerSize.height += messageVerticalInsets
 
         return messageContainerSize
     }

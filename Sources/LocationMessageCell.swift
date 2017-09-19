@@ -27,25 +27,25 @@ import MapKit
 
 open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
 
-    lazy var mapSnapshotOptions: MKMapSnapshotOptions = {
-        let options = MKMapSnapshotOptions()
-        options.showsBuildings = true
-        options.showsPointsOfInterest = true
-        options.scale = UIScreen.main.scale
-        return options
-    }()
-
     override open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         switch message.data {
         case .location(let location):
-            let span = MKCoordinateSpan(latitudeDelta: 0, longitudeDelta: 0)
-            mapSnapshotOptions.region = MKCoordinateRegion(center: location.coordinate, span: span)
-            mapSnapshotOptions.size = messageContainerView.frame.size
-            let snapShotter = MKMapSnapshotter(options: mapSnapshotOptions)
-            snapShotter.start(completionHandler: { (snapshot: MKMapSnapshot?, error: Error?) in
-                self.messageContentView.image = snapshot?.image
-            })
+            guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else { return }
+
+            let options = displayDelegate.snapshotOptionsForLocation(message: message, at: indexPath, in: messagesCollectionView)
+            let snapshotOptions = MKMapSnapshotOptions()
+
+            snapshotOptions.scale = options.scale
+            snapshotOptions.region = MKCoordinateRegion(center: location.coordinate, span: options.span)
+            snapshotOptions.size = messageContainerView.frame.size
+            snapshotOptions.showsBuildings = options.showsBuildings
+            snapshotOptions.showsPointsOfInterest = options.showsPointsOfInterest
+
+            let snapShotter = MKMapSnapshotter(options: snapshotOptions)
+            snapShotter.start { (snapshot: MKMapSnapshot?, error: Error?) in
+                if error == nil { self.messageContentView.image = snapshot?.image }
+            }
         default:
             break
         }
