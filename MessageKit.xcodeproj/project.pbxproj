@@ -61,6 +61,9 @@
 		B0655A381F23EE8B00542A83 /* MessageInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A371F23EE8B00542A83 /* MessageInputBar.swift */; };
 		B0655A4D1F244C0600542A83 /* MessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A4C1F244C0600542A83 /* MessageCollectionViewCell.swift */; };
 		B0655A4F1F245C5A00542A83 /* MessagesCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0655A4E1F245C5A00542A83 /* MessagesCollectionViewFlowLayout.swift */; };
+		B06D19331F70D2CA0020E416 /* LocationMessageLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06D19321F70D2CA0020E416 /* LocationMessageLayoutDelegate.swift */; };
+		B06D19351F70D3170020E416 /* MediaMessageLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06D19341F70D3170020E416 /* MediaMessageLayoutDelegate.swift */; };
+		B06D19371F70D3580020E416 /* LocationMessageSnapshotOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06D19361F70D3580020E416 /* LocationMessageSnapshotOptions.swift */; };
 		B074EE931F35587100ABB8C8 /* MessageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B074EE921F35587100ABB8C8 /* MessageHeaderView.swift */; };
 		B074EE951F35588A00ABB8C8 /* MessageFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B074EE941F35588A00ABB8C8 /* MessageFooterView.swift */; };
 		B074EE971F355FBC00ABB8C8 /* MessagesLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B074EE961F355FBC00ABB8C8 /* MessagesLayoutDelegate.swift */; };
@@ -143,6 +146,9 @@
 		B0655A371F23EE8B00542A83 /* MessageInputBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageInputBar.swift; sourceTree = "<group>"; };
 		B0655A4C1F244C0600542A83 /* MessageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewCell.swift; sourceTree = "<group>"; };
 		B0655A4E1F245C5A00542A83 /* MessagesCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		B06D19321F70D2CA0020E416 /* LocationMessageLayoutDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMessageLayoutDelegate.swift; sourceTree = "<group>"; };
+		B06D19341F70D3170020E416 /* MediaMessageLayoutDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaMessageLayoutDelegate.swift; sourceTree = "<group>"; };
+		B06D19361F70D3580020E416 /* LocationMessageSnapshotOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMessageSnapshotOptions.swift; sourceTree = "<group>"; };
 		B074EE921F35587100ABB8C8 /* MessageHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageHeaderView.swift; sourceTree = "<group>"; };
 		B074EE941F35588A00ABB8C8 /* MessageFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageFooterView.swift; sourceTree = "<group>"; };
 		B074EE961F355FBC00ABB8C8 /* MessagesLayoutDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesLayoutDelegate.swift; sourceTree = "<group>"; };
@@ -289,6 +295,7 @@
 				B0147C911F6002140035B36E /* MessageKitDateFormatter.swift */,
 				B0147C971F61AF910035B36E /* LabelAlignment.swift */,
 				B0E1756E1F655A1600F0DEF6 /* AvatarHorizontalAlignment.swift */,
+				B06D19361F70D3580020E416 /* LocationMessageSnapshotOptions.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -325,6 +332,8 @@
 				B03FF9AE1F31BB1200754FE5 /* MessageCellDelegate.swift */,
 				B074EE961F355FBC00ABB8C8 /* MessagesLayoutDelegate.swift */,
 				B01280F21F4E8798004BCD3E /* MessageLabelDelegate.swift */,
+				B06D19321F70D2CA0020E416 /* LocationMessageLayoutDelegate.swift */,
+				B06D19341F70D3170020E416 /* MediaMessageLayoutDelegate.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -501,14 +510,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				171D5AB91F36712B0053DF69 /* InputTextView.swift in Sources */,
+				B06D19331F70D2CA0020E416 /* LocationMessageLayoutDelegate.swift in Sources */,
 				B0147C901F5ED0810035B36E /* MessageDateHeaderView.swift in Sources */,
 				38C8679E1F50EA4A00811974 /* InputBarItem.swift in Sources */,
 				B01049121F6F86E8008DBA58 /* LocationMessageCell.swift in Sources */,
 				B074EE971F355FBC00ABB8C8 /* MessagesLayoutDelegate.swift in Sources */,
 				38C8679A1F50EA1000811974 /* NSConstraintLayoutSet.swift in Sources */,
+				B06D19351F70D3170020E416 /* MediaMessageLayoutDelegate.swift in Sources */,
 				882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */,
 				888CEBFC1D3FD525005178DE /* MessagesViewController.swift in Sources */,
 				B0147C831F5BE9220035B36E /* Bundle+Extensions.swift in Sources */,
+				B06D19371F70D3580020E416 /* LocationMessageSnapshotOptions.swift in Sources */,
 				E8586DB51F59A1C300C9BE9D /* MessageContainerView.swift in Sources */,
 				B0655A4F1F245C5A00542A83 /* MessagesCollectionViewFlowLayout.swift in Sources */,
 				B0655A2C1F23D81600542A83 /* MessageData.swift in Sources */,

@@ -181,6 +181,20 @@ extension ConversationViewController: MessagesLayoutDelegate {
 
 }
 
+// MARK: - LocationMessageLayoutDelegate
+
+extension ConversationViewController: LocationMessageLayoutDelegate {
+
+    func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 200
+    }
+
+}
+
+// MARK: - MediaMessageLayoutDelegate
+
+extension ConversationViewController: MediaMessageLayoutDelegate {}
+
 // MARK: - MessageCellDelegate
 
 extension ConversationViewController: MessageCellDelegate {
