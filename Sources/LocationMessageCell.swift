@@ -27,27 +27,52 @@ import MapKit
 
 open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
 
+    // MARK: - Properties
+
+    open var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+
     override open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
+
         switch message.data {
         case .location(let location):
             guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else { return }
-
             let options = displayDelegate.snapshotOptionsForLocation(message: message, at: indexPath, in: messagesCollectionView)
-            let snapshotOptions = MKMapSnapshotOptions()
-
-            snapshotOptions.scale = options.scale
-            snapshotOptions.region = MKCoordinateRegion(center: location.coordinate, span: options.span)
-            snapshotOptions.size = messageContainerView.frame.size
-            snapshotOptions.showsBuildings = options.showsBuildings
-            snapshotOptions.showsPointsOfInterest = options.showsPointsOfInterest
-
-            let snapShotter = MKMapSnapshotter(options: snapshotOptions)
-            snapShotter.start { (snapshot: MKMapSnapshot?, error: Error?) in
-                if error == nil { self.messageContentView.image = snapshot?.image }
-            }
+            setMapSnaphotImage(for: location, options: options)
         default:
             break
+        }
+    }
+
+    override func setupSubviews() {
+        super.setupSubviews()
+        messageContentView.addSubview(activityIndicator)
+        setupConstraints()
+    }
+
+    private func setupConstraints() {
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        let centerX = activityIndicator.centerXAnchor.constraint(equalTo: messageContentView.centerXAnchor)
+        let centerY = activityIndicator.centerYAnchor.constraint(equalTo: messageContentView.centerYAnchor)
+        NSLayoutConstraint.activate([centerX, centerY])
+    }
+
+    open func setMapSnaphotImage(for location: CLLocation, options: LocationMessageSnapshotOptions) {
+
+        activityIndicator.startAnimating()
+
+        let snapshotOptions = MKMapSnapshotOptions()
+        snapshotOptions.region = MKCoordinateRegion(center: location.coordinate, span: options.span)
+        snapshotOptions.size = messageContainerView.frame.size
+        snapshotOptions.showsBuildings = options.showsBuildings
+        snapshotOptions.showsPointsOfInterest = options.showsPointsOfInterest
+
+        let snapShotter = MKMapSnapshotter(options: snapshotOptions)
+        snapShotter.start { (snapshot, error) in
+            self.activityIndicator.stopAnimating()
+            if error == nil {
+                self.messageContentView.image = snapshot?.image
+            }
         }
     }
 
