@@ -6,7 +6,7 @@ import PlaygroundSupport
 //Get an image
 let testImage = #imageLiteral(resourceName: "NiceSelfi.jpg")
 
-var avatarView = AvatarView()
+var avatarView = AvatarView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
 
 //: Uncomment any line to see how it changes the `Avatar`. Change the parameters and see the effects.
 
