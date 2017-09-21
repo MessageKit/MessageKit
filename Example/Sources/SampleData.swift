@@ -23,6 +23,7 @@
  */
 
 import MessageKit
+import CoreLocation
 
 struct SampleData {
     let Dan = Sender(id: "123456", displayName: "Dan Leonard")
@@ -34,7 +35,7 @@ struct SampleData {
 
         let msg1 = MockMessage(text: "Check out this awesome UI library for Chat", sender: Dan, messageId: UUID().uuidString)
         var msg2 = MockMessage(text: "This is insane.", sender: Steven, messageId: UUID().uuidString)
-        var msg3 = MockMessage(text: "Companies that get confused, that think their goal is revenue or stock price or something. You have to focus on the things that lead to those.", sender: Dan, messageId: UUID().uuidString)
+        var msg3 = MockMessage(image: #imageLiteral(resourceName: "Steve-Jobs"), sender: Jobs, messageId: UUID().uuidString)
         var msg4 =  MockMessage(text: "My favorite things in life don’t cost any money. It’s really clear that the most precious resource we all have is time.", sender: Jobs, messageId: UUID().uuidString)
         var msg5 = MockMessage(text: "You know, this iPhone, as a matter of fact, the engine in here is made in America. And not only are the engines in here made in America, but engines are made in America and are exported. The glass on this phone is made in Kentucky. And so we've been working for years on doing more and more in the United States.", sender: Dan, messageId: UUID().uuidString)
         var msg6 =  MockMessage(text: "I think if you do something and it turns out pretty good, then you should go do something else wonderful, not dwell on it for too long. Just figure out what’s next.", sender: Jobs, messageId: UUID().uuidString)
@@ -56,6 +57,10 @@ struct SampleData {
         var msg11 = MockMessage(text: "One Infinite Loop Cupertino, CA 95014 This is some extra text that should not be detected.", sender: Cook, messageId: UUID().uuidString)
         let msg12 = MockMessage(text: "This is an example of the date detector 11/11/2017. April 1st is April Fools Day. Next Friday is not Friday the 13th.", sender: Dan, messageId: UUID().uuidString)
         let msg13 = MockMessage(text: "https//:github.com/SD10", sender: Steven, messageId: UUID().uuidString)
+        let msg14 = MockMessage(thumbnail: #imageLiteral(resourceName: "Tim-Cook"), sender: Jobs, messageId: UUID().uuidString)
+
+        let location = CLLocation(latitude: 37.3318, longitude: -122.0312) // Apple HQ
+        let msg15 = MockMessage(location: location, sender: Jobs, messageId: UUID().uuidString)
 
         msg2.sentDate = Calendar.current.date(byAdding: .hour, value: 2, to: msg1.sentDate)!
         msg3.sentDate = Calendar.current.date(byAdding: .minute, value: 37, to: msg2.sentDate)!
@@ -68,7 +73,7 @@ struct SampleData {
         msg10.sentDate = Calendar.current.date(byAdding: .minute, value: 59, to: msg9.sentDate)!
         msg11.sentDate = Calendar.current.date(byAdding: .hour, value: 7, to: msg10.sentDate)!
 
-        return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11, msg12, msg13].map { msg -> MockMessage in
+        return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11, msg12, msg13, msg14, msg15].map { msg -> MockMessage in
             var msg = msg
             msg.sender = msg.sender == Dan ? Steven : Dan
             return msg

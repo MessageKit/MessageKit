@@ -1,18 +1,18 @@
 /*
  MIT License
- 
+
  Copyright (c) 2017 MessageKit
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,44 +25,44 @@
 import UIKit
 
 open class MessagesViewController: UIViewController {
-    
-	// MARK: - Properties
 
-	open var messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
+    // MARK: - Properties
+
+    open var messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
 
     open var messageInputBar = MessageInputBar()
 
     private var messageInputBarCopy: MessageInputBar?
 
     private var isFirstLayout: Bool = true
-    
-	override open var canBecomeFirstResponder: Bool {
-		return true
-	}
 
-	override open var inputAccessoryView: UIView? {
+    override open var canBecomeFirstResponder: Bool {
+        return true
+    }
+
+    override open var inputAccessoryView: UIView? {
         return messageInputBar
-	}
+    }
 
     open override var shouldAutorotate: Bool {
         return false
     }
 
-	// MARK: - View Life Cycle
+    // MARK: - View Life Cycle
 
-	open override func viewDidLoad() {
-		super.viewDidLoad()
+    open override func viewDidLoad() {
+        super.viewDidLoad()
 
-		automaticallyAdjustsScrollViewInsets = false
+        automaticallyAdjustsScrollViewInsets = false
         view.backgroundColor = .white
         messagesCollectionView.keyboardDismissMode = .interactive
 
-		setupSubviews()
-		setupConstraints()
+        setupSubviews()
+        setupConstraints()
         registerReusableViews()
-		setupDelegates()
+        setupDelegates()
 
-	}
+    }
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -91,16 +91,23 @@ open class MessagesViewController: UIViewController {
         removeKeyboardObservers()
     }
 
-	// MARK: - Methods
+    // MARK: - Methods
 
-	private func setupDelegates() {
-		messagesCollectionView.delegate = self
-		messagesCollectionView.dataSource = self
-	}
+    private func setupDelegates() {
+        messagesCollectionView.delegate = self
+        messagesCollectionView.dataSource = self
+    }
 
     private func registerReusableViews() {
-        messagesCollectionView.register(MessageCollectionViewCell.self,
-                                        forCellWithReuseIdentifier: "MessageCell")
+
+        messagesCollectionView.register(TextMessageCell.self,
+                                        forCellWithReuseIdentifier: "TextMessageCell")
+
+        messagesCollectionView.register(MediaMessageCell.self,
+                                        forCellWithReuseIdentifier: "MediaMessageCell")
+
+        messagesCollectionView.register(LocationMessageCell.self,
+                                        forCellWithReuseIdentifier: "LocationMessageCell")
 
         messagesCollectionView.register(MessageFooterView.self,
                                         forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
@@ -113,14 +120,14 @@ open class MessagesViewController: UIViewController {
         messagesCollectionView.register(MessageDateHeaderView.self,
                                         forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
                                         withReuseIdentifier: "MessageDateHeaderView")
+
     }
 
-	private func setupSubviews() {
-		view.addSubview(messagesCollectionView)
-	}
+    private func setupSubviews() {
+        view.addSubview(messagesCollectionView)
+    }
 
-	private func setupConstraints() {
-       
+    private func setupConstraints() {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
 
         let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: topLayoutGuide.length)
@@ -128,8 +135,8 @@ open class MessagesViewController: UIViewController {
         let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         let bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
 
-		NSLayoutConstraint.activate([top, bottom, trailing, leading])
-	}
+        NSLayoutConstraint.activate([top, bottom, trailing, leading])
+    }
 
     // MARK: - MessageInputBar
     // Fixes bug where MessageInputBar text renders after viewDidAppear
@@ -151,10 +158,10 @@ open class MessagesViewController: UIViewController {
 
 extension MessagesViewController: UICollectionViewDelegateFlowLayout {
 
-	public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		guard let messagesFlowLayout = collectionViewLayout as? MessagesCollectionViewFlowLayout else { return .zero }
-		return messagesFlowLayout.sizeForItem(at: indexPath)
-	}
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let messagesFlowLayout = collectionViewLayout as? MessagesCollectionViewFlowLayout else { return .zero }
+        return messagesFlowLayout.sizeForItem(at: indexPath)
+    }
 
 }
 
@@ -162,60 +169,51 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
 
 extension MessagesViewController: UICollectionViewDataSource {
 
-	public func numberOfSections(in collectionView: UICollectionView) -> Int {
-		guard let collectionView = collectionView as? MessagesCollectionView else { return 0 }
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        guard let collectionView = collectionView as? MessagesCollectionView else { return 0 }
 
-		// Each message is its own section
-		return collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
-	}
+        // Each message is its own section
+        return collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
+    }
 
-	public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		guard let collectionView = collectionView as? MessagesCollectionView else { return 0 }
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let collectionView = collectionView as? MessagesCollectionView else { return 0 }
 
-		let messageCount = collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
-		// There will only ever be 1 message per section
-		return messageCount > 0 ? 1 : 0
+        let messageCount = collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
+        // There will only ever be 1 message per section
+        return messageCount > 0 ? 1 : 0
 
-	}
+    }
 
-	public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MessageCell", for: indexPath) as? MessageCollectionViewCell ?? MessageCollectionViewCell()
-
-        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return cell }
-
-        if let cellDelegate = messagesCollectionView.messageCellDelegate {
-            if cell.delegate == nil { cell.delegate = cellDelegate }
-        }
-
-        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return cell }
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return UICollectionViewCell() }
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { fatalError("Please set messagesDataSource") }
 
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        let avatar = messagesDataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
-        let topLabelText = messagesDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
-        let bottomLabelText = messagesDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
 
-        if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {
-
-            let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
-            let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
-            let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
-
-            cell.messageLabel.textColor = textColor
-            cell.messageContainerView.messageColor = messageColor
-            cell.messageContainerView.style = messageStyle
-
+        switch message.data {
+        case .text, .attributedText:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TextMessageCell", for: indexPath) as? TextMessageCell else {
+                fatalError("Unable to dequeue TextMessageCell")
+            }
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .photo, .video:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaMessageCell", for: indexPath) as? MediaMessageCell else {
+                fatalError("Unable to dequeue MediaMessageCell")
+            }
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .location:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LocationMessageCell", for: indexPath) as? LocationMessageCell else {
+                fatalError("Unable to dequeue LocationMessageCell")
+            }
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
         }
 
-        // Must be set after configuring displayDelegate properties
-        cell.avatarView.set(avatar: avatar)
-        cell.cellTopLabel.attributedText = topLabelText
-        cell.cellBottomLabel.attributedText = bottomLabelText
-        cell.configure(with: message)
-
-		return cell
-
-	}
+    }
 
     public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
@@ -240,7 +238,7 @@ extension MessagesViewController: UICollectionViewDataSource {
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return .zero }
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return .zero }
         guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
-         // Could pose a problem if subclass behaviors allows more than one item per section
+        // Could pose a problem if subclass behaviors allows more than one item per section
         let indexPath = IndexPath(item: 0, section: section)
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         return messagesLayoutDelegate.headerViewSize(for: message, at: indexPath, in: messagesCollectionView)
@@ -261,11 +259,11 @@ extension MessagesViewController: UICollectionViewDataSource {
 // MARK: - Keyboard Handling
 
 extension MessagesViewController {
-    
+
     fileprivate func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
     }
-    
+
     fileprivate func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
     }
@@ -282,7 +280,7 @@ extension MessagesViewController {
             let bottomInset = keyboardEndFrame.height > messageInputBar.frame.height ? keyboardEndFrame.height : messageInputBar.frame.height
             messagesCollectionView.contentInset.bottom = bottomInset
         }
-
+        
     }
-
+    
 }

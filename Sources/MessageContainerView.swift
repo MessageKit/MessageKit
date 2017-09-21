@@ -24,56 +24,51 @@
 
 import UIKit
 
-open class MessageContainerView: UIView {
+open class MessageContainerView: UIImageView {
 
     // MARK: - Properties
 
-    open let imageView = UIImageView()
+    private let imageMask = UIImageView()
+
+    open override var frame: CGRect {
+        didSet {
+            applyMessageStyle()
+        }
+    }
 
     open var style: MessageStyle = .none {
         didSet {
-            imageView.image = style.image
-            updateMessageColor()
+            applyMessageStyle()
         }
-    }
-
-    open var messageColor: UIColor = .white {
-        didSet {
-            updateMessageColor()
-        }
-    }
-
-    // MARK: - Initializers
-
-    override public init(frame: CGRect) {
-        super.init(frame: frame)
-        setupSubviews()
-        setupConstraints()
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Methods
 
-    func setupSubviews() {
-        imageView.isUserInteractionEnabled = true
-        addSubview(imageView)
-    }
-
-    func setupConstraints() {
-        imageView.fillSuperview()
-    }
-
-    private func updateMessageColor() {
+    private func applyMessageStyle() {
         switch style {
+        case .bubble, .bubbleTail:
+            imageMask.image = style.image
+            imageMask.frame = bounds
+            mask = imageMask
+            image = nil
+        case .bubbleOutline(let color):
+            let bubbleStyle: MessageStyle = .bubble
+            imageMask.image = bubbleStyle.image
+            imageMask.frame = bounds.insetBy(dx: 1.0, dy: 1.0)
+            mask = imageMask
+            image = style.image
+            tintColor = color
+        case .bubbleTailOutline(let color, let tail, let corner):
+            let bubbleStyle: MessageStyle = .bubbleTailOutline(.white, tail, corner)
+            imageMask.image = bubbleStyle.image
+            imageMask.frame = bounds.insetBy(dx: 1.0, dy: 1.0)
+            mask = imageMask
+            image = style.image
+            tintColor = color
         case .none:
-            backgroundColor = messageColor
-            imageView.tintColor = messageColor
-        default:
-            backgroundColor = superview?.backgroundColor
-            imageView.tintColor = messageColor
+            mask = nil
+            image = nil
+            tintColor = nil
         }
     }
 
