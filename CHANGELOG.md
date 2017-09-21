@@ -7,6 +7,12 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ## Upcoming release
 ----------------
 
+## [Prerelease] 0.7.3
+
+- Fixes missing asset bundle resources for Carthage installation.
+
+## [Prerelease] 0.7.2
+
 ## [Prerelease] 0.7.1
 
 - Fixes missing asset bundle resources in framework.
