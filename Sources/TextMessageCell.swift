@@ -47,6 +47,7 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
 
         guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else { return }
         messageContentView.textInsets = attributes.messageLabelInsets
+        messageContentView.font = attributes.messageLabelFont
     }
 
     override open func prepareForReuse() {
