@@ -24,11 +24,16 @@
 
 import UIKit
 
-open class MessageCollectionViewCell: UICollectionViewCell {
+open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell {
 
     // MARK: - Properties
 
-    open var messageContainerView: MessageContainerView = MessageContainerView()
+    open var messageContainerView: MessageContainerView = {
+        let messageContainerView = MessageContainerView()
+        messageContainerView.clipsToBounds = true
+        messageContainerView.layer.masksToBounds = true
+        return messageContainerView
+    }()
 
     open var avatarView: AvatarView = AvatarView()
 
@@ -38,7 +43,12 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         return topLabel
     }()
 
-    open var messageLabel: MessageLabel = MessageLabel()
+    open var messageContentView: ContentView = {
+        let contentView = ContentView()
+        contentView.clipsToBounds = true
+        contentView.isUserInteractionEnabled = true
+        return contentView
+    }()
 
     open var cellBottomLabel: MessageLabel = {
         let bottomLabel = MessageLabel()
@@ -46,11 +56,9 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         return bottomLabel
     }()
 
-    open weak var delegate: MessageCellDelegate? {
-        didSet {
-            messageLabel.delegate = delegate
-        }
-    }
+    open weak var delegate: MessageCellDelegate?
+
+    var messageTapGesture: UITapGestureRecognizer?
 
     // MARK: - Initializer
 
@@ -67,11 +75,11 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Methods
 
-    private func setupSubviews() {
+    internal func setupSubviews() {
 
         contentView.addSubview(cellTopLabel)
         contentView.addSubview(messageContainerView)
-        messageContainerView.addSubview(messageLabel)
+        messageContainerView.addSubview(messageContentView)
         contentView.addSubview(avatarView)
         contentView.addSubview(cellBottomLabel)
 
@@ -85,8 +93,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         avatarView.frame = attributes.avatarFrame
 
         messageContainerView.frame = attributes.messageContainerFrame
-        messageLabel.frame = CGRect(origin: .zero, size: attributes.messageContainerFrame.size)
-        messageLabel.textInsets = attributes.messageLabelInsets
+        messageContentView.frame = messageContainerView.bounds
 
         cellTopLabel.frame = attributes.cellTopLabelFrame
         cellTopLabel.textInsets = attributes.cellTopLabelInsets
@@ -97,26 +104,44 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     }
 
     override open func prepareForReuse() {
-        messageLabel.text = nil
-        messageLabel.attributedText = nil
         cellTopLabel.text = nil
         cellTopLabel.attributedText = nil
         cellBottomLabel.text = nil
         cellBottomLabel.attributedText = nil
     }
 
-    public func configure(with message: MessageType) {
+    public func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
 
-        switch message.data {
-        case .text(let text):
-            messageLabel.text = text
-        case .attributedText(let text):
-            messageLabel.attributedText = text
+        // Check if delegate has already been set to reduce number of assignments
+        if delegate == nil, let cellDelegate = messagesCollectionView.messageCellDelegate {
+            delegate = cellDelegate
+        }
+
+        if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {
+
+            let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
+            let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
+
+            messageContainerView.backgroundColor = messageColor
+            messageContainerView.style = messageStyle
+        }
+
+        // Make sure we set all data source properties after configuring display delegate properties
+        // The MessageLabel class probably has a stateful issue
+        if let dataSource = messagesCollectionView.messagesDataSource {
+
+            let avatar = dataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
+            let topLabelText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
+            let bottomLabelText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
+
+            avatarView.set(avatar: avatar)
+            cellTopLabel.attributedText = topLabelText
+            cellBottomLabel.attributedText = bottomLabelText
         }
 
     }
 
-    private func setupGestureRecognizers() {
+    func setupGestureRecognizers() {
 
         let avatarTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
         avatarView.addGestureRecognizer(avatarTapGesture)
@@ -124,7 +149,8 @@ open class MessageCollectionViewCell: UICollectionViewCell {
 
         let messageTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapMessage))
         messageContainerView.addGestureRecognizer(messageTapGesture)
-        messageTapGesture.delegate = messageLabel
+        messageContainerView.isUserInteractionEnabled = true
+        self.messageTapGesture = messageTapGesture
 
         let topLabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapTopLabel))
         cellTopLabel.addGestureRecognizer(topLabelTapGesture)

@@ -396,7 +396,7 @@ open class MessageInputBar: UIView {
     /// - Parameters:
     ///   - newValue: New widthAnchor constant
     ///   - animated: If the layout should be animated
-    open func setLeftStackViewWidthContant(to newValue: CGFloat, animated: Bool) {
+    open func setLeftStackViewWidthConstant(to newValue: CGFloat, animated: Bool) {
         performLayout(animated) {
             self.leftStackViewWidthContant = newValue
             self.layoutStackViews([.left])
@@ -409,7 +409,7 @@ open class MessageInputBar: UIView {
     /// - Parameters:
     ///   - newValue: New widthAnchor constant
     ///   - animated: If the layout should be animated
-    open func setRightStackViewWidthContant(to newValue: CGFloat, animated: Bool) {
+    open func setRightStackViewWidthConstant(to newValue: CGFloat, animated: Bool) {
         performLayout(animated) {
             self.rightStackViewWidthContant = newValue
             self.layoutStackViews([.right])
