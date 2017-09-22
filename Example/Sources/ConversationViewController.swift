@@ -54,7 +54,7 @@ class ConversationViewController: MessagesViewController {
                     self.slack()
                 })
             }),
-            UIAlertAction(title: "iMessage", style: .default, handler: { action in
+            UIAlertAction(title: "iMessage", style: .default, handler: { _ in
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
                     self.iMessage()
                 })
@@ -103,7 +103,7 @@ class ConversationViewController: MessagesViewController {
                     $0.layer.borderColor = $0.titleColor(for: .disabled)?.cgColor
                     $0.backgroundColor = .white
                 }.onEnabled {
-                    $0.backgroundColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                    $0.backgroundColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
                     $0.layer.borderColor = UIColor.clear.cgColor
                 }.onSelected {
                     // We use a transform becuase changing the size would cause the other views to relayout
@@ -140,7 +140,7 @@ class ConversationViewController: MessagesViewController {
         messageInputBar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         messageInputBar.setRightStackViewWidthConstant(to: 36, animated: true)
         messageInputBar.setStackViewItems([messageInputBar.sendButton], forStack: .right, animated: true)
-        messageInputBar.sendButton.imageView?.backgroundColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+        messageInputBar.sendButton.imageView?.backgroundColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
         messageInputBar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         messageInputBar.sendButton.setSize(CGSize(width: 36, height: 36), animated: true)
         messageInputBar.sendButton.image = #imageLiteral(resourceName: "ic_up")
@@ -167,7 +167,7 @@ class ConversationViewController: MessagesViewController {
                 $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
                 $0.setSize(CGSize(width: 30, height: 30), animated: true)
             }.onSelected {
-                $0.tintColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                $0.tintColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
             }.onDeselected {
                 $0.tintColor = UIColor.lightGray
             }.onTouchUpInside { _ in
@@ -262,19 +262,19 @@ extension ConversationViewController: MediaMessageLayoutDelegate {}
 
 extension ConversationViewController: MessageCellDelegate {
 
-    func didTapAvatar<T: UIView>(in cell: MessageCollectionViewCell<T>) {
+    func didTapAvatar<T>(in cell: MessageCollectionViewCell<T>) {
         print("Avatar tapped")
     }
 
-    func didTapMessage<T: UIView>(in cell: MessageCollectionViewCell<T>) {
+    func didTapMessage<T>(in cell: MessageCollectionViewCell<T>) {
         print("Message tapped")
     }
 
-    func didTapTopLabel<T: UIView>(in cell: MessageCollectionViewCell<T>) {
+    func didTapTopLabel<T>(in cell: MessageCollectionViewCell<T>) {
         print("Top label tapped")
     }
 
-    func didTapBottomLabel<T: UIView>(in cell: MessageCollectionViewCell<T>) {
+    func didTapBottomLabel<T>(in cell: MessageCollectionViewCell<T>) {
         print("Bottom label tapped")
     }
 

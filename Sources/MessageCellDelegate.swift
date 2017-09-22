@@ -26,24 +26,24 @@ import Foundation
 
 public protocol MessageCellDelegate: class, MessageLabelDelegate {
 
-    func didTapMessage<T: UIView>(in cell: MessageCollectionViewCell<T>)
+    func didTapMessage<T>(in cell: MessageCollectionViewCell<T>)
 
-    func didTapAvatar<T: UIView>(in cell: MessageCollectionViewCell<T>)
+    func didTapAvatar<T>(in cell: MessageCollectionViewCell<T>)
 
-    func didTapBottomLabel<T: UIView>(in cell: MessageCollectionViewCell<T>)
+    func didTapBottomLabel<T>(in cell: MessageCollectionViewCell<T>)
 
-    func didTapTopLabel<T: UIView>(in cell: MessageCollectionViewCell<T>)
+    func didTapTopLabel<T>(in cell: MessageCollectionViewCell<T>)
 
 }
 
 public extension MessageCellDelegate {
 
-    func didTapMessage<T: UIView>(in cell: MessageCollectionViewCell<T>) {}
+    func didTapMessage<T>(in cell: MessageCollectionViewCell<T>) {}
 
-    func didTapAvatar<T: UIView>(in cell: MessageCollectionViewCell<T>) {}
+    func didTapAvatar<T>(in cell: MessageCollectionViewCell<T>) {}
 
-    func didTapBottomLabel<T: UIView>(in cell: MessageCollectionViewCell<T>) {}
+    func didTapBottomLabel<T>(in cell: MessageCollectionViewCell<T>) {}
 
-    func didTapTopLabel<T: UIView>(in cell: MessageCollectionViewCell<T>) {}
+    func didTapTopLabel<T>(in cell: MessageCollectionViewCell<T>) {}
 
 }
