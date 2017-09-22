@@ -26,8 +26,6 @@ import Foundation
 import MessageKit
 import CoreLocation
 
-
-
 struct MockMessage: MessageType {
 	
 	var messageId: String

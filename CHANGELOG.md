@@ -7,7 +7,14 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ## Upcoming release
 ----------------
 
+## [Prerelease] 0.8.1
+### Added
+- Support for Swift 3.2 and Xcode 9
+
 ## [Prerelease] 0.8.0
+
+This release closes the [0.8 milestone](https://github.com/MessageKit/MessageKit/milestone/9?closed=1).
+
 ### Added
 - **Breaking Change** `MessageData` now supports `.photo(UIImage)`, `.location(CLLocation)`, `.video(file: URL, thumbnail: UIImage)` cases.
 - **Breaking Change** `MessageCollectionViewCell` is now generic over its `ContentView` constrained to `UIView`.
