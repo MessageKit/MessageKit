@@ -128,3 +128,31 @@ public extension MessageContainerView {
     }
 
 }
+
+// MARK: - MessageCollectionViewCell
+
+public extension MessageCollectionViewCell where ContentView == MessageLabel {
+
+    @available(*, deprecated: 0.8.0, message: "messageLabel has been deprecated. Please use the messageContentView property instead.")
+    public var messageLabel: MessageLabel {
+        get { return messageContentView }
+        set { messageContentView = newValue }
+    }
+
+}
+
+// MARK: - AvatarView
+
+public extension AvatarView {
+
+    @available(*, deprecated: 0.8.0, message: "setBackground(_:) has been deprecated. Please use the backgroundColor property instead.")
+    public func setBackground(color: UIColor) {
+        backgroundColor = color
+    }
+
+    @available(*, deprecated: 0.8.0, message: "getImage() has been deprecated. Please use the image property instead.")
+    public func getImage() -> UIImage? {
+        return imageView.image
+    }
+    
+}
