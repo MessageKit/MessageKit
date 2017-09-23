@@ -419,11 +419,11 @@ open class MessageInputBar: UIView {
     
     // MARK: - Notifications/Hooks
     
-    open func orientationDidChange() {
+  @objc open func orientationDidChange() {
         invalidateIntrinsicContentSize()
     }
     
-    open func textViewDidChange() {
+  @objc open func textViewDidChange() {
         let trimmedText = inputTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
 
         sendButton.isEnabled = !trimmedText.isEmpty
@@ -435,11 +435,11 @@ open class MessageInputBar: UIView {
         invalidateIntrinsicContentSize()
     }
     
-    open func textViewDidBeginEditing() {
+  @objc open func textViewDidBeginEditing() {
         self.items.forEach { $0.keyboardEditingBeginsAction() }
     }
     
-    open func textViewDidEndEditing() {
+  @objc open func textViewDidEndEditing() {
         self.items.forEach { $0.keyboardEditingEndsAction() }
     }
     
