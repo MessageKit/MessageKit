@@ -36,7 +36,7 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
 
         switch message.data {
         case .location(let location):
-            guard let displayDelegate = messagesCollectionView.locationMessagesDisplayDelegate else { return }
+            guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate as? LocationMessageDisplayDelegate else { return }
             let options = displayDelegate.snapshotOptionsForLocation(message: message, at: indexPath, in: messagesCollectionView)
             let annotationView = displayDelegate.annotationViewForLocation(message: message, at: indexPath, in: messagesCollectionView)
             setMapSnaphotImage(for: location, annotationView: annotationView, options: options)
@@ -70,7 +70,9 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
 
         let snapShotter = MKMapSnapshotter(options: snapshotOptions)
         snapShotter.start { (snapshot, error) in
-
+            defer {
+                self.activityIndicator.stopAnimating()
+            }
             guard let snapshot = snapshot, error == nil else {
                 //show an error image?
                 return
@@ -93,7 +95,6 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
 
             UIGraphicsEndImageContext()
 
-            self.activityIndicator.stopAnimating()
             self.messageContentView.image = image
             
         }

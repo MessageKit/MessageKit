@@ -38,7 +38,6 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
-        messagesCollectionView.locationMessagesDisplayDelegate = self
         messageInputBar.delegate = self
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_keyboard"),

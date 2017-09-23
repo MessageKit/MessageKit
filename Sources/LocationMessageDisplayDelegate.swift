@@ -12,7 +12,7 @@ import MapKit
 public protocol LocationMessageDisplayDelegate: MessagesDisplayDelegate {
     
     func snapshotOptionsForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LocationMessageSnapshotOptions
-    
+
     func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView
 
 }
