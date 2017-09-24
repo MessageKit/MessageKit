@@ -119,28 +119,28 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         }
     }
 
-    open var addressAttributes: [String: Any] = [:] {
+    open var addressAttributes: [NSAttributedStringKey: Any] = [:] {
         didSet {
             updateAttributes(for: .address)
             setNeedsDisplay()
         }
     }
 
-    open var dateAttributes: [String: Any] = [:] {
+    open var dateAttributes: [NSAttributedStringKey: Any] = [:] {
         didSet {
             updateAttributes(for: .date)
             setNeedsDisplay()
         }
     }
 
-    open var phoneNumberAttributes: [String: Any] = [:] {
+    open var phoneNumberAttributes: [NSAttributedStringKey: Any] = [:] {
         didSet {
             updateAttributes(for: .phoneNumber)
             setNeedsDisplay()
         }
     }
 
-    open var urlAttributes: [String: Any] = [:] {
+    open var urlAttributes: [NSAttributedStringKey: Any] = [:] {
         didSet {
             updateAttributes(for: .url)
             setNeedsDisplay()
@@ -156,10 +156,10 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         self.numberOfLines = 0
         self.lineBreakMode = .byWordWrapping
 
-        let defaultAttributes: [String: Any] = [
-            NSForegroundColorAttributeName: self.textColor,
-            NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue,
-            NSUnderlineColorAttributeName: self.textColor
+        let defaultAttributes: [NSAttributedStringKey: Any] = [
+          NSAttributedStringKey.foregroundColor: self.textColor,
+          NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
+          NSAttributedStringKey.underlineColor: self.textColor
         ]
 
         self.addressAttributes = defaultAttributes
@@ -210,7 +210,7 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
             guard let index = stringIndex(at: touchLocation) else { return true }
             for (_, ranges) in rangesForDetectors {
                 for (nsRange, _) in ranges {
-                    guard let range = nsRange.toRange() else { return true }
+                  guard let range = Range(nsRange) else { return true }
                     if range.contains(index) { return false }
                 }
             }
@@ -219,7 +219,7 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
             guard let index = stringIndex(at: touchLocation) else { return false }
             for (_, ranges) in rangesForDetectors {
                 for (nsRange, _) in ranges {
-                    guard let range = nsRange.toRange() else { return false }
+                    guard let range = Range(nsRange) else { return false }
                     if range.contains(index) { return true }
                 }
             }
@@ -266,11 +266,11 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         let mutableAttributedString = NSMutableAttributedString(attributedString: text)
         var textRange = NSRange(location: 0, length: 0)
 
-        let paragraphStyle = text.attribute(NSParagraphStyleAttributeName, at: 0, effectiveRange: &textRange) as? NSMutableParagraphStyle ?? NSMutableParagraphStyle()
+      let paragraphStyle = text.attribute(NSAttributedStringKey.paragraphStyle, at: 0, effectiveRange: &textRange) as? NSMutableParagraphStyle ?? NSMutableParagraphStyle()
         paragraphStyle.lineBreakMode = lineBreakMode
         paragraphStyle.alignment = textAlignment
 
-        mutableAttributedString.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: textRange)
+      mutableAttributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: textRange)
 
         return mutableAttributedString
 
@@ -304,7 +304,7 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
     }
 
-    private func detectorAttributes(for detectorType: DetectorType) -> [String: Any] {
+    private func detectorAttributes(for detectorType: DetectorType) -> [NSAttributedStringKey: Any] {
 
         switch detectorType {
         case .address:
@@ -319,7 +319,7 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
     }
 
-    private func detectorAttributes(for checkingResultType: NSTextCheckingResult.CheckingType) -> [String: Any] {
+    private func detectorAttributes(for checkingResultType: NSTextCheckingResult.CheckingType) -> [NSAttributedStringKey: Any] {
         switch checkingResultType {
         case NSTextCheckingResult.CheckingType.address:
             return addressAttributes
@@ -413,14 +413,14 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         isUserInteractionEnabled = true
     }
 
-    func handleGesture(_ gesture: UIGestureRecognizer) {
+  @objc func handleGesture(_ gesture: UIGestureRecognizer) {
 
         let touchLocation = gesture.location(ofTouch: 0, in: self)
         guard let index = stringIndex(at: touchLocation) else { return }
 
         for (detectorType, ranges) in rangesForDetectors {
             for (nsRange, value) in ranges {
-                guard let range = nsRange.toRange() else { return }
+                guard let range = Range(nsRange) else { return }
                 if range.contains(index) {
                     handleGesture(for: detectorType, value: value)
                 }

@@ -268,7 +268,7 @@ extension MessagesViewController {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
     }
 
-    func handleKeyboardDidChangeState(_ notification: Notification) {
+  @objc func handleKeyboardDidChangeState(_ notification: Notification) {
 
         guard let keyboardEndFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
 
