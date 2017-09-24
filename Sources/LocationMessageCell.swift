@@ -74,7 +74,7 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
                 self.activityIndicator.stopAnimating()
             }
             guard let snapshot = snapshot, error == nil else {
-                print("\(#function) Error creating map snapshot: \(String(describing: error))") //show an error image?
+                //show an error image?
                 return
             }
 
