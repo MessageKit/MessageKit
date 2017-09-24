@@ -164,19 +164,19 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
 
     // MARK: - Delegate Methods
 
-    func didTapAvatar() {
+  @objc func didTapAvatar() {
         delegate?.didTapAvatar(in: self)
     }
 
-    func didTapMessage() {
+  @objc func didTapMessage() {
         delegate?.didTapMessage(in: self)
     }
 
-    func didTapTopLabel() {
+  @objc func didTapTopLabel() {
         delegate?.didTapTopLabel(in: self)
     }
 
-    func didTapBottomLabel() {
+  @objc func didTapBottomLabel() {
         delegate?.didTapBottomLabel(in: self)
     }
 

@@ -7,6 +7,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ## Upcoming release
 ----------------
 
+## [Prerelease] 0.8.2
+### Added
+- Support for Swift 4
+
 ## [Prerelease] 0.8.1
 ### Added
 - Support for Swift 3.2 and Xcode 9
