@@ -307,7 +307,7 @@ extension ConversationViewController: MessageLabelDelegate {
 
 extension ConversationViewController: LocationMessageDisplayDelegate {
 
-    func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView {
+    func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView? {
         let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
         let pinImage = #imageLiteral(resourceName: "pin")
         annotationView.image = pinImage

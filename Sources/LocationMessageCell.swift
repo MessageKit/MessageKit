@@ -58,7 +58,7 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
         NSLayoutConstraint.activate([centerX, centerY])
     }
 
-    open func setMapSnaphotImage(for location: CLLocation, annotationView: MKAnnotationView, options: LocationMessageSnapshotOptions) {
+    open func setMapSnaphotImage(for location: CLLocation, annotationView: MKAnnotationView?, options: LocationMessageSnapshotOptions) {
 
         activityIndicator.startAnimating()
 
@@ -74,7 +74,12 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
                 self.activityIndicator.stopAnimating()
             }
             guard let snapshot = snapshot, error == nil else {
-                //show an error image?
+                print("\(#function) Error creating map snapshot: \(String(describing: error))") //show an error image?
+                return
+            }
+
+            guard let annotationView = annotationView else {
+                self.messageContentView.image = snapshot.image
                 return
             }
 
@@ -90,13 +95,10 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
             point.y += annotationView.centerOffset.y
 
             annotationView.image?.draw(at: point)
-            
-            let image = UIGraphicsGetImageFromCurrentImageContext()
+            let composedImage = UIGraphicsGetImageFromCurrentImageContext()
 
             UIGraphicsEndImageContext()
-
-            self.messageContentView.image = image
-            
+            self.messageContentView.image = composedImage
         }
     }
 }
