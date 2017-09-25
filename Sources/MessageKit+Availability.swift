@@ -54,14 +54,19 @@ public extension MessagesCollectionViewFlowLayout {
         return .zero
     }
 
-    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use `cellTopLabelPosition(for:indexPath:messagesCollectionView)")
+    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use cellTopLabelPosition(for:indexPath:messagesCollectionView)")
     public var topLabelExtendsPastAvatar: Bool {
         return false
     }
 
-    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use `cellBottomLabelPosition(for:indexPath:messagesCollectionView)")
+    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use cellBottomLabelPosition(for:indexPath:messagesCollectionView)")
     public var bottomLabelExtendsPastAvatar: Bool {
         return false
+    }
+
+    @available(*, deprecated: 0.9.0, message: "Removed in MessageKit 0.9.0. Please use messageLabelInsets(for:indexPath:messagesCollectionView)")
+    public var messageLabelInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
     }
 
 }
