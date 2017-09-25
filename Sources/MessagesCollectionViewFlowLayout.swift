@@ -30,7 +30,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     // MARK: - Properties
 
     open var messageLabelFont: UIFont
-    open var messageLabelInsets: UIEdgeInsets
     open var messageToViewEdgePadding: CGFloat
 
     open var cellTopLabelInsets: UIEdgeInsets
@@ -72,7 +71,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     override public init() {
 
         messageLabelFont = UIFont.preferredFont(forTextStyle: .body)
-        messageLabelInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
         messageToViewEdgePadding = 30.0
 
         cellTopLabelInsets = .zero
@@ -126,6 +124,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
         let indexPath = attributes.indexPath
         let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        let messageInsets = messageLabelInsets(for: message, at: indexPath)
 
         // First we set all the sizes so we can pass the attributes object around to calculate the origins
         attributes.messageContainerFrame = CGRect(origin: .zero, size: messageContainerSize(for: message, at: indexPath))
@@ -134,7 +133,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         attributes.avatarFrame = CGRect(origin: .zero, size: avatarSize(for: message, at: indexPath))
 
         attributes.messageLabelFont = messageLabelFont
-        attributes.messageLabelInsets = messageLabelInsets
+        attributes.messageLabelInsets = messageInsets
         attributes.cellTopLabelInsets = cellTopLabelInsets
         attributes.cellBottomLabelInsets = cellBottomLabelInsets
         attributes.avatarHorizontalAlignment = avatarHorizontalAlignment(for: message)
@@ -260,14 +259,11 @@ extension MessagesCollectionViewFlowLayout {
 
     // MARK: - Message Container Calculations
 
-    /// The total value of the horizontal insets for the message label.
-    private var messageHorizontalInsets: CGFloat {
-        return messageLabelInsets.left + messageLabelInsets.right
-    }
-
-    /// The total value of the vertical insets for the message label.
-    private var messageVerticalInsets: CGFloat {
-        return messageLabelInsets.top + messageLabelInsets.bottom
+    /// The insets for the text of the MessageLabel
+    private func messageLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
+        guard let messagesCollectionView = messagesCollectionView else { return .zero }
+        guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
+        return layoutDelegate.messageLabelInset(for: message, at: indexPath, in: messagesCollectionView)
     }
 
     /// The max width available for the message container.
@@ -278,6 +274,9 @@ extension MessagesCollectionViewFlowLayout {
         // Only apply padding if avatar width is greater than zero
         if avatarWidth > 0 { avatarWidth += avatarMessagePadding }
 
+        let messageInsets = messageLabelInsets(for: message, at: indexPath)
+        let messageHorizontalInsets = messageInsets.left + messageInsets.right
+
         let availableWidth = itemWidth - avatarWidth - messageToViewEdgePadding - messageHorizontalInsets
 
         return availableWidth
@@ -287,6 +286,9 @@ extension MessagesCollectionViewFlowLayout {
     fileprivate func messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
 
         let maxWidth = messageContainerMaxWidth(for: message, at: indexPath)
+        let messageInsets = messageLabelInsets(for: message, at: indexPath)
+        let messageHorizontalInsets = messageInsets.left + messageInsets.right
+        let messageVerticalInsets = messageInsets.top + messageInsets.bottom
 
         var messageContainerSize: CGSize = .zero
 
