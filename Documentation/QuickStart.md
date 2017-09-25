@@ -59,5 +59,69 @@ public enum MessageData {
 
 - `location(CLLocation)` - Use this case to display a location message.
 
+# MessagesViewController
 
+## Subclassing MessagesViewController
+To begin using **MessageKit** you first need to subclass `MessagesViewController`:
+```Swift
+class ChatViewController: MessagesViewController {
+	override func viewDidLoad() {
+		super.viewDidLoad()
+	}
+}
+```
+**NOTE**: If you override any of the `UIViewController` lifecycle methods such as `viewDidLoad`, `viewWillAppear`, `viewDidAppear`, make sure to call the superclass implementation of these methods.
 
+## Displaying Messages in your MessagesViewController
+In order to start displaying messages in your `MessagesViewController` subclass, you NEED to conform to the following 3 protocols:
+
+1. `MessagesDataSource`
+2. `MessagesLayoutDelegate`
+3. `MessagesDisplayDelegate`
+
+```Swift
+class ChatViewController: MessagesViewController {
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		messagesCollectionView.messagesDataSource = self
+		messagesCollectionView.messagesLayoutDelegate = self
+		messagesCollectionView.messagesDisplayDelegate = self
+	}
+}
+```
+
+### MessagesDataSource
+
+You must implement the following 3 methods to conform to `MessagesDataSource`:
+
+```Swift
+// Some global variables for the sake of the example. Using globals is not recommended!
+let sender = Sender(id: "any_unique_id", displayName: "Steven")
+let messages: [MessageType] = []
+
+extension ChatViewController: MessagesDataSource {
+
+	func currentSender() -> Sender {
+		return Sender(id: "any_unique_id", displayName: "Steven")
+	}
+
+	func numberOfMessagess(in messagesCollectionView: MessagesCollectionView) -> Int {
+		return messages.count
+	}
+
+	func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
+		return messages[indexPath.section]
+	}
+}
+```
+**NOTE**: If you look closely at the implementation of the `messageForItem` method you'll see that we use the `indexPath.section` to retrieve our `MessageType` from the array as opposed to the traditional `indexPath.row` property. This is because in **MessageKit** each `MessageType` is in its own section of the `MessagesCollectionView`.
+
+As you can see **MessageKit** does not require you to return a `MessagesCollectionViewCell` like the traditional `UITableView` or `UICollectionView` API. All that is required is for you to return your `MessageType` model object. We take care of applying the model to the cell for you.
+
+### MessagesLayoutDelegate & MessagesDisplayDelegate
+
+The `MessagesLayoutDelegate` and `MessagesDisplayDelegate` don't require you to implement any methods as they have default implementations for everything. You just need to make your `MessagesViewController` subclass conform to these two protocols and set them in the `MessagesCollectionView` object.
+
+```Swift
+extension ChatViewController: MessagesDisplayDelegate, MessagesLayoutDelegate {}
+```
