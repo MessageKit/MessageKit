@@ -36,9 +36,10 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
 
         switch message.data {
         case .location(let location):
-            guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else { return }
+            guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate as? LocationMessageDisplayDelegate else { return }
             let options = displayDelegate.snapshotOptionsForLocation(message: message, at: indexPath, in: messagesCollectionView)
-            setMapSnaphotImage(for: location, options: options)
+            let annotationView = displayDelegate.annotationViewForLocation(message: message, at: indexPath, in: messagesCollectionView)
+            setMapSnaphotImage(for: location, annotationView: annotationView, options: options)
         default:
             break
         }
@@ -57,7 +58,7 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
         NSLayoutConstraint.activate([centerX, centerY])
     }
 
-    open func setMapSnaphotImage(for location: CLLocation, options: LocationMessageSnapshotOptions) {
+    open func setMapSnaphotImage(for location: CLLocation, annotationView: MKAnnotationView?, options: LocationMessageSnapshotOptions) {
 
         activityIndicator.startAnimating()
 
@@ -69,11 +70,35 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
 
         let snapShotter = MKMapSnapshotter(options: snapshotOptions)
         snapShotter.start { (snapshot, error) in
-            self.activityIndicator.stopAnimating()
-            if error == nil {
-                self.messageContentView.image = snapshot?.image
+            defer {
+                self.activityIndicator.stopAnimating()
             }
+            guard let snapshot = snapshot, error == nil else {
+                //show an error image?
+                return
+            }
+
+            guard let annotationView = annotationView else {
+                self.messageContentView.image = snapshot.image
+                return
+            }
+
+            UIGraphicsBeginImageContextWithOptions(snapshotOptions.size, true, 0)
+
+            snapshot.image.draw(at: .zero)
+
+            var point = snapshot.point(for: location.coordinate)
+            //Move point to reflect annotation anchor
+            point.x -= annotationView.bounds.size.width / 2
+            point.y -= annotationView.bounds.size.height / 2
+            point.x += annotationView.centerOffset.x
+            point.y += annotationView.centerOffset.y
+
+            annotationView.image?.draw(at: point)
+            let composedImage = UIGraphicsGetImageFromCurrentImageContext()
+
+            UIGraphicsEndImageContext()
+            self.messageContentView.image = composedImage
         }
     }
-
 }

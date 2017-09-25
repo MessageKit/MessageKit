@@ -24,6 +24,7 @@
 
 import UIKit
 import MessageKit
+import MapKit
 
 class ConversationViewController: MessagesViewController {
 
@@ -298,6 +299,20 @@ extension ConversationViewController: MessageLabelDelegate {
 
     func didSelectURL(_ url: URL) {
         print("URL Selected: \(url)")
+    }
+
+}
+
+// MARK: - LocationMessageDisplayDelegate
+
+extension ConversationViewController: LocationMessageDisplayDelegate {
+
+    func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView? {
+        let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
+        let pinImage = #imageLiteral(resourceName: "pin")
+        annotationView.image = pinImage
+        annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
+        return annotationView
     }
 
 }
