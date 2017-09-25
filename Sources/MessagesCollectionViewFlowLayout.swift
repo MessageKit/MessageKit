@@ -446,7 +446,7 @@ extension MessagesCollectionViewFlowLayout {
     private func cellBottomLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
         guard let messagesCollectionView = messagesCollectionView else { return .zero }
         guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
-        let labelAlignment = layoutDelegate.cellTopLabelAlignment(for: message, at: indexPath, in: messagesCollectionView)
+        let labelAlignment = layoutDelegate.cellBottomLabelAlignment(for: message, at: indexPath, in: messagesCollectionView)
         return labelAlignment.insets
     }
 

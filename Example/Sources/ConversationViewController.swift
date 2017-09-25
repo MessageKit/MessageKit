@@ -234,6 +234,22 @@ extension ConversationViewController: MessagesDisplayDelegate {
 
 extension ConversationViewController: MessagesLayoutDelegate {
 
+    func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+        if isFromCurrentSender(message: message) {
+            return .messageTrailing(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+        } else {
+            return .messageLeading(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
+        }
+    }
+
+    func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+        if isFromCurrentSender(message: message) {
+            return .messageLeading(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
+        } else {
+            return .messageTrailing(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+        }
+    }
+
     func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
         return .messageBottom
     }
