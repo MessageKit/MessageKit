@@ -69,6 +69,15 @@ public extension MessagesCollectionViewFlowLayout {
         return UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
     }
 
+    @available(*, deprecated: 0.9.0, message: "Removed in MessageKit 0.9.0. Please use associated value of LabelAlignment")
+    public var cellTopLabelInsets: UIEdgeInsets {
+        return .zero
+    }
+    @available(*, deprecated: 0.9.0, message: "Removed in MessageKit 0.9.0. Please use associated value of LabelAlignment")
+    public var cellBottomLabelInsets: UIEdgeInsets {
+        return .zero
+    }
+
 }
 
 // MARK: - CellLabelPosition
@@ -81,7 +90,7 @@ public enum CellLabelPosition {
     case cellCenter
     case messageTrailing
     case messageLeading
-    
+
 }
 
 // MARK: - Avatar Position
@@ -94,7 +103,7 @@ public enum AvatarPosition {
     case messageCenter
     case messageBottom
     case cellBottom
-    
+
 }
 
 // MARK: - MessagesLayoutDelegate
@@ -159,5 +168,5 @@ public extension AvatarView {
     public func getImage() -> UIImage? {
         return imageView.image
     }
-    
+
 }
