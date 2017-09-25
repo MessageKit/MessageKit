@@ -54,13 +54,13 @@ public extension MessagesLayoutDelegate {
     }
 
     func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
-        guard let dataSource = messagesCollectionView.messagesDataSource else { return .cellCenter }
-        return dataSource.isFromCurrentSender(message: message) ? .messageTrailing : .messageLeading
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return .cellCenter(.zero) }
+        return dataSource.isFromCurrentSender(message: message) ? .messageTrailing(.zero) : .messageLeading(.zero)
     }
 
     func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
-        guard let dataSource = messagesCollectionView.messagesDataSource else { return .cellCenter }
-        return dataSource.isFromCurrentSender(message: message) ? .messageLeading : .messageTrailing
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return .cellCenter(.zero) }
+        return dataSource.isFromCurrentSender(message: message) ? .messageLeading(.zero) : .messageTrailing(.zero)
     }
 
     func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
