@@ -9,11 +9,22 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - `LocationMessageDisplayDelegate` to customize a location messages appearance and add a `MKAnnotationView` to location message snapshots. 
 [#150](https://github.com/MessageKit/MessageKit/pull/150) by [@etoledom](https://github.com/etoledom).
 
+- `messageLabelInsets(for:indexPath:messagesCollectionView` method to `MessagesLayoutDelegate`. 
+[#162](https://github.com/MessageKit/MessageKit/pull/162) by [@SD10](https://github.com/SD10).
+
 ### Changed
 - **Breaking Change** `snapshotOptionsForLocation` method is now part of `LocationMessageDisplayDelegate`. 
 [#150](https://github.com/MessageKit/MessageKit/pull/150) by [@etoledom](https://github.com/etoledom).
+
 - **Breaking Change** `setMapSnapshotImage` now includes an `annotationView: MKAnnotationView?` argument. 
 [#150](https://github.com/MessageKit/MessageKit/pull/150) by [@etoledom](https://github.com/etoledom).
+
+- **Breaking Change** `messageLabelInsets` has been made into a method on `MessagesLayoutDelegate`. 
+[#162](https://github.com/MessageKit/MessageKit/pull/162) by [@SD10](https://github.com/SD10).
+
+- **Breaking Change** `messageLabelInsets` now defaults to a `left` inset of 18 for incoming messages
+ and a `right` inset of 18 for outgoing messages. 
+[#162](https://github.com/MessageKit/MessageKit/pull/162) by [@SD10](https://github.com/SD10). 
 
 ----------------
 
