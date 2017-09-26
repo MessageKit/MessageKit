@@ -6,6 +6,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 ### Added
+- **Breaking Change** `.custom((MessageContainerView)->Void)` case to `MessageStyle` enum. 
+[#163](https://github.com/MessageKit/MessageKit/pull/163) by [@SD10](https://github.com/SD10).
+
 - **Breaking Change** `UIEdgeInsets` associated value to all `LabelAlignment` enum cases. 
 [#166](https://github.com/MessageKit/MessageKit/pull/166) by [@SD10](https://github.com/SD10).
 
