@@ -22,14 +22,24 @@
  SOFTWARE.
  */
 
-import Foundation
+import UIKit
 
 public enum LabelAlignment {
 
-    case cellTrailing
-    case cellLeading
-    case cellCenter
-    case messageTrailing
-    case messageLeading
-    
+    case cellTrailing(UIEdgeInsets)
+    case cellLeading(UIEdgeInsets)
+    case cellCenter(UIEdgeInsets)
+    case messageTrailing(UIEdgeInsets)
+    case messageLeading(UIEdgeInsets)
+
+    public var insets: UIEdgeInsets {
+        switch self {
+        case .cellTrailing(let insets): return insets
+        case .cellLeading(let insets): return insets
+        case .cellCenter(let insets): return insets
+        case .messageTrailing(let insets): return insets
+        case .messageLeading(let insets): return insets
+        }
+    }
+
 }

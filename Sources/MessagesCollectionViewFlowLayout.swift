@@ -32,9 +32,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     open var messageLabelFont: UIFont
     open var messageToViewEdgePadding: CGFloat
 
-    open var cellTopLabelInsets: UIEdgeInsets
-    open var cellBottomLabelInsets: UIEdgeInsets
-
     open var avatarAlwaysLeading: Bool {
         willSet {
             if newValue {
@@ -72,9 +69,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
         messageLabelFont = UIFont.preferredFont(forTextStyle: .body)
         messageToViewEdgePadding = 30.0
-
-        cellTopLabelInsets = .zero
-        cellBottomLabelInsets = .zero
 
         avatarAlwaysLeading = false
         avatarAlwaysTrailing = false
@@ -125,6 +119,8 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         let indexPath = attributes.indexPath
         let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         let messageInsets = messageLabelInsets(for: message, at: indexPath)
+        let topLabelInsets = cellTopLabelInsets(for: message, at: indexPath)
+        let bottomLabelInsets = cellBottomLabelInsets(for: message, at: indexPath)
 
         // First we set all the sizes so we can pass the attributes object around to calculate the origins
         attributes.messageContainerFrame = CGRect(origin: .zero, size: messageContainerSize(for: message, at: indexPath))
@@ -134,8 +130,8 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
         attributes.messageLabelFont = messageLabelFont
         attributes.messageLabelInsets = messageInsets
-        attributes.cellTopLabelInsets = cellTopLabelInsets
-        attributes.cellBottomLabelInsets = cellBottomLabelInsets
+        attributes.cellTopLabelInsets = topLabelInsets
+        attributes.cellBottomLabelInsets = bottomLabelInsets
         attributes.avatarHorizontalAlignment = avatarHorizontalAlignment(for: message)
 
         let layoutDelegate = messagesCollectionView.messagesLayoutDelegate
@@ -342,14 +338,12 @@ extension MessagesCollectionViewFlowLayout {
 
     // MARK: - Cell Top Label Calculations
 
-    /// The total value of the horizontal insets for the cell top label.
-    private var topLabelHorizontalInsets: CGFloat {
-        return cellTopLabelInsets.left + cellTopLabelInsets.right
-    }
-
-    /// The total value of the vertical insets for the cell top label.
-    private var topLabelVerticalInsets: CGFloat {
-        return cellTopLabelInsets.top + cellTopLabelInsets.bottom
+    /// The insets for the cell's top label.
+    private func cellTopLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
+        guard let messagesCollectionView = messagesCollectionView else { return .zero }
+        guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
+        let labelAlignment = layoutDelegate.cellTopLabelAlignment(for: message, at: indexPath, in: messagesCollectionView)
+        return labelAlignment.insets
     }
 
     /// The max width available for the cell top label.
@@ -361,6 +355,7 @@ extension MessagesCollectionViewFlowLayout {
         let labelHorizontal = layoutDelegate.cellTopLabelAlignment(for: message, at: indexPath, in: messagesCollectionView)
         let avatarVertical = layoutDelegate.avatarAlignment(for: message, at: indexPath, in: messagesCollectionView)
         let avatarHorizontal = avatarHorizontalAlignment(for: message)
+        let topLabelHorizontalInsets = labelHorizontal.insets.left + labelHorizontal.insets.right
 
         var avatarWidth = layoutDelegate.avatarSize(for: message, at: indexPath, in: messagesCollectionView).width
 
@@ -401,6 +396,10 @@ extension MessagesCollectionViewFlowLayout {
 
         let maxWidth = topLabelMaxWidth(for: message, at: indexPath)
         var size = labelSize(for: topLabelText, considering: maxWidth)
+
+        let topLabelInsets = cellTopLabelInsets(for: message, at: indexPath)
+        let topLabelHorizontalInsets = topLabelInsets.left + topLabelInsets.right
+        let topLabelVerticalInsets = topLabelInsets.top + topLabelInsets.bottom
 
         size.width += topLabelHorizontalInsets
         size.height += topLabelVerticalInsets
@@ -443,14 +442,12 @@ extension MessagesCollectionViewFlowLayout {
 
     // MARK: - Cell Bottom Label Calculations
 
-    /// The total value of the horizontal insets for the cell bottom label
-    private var bottomLabelHorizontalInsets: CGFloat {
-        return cellBottomLabelInsets.left + cellBottomLabelInsets.right
-    }
-
-    /// The total value of the vertical insets for the cell bottom label.
-    private var bottomLabelVerticalInsets: CGFloat {
-        return cellBottomLabelInsets.top + cellBottomLabelInsets.bottom
+    /// The insets for the cell's top label.
+    private func cellBottomLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
+        guard let messagesCollectionView = messagesCollectionView else { return .zero }
+        guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
+        let labelAlignment = layoutDelegate.cellBottomLabelAlignment(for: message, at: indexPath, in: messagesCollectionView)
+        return labelAlignment.insets
     }
 
     /// The max with available for the cell bottom label.
@@ -462,6 +459,7 @@ extension MessagesCollectionViewFlowLayout {
         let labelHorizontal = layoutDelegate.cellBottomLabelAlignment(for: message, at: indexPath, in: messagesCollectionView)
         let avatarVertical = layoutDelegate.avatarAlignment(for: message, at: indexPath, in: messagesCollectionView)
         let avatarHorizontal = avatarHorizontalAlignment(for: message)
+        let bottomLabelHorizontalInsets = labelHorizontal.insets.left + labelHorizontal.insets.right
 
         var avatarWidth = layoutDelegate.avatarSize(for: message, at: indexPath, in: messagesCollectionView).width
 
@@ -503,6 +501,10 @@ extension MessagesCollectionViewFlowLayout {
 
         let maxWidth = bottomLabelMaxWidth(for: message, at: indexPath)
         var size = labelSize(for: bottomLabelText, considering: maxWidth)
+
+        let bottomLabelInsets = cellBottomLabelInsets(for: message, at: indexPath)
+        let bottomLabelHorizontalInsets = bottomLabelInsets.left + bottomLabelInsets.right
+        let bottomLabelVerticalInsets = bottomLabelInsets.top + bottomLabelInsets.bottom
 
         size.width += bottomLabelHorizontalInsets
         size.height += bottomLabelVerticalInsets
