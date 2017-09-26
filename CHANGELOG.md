@@ -28,15 +28,15 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ----------------
 
-## [Prerelease] 0.8.2
+## [[Prerelease] 0.8.2](https://github.com/MessageKit/MessageKit/releases/tag/0.8.2)
 ### Added
 - Support for Swift 4
 
-## [Prerelease] 0.8.1
+## [[Prerelease] 0.8.1](https://github.com/MessageKit/MessageKit/releases/tag/0.8.1)
 ### Added
 - Support for Swift 3.2 and Xcode 9
 
-## [Prerelease] 0.8.0
+## [[Prerelease] 0.8.0](https://github.com/MessageKit/MessageKit/releases/tag/0.8.0)
 
 This release closes the [0.8 milestone](https://github.com/MessageKit/MessageKit/milestone/9?closed=1).
 
@@ -64,45 +64,45 @@ This release closes the [0.8 milestone](https://github.com/MessageKit/MessageKit
 - `AvatarView`'s placeholder image is no longer constrained to a size of `30 x 30`.
 - `AvatarView`'s placeholder text can now auto-adjust based on available width.
 
-## [Prerelease] 0.7.4
+## [[Prerelease] 0.7.4](https://github.com/MessageKit/MessageKit/releases/tag/0.7.4)
 
 - Fixes invalid image path for Carthage resources.
 
-## [Prerelease] 0.7.3
+## [[Prerelease] 0.7.3](https://github.com/MessageKit/MessageKit/releases/tag/0.7.3)
 
 - Fixes missing asset bundle resources for Carthage installation.
 
-## [Prerelease] 0.7.2
+## [[Prerelease] 0.7.2](https://github.com/MessageKit/MessageKit/releases/tag/0.7.2)
 
-## [Prerelease] 0.7.1
+## [[Prerelease] 0.7.1](https://github.com/MessageKit/MessageKit/releases/tag/0.7.1)
 
 - Fixes missing asset bundle resources in framework.
 
-## [Prerelease] 0.7.0
+## [[Prerelease] 0.7.0](https://github.com/MessageKit/MessageKit/releases/tag/0.7.0)
 
 This release closes the [0.7 milestone](https://github.com/MessageKit/MessageKit/milestone/8?closed=1)
 
-## [Prerelease] 0.6.0
+## [[Prerelease] 0.6.0](https://github.com/MessageKit/MessageKit/releases/tag/0.6.0)
 
 This release closes the [0.6 milestone](https://github.com/MessageKit/MessageKit/milestone/7?closed=1).
 
-## [Prerelease] 0.5.0
+## [[Prerelease] 0.5.0](https://github.com/MessageKit/MessageKit/releases/tag/0.5.0)
 
 This release closes the [0.5 milestone](https://github.com/MessageKit/MessageKit/milestone/5?closed=1).
 
-## [Prerelease] 0.4.0
+## [[Prerelease] 0.4.0](https://github.com/MessageKit/MessageKit/releases/tag/0.4.0)
 
 This release closes the [0.4 milestone](https://github.com/MessageKit/MessageKit/milestone/4?closed=1).
 
-## [Prerelease] 0.3.0
+## [[Prerelease] 0.3.0](https://github.com/MessageKit/MessageKit/releases/tag/0.3.0)
 
 This release closes the [0.3 milestone](https://github.com/MessageKit/MessageKit/milestone/3?closed=1).
 
-## [Prerelease] 0.2.0
+## [[Prerelease] 0.2.0](https://github.com/MessageKit/MessageKit/releases/tag/0.2.0)
 
 This release closes the [0.2 milestone](https://github.com/MessageKit/MessageKit/milestone/2?closed=1).
 
-## [Prerelease] 0.1.0
+## [[Prerelease] 0.1.0](https://github.com/MessageKit/MessageKit/releases/tag/0.1.0)
 
 This release closes the [0.1 milestone](https://github.com/MessageKit/MessageKit/milestone/1?closed=1).
 
