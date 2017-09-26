@@ -6,6 +6,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 ### Added
+- **Breaking Change** `UIEdgeInsets` associated value to all `LabelAlignment` enum cases. 
+[#166](https://github.com/MessageKit/MessageKit/pull/166) by [@SD10](https://github.com/SD10).
+
 - `LocationMessageDisplayDelegate` to customize a location messages appearance and add a `MKAnnotationView` to location message snapshots. 
 [#150](https://github.com/MessageKit/MessageKit/pull/150) by [@etoledom](https://github.com/etoledom).
 
@@ -25,6 +28,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - **Breaking Change** `messageLabelInsets` now defaults to a `left` inset of 18 for incoming messages
  and a `right` inset of 18 for outgoing messages. 
 [#162](https://github.com/MessageKit/MessageKit/pull/162) by [@SD10](https://github.com/SD10). 
+
+### Removed
+- **Breaking Change** `cellTopLabelInsets` and `cellBottomLabelInsets` from `MessagesCollectionViewFlowLayout`.
+[#166](https://github.com/MessageKit/MessageKit/pull/166) by [@SD10](https://github.com/SD10).
 
 ----------------
 
