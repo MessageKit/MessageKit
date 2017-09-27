@@ -39,7 +39,9 @@ public protocol MessagesDataSource: class {
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
 
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
-
+    
+    func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> (() -> Void)?
+    
 }
 
 public extension MessagesDataSource {
@@ -60,4 +62,7 @@ public extension MessagesDataSource {
         return nil
     }
 
+    func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> (() -> Void)? {
+        return nil
+    }
 }
