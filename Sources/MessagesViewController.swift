@@ -169,14 +169,14 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
 
 extension MessagesViewController: UICollectionViewDataSource {
 
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+    open func numberOfSections(in collectionView: UICollectionView) -> Int {
         guard let collectionView = collectionView as? MessagesCollectionView else { return 0 }
 
         // Each message is its own section
         return collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
     }
 
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let collectionView = collectionView as? MessagesCollectionView else { return 0 }
 
         let messageCount = collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
@@ -185,7 +185,7 @@ extension MessagesViewController: UICollectionViewDataSource {
 
     }
 
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return UICollectionViewCell() }
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { fatalError("Please set messagesDataSource") }
@@ -215,7 +215,7 @@ extension MessagesViewController: UICollectionViewDataSource {
 
     }
 
-    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    open func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return UICollectionReusableView() }
         guard let dataSource = messagesCollectionView.messagesDataSource else { return UICollectionReusableView() }
@@ -234,7 +234,7 @@ extension MessagesViewController: UICollectionViewDataSource {
 
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return .zero }
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return .zero }
         guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
@@ -244,7 +244,7 @@ extension MessagesViewController: UICollectionViewDataSource {
         return messagesLayoutDelegate.headerViewSize(for: message, at: indexPath, in: messagesCollectionView)
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return .zero }
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return .zero }
         guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
