@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class InputTextView: UITextView {
+open class InputTextView: UITextView, UITextViewDelegate {
 
     // MARK: - Properties
 
@@ -102,6 +102,7 @@ open class InputTextView: UITextView {
         layer.cornerRadius = 5.0
         layer.borderWidth = 1.25
         layer.borderColor = UIColor.lightGray.cgColor
+        delegate = self
 
         addSubviews()
         addConstraints()
@@ -129,5 +130,20 @@ open class InputTextView: UITextView {
         placeholderLabelConstraintSet?.left?.constant = placeholderLabelInsets.left
         placeholderLabelConstraintSet?.right?.constant = -placeholderLabelInsets.bottom
     }
-
+    
+    // MARK: - UITextViewDelegate
+    
+    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        // When isScrollEnabled gets changed in MessageInputBar when it becomes more than the maxHeight there is a bug the incorrectly sets the contentSize. This fixes it by inserting the text via `replacingCharacters`
+        if text == UIPasteboard.general.string {
+            if let messageInputBar = messageInputBar {
+                if !messageInputBar.isOverMaxHeight {
+                    textView.text = (textView.text as NSString).replacingCharacters(in: range, with: text)
+                    return false
+                }
+            }
+        }
+        return true
+    }
 }
