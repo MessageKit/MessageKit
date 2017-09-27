@@ -81,6 +81,7 @@ open class MessagesViewController: UIViewController {
         if isFirstLayout {
             addKeyboardObservers()
             messagesCollectionView.contentInset.bottom = messageInputBar.frame.height
+            messagesCollectionView.scrollIndicatorInsets.bottom = messageInputBar.frame.height
             isFirstLayout = false
         }
     }
@@ -274,11 +275,15 @@ extension MessagesViewController {
 
         if (keyboardEndFrame.origin.y + keyboardEndFrame.size.height) > view.frame.size.height {
             // Hardware keyboard is found
-            messagesCollectionView.contentInset.bottom = view.frame.size.height - keyboardEndFrame.origin.y
+            let bottomInset = view.frame.size.height - keyboardEndFrame.origin.y
+            messagesCollectionView.contentInset.bottom = bottomInset
+            messagesCollectionView.scrollIndicatorInsets.bottom = bottomInset
+
         } else {
             //Software keyboard is found
             let bottomInset = keyboardEndFrame.height > messageInputBar.frame.height ? keyboardEndFrame.height : messageInputBar.frame.height
             messagesCollectionView.contentInset.bottom = bottomInset
+            messagesCollectionView.scrollIndicatorInsets.bottom = bottomInset
         }
         
     }
