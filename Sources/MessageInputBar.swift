@@ -463,10 +463,3 @@ open class MessageInputBar: UIView {
         textViewDidChange()
     }
 }
-
-extension MessageInputBar {
-    
-    func createCopy() -> MessageInputBar? {
-        return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as? MessageInputBar
-    }
-}

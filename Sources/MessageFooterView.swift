@@ -32,7 +32,7 @@ open class MessageFooterView: UICollectionReusableView {
         super.init(frame: frame)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
