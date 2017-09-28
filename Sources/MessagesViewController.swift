@@ -244,7 +244,7 @@ extension MessagesViewController {
 
         guard let keyboardEndFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
 
-        if (keyboardEndFrame.origin.y + keyboardEndFrame.size.height) > view.frame.size.height {
+        if (keyboardEndFrame.origin.y + keyboardEndFrame.size.height) > UIScreen.main.bounds.height {
             // Hardware keyboard is found
             let bottomInset = view.frame.size.height - keyboardEndFrame.origin.y
             messagesCollectionView.contentInset.bottom = bottomInset
