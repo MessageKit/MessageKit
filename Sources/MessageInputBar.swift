@@ -131,12 +131,20 @@ open class MessageInputBar: UIView {
         var heightToFit = sizeToFit.height.rounded() + padding.top + padding.bottom
 
         if heightToFit >= maxHeight {
-            inputTextView.isScrollEnabled = true
+            if !isOverMaxHeight {
+                textViewHeightAnchor?.isActive = true
+                inputTextView.isScrollEnabled = true
+                isOverMaxHeight = true
+            }
             heightToFit = maxHeight
         } else {
-            inputTextView.isScrollEnabled = false
-            inputTextView.invalidateIntrinsicContentSize()
+            if isOverMaxHeight {
+                textViewHeightAnchor?.isActive = false
+                inputTextView.isScrollEnabled = false
+                isOverMaxHeight = false
+            }
         }
+        inputTextView.invalidateIntrinsicContentSize()
 
         let size = CGSize(width: bounds.width, height: heightToFit)
 
@@ -148,9 +156,12 @@ open class MessageInputBar: UIView {
         return size
     }
     
+    private(set) var isOverMaxHeight = false
+    
     /// The maximum intrinsicContentSize height. When reached the delegate 'didChangeIntrinsicContentTo' will be called.
     open var maxHeight: CGFloat = UIScreen.main.bounds.height / 3 {
         didSet {
+            textViewHeightAnchor?.constant = maxHeight
             invalidateIntrinsicContentSize()
         }
     }
@@ -189,6 +200,7 @@ open class MessageInputBar: UIView {
     // MARK: - Auto-Layout Management
     
     private var textViewLayoutSet: NSLayoutConstraintSet?
+    private var textViewHeightAnchor: NSLayoutConstraint?
     private var leftStackViewLayoutSet: NSLayoutConstraintSet?
     private var rightStackViewLayoutSet: NSLayoutConstraintSet?
     private var bottomStackViewLayoutSet: NSLayoutConstraintSet?
@@ -247,6 +259,7 @@ open class MessageInputBar: UIView {
             left:   inputTextView.leftAnchor.constraint(equalTo: leftStackView.rightAnchor, constant: textViewPadding.left),
             right:  inputTextView.rightAnchor.constraint(equalTo: rightStackView.leftAnchor, constant: -textViewPadding.right)
             ).activate()
+        textViewHeightAnchor = inputTextView.heightAnchor.constraint(equalToConstant: maxHeight)
         
         leftStackViewLayoutSet = NSLayoutConstraintSet(
             top:    inputTextView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
@@ -419,11 +432,11 @@ open class MessageInputBar: UIView {
     
     // MARK: - Notifications/Hooks
     
-  @objc open func orientationDidChange() {
+    @objc open func orientationDidChange() {
         invalidateIntrinsicContentSize()
     }
     
-  @objc open func textViewDidChange() {
+    @objc open func textViewDidChange() {
         let trimmedText = inputTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
 
         sendButton.isEnabled = !trimmedText.isEmpty
@@ -435,11 +448,11 @@ open class MessageInputBar: UIView {
         invalidateIntrinsicContentSize()
     }
     
-  @objc open func textViewDidBeginEditing() {
+    @objc open func textViewDidBeginEditing() {
         self.items.forEach { $0.keyboardEditingBeginsAction() }
     }
     
-  @objc open func textViewDidEndEditing() {
+    @objc open func textViewDidEndEditing() {
         self.items.forEach { $0.keyboardEditingEndsAction() }
     }
     
