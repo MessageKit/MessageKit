@@ -18,6 +18,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - `messageLabelInsets(for:indexPath:messagesCollectionView` method to `MessagesLayoutDelegate`. 
 [#162](https://github.com/MessageKit/MessageKit/pull/162) by [@SD10](https://github.com/SD10).
 
+### Fixed
+
+-  `MessageInputBar` now correctly sizes itself when breaking its max height or pasting in large amounts of text
+[#173](https://github.com/MessageKit/MessageKit/pull/173) by [@nathantannar4](https://github.com/nathantannar4).
+
 ### Changed
 - **Breaking Change** `snapshotOptionsForLocation` method is now part of `LocationMessageDisplayDelegate`. 
 [#150](https://github.com/MessageKit/MessageKit/pull/150) by [@etoledom](https://github.com/etoledom).
@@ -30,7 +35,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - **Breaking Change** `messageLabelInsets` now defaults to a `left` inset of 18 for incoming messages
  and a `right` inset of 18 for outgoing messages. 
-[#162](https://github.com/MessageKit/MessageKit/pull/162) by [@SD10](https://github.com/SD10). 
+[#162](https://github.com/MessageKit/MessageKit/pull/162) by [@SD10](https://github.com/SD10).
+
+- **Breaking Change** `InputTextView`'s `UITextViewDelegate` is now set to `self`
+[#173](https://github.com/MessageKit/MessageKit/pull/173) by [@nathantannar4](https://github.com/nathantannar4).
 
 ### Removed
 - **Breaking Change** `cellTopLabelInsets` and `cellBottomLabelInsets` from `MessagesCollectionViewFlowLayout`.
