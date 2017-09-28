@@ -78,6 +78,7 @@ open class InputTextView: UITextView {
     
     open override var scrollIndicatorInsets: UIEdgeInsets {
         didSet {
+            // When .zero a rendering issue can occur when the MessagesViewController is pushed onto a UINavigationController stack, popped and then pushed again
             if scrollIndicatorInsets == .zero {
                 scrollIndicatorInsets = UIEdgeInsets(top: .leastNonzeroMagnitude,
                                                      left: .leastNonzeroMagnitude,
