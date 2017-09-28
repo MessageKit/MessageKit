@@ -61,6 +61,11 @@ open class MessagesViewController: UIViewController {
         setupDelegates()
 
     }
+    
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        messageInputBar.inputTextView.setNeedsDisplay()
+    }
 
     open override func viewDidLayoutSubviews() {
         // Hack to prevent animation of the contentInset after viewDidAppear
