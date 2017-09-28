@@ -98,6 +98,7 @@ open class InputTextView: UITextView {
 
         font = UIFont.preferredFont(forTextStyle: .body)
         textContainerInset = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+        scrollIndicatorInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
         isScrollEnabled = false
         layer.cornerRadius = 5.0
         layer.borderWidth = 1.25
