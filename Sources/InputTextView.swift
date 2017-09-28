@@ -75,6 +75,18 @@ open class InputTextView: UITextView {
             updateConstraintsForPlaceholderLabel()
         }
     }
+    
+    open override var scrollIndicatorInsets: UIEdgeInsets {
+        didSet {
+            // When .zero a rendering issue can occur when the MessagesViewController is pushed onto a UINavigationController stack, popped and then pushed again
+            if scrollIndicatorInsets == .zero {
+                scrollIndicatorInsets = UIEdgeInsets(top: .leastNonzeroMagnitude,
+                                                     left: .leastNonzeroMagnitude,
+                                                     bottom: .leastNonzeroMagnitude,
+                                                     right: .leastNonzeroMagnitude)
+            }
+        }
+    }
 
     public weak var messageInputBar: MessageInputBar?
 
@@ -98,6 +110,10 @@ open class InputTextView: UITextView {
 
         font = UIFont.preferredFont(forTextStyle: .body)
         textContainerInset = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+        scrollIndicatorInsets = UIEdgeInsets(top: .leastNonzeroMagnitude,
+                                             left: .leastNonzeroMagnitude,
+                                             bottom: .leastNonzeroMagnitude,
+                                             right: .leastNonzeroMagnitude)
         isScrollEnabled = false
         layer.cornerRadius = 5.0
         layer.borderWidth = 1.25
