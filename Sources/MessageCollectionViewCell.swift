@@ -62,7 +62,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
 
     // MARK: - Initializer
 
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setupSubviews()
         setupGestureRecognizers()
@@ -85,7 +85,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
 
     }
 
-    override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+    open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
 
         guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else { return }
@@ -103,7 +103,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
 
     }
 
-    override open func prepareForReuse() {
+    open override func prepareForReuse() {
         cellTopLabel.text = nil
         cellTopLabel.attributedText = nil
         cellBottomLabel.text = nil

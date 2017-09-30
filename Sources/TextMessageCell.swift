@@ -28,7 +28,7 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
 
     // MARK: - Properties
 
-    override open weak var delegate: MessageCellDelegate? {
+    open override weak var delegate: MessageCellDelegate? {
         didSet {
             messageContentView.delegate = delegate
         }
@@ -42,7 +42,7 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
 
     // MARK: - Methods
 
-    override open func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
+    open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
 
         guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else { return }
@@ -50,13 +50,13 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
         messageContentView.font = attributes.messageLabelFont
     }
 
-    override open func prepareForReuse() {
+    open override func prepareForReuse() {
         super.prepareForReuse()
         messageContentView.attributedText = nil
         messageContentView.text = nil
     }
 
-    override public func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+    public override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
 
         if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {
