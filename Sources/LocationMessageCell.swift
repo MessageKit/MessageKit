@@ -31,7 +31,7 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
 
     open var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
-    override open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+    open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
 
         switch message.data {

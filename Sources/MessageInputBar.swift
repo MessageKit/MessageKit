@@ -125,7 +125,7 @@ open class MessageInputBar: UIView {
         }
     }
     
-    override open var intrinsicContentSize: CGSize {
+    open override var intrinsicContentSize: CGSize {
         let maxSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
         let sizeToFit = inputTextView.sizeThatFits(maxSize)
         var heightToFit = sizeToFit.height.rounded() + padding.top + padding.bottom
