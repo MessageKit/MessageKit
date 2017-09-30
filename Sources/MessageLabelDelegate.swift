@@ -25,7 +25,9 @@
 import Foundation
 
 public protocol MessageLabelDelegate: class {
-
+    // If nil, fallback to default detectors
+    func enabledDetectors() -> [DetectorType]?
+ 
     func didSelectAddress(_ addressComponents: [String: String])
 
     func didSelectDate(_ date: Date)
@@ -37,6 +39,8 @@ public protocol MessageLabelDelegate: class {
 }
 
 public extension MessageLabelDelegate {
+
+    func enabledDetectors() -> [DetectorType]? { return nil }
 
     func didSelectAddress(_ addressComponents: [String: String]) {}
 
