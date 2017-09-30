@@ -50,6 +50,19 @@ public protocol LocationMessageDisplayDelegate: MessagesDisplayDelegate {
     /// - Returns: Your customized MKAnnotationView or nil to not show any.
     func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView?
 
+
+    /// Ask the delegate for a custom animation block to run when whe map screenshot is ready to be displaied in the given location message
+    /// The animation block is called with the view to be animated. You can animate it with CoreAnimation, UIView.animate or any library you prefer.
+    ///
+    /// default: nil
+    ///
+    /// - Parameters:
+    ///   - message: The location message with the map to animate
+    ///   - indexPath: Message's index path
+    ///   - messagesCollectionView: The collection view requesting the information
+    /// - Returns: Your customized animation block.
+    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIView) -> Void)?
+
 }
 
 public extension LocationMessageDisplayDelegate {
@@ -60,6 +73,10 @@ public extension LocationMessageDisplayDelegate {
 
     func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView? {
         return MKPinAnnotationView(annotation: nil, reuseIdentifier: nil)
+    }
+
+    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIView) -> Void)? {
+        return nil
     }
 
 }

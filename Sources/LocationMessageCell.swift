@@ -39,7 +39,8 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
             guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate as? LocationMessageDisplayDelegate else { return }
             let options = displayDelegate.snapshotOptionsForLocation(message: message, at: indexPath, in: messagesCollectionView)
             let annotationView = displayDelegate.annotationViewForLocation(message: message, at: indexPath, in: messagesCollectionView)
-            setMapSnaphotImage(for: location, annotationView: annotationView, options: options)
+            let animationBlock = displayDelegate.animationBlockForLocation(message: message, at: indexPath, in: messagesCollectionView)
+            setMapSnaphotImage(for: location, annotationView: annotationView, options: options, animation: animationBlock)
         default:
             break
         }
@@ -58,7 +59,7 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
         NSLayoutConstraint.activate([centerX, centerY])
     }
 
-    open func setMapSnaphotImage(for location: CLLocation, annotationView: MKAnnotationView?, options: LocationMessageSnapshotOptions) {
+    open func setMapSnaphotImage(for location: CLLocation, annotationView: MKAnnotationView?, options: LocationMessageSnapshotOptions, animation: ((UIView) -> Void)?) {
 
         activityIndicator.startAnimating()
 
@@ -99,6 +100,7 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
 
             UIGraphicsEndImageContext()
             self.messageContentView.image = composedImage
+            animation?(self.messageContentView)
         }
     }
 }
