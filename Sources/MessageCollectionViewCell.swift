@@ -39,7 +39,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
 
     open var cellTopLabel: MessageLabel = {
         let topLabel = MessageLabel()
-        topLabel.enabledDetectors = []
+        topLabel.defaultEnabledDetectors = []
         return topLabel
     }()
 
@@ -52,7 +52,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
 
     open var cellBottomLabel: MessageLabel = {
         let bottomLabel = MessageLabel()
-        bottomLabel.enabledDetectors = []
+        bottomLabel.defaultEnabledDetectors = []
         return bottomLabel
     }()
 
