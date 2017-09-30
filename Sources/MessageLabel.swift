@@ -55,7 +55,7 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
     open weak var delegate: MessageLabelDelegate?
 
-    open var enabledDetectors: [DetectorType] = [.phoneNumber, .address, .date, .url]
+    open var defaultEnabledDetectors: [DetectorType] = [.phoneNumber, .address, .date, .url]
 
     open override var attributedText: NSAttributedString? {
         didSet {
@@ -243,6 +243,7 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
             return
         }
 
+        let enabledDetectors = delegate?.enabledDetectors() ?? defaultEnabledDetectors
         guard let checkingResults = parse(text: attributedText, for: enabledDetectors), checkingResults.isEmpty == false else {
             let textWithParagraphAttributes = addParagraphStyleAttribute(to: attributedText)
             textStorage.setAttributedString(textWithParagraphAttributes)
