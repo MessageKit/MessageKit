@@ -513,6 +513,7 @@ open class MessageInputBar: UIView {
             self.topStackViewHeightConstant = newValue
             self.layoutStackViews([.top])
         }
+        invalidateIntrinsicContentSize()
     }
     
     // MARK: - Notifications/Hooks
