@@ -53,11 +53,14 @@ open class MessageInputBar: UIView {
     /// When set to true, the blurView in the background is shown and the backgroundColor is set to .clear. Default is FALSE
     open var isTranslucent: Bool = false {
         didSet {
-            if isTranslucent && blurView.superview == nil {
-                backgroundView.addSubview(blurView)
-                blurView.fillSuperview()
+            if isTranslucent {
+                blurView.isHidden = false
+                if blurView.superview == nil {
+                    backgroundView.addSubview(blurView)
+                    blurView.fillSuperview()
+                }
             } else if !isTranslucent {
-                blurView.removeFromSuperview()
+                blurView.isHidden = true
             }
             backgroundView.backgroundColor = isTranslucent ? .clear : .white
         }
@@ -109,8 +112,6 @@ open class MessageInputBar: UIView {
         view.spacing = 15
         return view
     }()
-    
-    open let typingIndicatorLabel = UILabel()
     
     open lazy var inputTextView: InputTextView = { [weak self] in
         let textView = InputTextView()
@@ -196,7 +197,7 @@ open class MessageInputBar: UIView {
     private(set) var isOverMaxHeight = false
     
     /// The maximum size of the MessageInputBar not including the height required by the topStackView
-    open var maxHeight: CGFloat = UIScreen.main.bounds.height / 3 {
+    open var maxHeight: CGFloat = (UIScreen.main.bounds.height / 3).rounded() {
         didSet {
             textViewHeightAnchor?.constant = maxHeight
             invalidateIntrinsicContentSize()
@@ -511,21 +512,6 @@ open class MessageInputBar: UIView {
         performLayout(animated) {
             self.topStackViewHeightConstant = newValue
             self.layoutStackViews([.top])
-        }
-    }
-    
-    open func setTypingIndicator(with attributedText: NSAttributedString = NSAttributedString(), hidden: Bool) {
-        
-        typingIndicatorLabel.attributedText = attributedText
-        if hidden {
-            setTopStackViewHeightConstant(to: 0, animated: false)
-            typingIndicatorLabel.removeFromSuperview()
-        } else if !topStackView.arrangedSubviews.contains(typingIndicatorLabel) {
-            topStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-            let maxSize = CGSize(width: topStackView.bounds.width, height: .greatestFiniteMagnitude)
-            let heightToFit = typingIndicatorLabel.sizeThatFits(maxSize).height
-            topStackView.addArrangedSubview(typingIndicatorLabel)
-            setTopStackViewHeightConstant(to: heightToFit, animated: false)
         }
     }
     

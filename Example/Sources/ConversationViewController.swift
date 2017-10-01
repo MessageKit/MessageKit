@@ -60,20 +60,7 @@ class ConversationViewController: MessagesViewController {
     
     @objc func handleTyping() {
         
-        if typingCount == 0 {
-            messageInputBar.topStackViewPadding = messageInputBar.padding
-            let text = NSMutableAttributedString().bold("@nathan.tannar", textColor: .darkGray).normal(" is typing...", textColor: .darkGray)
-            messageInputBar.setTypingIndicator(with: text, hidden: false)
-            typingCount += 1
-        } else if typingCount == 1 {
-            let text = NSMutableAttributedString().bold("@nathan.tannar", textColor: .darkGray).normal(" & ", textColor: .darkGray).bold("@steve.jobs", textColor: .darkGray).normal(" are typing...", textColor: .darkGray)
-            messageInputBar.setTypingIndicator(with: text, hidden: false)
-            typingCount += 1
-        } else {
-            messageInputBar.topStackViewPadding = .zero
-            messageInputBar.setTypingIndicator(hidden: true)
-            typingCount = 0
-        }
+        // To be implemented
     }
     
     @objc func handleKeyboardButton() {
