@@ -25,6 +25,17 @@
 import UIKit
 
 open class MessageInputBar: UIView {
+
+    // MARK: - iPhone X Layout Fix
+    // Could be fixed by Apple soon
+    // https://stackoverflow.com/questions/46282987/iphone-x-how-to-handle-view-controller-inputaccessoryview
+    open override func didMoveToWindow() {
+        if #available(iOS 11.0, *) {
+            if let window = window {
+                bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1.0).isActive = true
+            }
+        }
+    }
     
     public enum UIStackViewPosition {
         case left, right, bottom
