@@ -30,7 +30,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     // MARK: - Properties
 
     open var messageLabelFont: UIFont
-    open var messageToViewEdgePadding: CGFloat
 
     open var avatarAlwaysLeading: Bool {
         willSet {
@@ -47,8 +46,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             }
         }
     }
-
-    fileprivate var avatarMessagePadding: CGFloat = 4
 
     fileprivate var messagesCollectionView: MessagesCollectionView? {
         return collectionView as? MessagesCollectionView
@@ -68,7 +65,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     public override init() {
 
         messageLabelFont = UIFont.preferredFont(forTextStyle: .body)
-        messageToViewEdgePadding = 30.0
 
         avatarAlwaysLeading = false
         avatarAlwaysTrailing = false
@@ -118,6 +114,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
         let indexPath = attributes.indexPath
         let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        let messagePadding = messageContainerPadding(for: message, at: indexPath)
         let messageInsets = messageLabelInsets(for: message, at: indexPath)
         let topLabelInsets = cellTopLabelInsets(for: message, at: indexPath)
         let bottomLabelInsets = cellBottomLabelInsets(for: message, at: indexPath)
@@ -129,6 +126,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         attributes.avatarFrame = CGRect(origin: .zero, size: avatarSize(for: message, at: indexPath))
 
         attributes.messageLabelFont = messageLabelFont
+        attributes.messagePadding = messagePadding
         attributes.messageLabelInsets = messageInsets
         attributes.cellTopLabelInsets = topLabelInsets
         attributes.cellBottomLabelInsets = bottomLabelInsets
@@ -207,6 +205,7 @@ extension MessagesCollectionViewFlowLayout {
         let cellTopLabelHeight = attributes.cellTopLabelFrame.height
         let cellBottomLabelHeight = attributes.cellBottomLabelFrame.height
         let messageContainerHeight = attributes.messageContainerFrame.height
+        let messagePadding = attributes.messagePadding
 
         switch avatarAlignment {
         case .cellTop:
@@ -214,13 +213,13 @@ extension MessagesCollectionViewFlowLayout {
         case .cellBottom:
             origin.y = contentHeight - avatarHeight
         case .messageTop:
-            origin.y = cellTopLabelHeight
+            origin.y = cellTopLabelHeight + messagePadding.top
         case .messageBottom:
-            origin.y = contentHeight - avatarHeight - cellBottomLabelHeight
+            origin.y = contentHeight - avatarHeight - cellBottomLabelHeight - messagePadding.bottom
         case .messageCenter:
             let messageMidY = messageContainerHeight / 2
             let avatarMidY = avatarHeight / 2
-            origin.y = contentHeight - cellTopLabelHeight - messageMidY - avatarMidY
+            origin.y = cellTopLabelHeight + messagePadding.top + messageMidY - avatarMidY
         }
         
         return origin
@@ -255,6 +254,12 @@ extension MessagesCollectionViewFlowLayout {
 
     // MARK: - Message Container Calculations
 
+    fileprivate func messageContainerPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
+        guard let messagesCollectionView = messagesCollectionView else { return .zero }
+        guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
+        return layoutDelegate.messagePadding(for: message, at: indexPath, in: messagesCollectionView)
+    }
+
     /// The insets for the text of the MessageLabel
     private func messageLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
         guard let messagesCollectionView = messagesCollectionView else { return .zero }
@@ -265,15 +270,14 @@ extension MessagesCollectionViewFlowLayout {
     /// The max width available for the message container.
     private func messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
-        var avatarWidth = avatarSize(for: message, at: indexPath).width
-
-        // Only apply padding if avatar width is greater than zero
-        if avatarWidth > 0 { avatarWidth += avatarMessagePadding }
-
+        let avatarWidth = avatarSize(for: message, at: indexPath).width
+        let messagePadding = messageContainerPadding(for: message, at: indexPath)
         let messageInsets = messageLabelInsets(for: message, at: indexPath)
+
+        let messageHorizontalPadding = messagePadding.left + messagePadding.right
         let messageHorizontalInsets = messageInsets.left + messageInsets.right
 
-        let availableWidth = itemWidth - avatarWidth - messageToViewEdgePadding - messageHorizontalInsets
+        let availableWidth = itemWidth - avatarWidth - messageHorizontalPadding - messageHorizontalInsets
 
         return availableWidth
     }
@@ -317,19 +321,17 @@ extension MessagesCollectionViewFlowLayout {
     /// The origin for the message container.
     fileprivate func messageContainerOrigin(for attributes: MessagesCollectionViewLayoutAttributes) -> CGPoint {
 
-        var avatarWidth = attributes.avatarFrame.width
-
-        if avatarWidth > 0 { avatarWidth += avatarMessagePadding }
+        let avatarWidth = attributes.avatarFrame.width
 
         var origin = CGPoint.zero
 
         switch attributes.avatarHorizontalAlignment {
         case .cellLeading:
-            origin.x = avatarWidth
-            origin.y = attributes.cellTopLabelFrame.height
+            origin.x = avatarWidth + attributes.messagePadding.left
+            origin.y = attributes.cellTopLabelFrame.height + attributes.messagePadding.top
         case .cellTrailing:
-            origin.x = attributes.frame.width - avatarWidth - attributes.messageContainerFrame.width
-            origin.y = attributes.cellTopLabelFrame.height
+            origin.x = attributes.frame.width - avatarWidth - attributes.messageContainerFrame.width - attributes.messagePadding.right
+            origin.y = attributes.cellTopLabelFrame.height + attributes.messagePadding.top
         }
 
         return origin
@@ -357,10 +359,7 @@ extension MessagesCollectionViewFlowLayout {
         let avatarHorizontal = avatarHorizontalAlignment(for: message)
         let topLabelHorizontalInsets = labelHorizontal.insets.left + labelHorizontal.insets.right
 
-        var avatarWidth = layoutDelegate.avatarSize(for: message, at: indexPath, in: messagesCollectionView).width
-
-        // Only apply padding is avatar width is greater than zero
-        if avatarWidth > 0 { avatarWidth += avatarMessagePadding }
+        let avatarWidth = layoutDelegate.avatarSize(for: message, at: indexPath, in: messagesCollectionView).width
 
         switch (labelHorizontal, avatarHorizontal, avatarVertical) {
 
@@ -427,13 +426,13 @@ extension MessagesCollectionViewFlowLayout {
         case (.cellTrailing, _):
             origin.x = attributes.frame.width - attributes.cellTopLabelFrame.width
         case (.messageLeading, .cellLeading):
-            origin.x = attributes.avatarFrame.width + avatarMessagePadding
+            origin.x = attributes.avatarFrame.width + attributes.messagePadding.left
         case (.messageLeading, .cellTrailing):
-            origin.x = attributes.frame.width - attributes.avatarFrame.width - avatarMessagePadding - attributes.messageContainerFrame.width
+            origin.x = attributes.frame.width - attributes.avatarFrame.width - attributes.messagePadding.right - attributes.messageContainerFrame.width
         case (.messageTrailing, .cellTrailing):
-            origin.x = attributes.frame.width - attributes.avatarFrame.width - avatarMessagePadding - attributes.cellTopLabelFrame.width
+            origin.x = attributes.frame.width - attributes.avatarFrame.width - attributes.messagePadding.right - attributes.cellTopLabelFrame.width
         case (.messageTrailing, .cellLeading):
-            origin.x = attributes.frame.width - messageToViewEdgePadding - attributes.cellTopLabelFrame.width
+            origin.x = attributes.frame.width - attributes.messagePadding.right - attributes.cellTopLabelFrame.width
         }
 
         return origin
@@ -461,10 +460,7 @@ extension MessagesCollectionViewFlowLayout {
         let avatarHorizontal = avatarHorizontalAlignment(for: message)
         let bottomLabelHorizontalInsets = labelHorizontal.insets.left + labelHorizontal.insets.right
 
-        var avatarWidth = layoutDelegate.avatarSize(for: message, at: indexPath, in: messagesCollectionView).width
-
-        // Only apply padding is avatar width is greater than zero
-        if avatarWidth > 0 { avatarWidth += avatarMessagePadding }
+        let avatarWidth = layoutDelegate.avatarSize(for: message, at: indexPath, in: messagesCollectionView).width
 
         switch (labelHorizontal, avatarHorizontal, avatarVertical) {
 
@@ -532,13 +528,13 @@ extension MessagesCollectionViewFlowLayout {
         case (.cellTrailing, _):
             origin.x = attributes.frame.width - attributes.cellBottomLabelFrame.width
         case (.messageLeading, .cellLeading):
-            origin.x = attributes.avatarFrame.width + avatarMessagePadding
+            origin.x = attributes.avatarFrame.width + attributes.messagePadding.left
         case (.messageLeading, .cellTrailing):
-            origin.x = attributes.frame.width - attributes.avatarFrame.width - avatarMessagePadding - attributes.messageContainerFrame.width
+            origin.x = attributes.frame.width - attributes.avatarFrame.width - attributes.messagePadding.right - attributes.messageContainerFrame.width
         case (.messageTrailing, .cellTrailing):
-            origin.x = attributes.frame.width - attributes.avatarFrame.width - avatarMessagePadding - attributes.cellBottomLabelFrame.width
+            origin.x = attributes.frame.width - attributes.avatarFrame.width - attributes.messagePadding.right - attributes.cellBottomLabelFrame.width
         case (.messageTrailing, .cellLeading):
-            origin.x = attributes.avatarFrame.width + avatarMessagePadding + attributes.messageContainerFrame.width - attributes.cellBottomLabelFrame.width
+            origin.x = attributes.avatarFrame.width + attributes.messagePadding.left + attributes.messageContainerFrame.width - attributes.cellBottomLabelFrame.width
         }
 
         return origin
@@ -558,14 +554,16 @@ extension MessagesCollectionViewFlowLayout {
         let topLabelHeight = cellTopLabelSize(for: message, at: indexPath).height
         let avatarHeight = avatarSize(for: message, at: indexPath).height
         let bottomLabelHeight = cellBottomLabelSize(for: message, at: indexPath).height
+        let messagePadding = messageContainerPadding(for: message, at: indexPath)
+        let messagePaddingVertical = messagePadding.top + messagePadding.bottom
 
         switch avatarAlignment {
         case .cellTop:
-            return max(avatarHeight, topLabelHeight) + bottomLabelHeight
+            return max(avatarHeight, topLabelHeight) + bottomLabelHeight + messagePaddingVertical
         case .cellBottom:
-            return max(avatarHeight, bottomLabelHeight) + topLabelHeight
+            return max(avatarHeight, bottomLabelHeight) + topLabelHeight + messagePaddingVertical
         case .messageTop, .messageCenter, .messageBottom:
-            return topLabelHeight + avatarHeight + bottomLabelHeight
+            return topLabelHeight + avatarHeight + bottomLabelHeight + messagePaddingVertical
         }
 
     }
@@ -576,8 +574,10 @@ extension MessagesCollectionViewFlowLayout {
         let messageContainerHeight = messageContainerSize(for: message, at: indexPath).height
         let cellTopLabelHeight = cellTopLabelSize(for: message, at: indexPath).height
         let cellBottomLabelHeight = cellBottomLabelSize(for: message, at: indexPath).height
+        let messagePadding = messageContainerPadding(for: message, at: indexPath)
+        let messagePaddingVertical = messagePadding.top + messagePadding.bottom
 
-        return messageContainerHeight + cellBottomLabelHeight + cellTopLabelHeight
+        return messageContainerHeight + cellBottomLabelHeight + cellTopLabelHeight + messagePaddingVertical
 
     }
 

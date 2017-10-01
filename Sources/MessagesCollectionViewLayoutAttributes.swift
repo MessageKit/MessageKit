@@ -32,8 +32,9 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
     var avatarFrame: CGRect = .zero
 
     var messageContainerFrame: CGRect = .zero
+    var messagePadding: UIEdgeInsets = .zero
     var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
-    var messageLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
+    var messageLabelInsets: UIEdgeInsets = .zero
 
     var cellTopLabelFrame: CGRect = .zero
     var cellTopLabelInsets: UIEdgeInsets = .zero
