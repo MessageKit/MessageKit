@@ -59,7 +59,7 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
         NSLayoutConstraint.activate([centerX, centerY])
     }
 
-    open func setMapSnaphotImage(for location: CLLocation, annotationView: MKAnnotationView?, options: LocationMessageSnapshotOptions, animation: ((UIView) -> Void)?) {
+    open func setMapSnaphotImage(for location: CLLocation, annotationView: MKAnnotationView?, options: LocationMessageSnapshotOptions, animation: ((UIImageView) -> Void)?) {
 
         activityIndicator.startAnimating()
 
