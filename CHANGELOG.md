@@ -18,8 +18,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - `messageLabelInsets(for:indexPath:messagesCollectionView` method to `MessagesLayoutDelegate`. 
 [#162](https://github.com/MessageKit/MessageKit/pull/162) by [@SD10](https://github.com/SD10).
 
--`animationBlockForLocation(message:indexPath:messagesCollectionView)` method to `LocationMessageDisplayDelegate` to customize the display animation of the location message's map
-[210](https://github.com/MessageKit/MessageKit/pull/210) by [@etoledom](https://github.com/etoledom).
+- `animationBlockForLocation(message:indexPath:messagesCollectionView)` method to `LocationMessageDisplayDelegate` to customize the display animation of the location message's map.
+[#210](https://github.com/MessageKit/MessageKit/pull/210) by [@etoledom](https://github.com/etoledom).
 
 ### Fixed
 
