@@ -333,7 +333,7 @@ extension ConversationViewController: LocationMessageDisplayDelegate {
         return annotationView
     }
 
-    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIView) -> Void)? {
+    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)? {
         return { view in
             view.layer.transform = CATransform3DMakeScale(0, 0, 0)
             view.alpha = 0.0
