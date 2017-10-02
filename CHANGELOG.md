@@ -44,6 +44,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - **Breaking Change** `InputTextView`'s `UITextViewDelegate` is now set to `self`
 [#173](https://github.com/MessageKit/MessageKit/pull/173) by [@nathantannar4](https://github.com/nathantannar4).
 
+- `configure` method of all `MessageCollectionViewCell` types to be marked as `open`.
+[#200](https://github.com/MessageKit/MessageKit/pull/200) by [@SD10](https://github.com/sd10).
+
+
 ### Removed
 - **Breaking Change** `cellTopLabelInsets` and `cellBottomLabelInsets` from `MessagesCollectionViewFlowLayout`.
 [#166](https://github.com/MessageKit/MessageKit/pull/166) by [@SD10](https://github.com/SD10).

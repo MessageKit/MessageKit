@@ -56,7 +56,7 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
         messageContentView.text = nil
     }
 
-    public override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+    open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
 
         if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {

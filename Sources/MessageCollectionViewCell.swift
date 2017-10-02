@@ -110,7 +110,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell 
         cellBottomLabel.attributedText = nil
     }
 
-    public func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+    open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
 
         // Check if delegate has already been set to reduce number of assignments
         if delegate == nil, let cellDelegate = messagesCollectionView.messageCellDelegate {
