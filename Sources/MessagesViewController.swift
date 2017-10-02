@@ -31,6 +31,8 @@ open class MessagesViewController: UIViewController {
     open var messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
 
     open var messageInputBar = MessageInputBar()
+    
+    open var scrollsToBottomOnFirstLayout: Bool = false
 
     private var isFirstLayout: Bool = true
 
@@ -70,6 +72,11 @@ open class MessagesViewController: UIViewController {
             messagesCollectionView.contentInset.bottom = messageInputBar.frame.height
             messagesCollectionView.scrollIndicatorInsets.bottom = messageInputBar.frame.height
             isFirstLayout = false
+            
+            //Scroll to bottom at first load
+            if scrollsToBottomOnFirstLayout {
+                messagesCollectionView.scrollToBottom(animated: false)
+            }
         }
     }
 

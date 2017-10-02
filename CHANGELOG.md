@@ -5,7 +5,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 --------------------------------------
 
 ## Upcoming release
+
 ### Added
+
 - **Breaking Change** `.custom((MessageContainerView)->Void)` case to `MessageStyle` enum. 
 [#163](https://github.com/MessageKit/MessageKit/pull/163) by [@SD10](https://github.com/SD10).
 
@@ -20,6 +22,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - `animationBlockForLocation(message:indexPath:messagesCollectionView)` method to `LocationMessageDisplayDelegate` to customize the display animation of the location message's map.
 [#210](https://github.com/MessageKit/MessageKit/pull/210) by [@etoledom](https://github.com/etoledom).
+
+- `scrollsToBottomOnFirstLayout` property to automatically scroll to the bottom of `MessagesCollectionView` on first load.
+[#213](https://github.com/MessageKit/MessageKit/pull/213) by [@FraDeliro](https://github.com/FraDeliro).
 
 ### Fixed
 
@@ -36,6 +41,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 [#174](https://github.com/MessageKit/MessageKit/pull/174) by [@etoledom](https://github.com/etoledom).
 
 ### Changed
+
 - **Breaking Change** `snapshotOptionsForLocation` method is now part of `LocationMessageDisplayDelegate`. 
 [#150](https://github.com/MessageKit/MessageKit/pull/150) by [@etoledom](https://github.com/etoledom).
 
@@ -62,10 +68,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 [#177](https://github.com/MessageKit/MessageKit/pull/177) by [@cwalo](https://github.com/cwalo).
 
 ### Removed
+
 - **Breaking Change** `cellTopLabelInsets` and `cellBottomLabelInsets` from `MessagesCollectionViewFlowLayout`.
 [#166](https://github.com/MessageKit/MessageKit/pull/166) by [@SD10](https://github.com/SD10).
-
-----------------
 
 ## [[Prerelease] 0.8.2](https://github.com/MessageKit/MessageKit/releases/tag/0.8.2)
 ### Added
