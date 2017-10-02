@@ -29,6 +29,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Incorrect sizing of `MessagesCollectionView`s content inset by setting `extendedLayoutIncludesOpaqueBars` to true by default.
 [#204](https://github.com/MessageKit/MessageKit/pull/204) by [@SD10](https://github.com/SD10).
 
+- `scrollIndicatorInsets` to match the insets of the `MessagesCollectionView`.
+[#174](https://github.com/MessageKit/MessageKit/pull/174) by [@etoledom](https://github.com/etoledom).
+
 ### Changed
 - **Breaking Change** `snapshotOptionsForLocation` method is now part of `LocationMessageDisplayDelegate`. 
 [#150](https://github.com/MessageKit/MessageKit/pull/150) by [@etoledom](https://github.com/etoledom).
@@ -49,6 +52,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - `configure` method of all `MessageCollectionViewCell` types to be marked as `open`.
 [#200](https://github.com/MessageKit/MessageKit/pull/200) by [@SD10](https://github.com/sd10).
 
+- `MessageHeaderView`, `MessageFooterView`, and `MessageDateHeaderView` initializers to be `public`.
+[#175](https://github.com/MessageKit/MessageKit/pull/175) by [@cwalo](https://github.com/cwalo).
+
+- `UICollectionViewDataSource` and `UICollectionViewDelegate` methods of `MessagesViewController` to be `open`.
+[#177](https://github.com/MessageKit/MessageKit/pull/177) by [@cwalo](https://github.com/cwalo).
 
 ### Removed
 - **Breaking Change** `cellTopLabelInsets` and `cellBottomLabelInsets` from `MessagesCollectionViewFlowLayout`.
