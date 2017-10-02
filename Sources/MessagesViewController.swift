@@ -31,11 +31,13 @@ open class MessagesViewController: UIViewController {
     open var messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
 
     open var messageInputBar = MessageInputBar()
+    
+    open var scrollsToBottomOnFirstLayout: Bool = false
 
     private var messageInputBarCopy: MessageInputBar?
 
     private var isFirstLayout: Bool = true
-
+    
     override open var canBecomeFirstResponder: Bool {
         return true
     }
@@ -82,6 +84,13 @@ open class MessagesViewController: UIViewController {
             addKeyboardObservers()
             messagesCollectionView.contentInset.bottom = messageInputBar.frame.height
             isFirstLayout = false
+            
+            //scroll to bottom at first load
+            guard scrollsToBottomOnFirstLayout == true else {
+                return
+            }
+            scrollsToBottomOnFirstLayout = false
+            messagesCollectionView.scrollToBottom(animated: false)
         }
     }
 
