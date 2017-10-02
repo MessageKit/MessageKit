@@ -85,12 +85,10 @@ open class MessagesViewController: UIViewController {
             messagesCollectionView.contentInset.bottom = messageInputBar.frame.height
             isFirstLayout = false
             
-            //scroll to bottom at first load
-            guard scrollsToBottomOnFirstLayout == true else {
-                return
+            //Scroll to bottom at first load
+            if scrollsToBottomOnFirstLayout {
+                messagesCollectionView.scrollToBottom(animated: false)
             }
-            scrollsToBottomOnFirstLayout = false
-            messagesCollectionView.scrollToBottom(animated: false)
         }
     }
 

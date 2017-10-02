@@ -5,7 +5,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 --------------------------------------
 
 ## Upcoming release
-----------------
+### Added
+- **Breaking Change**  `MessagesViewController` now support `scrollsToBottomOnFirstLayout` property to automatically scrolls to bottom ``messagesCollectionView``
 
 ## [Prerelease] 0.8.2
 ### Added
