@@ -5,6 +5,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 --------------------------------------
 
 ## Upcoming release
+
 ### Added
 
 - **Breaking Change** `.custom((MessageContainerView)->Void)` case to `MessageStyle` enum. 
