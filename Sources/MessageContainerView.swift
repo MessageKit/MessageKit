@@ -69,6 +69,11 @@ open class MessageContainerView: UIImageView {
             mask = nil
             image = nil
             tintColor = nil
+        case .custom(let configurationClosure):
+            mask = nil
+            image = nil
+            tintColor = nil
+            configurationClosure(self)
         }
     }
 

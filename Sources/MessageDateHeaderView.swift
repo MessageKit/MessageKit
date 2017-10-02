@@ -32,7 +32,7 @@ open class MessageDateHeaderView: MessageHeaderView {
 
     // MARK: - Initializers
 
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(dateLabel)
         dateLabel.fillSuperview()
@@ -41,7 +41,7 @@ open class MessageDateHeaderView: MessageHeaderView {
         dateLabel.textColor = .darkGray
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

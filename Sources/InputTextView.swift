@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class InputTextView: UITextView {
+open class InputTextView: UITextView, UITextViewDelegate {
 
     // MARK: - Properties
 
@@ -58,13 +58,13 @@ open class InputTextView: UITextView {
         }
     }
 
-    override open var font: UIFont! {
+    open override var font: UIFont! {
         didSet {
             placeholderLabel.font = font
         }
     }
 
-    override open var textAlignment: NSTextAlignment {
+    open override var textAlignment: NSTextAlignment {
         didSet {
             placeholderLabel.textAlignment = textAlignment
         }
@@ -73,6 +73,18 @@ open class InputTextView: UITextView {
     open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 7, bottom: 4, right: 4) {
         didSet {
             updateConstraintsForPlaceholderLabel()
+        }
+    }
+    
+    open override var scrollIndicatorInsets: UIEdgeInsets {
+        didSet {
+            // When .zero a rendering issue can occur when the MessagesViewController is pushed onto a UINavigationController stack, popped and then pushed again
+            if scrollIndicatorInsets == .zero {
+                scrollIndicatorInsets = UIEdgeInsets(top: .leastNonzeroMagnitude,
+                                                     left: .leastNonzeroMagnitude,
+                                                     bottom: .leastNonzeroMagnitude,
+                                                     right: .leastNonzeroMagnitude)
+            }
         }
     }
 
@@ -84,7 +96,7 @@ open class InputTextView: UITextView {
         self.init(frame: .zero)
     }
 
-    override public init(frame: CGRect, textContainer: NSTextContainer?) {
+    public override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         setup()
     }
@@ -98,10 +110,15 @@ open class InputTextView: UITextView {
 
         font = UIFont.preferredFont(forTextStyle: .body)
         textContainerInset = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+        scrollIndicatorInsets = UIEdgeInsets(top: .leastNonzeroMagnitude,
+                                             left: .leastNonzeroMagnitude,
+                                             bottom: .leastNonzeroMagnitude,
+                                             right: .leastNonzeroMagnitude)
         isScrollEnabled = false
         layer.cornerRadius = 5.0
         layer.borderWidth = 1.25
         layer.borderColor = UIColor.lightGray.cgColor
+        delegate = self
 
         addSubviews()
         addConstraints()
@@ -129,5 +146,20 @@ open class InputTextView: UITextView {
         placeholderLabelConstraintSet?.left?.constant = placeholderLabelInsets.left
         placeholderLabelConstraintSet?.right?.constant = -placeholderLabelInsets.bottom
     }
-
+    
+    // MARK: - UITextViewDelegate
+    
+    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        // When isScrollEnabled gets changed in MessageInputBar when it becomes more than the maxHeight there is a bug the incorrectly sets the contentSize. This fixes it by inserting the text via `replacingCharacters`
+        if text == UIPasteboard.general.string {
+            if let messageInputBar = messageInputBar {
+                if !messageInputBar.isOverMaxHeight {
+                    textView.text = (textView.text as NSString).replacingCharacters(in: range, with: text)
+                    return false
+                }
+            }
+        }
+        return true
+    }
 }

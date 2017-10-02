@@ -5,18 +5,82 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 --------------------------------------
 
 ## Upcoming release
-### Added
-- **Breaking Change**  `MessagesViewController` now support `scrollsToBottomOnFirstLayout` property to automatically scrolls to bottom ``messagesCollectionView``
 
-## [Prerelease] 0.8.2
+### Added
+
+- **Breaking Change** `.custom((MessageContainerView)->Void)` case to `MessageStyle` enum. 
+[#163](https://github.com/MessageKit/MessageKit/pull/163) by [@SD10](https://github.com/SD10).
+
+- **Breaking Change** `UIEdgeInsets` associated value to all `LabelAlignment` enum cases. 
+[#166](https://github.com/MessageKit/MessageKit/pull/166) by [@SD10](https://github.com/SD10).
+
+- `LocationMessageDisplayDelegate` to customize a location messages appearance and add a `MKAnnotationView` to location message snapshots. 
+[#150](https://github.com/MessageKit/MessageKit/pull/150) by [@etoledom](https://github.com/etoledom).
+
+- `messageLabelInsets(for:indexPath:messagesCollectionView` method to `MessagesLayoutDelegate`. 
+[#162](https://github.com/MessageKit/MessageKit/pull/162) by [@SD10](https://github.com/SD10).
+
+- `animationBlockForLocation(message:indexPath:messagesCollectionView)` method to `LocationMessageDisplayDelegate` to customize the display animation of the location message's map.
+[#210](https://github.com/MessageKit/MessageKit/pull/210) by [@etoledom](https://github.com/etoledom).
+
+- `scrollsToBottomOnFirstLayout` property to automatically scroll to the bottom of `MessagesCollectionView` on first load.
+[#213](https://github.com/MessageKit/MessageKit/pull/213) by [@FraDeliro](https://github.com/FraDeliro).
+
+### Fixed
+
+-  `MessageInputBar` now correctly sizes itself when breaking its max height or pasting in large amounts of text
+[#173](https://github.com/MessageKit/MessageKit/pull/173) by [@nathantannar4](https://github.com/nathantannar4).
+
+- `MessageInputBar` faced a rendering issue on subsequent presentations of a `MessageViewController`. This was originally patched by adding a copy to the view during `viewDidAppear(animated:)` however that led to other issues [#116](https://github.com/MessageKit/MessageKit/issues/116). A correct patch has now been applied.
+[#178](https://github.com/MessageKit/MessageKit/pull/178) by [@nathantannar4](https://github.com/nathantannar4).
+
+- Incorrect sizing of `MessagesCollectionView`s content inset by setting `extendedLayoutIncludesOpaqueBars` to true by default.
+[#204](https://github.com/MessageKit/MessageKit/pull/204) by [@SD10](https://github.com/SD10).
+
+- `scrollIndicatorInsets` to match the insets of the `MessagesCollectionView`.
+[#174](https://github.com/MessageKit/MessageKit/pull/174) by [@etoledom](https://github.com/etoledom).
+
+### Changed
+
+- **Breaking Change** `snapshotOptionsForLocation` method is now part of `LocationMessageDisplayDelegate`. 
+[#150](https://github.com/MessageKit/MessageKit/pull/150) by [@etoledom](https://github.com/etoledom).
+
+- **Breaking Change** `setMapSnapshotImage` now includes an `annotationView: MKAnnotationView?` argument. 
+[#150](https://github.com/MessageKit/MessageKit/pull/150) by [@etoledom](https://github.com/etoledom).
+
+- **Breaking Change** `messageLabelInsets` has been made into a method on `MessagesLayoutDelegate`. 
+[#162](https://github.com/MessageKit/MessageKit/pull/162) by [@SD10](https://github.com/SD10).
+
+- **Breaking Change** `messageLabelInsets` now defaults to a `left` inset of 18 for incoming messages
+ and a `right` inset of 18 for outgoing messages. 
+[#162](https://github.com/MessageKit/MessageKit/pull/162) by [@SD10](https://github.com/SD10).
+
+- **Breaking Change** `InputTextView`'s `UITextViewDelegate` is now set to `self`
+[#173](https://github.com/MessageKit/MessageKit/pull/173) by [@nathantannar4](https://github.com/nathantannar4).
+
+- `configure` method of all `MessageCollectionViewCell` types to be marked as `open`.
+[#200](https://github.com/MessageKit/MessageKit/pull/200) by [@SD10](https://github.com/sd10).
+
+- `MessageHeaderView`, `MessageFooterView`, and `MessageDateHeaderView` initializers to be `public`.
+[#175](https://github.com/MessageKit/MessageKit/pull/175) by [@cwalo](https://github.com/cwalo).
+
+- `UICollectionViewDataSource` and `UICollectionViewDelegate` methods of `MessagesViewController` to be `open`.
+[#177](https://github.com/MessageKit/MessageKit/pull/177) by [@cwalo](https://github.com/cwalo).
+
+### Removed
+
+- **Breaking Change** `cellTopLabelInsets` and `cellBottomLabelInsets` from `MessagesCollectionViewFlowLayout`.
+[#166](https://github.com/MessageKit/MessageKit/pull/166) by [@SD10](https://github.com/SD10).
+
+## [[Prerelease] 0.8.2](https://github.com/MessageKit/MessageKit/releases/tag/0.8.2)
 ### Added
 - Support for Swift 4
 
-## [Prerelease] 0.8.1
+## [[Prerelease] 0.8.1](https://github.com/MessageKit/MessageKit/releases/tag/0.8.1)
 ### Added
 - Support for Swift 3.2 and Xcode 9
 
-## [Prerelease] 0.8.0
+## [[Prerelease] 0.8.0](https://github.com/MessageKit/MessageKit/releases/tag/0.8.0)
 
 This release closes the [0.8 milestone](https://github.com/MessageKit/MessageKit/milestone/9?closed=1).
 
@@ -44,45 +108,45 @@ This release closes the [0.8 milestone](https://github.com/MessageKit/MessageKit
 - `AvatarView`'s placeholder image is no longer constrained to a size of `30 x 30`.
 - `AvatarView`'s placeholder text can now auto-adjust based on available width.
 
-## [Prerelease] 0.7.4
+## [[Prerelease] 0.7.4](https://github.com/MessageKit/MessageKit/releases/tag/0.7.4)
 
 - Fixes invalid image path for Carthage resources.
 
-## [Prerelease] 0.7.3
+## [[Prerelease] 0.7.3](https://github.com/MessageKit/MessageKit/releases/tag/0.7.3)
 
 - Fixes missing asset bundle resources for Carthage installation.
 
-## [Prerelease] 0.7.2
+## [[Prerelease] 0.7.2](https://github.com/MessageKit/MessageKit/releases/tag/0.7.2)
 
-## [Prerelease] 0.7.1
+## [[Prerelease] 0.7.1](https://github.com/MessageKit/MessageKit/releases/tag/0.7.1)
 
 - Fixes missing asset bundle resources in framework.
 
-## [Prerelease] 0.7.0
+## [[Prerelease] 0.7.0](https://github.com/MessageKit/MessageKit/releases/tag/0.7.0)
 
 This release closes the [0.7 milestone](https://github.com/MessageKit/MessageKit/milestone/8?closed=1)
 
-## [Prerelease] 0.6.0
+## [[Prerelease] 0.6.0](https://github.com/MessageKit/MessageKit/releases/tag/0.6.0)
 
 This release closes the [0.6 milestone](https://github.com/MessageKit/MessageKit/milestone/7?closed=1).
 
-## [Prerelease] 0.5.0
+## [[Prerelease] 0.5.0](https://github.com/MessageKit/MessageKit/releases/tag/0.5.0)
 
 This release closes the [0.5 milestone](https://github.com/MessageKit/MessageKit/milestone/5?closed=1).
 
-## [Prerelease] 0.4.0
+## [[Prerelease] 0.4.0](https://github.com/MessageKit/MessageKit/releases/tag/0.4.0)
 
 This release closes the [0.4 milestone](https://github.com/MessageKit/MessageKit/milestone/4?closed=1).
 
-## [Prerelease] 0.3.0
+## [[Prerelease] 0.3.0](https://github.com/MessageKit/MessageKit/releases/tag/0.3.0)
 
 This release closes the [0.3 milestone](https://github.com/MessageKit/MessageKit/milestone/3?closed=1).
 
-## [Prerelease] 0.2.0
+## [[Prerelease] 0.2.0](https://github.com/MessageKit/MessageKit/releases/tag/0.2.0)
 
 This release closes the [0.2 milestone](https://github.com/MessageKit/MessageKit/milestone/2?closed=1).
 
-## [Prerelease] 0.1.0
+## [[Prerelease] 0.1.0](https://github.com/MessageKit/MessageKit/releases/tag/0.1.0)
 
 This release closes the [0.1 milestone](https://github.com/MessageKit/MessageKit/milestone/1?closed=1).
 

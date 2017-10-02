@@ -54,14 +54,28 @@ public extension MessagesCollectionViewFlowLayout {
         return .zero
     }
 
-    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use `cellTopLabelPosition(for:indexPath:messagesCollectionView)")
+    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use cellTopLabelPosition(for:indexPath:messagesCollectionView)")
     public var topLabelExtendsPastAvatar: Bool {
         return false
     }
 
-    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use `cellBottomLabelPosition(for:indexPath:messagesCollectionView)")
+    @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use cellBottomLabelPosition(for:indexPath:messagesCollectionView)")
     public var bottomLabelExtendsPastAvatar: Bool {
         return false
+    }
+
+    @available(*, deprecated: 0.9.0, message: "Removed in MessageKit 0.9.0. Please use messageLabelInsets(for:indexPath:messagesCollectionView)")
+    public var messageLabelInsets: UIEdgeInsets {
+        return UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
+    }
+
+    @available(*, deprecated: 0.9.0, message: "Removed in MessageKit 0.9.0. Please use associated value of LabelAlignment")
+    public var cellTopLabelInsets: UIEdgeInsets {
+        return .zero
+    }
+    @available(*, deprecated: 0.9.0, message: "Removed in MessageKit 0.9.0. Please use associated value of LabelAlignment")
+    public var cellBottomLabelInsets: UIEdgeInsets {
+        return .zero
     }
 
 }
@@ -76,7 +90,7 @@ public enum CellLabelPosition {
     case cellCenter
     case messageTrailing
     case messageLeading
-    
+
 }
 
 // MARK: - Avatar Position
@@ -89,7 +103,7 @@ public enum AvatarPosition {
     case messageCenter
     case messageBottom
     case cellBottom
-    
+
 }
 
 // MARK: - MessagesLayoutDelegate
@@ -154,5 +168,5 @@ public extension AvatarView {
     public func getImage() -> UIImage? {
         return imageView.image
     }
-    
+
 }
