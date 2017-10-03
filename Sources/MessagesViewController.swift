@@ -116,6 +116,9 @@ open class MessagesViewController: UIViewController {
         messagesCollectionView.register(LocationMessageCell.self,
                                         forCellWithReuseIdentifier: "LocationMessageCell")
 
+        messagesCollectionView.register(EmojiMessageCell.self,
+                                        forCellWithReuseIdentifier: "EmojiMessageCell")
+
         messagesCollectionView.register(MessageFooterView.self,
                                         forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
                                         withReuseIdentifier: "MessageFooterView")
@@ -200,6 +203,12 @@ extension MessagesViewController: UICollectionViewDataSource {
         case .location:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LocationMessageCell", for: indexPath) as? LocationMessageCell else {
                 fatalError("Unable to dequeue LocationMessageCell")
+            }
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .emoji:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiMessageCell", for: indexPath) as? EmojiMessageCell else {
+                fatalError("Unable to dequeue EmojiMessageCell")
             }
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell

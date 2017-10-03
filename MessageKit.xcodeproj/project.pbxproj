@@ -17,6 +17,7 @@
 		38C8679A1F50EA1000811974 /* NSConstraintLayoutSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867981F50EA1000811974 /* NSConstraintLayoutSet.swift */; };
 		38C8679B1F50EA1000811974 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867991F50EA1000811974 /* UIView+Extensions.swift */; };
 		38C8679E1F50EA4A00811974 /* InputBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C8679D1F50EA4A00811974 /* InputBarItem.swift */; };
+		492CB9F11F84362A009FE895 /* EmojiMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492CB9F01F84362A009FE895 /* EmojiMessageCell.swift */; };
 		7E7555A81F75C819004C50B6 /* LocationMessageDisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E7555A71F75C819004C50B6 /* LocationMessageDisplayDelegate.swift */; };
 		882D75841DE507320033F95F /* MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882D75831DE507320033F95F /* MessagesDataSource.swift */; };
 		888CEBFC1D3FD525005178DE /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888CEBFB1D3FD525005178DE /* MessagesViewController.swift */; };
@@ -83,6 +84,7 @@
 		38C867981F50EA1000811974 /* NSConstraintLayoutSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSConstraintLayoutSet.swift; sourceTree = "<group>"; };
 		38C867991F50EA1000811974 /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		38C8679D1F50EA4A00811974 /* InputBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarItem.swift; sourceTree = "<group>"; };
+		492CB9F01F84362A009FE895 /* EmojiMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiMessageCell.swift; sourceTree = "<group>"; };
 		7E7555A71F75C819004C50B6 /* LocationMessageDisplayDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMessageDisplayDelegate.swift; sourceTree = "<group>"; };
 		882D75831DE507320033F95F /* MessagesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDataSource.swift; sourceTree = "<group>"; };
 		888CEBFB1D3FD525005178DE /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				E8586DB41F59A1C300C9BE9D /* MessageContainerView.swift */,
 				B0147C8F1F5ED0810035B36E /* MessageDateHeaderView.swift */,
 				B0291DA81F6DBB9F00BEDF03 /* TextMessageCell.swift */,
+				492CB9F01F84362A009FE895 /* EmojiMessageCell.swift */,
 				B0D943BD1F6DC9AB008B7BFD /* MediaMessageCell.swift */,
 				B010490F1F6F8684008DBA58 /* PlayButtonView.swift */,
 				B01049111F6F86E8008DBA58 /* LocationMessageCell.swift */,
@@ -478,6 +481,7 @@
 				88916B471CF0DFE600469F91 /* MessageType.swift in Sources */,
 				B0D943BE1F6DC9AB008B7BFD /* MediaMessageCell.swift in Sources */,
 				B0291DA91F6DBB9F00BEDF03 /* TextMessageCell.swift in Sources */,
+				492CB9F11F84362A009FE895 /* EmojiMessageCell.swift in Sources */,
 				B0AA1F511F42E91A00BAE583 /* AvatarAlignment.swift in Sources */,
 				B03FF9AF1F31BB1200754FE5 /* MessageCellDelegate.swift in Sources */,
 				37C936981F38F6AC00853DF2 /* Avatar.swift in Sources */,

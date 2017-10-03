@@ -30,6 +30,8 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     // MARK: - Properties
 
     open var messageLabelFont: UIFont
+    open var emojiLabelFont: UIFont
+
     open var messageToViewEdgePadding: CGFloat
 
     open var avatarAlwaysLeading: Bool {
@@ -68,6 +70,8 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     public override init() {
 
         messageLabelFont = UIFont.preferredFont(forTextStyle: .body)
+        emojiLabelFont = messageLabelFont.withSize(2 * messageLabelFont.pointSize)
+
         messageToViewEdgePadding = 30.0
 
         avatarAlwaysLeading = false
@@ -309,6 +313,10 @@ extension MessagesCollectionViewFlowLayout {
             let width = layoutDelegate.widthForLocation(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
             let height = layoutDelegate.heightForLocation(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
             messageContainerSize = CGSize(width: width, height: height)
+        case .emoji(let text):
+            messageContainerSize = labelSize(for: text, considering: maxWidth, and: emojiLabelFont)
+            messageContainerSize.width += messageHorizontalInsets
+            messageContainerSize.height += messageVerticalInsets
         }
 
         return messageContainerSize
