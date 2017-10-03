@@ -34,7 +34,15 @@ open class MessagesViewController: UIViewController {
     
     open var scrollsToBottomOnFirstLayout: Bool = false
 
+
     open var scrollsToBottomOnKeybordBeginsEditing: Bool = false
+
+    open var additionalTopContentInset: CGFloat = 0 {
+        didSet {
+            let inset = topLayoutGuide.length + additionalTopContentInset
+            messagesCollectionView.contentInset.top = inset
+        }
+    }
 
     private var isFirstLayout: Bool = true
 
@@ -73,6 +81,7 @@ open class MessagesViewController: UIViewController {
             defer { isFirstLayout = false }
 
             addKeyboardObservers()
+            messagesCollectionView.contentInset.top = additionalTopContentInset + topLayoutGuide.length
             messagesCollectionView.contentInset.bottom = messageInputBar.frame.height
             messagesCollectionView.scrollIndicatorInsets.bottom = messageInputBar.frame.height
             

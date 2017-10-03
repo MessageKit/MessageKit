@@ -28,12 +28,19 @@ import MapKit
 
 class ConversationViewController: MessagesViewController {
 
-    var messageList: [MockMessage] = []
+    var messageList: [MockMessage] = [] {
+        didSet {
+            messagesCollectionView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        messageList = SampleData().getMessages()
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.messageList = SampleData.shared.getMessages(count: 100)
+        }
+
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
@@ -184,7 +191,7 @@ class ConversationViewController: MessagesViewController {
 extension ConversationViewController: MessagesDataSource {
 
     func currentSender() -> Sender {
-        return SampleData().getCurrentSender()
+        return SampleData.shared.currentSender
     }
 
     func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int {
@@ -196,7 +203,7 @@ extension ConversationViewController: MessagesDataSource {
     }
 
     func avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
-        return SampleData().getAvatarFor(sender: message.sender)
+        return SampleData.shared.getAvatarFor(sender: message.sender)
     }
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
@@ -353,7 +360,7 @@ extension ConversationViewController: LocationMessageDisplayDelegate {
 extension ConversationViewController: MessageInputBarDelegate {
 
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-        messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString))
+        messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date()))
         inputBar.inputTextView.text = String()
         messagesCollectionView.reloadData()
     }
