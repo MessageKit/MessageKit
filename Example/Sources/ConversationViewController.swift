@@ -33,6 +33,8 @@ class ConversationViewController: MessagesViewController {
     var typingCount = 0
     
     var viewIsLoaded = false
+    
+    var showMentionList = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,24 +45,29 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
+        messageInputBar.autocompleteManager.dataSource = self
+        messageInputBar.autocompleteManager.delegate = self
+        messageInputBar.isAutocompleteEnabled = true
 
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
                             style: .plain,
                             target: self,
                             action: #selector(handleKeyboardButton)),
-            UIBarButtonItem(image: UIImage(named: "ic_typing"),
+            UIBarButtonItem(image: UIImage(named: "ic_at"),
                             style: .plain,
                             target: self,
-                            action: #selector(handleTyping))
+                            action: #selector(handleAutocomplete))
         ]
         
         viewIsLoaded = true
     }
     
-    @objc func handleTyping() {
+    @objc func handleAutocomplete() {
         
-        // To be implemented
+        // Modifying the text manually wont call the delgate and thus the autocomplete logic, so we ask the manager to check
+        messageInputBar.inputTextView.text.append("@")
+        messageInputBar.autocompleteManager.checkLastCharacter()
     }
     
     @objc func handleKeyboardButton() {
@@ -191,6 +198,18 @@ class ConversationViewController: MessagesViewController {
             }.onTouchUpInside { _ in
                 print("Item Tapped")
         }
+    }
+}
+
+extension ConversationViewController: AutocompleteDataSource, AutocompleteDelegate {
+   
+    func autocomplete(_ autocompleteManager: AutocompleteManager, autocompleteTextFor prefix: Character, with textFilter: String) -> [String] {
+        
+        let values = prefix == "@" ? ["nathan.tannar","steve.jobs","tim.cook"] : ["apple", "iphone", "ipad", "iOS", "macOS", "MessageKit"]
+        if !textFilter.isEmpty {
+            return values.filter { $0.lowercased().contains(textFilter.lowercased()) }
+        }
+        return values
     }
 }
 

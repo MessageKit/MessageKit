@@ -24,22 +24,16 @@
 
 import UIKit
 
-public protocol MessageInputBarDelegate: class {
+public protocol AutocompleteDataSource: class {
     
-    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String)
+    func autocomplete(_ autocompleteManager: AutocompleteManager, autocompleteTextFor prefix: Character, with textFilter: String) -> [String]
     
-    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize)
-    
-    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String)
-
+    func autocomplete(_ autocompleteManager: AutocompleteManager, cellConfigFor cell: AutocompleteCell, at indexPath: IndexPath)
 }
 
-public extension MessageInputBarDelegate {
+public extension AutocompleteDataSource {
     
-    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {}
-    
-    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize) {}
-    
-    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String) {}
-
+    func autocomplete(_ autocompleteManager: AutocompleteManager, cellConfigFor cell: AutocompleteCell, at indexPath: IndexPath) {}
 }
+
+

@@ -74,6 +74,22 @@ open class MessageInputBar: UIView {
         return view
     }()
     
+    /// The object that manages autocomplete
+    open var autocompleteManager = AutocompleteManager()
+    
+    open var isAutocompleteEnabled: Bool = false {
+        didSet {
+            if isAutocompleteEnabled && autocompleteManager.tableView.superview == nil {
+                topStackView.addArrangedSubview(autocompleteManager.tableView)
+                inputTextView.delegate = autocompleteManager
+                autocompleteManager.messageInputBar = self
+            } else if !isAutocompleteEnabled {
+                autocompleteManager.tableView.removeFromSuperview()
+                autocompleteManager.messageInputBar = nil
+            }
+        }
+    }
+    
     open let topStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -280,7 +296,7 @@ open class MessageInputBar: UIView {
     
     open func setup() {
         
-        backgroundColor = .white
+        backgroundColor = .clear
         autoresizingMask = [.flexibleHeight]
         setupSubviews()
         setupConstraints()
@@ -512,8 +528,8 @@ open class MessageInputBar: UIView {
         performLayout(animated) {
             self.topStackViewHeightConstant = newValue
             self.layoutStackViews([.top])
+            self.invalidateIntrinsicContentSize()
         }
-        invalidateIntrinsicContentSize()
     }
     
     // MARK: - Notifications/Hooks
