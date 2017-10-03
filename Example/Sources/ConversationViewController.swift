@@ -29,6 +29,12 @@ import MapKit
 class ConversationViewController: MessagesViewController {
 
     var messageList: [MockMessage] = []
+    
+    var typingCount = 0
+    
+    var viewIsLoaded = false
+    
+    var showMentionList = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,15 +45,33 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
-        scrollsToBottomOnFirstLayout = true //default false
+        messageInputBar.autocompleteManager.dataSource = self
+        messageInputBar.autocompleteManager.delegate = self
+        messageInputBar.isAutocompleteEnabled = true
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(handleKeyboardButton))
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
+                            style: .plain,
+                            target: self,
+                            action: #selector(handleKeyboardButton)),
+            UIBarButtonItem(image: UIImage(named: "ic_at"),
+                            style: .plain,
+                            target: self,
+                            action: #selector(handleAutocomplete))
+        ]
+        
+        viewIsLoaded = true
+        scrollsToBottomOnFirstLayout = true //default false
     }
     
-  @objc func handleKeyboardButton() {
+    @objc func handleAutocomplete() {
+        
+        // Modifying the text manually wont call the delgate and thus the autocomplete logic, so we ask the manager to check
+        messageInputBar.inputTextView.text.append("@")
+        messageInputBar.autocompleteManager.checkLastCharacter()
+    }
+    
+    @objc func handleKeyboardButton() {
         
         let actionSheetController = UIAlertController(title: "Change Keyboard Style", message: nil, preferredStyle: .actionSheet)
         let actions = [
@@ -100,7 +124,7 @@ class ConversationViewController: MessagesViewController {
                     $0.layer.borderColor = $0.titleColor(for: .disabled)?.cgColor
                     $0.setTitleColor(.white, for: .normal)
                     $0.setTitleColor(.white, for: .highlighted)
-                    $0.setSize(CGSize(width: 52, height: 30), animated: true)
+                    $0.setSize(CGSize(width: 52, height: 30), animated: viewIsLoaded)
                 }.onDisabled {
                     $0.layer.borderColor = $0.titleColor(for: .disabled)?.cgColor
                     $0.backgroundColor = .white
@@ -121,10 +145,10 @@ class ConversationViewController: MessagesViewController {
         messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
         
         // Since we moved the send button to the bottom stack lets set the right stack width to 0
-        messageInputBar.setRightStackViewWidthConstant(to: 0, animated: true)
+        messageInputBar.setRightStackViewWidthConstant(to: 0, animated: viewIsLoaded)
         
         // Finally set the items
-        messageInputBar.setStackViewItems(items, forStack: .bottom, animated: true)
+        messageInputBar.setStackViewItems(items, forStack: .bottom, animated: viewIsLoaded)
     }
     
     func iMessage() {
@@ -140,11 +164,11 @@ class ConversationViewController: MessagesViewController {
         messageInputBar.inputTextView.layer.cornerRadius = 16.0
         messageInputBar.inputTextView.layer.masksToBounds = true
         messageInputBar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        messageInputBar.setRightStackViewWidthConstant(to: 36, animated: true)
-        messageInputBar.setStackViewItems([messageInputBar.sendButton], forStack: .right, animated: true)
+        messageInputBar.setRightStackViewWidthConstant(to: 36, animated: viewIsLoaded)
+        messageInputBar.setStackViewItems([messageInputBar.sendButton], forStack: .right, animated: viewIsLoaded)
         messageInputBar.sendButton.imageView?.backgroundColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
         messageInputBar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-        messageInputBar.sendButton.setSize(CGSize(width: 36, height: 36), animated: true)
+        messageInputBar.sendButton.setSize(CGSize(width: 36, height: 36), animated: viewIsLoaded)
         messageInputBar.sendButton.image = #imageLiteral(resourceName: "ic_up")
         messageInputBar.sendButton.title = nil
         messageInputBar.sendButton.imageView?.layer.cornerRadius = 16
@@ -167,7 +191,7 @@ class ConversationViewController: MessagesViewController {
             .configure {
                 $0.spacing = .fixed(10)
                 $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
-                $0.setSize(CGSize(width: 30, height: 30), animated: true)
+                $0.setSize(CGSize(width: 30, height: 30), animated: viewIsLoaded)
             }.onSelected {
                 $0.tintColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
             }.onDeselected {
@@ -175,6 +199,14 @@ class ConversationViewController: MessagesViewController {
             }.onTouchUpInside { _ in
                 print("Item Tapped")
         }
+    }
+}
+
+extension ConversationViewController: AutocompleteDataSource, AutocompleteDelegate {
+   
+    func autocomplete(_ autocompleteManager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String] {
+        
+        return prefix == "@" ? ["nathan.tannar","steve.jobs","tim.cook"] : ["apple", "iphone", "ipad", "iOS", "macOS", "MessageKit"]
     }
 }
 
@@ -356,5 +388,4 @@ extension ConversationViewController: MessageInputBarDelegate {
         inputBar.inputTextView.text = String()
         messagesCollectionView.reloadData()
     }
-
 }
