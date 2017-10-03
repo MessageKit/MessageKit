@@ -47,6 +47,7 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
         scrollsToBottomOnFirstLayout = true //default false
+        scrollsToBottomOnKeybordBeginsEditing = true // default false
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
                                                             style: .plain,

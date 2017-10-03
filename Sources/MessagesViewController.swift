@@ -34,6 +34,9 @@ open class MessagesViewController: UIViewController {
     
     open var scrollsToBottomOnFirstLayout: Bool = false
 
+
+    open var scrollsToBottomOnKeybordBeginsEditing: Bool = false
+
     open var additionalTopContentInset: CGFloat = 0 {
         didSet {
             let inset = topLayoutGuide.length + additionalTopContentInset
@@ -75,11 +78,12 @@ open class MessagesViewController: UIViewController {
     open override func viewDidLayoutSubviews() {
         // Hack to prevent animation of the contentInset after viewDidAppear
         if isFirstLayout {
+            defer { isFirstLayout = false }
+
             addKeyboardObservers()
             messagesCollectionView.contentInset.top = additionalTopContentInset + topLayoutGuide.length
             messagesCollectionView.contentInset.bottom = messageInputBar.frame.height
             messagesCollectionView.scrollIndicatorInsets.bottom = messageInputBar.frame.height
-            isFirstLayout = false
             
             //Scroll to bottom at first load
             if scrollsToBottomOnFirstLayout {
@@ -248,15 +252,24 @@ extension MessagesViewController: UICollectionViewDataSource {
 
 extension MessagesViewController {
 
+
     fileprivate func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleTextViewDidBeginEditing), name: .UITextViewTextDidBeginEditing, object: messageInputBar.inputTextView)
     }
 
     fileprivate func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UITextViewTextDidBeginEditing, object: messageInputBar.inputTextView)
     }
 
-  @objc func handleKeyboardDidChangeState(_ notification: Notification) {
+    @objc func handleTextViewDidBeginEditing(_ notification: Notification) {
+        if scrollsToBottomOnKeybordBeginsEditing {
+            messagesCollectionView.scrollToBottom(animated: true)
+        }
+    }
+
+    @objc func handleKeyboardDidChangeState(_ notification: Notification) {
 
         guard let keyboardEndFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
 
