@@ -26,7 +26,7 @@ import UIKit
 
 public protocol AutocompleteDataSource: class {
     
-    func autocomplete(_ autocompleteManager: AutocompleteManager, autocompleteTextFor prefix: Character, with textFilter: String) -> [String]
+    func autocomplete(_ autocompleteManager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String]
     
     func autocomplete(_ autocompleteManager: AutocompleteManager, cellConfigFor cell: AutocompleteCell, at indexPath: IndexPath)
 }

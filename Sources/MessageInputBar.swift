@@ -77,6 +77,7 @@ open class MessageInputBar: UIView {
     /// The object that manages autocomplete
     open var autocompleteManager = AutocompleteManager()
     
+    /// When set to TRUE the UITableView corresponding to the AutocompleteManager will be added to the top UIStackView
     open var isAutocompleteEnabled: Bool = false {
         didSet {
             if isAutocompleteEnabled && autocompleteManager.tableView.superview == nil {

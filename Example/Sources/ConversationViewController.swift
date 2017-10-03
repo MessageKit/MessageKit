@@ -204,13 +204,9 @@ class ConversationViewController: MessagesViewController {
 
 extension ConversationViewController: AutocompleteDataSource, AutocompleteDelegate {
    
-    func autocomplete(_ autocompleteManager: AutocompleteManager, autocompleteTextFor prefix: Character, with textFilter: String) -> [String] {
+    func autocomplete(_ autocompleteManager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String] {
         
-        let values = prefix == "@" ? ["nathan.tannar","steve.jobs","tim.cook"] : ["apple", "iphone", "ipad", "iOS", "macOS", "MessageKit"]
-        if !textFilter.isEmpty {
-            return values.filter { $0.lowercased().contains(textFilter.lowercased()) }
-        }
-        return values
+        return prefix == "@" ? ["nathan.tannar","steve.jobs","tim.cook"] : ["apple", "iphone", "ipad", "iOS", "macOS", "MessageKit"]
     }
 }
 

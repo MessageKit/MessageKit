@@ -104,14 +104,6 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         autocomplete(with: replacementText)
     }
     
-    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        // Prevent a bounce up which leaves empty content in the background
-        if scrollView.contentOffset.y > 0 {
-            scrollView.contentOffset.y = 0
-        }
-    }
-    
     // MARK: -  UITextViewDelegate
    
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -154,7 +146,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     private func registerCurrentPrefix(to prefix: Character, at range: Range<Int>) {
         currentPrefix = prefix
         currentPrefixRange = range
-        autocompleteMap[prefix] = dataSource?.autocomplete(self, autocompleteTextFor: prefix, with: String()) ?? []
+        autocompleteMap[prefix] = dataSource?.autocomplete(self, autocompleteTextFor: prefix) ?? []
         currentFilter = String()
     }
     
