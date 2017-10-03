@@ -25,77 +25,167 @@
 import MessageKit
 import CoreLocation
 
-struct SampleData {
-    let Dan = Sender(id: "123456", displayName: "Dan Leonard")
-    let Steven = Sender(id: "654321", displayName: "Steven")
-    let Jobs = Sender(id: "000001", displayName: "Steve Jobs")
-    let Cook = Sender(id: "656361", displayName: "Tim Cook")
+final class SampleData {
 
-    func getMessages() -> [MockMessage] {
+    static let shared = SampleData()
 
-        let msg1 = MockMessage(text: "Check out this awesome UI library for Chat", sender: Dan, messageId: UUID().uuidString)
-        var msg2 = MockMessage(text: "This is insane.", sender: Steven, messageId: UUID().uuidString)
-        var msg3 = MockMessage(image: #imageLiteral(resourceName: "Steve-Jobs"), sender: Jobs, messageId: UUID().uuidString)
-        var msg4 =  MockMessage(text: "My favorite things in life don’t cost any money. It’s really clear that the most precious resource we all have is time.", sender: Jobs, messageId: UUID().uuidString)
-        var msg5 = MockMessage(text: "You know, this iPhone, as a matter of fact, the engine in here is made in America. And not only are the engines in here made in America, but engines are made in America and are exported. The glass on this phone is made in Kentucky. And so we've been working for years on doing more and more in the United States.", sender: Dan, messageId: UUID().uuidString)
-        var msg6 =  MockMessage(text: "I think if you do something and it turns out pretty good, then you should go do something else wonderful, not dwell on it for too long. Just figure out what’s next.", sender: Jobs, messageId: UUID().uuidString)
-        var msg7 = MockMessage(text: "Remembering that I'll be dead soon is the most important tool I've ever encountered to help me make the big choices in life. Because almost everything - all external expectations, all pride, all fear of embarrassment or failure - these things just fall away in the face of death, leaving only what is truly important.", sender: Dan, messageId: UUID().uuidString)
-        var msg8 = MockMessage(text: "Price is rarely the most important thing. A cheap product might sell some units. Somebody gets it home and they feel great when they pay the money, but then they get it home and use it and the joy is gone.", sender: Cook, messageId: UUID().uuidString)
+    private init() {}
 
-        let msg9String = "Use .attributedText() to add bold, italic, colored text and more..."
-		let msg9Text = NSString(string: msg9String)
-		let msg9AttributedText = NSMutableAttributedString(string: String(msg9Text))
+    let messageTextValues = [
+        "Ok",
+        "k",
+        "lol",
+        "1-800-555-0000",
+        "One Infinite Loop Cupertino, CA 95014 This is some extra text that should not be detected.",
+        "This is an example of the date detector 11/11/2017. April 1st is April Fools Day. Next Friday is not Friday the 13th.",
+        "https://github.com/SD10",
+        "Check out this awesome UI library for Chat",
+        "My favorite things in life don’t cost any money. It’s really clear that the most precious resource we all have is time.",
+        """
+            You know, this iPhone, as a matter of fact, the engine in here is made in America.
+            And not only are the engines in here made in America, but engines are made in America and are exported.
+            The glass on this phone is made in Kentucky. And so we've been working for years on doing more and more in the United States.
+            """,
+        """
+            Remembering that I'll be dead soon is the most important tool I've ever encountered to help me make the big choices in life.
+            Because almost everything - all external expectations, all pride, all fear of embarrassment or failure -
+            these things just fall away in the face of death, leaving only what is truly important.
+            """,
+        "I think if you do something and it turns out pretty good, then you should go do something else wonderful, not dwell on it for too long. Just figure out what’s next.",
+        "Price is rarely the most important thing. A cheap product might sell some units. Somebody gets it home and they feel great when they pay the money, but then they get it home and use it and the joy is gone."
+    ]
 
-      msg9AttributedText.addAttribute(NSAttributedStringKey.font, value: UIFont.preferredFont(forTextStyle: .body), range: NSRange(location: 0, length: msg9Text.length))
-      msg9AttributedText.addAttributes([NSAttributedStringKey.font: UIFont.monospacedDigitSystemFont(ofSize: UIFont.systemFontSize, weight: UIFont.Weight.bold)], range: msg9Text.range(of: ".attributedText()"))
-      msg9AttributedText.addAttributes([NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)], range: msg9Text.range(of: "bold"))
-      msg9AttributedText.addAttributes([NSAttributedStringKey.font: UIFont.italicSystemFont(ofSize: UIFont.systemFontSize)], range: msg9Text.range(of: "italic"))
-      msg9AttributedText.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.red], range: msg9Text.range(of: "colored"))
-		
-		var msg9 = MockMessage(attributedText: msg9AttributedText, sender: Jobs, messageId: UUID().uuidString)
-        var msg10 = MockMessage(text: "1-800-555-0000", sender: Dan, messageId: UUID().uuidString)
-        var msg11 = MockMessage(text: "One Infinite Loop Cupertino, CA 95014 This is some extra text that should not be detected.", sender: Cook, messageId: UUID().uuidString)
-        let msg12 = MockMessage(text: "This is an example of the date detector 11/11/2017. April 1st is April Fools Day. Next Friday is not Friday the 13th.", sender: Dan, messageId: UUID().uuidString)
-        let msg13 = MockMessage(text: "https//:github.com/SD10", sender: Steven, messageId: UUID().uuidString)
-        let msg14 = MockMessage(thumbnail: #imageLiteral(resourceName: "Tim-Cook"), sender: Jobs, messageId: UUID().uuidString)
+    let dan = Sender(id: "123456", displayName: "Dan Leonard")
+    let steven = Sender(id: "654321", displayName: "Steven")
+    let jobs = Sender(id: "000001", displayName: "Steve Jobs")
+    let cook = Sender(id: "656361", displayName: "Tim Cook")
 
-        let location = CLLocation(latitude: 37.3318, longitude: -122.0312) // Apple HQ
-        let msg15 = MockMessage(location: location, sender: Jobs, messageId: UUID().uuidString)
+    lazy var senders = [dan, steven, jobs, cook]
 
-        msg2.sentDate = Calendar.current.date(byAdding: .hour, value: 2, to: msg1.sentDate)!
-        msg3.sentDate = Calendar.current.date(byAdding: .minute, value: 37, to: msg2.sentDate)!
-        msg4.sentDate = Calendar.current.date(byAdding: .minute, value: 3, to: msg3.sentDate)!
-        msg5.sentDate = Calendar.current.date(byAdding: .hour, value: 2, to: msg4.sentDate)!
-        msg6.sentDate = Calendar.current.date(byAdding: .minute, value: 12, to: msg5.sentDate)!
-        msg7.sentDate = Calendar.current.date(byAdding: .minute, value: 23, to: msg6.sentDate)!
-        msg8.sentDate = Calendar.current.date(byAdding: .hour, value: 300, to: msg7.sentDate)!
-        msg9.sentDate = Calendar.current.date(byAdding: .hour, value: 2, to: msg8.sentDate)!
-        msg10.sentDate = Calendar.current.date(byAdding: .minute, value: 59, to: msg9.sentDate)!
-        msg11.sentDate = Calendar.current.date(byAdding: .hour, value: 7, to: msg10.sentDate)!
+    var currentSender: Sender {
+        return steven
+    }
 
-        return [msg1, msg2, msg3, msg4, msg5, msg6, msg7, msg8, msg9, msg10, msg11, msg12, msg13, msg14, msg15].map { msg -> MockMessage in
-            var msg = msg
-            msg.sender = msg.sender == Dan ? Steven : Dan
-            return msg
+    let messageImages: [UIImage] = [#imageLiteral(resourceName: "Dan-Leonard"), #imageLiteral(resourceName: "Tim-Cook"), #imageLiteral(resourceName: "Steve-Jobs")]
+
+    var now = Date()
+
+    let messageTypes = ["Text", "Text", "Text", "AttributedText", "Photo", "Video", "Location"]
+
+    let attributes = ["Font1", "Font2", "Font3", "Font4", "Color", "Combo"]
+
+    let locations: [CLLocation] = [
+        CLLocation(latitude: 37.3118, longitude: -122.0312),
+        CLLocation(latitude: 33.6318, longitude: -100.0386),
+        CLLocation(latitude: 29.3358, longitude: -108.8311),
+        CLLocation(latitude: 39.3218, longitude: -127.4312),
+        CLLocation(latitude: 35.3218, longitude: -127.4314),
+        CLLocation(latitude: 39.3218, longitude: -113.3317)
+    ]
+
+    func attributedString(with text: String) -> NSAttributedString {
+        let nsString = NSString(string: text)
+        var mutableAttributedString = NSMutableAttributedString(string: text)
+        let randomAttribute = Int(arc4random_uniform(UInt32(attributes.count)))
+        let range = NSRange(location: 0, length: nsString.length)
+
+        switch attributes[randomAttribute] {
+        case "Font1":
+            mutableAttributedString.addAttribute(NSAttributedStringKey.font, value: UIFont.preferredFont(forTextStyle: .body), range: range)
+        case "Font2":
+            mutableAttributedString.addAttributes([NSAttributedStringKey.font: UIFont.monospacedDigitSystemFont(ofSize: UIFont.systemFontSize, weight: UIFont.Weight.bold)], range: range)
+        case "Font3":
+            mutableAttributedString.addAttributes([NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)], range: range)
+        case "Font4":
+            mutableAttributedString.addAttributes([NSAttributedStringKey.font: UIFont.italicSystemFont(ofSize: UIFont.systemFontSize)], range: range)
+        case "Color":
+            mutableAttributedString.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.red], range: range)
+        case "Combo":
+            let msg9String = "Use .attributedText() to add bold, italic, colored text and more..."
+            let msg9Text = NSString(string: msg9String)
+            let msg9AttributedText = NSMutableAttributedString(string: String(msg9Text))
+
+            msg9AttributedText.addAttribute(NSAttributedStringKey.font, value: UIFont.preferredFont(forTextStyle: .body), range: NSRange(location: 0, length: msg9Text.length))
+            msg9AttributedText.addAttributes([NSAttributedStringKey.font: UIFont.monospacedDigitSystemFont(ofSize: UIFont.systemFontSize, weight: UIFont.Weight.bold)], range: msg9Text.range(of: ".attributedText()"))
+            msg9AttributedText.addAttributes([NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)], range: msg9Text.range(of: "bold"))
+            msg9AttributedText.addAttributes([NSAttributedStringKey.font: UIFont.italicSystemFont(ofSize: UIFont.systemFontSize)], range: msg9Text.range(of: "italic"))
+            msg9AttributedText.addAttributes([NSAttributedStringKey.foregroundColor: UIColor.red], range: msg9Text.range(of: "colored"))
+            mutableAttributedString = msg9AttributedText
+        default:
+            fatalError("Unrecognized attribute for mock message")
+        }
+
+        return NSAttributedString(attributedString: mutableAttributedString)
+    }
+
+    func dateAddingRandomTime() -> Date {
+        let randomNumber = Int(arc4random_uniform(UInt32(10)))
+        if randomNumber % 2 == 0 {
+            let date = Calendar.current.date(byAdding: .hour, value: randomNumber, to: now)!
+            now = date
+            return date
+        } else {
+            let randomMinute = Int(arc4random_uniform(UInt32(59)))
+            let date = Calendar.current.date(byAdding: .minute, value: randomMinute, to: now)!
+            now = date
+            return date
         }
     }
 
-    func getCurrentSender() -> Sender {
-        return Dan
+    func randomMessage() -> MockMessage {
+
+        let randomNumberSender = Int(arc4random_uniform(UInt32(senders.count)))
+        let randomNumberText = Int(arc4random_uniform(UInt32(messageTextValues.count)))
+        let randomNumberImage = Int(arc4random_uniform(UInt32(messageImages.count)))
+        let randomMessageType = Int(arc4random_uniform(UInt32(messageTypes.count)))
+        let randomNumberLocation = Int(arc4random_uniform(UInt32(locations.count)))
+        let uniqueID = NSUUID().uuidString
+        let sender = senders[randomNumberSender]
+        let date = dateAddingRandomTime()
+
+        switch messageTypes[randomMessageType] {
+        case "Text":
+            return MockMessage(text: messageTextValues[randomNumberText], sender: sender, messageId: uniqueID, date: date)
+        case "AttributedText":
+            let attributedText = attributedString(with: messageTextValues[randomNumberText])
+            return MockMessage(attributedText: attributedText, sender: senders[randomNumberSender], messageId: uniqueID, date: date)
+        case "Photo":
+            let image = messageImages[randomNumberImage]
+            return MockMessage(image: image, sender: sender, messageId: uniqueID, date: date)
+        case "Video":
+            let image = messageImages[randomNumberImage]
+            return MockMessage(thumbnail: image, sender: sender, messageId: uniqueID, date: date)
+        case "Location":
+            return MockMessage(location: locations[randomNumberLocation], sender: sender, messageId: uniqueID, date: date)
+        default:
+            fatalError("Unrecognized mock message type")
+        }
+    }
+
+    func getMessages(count: Int) -> [MockMessage] {
+        var messages: [MockMessage] = []
+        for _ in 0...count {
+            messages.append(randomMessage())
+        }
+        return messages
     }
 
     func getAvatarFor(sender: Sender) -> Avatar {
         switch sender {
-        case Dan:
+        case dan:
             return Avatar(image: #imageLiteral(resourceName: "Dan-Leonard"), initals: "DL")
-        case Steven:
+        case steven:
             return Avatar(initals: "S")
-        case Jobs:
+        case jobs:
             return Avatar(image: #imageLiteral(resourceName: "Steve-Jobs"), initals: "SJ")
-        case Cook:
+        case cook:
             return Avatar(image: #imageLiteral(resourceName: "Tim-Cook"))
         default:
             return Avatar()
         }
     }
+
 }
+
+
+
