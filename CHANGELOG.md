@@ -26,6 +26,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - `scrollsToBottomOnFirstLayout` property to automatically scroll to the bottom of `MessagesCollectionView` on first load.
 [#213](https://github.com/MessageKit/MessageKit/pull/213) by [@FraDeliro](https://github.com/FraDeliro).
 
+- `scrollsToBottomOnKeyboardDidBeginEditing` property to automatically scroll to the bottom of `MessagesCollectionView` when the keyboard begins editing.
+[#217](https://github.com/MessageKit/MessageKit/pull/217) by [@SD10](https://github.com/SD10).
+
 ### Fixed
 
 -  `MessageInputBar` now correctly sizes itself when breaking its max height or pasting in large amounts of text
