@@ -1,15 +1,26 @@
-## Expected Result
+## General Information
+
+* MessageKit Version:
+
+* iOS Version(s):
+
+* Swift Version:
+
+* Devices/Simulators:
+
+* Reproducible in ChatExample? (Yes/No):
+
+
+
+##  What happened?
 
 
 
 
-## Actual Result Gotten
-
-
-
-## Ways to Resolve this issue
+## What did you expect to happen?
 
 
 
 
-## Information about Device Issue was experience
+
+
