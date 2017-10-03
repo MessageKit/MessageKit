@@ -38,7 +38,7 @@ open class PlayButtonView: UIView {
         return CGSize(width: frame.width/2, height: frame.height/2)
     }
 
-    override open var frame: CGRect {
+    open override var frame: CGRect {
         didSet {
             updateTriangleConstraints()
             applyCornerRadius()
@@ -46,7 +46,7 @@ open class PlayButtonView: UIView {
         }
     }
 
-    override open var bounds: CGRect {
+    open override var bounds: CGRect {
         didSet {
             updateTriangleConstraints()
             applyCornerRadius()
@@ -56,7 +56,7 @@ open class PlayButtonView: UIView {
 
     // MARK: - Initializers
 
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
 
         setupSubviews()

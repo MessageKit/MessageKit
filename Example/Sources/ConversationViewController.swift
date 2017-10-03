@@ -61,6 +61,7 @@ class ConversationViewController: MessagesViewController {
         ]
         
         viewIsLoaded = true
+        scrollsToBottomOnFirstLayout = true //default false
     }
     
     @objc func handleAutocomplete() {
@@ -367,6 +368,17 @@ extension ConversationViewController: LocationMessageDisplayDelegate {
         annotationView.image = pinImage
         annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
         return annotationView
+    }
+
+    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)? {
+        return { view in
+            view.layer.transform = CATransform3DMakeScale(0, 0, 0)
+            view.alpha = 0.0
+            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [], animations: {
+                view.layer.transform = CATransform3DIdentity
+                view.alpha = 1.0
+            }, completion: nil)
+        }
     }
 
 }

@@ -31,14 +31,16 @@ open class MessagesViewController: UIViewController {
     open var messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
 
     open var messageInputBar = MessageInputBar()
+    
+    open var scrollsToBottomOnFirstLayout: Bool = false
 
     private var isFirstLayout: Bool = true
 
-    override open var canBecomeFirstResponder: Bool {
+    open override var canBecomeFirstResponder: Bool {
         return true
     }
 
-    override open var inputAccessoryView: UIView? {
+    open override var inputAccessoryView: UIView? {
         return messageInputBar
     }
 
@@ -51,6 +53,7 @@ open class MessagesViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
+        extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = false
         view.backgroundColor = .white
         messagesCollectionView.keyboardDismissMode = .interactive
@@ -69,6 +72,11 @@ open class MessagesViewController: UIViewController {
             messagesCollectionView.contentInset.bottom = messageInputBar.frame.height
             messagesCollectionView.scrollIndicatorInsets.bottom = messageInputBar.frame.height
             isFirstLayout = false
+            
+            //Scroll to bottom at first load
+            if scrollsToBottomOnFirstLayout {
+                messagesCollectionView.scrollToBottom(animated: false)
+            }
         }
     }
 

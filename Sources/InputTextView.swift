@@ -56,13 +56,13 @@ open class InputTextView: UITextView, UITextViewDelegate {
         }
     }
 
-    override open var font: UIFont! {
+    open override var font: UIFont! {
         didSet {
             placeholderLabel.font = font
         }
     }
 
-    override open var textAlignment: NSTextAlignment {
+    open override var textAlignment: NSTextAlignment {
         didSet {
             placeholderLabel.textAlignment = textAlignment
         }
@@ -96,7 +96,7 @@ open class InputTextView: UITextView, UITextViewDelegate {
         self.init(frame: .zero)
     }
 
-    override public init(frame: CGRect, textContainer: NSTextContainer?) {
+    public override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         setup()
     }

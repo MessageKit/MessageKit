@@ -5,7 +5,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 --------------------------------------
 
 ## Upcoming release
+
 ### Added
+
 - **Breaking Change** `.custom((MessageContainerView)->Void)` case to `MessageStyle` enum. 
 [#163](https://github.com/MessageKit/MessageKit/pull/163) by [@SD10](https://github.com/SD10).
 
@@ -18,6 +20,12 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - `messageLabelInsets(for:indexPath:messagesCollectionView` method to `MessagesLayoutDelegate`. 
 [#162](https://github.com/MessageKit/MessageKit/pull/162) by [@SD10](https://github.com/SD10).
 
+- `animationBlockForLocation(message:indexPath:messagesCollectionView)` method to `LocationMessageDisplayDelegate` to customize the display animation of the location message's map.
+[#210](https://github.com/MessageKit/MessageKit/pull/210) by [@etoledom](https://github.com/etoledom).
+
+- `scrollsToBottomOnFirstLayout` property to automatically scroll to the bottom of `MessagesCollectionView` on first load.
+[#213](https://github.com/MessageKit/MessageKit/pull/213) by [@FraDeliro](https://github.com/FraDeliro).
+
 ### Fixed
 
 -  `MessageInputBar` now correctly sizes itself when breaking its max height or pasting in large amounts of text
@@ -26,8 +34,14 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - `MessageInputBar` faced a rendering issue on subsequent presentations of a `MessageViewController`. This was originally patched by adding a copy to the view during `viewDidAppear(animated:)` however that led to other issues [#116](https://github.com/MessageKit/MessageKit/issues/116). A correct patch has now been applied.
 [#178](https://github.com/MessageKit/MessageKit/pull/178) by [@nathantannar4](https://github.com/nathantannar4).
 
+- Incorrect sizing of `MessagesCollectionView`s content inset by setting `extendedLayoutIncludesOpaqueBars` to true by default.
+[#204](https://github.com/MessageKit/MessageKit/pull/204) by [@SD10](https://github.com/SD10).
+
+- `scrollIndicatorInsets` to match the insets of the `MessagesCollectionView`.
+[#174](https://github.com/MessageKit/MessageKit/pull/174) by [@etoledom](https://github.com/etoledom).
 
 ### Changed
+
 - **Breaking Change** `snapshotOptionsForLocation` method is now part of `LocationMessageDisplayDelegate`. 
 [#150](https://github.com/MessageKit/MessageKit/pull/150) by [@etoledom](https://github.com/etoledom).
 
@@ -44,11 +58,19 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - **Breaking Change** `InputTextView`'s `UITextViewDelegate` is now set to `self`
 [#173](https://github.com/MessageKit/MessageKit/pull/173) by [@nathantannar4](https://github.com/nathantannar4).
 
+- `configure` method of all `MessageCollectionViewCell` types to be marked as `open`.
+[#200](https://github.com/MessageKit/MessageKit/pull/200) by [@SD10](https://github.com/sd10).
+
+- `MessageHeaderView`, `MessageFooterView`, and `MessageDateHeaderView` initializers to be `public`.
+[#175](https://github.com/MessageKit/MessageKit/pull/175) by [@cwalo](https://github.com/cwalo).
+
+- `UICollectionViewDataSource` and `UICollectionViewDelegate` methods of `MessagesViewController` to be `open`.
+[#177](https://github.com/MessageKit/MessageKit/pull/177) by [@cwalo](https://github.com/cwalo).
+
 ### Removed
+
 - **Breaking Change** `cellTopLabelInsets` and `cellBottomLabelInsets` from `MessagesCollectionViewFlowLayout`.
 [#166](https://github.com/MessageKit/MessageKit/pull/166) by [@SD10](https://github.com/SD10).
-
-----------------
 
 ## [[Prerelease] 0.8.2](https://github.com/MessageKit/MessageKit/releases/tag/0.8.2)
 ### Added
