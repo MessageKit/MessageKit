@@ -251,6 +251,7 @@ extension MessagesViewController {
 
     fileprivate func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UITextViewTextDidBeginEditing, object: messageInputBar.inputTextView)
     }
 
     @objc func handleTextViewDidBeginEditing(_ notification: Notification) {
