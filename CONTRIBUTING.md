@@ -46,9 +46,9 @@ The more information you can provide, the easier it will be for us to resolve yo
     - This ensures the feature is in scope and no ones time is wasted.
 
 - **Please DO NOT submit pull requests to the `master` branch**
-    - This branch is always stable and represents a relase.
+    - This branch is always stable and represents a release.
 
-- **Please DO submit your pull request to the branch repersenting the next release version**
+- **Please DO submit your pull request to the branch representing the next release version**
 
 1. Link to any issues the pull request resolves. If none exist, create one.
 2. Write unit tests for new functionality or fix any broken by your changes. 
