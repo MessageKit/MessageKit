@@ -25,7 +25,6 @@
 import Foundation
 import MapKit
 
-
 /// Conform to this protocol to customize location messages's style
 public protocol LocationMessageDisplayDelegate: MessagesDisplayDelegate {
 
@@ -49,7 +48,6 @@ public protocol LocationMessageDisplayDelegate: MessagesDisplayDelegate {
     ///   - messageCollectionView: The collection view requesting the information
     /// - Returns: Your customized MKAnnotationView or nil to not show any.
     func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView?
-
 
     /// Ask the delegate for a custom animation block to run when whe map screenshot is ready to be displaied in the given location message
     /// The animation block is called with the image view to be animated. You can animate it with CoreAnimation, UIView.animate or any library you prefer.
