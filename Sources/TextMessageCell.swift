@@ -71,8 +71,6 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
         case .attributedText(let text):
             messageContentView.attributedText = text
         case .emoji(let text):
-            messageContainerView.backgroundColor = .clear
-
             messageContentView.text = text
             messageContentView.font = messageContentView.font.withSize(2 * messageContentView.font.pointSize)
         default:

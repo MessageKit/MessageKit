@@ -29,8 +29,12 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - Properties
 
-    open var messageLabelFont: UIFont
-    open var emojiLabelFont: UIFont
+    open var messageLabelFont: UIFont {
+        didSet {
+            emojiLabelFont = messageLabelFont.withSize(2 * messageLabelFont.pointSize)
+        }
+    }
+    private var emojiLabelFont: UIFont
 
     open var avatarAlwaysLeading: Bool {
         willSet {
