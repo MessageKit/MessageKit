@@ -88,6 +88,11 @@ public extension MessagesCollectionViewFlowLayout {
         return .zero
     }
 
+    @available(*, deprecated: 0.9.0, message: "Removed in MessageKit 0.9.0. Please use messagePadding(for:at:in) method of MessagesLayoutDelegate")
+    public var messageToViewEdgePadding: CGFloat {
+        return 30
+    }
+
 }
 
 // MARK: - CellLabelPosition
