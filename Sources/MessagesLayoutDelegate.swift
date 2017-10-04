@@ -28,6 +28,8 @@ public protocol MessagesLayoutDelegate: class {
 
     func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
 
+    func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
+
     func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment
 
     func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
@@ -47,6 +49,15 @@ public extension MessagesLayoutDelegate {
     func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
         guard let dataSource = messagesCollectionView.messagesDataSource else { return .zero }
         return dataSource.isFromCurrentSender(message: message) ? UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18) : UIEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)
+    }
+
+    func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return .zero }
+        if dataSource.isFromCurrentSender(message: message) {
+            return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
+        } else {
+            return UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
+        }
     }
 
     func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
