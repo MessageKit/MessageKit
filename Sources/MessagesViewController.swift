@@ -34,7 +34,6 @@ open class MessagesViewController: UIViewController {
     
     open var scrollsToBottomOnFirstLayout: Bool = false
 
-
     open var scrollsToBottomOnKeybordBeginsEditing: Bool = false
 
     open var additionalTopContentInset: CGFloat = 0 {
@@ -251,7 +250,6 @@ extension MessagesViewController: UICollectionViewDataSource {
 // MARK: - Keyboard Handling
 
 extension MessagesViewController {
-
 
     fileprivate func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
