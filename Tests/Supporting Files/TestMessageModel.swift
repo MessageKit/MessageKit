@@ -22,28 +22,19 @@
  SOFTWARE.
  */
 
-import XCTest
-@testable import MessageKit
+import Foundation
 
-class MessagesCollectionViewTests: XCTestCase {
-
-    var messagesCollectionView: MessagesCollectionView!
-    let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
-    let layout = UICollectionViewLayout()
-    override func setUp() {
-        super.setUp()
-        messagesCollectionView = MessagesCollectionView(frame: rect, collectionViewLayout: layout)
+struct TestMessage: MessageType {
+    var messageId: String
+    var sender: Sender
+    var sentDate: Date
+    var data: MessageData
+    
+    init(text: String, sender: Sender, messageId: String) {
+        data = .text(text)
+        self.sender = sender
+        self.messageId = messageId
+        self.sentDate = Date()
     }
-
-    override func tearDown() {
-        messagesCollectionView = nil
-        super.tearDown()
-    }
-
-    func testInit() {
-        XCTAssertEqual(messagesCollectionView.frame, rect)
-        XCTAssertEqual(messagesCollectionView.collectionViewLayout, layout)
-        XCTAssertEqual(messagesCollectionView.backgroundColor, .white)
-    }
-
+    
 }
