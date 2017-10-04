@@ -24,7 +24,8 @@
 
 import UIKit
 
-open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell {
+open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell, CollectionViewReusable {
+    open class func reuseIdentifier() -> String { return "messagekit.cell.base-cell" }
 
     // MARK: - Properties
 

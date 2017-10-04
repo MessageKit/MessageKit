@@ -34,7 +34,6 @@ open class MessagesViewController: UIViewController {
     
     open var scrollsToBottomOnFirstLayout: Bool = false
 
-
     open var scrollsToBottomOnKeybordBeginsEditing: Bool = false
 
     open var additionalTopContentInset: CGFloat = 0 {
@@ -107,26 +106,13 @@ open class MessagesViewController: UIViewController {
 
     private func registerReusableViews() {
 
-        messagesCollectionView.register(TextMessageCell.self,
-                                        forCellWithReuseIdentifier: "TextMessageCell")
+        messagesCollectionView.register(TextMessageCell.self)
+        messagesCollectionView.register(MediaMessageCell.self)
+        messagesCollectionView.register(LocationMessageCell.self)
 
-        messagesCollectionView.register(MediaMessageCell.self,
-                                        forCellWithReuseIdentifier: "MediaMessageCell")
-
-        messagesCollectionView.register(LocationMessageCell.self,
-                                        forCellWithReuseIdentifier: "LocationMessageCell")
-
-        messagesCollectionView.register(MessageFooterView.self,
-                                        forSupplementaryViewOfKind: UICollectionElementKindSectionFooter,
-                                        withReuseIdentifier: "MessageFooterView")
-
-        messagesCollectionView.register(MessageHeaderView.self,
-                                        forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                                        withReuseIdentifier: "MessageHeaderView")
-
-        messagesCollectionView.register(MessageDateHeaderView.self,
-                                        forSupplementaryViewOfKind: UICollectionElementKindSectionHeader,
-                                        withReuseIdentifier: "MessageDateHeaderView")
+        messagesCollectionView.register(MessageFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter)
+        messagesCollectionView.register(MessageHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
+        messagesCollectionView.register(MessageDateHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
 
     }
 
@@ -186,21 +172,15 @@ extension MessagesViewController: UICollectionViewDataSource {
 
         switch message.data {
         case .text, .attributedText, .emoji:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TextMessageCell", for: indexPath) as? TextMessageCell else {
-                fatalError("Unable to dequeue TextMessageCell")
-            }
+            let cell = collectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         case .photo, .video:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaMessageCell", for: indexPath) as? MediaMessageCell else {
-                fatalError("Unable to dequeue MediaMessageCell")
-            }
+    	    let cell = collectionView.dequeueReusableCell(MediaMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         case .location:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LocationMessageCell", for: indexPath) as? LocationMessageCell else {
-                fatalError("Unable to dequeue LocationMessageCell")
-            }
+    	    let cell = collectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         }
@@ -251,7 +231,6 @@ extension MessagesViewController: UICollectionViewDataSource {
 // MARK: - Keyboard Handling
 
 extension MessagesViewController {
-
 
     fileprivate func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
