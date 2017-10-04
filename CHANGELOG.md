@@ -32,6 +32,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - `additionalTopContentInset` property to `MessagesColectionViewController` to allow users to account for extra subviews.
 [#218](https://github.com/MessageKit/MessageKit/pull/218) by [@SD10](https://github.com/SD10).
 
+- `messagePadding(for:at:in)` method to `MessagesLayoutDelegate` to dynamically set padding around `MessageContainerView`.
+[#208](https://github.com/MessageKit/MessageKit/pull/208) by [@SD10](https://github.com/SD10).
+
 ### Fixed
 
 -  `MessageInputBar` now correctly sizes itself when breaking its max height or pasting in large amounts of text
@@ -84,6 +87,9 @@ have been renamed to `dequeueReusableHeaderView(CollectionViewReusable.Type,for:
 
 - **Breaking Change** `cellTopLabelInsets` and `cellBottomLabelInsets` from `MessagesCollectionViewFlowLayout`.
 [#166](https://github.com/MessageKit/MessageKit/pull/166) by [@SD10](https://github.com/SD10).
+
+- **Breaking Change** `messageToViewEdgePadding` on `MessagesCollectionViewFlowLayout` in favor of `messagePadding(for:at:in)`.
+[#208](https://github.com/MessageKit/MessageKit/pull/208) by [@SD10](https://github.com/SD10).
 
 ## [[Prerelease] 0.8.2](https://github.com/MessageKit/MessageKit/releases/tag/0.8.2)
 ### Added
