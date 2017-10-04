@@ -32,13 +32,13 @@ extension UIView {
         }
         translatesAutoresizingMaskIntoConstraints = false
 
-		let constraints: [NSLayoutConstraint] = [
-			leftAnchor.constraint(equalTo: superview.leftAnchor),
-			rightAnchor.constraint(equalTo: superview.rightAnchor),
-			topAnchor.constraint(equalTo: superview.topAnchor),
-			bottomAnchor.constraint(equalTo: superview.bottomAnchor)
-			]
-		NSLayoutConstraint.activate(constraints)
+	    let constraints: [NSLayoutConstraint] = [
+    	    leftAnchor.constraint(equalTo: superview.leftAnchor),
+    	    rightAnchor.constraint(equalTo: superview.rightAnchor),
+    	    topAnchor.constraint(equalTo: superview.topAnchor),
+    	    bottomAnchor.constraint(equalTo: superview.bottomAnchor)
+    	    ]
+	    NSLayoutConstraint.activate(constraints)
     }
 
     @discardableResult

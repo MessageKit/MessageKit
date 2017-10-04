@@ -190,6 +190,7 @@
 				88916B231CF0DF2F00469F91 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		88916B231CF0DF2F00469F91 /* Products */ = {
 			isa = PBXGroup;
