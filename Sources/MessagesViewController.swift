@@ -122,11 +122,16 @@ open class MessagesViewController: UIViewController {
 
     private func setupConstraints() {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
-
         let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: topLayoutGuide.length)
         let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        let bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        var bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+
+        // iPhone X workaround
+        if #available(iOS 11.0, *) {
+            view.backgroundColor = messageInputBar.backgroundColor
+            bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        }
 
         NSLayoutConstraint.activate([top, bottom, trailing, leading])
     }
