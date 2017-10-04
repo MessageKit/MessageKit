@@ -33,7 +33,6 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
 
     var messageContainerFrame: CGRect = .zero
     var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
-    lazy var emojiLabelFont = messageLabelFont.withSize(2 * messageLabelFont.pointSize)
     var messageLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
 
     var cellTopLabelFrame: CGRect = .zero
