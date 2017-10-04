@@ -64,14 +64,4 @@ open class MessagesCollectionView: UICollectionView {
         scrollToItem(at: indexPath, at: .bottom, animated: animated)
     }
 
-    open func dequeueMessageHeaderView(withReuseIdentifier identifier: String = "MessageHeaderView", for indexPath: IndexPath) -> MessageHeaderView {
-        let header = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: identifier, for: indexPath)
-        return header as? MessageHeaderView ?? MessageHeaderView()
-    }
-
-    open func dequeueMessageFooterView(withReuseIdentifier identifier: String = "MessageFooterView", for indexPath: IndexPath) -> MessageFooterView {
-        let footer = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: identifier, for: indexPath)
-        return footer as? MessageFooterView ?? MessageFooterView()
-    }
-
 }
