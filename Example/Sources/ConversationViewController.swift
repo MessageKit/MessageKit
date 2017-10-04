@@ -367,6 +367,7 @@ extension ConversationViewController: MessageInputBarDelegate {
         messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date()))
         inputBar.inputTextView.text = String()
         messagesCollectionView.reloadData()
+        messagesCollectionView.scrollToBottom()
     }
 
 }
