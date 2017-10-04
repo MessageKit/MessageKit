@@ -24,11 +24,10 @@
 
 import UIKit
 
-open class MessageHeaderView: UICollectionReusableView {
+open class MessageHeaderView: UICollectionReusableView, CollectionViewReusable {
+	open class func reuseIdentifier() -> String { return "messagekit.header.base" }
 
     // MARK: - Properties
-
-    static let identifier = "MessageHeaderView"
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
