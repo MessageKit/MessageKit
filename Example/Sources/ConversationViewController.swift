@@ -235,10 +235,6 @@ extension ConversationViewController: MessagesDisplayDelegate {
 //        return .custom(configurationClosure)
     }
 
-    func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView? {
-        return messagesCollectionView.dequeueMessageFooterView(for: indexPath)
-    }
-
 }
 
 // MARK: - MessagesLayoutDelegate
