@@ -26,24 +26,24 @@ import XCTest
 @testable import MessageKit
 
 class SenderTests: XCTestCase {
-    
+
     var senderBob: Sender!
-    
+
     override func setUp() {
         super.setUp()
         senderBob = Sender(id: "id1", displayName: "Bob")
     }
-    
+
     override func tearDown() {
         super.tearDown()
         senderBob = nil
     }
-    
+
     func testEquatableWithSameID() {
         let alsoSenderBob = Sender(id: "id1", displayName: "Bob")
         XCTAssertEqual(senderBob, alsoSenderBob)
     }
-    
+
     func testEquatableWithDifferentID() {
         let anotherSenderBob = Sender(id: "id2", displayName: "Bob")
         XCTAssertNotEqual(senderBob, anotherSenderBob)

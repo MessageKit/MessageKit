@@ -26,12 +26,12 @@ import XCTest
 @testable import MessageKit
 
 class DetectorTypeTests: XCTestCase {
-    
+
     func testTextCheckingType() {
         XCTAssertEqual(DetectorType.address.textCheckingType, .address)
         XCTAssertEqual(DetectorType.date.textCheckingType, .date)
         XCTAssertEqual(DetectorType.phoneNumber.textCheckingType, .phoneNumber)
         XCTAssertEqual(DetectorType.url.textCheckingType, .link)
     }
-    
+
 }

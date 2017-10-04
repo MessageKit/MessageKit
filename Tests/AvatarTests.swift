@@ -32,5 +32,5 @@ class AvatarTests: XCTestCase {
         XCTAssertNil(avatar.image)
         XCTAssertEqual(avatar.initals, "?")
     }
-    
+
 }
