@@ -29,7 +29,12 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - Properties
 
-    open var messageLabelFont: UIFont
+    open var messageLabelFont: UIFont {
+        didSet {
+            emojiLabelFont = messageLabelFont.withSize(2 * messageLabelFont.pointSize)
+        }
+    }
+    private var emojiLabelFont: UIFont
 
     open var avatarAlwaysLeading: Bool {
         willSet {
@@ -65,6 +70,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     public override init() {
 
         messageLabelFont = UIFont.preferredFont(forTextStyle: .body)
+        emojiLabelFont = messageLabelFont.withSize(2 * messageLabelFont.pointSize)
 
         avatarAlwaysLeading = false
         avatarAlwaysTrailing = false
@@ -169,7 +175,7 @@ extension MessagesCollectionViewFlowLayout {
 
         if avatarAlwaysTrailing { return .cellTrailing }
         if avatarAlwaysLeading { return .cellLeading }
-        
+
         guard let messagesCollectionView = messagesCollectionView else { return .cellLeading }
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return .cellLeading }
 
@@ -221,9 +227,9 @@ extension MessagesCollectionViewFlowLayout {
             let avatarMidY = avatarHeight / 2
             origin.y = cellTopLabelHeight + messagePadding.top + messageMidY - avatarMidY
         }
-        
+
         return origin
-        
+
     }
 
     // MARK: - Label Size Calculations
@@ -313,6 +319,10 @@ extension MessagesCollectionViewFlowLayout {
             let width = layoutDelegate.widthForLocation(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
             let height = layoutDelegate.heightForLocation(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
             messageContainerSize = CGSize(width: width, height: height)
+        case .emoji(let text):
+            messageContainerSize = labelSize(for: text, considering: maxWidth, and: emojiLabelFont)
+            messageContainerSize.width += messageHorizontalInsets
+            messageContainerSize.height += messageVerticalInsets
         }
 
         return messageContainerSize
@@ -506,7 +516,7 @@ extension MessagesCollectionViewFlowLayout {
         size.height += bottomLabelVerticalInsets
 
         return size
-        
+
     }
 
     /// The origin for the cell bottom label.
@@ -583,19 +593,19 @@ extension MessagesCollectionViewFlowLayout {
 
     /// The size for the cell considering all cell contents.
     open func sizeForItem(at indexPath: IndexPath) -> CGSize {
-        
+
         guard let messagesCollectionView = messagesCollectionView else { return .zero }
         guard let dataSource = messagesCollectionView.messagesDataSource else { return .zero }
-        
+
         let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        
+
         let minimumHeight = minimumCellHeight(for: message, at: indexPath)
         let estimatedHeight = estimatedCellHeight(for: message, at: indexPath)
 
         let itemHeight = estimatedHeight > minimumHeight ? estimatedHeight : minimumHeight
 
         return CGSize(width: itemWidth, height: itemHeight)
-        
+
     }
-    
+
 }

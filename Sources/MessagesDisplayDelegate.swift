@@ -52,8 +52,14 @@ public extension MessagesDisplayDelegate {
     }
 
     func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        guard let dataSource = messagesCollectionView.messagesDataSource else { return .white }
-        return dataSource.isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
+
+        switch message.data {
+        case .emoji:
+            return .clear
+        default:
+            guard let dataSource = messagesCollectionView.messagesDataSource else { return .white }
+            return dataSource.isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
+        }
     }
     
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView {

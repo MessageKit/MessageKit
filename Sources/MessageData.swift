@@ -32,6 +32,7 @@ public enum MessageData {
     case photo(UIImage)
     case video(file: URL, thumbnail: UIImage)
     case location(CLLocation)
+    case emoji(String)
 
     // MARK: - Not supported yet
 

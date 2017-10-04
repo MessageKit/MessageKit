@@ -70,7 +70,7 @@ final class SampleData {
 
     var now = Date()
 
-    let messageTypes = ["Text", "Text", "Text", "AttributedText", "Photo", "Video", "Location"]
+    let messageTypes = ["Text", "Text", "Text", "AttributedText", "Photo", "Video", "Location", "Emoji"]
 
     let attributes = ["Font1", "Font2", "Font3", "Font4", "Color", "Combo"]
 
@@ -81,6 +81,15 @@ final class SampleData {
         CLLocation(latitude: 39.3218, longitude: -127.4312),
         CLLocation(latitude: 35.3218, longitude: -127.4314),
         CLLocation(latitude: 39.3218, longitude: -113.3317)
+    ]
+
+    let emojis = [
+        "👍",
+        "👋",
+        "👋👋👋",
+        "😱😱",
+        "🎈",
+        "🇧🇷",
     ]
 
     func attributedString(with text: String) -> NSAttributedString {
@@ -139,6 +148,7 @@ final class SampleData {
         let randomNumberImage = Int(arc4random_uniform(UInt32(messageImages.count)))
         let randomMessageType = Int(arc4random_uniform(UInt32(messageTypes.count)))
         let randomNumberLocation = Int(arc4random_uniform(UInt32(locations.count)))
+        let randomNumberEmoji = Int(arc4random_uniform(UInt32(emojis.count)))
         let uniqueID = NSUUID().uuidString
         let sender = senders[randomNumberSender]
         let date = dateAddingRandomTime()
@@ -157,6 +167,8 @@ final class SampleData {
             return MockMessage(thumbnail: image, sender: sender, messageId: uniqueID, date: date)
         case "Location":
             return MockMessage(location: locations[randomNumberLocation], sender: sender, messageId: uniqueID, date: date)
+        case "Emoji":
+            return MockMessage(emoji: emojis[randomNumberEmoji], sender: sender, messageId: uniqueID, date: date)
         default:
             fatalError("Unrecognized mock message type")
         }

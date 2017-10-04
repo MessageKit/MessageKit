@@ -14,6 +14,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - **Breaking Change** `UIEdgeInsets` associated value to all `LabelAlignment` enum cases. 
 [#166](https://github.com/MessageKit/MessageKit/pull/166) by [@SD10](https://github.com/SD10).
 
+- **Breaking Change** `.emoji(String)` case to `MessageData` enum. 
+[#222](https://github.com/MessageKit/MessageKit/pull/222) by [@SirArkimdes](https://github.com/SirArkimedes).
+
 - `LocationMessageDisplayDelegate` to customize a location messages appearance and add a `MKAnnotationView` to location message snapshots. 
 [#150](https://github.com/MessageKit/MessageKit/pull/150) by [@etoledom](https://github.com/etoledom).
 
