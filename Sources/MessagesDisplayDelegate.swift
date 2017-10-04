@@ -32,11 +32,11 @@ public protocol MessagesDisplayDelegate: class {
     
     func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
     
-    func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView?
+    func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView
 
     func shouldDisplayHeader(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Bool
     
-    func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView?
+    func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView
 
 }
 
@@ -56,9 +56,9 @@ public extension MessagesDisplayDelegate {
         return dataSource.isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
     }
     
-    func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView? {
-        let header = messagesCollectionView.dequeueMessageHeaderView(withReuseIdentifier: "MessageDateHeaderView", for: indexPath) as? MessageDateHeaderView
-        header?.dateLabel.text = MessageKitDateFormatter.shared.string(from: message.sentDate)
+    func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView {
+        let header = messagesCollectionView.dequeueReusableHeaderView(MessageDateHeaderView.self, for: indexPath)
+        header.dateLabel.text = MessageKitDateFormatter.shared.string(from: message.sentDate)
         return header
     }
 
@@ -72,8 +72,8 @@ public extension MessagesDisplayDelegate {
         return timeIntervalSinceLastMessage >= messagesCollectionView.showsDateHeaderAfterTimeInterval
     }
 
-    func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView? {
-        return nil
+    func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView {
+        return messagesCollectionView.dequeueReusableFooterView(MessageFooterView.self, for: indexPath)
     }
 
 }

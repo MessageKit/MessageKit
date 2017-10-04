@@ -176,11 +176,11 @@ extension MessagesViewController: UICollectionViewDataSource {
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         case .photo, .video:
-    	    let cell = collectionView.dequeueReusableCell(MediaMessageCell.self, for: indexPath)
+    	    let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         case .location:
-    	    let cell = collectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
+    	    let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         }
@@ -197,9 +197,9 @@ extension MessagesViewController: UICollectionViewDataSource {
 
         switch kind {
         case UICollectionElementKindSectionHeader:
-            return displayDelegate.messageHeaderView(for: message, at: indexPath, in: messagesCollectionView) ?? MessageHeaderView()
+            return displayDelegate.messageHeaderView(for: message, at: indexPath, in: messagesCollectionView)
         case UICollectionElementKindSectionFooter:
-            return displayDelegate.messageFooterView(for: message, at: indexPath, in: messagesCollectionView) ?? MessageFooterView()
+            return displayDelegate.messageFooterView(for: message, at: indexPath, in: messagesCollectionView)
         default:
             fatalError("Unrecognized element of kind: \(kind)")
         }

@@ -38,6 +38,16 @@ public extension MessagesCollectionView {
         return nil
     }
 
+    @available(*, deprecated: 0.9.0, message: "Removed in MessageKit 0.9.0. Please use dequeueReusableHeaderView")
+    public func dequeueMessageHeaderView(withReuseIdentifier identifier: String = "MessageHeaderView", for indexPath: IndexPath) -> MessageHeaderView {
+        return dequeueReusableHeaderView(MessageHeaderView.self, for: indexPath)
+    }
+
+    @available(*, deprecated: 0.9.0, message: "Removed in MessageKit 0.9.0. Please use dequeueReusableFooterView")
+    public func dequeueMessageFooterView(withReuseIdentifier identifier: String = "MessageFooterView", for indexPath: IndexPath) -> MessageFooterView {
+        return dequeueReusableFooterView(MessageFooterView.self, for: indexPath)
+    }
+
 }
 
 // MARK: - MessagesCollectionViewFlowLayout

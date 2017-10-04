@@ -32,7 +32,6 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - `additionalTopContentInset` property to `MessagesColectionViewController` to allow users to account for extra subviews.
 [#218](https://github.com/MessageKit/MessageKit/pull/218) by [@SD10](https://github.com/SD10).
 
-
 ### Fixed
 
 -  `MessageInputBar` now correctly sizes itself when breaking its max height or pasting in large amounts of text
@@ -64,6 +63,13 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - **Breaking Change** `InputTextView`'s `UITextViewDelegate` is now set to `self`
 [#173](https://github.com/MessageKit/MessageKit/pull/173) by [@nathantannar4](https://github.com/nathantannar4).
+
+- **Breaking Change** `MessagesDisplayDelegate` `messageHeaderView(for:at:in)` and `messageFooterView(for:at:in)` to return non-optionals.
+[#229](https://github.com/MessageKit/MessageKit/pull/229) by [@SD10](https://github.com/SD10).
+
+- **Breaking Change** `MessagesCollectionView` `dequeueMessageHeaderView(withIdentifier:for:)` & `dequeueMessageFooterView(widthIdentifier:for:)`
+have been renamed to `dequeueReusableHeaderView(CollectionViewReusable.Type,for:)` & `dequeueReusableFooterView(CollectionViewReusable.Type,for:)`.
+[#229](https://github.com/MessageKit/MessageKit/pull/229) by [@SD10](https://github.com/SD10).
 
 - `configure` method of all `MessageCollectionViewCell` types to be marked as `open`.
 [#200](https://github.com/MessageKit/MessageKit/pull/200) by [@SD10](https://github.com/sd10).
