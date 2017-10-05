@@ -30,7 +30,9 @@ class ConversationViewController: MessagesViewController {
 
     var messageList: [MockMessage] = [] {
         didSet {
-            messagesCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.messagesCollectionView.reloadData()
+            }
         }
     }
 
