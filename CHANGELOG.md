@@ -17,6 +17,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - **Breaking Change** `.emoji(String)` case to `MessageData` enum. 
 [#222](https://github.com/MessageKit/MessageKit/pull/222) by [@SirArkimdes](https://github.com/SirArkimedes).
 
+- **Breaking Change** `TextMessageDisplayDelegate` to handle `enabledDetecors(for:at:in)` and moves `textColor(for:at:in)` to this namespace.
+[#230](https://github.com/MessageKit/MessageKit/pull/230) by [@SD10](https://github.com/sd10)
+
 - `LocationMessageDisplayDelegate` to customize a location messages appearance and add a `MKAnnotationView` to location message snapshots. 
 [#150](https://github.com/MessageKit/MessageKit/pull/150) by [@etoledom](https://github.com/etoledom).
 

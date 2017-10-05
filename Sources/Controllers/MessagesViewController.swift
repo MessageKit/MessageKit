@@ -28,7 +28,7 @@ open class MessagesViewController: UIViewController {
 
     // MARK: - Properties
 
-    open var messagesCollectionView = MessagesCollectionView(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
+    open var messagesCollectionView = MessagesCollectionView()
 
     open var messageInputBar = MessageInputBar()
     
@@ -165,8 +165,13 @@ extension MessagesViewController: UICollectionViewDataSource {
 
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return UICollectionViewCell() }
-        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { fatalError("Please set messagesDataSource") }
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError("Managed collectionView: \(collectionView.debugDescription) is not a MessagesCollectionView.")
+        }
+
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError("MessagesDataSource has not been set.")
+        }
 
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
@@ -189,9 +194,17 @@ extension MessagesViewController: UICollectionViewDataSource {
 
     open func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
-        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return UICollectionReusableView() }
-        guard let dataSource = messagesCollectionView.messagesDataSource else { return UICollectionReusableView() }
-        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else { return UICollectionReusableView() }
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError("Managed collectionView: \(collectionView.debugDescription) is not a MessagesCollectionView.")
+        }
+
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            fatalError("MessagesDataSource has not been set.")
+        }
+
+        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
+            fatalError("MessagesDisplayDelegate has not been set.")
+        }
 
         let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 

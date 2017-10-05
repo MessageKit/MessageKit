@@ -24,9 +24,28 @@
 
 import Foundation
 
-public protocol MessagesDisplayDelegate: class {
-    
+public protocol TextMessageDisplayDelegate: class {
+
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
+
+    func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType]
+
+}
+
+public extension TextMessageDisplayDelegate {
+
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return .darkText }
+        return dataSource.isFromCurrentSender(message: message) ? .white : .darkText
+    }
+
+    func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
+        return [.url, .address, .phoneNumber, .date]
+    }
+
+}
+
+public protocol MessagesDisplayDelegate: class {
 
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle
     
@@ -41,12 +60,7 @@ public protocol MessagesDisplayDelegate: class {
 }
 
 public extension MessagesDisplayDelegate {
-    
-    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        guard let dataSource = messagesCollectionView.messagesDataSource else { return .darkText }
-        return dataSource.isFromCurrentSender(message: message) ? .white : .darkText
-    }
-    
+
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         return .bubble
     }

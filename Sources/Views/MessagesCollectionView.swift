@@ -57,6 +57,10 @@ open class MessagesCollectionView: UICollectionView {
         fatalError("init(coder:) has not been implemented")
     }
 
+    public convenience init() {
+        self.init(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
+    }
+
     // MARK: - Methods
 
     public func scrollToBottom(animated: Bool = false) {
