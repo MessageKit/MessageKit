@@ -23,6 +23,7 @@
  */
 
 import XCTest
+import CoreLocation
 @testable import MessageKit
 
 class MessagesViewControllerTests: XCTestCase {
@@ -90,11 +91,8 @@ class MessagesViewControllerTests: XCTestCase {
     }
 
     func testViewDidLoadShouldSetDelegateAndDataSourceToTheSameObject() {
-        let delegate = sut.messagesCollectionView.delegate
-        let dataSource = sut.messagesCollectionView.dataSource
-
-        XCTAssertEqual(delegate as? MessagesViewController,
-                       dataSource as? MessagesViewController)
+        XCTAssertEqual(sut.messagesCollectionView.delegate as? MessagesViewController,
+                       sut.messagesCollectionView.dataSource as? MessagesViewController)
     }
 
     func testShouldAutorotateIsFalse() {
@@ -113,42 +111,115 @@ class MessagesViewControllerTests: XCTestCase {
     }
 
     func testNumberOfSectionWithoutData_IsZero() {
-        let messagesCollectionView = sut.messagesCollectionView
         let messagesDataSource = MockMessagesDataSource()
-        messagesCollectionView.messagesDataSource = messagesDataSource
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
 
-        XCTAssertEqual(messagesCollectionView.numberOfSections, 0)
+        XCTAssertEqual(sut.messagesCollectionView.numberOfSections, 0)
     }
 
     func testNumberOfSection_IsNumberOfMessages() {
-        let messagesCollectionView = sut.messagesCollectionView
         let messagesDataSource = MockMessagesDataSource()
-        messagesCollectionView.messagesDataSource = messagesDataSource
-
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages = makeMessages(for: messagesDataSource.senders)
 
-        let count = messagesCollectionView.numberOfSections
-        let expectedCount = messagesDataSource.numberOfMessages(in: messagesCollectionView)
+        let count = sut.messagesCollectionView.numberOfSections
+        let expectedCount = messagesDataSource.numberOfMessages(in: sut.messagesCollectionView)
 
         XCTAssertEqual(count, expectedCount)
     }
 
     func testNumberOfItemInSection_IsOne() {
-        let messagesCollectionView = sut.messagesCollectionView
         let messagesDataSource = MockMessagesDataSource()
-        messagesCollectionView.messagesDataSource = messagesDataSource
-
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages = makeMessages(for: messagesDataSource.senders)
 
-        XCTAssertEqual(messagesCollectionView.numberOfItems(inSection: 0), 1)
-        XCTAssertEqual(messagesCollectionView.numberOfItems(inSection: 1), 1)
+        XCTAssertEqual(sut.messagesCollectionView.numberOfItems(inSection: 0), 1)
+        XCTAssertEqual(sut.messagesCollectionView.numberOfItems(inSection: 1), 1)
+    }
+
+    func testCellForItemWithTextData_ReturnsTextMessageCell() {
+        let messagesDataSource = MockMessagesDataSource()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(text: "Test",
+                                                       sender: messagesDataSource.senders[0],
+                                                       messageId: "test_id"))
+
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
+                                                                         cellForItemAt: IndexPath(item: 0, section: 0))
+
+        XCTAssertNotNil(cell)
+        XCTAssertTrue(cell is TextMessageCell)
+    }
+
+    func testCellForItemWithAttributedTextData_ReturnsTextMessageCell() {
+        let messagesDataSource = MockMessagesDataSource()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        let attributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
+        let attriutedString = NSAttributedString(string: "Test", attributes: attributes)
+        messagesDataSource.messages.append(MockMessage(attributedText: attriutedString,
+                                                       sender: messagesDataSource.senders[0],
+                                                       messageId: "test_id"))
+
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
+                                                                         cellForItemAt: IndexPath(item: 0, section: 0))
+
+        XCTAssertNotNil(cell)
+        XCTAssertTrue(cell is TextMessageCell)
+    }
+
+    func testCellForItemWithPhotoData_ReturnsMediaMessageCell() {
+        let messagesDataSource = MockMessagesDataSource()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(image: UIImage(),
+                                                       sender: messagesDataSource.senders[0],
+                                                       messageId: "test_id"))
+
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
+                                                                         cellForItemAt: IndexPath(item: 0, section: 0))
+
+        XCTAssertNotNil(cell)
+        XCTAssertTrue(cell is MediaMessageCell)
+    }
+
+    func testCellForItemWithVideoData_ReturnsMediaMessageCell() {
+        let messagesDataSource = MockMessagesDataSource()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(thumbnail: UIImage(),
+                                                       sender: messagesDataSource.senders[0],
+                                                       messageId: "test_id"))
+
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
+                                                                         cellForItemAt: IndexPath(item: 0, section: 0))
+
+        XCTAssertNotNil(cell)
+        XCTAssertTrue(cell is MediaMessageCell)
+    }
+
+    func testCellForItemWithLocationData_ReturnsLocationMessageCell() {
+        let messagesDataSource = MockMessagesDataSource()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(location: CLLocation(latitude: 60.0, longitude: 70.0),
+                                                       sender: messagesDataSource.senders[0],
+                                                       messageId: "test_id"))
+
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
+                                                                         cellForItemAt: IndexPath(item: 0, section: 0))
+
+        XCTAssertNotNil(cell)
+        XCTAssertTrue(cell is LocationMessageCell)
     }
 
     // MARK: - Assistants
 
     private func makeMessages(for senders: [Sender]) -> [MessageType] {
-        return [MockMessage(text: "Text 1", sender: senders[0], messageId: "001"),
-                MockMessage(text: "Text 2", sender: senders[1], messageId: "002")]
+        return [MockMessage(text: "Text 1", sender: senders[0], messageId: "test_id_1"),
+                MockMessage(text: "Text 2", sender: senders[1], messageId: "test_id_2")]
     }
+
+}
+
+extension MessagesViewControllerTests {
+
+    fileprivate class MockMessagesDisplayDelegate: MessagesDisplayDelegate { }
 
 }

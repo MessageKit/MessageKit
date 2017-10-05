@@ -35,6 +35,8 @@ class MessagesDisplayDelegateTests: XCTestCase {
 
         sut = MockMessagesViewController()
         _ = sut.view
+        sut.beginAppearanceTransition(true, animated: true)
+        sut.endAppearanceTransition()
     }
 
     override func tearDown() {
