@@ -89,7 +89,7 @@ final class SampleData {
         "👋👋👋",
         "😱😱",
         "🎈",
-        "🇧🇷",
+        "🇧🇷"
     ]
 
     func attributedString(with text: String) -> NSAttributedString {

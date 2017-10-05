@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: ../MessageKit.podspec
 
 SPEC CHECKSUMS:
-  MessageKit: 61520afc3c0d43fdc8a5ab2e18cdadbf64f7473e
+  MessageKit: 8b66f40a259d731a4570db967410c7966c2e7c8a
 
 PODFILE CHECKSUM: 9ac65b8dedf0e1b63fea245b089b6645c4e66309
 
