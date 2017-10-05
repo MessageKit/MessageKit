@@ -27,58 +27,100 @@ import XCTest
 @testable import MessageKit
 
 class MessagesDisplayDelegateTests: XCTestCase {
-    
-    var testClass: TestMessagesViewControllerModel!
-    var window: UIWindow!
-    
+
+    private var sut: MockMessagesViewController!
+
     override func setUp() {
         super.setUp()
-        
-        window = UIWindow(frame: CGRect.zero)
-        testClass = TestMessagesViewControllerModel()
-        window.addSubview(testClass.view)
-        
-        // Ensures that the messageList has been set.
-        testClass.viewDidLoad()
+
+        sut = MockMessagesViewController()
+        _ = sut.view
     }
-    
+
     override func tearDown() {
-        window = nil
+        sut = nil
+
         super.tearDown()
     }
-    
+
     func testInit() {
-        XCTAssertNotNil(testClass)
-        XCTAssertNotNil(testClass.messageList)
+        XCTAssertNotNil(sut)
+        XCTAssertNotNil(sut.dataProvider.messages)
     }
-    
+
     func testMessageTextColorDefaultState() {
-        XCTAssertEqual(testClass.textColor(for: testClass.messageList[0], at: IndexPath(item: 0, section: 0), in: testClass.messagesCollectionView), UIColor.white)
-        XCTAssertEqual(testClass.textColor(for: testClass.messageList[1], at: IndexPath(item: 1, section: 0), in: testClass.messagesCollectionView), UIColor.darkText)
+        XCTAssertEqual(sut.textColor(for: sut.dataProvider.messages[0],
+                                     at: IndexPath(item: 0, section: 0),
+                                     in: sut.messagesCollectionView),
+                       UIColor.white)
+        XCTAssertEqual(sut.textColor(for: sut.dataProvider.messages[1],
+                                     at: IndexPath(item: 1, section: 0),
+                                     in: sut.messagesCollectionView),
+                       UIColor.darkText)
     }
-  
-    func testMessageTextColorWhenDataSourceIsNil() {
-        testClass.messagesCollectionView.messagesDataSource = nil
-        XCTAssertEqual(testClass.textColor(for: testClass.messageList[0], at: IndexPath(item: 0, section: 0), in: testClass.messagesCollectionView), UIColor.darkText)
-        XCTAssertEqual(testClass.textColor(for: testClass.messageList[1], at: IndexPath(item: 1, section: 0), in: testClass.messagesCollectionView), UIColor.darkText)
-    }
-    
+
     func testBackGroundColorDefaultState() {
-        XCTAssertEqual(testClass.backgroundColor(for: testClass.messageList[0], at:  IndexPath(item: 0, section: 0), in: testClass.messagesCollectionView), UIColor.outgoingGreen)
-        XCTAssertNotEqual(testClass.backgroundColor(for: testClass.messageList[0], at:  IndexPath(item: 0, section: 0), in: testClass.messagesCollectionView), UIColor.incomingGray)
-        XCTAssertEqual(testClass.backgroundColor(for: testClass.messageList[1], at:  IndexPath(item: 1, section: 0), in: testClass.messagesCollectionView), UIColor.incomingGray)
-        XCTAssertNotEqual(testClass.backgroundColor(for: testClass.messageList[1], at:  IndexPath(item: 1, section: 0), in: testClass.messagesCollectionView), UIColor.outgoingGreen)
+        XCTAssertEqual(sut.backgroundColor(for: sut.dataProvider.messages[0],
+                                           at: IndexPath(item: 0, section: 0),
+                                           in: sut.messagesCollectionView),
+                       UIColor.outgoingGreen)
+        XCTAssertNotEqual(sut.backgroundColor(for: sut.dataProvider.messages[0],
+                                              at: IndexPath(item: 0, section: 0),
+                                              in: sut.messagesCollectionView),
+                          UIColor.incomingGray)
+        XCTAssertEqual(sut.backgroundColor(for: sut.dataProvider.messages[1],
+                                           at: IndexPath(item: 1, section: 0),
+                                           in: sut.messagesCollectionView),
+                       UIColor.incomingGray)
+        XCTAssertNotEqual(sut.backgroundColor(for: sut.dataProvider.messages[1],
+                                              at: IndexPath(item: 1, section: 0),
+                                              in: sut.messagesCollectionView),
+                          UIColor.outgoingGreen)
     }
-    
+
     func testAvatarDefaultState() {
-        XCTAssertNotNil(testClass.avatar(for: testClass.messageList[0], at: IndexPath(item: 0, section: 0), in: testClass.messagesCollectionView).initals)
+        XCTAssertNotNil(sut.dataProvider.avatar(for: sut.dataProvider.messages[0],
+                                                at: IndexPath(item: 0, section: 0),
+                                                in: sut.messagesCollectionView).initals)
     }
-    
+
     func testCellTopLabelDefaultState() {
-        XCTAssertNil(testClass.cellTopLabelAttributedText(for: testClass.messageList[0], at: IndexPath(item: 0, section: 0)))
+        XCTAssertNil(sut.dataProvider.cellTopLabelAttributedText(for: sut.dataProvider.messages[0],
+                                                                 at: IndexPath(item: 0, section: 0)))
     }
-    
+
     func testCellBottomLabelDefaultState() {
-        XCTAssertNil(testClass.cellBottomLabelAttributedText(for: testClass.messageList[0], at: IndexPath(item: 0, section: 0)))
+        XCTAssertNil(sut.dataProvider.cellBottomLabelAttributedText(for: sut.dataProvider.messages[0],
+                                                                    at: IndexPath(item: 0, section: 0)))
     }
+
+}
+
+extension MessagesDisplayDelegateTests {
+
+    fileprivate class MockMessagesViewController: MessagesViewController, MessagesDisplayDelegate {
+
+        var dataProvider: MockMessagesDataSource!
+
+        override func viewDidLoad() {
+            super.viewDidLoad()
+
+            dataProvider = makeDataSource()
+            messagesCollectionView.messagesDataSource = dataProvider
+        }
+
+        private func makeDataSource() -> MockMessagesDataSource {
+            let dataSource = MockMessagesDataSource()
+            dataSource.messages.append(MockMessage(text: "Text 1",
+                                                   sender: dataSource.senders[0],
+                                                   messageId: "001"))
+            dataSource.messages.append(MockMessage(text: "Text 2",
+                                                   sender: dataSource.senders[1],
+                                                   messageId: "002"))
+
+            return dataSource
+        }
+
+    }
+
 }
