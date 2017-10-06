@@ -55,6 +55,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - `scrollIndicatorInsets` to match the insets of the `MessagesCollectionView`.
 [#174](https://github.com/MessageKit/MessageKit/pull/174) by [@etoledom](https://github.com/etoledom).
 
+- `MediaMessageCell` had an offset `PlayButtonView` that was being constrained to the cell and not the message container.
+[#239](https://github.com/MessageKit/MessageKit/pull/239) by [@SirArkimedes](https://github.com/SirArkimedes).
+
 ### Changed
 
 - **Breaking Change** `snapshotOptionsForLocation` method is now part of `LocationMessageDisplayDelegate`. 
