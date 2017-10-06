@@ -24,20 +24,30 @@
 
 import UIKit
 import MessageKit
+import MapKit
 
 class ConversationViewController: MessagesViewController {
 
-    var messageList: [MockMessage] = []
+    var messageList: [MockMessage] = [] {
+        didSet {
+            messagesCollectionView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        messageList = SampleData().getMessages()
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.messageList = SampleData.shared.getMessages(count: 100)
+        }
+
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
+        scrollsToBottomOnFirstLayout = true //default false
+        scrollsToBottomOnKeybordBeginsEditing = true // default false
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
                                                             style: .plain,
@@ -181,7 +191,7 @@ class ConversationViewController: MessagesViewController {
 extension ConversationViewController: MessagesDataSource {
 
     func currentSender() -> Sender {
-        return SampleData().getCurrentSender()
+        return SampleData.shared.currentSender
     }
 
     func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int {
@@ -193,7 +203,7 @@ extension ConversationViewController: MessagesDataSource {
     }
 
     func avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
-        return SampleData().getAvatarFor(sender: message.sender)
+        return SampleData.shared.getAvatarFor(sender: message.sender)
     }
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
@@ -221,10 +231,8 @@ extension ConversationViewController: MessagesDisplayDelegate {
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
         return .bubbleTail(corner, .curved)
-    }
-
-    func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView? {
-        return messagesCollectionView.dequeueMessageFooterView(for: indexPath)
+//        let configurationClosure = { (view: MessageContainerView) in}
+//        return .custom(configurationClosure)
     }
 
 }
@@ -232,6 +240,30 @@ extension ConversationViewController: MessagesDisplayDelegate {
 // MARK: - MessagesLayoutDelegate
 
 extension ConversationViewController: MessagesLayoutDelegate {
+
+    func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
+        if isFromCurrentSender(message: message) {
+            return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
+        } else {
+            return UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
+        }
+    }
+
+    func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+        if isFromCurrentSender(message: message) {
+            return .messageTrailing(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+        } else {
+            return .messageLeading(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
+        }
+    }
+
+    func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+        if isFromCurrentSender(message: message) {
+            return .messageLeading(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0))
+        } else {
+            return .messageTrailing(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
+        }
+    }
 
     func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
         return .messageBottom
@@ -302,14 +334,40 @@ extension ConversationViewController: MessageLabelDelegate {
 
 }
 
+// MARK: - LocationMessageDisplayDelegate
+
+extension ConversationViewController: LocationMessageDisplayDelegate {
+
+    func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView? {
+        let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
+        let pinImage = #imageLiteral(resourceName: "pin")
+        annotationView.image = pinImage
+        annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
+        return annotationView
+    }
+
+    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)? {
+        return { view in
+            view.layer.transform = CATransform3DMakeScale(0, 0, 0)
+            view.alpha = 0.0
+            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [], animations: {
+                view.layer.transform = CATransform3DIdentity
+                view.alpha = 1.0
+            }, completion: nil)
+        }
+    }
+
+}
+
 // MARK: - MessageInputBarDelegate
 
 extension ConversationViewController: MessageInputBarDelegate {
 
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-        messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString))
+        messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date()))
         inputBar.inputTextView.text = String()
         messagesCollectionView.reloadData()
+        messagesCollectionView.scrollToBottom()
     }
 
 }
