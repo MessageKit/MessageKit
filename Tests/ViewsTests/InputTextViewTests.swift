@@ -38,7 +38,7 @@ class InputTextViewTests: XCTestCase {
         super.tearDown()
     }
 
-    func testPlaceholderLabel() {
+    func testPlaceholderLabelSetup() {
         XCTAssertEqual(textView.placeholderLabel.numberOfLines, 0)
         XCTAssertEqual(textView.placeholderLabel.textColor, UIColor.lightGray)
         XCTAssertEqual(textView.placeholderLabel.text, "New Message")
@@ -46,29 +46,32 @@ class InputTextViewTests: XCTestCase {
         XCTAssertFalse(textView.placeholderLabel.translatesAutoresizingMaskIntoConstraints)
     }
 
-    func testTextChanging() {
-        textView.text = "New Text"
-        XCTAssertTrue(textView.placeholderLabel.isHidden)
+    func testPlaceholderLabelIsHiddenWhenTextIsEmpty() {
         textView.text = ""
         XCTAssertFalse(textView.placeholderLabel.isHidden)
     }
 
-    func testPlaceholderText() {
+    func testPlaceholderLabelIsNotHiddenWhenTextIsNotEmpty() {
+        textView.text = "New Text"
+        XCTAssert(textView.placeholderLabel.isHidden)
+    }
+
+    func testPlaceholderTextChanging() {
         textView.placeholder = "New Placeholder"
         XCTAssertEqual(textView.placeholderLabel.text, "New Placeholder")
     }
 
-    func testPlaceholderTextColor() {
+    func testPlaceholderTextColorChanging() {
         textView.placeholderTextColor = UIColor.red
         XCTAssertEqual(textView.placeholderLabel.textColor, UIColor.red)
     }
 
-    func testFont() {
+    func testFontChanging() {
         textView.font = UIFont.systemFont(ofSize: 14)
         XCTAssertEqual(textView.placeholderLabel.font, UIFont.systemFont(ofSize: 14))
     }
 
-    func testTextAlignment() {
+    func testTextAlignmentChanging() {
         textView.textAlignment = .center
         XCTAssertEqual(textView.placeholderLabel.textAlignment, .center)
     }
@@ -81,7 +84,6 @@ class InputTextViewTests: XCTestCase {
         XCTAssertEqual(textView.layer.cornerRadius, 5.0)
         XCTAssertEqual(textView.layer.borderWidth, 1.25)
         XCTAssertEqual(textView.layer.borderColor, UIColor.lightGray.cgColor)
-
         XCTAssertTrue(textView.subviews.contains(textView.placeholderLabel))
     }
 

@@ -57,5 +57,56 @@ class InputBarItemTests: XCTestCase {
         let item = InputBarButtonItem.fixedSpace(100)
         XCTAssertEqual(item.size, .zero)
     }
-    
+
+    func testImagePropertyDefaultNil() {
+        XCTAssertNil(button.image)
+    }
+
+    func testImagePropertyGettersAndSetters() {
+        button.image = UIImage()
+        XCTAssertNotNil(button.image)
+        XCTAssertEqual(UIImagePNGRepresentation(button.image!), UIImagePNGRepresentation(UIImage()))
+    }
+
+    func testIsHighlightedProperty() {
+        var onSelectedCalled = false
+        button.onSelected { (_) in
+            onSelectedCalled = true
+        }
+
+        button.isHighlighted = true
+
+        XCTAssert(onSelectedCalled)
+    }
+
+    func testIsNotHighlightedProperty() {
+        var onDeselectedCalled = false
+        button.onDeselected { (_) in
+            onDeselectedCalled = true
+        }
+
+        button.isHighlighted = false
+
+        XCTAssert(onDeselectedCalled)
+    }
+
+    func testIsEnabledProperty() {
+        var onEnabledCalled = false
+        button.onEnabled { (_) in
+            onEnabledCalled = true
+        }
+        button.isEnabled = true
+
+        XCTAssert(onEnabledCalled)
+    }
+
+    func testIsNotEnabledProperty() {
+        var onDisabledCalled = false
+        button.onDisabled { (_) in
+            onDisabledCalled = true
+        }
+        button.isEnabled = false
+
+        XCTAssert(onDisabledCalled)
+    }
 }

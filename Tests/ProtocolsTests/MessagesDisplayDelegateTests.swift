@@ -111,7 +111,7 @@ extension MessagesDisplayDelegateTests {
             messagesCollectionView.messagesDataSource = dataProvider
         }
 
-        private func makeDataSource() -> MockMessagesDataSource {
+        private func makeDataSource() -> MockMessagesDataSource { 
             let dataSource = MockMessagesDataSource()
             dataSource.messages.append(MockMessage(text: "Text 1",
                                                    sender: dataSource.senders[0],
