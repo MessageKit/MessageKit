@@ -68,13 +68,10 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
         }
 
         switch message.data {
-        case .text(let text):
+        case .text(let text), .emoji(let text):
             messageContentView.text = text
         case .attributedText(let text):
             messageContentView.attributedText = text
-        case .emoji(let text):
-            messageContentView.text = text
-            messageContentView.font = messageContentView.font.withSize(2 * messageContentView.font.pointSize)
         default:
             break
         }

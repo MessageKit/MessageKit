@@ -131,7 +131,13 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         attributes.cellBottomLabelFrame = CGRect(origin: .zero, size: cellBottomLabelSize(for: message, at: indexPath))
         attributes.avatarFrame = CGRect(origin: .zero, size: avatarSize(for: message, at: indexPath))
 
-        attributes.messageLabelFont = messageLabelFont
+        switch message.data {
+        case .emoji:
+            attributes.messageLabelFont = emojiLabelFont
+        default:
+            attributes.messageLabelFont = messageLabelFont
+        }
+
         attributes.messagePadding = messagePadding
         attributes.messageLabelInsets = messageInsets
         attributes.cellTopLabelInsets = topLabelInsets
