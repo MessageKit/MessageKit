@@ -50,17 +50,6 @@ class MessagesDisplayDelegateTests: XCTestCase {
         XCTAssertNotNil(sut.dataProvider.messages)
     }
 
-    func testMessageTextColorDefaultState() {
-        XCTAssertEqual(sut.textColor(for: sut.dataProvider.messages[0],
-                                     at: IndexPath(item: 0, section: 0),
-                                     in: sut.messagesCollectionView),
-                       UIColor.white)
-        XCTAssertEqual(sut.textColor(for: sut.dataProvider.messages[1],
-                                     at: IndexPath(item: 1, section: 0),
-                                     in: sut.messagesCollectionView),
-                       UIColor.darkText)
-    }
-
     func testBackGroundColorDefaultState() {
         XCTAssertEqual(sut.backgroundColor(for: sut.dataProvider.messages[0],
                                            at: IndexPath(item: 0, section: 0),
