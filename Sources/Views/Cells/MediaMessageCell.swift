@@ -40,8 +40,8 @@ open class MediaMessageCell: MessageCollectionViewCell<UIImageView> {
     private func setupConstraints() {
         playButtonView.translatesAutoresizingMaskIntoConstraints = false
 
-        let centerX = playButtonView.centerXAnchor.constraint(equalTo: centerXAnchor)
-        let centerY = playButtonView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        let centerX = playButtonView.centerXAnchor.constraint(equalTo: messageContainerView.centerXAnchor)
+        let centerY = playButtonView.centerYAnchor.constraint(equalTo: messageContainerView.centerYAnchor)
         let width = playButtonView.widthAnchor.constraint(equalToConstant: playButtonView.bounds.width)
         let height = playButtonView.heightAnchor.constraint(equalToConstant: playButtonView.bounds.height)
 
