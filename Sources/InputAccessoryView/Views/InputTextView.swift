@@ -173,24 +173,6 @@ open class InputTextView: UITextView {
                                                object: nil)
     }
     
-    open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        if action == #selector(paste(_:)) && UIPasteboard.general.image != nil {
-            return true
-        }
-        return super.canPerformAction(action, withSender: sender)
-    }
-    
-    // MARK: - Paste Support
-    
-    open override func paste(_ sender: Any?) {
-        
-        if let image = UIPasteboard.general.image {
-            messageInputBar?.attachmentManager.insertAttachment(image, at: 0)
-        } else {
-            super.paste(sender)
-        }
-    }
-    
     // MARK: - Attributed Text Highlighting
     
     open func resetTypingAttributes() {
@@ -245,7 +227,6 @@ open class InputTextView: UITextView {
         }
         return ranges
     }
-
     
     // MARK: - Notifications
     
@@ -254,4 +235,3 @@ open class InputTextView: UITextView {
         placeholderLabel.isHidden = !text.isEmpty
     }
 }
-

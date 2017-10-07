@@ -72,21 +72,6 @@ open class MessageInputBar: UIView {
     
     open let bottomStackView = InputStackView(axis: .horizontal, spacing: 15)
     
-    /// The object that manages attachments
-    open lazy var attachmentManager: AttachmentManager = { [weak self] in
-        let manager = AttachmentManager()
-        manager.delegate = self
-        return manager
-    }()
-    
-    /// The object that manages autocomplete
-    open lazy var autocompleteManager: AutocompleteManager = { [weak self] in
-        let manager = AutocompleteManager()
-        manager.delegate = self
-        self?.inputTextView.delegate = manager
-        return manager
-    }()
-    
     open lazy var inputTextView: InputTextView = { [weak self] in
         let textView = InputTextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -481,7 +466,7 @@ open class MessageInputBar: UIView {
     @objc
     open func textViewDidChange() {
         let trimmedText = inputTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        sendButton.isEnabled = !inputTextView.text.isEmpty || attachmentManager.attachments.count > 0
+        sendButton.isEnabled = !inputTextView.text.isEmpty
         items.forEach { $0.textViewDidChangeAction(with: self.inputTextView) }
         delegate?.messageInputBar(self, textViewTextDidChangeTo: trimmedText)
         invalidateIntrinsicContentSize()
@@ -502,90 +487,5 @@ open class MessageInputBar: UIView {
     open func didSelectSendButton() {
         delegate?.messageInputBar(self, didPressSendButtonWith: inputTextView.text)
         textViewDidChange()
-        autocompleteManager.invalidate()
-        attachmentManager.invalidate()
-    }
-}
-
-extension MessageInputBar: AttachmentManagerDelegate {
-    
-    open func attachmentManager(_ manager: AttachmentManager, didReloadTo attachments: [AnyObject]) {
-        sendButton.isEnabled = attachmentManager.attachments.count > 0
-        setAttachmentManager(active: attachments.count > 0 || manager.isPersistent)
-    }
-    
-    open func attachmentManager(_ manager: AttachmentManager, didInsert attachment: AnyObject, at index: Int) {
-        sendButton.isEnabled = attachmentManager.attachments.count > 0
-        setAttachmentManager(active: manager.attachments.count > 0 || manager.isPersistent)
-    }
-    
-    open func attachmentManager(_ manager: AttachmentManager, didRemove attachment: AnyObject, at index: Int) {
-        sendButton.isEnabled = attachmentManager.attachments.count > 0
-        setAttachmentManager(active: manager.attachments.count > 0 || manager.isPersistent)
-    }
-    
-    /// Attempts to activate/deactive the AttachmentManager by inserting/removing it into the top UIStackView. Also inserts/removes a SeparatorLine below it
-    ///
-    /// - Parameter active: If the manager should be activated
-    open func setAttachmentManager(active: Bool) {
-        
-        if active && !topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
-            let index = topStackView.arrangedSubviews.count
-            topStackView.insertArrangedSubview(attachmentManager.attachmentView, at: index)
-            topStackView.insertArrangedSubview(SeparatorLine(), at: index + 1)
-            topStackView.layoutIfNeeded()
-        } else if !active && topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
-            if let index = topStackView.arrangedSubviews.index(of: attachmentManager.attachmentView) {
-                let separatorIndex = index + 1
-                if separatorIndex < topStackView.arrangedSubviews.count {
-                    if let separatorLine = topStackView.arrangedSubviews[separatorIndex] as? SeparatorLine {
-                        topStackView.removeArrangedSubview(separatorLine)
-                    }
-                }
-            }
-            topStackView.removeArrangedSubview(attachmentManager.attachmentView)
-            topStackView.layoutIfNeeded()
-        }
-    }
-}
-
-extension MessageInputBar: AutocompleteManagerDelegate {
-    
-    open func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: Character, at range: Range<Int>) -> Bool {
-        setAutocompleteManager(active: true)
-        return true
-    }
-    
-    open func autocompleteManager(_ manager: AutocompleteManager, shouldUnregister prefix: Character) -> Bool {
-        setAutocompleteManager(active: false)
-        return true
-    }
-    
-    public func autocompleteManager(_ manager: AutocompleteManager, shouldComplete prefix: Character, with text: String) -> Bool {
-        return true
-    }
-    
-    /// Attempts to activate/deactive the AutocompleteManager by inserting/removing it into the top UIStackView. Also inserts/removes a SeparatorLine below it
-    ///
-    /// - Parameter active: If the manager should be activated
-    open func setAutocompleteManager(active: Bool) {
-        
-        if active && !topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
-            let index = topStackView.arrangedSubviews.first == separatorLine ? 1 : 0
-            topStackView.insertArrangedSubview(autocompleteManager.tableView, at: index)
-            topStackView.insertArrangedSubview(SeparatorLine(), at: index + 1)
-            topStackView.layoutIfNeeded()
-        } else if !active && topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
-            if let index = topStackView.arrangedSubviews.index(of: autocompleteManager.tableView) {
-                let separatorIndex = index + 1
-                if separatorIndex < topStackView.arrangedSubviews.count {
-                    if let separatorLine = topStackView.arrangedSubviews[separatorIndex] as? SeparatorLine {
-                        topStackView.removeArrangedSubview(separatorLine)
-                    }
-                }
-            }
-            topStackView.removeArrangedSubview(autocompleteManager.tableView)
-            topStackView.layoutIfNeeded()
-        }
     }
 }
