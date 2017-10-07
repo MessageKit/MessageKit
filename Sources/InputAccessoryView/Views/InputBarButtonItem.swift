@@ -43,11 +43,11 @@ open class InputBarButtonItem: UIButton {
         didSet {
             switch spacing {
             case .flexible:
-              setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .horizontal)
+                setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .horizontal)
             case .fixed:
-              setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+                setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
             case .none:
-              setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
+                setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
             }
         }
     }
@@ -117,6 +117,7 @@ open class InputBarButtonItem: UIButton {
     private var onTouchUpInsideAction: InputBarButtonItemAction?
     private var onKeyboardEditingBeginsAction: InputBarButtonItemAction?
     private var onKeyboardEditingEndsAction: InputBarButtonItemAction?
+    private var onKeyboardSwipeGestureAction: ((InputBarButtonItem, UISwipeGestureRecognizer) -> Void)?
     private var onTextViewDidChangeAction: ((InputBarButtonItem, InputTextView) -> Void)?
     private var onSelectedAction: InputBarButtonItemAction?
     private var onDeselectedAction: InputBarButtonItemAction?
@@ -140,12 +141,11 @@ open class InputBarButtonItem: UIButton {
     }
     
     open func setup() {
-        
         contentVerticalAlignment = .center
         contentHorizontalAlignment = .center
         imageView?.contentMode = .scaleAspectFit
-      setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
-      setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .vertical)
+        setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
+        setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .vertical)
         setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1), for: .normal)
         setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
         setTitleColor(.lightGray, for: .disabled)
@@ -181,6 +181,12 @@ open class InputBarButtonItem: UIButton {
     @discardableResult
     open func onKeyboardEditingEnds(_ action: @escaping InputBarButtonItemAction) -> Self {
         onKeyboardEditingEndsAction = action
+        return self
+    }
+    
+    @discardableResult
+    open func onKeyboardSwipeGesture(_ action: @escaping (_ item: InputBarButtonItem, _ gesture: UISwipeGestureRecognizer) -> Void) -> Self {
+        onKeyboardSwipeGestureAction = action
         return self
     }
     
@@ -226,6 +232,10 @@ open class InputBarButtonItem: UIButton {
         onTextViewDidChangeAction?(self, textView)
     }
     
+    public func keyboardSwipeGestureAction(with gesture: UISwipeGestureRecognizer) {
+        onKeyboardSwipeGestureAction?(self, gesture)
+    }
+    
     public func keyboardEditingEndsAction() {
         onKeyboardEditingEndsAction?(self)
     }
@@ -234,7 +244,7 @@ open class InputBarButtonItem: UIButton {
         onKeyboardEditingBeginsAction?(self)
     }
     
-  @objc public func touchUpInsideAction() {
+    @objc public func touchUpInsideAction() {
         onTouchUpInsideAction?(self)
     }
     

@@ -22,25 +22,22 @@
  SOFTWARE.
  */
 
-import Foundation
 import UIKit
 
-public protocol MessageInputBarDelegate: class {
+public protocol AttachmentManagerDelegate: class {
     
-    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String)
+    func attachmentManager(_ manager: AttachmentManager, didInsert attachment: AnyObject, at index: Int)
     
-    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize)
+    func attachmentManager(_ manager: AttachmentManager, didRemove attachment: AnyObject, at index: Int)
     
-    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String)
-
+    func attachmentManager(_ manager: AttachmentManager, didReloadTo attachments: [AnyObject])
 }
 
-public extension MessageInputBarDelegate {
+public extension AttachmentManagerDelegate {
     
-    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {}
+    func attachmentManager(_ manager: AttachmentManager, didInsert attachment: AnyObject, at index: Int) {}
     
-    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize) {}
+    func attachmentManager(_ manager: AttachmentManager, didRemove attachment: AnyObject, at index: Int) {}
     
-    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String) {}
-
+    func attachmentManager(_ manager: AttachmentManager, didReloadTo attachments: [AnyObject]) {}
 }
