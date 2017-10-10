@@ -60,4 +60,8 @@ struct MockMessage: MessageType {
         self.init(data: .location(location), sender: sender, messageId: messageId)
     }
 
+    init(emoji: String, sender: Sender, messageId: String) {
+        self.init(data: .emoji(emoji), sender: sender, messageId: messageId)
+    }
+
 }
