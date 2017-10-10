@@ -449,10 +449,18 @@ open class MessageInputBar: UIView {
     }
     
     @objc open func textViewDidBeginEditing() {
+        if #available(iOS 11.0, *) {
+            invalidateIntrinsicContentSize()
+            padding = UIEdgeInsets(top: self.safeAreaInsets.top + 6, left: self.safeAreaInsets.left + 12, bottom: 6.0, right: self.safeAreaInsets.right + 12)
+        }
         self.items.forEach { $0.keyboardEditingBeginsAction() }
     }
     
     @objc open func textViewDidEndEditing() {
+        if #available(iOS 11.0, *) {
+            invalidateIntrinsicContentSize()
+            padding = UIEdgeInsets(top: self.safeAreaInsets.top + 6, left: self.safeAreaInsets.left + 12, bottom: self.safeAreaInsets.bottom + 6, right: self.safeAreaInsets.right + 12)
+        }
         self.items.forEach { $0.keyboardEditingEndsAction() }
     }
     
@@ -461,5 +469,15 @@ open class MessageInputBar: UIView {
     open func didSelectSendButton() {
         delegate?.messageInputBar(self, didPressSendButtonWith: inputTextView.text)
         textViewDidChange()
+    }
+    
+    
+    @available(iOS 11.0, *)
+    open override func safeAreaInsetsDidChange() {
+//        padding: UIEdgeInsets = UIEdgeInsets(top: 6, left: 12, bottom: 6, right: 12)
+        super.safeAreaInsetsDidChange()
+//        invalidateIntrinsicContentSize()
+        padding = UIEdgeInsets(top: self.safeAreaInsets.top + 6, left: self.safeAreaInsets.left + 12, bottom: self.safeAreaInsets.bottom + 6, right: self.safeAreaInsets.right + 12)
+        
     }
 }
