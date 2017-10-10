@@ -24,6 +24,22 @@
 
 import Foundation
 
+// MARK: - MessagesViewController
+
+public extension MessagesViewController {
+
+    @available(*, deprecated: 0.10.0, message: "Removed in MessageKit 0.10.0. Please use the messagesCollectionView.contentInsets.top property.")
+    public var additionalTopContentInset: CGFloat {
+        get {
+            return messagesCollectionView.contentInset.top
+        }
+        set {
+            messagesCollectionView.contentInset.top = newValue
+        }
+    }
+
+}
+
 // MARK: - MessagesDisplayDataSource
 
 @available(*, deprecated: 0.7.0, message: "Removed in MessageKit 0.7.0. Please use MessagesDisplayDelegate.")
