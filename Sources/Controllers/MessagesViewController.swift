@@ -56,6 +56,10 @@ open class MessagesViewController: UIViewController {
     open override var shouldAutorotate: Bool {
         return false
     }
+	
+	fileprivate var targetedCell:UICollectionViewCell?
+	
+	fileprivate var targetedFrame = CGRect.zero
 
     // MARK: - View Life Cycle
 
@@ -72,37 +76,8 @@ open class MessagesViewController: UIViewController {
         registerReusableViews()
         setupDelegates()
 
-		self.addMenuControllerObservers()
+		addMenuControllerObservers()
     }
-	
-	fileprivate func addMenuControllerObservers() {
-		NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(aNotification:)), name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerDidHide(aNotification:)), name: NSNotification.Name.UIMenuControllerDidHideMenu, object: nil)
-	}
-	
-	fileprivate func removeMenuControllerObservers() {
-		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
-		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIMenuControllerDidHideMenu, object: nil)
-	}
-	
-	fileprivate var targetedCell:UICollectionViewCell?
-	fileprivate var targetedFrame = CGRect.zero
-	@objc func menuControllerWillShow(aNotification:Notification) {
-		if let currentMenuController = aNotification.object as? UIMenuController,
-			let currentTargetedCell = targetedCell {
-			NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
-			currentMenuController.setMenuVisible(false, animated: false)
-			currentMenuController.setTargetRect(self.targetedFrame, in: currentTargetedCell)
-			currentMenuController.setMenuVisible(true, animated: true)
-			self.messagesCollectionView.isUserInteractionEnabled = false
-		}
-	}
-	
-	@objc func menuControllerDidHide(aNotification:Notification) {
-		NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(aNotification:)), name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
-		self.messagesCollectionView.isUserInteractionEnabled = true
-		self.targetedCell = nil
-	}
 
     open override func viewDidLayoutSubviews() {
         // Hack to prevent animation of the contentInset after viewDidAppear
@@ -167,7 +142,7 @@ open class MessagesViewController: UIViewController {
 
 extension MessagesViewController: UICollectionViewDelegate {
 	
-	public func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+	open func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
 		
 		guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return false }
 		let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
@@ -191,11 +166,11 @@ extension MessagesViewController: UICollectionViewDelegate {
 		return false
 	}
 	
-	public func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+	open func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
 		return (action == NSSelectorFromString("copy:"))
 	}
 	
-	public func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+	open func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
 		
 		guard let messagesDataSource = messagesCollectionView.messagesDataSource else { fatalError("Please set messagesDataSource") }
 		let pasteBoard = UIPasteboard.general
@@ -373,4 +348,35 @@ extension MessagesViewController {
         
     }
     
+}
+
+// MARK: - Copy Menu Handling
+
+extension MessagesViewController {
+	fileprivate func addMenuControllerObservers() {
+		NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(aNotification:)), name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerDidHide(aNotification:)), name: NSNotification.Name.UIMenuControllerDidHideMenu, object: nil)
+	}
+	
+	fileprivate func removeMenuControllerObservers() {
+		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIMenuControllerDidHideMenu, object: nil)
+	}
+	
+	@objc func menuControllerWillShow(aNotification:Notification) {
+		if let currentMenuController = aNotification.object as? UIMenuController,
+			let currentTargetedCell = targetedCell {
+			NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+			currentMenuController.setMenuVisible(false, animated: false)
+			currentMenuController.setTargetRect(self.targetedFrame, in: currentTargetedCell)
+			currentMenuController.setMenuVisible(true, animated: true)
+			self.messagesCollectionView.isUserInteractionEnabled = false
+		}
+	}
+	
+	@objc func menuControllerDidHide(aNotification:Notification) {
+		NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(aNotification:)), name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+		self.messagesCollectionView.isUserInteractionEnabled = true
+		self.targetedCell = nil
+	}
 }
