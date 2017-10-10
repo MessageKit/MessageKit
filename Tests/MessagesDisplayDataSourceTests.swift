@@ -56,6 +56,12 @@ class MessagesDisplayDelegateTests: XCTestCase {
         XCTAssertEqual(testClass.textColor(for: testClass.messageList[0], at: IndexPath(item: 0, section: 0), in: testClass.messagesCollectionView), UIColor.white)
         XCTAssertEqual(testClass.textColor(for: testClass.messageList[1], at: IndexPath(item: 1, section: 0), in: testClass.messagesCollectionView), UIColor.darkText)
     }
+  
+    func testMessageTextColorWhenDataSourceIsNil() {
+        testClass.messagesCollectionView.messagesDataSource = nil
+        XCTAssertEqual(testClass.textColor(for: testClass.messageList[0], at: IndexPath(item: 0, section: 0), in: testClass.messagesCollectionView), UIColor.darkText)
+        XCTAssertEqual(testClass.textColor(for: testClass.messageList[1], at: IndexPath(item: 1, section: 0), in: testClass.messagesCollectionView), UIColor.darkText)
+    }
     
     func testBackGroundColorDefaultState() {
         XCTAssertEqual(testClass.backgroundColor(for: testClass.messageList[0], at:  IndexPath(item: 0, section: 0), in: testClass.messagesCollectionView), UIColor.outgoingGreen)
