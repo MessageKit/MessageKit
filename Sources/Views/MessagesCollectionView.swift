@@ -65,7 +65,7 @@ open class MessagesCollectionView: UICollectionView {
 
     public func scrollToBottom(animated: Bool = false) {
         guard let indexPath = indexPathForLastItem else { return }
-        scrollToItem(at: indexPath, at: .bottom, animated: animated)
+        scrollToItem(at: indexPath, at: .centeredVertically, animated: animated)
     }
 
 }

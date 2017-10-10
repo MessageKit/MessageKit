@@ -80,10 +80,16 @@ open class MessagesViewController: UIViewController {
             defer { isFirstLayout = false }
 
             addKeyboardObservers()
-            messagesCollectionView.contentInset.top = additionalTopContentInset + topLayoutGuide.length
-            messagesCollectionView.contentInset.bottom = messageInputBar.frame.height
-            messagesCollectionView.scrollIndicatorInsets.bottom = messageInputBar.frame.height
             
+            if #available(iOS 11.0, *) {
+                messagesCollectionView.contentInset.top = additionalTopContentInset
+            } else {
+                messagesCollectionView.contentInset.top = additionalTopContentInset + topLayoutGuide.length
+            }
+            let bottomInset = messageInputBar.frame.height - bottomLayoutGuide.length
+            messagesCollectionView.contentInset.bottom = bottomInset
+            messagesCollectionView.scrollIndicatorInsets.bottom = bottomInset
+
             //Scroll to bottom at first load
             if scrollsToBottomOnFirstLayout {
                 messagesCollectionView.scrollToBottom(animated: false)
@@ -273,7 +279,7 @@ extension MessagesViewController {
 
         } else {
             //Software keyboard is found
-            let bottomInset = keyboardEndFrame.height > messageInputBar.frame.height ? keyboardEndFrame.height : messageInputBar.frame.height
+            let bottomInset = keyboardEndFrame.height > messageInputBar.frame.height ? keyboardEndFrame.height - bottomLayoutGuide.length : messageInputBar.frame.height - bottomLayoutGuide.length
             messagesCollectionView.contentInset.bottom = bottomInset
             messagesCollectionView.scrollIndicatorInsets.bottom = bottomInset
         }
