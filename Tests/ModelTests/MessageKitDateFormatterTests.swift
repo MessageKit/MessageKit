@@ -92,7 +92,7 @@ class MessageKitDateFormatterTests: XCTestCase {
         }
 
         ///Day of last week
-        startOfWeek = startOfWeek.addingTimeInterval(-60*60*24)
+        startOfWeek = (Calendar.current as NSCalendar).date(byAdding: .day, value: -2, to: startOfWeek, options: [])!
         formatter.dateFormat = "E, d MMM, h:mm a"
         XCTAssertEqual(MessageKitDateFormatter.shared.string(from: startOfWeek), formatter.string(from: startOfWeek))
     }
