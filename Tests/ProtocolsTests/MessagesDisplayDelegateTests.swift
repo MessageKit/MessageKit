@@ -34,9 +34,11 @@ class MessagesDisplayDelegateTests: XCTestCase {
         super.setUp()
 
         sut = MockMessagesViewController()
+        sut.view.frame = CGRect(x: 0.0, y: 0.0, width: 320, height: 480)
         _ = sut.view
         sut.beginAppearanceTransition(true, animated: true)
         sut.endAppearanceTransition()
+        sut.view.layoutIfNeeded()
     }
 
     override func tearDown() {
@@ -161,6 +163,22 @@ class MessagesDisplayDelegateTests: XCTestCase {
         XCTAssertFalse(sut.shouldDisplayHeader(for: sut.dataProvider.messages[2],
                                                at: IndexPath(item: 0, section: 1),
                                                in: sut.messagesCollectionView))
+    }
+
+    func testMessageHeaderView_IsNotNil() {
+        let headerView = sut.messageHeaderView(for: sut.dataProvider.messages[0],
+                                               at: IndexPath(item: 0, section: 0),
+                                               in: sut.messagesCollectionView)
+
+        XCTAssertNotNil(headerView)
+    }
+
+    func testMessageFooterView_IsNotNil() {
+        let footerView = sut.messageFooterView(for: sut.dataProvider.messages[1],
+                                               at: IndexPath(item: 0, section: 1),
+                                               in: sut.messagesCollectionView)
+
+        XCTAssertNotNil(footerView)
     }
 
 }
