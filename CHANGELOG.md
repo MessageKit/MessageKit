@@ -6,6 +6,12 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Removed
+
+- **Breaking Change** Removed `additionalTopContentInset` property of `MessagesViewController` because this is no longer necessary
+when `extendedLayoutIncludesOpaqueBars` is `true`.
+[#250](https://github.com/MessageKit/MessageKit/pull/250) by [@SD10](https://github.com/SD10).
+
 ## [[Prerelease] 0.9.0](https://github.com/MessageKit/MessageKit/releases/tag/0.9.0)
 
 ### Added
