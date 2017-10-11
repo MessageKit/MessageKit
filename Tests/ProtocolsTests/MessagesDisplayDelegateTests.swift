@@ -34,7 +34,6 @@ class MessagesDisplayDelegateTests: XCTestCase {
         super.setUp()
 
         sut = MockMessagesViewController()
-        sut.view.frame = CGRect(x: 0.0, y: 0.0, width: 320, height: 480)
         _ = sut.view
         sut.beginAppearanceTransition(true, animated: true)
         sut.endAppearanceTransition()

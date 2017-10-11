@@ -37,6 +37,9 @@ class MessagesViewControllerTests: XCTestCase {
 
         sut = MessagesViewController()
         _ = sut.view
+        sut.beginAppearanceTransition(true, animated: true)
+        sut.endAppearanceTransition()
+        sut.view.layoutIfNeeded()
     }
 
     override func tearDown() {
@@ -47,66 +50,71 @@ class MessagesViewControllerTests: XCTestCase {
 
     // MARK: - Test
 
-    func testMessageCollectionViewNotNilAfterViewDidLoad() {
+    func testMessageCollectionViewLayout_IsMessageCollectionViewLayout() {
+        XCTAssertNotNil(sut.messagesCollectionView.collectionViewLayout)
+        XCTAssertTrue(sut.messagesCollectionView.collectionViewLayout is MessagesCollectionViewFlowLayout)
+    }
+
+    func testMessageCollectionView_IsNotNilAfterViewDidLoad() {
         XCTAssertNotNil(sut.messageInputBar)
     }
 
-    func testMessageCollectionViewHasMessageCollectionFlowLayoutAfterViewDidLoad() {
+    func testMessageCollectionView_HasMessageCollectionFlowLayoutAfterViewDidLoad() {
         let layout = sut.messagesCollectionView.collectionViewLayout
 
         XCTAssertNotNil(layout)
         XCTAssertTrue(layout is MessagesCollectionViewFlowLayout)
     }
 
-    func testMessageInputBarNotNilAfterViewDidLoad() {
+    func testMessageInputBar_IsNotNilAfterViewDidLoad() {
         XCTAssertNotNil(sut.messageInputBar)
     }
 
-    func testViewDidLoadShouldSetBackgroundColorToWhite() {
+    func testViewDidLoad_ShouldSetBackgroundColorToWhite() {
         XCTAssertEqual(sut.view.backgroundColor, UIColor.white)
     }
 
-    func testViewDidLoadShouldAddMessageCollectionViewInSubviews() {
+    func testViewDidLoad_ShouldAddMessageCollectionViewInSubviews() {
         let messageColelctionViews = sut.view.subviews.filter { $0 is MessagesCollectionView }
 
         XCTAssertEqual(messageColelctionViews.count, 1)
     }
 
-    func testViewDidLoadShouldSetAutomaticallyAdjustsScrollViewInsetsToFalse() {
+    func testViewDidLoad_ShouldSetAutomaticallyAdjustsScrollViewInsetsToFalse() {
         XCTAssertFalse(sut.automaticallyAdjustsScrollViewInsets)
     }
 
-    func testViewDidLoadShouldSetCollectionViewDelegate() {
+    func testViewDidLoad_ShouldSetCollectionViewDelegate() {
         let delegate = sut.messagesCollectionView.delegate
 
         XCTAssertNotNil(delegate)
         XCTAssertTrue(delegate is MessagesViewController)
     }
 
-    func testViewDidLoadShouldSetCollectionViewDataSource() {
+    func testViewDidLoad_ShouldSetCollectionViewDataSource() {
         let dataSource = sut.messagesCollectionView.dataSource
 
         XCTAssertNotNil(dataSource)
         XCTAssertTrue(dataSource is MessagesViewController)
     }
 
-    func testViewDidLoadShouldSetDelegateAndDataSourceToTheSameObject() {
+    func testViewDidLoad_ShouldSetDelegateAndDataSourceToTheSameObject() {
         XCTAssertEqual(sut.messagesCollectionView.delegate as? MessagesViewController,
                        sut.messagesCollectionView.dataSource as? MessagesViewController)
     }
 
-    func testShouldAutorotateIsFalse() {
+    func testShouldAutorotate_IsFalse() {
         XCTAssertFalse(sut.shouldAutorotate)
     }
 
-    func testInputAccessoryViewShouldReturnMessageInputBarAfterViewDidLoad() {
+    func testInputAccessoryView_ShouldReturnsMessageInputBarAfterViewDidLoad() {
         let inputAccessoryView = sut.inputAccessoryView
 
         XCTAssertNotNil(inputAccessoryView)
         XCTAssertEqual(inputAccessoryView, sut.messageInputBar)
     }
 
-    func testCaBecomeFirstResponderIsTrue() {
+    func testCanBecomeFirstResponder_IsTrue() {
         XCTAssertTrue(sut.canBecomeFirstResponder)
     }
 
@@ -122,6 +130,8 @@ class MessagesViewControllerTests: XCTestCase {
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages = makeMessages(for: messagesDataSource.senders)
 
+        sut.messagesCollectionView.reloadData()
+
         let count = sut.messagesCollectionView.numberOfSections
         let expectedCount = messagesDataSource.numberOfMessages(in: sut.messagesCollectionView)
 
@@ -133,6 +143,8 @@ class MessagesViewControllerTests: XCTestCase {
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages = makeMessages(for: messagesDataSource.senders)
 
+        sut.messagesCollectionView.reloadData()
+
         XCTAssertEqual(sut.messagesCollectionView.numberOfItems(inSection: 0), 1)
         XCTAssertEqual(sut.messagesCollectionView.numberOfItems(inSection: 1), 1)
     }
@@ -143,6 +155,8 @@ class MessagesViewControllerTests: XCTestCase {
         messagesDataSource.messages.append(MockMessage(text: "Test",
                                                        sender: messagesDataSource.senders[0],
                                                        messageId: "test_id"))
+
+        sut.messagesCollectionView.reloadData()
 
         let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
                                                                          cellForItemAt: IndexPath(item: 0, section: 0))
@@ -160,6 +174,8 @@ class MessagesViewControllerTests: XCTestCase {
                                                        sender: messagesDataSource.senders[0],
                                                        messageId: "test_id"))
 
+        sut.messagesCollectionView.reloadData()
+
         let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
                                                                          cellForItemAt: IndexPath(item: 0, section: 0))
 
@@ -173,6 +189,8 @@ class MessagesViewControllerTests: XCTestCase {
         messagesDataSource.messages.append(MockMessage(image: UIImage(),
                                                        sender: messagesDataSource.senders[0],
                                                        messageId: "test_id"))
+
+        sut.messagesCollectionView.reloadData()
 
         let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
                                                                          cellForItemAt: IndexPath(item: 0, section: 0))
@@ -188,6 +206,8 @@ class MessagesViewControllerTests: XCTestCase {
                                                        sender: messagesDataSource.senders[0],
                                                        messageId: "test_id"))
 
+        sut.messagesCollectionView.reloadData()
+
         let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
                                                                          cellForItemAt: IndexPath(item: 0, section: 0))
 
@@ -202,6 +222,8 @@ class MessagesViewControllerTests: XCTestCase {
                                                        sender: messagesDataSource.senders[0],
                                                        messageId: "test_id"))
 
+        sut.messagesCollectionView.reloadData()
+
         let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
                                                                          cellForItemAt: IndexPath(item: 0, section: 0))
 
@@ -215,11 +237,5 @@ class MessagesViewControllerTests: XCTestCase {
         return [MockMessage(text: "Text 1", sender: senders[0], messageId: "test_id_1"),
                 MockMessage(text: "Text 2", sender: senders[1], messageId: "test_id_2")]
     }
-
-}
-
-extension MessagesViewControllerTests {
-
-    fileprivate class MockMessagesDisplayDelegate: MessagesDisplayDelegate { }
 
 }
