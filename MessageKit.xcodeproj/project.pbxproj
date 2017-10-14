@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		372F6AEF1F36C61000B57FBD /* AvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372F6AEE1F36C61000B57FBD /* AvatarViewTests.swift */; };
 		376AD1861F4259270083072A /* MessagesDisplayDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376AD1851F4259270083072A /* MessagesDisplayDataSourceTests.swift */; };
+		387752C31F88B615000E0AC5 /* MessageInputBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387752B01F88B5FC000E0AC5 /* MessageInputBarDelegate.swift */; };
+		387752C61F88B625000E0AC5 /* InputBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387752B81F88B5FC000E0AC5 /* InputBarButtonItem.swift */; };
+		387752C71F88B625000E0AC5 /* InputStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387752B91F88B5FC000E0AC5 /* InputStackView.swift */; };
+		387752C81F88B625000E0AC5 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387752BA1F88B5FC000E0AC5 /* InputTextView.swift */; };
+		387752C91F88B625000E0AC5 /* MessageInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387752BB1F88B5FC000E0AC5 /* MessageInputBar.swift */; };
+		387752CA1F88B625000E0AC5 /* SeparatorLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387752BC1F88B5FC000E0AC5 /* SeparatorLine.swift */; };
+		387752E01F88B64F000E0AC5 /* NSMutableAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387752DF1F88B64F000E0AC5 /* NSMutableAttributedString+Extensions.swift */; };
 		88916B2D1CF0DF2F00469F91 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88916B221CF0DF2F00469F91 /* MessageKit.framework */; };
 		88916B451CF0DF5900469F91 /* MessageKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88916B431CF0DF5900469F91 /* MessageKitTests.swift */; };
 		B0C8D99B1F73076B000A86E4 /* MessageKitAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B0C8D99A1F73076B000A86E4 /* MessageKitAssets.bundle */; };
@@ -33,9 +40,6 @@
 		B7A03F3D1F866946006AEF79 /* MediaMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F391F866946006AEF79 /* MediaMessageCell.swift */; };
 		B7A03F461F86694F006AEF79 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F3E1F86694F006AEF79 /* AvatarView.swift */; };
 		B7A03F471F86694F006AEF79 /* MessageLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F3F1F86694F006AEF79 /* MessageLabel.swift */; };
-		B7A03F481F86694F006AEF79 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F401F86694F006AEF79 /* InputTextView.swift */; };
-		B7A03F491F86694F006AEF79 /* InputBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F411F86694F006AEF79 /* InputBarItem.swift */; };
-		B7A03F4A1F86694F006AEF79 /* MessageInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F421F86694F006AEF79 /* MessageInputBar.swift */; };
 		B7A03F4B1F86694F006AEF79 /* MessageContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F431F86694F006AEF79 /* MessageContainerView.swift */; };
 		B7A03F4C1F86694F006AEF79 /* PlayButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F441F86694F006AEF79 /* PlayButtonView.swift */; };
 		B7A03F4D1F86694F006AEF79 /* MessagesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F451F86694F006AEF79 /* MessagesCollectionView.swift */; };
@@ -48,7 +52,6 @@
 		B7A03F5F1F8669CA006AEF79 /* MessageLabelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F551F8669C9006AEF79 /* MessageLabelDelegate.swift */; };
 		B7A03F601F8669CA006AEF79 /* MessagesDisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F561F8669C9006AEF79 /* MessagesDisplayDelegate.swift */; };
 		B7A03F611F8669CA006AEF79 /* MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F571F8669CA006AEF79 /* MessagesDataSource.swift */; };
-		B7A03F621F8669CA006AEF79 /* MessageInputBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F581F8669CA006AEF79 /* MessageInputBarDelegate.swift */; };
 		B7A03F631F8669CA006AEF79 /* LocationMessageLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F591F8669CA006AEF79 /* LocationMessageLayoutDelegate.swift */; };
 		B7A03F6A1F8669EB006AEF79 /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F641F8669EB006AEF79 /* UICollectionView+Extensions.swift */; };
 		B7A03F6B1F8669EB006AEF79 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F651F8669EB006AEF79 /* UIColor+Extensions.swift */; };
@@ -76,6 +79,13 @@
 /* Begin PBXFileReference section */
 		372F6AEE1F36C61000B57FBD /* AvatarViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarViewTests.swift; sourceTree = "<group>"; };
 		376AD1851F4259270083072A /* MessagesDisplayDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDisplayDataSourceTests.swift; sourceTree = "<group>"; };
+		387752B01F88B5FC000E0AC5 /* MessageInputBarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBarDelegate.swift; sourceTree = "<group>"; };
+		387752B81F88B5FC000E0AC5 /* InputBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBarButtonItem.swift; sourceTree = "<group>"; };
+		387752B91F88B5FC000E0AC5 /* InputStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputStackView.swift; sourceTree = "<group>"; };
+		387752BA1F88B5FC000E0AC5 /* InputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
+		387752BB1F88B5FC000E0AC5 /* MessageInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBar.swift; sourceTree = "<group>"; };
+		387752BC1F88B5FC000E0AC5 /* SeparatorLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorLine.swift; sourceTree = "<group>"; };
+		387752DF1F88B64F000E0AC5 /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 		88916B221CF0DF2F00469F91 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88916B2C1CF0DF2F00469F91 /* MessageKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessageKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		88916B421CF0DF5900469F91 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -102,9 +112,6 @@
 		B7A03F391F866946006AEF79 /* MediaMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaMessageCell.swift; sourceTree = "<group>"; };
 		B7A03F3E1F86694F006AEF79 /* AvatarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		B7A03F3F1F86694F006AEF79 /* MessageLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageLabel.swift; sourceTree = "<group>"; };
-		B7A03F401F86694F006AEF79 /* InputTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
-		B7A03F411F86694F006AEF79 /* InputBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarItem.swift; sourceTree = "<group>"; };
-		B7A03F421F86694F006AEF79 /* MessageInputBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageInputBar.swift; sourceTree = "<group>"; };
 		B7A03F431F86694F006AEF79 /* MessageContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageContainerView.swift; sourceTree = "<group>"; };
 		B7A03F441F86694F006AEF79 /* PlayButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayButtonView.swift; sourceTree = "<group>"; };
 		B7A03F451F86694F006AEF79 /* MessagesCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionView.swift; sourceTree = "<group>"; };
@@ -117,7 +124,6 @@
 		B7A03F551F8669C9006AEF79 /* MessageLabelDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageLabelDelegate.swift; sourceTree = "<group>"; };
 		B7A03F561F8669C9006AEF79 /* MessagesDisplayDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDisplayDelegate.swift; sourceTree = "<group>"; };
 		B7A03F571F8669CA006AEF79 /* MessagesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDataSource.swift; sourceTree = "<group>"; };
-		B7A03F581F8669CA006AEF79 /* MessageInputBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageInputBarDelegate.swift; sourceTree = "<group>"; };
 		B7A03F591F8669CA006AEF79 /* LocationMessageLayoutDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMessageLayoutDelegate.swift; sourceTree = "<group>"; };
 		B7A03F641F8669EB006AEF79 /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
 		B7A03F651F8669EB006AEF79 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
@@ -182,6 +188,35 @@
 			path = "Support Files";
 			sourceTree = "<group>";
 		};
+		387752A71F88B5FC000E0AC5 /* InputAccessoryView */ = {
+			isa = PBXGroup;
+			children = (
+				387752AB1F88B5FC000E0AC5 /* Protocols */,
+				387752B11F88B5FC000E0AC5 /* Views */,
+			);
+			path = InputAccessoryView;
+			sourceTree = "<group>";
+		};
+		387752AB1F88B5FC000E0AC5 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				387752B01F88B5FC000E0AC5 /* MessageInputBarDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		387752B11F88B5FC000E0AC5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				387752B81F88B5FC000E0AC5 /* InputBarButtonItem.swift */,
+				387752B91F88B5FC000E0AC5 /* InputStackView.swift */,
+				387752BA1F88B5FC000E0AC5 /* InputTextView.swift */,
+				387752BB1F88B5FC000E0AC5 /* MessageInputBar.swift */,
+				387752BC1F88B5FC000E0AC5 /* SeparatorLine.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		88916B181CF0DF2F00469F91 = {
 			isa = PBXGroup;
 			children = (
@@ -209,6 +244,7 @@
 				B09643991F295D58004D0129 /* Models */,
 				B096439A1F295D68004D0129 /* Views */,
 				B096439C1F295DA9004D0129 /* Controllers */,
+				387752A71F88B5FC000E0AC5 /* InputAccessoryView */,
 				B096439B1F295D82004D0129 /* Protocols */,
 				B09643981F295D43004D0129 /* Extensions */,
 				B096439E1F295DD7004D0129 /* Supporting */,
@@ -242,6 +278,7 @@
 			children = (
 				B7A03F671F8669EB006AEF79 /* Bundle+Extensions.swift */,
 				B7A03F681F8669EB006AEF79 /* NSAttributedString+Extensions.swift */,
+				387752DF1F88B64F000E0AC5 /* NSMutableAttributedString+Extensions.swift */,
 				B7A03F691F8669EB006AEF79 /* String+Extensions.swift */,
 				B7A03F641F8669EB006AEF79 /* UICollectionView+Extensions.swift */,
 				B7A03F651F8669EB006AEF79 /* UIColor+Extensions.swift */,
@@ -274,10 +311,7 @@
 				2EB618F01F84676A007FBA0E /* Cells */,
 				2EB618F11F846899007FBA0E /* Headers & Footers */,
 				B7A03F3E1F86694F006AEF79 /* AvatarView.swift */,
-				B7A03F411F86694F006AEF79 /* InputBarItem.swift */,
-				B7A03F401F86694F006AEF79 /* InputTextView.swift */,
 				B7A03F431F86694F006AEF79 /* MessageContainerView.swift */,
-				B7A03F421F86694F006AEF79 /* MessageInputBar.swift */,
 				B7A03F3F1F86694F006AEF79 /* MessageLabel.swift */,
 				B7A03F451F86694F006AEF79 /* MessagesCollectionView.swift */,
 				B7A03F441F86694F006AEF79 /* PlayButtonView.swift */,
@@ -292,7 +326,6 @@
 				B7A03F591F8669CA006AEF79 /* LocationMessageLayoutDelegate.swift */,
 				B7A03F501F8669C9006AEF79 /* MediaMessageLayoutDelegate.swift */,
 				B7A03F521F8669C9006AEF79 /* MessageCellDelegate.swift */,
-				B7A03F581F8669CA006AEF79 /* MessageInputBarDelegate.swift */,
 				B7A03F551F8669C9006AEF79 /* MessageLabelDelegate.swift */,
 				B7A03F571F8669CA006AEF79 /* MessagesDataSource.swift */,
 				B7A03F561F8669C9006AEF79 /* MessagesDisplayDelegate.swift */,
@@ -460,15 +493,15 @@
 				B7A03F3C1F866946006AEF79 /* LocationMessageCell.swift in Sources */,
 				B7A03F5B1F8669CA006AEF79 /* MessageType.swift in Sources */,
 				B7A03F6F1F8669EB006AEF79 /* String+Extensions.swift in Sources */,
-				B7A03F491F86694F006AEF79 /* InputBarItem.swift in Sources */,
 				B7A03F601F8669CA006AEF79 /* MessagesDisplayDelegate.swift in Sources */,
+				387752C31F88B615000E0AC5 /* MessageInputBarDelegate.swift in Sources */,
 				B7A03F791F866A30006AEF79 /* TestMessageModel.swift in Sources */,
 				B7A03F5C1F8669CA006AEF79 /* MessageCellDelegate.swift in Sources */,
-				B7A03F4A1F86694F006AEF79 /* MessageInputBar.swift in Sources */,
 				B7A03F4B1F86694F006AEF79 /* MessageContainerView.swift in Sources */,
 				B7A03F281F866895006AEF79 /* LocationMessageSnapshotOptions.swift in Sources */,
 				B7A03F5D1F8669CA006AEF79 /* LocationMessageDisplayDelegate.swift in Sources */,
-				B7A03F481F86694F006AEF79 /* InputTextView.swift in Sources */,
+				387752E01F88B64F000E0AC5 /* NSMutableAttributedString+Extensions.swift in Sources */,
+				387752C81F88B625000E0AC5 /* InputTextView.swift in Sources */,
 				B7A03F6C1F8669EB006AEF79 /* UIView+Extensions.swift in Sources */,
 				B7A03F631F8669CA006AEF79 /* LocationMessageLayoutDelegate.swift in Sources */,
 				B7A03F3A1F866946006AEF79 /* TextMessageCell.swift in Sources */,
@@ -479,22 +512,25 @@
 				B7A03F331F866940006AEF79 /* MessageDateHeaderView.swift in Sources */,
 				B7A03F2E1F866895006AEF79 /* MessageData.swift in Sources */,
 				B7A03F7B1F866B85006AEF79 /* MessageCollectionViewCell.swift in Sources */,
+				387752C61F88B625000E0AC5 /* InputBarButtonItem.swift in Sources */,
 				B7A03F6B1F8669EB006AEF79 /* UIColor+Extensions.swift in Sources */,
 				B7A03F5E1F8669CA006AEF79 /* MessagesLayoutDelegate.swift in Sources */,
 				B7A03F261F866895006AEF79 /* MessageKitDateFormatter.swift in Sources */,
+				387752CA1F88B625000E0AC5 /* SeparatorLine.swift in Sources */,
 				B7A03F6D1F8669EB006AEF79 /* Bundle+Extensions.swift in Sources */,
 				B7A03F6A1F8669EB006AEF79 /* UICollectionView+Extensions.swift in Sources */,
 				B7A03F611F8669CA006AEF79 /* MessagesDataSource.swift in Sources */,
 				B7A03F6E1F8669EB006AEF79 /* NSAttributedString+Extensions.swift in Sources */,
 				B7A03F471F86694F006AEF79 /* MessageLabel.swift in Sources */,
+				387752C91F88B625000E0AC5 /* MessageInputBar.swift in Sources */,
 				B7A03F5F1F8669CA006AEF79 /* MessageLabelDelegate.swift in Sources */,
+				387752C71F88B625000E0AC5 /* InputStackView.swift in Sources */,
 				B7A03F4C1F86694F006AEF79 /* PlayButtonView.swift in Sources */,
 				B7A03F5A1F8669CA006AEF79 /* MediaMessageLayoutDelegate.swift in Sources */,
 				B7A03F291F866895006AEF79 /* Sender.swift in Sources */,
 				B7A03F4F1F86697C006AEF79 /* MessagesViewController.swift in Sources */,
 				B7A03F251F866895006AEF79 /* NSConstraintLayoutSet.swift in Sources */,
 				B7A03F341F866940006AEF79 /* MessageFooterView.swift in Sources */,
-				B7A03F621F8669CA006AEF79 /* MessageInputBarDelegate.swift in Sources */,
 				B7A03F181F86682C006AEF79 /* MessagesCollectionViewFlowLayout.swift in Sources */,
 				B7A03F2A1F866895006AEF79 /* MessageStyle.swift in Sources */,
 				B7A03F4D1F86694F006AEF79 /* MessagesCollectionView.swift in Sources */,

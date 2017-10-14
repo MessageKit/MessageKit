@@ -52,6 +52,15 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
+        
+        // key for autocomplete
+        messageInputBar.autocompleteManager.dataSource = self
+        
+        // Always show attachment view
+//        messageInputBar.attachmentManager.isPersistent = true
+        // Action for Add attachment cell
+//        messageInputBar.attachmentManager.addAttachmentCellPressedBlock = { }
+        
         scrollsToBottomOnFirstLayout = true //default false
         scrollsToBottomOnKeybordBeginsEditing = true // default false
 
@@ -104,8 +113,12 @@ class ConversationViewController: MessagesViewController {
                 print("# Selected")
             },
             .flexibleSpace,
-            makeButton(named: "ic_library").onTextViewDidChange { button, textView in
-                button.isEnabled = textView.text.isEmpty
+            makeButton(named: "ic_library").onSelected {
+                $0.tintColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                let imagePicker = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.sourceType = .photoLibrary
+                self.present(imagePicker, animated: true, completion: nil)
             },
             messageInputBar.sendButton
                 .configure {
@@ -129,6 +142,13 @@ class ConversationViewController: MessagesViewController {
             }
         ]
         items.forEach { $0.tintColor = .lightGray }
+        
+        messageInputBar.attachmentManager.addAttachmentCellPressedBlock = { [weak self] _ in
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            self?.present(imagePicker, animated: true, completion: nil)
+        }
         
         // We can change the container insets if we want
         messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
@@ -171,6 +191,11 @@ class ConversationViewController: MessagesViewController {
         let newMessageInputBar = MessageInputBar()
         newMessageInputBar.delegate = self
         messageInputBar = newMessageInputBar
+        
+        // key for autocomplete
+        messageInputBar.autocompleteManager.delegate = self
+        messageInputBar.autocompleteManager.dataSource = self
+        
         reloadInputViews()
     }
     
@@ -189,6 +214,40 @@ class ConversationViewController: MessagesViewController {
             }.onTouchUpInside { _ in
                 print("Item Tapped")
         }
+    }
+}
+
+extension ConversationViewController: AutocompleteManagerDelegate, AutocompleteManagerDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func autocompleteManager(_ manager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String] {
+        
+        var array: [String] = []
+        for _ in 1...100 {
+            if prefix == "@" {
+                array.append(Randoms.randomFakeName().replacingOccurrences(of: " ", with: ".").lowercased())
+            } else {
+                array.append(Lorem.word())
+            }
+        }
+        return array
+    }
+    
+    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
+        
+        let cell = manager.defaultCell(in: tableView, at: indexPath, for: arguments)
+        
+        // or provide your own cell
+        
+        return cell
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        dismiss(animated: true, completion: {
+            if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                self.messageInputBar.attachmentManager.insertAttachment(pickedImage, at: self.messageInputBar.attachmentManager.attachments.count)
+            }
+        })
     }
 }
 

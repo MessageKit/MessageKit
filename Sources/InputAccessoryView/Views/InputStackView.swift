@@ -22,25 +22,33 @@
  SOFTWARE.
  */
 
-import Foundation
 import UIKit
 
-public protocol MessageInputBarDelegate: class {
+open class InputStackView: UIStackView {
     
-    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String)
+    // MARK: Initialization
     
-    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize)
+    convenience init(axis: UILayoutConstraintAxis, spacing: CGFloat) {
+        self.init(frame: .zero)
+        self.axis = axis
+        self.spacing = spacing
+    }
     
-    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String)
-
-}
-
-public extension MessageInputBarDelegate {
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
     
-    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {}
+    required public init(coder: NSCoder) {
+        super.init(coder: coder)
+    }
     
-    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize) {}
+    // MARK: - Setup
     
-    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String) {}
-
+    private func setup() {
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        distribution = .fill
+        alignment = .fill
+    }
 }

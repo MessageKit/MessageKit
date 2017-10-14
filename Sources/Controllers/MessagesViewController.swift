@@ -65,7 +65,37 @@ open class MessagesViewController: UIViewController {
         registerReusableViews()
         setupDelegates()
 
+		self.addMenuControllerObservers()
     }
+	
+	fileprivate func addMenuControllerObservers() {
+		NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(aNotification:)), name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerDidHide(aNotification:)), name: NSNotification.Name.UIMenuControllerDidHideMenu, object: nil)
+	}
+	
+	fileprivate func removeMenuControllerObservers() {
+		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+		NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIMenuControllerDidHideMenu, object: nil)
+	}
+	
+	fileprivate var targetedCell:UICollectionViewCell?
+	fileprivate var targetedFrame = CGRect.zero
+	@objc func menuControllerWillShow(aNotification:Notification) {
+		if let currentMenuController = aNotification.object as? UIMenuController,
+			let currentTargetedCell = targetedCell {
+			NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+			currentMenuController.setMenuVisible(false, animated: false)
+			currentMenuController.setTargetRect(self.targetedFrame, in: currentTargetedCell)
+			currentMenuController.setMenuVisible(true, animated: true)
+			self.messagesCollectionView.isUserInteractionEnabled = false
+		}
+	}
+	
+	@objc func menuControllerDidHide(aNotification:Notification) {
+		NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(aNotification:)), name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+		self.messagesCollectionView.isUserInteractionEnabled = true
+		self.targetedCell = nil
+	}
 
     open override func viewDidLayoutSubviews() {
         // Hack to prevent animation of the contentInset after viewDidAppear
@@ -87,6 +117,7 @@ open class MessagesViewController: UIViewController {
 
     deinit {
         removeKeyboardObservers()
+		removeMenuControllerObservers()
     }
 
     // MARK: - Methods
@@ -122,6 +153,68 @@ open class MessagesViewController: UIViewController {
 
         NSLayoutConstraint.activate([top, bottom, trailing, leading])
     }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension MessagesViewController: UICollectionViewDelegate {
+	
+	public func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+		
+		guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return false }
+		let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+		
+		switch message.data {
+		case .text, .attributedText, .photo:
+			if let selectedTextMessageCell = collectionView.cellForItem(at: indexPath) as? TextMessageCell {
+				self.targetedFrame = selectedTextMessageCell.messageContainerView.frame
+				self.targetedCell = selectedTextMessageCell
+				return true
+			}
+			else if let selectedMediaMessageCell = collectionView.cellForItem(at: indexPath) as? MediaMessageCell {
+				self.targetedFrame = selectedMediaMessageCell.messageContainerView.frame
+				self.targetedCell = selectedMediaMessageCell
+				return true
+			}
+		default:
+			break
+		}
+		
+		return false
+	}
+	
+	public func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+		return (action == NSSelectorFromString("copy:"))
+	}
+	
+	public func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+		
+		guard let messagesDataSource = messagesCollectionView.messagesDataSource else { fatalError("Please set messagesDataSource") }
+		let pasteBoard = UIPasteboard.general
+		let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+		
+		
+		switch message.data {
+		case .text, .attributedText:
+			switch message.data {
+			case .text(let text):
+				pasteBoard.string = text
+			case .attributedText(let text):
+				pasteBoard.string = text.string
+			default:
+				break
+			}
+		case .photo:
+			switch message.data {
+			case .photo(let image):
+				pasteBoard.image = image
+			default:
+				break
+			}
+		default:
+			break
+		}
+	}
 }
 
 // MARK: - UICollectionViewDelegate & UICollectionViewDelegateFlowLayout Conformance

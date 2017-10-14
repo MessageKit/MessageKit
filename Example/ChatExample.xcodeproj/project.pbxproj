@@ -470,7 +470,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ChatExample/Pods-ChatExample-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/MessageKit/MessageKitAssets.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/MessageKit/MessageKitAssets.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
