@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class InputTextView: UITextView, UITextViewDelegate {
+open class InputTextView: UITextView {
 
     // MARK: - Properties
 
@@ -70,7 +70,7 @@ open class InputTextView: UITextView, UITextViewDelegate {
         }
     }
 
-    open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 7, bottom: 4, right: 4) {
+    open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 7, bottom: 4, right: 7) {
         didSet {
             updateConstraintsForPlaceholderLabel()
         }
@@ -118,7 +118,6 @@ open class InputTextView: UITextView, UITextViewDelegate {
         layer.cornerRadius = 5.0
         layer.borderWidth = 1.25
         layer.borderColor = UIColor.lightGray.cgColor
-        delegate = self
 
         addSubviews()
         addConstraints()
@@ -135,7 +134,7 @@ open class InputTextView: UITextView, UITextViewDelegate {
             top:    placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: placeholderLabelInsets.top),
             bottom: placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -placeholderLabelInsets.bottom),
             left:   placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderLabelInsets.left),
-            right:  placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -placeholderLabelInsets.right)
+            width:  placeholderLabel.widthAnchor.constraint(equalTo: widthAnchor, constant: -(placeholderLabelInsets.left + placeholderLabelInsets.right))
             ).activate()
     }
 
@@ -144,22 +143,6 @@ open class InputTextView: UITextView, UITextViewDelegate {
         placeholderLabelConstraintSet?.top?.constant = placeholderLabelInsets.top
         placeholderLabelConstraintSet?.bottom?.constant = -placeholderLabelInsets.bottom
         placeholderLabelConstraintSet?.left?.constant = placeholderLabelInsets.left
-        placeholderLabelConstraintSet?.right?.constant = -placeholderLabelInsets.bottom
-    }
-    
-    // MARK: - UITextViewDelegate
-    
-    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        
-        // When isScrollEnabled gets changed in MessageInputBar when it becomes more than the maxHeight there is a bug the incorrectly sets the contentSize. This fixes it by inserting the text via `replacingCharacters`
-        if text == UIPasteboard.general.string {
-            if let messageInputBar = messageInputBar {
-                if !messageInputBar.isOverMaxHeight {
-                    textView.text = (textView.text as NSString).replacingCharacters(in: range, with: text)
-                    return false
-                }
-            }
-        }
-        return true
+        placeholderLabelConstraintSet?.width?.constant = -(placeholderLabelInsets.left + placeholderLabelInsets.right)
     }
 }
