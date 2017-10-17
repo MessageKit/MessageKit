@@ -37,7 +37,7 @@ pod 'MessageKit'
 
 If your project is still using Swift 3. Add the following code in your Podfile.
 
-````ruby
+````
 target 'TARGET_NAME' do
     pod 'MessageKit'
     ...
