@@ -35,6 +35,24 @@ See [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) 
 pod 'MessageKit'
 ````
 
+If your project is still using Swift 3. Add the following code in your Podfile.
+
+````
+target 'TARGET_NAME' do
+    pod 'MessageKit'
+    ...
+    post_install do |installer|
+        installer.pods_project.targets.each do |target|
+            if target.name == 'MessageKit'
+                target.build_configurations.each do |config|
+                    config.build_settings['SWIFT_VERSION'] = '4.0'
+                end
+            end
+        end
+    end
+end
+````
+
 ### [Carthage](https://github.com/Carthage/Carthage)
 
 To integrate MessageKit using Carthage, add the following to your `Cartfile`:
