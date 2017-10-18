@@ -6,13 +6,16 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
-### Changed
+### Fixed
 
 -  Fixed a bug that prevented the `textAllignment` property of `InputTextView`'s `placeholderLabel` from having noticable differences when changed to `.center` or `.right`
 [#262](https://github.com/MessageKit/MessageKit/pull/262) by [@nathantannar4](https://github.com/nathantannar4).
 
 -  Initial `contentInset.bottom` reference changed from `messageInputBar` to `inputAccessoryView` to allow custom inp`inputAccessoryView`'s that don't break the initial layout
 [#267](https://github.com/MessageKit/MessageKit/pull/262) by [@nathantannar4](https://github.com/nathantannar4).
+
+-  Changes the `MessageInputBar` bottom `UIStackView`'s `bottomAnchor` to `layoutMarginsGuide.bottomAnchor` to fix issues on the iPhone X
+[#266](https://github.com/MessageKit/MessageKit/pull/266) by [@nathantannar4](https://github.com/nathantannar4).
 
 ### Removed
 
