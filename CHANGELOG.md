@@ -11,6 +11,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 -  Fixed a bug that prevented the `textAllignment` property of `InputTextView`'s `placeholderLabel` from having noticable differences when changed to `.center` or `.right`
 [#262](https://github.com/MessageKit/MessageKit/pull/262) by [@nathantannar4](https://github.com/nathantannar4).
 
+-  Initial `contentInset.bottom` reference changed from `messageInputBar` to `inputAccessoryView` to allow custom inp`inputAccessoryView`'s that don't break the initial layout
+[#267](https://github.com/MessageKit/MessageKit/pull/262) by [@nathantannar4](https://github.com/nathantannar4).
+
 ### Removed
 
 - **Breaking Change** Removed `additionalTopContentInset` property of `MessagesViewController` because this is no longer necessary
