@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class InputBarButtonItem: UIButton {
+open class InputBarButtonItem: UIButton, InputItem {
     
     public enum Spacing {
         case fixed(CGFloat)
@@ -70,7 +70,7 @@ open class InputBarButtonItem: UIButton {
         return contentSize
     }
     
-    internal var parentStackViewPosition: MessageInputBar.UIStackViewPosition?
+    open var parentStackViewPosition: MessageInputBar.UIStackViewPosition?
     
     /// The title for the UIControlState.normal
     open var title: String? {

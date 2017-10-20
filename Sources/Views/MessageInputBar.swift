@@ -180,20 +180,23 @@ open class MessageInputBar: UIView {
         }
     }
     
+    /// Holds the InputManager plugins that can be used to extend the functionality of the MessageInputBar
+    open var inputManagers = [InputManager]()
+    
     /// The InputBarItems held in the leftStackView
-    private(set) var leftStackViewItems: [InputBarButtonItem] = []
+    private(set) var leftStackViewItems: [InputItem] = []
     
     /// The InputBarItems held in the rightStackView
-    private(set) var rightStackViewItems: [InputBarButtonItem] = []
+    private(set) var rightStackViewItems: [InputItem] = []
     
     /// The InputBarItems held in the bottomStackView
-    private(set) var bottomStackViewItems: [InputBarButtonItem] = []
+    private(set) var bottomStackViewItems: [InputItem] = []
     
     /// The InputBarItems held to make use of their hooks but they are not automatically added to a UIStackView
-    open var nonStackViewItems: [InputBarButtonItem] = []
+    open var nonStackViewItems: [InputItem] = []
     
     /// Returns a flatMap of all the items in each of the UIStackViews
-    public var items: [InputBarButtonItem] {
+    public var items: [InputItem] {
         return [leftStackViewItems, rightStackViewItems, bottomStackViewItems, nonStackViewItems].flatMap { $0 }
     }
     
@@ -375,7 +378,9 @@ open class MessageInputBar: UIView {
                 leftStackViewItems.forEach {
                     $0.messageInputBar = self
                     $0.parentStackViewPosition = position
-                    leftStackView.addArrangedSubview($0)
+                    if let view = $0 as? UIView {
+                        leftStackView.addArrangedSubview(view)
+                    }
                 }
                 leftStackView.layoutIfNeeded()
             case .right:
@@ -384,7 +389,9 @@ open class MessageInputBar: UIView {
                 rightStackViewItems.forEach {
                     $0.messageInputBar = self
                     $0.parentStackViewPosition = position
-                    rightStackView.addArrangedSubview($0)
+                    if let view = $0 as? UIView {
+                        rightStackView.addArrangedSubview(view)
+                    }
                 }
                 rightStackView.layoutIfNeeded()
             case .bottom:
@@ -393,7 +400,9 @@ open class MessageInputBar: UIView {
                 bottomStackViewItems.forEach {
                     $0.messageInputBar = self
                     $0.parentStackViewPosition = position
-                    bottomStackView.addArrangedSubview($0)
+                    if let view = $0 as? UIView {
+                        bottomStackView.addArrangedSubview(view)
+                    }
                 }
                 bottomStackView.layoutIfNeeded()
             }
@@ -461,5 +470,6 @@ open class MessageInputBar: UIView {
     open func didSelectSendButton() {
         delegate?.messageInputBar(self, didPressSendButtonWith: inputTextView.text)
         textViewDidChange()
+        inputManagers.forEach { $0.invalidate() }
     }
 }
