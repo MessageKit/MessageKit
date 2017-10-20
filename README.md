@@ -19,7 +19,7 @@
 
 ## Goals
 
-- Provide a :rotating_light:safe:rotating_light: enviroment for others to learn and grow through Open Source.
+- Provide a :rotating_light:safe:rotating_light: environment for others to learn and grow through Open Source.
 - Make adding Chat:speech_balloon: to a project easy.
 - Enable beautiful and customizable Chat UI's.
 - Provide an awesome Open Source project for the iOS open source community.
@@ -30,7 +30,7 @@ See [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) 
 
 
 ## Installation
-### [CocoaPods](https://cocoapods.org/) **Recomended**
+### [CocoaPods](https://cocoapods.org/) **Recommended**
 ````ruby
 pod 'MessageKit'
 ````
