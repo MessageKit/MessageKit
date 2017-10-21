@@ -52,12 +52,7 @@ open class MessageInputBar: UIView {
     }
     
     /// A boarder line anchored to the top of the view
-    open let separatorLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    open let separatorLine = SeparatorLine()
     
     open let leftStackView: UIStackView = {
         let view = UIStackView()
