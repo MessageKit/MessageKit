@@ -25,18 +25,26 @@
 import UIKit
 
 open class MessagesViewController: UIViewController {
+    
+    // MARK: - Properties [Public]
 
-    // MARK: - Properties
-
+    /// The `MessagesCollectionView` managed by the messages view controller object.
     open var messagesCollectionView = MessagesCollectionView()
 
+    /// The `MessageInputBar` used as the `inputAccessoryView` in the view controller.
     open var messageInputBar = MessageInputBar()
     
+    /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
+    /// bottom on the view's first layout.
+    ///
+    /// The default value of this property is `false`.
     open var scrollsToBottomOnFirstLayout: Bool = false
 
+    /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
+    /// bottom whenever the `InputTextView` begins editing.
+    ///
+    /// The default value of this property is `false`.
     open var scrollsToBottomOnKeybordBeginsEditing: Bool = false
-
-    private var isFirstLayout: Bool = true
 
     open override var canBecomeFirstResponder: Bool {
         return true
@@ -49,6 +57,9 @@ open class MessagesViewController: UIViewController {
     open override var shouldAutorotate: Bool {
         return false
     }
+    
+    /// A Boolean value used to determine if `viewDidLayoutSubviews()` has been called.
+    private var isFirstLayout: Bool = true
 
     // MARK: - View Life Cycle
 
@@ -89,13 +100,15 @@ open class MessagesViewController: UIViewController {
         removeKeyboardObservers()
     }
 
-    // MARK: - Methods
+    // MARK: - Methods [Private]
 
+    /// Sets the delegate and dataSource of the messagesCollectionView property.
     private func setupDelegates() {
         messagesCollectionView.delegate = self
         messagesCollectionView.dataSource = self
     }
 
+    /// Registers all cells and supplementary views of the messagesCollectionView property.
     private func registerReusableViews() {
 
         messagesCollectionView.register(TextMessageCell.self)
@@ -108,10 +121,12 @@ open class MessagesViewController: UIViewController {
 
     }
 
+    /// Adds the messagesCollectionView to the controllers root view.
     private func setupSubviews() {
         view.addSubview(messagesCollectionView)
     }
 
+    /// Sets the constraints of the `MessagesCollectionView`.
     private func setupConstraints() {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -235,14 +250,14 @@ extension MessagesViewController: UICollectionViewDataSource {
 
 // MARK: - Keyboard Handling
 
-extension MessagesViewController {
+fileprivate extension MessagesViewController {
 
-    fileprivate func addKeyboardObservers() {
+    func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleTextViewDidBeginEditing), name: .UITextViewTextDidBeginEditing, object: messageInputBar.inputTextView)
     }
 
-    fileprivate func removeKeyboardObservers() {
+    func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UITextViewTextDidBeginEditing, object: messageInputBar.inputTextView)
     }
