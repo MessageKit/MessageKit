@@ -78,7 +78,7 @@ open class MessageInputBar: UIView {
      2. It's spacing is initially set to 15
      */
     open let bottomStackView = InputStackView(axis: .horizontal, spacing: 15)
-    
+        
     open lazy var inputTextView: InputTextView = { [weak self] in
         let textView = InputTextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
