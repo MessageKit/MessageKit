@@ -8,6 +8,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
+-  Two new protocols: `InputItem`, which `InputBarButtonItem` now conforms to, and `InputManager`, which can be used to make plugins for `MessageInputBar`.
+[#274](https://github.com/MessageKit/MessageKit/pull/274) by [@nathantannar4](https://github.com/nathantannar4).
+
 -  Created `SeparatorLine` and `InputStackView` as their own subclass of `UIView` and `UIStackView` respectively. This just improves reusability
 [#273](https://github.com/MessageKit/MessageKit/pull/273) by [@nathantannar4](https://github.com/nathantannar4).
 
