@@ -6,6 +6,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Added
+
+-  Two new protocols: `InputItem`, which `InputBarButtonItem` now conforms to, and `InputManager`, which can be used to make plugins for `MessageInputBar`.
+[#274](https://github.com/MessageKit/MessageKit/pull/274) by [@nathantannar4](https://github.com/nathantannar4).
+
 ### Fixed
 
 -  Fixed a bug that prevented the `textAllignment` property of `InputTextView`'s `placeholderLabel` from having noticable differences when changed to `.center` or `.right`
