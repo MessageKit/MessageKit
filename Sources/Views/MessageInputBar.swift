@@ -54,35 +54,30 @@ open class MessageInputBar: UIView {
     /// A boarder line anchored to the top of the view
     open let separatorLine = SeparatorLine()
     
-    open let leftStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.distribution = .fill
-        view.alignment = .fill
-        view.spacing = 15
-        return view
-    }()
+    /**
+     The InputStackView at the InputStackView.left position
+     
+     ## Important Notes ##
+     1. It's axis is initially set to .horizontal
+     */
+    open let leftStackView = InputStackView(axis: .horizontal, spacing: 0)
     
-    open let rightStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.distribution = .fill
-        view.alignment = .fill
-        view.spacing = 15
-        return view
-    }()
+    /**
+     The InputStackView at the InputStackView.right position
+     
+     ## Important Notes ##
+     1. It's axis is initially set to .horizontal
+     */
+    open let rightStackView = InputStackView(axis: .horizontal, spacing: 0)
     
-    open let bottomStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.distribution = .fill
-        view.alignment = .fill
-        view.spacing = 15
-        return view
-    }()
+    /**
+     The InputStackView at the InputStackView.bottom position
+     
+     ## Important Notes ##
+     1. It's axis is initially set to .horizontal
+     2. It's spacing is initially set to 15
+     */
+    open let bottomStackView = InputStackView(axis: .horizontal, spacing: 15)
     
     open lazy var inputTextView: InputTextView = { [weak self] in
         let textView = InputTextView()
