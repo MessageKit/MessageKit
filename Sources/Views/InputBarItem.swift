@@ -24,8 +24,19 @@
 
 import UIKit
 
+/**
+ A InputItem that inherits from UIButton
+ 
+ ## Important Notes ##
+ 1. Intended to be used in an `InputStackView`
+ */
 open class InputBarButtonItem: UIButton {
     
+    /// The spacing properties of the InputBarButtonItem
+    ///
+    /// - fixed: The spacing is fixed
+    /// - flexible: The spacing is flexible
+    /// - none: There is no spacing
     public enum Spacing {
         case fixed(CGFloat)
         case flexible
@@ -36,24 +47,25 @@ open class InputBarButtonItem: UIButton {
     
     // MARK: - Properties
     
-    /// Set automatically when using the InputBarAccessoryView method 'setStackViewItems'
+    /// A weak reference to the MessageInputBar that the InputBarButtonItem used in
     open weak var messageInputBar: MessageInputBar?
     
-    public var spacing: Spacing = .none {
+    /// The spacing property of the InputBarButtonItem
+    open var spacing: Spacing = .none {
         didSet {
             switch spacing {
             case .flexible:
-              setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .horizontal)
+                setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .horizontal)
             case .fixed:
-              setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+                setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
             case .none:
-              setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
+                setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
             }
         }
     }
     
     /// When not nil this size overrides the intrinsicContentSize
-    private(set) var size: CGSize? = CGSize(width: 20, height: 20) {
+    private var size: CGSize? = CGSize(width: 20, height: 20) {
         didSet {
             invalidateIntrinsicContentSize()
         }
@@ -70,7 +82,8 @@ open class InputBarButtonItem: UIButton {
         return contentSize
     }
     
-    internal var parentStackViewPosition: MessageInputBar.UIStackViewPosition?
+    /// A reference to the stack view position that the InputBarButtonItem is held in
+    open var parentStackViewPosition: InputStackView.Position?
     
     /// The title for the UIControlState.normal
     open var title: String? {
@@ -92,6 +105,7 @@ open class InputBarButtonItem: UIButton {
         }
     }
     
+    /// Calls the onSelectedAction or onDeselectedAction when set
     open override var isHighlighted: Bool {
         didSet {
             if isHighlighted {
@@ -102,6 +116,7 @@ open class InputBarButtonItem: UIButton {
         }
     }
     
+    /// Calls the onEnabledAction or onDisabledAction when set
     open override var isEnabled: Bool {
         didSet {
             if isEnabled {
@@ -112,11 +127,12 @@ open class InputBarButtonItem: UIButton {
         }
     }
     
-    // MARK: - Hooks
+    // MARK: - Reactive Hooks
     
     private var onTouchUpInsideAction: InputBarButtonItemAction?
     private var onKeyboardEditingBeginsAction: InputBarButtonItemAction?
     private var onKeyboardEditingEndsAction: InputBarButtonItemAction?
+    private var onKeyboardSwipeGestureAction: ((InputBarButtonItem, UISwipeGestureRecognizer) -> Void)?
     private var onTextViewDidChangeAction: ((InputBarButtonItem, InputTextView) -> Void)?
     private var onSelectedAction: InputBarButtonItemAction?
     private var onDeselectedAction: InputBarButtonItemAction?
@@ -139,13 +155,15 @@ open class InputBarButtonItem: UIButton {
         setup()
     }
     
+    // MARK: - Setup
+    
+    /// Sets up the default properties
     open func setup() {
-        
         contentVerticalAlignment = .center
         contentHorizontalAlignment = .center
         imageView?.contentMode = .scaleAspectFit
-      setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
-      setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .vertical)
+        setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
+        setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .vertical)
         setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1), for: .normal)
         setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
         setTitleColor(.lightGray, for: .disabled)
@@ -155,6 +173,13 @@ open class InputBarButtonItem: UIButton {
     
     // MARK: - Size Adjustment
     
+    /// Sets the size of the InputBarButtonItem which overrides the intrinsicContentSize. When set to nil
+    /// the default intrinsicContentSize is used. The new size will be laid out in the UIStackView that
+    /// the InputBarButtonItem is held in
+    ///
+    /// - Parameters:
+    ///   - newValue: The new size
+    ///   - animated: If the layout should be animated
     open func setSize(_ newValue: CGSize?, animated: Bool) {
         size = newValue
         if animated, let position = parentStackViewPosition {
@@ -166,90 +191,152 @@ open class InputBarButtonItem: UIButton {
     
     // MARK: - Hook Setup Methods
     
+    /// Used to setup your own initial properties
+    ///
+    /// - Parameter item: A reference to Self
+    /// - Returns: Self
     @discardableResult
-    open func configure(_ setup: InputBarButtonItemAction) -> Self {
-        setup(self)
+    open func configure(_ item: InputBarButtonItemAction) -> Self {
+        item(self)
         return self
     }
     
+    /// Sets the onKeyboardEditingBeginsAction
+    ///
+    /// - Parameter action: The new onKeyboardEditingBeginsAction
+    /// - Returns: Self
     @discardableResult
     open func onKeyboardEditingBegins(_ action: @escaping InputBarButtonItemAction) -> Self {
         onKeyboardEditingBeginsAction = action
         return self
     }
     
+    /// Sets the onKeyboardEditingEndsAction
+    ///
+    /// - Parameter action: The new onKeyboardEditingEndsAction
+    /// - Returns: Self
     @discardableResult
     open func onKeyboardEditingEnds(_ action: @escaping InputBarButtonItemAction) -> Self {
         onKeyboardEditingEndsAction = action
         return self
     }
     
+    /// Sets the onKeyboardSwipeGestureAction
+    ///
+    /// - Parameter action: The new onKeyboardSwipeGestureAction
+    /// - Returns: Self
+    @discardableResult
+    open func onKeyboardSwipeGesture(_ action: @escaping (_ item: InputBarButtonItem, _ gesture: UISwipeGestureRecognizer) -> Void) -> Self {
+        onKeyboardSwipeGestureAction = action
+        return self
+    }
+    
+    /// Sets the onTextViewDidChangeAction
+    ///
+    /// - Parameter action: The new onTextViewDidChangeAction
+    /// - Returns: Self
     @discardableResult
     open func onTextViewDidChange(_ action: @escaping (_ item: InputBarButtonItem, _ textView: InputTextView) -> Void) -> Self {
         onTextViewDidChangeAction = action
         return self
     }
     
+    /// Sets the onTouchUpInsideAction
+    ///
+    /// - Parameter action: The new onTouchUpInsideAction
+    /// - Returns: Self
     @discardableResult
     open func onTouchUpInside(_ action: @escaping InputBarButtonItemAction) -> Self {
         onTouchUpInsideAction = action
         return self
     }
     
+    /// Sets the onSelectedAction
+    ///
+    /// - Parameter action: The new onSelectedAction
+    /// - Returns: Self
     @discardableResult
     open func onSelected(_ action: @escaping InputBarButtonItemAction) -> Self {
         onSelectedAction = action
         return self
     }
     
+    /// Sets the onDeselectedAction
+    ///
+    /// - Parameter action: The new onDeselectedAction
+    /// - Returns: Self
     @discardableResult
     open func onDeselected(_ action: @escaping InputBarButtonItemAction) -> Self {
         onDeselectedAction = action
         return self
     }
     
+    /// Sets the onEnabledAction
+    ///
+    /// - Parameter action: The new onEnabledAction
+    /// - Returns: Self
     @discardableResult
     open func onEnabled(_ action: @escaping InputBarButtonItemAction) -> Self {
         onEnabledAction = action
         return self
     }
     
+    /// Sets the onDisabledAction
+    ///
+    /// - Parameter action: The new onDisabledAction
+    /// - Returns: Self
     @discardableResult
     open func onDisabled(_ action: @escaping InputBarButtonItemAction) -> Self {
         onDisabledAction = action
         return self
     }
     
-    // MARK: - Hook Executors
+    // MARK: - InputItem Protocol
     
-    public func textViewDidChangeAction(with textView: InputTextView) {
+    /// Executes the onTextViewDidChangeAction with the given textView
+    ///
+    /// - Parameter textView: A reference to the InputTextView
+    open func textViewDidChangeAction(with textView: InputTextView) {
         onTextViewDidChangeAction?(self, textView)
     }
     
-    public func keyboardEditingEndsAction() {
+    /// Executes the onKeyboardSwipeGestureAction with the given gesture
+    ///
+    /// - Parameter gesture: A reference to the gesture that was recognized
+    open func keyboardSwipeGestureAction(with gesture: UISwipeGestureRecognizer) {
+        onKeyboardSwipeGestureAction?(self, gesture)
+    }
+    
+    /// Executes the onKeyboardEditingEndsAction
+    open func keyboardEditingEndsAction() {
         onKeyboardEditingEndsAction?(self)
     }
     
-    public func keyboardEditingBeginsAction() {
+    /// Executes the onKeyboardEditingBeginsAction
+    open func keyboardEditingBeginsAction() {
         onKeyboardEditingBeginsAction?(self)
     }
     
-  @objc public func touchUpInsideAction() {
+    /// Executes the onTouchUpInsideAction
+    @objc
+    open func touchUpInsideAction() {
         onTouchUpInsideAction?(self)
     }
     
-    // MARK: - Static
+    // MARK: - Static Spacers
     
+    /// An InputBarButtonItem that's spacing property is set to be .flexible
     open static var flexibleSpace: InputBarButtonItem {
         let item = InputBarButtonItem()
-        item.size = .zero
+        item.setSize(.zero, animated: false)
         item.spacing = .flexible
         return item
     }
     
+    /// An InputBarButtonItem that's spacing property is set to be .fixed with the width arguement
     open static func fixedSpace(_ width: CGFloat) -> InputBarButtonItem {
         let item = InputBarButtonItem()
-        item.size = .zero
+        item.setSize(.zero, animated: false)
         item.spacing = .fixed(width)
         return item
     }
