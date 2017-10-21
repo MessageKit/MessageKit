@@ -37,7 +37,7 @@ open class MessageInputBar: UIView {
     open var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        view.backgroundColor = .inputBarGray
         return view
     }()
     
@@ -120,7 +120,7 @@ open class MessageInputBar: UIView {
     open var sendButton: InputBarButtonItem = {
         return InputBarButtonItem()
             .configure {
-                $0.setSize(CGSize(width: 52, height: 36), animated: false)
+                $0.setSize(CGSize(width: 52, height: 30), animated: false)
                 $0.isEnabled = false
                 $0.title = "Send"
                 $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
@@ -288,7 +288,6 @@ open class MessageInputBar: UIView {
         setupSubviews()
         setupConstraints()
         setupObservers()
-        setupGestureRecognizers()
     }
     
     /// Adds the required notification observers
@@ -305,17 +304,6 @@ open class MessageInputBar: UIView {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MessageInputBar.inputTextViewDidEndEditing),
                                                name: NSNotification.Name.UITextViewTextDidEndEditing, object: nil)
-    }
-    
-    /// Adds a UISwipeGestureRecognizer for each direction to the InputTextView
-    private func setupGestureRecognizers() {
-        let directions: [UISwipeGestureRecognizerDirection] = [.left, .right]
-        for direction in directions {
-            let gesture = UISwipeGestureRecognizer(target: self,
-                                                   action: #selector(MessageInputBar.didSwipeTextView(_:)))
-            gesture.direction = direction
-            inputTextView.addGestureRecognizer(gesture)
-        }
     }
     
     /// Adds all of the subviews
@@ -599,14 +587,6 @@ open class MessageInputBar: UIView {
     }
     
     // MARK: - User Actions
-    
-    /// Calls each items `keyboardSwipeGestureAction` method
-    /// Calls the delegates `didSwipeTextViewWith` method
-    @objc
-    open func didSwipeTextView(_ gesture: UISwipeGestureRecognizer) {
-        items.forEach { $0.keyboardSwipeGestureAction(with: gesture) }
-        delegate?.messageInputBar(self, didSwipeTextViewWith: gesture)
-    }
     
     /// Calls the delegates `didPressSendButtonWith` method
     /// Assumes that the InputTextView's text has been set to empty and calls `inputTextViewDidChange()`

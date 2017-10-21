@@ -31,7 +31,7 @@ import UIKit
  ## Important Notes ##
  1. Changing the font, textAlignment or textContainerInset automatically performs the same modifications to the placeholderLabel
  2. Intended to be used in an `MessageInputBar`
- 3. Default placeholder text is "Aa"
+ 3. Default placeholder text is "New Message"
  4. Will pass a pasted image it's `MessageInputBar`'s `InputManager`s
  */
 open class InputTextView: UITextView {
@@ -55,14 +55,14 @@ open class InputTextView: UITextView {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .lightGray
-        label.text = "Aa"
+        label.text = "New Message"
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     /// The placeholder text that appears when there is no text
-    open var placeholder: String? = "Aa" {
+    open var placeholder: String? = "New Message" {
         didSet {
             placeholderLabel.text = placeholder
         }
@@ -76,7 +76,7 @@ open class InputTextView: UITextView {
     }
     
     /// The UIEdgeInsets the placeholderLabel has within the InputTextView
-    open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4) {
+    open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 4) {
         didSet {
             updateConstraintsForPlaceholderLabel()
         }
@@ -146,13 +146,18 @@ open class InputTextView: UITextView {
     /// Sets up the default properties
     open func setup() {
         
-        backgroundColor = .clear
+        backgroundColor = .white
         font = UIFont.preferredFont(forTextStyle: .body)
         isScrollEnabled = false
+        textContainerInset = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+        placeholderLabelInsets = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 4)
         scrollIndicatorInsets = UIEdgeInsets(top: .leastNonzeroMagnitude,
                                              left: .leastNonzeroMagnitude,
                                              bottom: .leastNonzeroMagnitude,
                                              right: .leastNonzeroMagnitude)
+        layer.cornerRadius = 5.0
+        layer.borderWidth = 1.25
+        layer.borderColor = UIColor.lightGray.cgColor
         addObservers()
         addPlaceholderLabel()
     }

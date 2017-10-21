@@ -50,13 +50,6 @@ public protocol MessageInputBarDelegate: class {
     ///   - messageInputBar: The MessageInputBar
     ///   - text: The current text in the MessageInputBar's InputTextView
     func messageInputBar(_ messageInputBar: MessageInputBar, textViewTextDidChangeTo text: String)
-     
-    /// Called when a swipe gesture was recognized on the MessageInputBar's InputTextView
-    ///
-    /// - Parameters:
-    ///   - messageInputBar: The MessageInputBar
-    ///   - gesture: The gesture that was recognized
-    func messageInputBar(_ messageInputBar: MessageInputBar, didSwipeTextViewWith gesture: UISwipeGestureRecognizer)
 }
 
 public extension MessageInputBarDelegate {
