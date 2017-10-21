@@ -163,7 +163,7 @@ class ConversationViewController: MessagesViewController {
         messageInputBar.sendButton.title = nil
         messageInputBar.sendButton.imageView?.layer.cornerRadius = 16
         messageInputBar.sendButton.backgroundColor = .clear
-        messageInputBar.textViewPadding.right = -38
+        messageInputBar.inputTextViewPadding.right = -38
     }
     
     func defaultStyle() {

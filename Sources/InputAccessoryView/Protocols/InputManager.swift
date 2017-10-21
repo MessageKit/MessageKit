@@ -22,25 +22,19 @@
  SOFTWARE.
  */
 
-import Foundation
 import UIKit
 
-public protocol MessageInputBarDelegate: class {
+/// InputManager is a protocol that makes integrating plugins to the MessageInputBar easy.
+public protocol InputManager: class {
     
-    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String)
+    /// Should reload the state if the InputManager
+    func reload()
     
-    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize)
+    /// Should remove any content that the InputManager is managing
+    func invalidate()
     
-    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String)
-
-}
-
-public extension MessageInputBarDelegate {
-    
-    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {}
-    
-    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize) {}
-    
-    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String) {}
-
+    /// Should handle the input of data types that an InputManager manages
+    ///
+    /// - Parameter object: The object to input
+    func handleInput(of object: AnyObject)
 }
