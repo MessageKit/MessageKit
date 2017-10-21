@@ -50,7 +50,8 @@ open class InputBarButtonItem: UIButton {
     /// A weak reference to the MessageInputBar that the InputBarButtonItem used in
     open weak var messageInputBar: MessageInputBar?
     
-    /// The spacing property of the InputBarButtonItem
+    /// The spacing property of the InputBarButtonItem that determines the contentHuggingPriority and any
+    /// additional space to the intrinsicContentSize
     open var spacing: Spacing = .none {
         didSet {
             switch spacing {
@@ -132,7 +133,6 @@ open class InputBarButtonItem: UIButton {
     private var onTouchUpInsideAction: InputBarButtonItemAction?
     private var onKeyboardEditingBeginsAction: InputBarButtonItemAction?
     private var onKeyboardEditingEndsAction: InputBarButtonItemAction?
-    private var onKeyboardSwipeGestureAction: ((InputBarButtonItem, UISwipeGestureRecognizer) -> Void)?
     private var onTextViewDidChangeAction: ((InputBarButtonItem, InputTextView) -> Void)?
     private var onSelectedAction: InputBarButtonItemAction?
     private var onDeselectedAction: InputBarButtonItemAction?
@@ -221,16 +221,6 @@ open class InputBarButtonItem: UIButton {
         return self
     }
     
-    /// Sets the onKeyboardSwipeGestureAction
-    ///
-    /// - Parameter action: The new onKeyboardSwipeGestureAction
-    /// - Returns: Self
-    @discardableResult
-    open func onKeyboardSwipeGesture(_ action: @escaping (_ item: InputBarButtonItem, _ gesture: UISwipeGestureRecognizer) -> Void) -> Self {
-        onKeyboardSwipeGestureAction = action
-        return self
-    }
-    
     /// Sets the onTextViewDidChangeAction
     ///
     /// - Parameter action: The new onTextViewDidChangeAction
@@ -298,13 +288,6 @@ open class InputBarButtonItem: UIButton {
     /// - Parameter textView: A reference to the InputTextView
     open func textViewDidChangeAction(with textView: InputTextView) {
         onTextViewDidChangeAction?(self, textView)
-    }
-    
-    /// Executes the onKeyboardSwipeGestureAction with the given gesture
-    ///
-    /// - Parameter gesture: A reference to the gesture that was recognized
-    open func keyboardSwipeGestureAction(with gesture: UISwipeGestureRecognizer) {
-        onKeyboardSwipeGestureAction?(self, gesture)
     }
     
     /// Executes the onKeyboardEditingEndsAction

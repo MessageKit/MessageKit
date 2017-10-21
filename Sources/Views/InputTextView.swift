@@ -39,13 +39,13 @@ open class InputTextView: UITextView {
     
     open override var text: String! {
         didSet {
-            textViewTextDidChange()
+            placeholderLabel.isHidden = !text.isEmpty
         }
     }
     
     open override var attributedText: NSAttributedString! {
         didSet {
-            textViewTextDidChange()
+            placeholderLabel.isHidden = !text.isEmpty
         }
     }
     
@@ -60,7 +60,7 @@ open class InputTextView: UITextView {
         return label
     }()
     
-    /// The placeholder text that appears when there is no text
+    /// The placeholder text that appears when there is no text. The default value is "New Message"
     open var placeholder: String? = "New Message" {
         didSet {
             placeholderLabel.text = placeholder
@@ -92,13 +92,6 @@ open class InputTextView: UITextView {
     open override var textAlignment: NSTextAlignment {
         didSet {
             placeholderLabel.textAlignment = textAlignment
-        }
-    }
-    
-    /// The textContainerInset of the InputTextView. When set the placeholderLabelInsets is also updated
-    open override var textContainerInset: UIEdgeInsets {
-        didSet {
-            placeholderLabelInsets = textContainerInset
         }
     }
     
@@ -155,12 +148,11 @@ open class InputTextView: UITextView {
         layer.cornerRadius = 5.0
         layer.borderWidth = 1.25
         layer.borderColor = UIColor.lightGray.cgColor
-        addObservers()
-        addPlaceholderLabel()
+        setupPlaceholderLabel()
     }
     
     /// Adds the placeholderLabel to the view and sets up its initial constraints
-    private func addPlaceholderLabel() {
+    private func setupPlaceholderLabel() {
         
         addSubview(placeholderLabel)
         placeholderLabelConstraintSet = NSLayoutConstraintSet(
@@ -178,23 +170,5 @@ open class InputTextView: UITextView {
         placeholderLabelConstraintSet?.bottom?.constant = -placeholderLabelInsets.bottom
         placeholderLabelConstraintSet?.left?.constant = placeholderLabelInsets.left
         placeholderLabelConstraintSet?.width?.constant = -(placeholderLabelInsets.left + placeholderLabelInsets.right)
-    }
-    
-    /// Adds a notification for .UITextViewTextDidChange to detect when the placeholderLabel
-    /// should be hidden or shown
-    private func addObservers() {
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(InputTextView.textViewTextDidChange),
-                                               name: Notification.Name.UITextViewTextDidChange,
-                                               object: nil)
-    }
-    
-    // MARK: - Notifications
-    
-    /// Updates the placeholderLabel's isHidden property based on the text being empty or not
-    @objc
-    open func textViewTextDidChange() {
-        placeholderLabel.isHidden = !text.isEmpty
     }
 }

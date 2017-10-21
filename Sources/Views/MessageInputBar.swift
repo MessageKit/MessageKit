@@ -306,7 +306,7 @@ open class MessageInputBar: UIView {
     /// Layout the given UIStackView's
     ///
     /// - Parameter positions: The UIStackView's to layout
-    public func layoutStackViews(_ positions: [InputStackView.Position] = [.left, .right, .bottom, .top]) {
+    public func layoutStackViews(_ positions: [InputStackView.Position] = [.left, .right, .bottom]) {
         
         for position in positions {
             switch position {
@@ -319,8 +319,6 @@ open class MessageInputBar: UIView {
             case .bottom:
                 bottomStackView.setNeedsLayout()
                 bottomStackView.layoutIfNeeded()
-            case .top:
-                break
             }
         }
     }
@@ -388,8 +386,6 @@ open class MessageInputBar: UIView {
                     bottomStackView.addArrangedSubview($0)
                 }
                 bottomStackView.layoutIfNeeded()
-            case .top:
-                break
             }
         }
         
