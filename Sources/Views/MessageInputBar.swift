@@ -360,15 +360,15 @@ open class MessageInputBar: UIView {
         bottomStackViewLayoutSet?.activate()
     }
     
-    // MARK: - UIStackView InputBarItem Methods
+    // MARK: - UIStackView InputItem Methods
     
-    /// Removes all of the arranged subviews from the UIStackView and adds the given items. Sets the inputBarAccessoryView property of the InputBarButtonItem
+    /// Removes all of the arranged subviews from the UIStackView and adds the given items. Sets the messageInputBar property of the InputItem
     ///
     /// - Parameters:
     ///   - items: New UIStackView arranged views
     ///   - position: The targeted UIStackView
     ///   - animated: If the layout should be animated
-    open func setStackViewItems(_ items: [InputBarButtonItem], forStack position: UIStackViewPosition, animated: Bool) {
+    open func setStackViewItems(_ items: [InputItem], forStack position: UIStackViewPosition, animated: Bool) {
         
         func setNewItems() {
             switch position {
