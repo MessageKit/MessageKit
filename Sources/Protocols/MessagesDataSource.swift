@@ -60,6 +60,8 @@ public protocol MessagesDataSource: class {
     ///
     /// The default value returned by this method is `Avatar()`.
     func avatar(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar
+    
+    func avatarView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView, convertAvatarView: AvatarView) -> AvatarView
 
     /// The attributed text to be used for cell's top label.
     ///
@@ -91,6 +93,10 @@ public extension MessagesDataSource {
 
     func avatar(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
         return Avatar()
+    }
+    
+    func avatarView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView, convertAvatarView: AvatarView) -> AvatarView {
+        return convertAvatarView
     }
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
