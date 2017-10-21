@@ -24,10 +24,31 @@
 
 import Foundation
 
+/// A protocol used by the `MessagesViewController` to customize the appearance of a `TextMessageCell`.
 public protocol TextMessageDisplayDelegate: class {
 
+    /// Specifies the color of the text for a `TextMessageCell`.
+    ///
+    /// - Parameters:
+    ///   - message: A `MessageType` with a `MessageData` case of `.text` or `.attributedText` to which the color will apply.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is determined by the messages `Sender`:
+    ///
+    /// Current Sender: UIColor.white
+    ///
+    /// All other Senders: UIColor.darkText
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
 
+    /// Specifies the `DetectorType`s to check for the `MessageType`'s text against.
+    ///
+    /// - Parameters:
+    ///   - message: A `MessageType` with a `MessageData` case of `.text` or `.attributedText` to which the detectors will apply.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is all available detector types.
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType]
 
 }
@@ -45,10 +66,31 @@ public extension TextMessageDisplayDelegate {
 
 }
 
+/// A protocol used by the `MessagesViewController` to customize the appearance of a `MessagesCollectionViewCell`.
 public protocol MessagesDisplayDelegate: class {
 
+    /// Specifies the `MessageStyle` to be used for a `MessageContainerView`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is `MessageStyle.bubble`.
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle
-    
+
+    /// Specifies the background color of the `MessageContainerView`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value is `UIColor.clear` for emoji messages. For all other `MessageData` cases, the color depends on the `Sender`:
+    ///
+    /// Current Sender: Green
+    ///
+    /// All other Senders: Gray
     func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
     
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView
