@@ -6,6 +6,18 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Added
+
+- Added `removedCachedAttributes(for:MessageType)`, `removeAllCachedAttributes()`, and `attributesCacheMaxSize` to
+`MessagesCollectionViewFlowLayout` to manage the caching of layout information for messages.
+[#263](https://github.com/MessageKit/MessageKit/pull/263) by [@SD10](https://github.com/sd10).
+
+### Changed
+
+- Layout information is now being cached by `MessagesCollectionViewFlowLayout` for each `MessageType` using the
+`messageId` property. (This means if your layout is dynamic over the `IndexPath` you need to handle cache invalidation).
+[#263](https://github.com/MessageKit/MessageKit/pull/263) by [@SD10](https://github.com/sd10).
+
 ### Fixed
 
 -  Fixed a bug that prevented the `textAllignment` property of `InputTextView`'s `placeholderLabel` from having noticable differences when changed to `.center` or `.right`

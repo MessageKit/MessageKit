@@ -24,6 +24,8 @@
 
 import Foundation
 
+/// A intermediate context used to store recently calculated values used by
+/// the `MessagesCollectionViewFlowLayout` object to reduce redundant calculations.
 final class MessageIntermediateLayoutAttributes {
 
     // Message
