@@ -306,7 +306,7 @@ open class MessageInputBar: UIView {
     /// Layout the given UIStackView's
     ///
     /// - Parameter positions: The UIStackView's to layout
-    public func layoutStackViews(_ positions: [UIStackViewPosition] = [.left, .right, .bottom]) {
+    public func layoutStackViews(_ positions: [InputStackView.Position] = [.left, .right, .bottom]) {
         
         for position in positions {
             switch position {
@@ -355,7 +355,7 @@ open class MessageInputBar: UIView {
     ///   - items: New UIStackView arranged views
     ///   - position: The targeted UIStackView
     ///   - animated: If the layout should be animated
-    open func setStackViewItems(_ items: [InputBarButtonItem], forStack position: UIStackViewPosition, animated: Bool) {
+    open func setStackViewItems(_ items: [InputBarButtonItem], forStack position: InputStackView.Position, animated: Bool) {
         
         func setNewItems() {
             switch position {
