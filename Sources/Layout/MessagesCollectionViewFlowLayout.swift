@@ -695,7 +695,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
     ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating origin.
     private func avatarOrigin(for attributes: MessageIntermediateLayoutAttributes, and contentFrame: CGRect) -> CGPoint {
         
-        guard attributes.avatarSize != .zero else { return .zero }
+        guard attributes.avatarSize != .zero, contentFrame.size != .zero else { return .zero }
         
         var origin = CGPoint.zero
         
@@ -732,7 +732,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
     ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating origin.
     private func messageContainerOrigin(for attributes: MessageIntermediateLayoutAttributes, and contentFrame: CGRect) -> CGPoint {
         
-        guard attributes.messageContainerSize != .zero else { return .zero }
+        guard attributes.messageContainerSize != .zero, contentFrame.size != .zero else { return .zero }
         
         var origin = CGPoint.zero
         
@@ -757,7 +757,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
     ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating origin.
     private func cellBottomLabelOrigin(for attributes: MessageIntermediateLayoutAttributes, and contentFrame: CGRect) -> CGPoint {
         
-        guard attributes.cellBottomLabelSize != .zero else { return .zero }
+        guard attributes.cellBottomLabelSize != .zero, contentFrame.size != .zero else { return .zero }
         
         var origin = CGPoint(x: 0, y: contentFrame.height - attributes.cellBottomLabelSize.height)
         
@@ -790,7 +790,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
     ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating origin.
     fileprivate func cellTopLabelOrigin(for attributes: MessageIntermediateLayoutAttributes, and contentFrame: CGRect) -> CGPoint {
         
-        guard attributes.cellTopLabelSize != .zero else { return .zero }
+        guard attributes.cellTopLabelSize != .zero, contentFrame.size != .zero else { return .zero }
         
         var origin = CGPoint.zero
         
