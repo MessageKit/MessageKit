@@ -174,12 +174,12 @@ final class SampleData {
         }
     }
 
-    func getMessages(count: Int) -> [MockMessage] {
+    func getMessages(count: Int, completion: ([MockMessage]) -> Void) {
         var messages: [MockMessage] = []
         for _ in 0...count {
             messages.append(randomMessage())
         }
-        return messages
+        completion(messages)
     }
 
     func getAvatarFor(sender: Sender) -> Avatar {

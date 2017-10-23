@@ -36,13 +36,6 @@ open class MessagesViewController: UIViewController {
 
     open var scrollsToBottomOnKeybordBeginsEditing: Bool = false
 
-    open var additionalTopContentInset: CGFloat = 0 {
-        didSet {
-            let inset = topLayoutGuide.length + additionalTopContentInset
-            messagesCollectionView.contentInset.top = inset
-        }
-    }
-
     private var isFirstLayout: Bool = true
 
     open override var canBecomeFirstResponder: Bool {
@@ -80,9 +73,8 @@ open class MessagesViewController: UIViewController {
             defer { isFirstLayout = false }
 
             addKeyboardObservers()
-            messagesCollectionView.contentInset.top = additionalTopContentInset + topLayoutGuide.length
-            messagesCollectionView.contentInset.bottom = messageInputBar.frame.height
-            messagesCollectionView.scrollIndicatorInsets.bottom = messageInputBar.frame.height
+            messagesCollectionView.contentInset.bottom = inputAccessoryView?.frame.height ?? 0
+            messagesCollectionView.scrollIndicatorInsets.bottom = inputAccessoryView?.frame.height ?? 0
             
             //Scroll to bottom at first load
             if scrollsToBottomOnFirstLayout {
@@ -273,7 +265,7 @@ extension MessagesViewController {
 
         } else {
             //Software keyboard is found
-            let bottomInset = keyboardEndFrame.height > messageInputBar.frame.height ? keyboardEndFrame.height : messageInputBar.frame.height
+            let bottomInset = keyboardEndFrame.height > (inputAccessoryView?.frame.height ?? 0) ? keyboardEndFrame.height : (inputAccessoryView?.frame.height ?? 0)
             messagesCollectionView.contentInset.bottom = bottomInset
             messagesCollectionView.scrollIndicatorInsets.bottom = bottomInset
         }

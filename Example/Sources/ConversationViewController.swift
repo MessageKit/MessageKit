@@ -30,7 +30,9 @@ class ConversationViewController: MessagesViewController {
 
     var messageList: [MockMessage] = [] {
         didSet {
-            messagesCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.messagesCollectionView.reloadData()
+            }
         }
     }
 
@@ -38,7 +40,11 @@ class ConversationViewController: MessagesViewController {
         super.viewDidLoad()
 
         DispatchQueue.global(qos: .userInitiated).async {
-            self.messageList = SampleData.shared.getMessages(count: 100)
+            SampleData.shared.getMessages(count: 100) { messages in
+                DispatchQueue.main.async {
+                    self.messageList = messages
+                }
+            }
         }
 
         messagesCollectionView.messagesDataSource = self

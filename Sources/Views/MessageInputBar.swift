@@ -52,43 +52,33 @@ open class MessageInputBar: UIView {
     }
     
     /// A boarder line anchored to the top of the view
-    open let separatorLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    open let separatorLine = SeparatorLine()
     
-    open let leftStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.distribution = .fill
-        view.alignment = .fill
-        view.spacing = 15
-        return view
-    }()
+    /**
+     The InputStackView at the InputStackView.left position
+     
+     ## Important Notes ##
+     1. It's axis is initially set to .horizontal
+     */
+    open let leftStackView = InputStackView(axis: .horizontal, spacing: 0)
     
-    open let rightStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.distribution = .fill
-        view.alignment = .fill
-        view.spacing = 15
-        return view
-    }()
+    /**
+     The InputStackView at the InputStackView.right position
+     
+     ## Important Notes ##
+     1. It's axis is initially set to .horizontal
+     */
+    open let rightStackView = InputStackView(axis: .horizontal, spacing: 0)
     
-    open let bottomStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.distribution = .fill
-        view.alignment = .fill
-        view.spacing = 15
-        return view
-    }()
-    
+    /**
+     The InputStackView at the InputStackView.bottom position
+     
+     ## Important Notes ##
+     1. It's axis is initially set to .horizontal
+     2. It's spacing is initially set to 15
+     */
+    open let bottomStackView = InputStackView(axis: .horizontal, spacing: 15)
+        
     open lazy var inputTextView: InputTextView = { [weak self] in
         let textView = InputTextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -277,7 +267,7 @@ open class MessageInputBar: UIView {
         
         bottomStackViewLayoutSet = NSLayoutConstraintSet(
             top:    bottomStackView.topAnchor.constraint(equalTo: inputTextView.bottomAnchor),
-            bottom: bottomStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
+            bottom: bottomStackView.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor, constant: -padding.bottom),
             left:   bottomStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
             right:  bottomStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
             ).activate()
@@ -316,7 +306,7 @@ open class MessageInputBar: UIView {
     /// Layout the given UIStackView's
     ///
     /// - Parameter positions: The UIStackView's to layout
-    public func layoutStackViews(_ positions: [UIStackViewPosition] = [.left, .right, .bottom]) {
+    public func layoutStackViews(_ positions: [InputStackView.Position] = [.left, .right, .bottom]) {
         
         for position in positions {
             switch position {
@@ -365,7 +355,7 @@ open class MessageInputBar: UIView {
     ///   - items: New UIStackView arranged views
     ///   - position: The targeted UIStackView
     ///   - animated: If the layout should be animated
-    open func setStackViewItems(_ items: [InputBarButtonItem], forStack position: UIStackViewPosition, animated: Bool) {
+    open func setStackViewItems(_ items: [InputBarButtonItem], forStack position: InputStackView.Position, animated: Bool) {
         
         func setNewItems() {
             switch position {
