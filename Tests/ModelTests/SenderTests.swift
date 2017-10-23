@@ -22,19 +22,30 @@
  SOFTWARE.
  */
 
-import Foundation
+import XCTest
+@testable import MessageKit
 
-struct TestMessage: MessageType {
-    var messageId: String
-    var sender: Sender
-    var sentDate: Date
-    var data: MessageData
-    
-    init(text: String, sender: Sender, messageId: String) {
-        data = .text(text)
-        self.sender = sender
-        self.messageId = messageId
-        self.sentDate = Date()
+class SenderTests: XCTestCase {
+
+    var senderBob: Sender!
+
+    override func setUp() {
+        super.setUp()
+        senderBob = Sender(id: "id1", displayName: "Bob")
     }
-    
+
+    override func tearDown() {
+        super.tearDown()
+        senderBob = nil
+    }
+
+    func testEquatableWithSameID() {
+        let alsoSenderBob = Sender(id: "id1", displayName: "Bob")
+        XCTAssertEqual(senderBob, alsoSenderBob)
+    }
+
+    func testEquatableWithDifferentID() {
+        let anotherSenderBob = Sender(id: "id2", displayName: "Bob")
+        XCTAssertNotEqual(senderBob, anotherSenderBob)
+    }
 }
