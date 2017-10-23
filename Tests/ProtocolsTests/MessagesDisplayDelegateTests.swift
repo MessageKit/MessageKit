@@ -65,7 +65,7 @@ class MessagesDisplayDelegateTests: XCTestCase {
                           UIColor.outgoingGreen)
     }
 
-    func testBackgroundColorWithoutDataSource_ReturnsWhiteForDefault() {
+    func testBackgroundColorWithoutDataSource_returnsWhiteForDefault() {
         sut.messagesCollectionView.messagesDataSource = nil
         let backgroundColor = sut.backgroundColor(for: sut.dataProvider.messages[0],
                                                   at: IndexPath(item: 0, section: 0),
@@ -74,7 +74,7 @@ class MessagesDisplayDelegateTests: XCTestCase {
         XCTAssertEqual(backgroundColor, .white)
     }
 
-    func testBackgroundColorForMessageWithEmoji_ReturnsClearForDefault() {
+    func testBackgroundColorForMessageWithEmoji_returnsClearForDefault() {
         sut.dataProvider.messages.append(MockMessage(emoji: "🤔",
                                                      sender: sut.dataProvider.currentSender(),
                                                      messageId: "003"))
@@ -101,7 +101,7 @@ class MessagesDisplayDelegateTests: XCTestCase {
                                                                     at: IndexPath(item: 0, section: 0)))
     }
 
-    func testMessageStyle_ReturnsBubleTypeForDefault() {
+    func testMessageStyle_returnsBubleTypeForDefault() {
         let type = sut.messageStyle(for: sut.dataProvider.messages[0],
                                     at: IndexPath(item: 0, section: 0),
                                     in: sut.messagesCollectionView)
@@ -117,7 +117,7 @@ class MessagesDisplayDelegateTests: XCTestCase {
         XCTAssertTrue(result)
     }
 
-    func testShouldDisplayHeaderWithoutDataSource_ReturnsFalseForDefault() {
+    func testShouldDisplayHeaderWithoutDataSource_returnsFalseForDefault() {
         sut.messagesCollectionView.messagesDataSource = nil
 
         XCTAssertFalse(sut.shouldDisplayHeader(for: sut.dataProvider.messages[0],
@@ -125,13 +125,13 @@ class MessagesDisplayDelegateTests: XCTestCase {
                                                in: sut.messagesCollectionView))
     }
 
-    func testShouldDisplayHeaderForFirstMessage_ReturnsFalseForDefault() {
+    func testShouldDisplayHeaderForFirstMessage_returnsFalseForDefault() {
         XCTAssertFalse(sut.shouldDisplayHeader(for: sut.dataProvider.messages[0],
                                                at: IndexPath(item: 0, section: 0),
                                                in: sut.messagesCollectionView))
     }
 
-    func testShouldDisplayHeaderForMessageWithTimeIntervalSinceLastMessageGreatherThanScheduled_ReturnsTrue() {
+    func testShouldDisplayHeaderForMessageWithTimeIntervalSinceLastMessageGreatherThanScheduled_returnsTrue() {
         var message = MockMessage(text: "Test", sender: sut.dataProvider.currentSender(), messageId: "003")
         let scheduledInterval = sut.messagesCollectionView.showsDateHeaderAfterTimeInterval
         message.sentDate = Date(timeIntervalSinceNow: scheduledInterval + 300)
@@ -142,7 +142,7 @@ class MessagesDisplayDelegateTests: XCTestCase {
                                               in: sut.messagesCollectionView))
     }
 
-    func testShouldDisplayHeaderForMessageWithTimeIntervalSinceLastMessageEqualThanScheduled_ReturnsTrue() {
+    func testShouldDisplayHeaderForMessageWithTimeIntervalSinceLastMessageEqualThanScheduled_returnsTrue() {
         var message = MockMessage(text: "Test", sender: sut.dataProvider.currentSender(), messageId: "003")
         let scheduledInterval = sut.messagesCollectionView.showsDateHeaderAfterTimeInterval
         message.sentDate = Date(timeIntervalSinceNow: scheduledInterval)
@@ -153,7 +153,7 @@ class MessagesDisplayDelegateTests: XCTestCase {
                                               in: sut.messagesCollectionView))
     }
 
-    func testShouldDisplayHeaderForMessageWithTimeIntervalSinceLastMessageLessThanScheduled_ReturnsFalse() {
+    func testShouldDisplayHeaderForMessageWithTimeIntervalSinceLastMessageLessThanScheduled_returnsFalse() {
         var message = MockMessage(text: "Test", sender: sut.dataProvider.currentSender(), messageId: "003")
         let scheduledInterval = sut.messagesCollectionView.showsDateHeaderAfterTimeInterval
         message.sentDate = Date(timeIntervalSinceNow: scheduledInterval - 300)
@@ -164,7 +164,7 @@ class MessagesDisplayDelegateTests: XCTestCase {
                                                in: sut.messagesCollectionView))
     }
 
-    func testMessageHeaderView_IsNotNil() {
+    func testMessageHeaderView_isNotNil() {
         let headerView = sut.messageHeaderView(for: sut.dataProvider.messages[0],
                                                at: IndexPath(item: 0, section: 0),
                                                in: sut.messagesCollectionView)
@@ -172,7 +172,7 @@ class MessagesDisplayDelegateTests: XCTestCase {
         XCTAssertNotNil(headerView)
     }
 
-    func testMessageFooterView_IsNotNil() {
+    func testMessageFooterView_isNotNil() {
         let footerView = sut.messageFooterView(for: sut.dataProvider.messages[1],
                                                at: IndexPath(item: 0, section: 1),
                                                in: sut.messagesCollectionView)
@@ -201,7 +201,7 @@ class TextMessageDisplayDelegateTests: XCTestCase {
         super.tearDown()
     }
 
-    func testTextColorFromCurrentSender_ReturnsWhiteForDefault() {
+    func testTextColorFromCurrentSender_returnsWhiteForDefault() {
         let textColor = sut.textColor(for: sut.dataProvider.messages[0],
                                       at: IndexPath(item: 0, section: 0),
                                       in: sut.messagesCollectionView)
@@ -209,7 +209,7 @@ class TextMessageDisplayDelegateTests: XCTestCase {
         XCTAssertEqual(textColor, .white)
     }
 
-    func testTextColorFromYou_ReturnsDarkTextForDefault() {
+    func testTextColorFromYou_returnsDarkTextForDefault() {
         let textColor = sut.textColor(for: sut.dataProvider.messages[1],
                                       at: IndexPath(item: 0, section: 0),
                                       in: sut.messagesCollectionView)
@@ -217,7 +217,7 @@ class TextMessageDisplayDelegateTests: XCTestCase {
         XCTAssertEqual(textColor, .darkText)
     }
 
-    func testTextColorWithoutDataSource_ReturnsDarkTextForDefault() {
+    func testTextColorWithoutDataSource_returnsDarkTextForDefault() {
         sut.messagesCollectionView.messagesDataSource = nil
         let textColor = sut.textColor(for: sut.dataProvider.messages[1],
                                       at: IndexPath(item: 0, section: 0),
@@ -226,7 +226,7 @@ class TextMessageDisplayDelegateTests: XCTestCase {
         XCTAssertEqual(textColor, .darkText)
     }
 
-    func testEnableDetectors_ReturnsUrlAddressPhoneNumberAndDateForDefault() {
+    func testEnableDetectors_returnsUrlAddressPhoneNumberAndDateForDefault() {
         let detectors = sut.enabledDetectors(for: sut.dataProvider.messages[1],
                                              at: IndexPath(item: 0, section: 0),
                                              in: sut.messagesCollectionView)

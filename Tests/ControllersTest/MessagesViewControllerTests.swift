@@ -54,82 +54,82 @@ class MessagesViewControllerTests: XCTestCase {
 
     // MARK: - Test
 
-    func testMessageCollectionViewLayout_IsMessageCollectionViewLayout() {
+    func testMessageCollectionViewLayout_isMessageCollectionViewLayout() {
         XCTAssertNotNil(sut.messagesCollectionView.collectionViewLayout)
         XCTAssertTrue(sut.messagesCollectionView.collectionViewLayout is MessagesCollectionViewFlowLayout)
     }
 
-    func testMessageCollectionView_IsNotNilAfterViewDidLoad() {
+    func testMessageCollectionView_isNotNilAfterViewDidLoad() {
         XCTAssertNotNil(sut.messageInputBar)
     }
 
-    func testMessageCollectionView_HasMessageCollectionFlowLayoutAfterViewDidLoad() {
+    func testMessageCollectionView_hasMessageCollectionFlowLayoutAfterViewDidLoad() {
         let layout = sut.messagesCollectionView.collectionViewLayout
 
         XCTAssertNotNil(layout)
         XCTAssertTrue(layout is MessagesCollectionViewFlowLayout)
     }
 
-    func testMessageInputBar_IsNotNilAfterViewDidLoad() {
+    func testMessageInputBar_isNotNilAfterViewDidLoad() {
         XCTAssertNotNil(sut.messageInputBar)
     }
 
-    func testViewDidLoad_ShouldSetBackgroundColorToWhite() {
+    func testViewDidLoad_shouldSetBackgroundColorToWhite() {
         XCTAssertEqual(sut.view.backgroundColor, UIColor.white)
     }
 
-    func testViewDidLoad_ShouldAddMessageCollectionViewInSubviews() {
+    func testViewDidLoad_shouldAddMessageCollectionViewInSubviews() {
         let messageColelctionViews = sut.view.subviews.filter { $0 is MessagesCollectionView }
 
         XCTAssertEqual(messageColelctionViews.count, 1)
     }
 
-    func testViewDidLoad_ShouldSetAutomaticallyAdjustsScrollViewInsetsToFalse() {
+    func testViewDidLoad_shouldSetAutomaticallyAdjustsScrollViewInsetsToFalse() {
         XCTAssertFalse(sut.automaticallyAdjustsScrollViewInsets)
     }
 
-    func testViewDidLoad_ShouldSetCollectionViewDelegate() {
+    func testViewDidLoad_shouldSetCollectionViewDelegate() {
         let delegate = sut.messagesCollectionView.delegate
 
         XCTAssertNotNil(delegate)
         XCTAssertTrue(delegate is MessagesViewController)
     }
 
-    func testViewDidLoad_ShouldSetCollectionViewDataSource() {
+    func testViewDidLoad_shouldSetCollectionViewDataSource() {
         let dataSource = sut.messagesCollectionView.dataSource
 
         XCTAssertNotNil(dataSource)
         XCTAssertTrue(dataSource is MessagesViewController)
     }
 
-    func testViewDidLoad_ShouldSetDelegateAndDataSourceToTheSameObject() {
+    func testViewDidLoad_shouldSetDelegateAndDataSourceToTheSameObject() {
         XCTAssertEqual(sut.messagesCollectionView.delegate as? MessagesViewController,
                        sut.messagesCollectionView.dataSource as? MessagesViewController)
     }
 
-    func testShouldAutorotate_IsFalse() {
+    func testShouldAutorotate_isFalse() {
         XCTAssertFalse(sut.shouldAutorotate)
     }
 
-    func testInputAccessoryView_ShouldReturnsMessageInputBarAfterViewDidLoad() {
+    func testInputAccessoryView_shouldReturnsMessageInputBarAfterViewDidLoad() {
         let inputAccessoryView = sut.inputAccessoryView
 
         XCTAssertNotNil(inputAccessoryView)
         XCTAssertEqual(inputAccessoryView, sut.messageInputBar)
     }
 
-    func testCanBecomeFirstResponder_IsTrue() {
+    func testCanBecomeFirstResponder_isTrue() {
         XCTAssertTrue(sut.canBecomeFirstResponder)
     }
 
-    func testNumberOfSectionWithoutData_IsZero() {
+    func testNumberOfSectionWithoutData_isZero() {
         let messagesDataSource = MockMessagesDataSource()
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
 
         XCTAssertEqual(sut.messagesCollectionView.numberOfSections, 0)
     }
 
-    func testNumberOfSection_IsNumberOfMessages() {
+    func testNumberOfSection_isNumberOfMessages() {
         let messagesDataSource = MockMessagesDataSource()
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages = makeMessages(for: messagesDataSource.senders)
@@ -142,7 +142,7 @@ class MessagesViewControllerTests: XCTestCase {
         XCTAssertEqual(count, expectedCount)
     }
 
-    func testNumberOfItemInSection_IsOne() {
+    func testNumberOfItemInSection_isOne() {
         let messagesDataSource = MockMessagesDataSource()
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages = makeMessages(for: messagesDataSource.senders)
@@ -153,7 +153,7 @@ class MessagesViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.messagesCollectionView.numberOfItems(inSection: 1), 1)
     }
 
-    func testCellForItemWithTextData_ReturnsTextMessageCell() {
+    func testCellForItemWithTextData_returnsTextMessageCell() {
         let messagesDataSource = MockMessagesDataSource()
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages.append(MockMessage(text: "Test",
@@ -169,7 +169,7 @@ class MessagesViewControllerTests: XCTestCase {
         XCTAssertTrue(cell is TextMessageCell)
     }
 
-    func testCellForItemWithAttributedTextData_ReturnsTextMessageCell() {
+    func testCellForItemWithAttributedTextData_returnsTextMessageCell() {
         let messagesDataSource = MockMessagesDataSource()
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
         let attributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
@@ -187,7 +187,7 @@ class MessagesViewControllerTests: XCTestCase {
         XCTAssertTrue(cell is TextMessageCell)
     }
 
-    func testCellForItemWithPhotoData_ReturnsMediaMessageCell() {
+    func testCellForItemWithPhotoData_returnsMediaMessageCell() {
         let messagesDataSource = MockMessagesDataSource()
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages.append(MockMessage(image: UIImage(),
@@ -203,7 +203,7 @@ class MessagesViewControllerTests: XCTestCase {
         XCTAssertTrue(cell is MediaMessageCell)
     }
 
-    func testCellForItemWithVideoData_ReturnsMediaMessageCell() {
+    func testCellForItemWithVideoData_returnsMediaMessageCell() {
         let messagesDataSource = MockMessagesDataSource()
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages.append(MockMessage(thumbnail: UIImage(),
@@ -219,7 +219,7 @@ class MessagesViewControllerTests: XCTestCase {
         XCTAssertTrue(cell is MediaMessageCell)
     }
 
-    func testCellForItemWithLocationData_ReturnsLocationMessageCell() {
+    func testCellForItemWithLocationData_returnsLocationMessageCell() {
         let messagesDataSource = MockMessagesDataSource()
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages.append(MockMessage(location: CLLocation(latitude: 60.0, longitude: 70.0),
