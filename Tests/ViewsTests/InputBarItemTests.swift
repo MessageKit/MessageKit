@@ -48,15 +48,6 @@ class InputBarItemTests: XCTestCase {
         XCTAssertEqual(button.titleColor(for: .disabled), UIColor.lightGray)
         XCTAssertFalse(button.adjustsImageWhenHighlighted)
     }
-    
-    func testFlexibleSpace() {
-        XCTAssertEqual(InputBarButtonItem.flexibleSpace.size, .zero)
-    }
-    
-    func testFixedSpace() {
-        let item = InputBarButtonItem.fixedSpace(100)
-        XCTAssertEqual(item.size, .zero)
-    }
 
     func testImagePropertyDefaultNil() {
         XCTAssertNil(button.image)

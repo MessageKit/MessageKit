@@ -1,18 +1,18 @@
 /*
  MIT License
- 
+
  Copyright (c) 2017 MessageKit
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,72 +26,109 @@ import XCTest
 @testable import MessageKit
 
 class MessageInputBarTests: XCTestCase {
-    
-    var inputBar: MessageInputBar!
-    
+
+    var sut: MessageInputBar!
+
     override func setUp() {
         super.setUp()
-        inputBar = MessageInputBar()
+        sut = MessageInputBar()
     }
-    
+
     override func tearDown() {
-        inputBar = nil
+        sut = nil
         super.tearDown()
     }
-    
-    func testBlurEffect() {
-        XCTAssertFalse(inputBar.blurView.translatesAutoresizingMaskIntoConstraints)
-        XCTAssertTrue(inputBar.blurView.isHidden)
+
+    func testBlurEffectTranslatesAutoresizingMaskIntoConstraints_IsFalseAfterInit() {
+        XCTAssertFalse(sut.blurView.translatesAutoresizingMaskIntoConstraints)
+    }
+
+    func testBlurEffectIsHidden_IsTrueAfterInit() {
+        XCTAssertTrue(sut.blurView.isHidden)
+    }
+
+    func testIsTranslucent_IsFalseForDefault() {
+        XCTAssertFalse(sut.isTranslucent)
+    }
+
+    func testBlurViewIsHidden_IsFalseWhenIsTranslucentIsTrue() {
+        sut.isTranslucent = true
+        XCTAssertFalse(sut.blurView.isHidden)
+    }
+
+    func testBackgroundColor_IsClearWhenIsTranslucentIsTrue() {
+        sut.isTranslucent = true
+        XCTAssertEqual(sut.backgroundColor, UIColor.clear)
+    }
+
+    func testBlurViewIsHidden_IsTrueWhenIsTranslucentIsFalse() {
+        sut.isTranslucent = false
+        XCTAssertTrue(sut.blurView.isHidden)
+    }
+
+    func testBackgroundColor_IsWhiteWhenIsTranslucentIsFalse() {
+        sut.isTranslucent = false
+        XCTAssertEqual(sut.backgroundColor, UIColor.white)
+    }
+
+    func testSeparatorLine_IsNotNilAfterInit() {
+        XCTAssertNotNil(sut.separatorLine)
+    }
+
+    func testLeftStackView_IsNotNilAfterInit() {
+        XCTAssertNotNil(sut.leftStackView)
+    }
+
+    func testLeftStackViewAxis_IsHorizontalAfterInit() {
+        XCTAssertEqual(sut.leftStackView.axis, .horizontal)
+    }
+
+    func testLeftStackViewSpacing_IsZeroAfterInit() {
+        XCTAssertEqual(sut.leftStackView.spacing, 0)
     }
     
-    func testIsTranslucent() {
-        inputBar.isTranslucent = false
-        XCTAssertTrue(inputBar.blurView.isHidden)
-        XCTAssertEqual(inputBar.backgroundColor, UIColor.white)
-        inputBar.isTranslucent = true
-        XCTAssertFalse(inputBar.blurView.isHidden)
-        XCTAssertEqual(inputBar.backgroundColor, UIColor.clear)
+    func testRightStackView_IsNotNilAfterInit() {
+        XCTAssertNotNil(sut.rightStackView)
     }
-    
-    func testSeparatorLine() {
-        XCTAssertEqual(inputBar.separatorLine.backgroundColor, UIColor.lightGray)
-        XCTAssertFalse(inputBar.separatorLine.translatesAutoresizingMaskIntoConstraints)
+
+    func testRightStackViewAxis_IsHorizontalAfterInit() {
+        XCTAssertEqual(sut.rightStackView.axis, .horizontal)
     }
-    
-    func testLeftStackView() {
-        XCTAssertEqual(inputBar.leftStackView.axis, .horizontal)
-        XCTAssertEqual(inputBar.leftStackView.distribution, .fill)
-        XCTAssertEqual(inputBar.leftStackView.alignment, .fill)
-        XCTAssertEqual(inputBar.leftStackView.spacing, 15)
-        XCTAssertFalse(inputBar.leftStackView.translatesAutoresizingMaskIntoConstraints)
+
+    func testRightStackViewSpacing_IsZeroAfterInit() {
+        XCTAssertEqual(sut.rightStackView.spacing, 0)
     }
-    
-    func testRightStackView() {
-        XCTAssertEqual(inputBar.rightStackView.axis, .horizontal)
-        XCTAssertEqual(inputBar.rightStackView.distribution, .fill)
-        XCTAssertEqual(inputBar.rightStackView.alignment, .fill)
-        XCTAssertEqual(inputBar.rightStackView.spacing, 15)
-        XCTAssertFalse(inputBar.rightStackView.translatesAutoresizingMaskIntoConstraints)
+
+    func testBottomStackView_IsNotNilAfterInit() {
+        XCTAssertNotNil(sut.bottomStackView)
     }
-    
-    func testBottomStackView() {
-        XCTAssertEqual(inputBar.bottomStackView.axis, .horizontal)
-        XCTAssertEqual(inputBar.bottomStackView.distribution, .fill)
-        XCTAssertEqual(inputBar.bottomStackView.alignment, .fill)
-        XCTAssertEqual(inputBar.bottomStackView.spacing, 15)
-        XCTAssertFalse(inputBar.bottomStackView.translatesAutoresizingMaskIntoConstraints)
+
+    func testBottomStackViewAxis_IsHorizontalAfterInit() {
+        XCTAssertEqual(sut.bottomStackView.axis, .horizontal)
     }
-    
-    func testInputTextView() {
-        XCTAssertFalse(inputBar.inputTextView.translatesAutoresizingMaskIntoConstraints)
-        XCTAssertEqual(inputBar.inputTextView.messageInputBar, inputBar)
+
+    func testBottomStackViewSpacing_IsZeroAfterInit() {
+        XCTAssertEqual(sut.bottomStackView.spacing, 15)
     }
-    
-    func testSendButton() {
-        XCTAssertEqual(inputBar.sendButton.size, CGSize(width: 52, height: 28))
-        XCTAssertEqual(inputBar.sendButton.title, "Send")
-        XCTAssertEqual(inputBar.sendButton.titleLabel?.font, UIFont.preferredFont(forTextStyle: .headline))
-        XCTAssertFalse(inputBar.sendButton.isEnabled)
+
+    func testInputTextViewMessageInputBar_IsSelf() {
+        XCTAssertEqual(sut.inputTextView.messageInputBar, sut)
     }
-    
+
+    func testInputTextViewTranslatesAutoresizingMaskIntoConstraints_IsFalseAfterInit() {
+        XCTAssertFalse(sut.inputTextView.translatesAutoresizingMaskIntoConstraints)
+    }
+
+    func testSendButtonTitle_IsSendAfterInit() {
+        XCTAssertEqual(sut.sendButton.title, "Send")
+    }
+
+    func testSendButtonIsEnabled_IsFalseAfterInit() {
+        XCTAssertFalse(sut.sendButton.isEnabled)
+    }
+
+    func testSendButtonFont_IsHeadlineAfterInit() {
+        XCTAssertEqual(sut.sendButton.titleLabel?.font, UIFont.preferredFont(forTextStyle: .headline))
+    }
+
 }

@@ -237,7 +237,7 @@ class TextMessageDisplayDelegateTests: XCTestCase {
 
 }
 
-private class MockMessagesViewController: MessagesViewController, MessagesDisplayDelegate, TextMessageDisplayDelegate {
+private class MockMessagesViewController: MessagesViewController, MessagesDisplayDelegate, TextMessageDisplayDelegate, MessagesLayoutDelegate {
 
     var dataProvider: MockMessagesDataSource!
 
@@ -246,6 +246,7 @@ private class MockMessagesViewController: MessagesViewController, MessagesDispla
 
         dataProvider = makeDataSource()
         messagesCollectionView.messagesDataSource = dataProvider
+        messagesCollectionView.messagesLayoutDelegate = self
     }
 
     private func makeDataSource() -> MockMessagesDataSource {

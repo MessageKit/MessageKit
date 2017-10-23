@@ -29,6 +29,9 @@ import CoreLocation
 class MessagesViewControllerTests: XCTestCase {
 
     var sut: MessagesViewController!
+    // swiftlint:disable weak_delegate
+    private var layoutDelegate = MockLayoutDelegate()
+    // swiftlint:enable weak_delegate
 
     // MARK: - Overridden Methods
 
@@ -36,6 +39,7 @@ class MessagesViewControllerTests: XCTestCase {
         super.setUp()
 
         sut = MessagesViewController()
+        sut.messagesCollectionView.messagesLayoutDelegate = layoutDelegate
         _ = sut.view
         sut.beginAppearanceTransition(true, animated: true)
         sut.endAppearanceTransition()
@@ -238,4 +242,17 @@ class MessagesViewControllerTests: XCTestCase {
                 MockMessage(text: "Text 2", sender: senders[1], messageId: "test_id_2")]
     }
 
+}
+
+private class MockLayoutDelegate: MessagesLayoutDelegate, LocationMessageLayoutDelegate, MediaMessageLayoutDelegate {
+
+    // MARK: - LocationMessageLayoutDelegate
+
+    func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 0.0
+    }
+
+    func heightForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 10.0
+    }
 }
