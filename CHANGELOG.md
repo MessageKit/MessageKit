@@ -11,6 +11,14 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 -  Two new protocols: `InputItem`, which `InputBarButtonItem` now conforms to, and `InputManager`, which can be used to make plugins for `MessageInputBar`.
 [#274](https://github.com/MessageKit/MessageKit/pull/274) by [@nathantannar4](https://github.com/nathantannar4).
 
+-  Created `SeparatorLine` and `InputStackView` as their own subclass of `UIView` and `UIStackView` respectively. This just improves reusability
+[#273](https://github.com/MessageKit/MessageKit/pull/273) by [@nathantannar4](https://github.com/nathantannar4).
+
+### Changed
+
+-  **Breaking Change**  The properties `leftStackView`, `rightStackView` and `bottomStackView` in `MessageInputBar` are now of type `InputStackView`. The property `separatorLine` is also now of type `SeparatorLine` in `MessageInputBar`
+[#273](https://github.com/MessageKit/MessageKit/pull/273) by [@nathantannar4](https://github.com/nathantannar4).
+
 ### Fixed
 
 -  Fixed a bug that prevented the `textAllignment` property of `InputTextView`'s `placeholderLabel` from having noticable differences when changed to `.center` or `.right`
@@ -21,6 +29,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 -  Changes the `MessageInputBar` bottom `UIStackView`'s `bottomAnchor` to `layoutMarginsGuide.bottomAnchor` to fix issues on the iPhone X
 [#266](https://github.com/MessageKit/MessageKit/pull/266) by [@nathantannar4](https://github.com/nathantannar4).
+
+-  Initial `contentInset.bottom` reference changed from `messageInputBar` to `inputAccessoryView` to allow custom inp`inputAccessoryView`'s that don't break the initial layout
+[#267](https://github.com/MessageKit/MessageKit/pull/262) by [@nathantannar4](https://github.com/nathantannar4).
 
 ### Removed
 

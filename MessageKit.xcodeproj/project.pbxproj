@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		372F6AEF1F36C61000B57FBD /* AvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372F6AEE1F36C61000B57FBD /* AvatarViewTests.swift */; };
 		376AD1861F4259270083072A /* MessagesDisplayDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376AD1851F4259270083072A /* MessagesDisplayDataSourceTests.swift */; };
+		388A53E51F9E8DBB007B5CE4 /* InputStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388A53E31F9E8DBB007B5CE4 /* InputStackView.swift */; };
+		388A53E61F9E8DBB007B5CE4 /* SeparatorLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388A53E41F9E8DBB007B5CE4 /* SeparatorLine.swift */; };
 		38C57C811F9AEACF0043CC03 /* InputItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C57C7F1F9AEACF0043CC03 /* InputItem.swift */; };
 		88916B2D1CF0DF2F00469F91 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88916B221CF0DF2F00469F91 /* MessageKit.framework */; };
 		88916B451CF0DF5900469F91 /* MessageKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88916B431CF0DF5900469F91 /* MessageKitTests.swift */; };
@@ -77,6 +79,8 @@
 /* Begin PBXFileReference section */
 		372F6AEE1F36C61000B57FBD /* AvatarViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarViewTests.swift; sourceTree = "<group>"; };
 		376AD1851F4259270083072A /* MessagesDisplayDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDisplayDataSourceTests.swift; sourceTree = "<group>"; };
+		388A53E31F9E8DBB007B5CE4 /* InputStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputStackView.swift; sourceTree = "<group>"; };
+		388A53E41F9E8DBB007B5CE4 /* SeparatorLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorLine.swift; sourceTree = "<group>"; };
 		38C57C7F1F9AEACF0043CC03 /* InputItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputItem.swift; sourceTree = "<group>"; };
 		88916B221CF0DF2F00469F91 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88916B2C1CF0DF2F00469F91 /* MessageKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessageKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -277,12 +281,14 @@
 				2EB618F11F846899007FBA0E /* Headers & Footers */,
 				B7A03F3E1F86694F006AEF79 /* AvatarView.swift */,
 				B7A03F411F86694F006AEF79 /* InputBarItem.swift */,
+				388A53E31F9E8DBB007B5CE4 /* InputStackView.swift */,
 				B7A03F401F86694F006AEF79 /* InputTextView.swift */,
 				B7A03F431F86694F006AEF79 /* MessageContainerView.swift */,
 				B7A03F421F86694F006AEF79 /* MessageInputBar.swift */,
 				B7A03F3F1F86694F006AEF79 /* MessageLabel.swift */,
 				B7A03F451F86694F006AEF79 /* MessagesCollectionView.swift */,
 				B7A03F441F86694F006AEF79 /* PlayButtonView.swift */,
+				388A53E41F9E8DBB007B5CE4 /* SeparatorLine.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -461,6 +467,7 @@
 			files = (
 				B7A03F2B1F866895006AEF79 /* AvatarHorizontalAlignment.swift in Sources */,
 				B7A03F3C1F866946006AEF79 /* LocationMessageCell.swift in Sources */,
+				388A53E51F9E8DBB007B5CE4 /* InputStackView.swift in Sources */,
 				B7A03F5B1F8669CA006AEF79 /* MessageType.swift in Sources */,
 				B7A03F6F1F8669EB006AEF79 /* String+Extensions.swift in Sources */,
 				B7A03F491F86694F006AEF79 /* InputBarItem.swift in Sources */,
@@ -482,6 +489,7 @@
 				B7A03F3D1F866946006AEF79 /* MediaMessageCell.swift in Sources */,
 				B7A03F331F866940006AEF79 /* MessageDateHeaderView.swift in Sources */,
 				B7A03F2E1F866895006AEF79 /* MessageData.swift in Sources */,
+				388A53E61F9E8DBB007B5CE4 /* SeparatorLine.swift in Sources */,
 				B7A03F7B1F866B85006AEF79 /* MessageCollectionViewCell.swift in Sources */,
 				B7A03F6B1F8669EB006AEF79 /* UIColor+Extensions.swift in Sources */,
 				B7A03F5E1F8669CA006AEF79 /* MessagesLayoutDelegate.swift in Sources */,
