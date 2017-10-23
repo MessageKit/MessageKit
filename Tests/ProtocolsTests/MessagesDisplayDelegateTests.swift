@@ -165,8 +165,8 @@ class MessagesDisplayDelegateTests: XCTestCase {
     }
 
     func testMessageHeaderView_isNotNil() {
-        let headerView = sut.messageHeaderView(for: sut.dataProvider.messages[0],
-                                               at: IndexPath(item: 0, section: 0),
+        let headerView = sut.messageHeaderView(for: sut.dataProvider.messages[1],
+                                               at: IndexPath(item: 0, section: 1),
                                                in: sut.messagesCollectionView)
 
         XCTAssertNotNil(headerView)
