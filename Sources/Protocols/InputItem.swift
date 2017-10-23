@@ -1,18 +1,18 @@
 /*
  MIT License
-
+ 
  Copyright (c) 2017 MessageKit
-
+ 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
-
+ 
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
-
+ 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,21 +22,23 @@
  SOFTWARE.
  */
 
-import XCTest
+import UIKit
 
-final class MessageKitTests: XCTestCase {
-
-    override func setUp() {
-        super.setUp()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-    }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
+/// InputItem is a protocol that links elements to the MessageInputBar to make them reactive
+public protocol InputItem: class {
+    
+    /// A weak reference to the MessageInputBar. Set when inserted into an InputStackView
+    weak var messageInputBar: MessageInputBar? { get set }
+    
+    /// A reference to the InputStackView that the InputItem is contained in. Set when inserted into an InputStackView
+    var parentStackViewPosition: InputStackView.Position? { get set }
+    
+    /// A hook that is called when the InputTextView's text is changed
+    func textViewDidChangeAction(with textView: InputTextView)
+    
+    /// A hook that is called when the InputTextView is resigned as the first responder
+    func keyboardEditingEndsAction()
+    
+    /// A hook that is called when the InputTextView is made the first responder
+    func keyboardEditingBeginsAction()
 }

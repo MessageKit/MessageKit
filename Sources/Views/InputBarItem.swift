@@ -30,7 +30,7 @@ import UIKit
  ## Important Notes ##
  1. Intended to be used in an `InputStackView`
  */
-open class InputBarButtonItem: UIButton {
+open class InputBarButtonItem: UIButton, InputItem {
     
     /// The spacing properties of the InputBarButtonItem
     ///
