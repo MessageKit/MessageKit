@@ -40,7 +40,7 @@ class ConversationViewController: MessagesViewController {
         super.viewDidLoad()
 
         DispatchQueue.global(qos: .userInitiated).async {
-            SampleData.shared.getMessages(count: 100) { messages in
+            SampleData.shared.getMessages(count: 10) { messages in
                 DispatchQueue.main.async {
                     self.messageList = messages
                 }
