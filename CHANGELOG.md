@@ -9,7 +9,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ### Added
 
 -  **Breaking Change** Added `InputItem`, a protocol that `InputBarButtonItem` now conforms to. `MessageInputBar` has been switch to allow items that conform to `InputItem` so you no longer are restricted to just `InputBarButtonItem`
-[#273](https://github.com/MessageKit/MessageKit/pull/273) by [@nathantannar4](https://github.com/nathantannar4).
+[#279](https://github.com/MessageKit/MessageKit/pull/279) by [@nathantannar4](https://github.com/nathantannar4).
 
 - Added `removedCachedAttributes(for:MessageType)`, `removeAllCachedAttributes()`, and `attributesCacheMaxSize` to
 `MessagesCollectionViewFlowLayout` to manage the caching of layout information for messages.
@@ -21,7 +21,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ### Changed
 
 -  **Breaking Change**  The property enum used to define the stack view position, `MessageInputBar.UIStackViewPosition` was changed to the enum `InputStackView.Position`
-[#278](https://github.com/MessageKit/MessageKit/pull/278) by [@nathantannar4](https://github.com/nathantannar4).
+[#279](https://github.com/MessageKit/MessageKit/pull/279) by [@nathantannar4](https://github.com/nathantannar4).
 
 -  **Breaking Change**  The properties `leftStackView`, `rightStackView` and `bottomStackView` in `MessageInputBar` are now of type `InputStackView`. The property `separatorLine` is also now of type `SeparatorLine` in `MessageInputBar`.
 [#273](https://github.com/MessageKit/MessageKit/pull/273) by [@nathantannar4](https://github.com/nathantannar4).
