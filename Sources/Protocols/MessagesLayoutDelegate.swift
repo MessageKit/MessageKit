@@ -25,7 +25,7 @@
 import Foundation
 
 /// A protocol used by the `MessagesCollectionViewFlowLayout` object to determine
-// the size and layout of a `MessageCollectionViewCell` and its contents.
+/// the size and layout of a `MessageCollectionViewCell` and its contents.
 public protocol MessagesLayoutDelegate: class {
 
     /// Specifies the insets for the text rect of the `MessageLabel` in a `TextMessageCell`.
@@ -104,8 +104,24 @@ public protocol MessagesLayoutDelegate: class {
     /// The default value returned by this method is a size of `30 x 30`.
     func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
+    /// Specifies the size to use for a `MessageHeaderView`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed for this header.
+    ///   - indexPath: The `IndexPath` of the header.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this header will be displayed.
+    ///
+    /// The default value returned by this method is the width of the `MessagesCollectionView` and a height of 12.
     func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
+    /// Specifies the size to use for a `MessageFooterView`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed for this footer.
+    ///   - indexPath: The `IndexPath` of the footer.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this footer will be displayed.
+    ///
+    /// The default value returned by this method is a size of `GGSize.zero`.
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
 }

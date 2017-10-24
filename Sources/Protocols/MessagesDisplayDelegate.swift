@@ -92,11 +92,35 @@ public protocol MessagesDisplayDelegate: class {
     ///
     /// All other Senders: Gray
     func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
-    
+
+    /// The section header to use for a given `MessageType`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed for this header.
+    ///   - indexPath: The `IndexPath` of the header.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this header will be displayed.
+    ///
+    /// The default value returned by this method is a `MessageDateHeaderView`.
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView
 
+    /// Used by the `MessageLayoutDelegate` method `headerViewSize(_:_:_:)` to determine if a header should be displayed.
+    /// This method checks `MessageCollectionView`'s `showsDateHeaderAfterTimeInterval` property and returns true if
+    /// the current messages sent date occurs after the specified time interval when compared to the previous message.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed for this header.
+    ///   - indexPath: The `IndexPath` of the header.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this header will be displayed.
     func shouldDisplayHeader(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Bool
-    
+
+    /// The section footer to use for a given `MessageType`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed for this footer.
+    ///   - indexPath: The `IndexPath` of the footer.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this footer will be displayed.
+    ///
+    /// The default value returned by this method is a `MessageFooterView`.
     func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView
 
 }
