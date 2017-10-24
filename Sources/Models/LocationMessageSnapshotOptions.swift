@@ -24,11 +24,27 @@
 
 import MapKit
 
+/// An object grouping the settings used by the `MKMapSnapshotter` through the `LocationMessageDisplayDelegate`.
 public struct LocationMessageSnapshotOptions {
 
+    /// A Boolean value indicating whether the snapshot image should display buildings.
+    ///
+    /// The default value of this property is `false`.
     var showsBuildings = false
+
+    /// A Boolean value indicating whether the snapshot image should display points of interest.
+    ///
+    /// The default value of this property is `false`.
     var showsPointsOfInterest = false
+
+    /// The span of the snapshot.
+    ///
+    /// The default value of this property uses a width of `0` and height of `0`.
     var span: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0, longitudeDelta: 0)
+
+    /// The scale of the snapshot.
+    ///
+    /// The default value of this property uses the `UIScreen.main.scale`.
     var scale: CGFloat = UIScreen.main.scale
     
 }

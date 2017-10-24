@@ -23,6 +23,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 -  **Breaking Change**  The property enum used to define the stack view position, `MessageInputBar.UIStackViewPosition` was changed to the enum `InputStackView.Position`
 [#279](https://github.com/MessageKit/MessageKit/pull/279) by [@nathantannar4](https://github.com/nathantannar4).
 
+- Layout anchors for the `MessagesCollectionView` and `MessageInputBar` now include the safeAreaLayoutGuide to fix layout issues on iPhone X
+[#280](https://github.com/MessageKit/MessageKit/pull/280) by [@nathantannar4](https://github.com/nathantannar4).
+
+
 -  **Breaking Change**  The properties `leftStackView`, `rightStackView` and `bottomStackView` in `MessageInputBar` are now of type `InputStackView`. The property `separatorLine` is also now of type `SeparatorLine` in `MessageInputBar`.
 [#273](https://github.com/MessageKit/MessageKit/pull/273) by [@nathantannar4](https://github.com/nathantannar4).
 
