@@ -26,7 +26,13 @@ import Foundation
 
 // MARK: - AvatarVerticalAlignment
 
+/// An enum representing the horizontal alignment of an `AvatarView`.
 internal enum AvatarHorizontalAlignment {
+    
+    /// Positions the `AvatarView` on the side closest to the cell's leading edge.
     case cellLeading
+    
+    /// Positions the `AvatarView` on the side closest to the cell's trailing edge.
     case cellTrailing
+
 }

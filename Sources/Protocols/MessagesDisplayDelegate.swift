@@ -24,10 +24,31 @@
 
 import Foundation
 
+/// A protocol used by the `MessagesViewController` to customize the appearance of a `TextMessageCell`.
 public protocol TextMessageDisplayDelegate: class {
 
+    /// Specifies the color of the text for a `TextMessageCell`.
+    ///
+    /// - Parameters:
+    ///   - message: A `MessageType` with a `MessageData` case of `.text` or `.attributedText` to which the color will apply.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is determined by the messages `Sender`:
+    ///
+    /// Current Sender: UIColor.white
+    ///
+    /// All other Senders: UIColor.darkText
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
 
+    /// Specifies the `DetectorType`s to check for the `MessageType`'s text against.
+    ///
+    /// - Parameters:
+    ///   - message: A `MessageType` with a `MessageData` case of `.text` or `.attributedText` to which the detectors will apply.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is all available detector types.
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType]
 
 }
@@ -45,16 +66,61 @@ public extension TextMessageDisplayDelegate {
 
 }
 
+/// A protocol used by the `MessagesViewController` to customize the appearance of a `MessagesCollectionViewCell`.
 public protocol MessagesDisplayDelegate: class {
 
+    /// Specifies the `MessageStyle` to be used for a `MessageContainerView`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is `MessageStyle.bubble`.
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle
-    
+
+    /// Specifies the background color of the `MessageContainerView`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value is `UIColor.clear` for emoji messages. For all other `MessageData` cases, the color depends on the `Sender`:
+    ///
+    /// Current Sender: Green
+    ///
+    /// All other Senders: Gray
     func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
-    
+
+    /// The section header to use for a given `MessageType`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed for this header.
+    ///   - indexPath: The `IndexPath` of the header.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this header will be displayed.
+    ///
+    /// The default value returned by this method is a `MessageDateHeaderView`.
     func messageHeaderView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageHeaderView
 
+    /// Used by the `MessageLayoutDelegate` method `headerViewSize(_:_:_:)` to determine if a header should be displayed.
+    /// This method checks `MessageCollectionView`'s `showsDateHeaderAfterTimeInterval` property and returns true if
+    /// the current messages sent date occurs after the specified time interval when compared to the previous message.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed for this header.
+    ///   - indexPath: The `IndexPath` of the header.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this header will be displayed.
     func shouldDisplayHeader(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Bool
-    
+
+    /// The section footer to use for a given `MessageType`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed for this footer.
+    ///   - indexPath: The `IndexPath` of the footer.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this footer will be displayed.
+    ///
+    /// The default value returned by this method is a `MessageFooterView`.
     func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageFooterView
 
 }
