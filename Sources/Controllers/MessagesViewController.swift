@@ -84,8 +84,8 @@ open class MessagesViewController: UIViewController {
             defer { isFirstLayout = false }
 
             addKeyboardObservers()
-            messagesCollectionView.contentInset.bottom = inputAccessoryView?.frame.height ?? 0
-            messagesCollectionView.scrollIndicatorInsets.bottom = inputAccessoryView?.frame.height ?? 0
+            messagesCollectionView.contentInset.bottom = keyboardOffsetFrame.height
+            messagesCollectionView.scrollIndicatorInsets.bottom = keyboardOffsetFrame.height
             
             //Scroll to bottom at first load
             if scrollsToBottomOnFirstLayout {
@@ -129,13 +129,18 @@ open class MessagesViewController: UIViewController {
     /// Sets the constraints of the `MessagesCollectionView`.
     private func setupConstraints() {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: topLayoutGuide.length)
-        let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         let bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-
-        NSLayoutConstraint.activate([top, bottom, trailing, leading])
+        if #available(iOS 11.0, *) {
+            let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
+            let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            NSLayoutConstraint.activate([top, bottom, trailing, leading])
+        } else {
+            let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+            let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            NSLayoutConstraint.activate([top, bottom, trailing, leading])
+        }
     }
 }
 
@@ -262,29 +267,47 @@ fileprivate extension MessagesViewController {
         NotificationCenter.default.removeObserver(self, name: .UITextViewTextDidBeginEditing, object: messageInputBar.inputTextView)
     }
 
-    @objc func handleTextViewDidBeginEditing(_ notification: Notification) {
+    @objc
+    func handleTextViewDidBeginEditing(_ notification: Notification) {
         if scrollsToBottomOnKeybordBeginsEditing {
             messagesCollectionView.scrollToBottom(animated: true)
         }
     }
 
-    @objc func handleKeyboardDidChangeState(_ notification: Notification) {
+    @objc
+    func handleKeyboardDidChangeState(_ notification: Notification) {
 
         guard let keyboardEndFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
 
         if (keyboardEndFrame.origin.y + keyboardEndFrame.size.height) > UIScreen.main.bounds.height {
             // Hardware keyboard is found
-            let bottomInset = view.frame.size.height - keyboardEndFrame.origin.y
+            let bottomInset = view.frame.size.height - keyboardEndFrame.origin.y - iPhoneXBottomInset
             messagesCollectionView.contentInset.bottom = bottomInset
             messagesCollectionView.scrollIndicatorInsets.bottom = bottomInset
 
         } else {
             //Software keyboard is found
-            let bottomInset = keyboardEndFrame.height > (inputAccessoryView?.frame.height ?? 0) ? keyboardEndFrame.height : (inputAccessoryView?.frame.height ?? 0)
+            let bottomInset = keyboardEndFrame.height > keyboardOffsetFrame.height ? (keyboardEndFrame.height - iPhoneXBottomInset) : keyboardOffsetFrame.height
             messagesCollectionView.contentInset.bottom = bottomInset
             messagesCollectionView.scrollIndicatorInsets.bottom = bottomInset
         }
         
     }
     
+    fileprivate var keyboardOffsetFrame: CGRect {
+        guard let inputFrame = inputAccessoryView?.frame else { return .zero }
+        return CGRect(origin: inputFrame.origin, size: CGSize(width: inputFrame.width, height: inputFrame.height - iPhoneXBottomInset))
+    }
+    
+    /// On the iPhone X the inputAccessoryView is anchored to the layoutMarginesGuide.bottom anchor so the frame of the inputAccessoryView
+    /// is larger than the required offset for the MessagesCollectionView
+    ///
+    /// - Returns: The safeAreaInsets.bottom if its an iPhoneX, else 0
+    fileprivate var iPhoneXBottomInset: CGFloat {
+        if #available(iOS 11.0, *) {
+            guard UIScreen.main.nativeBounds.height == 2436 else { return 0 }
+            return view.safeAreaInsets.bottom
+        }
+        return 0
+    }
 }
