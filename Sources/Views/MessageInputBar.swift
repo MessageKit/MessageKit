@@ -26,10 +26,6 @@ import UIKit
 
 open class MessageInputBar: UIView {
     
-    public enum UIStackViewPosition {
-        case left, right, bottom
-    }
-    
     // MARK: - Properties
     
     open weak var delegate: MessageInputBarDelegate?
@@ -171,19 +167,19 @@ open class MessageInputBar: UIView {
     }
     
     /// The InputBarItems held in the leftStackView
-    private(set) var leftStackViewItems: [InputBarButtonItem] = []
+    private(set) var leftStackViewItems: [InputItem] = []
     
     /// The InputBarItems held in the rightStackView
-    private(set) var rightStackViewItems: [InputBarButtonItem] = []
+    private(set) var rightStackViewItems: [InputItem] = []
     
     /// The InputBarItems held in the bottomStackView
-    private(set) var bottomStackViewItems: [InputBarButtonItem] = []
+    private(set) var bottomStackViewItems: [InputItem] = []
     
     /// The InputBarItems held to make use of their hooks but they are not automatically added to a UIStackView
-    open var nonStackViewItems: [InputBarButtonItem] = []
+    open var nonStackViewItems: [InputItem] = []
     
     /// Returns a flatMap of all the items in each of the UIStackViews
-    public var items: [InputBarButtonItem] {
+    public var items: [InputItem] {
         return [leftStackViewItems, rightStackViewItems, bottomStackViewItems, nonStackViewItems].flatMap { $0 }
     }
     
@@ -361,13 +357,13 @@ open class MessageInputBar: UIView {
     
     // MARK: - UIStackView InputBarItem Methods
     
-    /// Removes all of the arranged subviews from the UIStackView and adds the given items. Sets the inputBarAccessoryView property of the InputBarButtonItem
+    /// Removes all of the arranged subviews from the UIStackView and adds the given items. Sets the messageInputBar property of the InputItem
     ///
     /// - Parameters:
     ///   - items: New UIStackView arranged views
     ///   - position: The targeted UIStackView
     ///   - animated: If the layout should be animated
-    open func setStackViewItems(_ items: [InputBarButtonItem], forStack position: InputStackView.Position, animated: Bool) {
+    open func setStackViewItems(_ items: [InputItem], forStack position: InputStackView.Position, animated: Bool) {
         
         func setNewItems() {
             switch position {
@@ -377,7 +373,9 @@ open class MessageInputBar: UIView {
                 leftStackViewItems.forEach {
                     $0.messageInputBar = self
                     $0.parentStackViewPosition = position
-                    leftStackView.addArrangedSubview($0)
+                    if let view = $0 as? UIView {
+                        leftStackView.addArrangedSubview(view)
+                    }
                 }
                 leftStackView.layoutIfNeeded()
             case .right:
@@ -386,7 +384,9 @@ open class MessageInputBar: UIView {
                 rightStackViewItems.forEach {
                     $0.messageInputBar = self
                     $0.parentStackViewPosition = position
-                    rightStackView.addArrangedSubview($0)
+                    if let view = $0 as? UIView {
+                        rightStackView.addArrangedSubview(view)
+                    }
                 }
                 rightStackView.layoutIfNeeded()
             case .bottom:
@@ -395,7 +395,9 @@ open class MessageInputBar: UIView {
                 bottomStackViewItems.forEach {
                     $0.messageInputBar = self
                     $0.parentStackViewPosition = position
-                    bottomStackView.addArrangedSubview($0)
+                    if let view = $0 as? UIView {
+                        bottomStackView.addArrangedSubview(view)
+                    }
                 }
                 bottomStackView.layoutIfNeeded()
             }
