@@ -40,7 +40,7 @@ open class InputStackView: UIStackView {
     /// - right: Bottom Stack View
     /// - bottom: Left Stack View
     public enum Position {
-        case left, right, bottom
+        case left, right, bottom, top
     }
     
     // MARK: Initialization
