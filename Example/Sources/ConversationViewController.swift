@@ -38,6 +38,8 @@ class ConversationViewController: MessagesViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        automaticallyAdjustsScrollViewInsets = true
 
         DispatchQueue.global(qos: .userInitiated).async {
             SampleData.shared.getMessages(count: 10) { messages in
@@ -55,11 +57,19 @@ class ConversationViewController: MessagesViewController {
         messageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
         scrollsToBottomOnFirstLayout = true //default false
         scrollsToBottomOnKeybordBeginsEditing = true // default false
+        
+        messageLoadMoreControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(handleKeyboardButton))
+    }
+    
+    @objc func loadMoreMessages() {
+        SampleData.shared.getMessages(count: 10) { messages in
+            self.messageList.insert(contentsOf: messages, at: 0)
+        }
     }
     
     @objc func handleKeyboardButton() {
