@@ -70,5 +70,31 @@ open class MessagesCollectionView: UICollectionView {
         guard let indexPath = indexPathForLastItem else { return }
         scrollToItem(at: indexPath, at: .bottom, animated: animated)
     }
+    
+    override open func reloadData() {
+        if !messageLoadMoreControl.isRefreshing {
+            super.reloadData()
+            return
+        }
+        
+        // wait util the refreshing animation is stop
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            // stop scrolling
+            self.setContentOffset(self.contentOffset, animated: false)
+            
+            // calculate the offset and reloadData
+            let beforeContentSize = self.contentSize
+            super.reloadData()
+            self.layoutIfNeeded()
+            let afterContentSize = self.contentSize
+            
+            // reset the contentOffset after data is updated
+            self.setContentOffset(CGPoint(
+                x: self.contentOffset.x + (afterContentSize.width - beforeContentSize.width),
+                y: self.contentOffset.y + (afterContentSize.height - beforeContentSize.height)), animated: false)
+            
+            self.messageLoadMoreControl.endRefreshing()
+        }
+    }
 
 }
