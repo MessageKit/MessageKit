@@ -35,6 +35,8 @@ open class MessagesCollectionView: UICollectionView {
     open weak var messagesLayoutDelegate: MessagesLayoutDelegate?
 
     open weak var messageCellDelegate: MessageCellDelegate?
+    
+    open var messageLoadMoreControl = UIRefreshControl()
 
     open var showsDateHeaderAfterTimeInterval: TimeInterval = 3600
 
@@ -51,6 +53,7 @@ open class MessagesCollectionView: UICollectionView {
     public override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         backgroundColor = .white
+        addSubview(messageLoadMoreControl)
     }
     
     required public init?(coder aDecoder: NSCoder) {
