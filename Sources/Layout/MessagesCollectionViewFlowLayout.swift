@@ -159,7 +159,15 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     /// - Parameters:
     ///   - message: The `MessageType` whose cached layout information is to be removed.
     public func removeCachedAttributes(for message: MessageType) {
-        intermediateAttributesCache.removeValue(forKey: message.messageId)
+        removeCachedAttributes(for: message.messageId)
+    }
+    
+    /// Removes the cached layout information for a `MessageType` given its `messageId`.
+    ///
+    /// - Parameters:
+    ///   - messageId: The `messageId` for the `MessageType` whose cached layout information is to be removed.
+    public func removeCachedAttributes(for messageId: String) {
+        intermediateAttributesCache.removeValue(forKey: messageId)
     }
     
     /// Removes the cached layout information for all `MessageType`s.
