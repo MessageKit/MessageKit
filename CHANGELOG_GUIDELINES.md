@@ -1,4 +1,4 @@
- Changelog Guidelines
+# Changelog Guidelines
 
 Here you can find the general guidelines for maintaining the Changelog (or adding new entry). We follow the guidelines from [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) with few additions. 
 
@@ -26,3 +26,29 @@ Here you can find the general guidelines for maintaining the Changelog (or addin
 - **Security** in case of vulnerabilities.
 
 ## Example:
+
+### Added
+
+- Added `removedCachedAttributes(for:MessageType)`, `removeAllCachedAttributes()`, and `attributesCacheMaxSize` to
+`MessagesCollectionViewFlowLayout` to manage the caching of layout information for messages.
+[#263](https://github.com/MessageKit/MessageKit/pull/263) by [@SD10](https://github.com/sd10).
+
+### Changed
+
+-  **Breaking Change**  The properties `leftStackView`, `rightStackView` and `bottomStackView` in `MessageInputBar` are now of type `InputStackView`. The property `separatorLine` is also now of type `SeparatorLine` in `MessageInputBar`.
+[#273](https://github.com/MessageKit/MessageKit/pull/273) by [@nathantannar4](https://github.com/nathantannar4).
+
+- Layout information is now being cached by `MessagesCollectionViewFlowLayout` for each `MessageType` using the
+`messageId` property. (This means if your layout is dynamic over the `IndexPath` you need to handle cache invalidation).
+[#263](https://github.com/MessageKit/MessageKit/pull/263) by [@SD10](https://github.com/sd10).
+
+### Fixed
+
+-  Fixed a bug that prevented the `textAllignment` property of `InputTextView`'s `placeholderLabel` from having noticable differences when changed to `.center` or `.right`.
+[#262](https://github.com/MessageKit/MessageKit/pull/262) by [@nathantannar4](https://github.com/nathantannar4).
+
+### Removed
+
+- **Breaking Change** Removed `additionalTopContentInset` property of `MessagesViewController` because this is no longer necessary
+when `extendedLayoutIncludesOpaqueBars` is `true`.
+[#250](https://github.com/MessageKit/MessageKit/pull/250) by [@SD10](https://github.com/SD10).
