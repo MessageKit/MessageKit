@@ -133,10 +133,23 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         super.init()
 
         sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(handleOrientationChange), name: .UIDeviceOrientationDidChange, object: nil)
     }
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    /// Invalidates the layout and removes all cached attributes on device orientation change
+    @objc
+    private func handleOrientationChange(_ notification: Notification) {
+        removeAllCachedAttributes()
+        invalidateLayout()
     }
 
     // MARK: - Methods [Public]
@@ -156,7 +169,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         if collectionView?.bounds.width != newBounds.width {
-            intermediateAttributesCache = [:]
+            removeAllCachedAttributes()
             return true
         } else {
             return false
