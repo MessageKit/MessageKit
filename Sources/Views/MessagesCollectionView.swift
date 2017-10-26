@@ -71,9 +71,9 @@ open class MessagesCollectionView: UICollectionView {
         scrollToItem(at: indexPath, at: .bottom, animated: animated)
     }
     
-    override open func reloadData() {
+    public func reloadAndMaintainOffset() {
         if !messageLoadMoreControl.isRefreshing {
-            super.reloadData()
+            reloadData()
             return
         }
         
@@ -84,7 +84,7 @@ open class MessagesCollectionView: UICollectionView {
             
             // calculate the offset and reloadData
             let beforeContentSize = self.contentSize
-            super.reloadData()
+            self.reloadData()
             self.layoutIfNeeded()
             let afterContentSize = self.contentSize
             
