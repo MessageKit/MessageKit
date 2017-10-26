@@ -136,6 +136,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
             let bottomLabelText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
 
             avatarView.set(avatar: avatar)
+            avatarView = dataSource.avatarView(for: message, at: indexPath, in: messagesCollectionView, convertAvatarView: avatarView)
             cellTopLabel.attributedText = topLabelText
             cellBottomLabel.attributedText = bottomLabelText
         }
