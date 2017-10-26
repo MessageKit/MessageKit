@@ -6,6 +6,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+## [[Prerelease] 0.10.0](https://github.com/MessageKit/MessageKit/releases/tag/0.10.0)
+
 ### Added
 
 - Added `removedCachedAttributes(for:MessageType)`, `removeAllCachedAttributes()`, and `attributesCacheMaxSize` to
@@ -17,15 +19,15 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Changed
 
-- Layout anchors for the `MessagesCollectionView` and `MessageInputBar` now include the safeAreaLayoutGuide to fix layout issues on iPhone X
-[#280](https://github.com/MessageKit/MessageKit/pull/280) by [@nathantannar4](https://github.com/nathantannar4).
-
 -  **Breaking Change**  The properties `leftStackView`, `rightStackView` and `bottomStackView` in `MessageInputBar` are now of type `InputStackView`. The property `separatorLine` is also now of type `SeparatorLine` in `MessageInputBar`.
 [#273](https://github.com/MessageKit/MessageKit/pull/273) by [@nathantannar4](https://github.com/nathantannar4).
 
 - Layout information is now being cached by `MessagesCollectionViewFlowLayout` for each `MessageType` using the
 `messageId` property. (This means if your layout is dynamic over the `IndexPath` you need to handle cache invalidation).
 [#263](https://github.com/MessageKit/MessageKit/pull/263) by [@SD10](https://github.com/sd10).
+
+- Layout anchors for the `MessagesCollectionView` and `MessageInputBar` now include the safeAreaLayoutGuide to fix layout issues on iPhone X
+[#280](https://github.com/MessageKit/MessageKit/pull/280) by [@nathantannar4](https://github.com/nathantannar4).
 
 ### Fixed
 
