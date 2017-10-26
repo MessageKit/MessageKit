@@ -24,11 +24,20 @@
 
 import Foundation
 
+/// An object that groups the metadata of a messages sender.
 public struct Sender {
 
+    /// MARK: - Properties
+
+    /// The unique String identifier for the sender.
+    ///
+    /// Note: This value must be unique across all senders.
     public let id: String
 
+    /// The display name of a sender.
     public let displayName: String
+
+    // MARK: - Intializers
 
     public init(id: String, displayName: String) {
         self.id = id
@@ -39,7 +48,10 @@ public struct Sender {
 // MARK: - Equatable Conformance
 
 extension Sender: Equatable {
+
+    /// Two senders are considered equal if they have the same id.
     static public func == (left: Sender, right: Sender) -> Bool {
         return left.id == right.id
     }
+
 }
