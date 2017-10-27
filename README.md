@@ -25,10 +25,6 @@
    <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"
         alt="Contributions Welcome">
 </a>
-<a href="https://github.com/ellerbrock/open-source-badge/">
-   <img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=102"
-        alt="Open Source Love">
-</a>
 
 ## Table of Contents
 
