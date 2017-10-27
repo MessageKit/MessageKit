@@ -53,7 +53,14 @@ public protocol LocationMessageLayoutDelegate: MessagesLayoutDelegate {
 public extension LocationMessageLayoutDelegate {
 
     func widthForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return maxWidth
+        
+        if messagesCollectionView.frame.width > messagesCollectionView.frame.height {
+            // isLandscape
+            return maxWidth / 2
+        } else {
+            // isPortait
+            return maxWidth
+        }
     }
     
 }

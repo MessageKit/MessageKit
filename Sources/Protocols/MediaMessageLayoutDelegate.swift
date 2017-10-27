@@ -56,13 +56,21 @@ public protocol MediaMessageLayoutDelegate: MessagesLayoutDelegate {
 public extension MediaMessageLayoutDelegate {
 
     func widthForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return maxWidth
+        
+        if messagesCollectionView.frame.width > messagesCollectionView.frame.height {
+            // isLandscape
+            return maxWidth / 2
+        } else {
+            // isPortait
+            return maxWidth
+        }
     }
 
     func heightForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         switch message.data {
         case .photo(let image), .video(_, let image):
-            let boundingRect = CGRect(origin: .zero, size: CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
+            let scaledMaxwidth = messagesCollectionView.frame.width > messagesCollectionView.frame.height ? maxWidth / 2 : maxWidth
+            let boundingRect = CGRect(origin: .zero, size: CGSize(width: scaledMaxwidth, height: .greatestFiniteMagnitude))
             return AVMakeRect(aspectRatio: image.size, insideRect: boundingRect).height
         default:
             return 0
