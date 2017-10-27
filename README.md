@@ -6,7 +6,7 @@
 [![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 <a href="https://swift.org">
- <img src="https://img.shields.io/badge/Swift-3.2-orange.svg"
+ <img src="https://img.shields.io/badge/Swift-4-orange.svg"
       alt="Swift" />
 </a>
 <a href="https://cocoapods.org/">
