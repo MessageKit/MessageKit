@@ -34,10 +34,6 @@ open class MessagesViewController: UIViewController {
     /// The `MessageInputBar` used as the `inputAccessoryView` in the view controller.
     open var messageInputBar = MessageInputBar()
     
-    open var messageLoadMoreControl: UIRefreshControl {
-        return messagesCollectionView.messageLoadMoreControl
-    }
-    
     /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
     /// bottom on the view's first layout.
     ///

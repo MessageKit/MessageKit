@@ -28,10 +28,20 @@ import MapKit
 
 class ConversationViewController: MessagesViewController {
 
+    let refreshControl = UIRefreshControl()
+    
     var messageList: [MockMessage] = [] {
         didSet {
-            DispatchQueue.main.async {
-                self.messagesCollectionView.reloadAndMaintainOffset()
+            if !refreshControl.isRefreshing {
+                DispatchQueue.main.async {
+                    self.messagesCollectionView.reloadData()
+                }
+            } else {
+                // wait util the refreshing animation is stop
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.messagesCollectionView.reloadDataAndKeepOffset()
+                    self.refreshControl.endRefreshing()
+                }
             }
         }
     }
@@ -58,7 +68,8 @@ class ConversationViewController: MessagesViewController {
         scrollsToBottomOnFirstLayout = true //default false
         scrollsToBottomOnKeybordBeginsEditing = true // default false
         
-        messageLoadMoreControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
+        messagesCollectionView.addSubview(refreshControl)
+        refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
                                                             style: .plain,

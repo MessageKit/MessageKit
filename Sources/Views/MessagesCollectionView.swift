@@ -35,8 +35,6 @@ open class MessagesCollectionView: UICollectionView {
     open weak var messagesLayoutDelegate: MessagesLayoutDelegate?
 
     open weak var messageCellDelegate: MessageCellDelegate?
-    
-    open var messageLoadMoreControl = UIRefreshControl()
 
     open var showsDateHeaderAfterTimeInterval: TimeInterval = 3600
 
@@ -53,7 +51,6 @@ open class MessagesCollectionView: UICollectionView {
     public override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         backgroundColor = .white
-        addSubview(messageLoadMoreControl)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -71,30 +68,20 @@ open class MessagesCollectionView: UICollectionView {
         scrollToItem(at: indexPath, at: .bottom, animated: animated)
     }
     
-    public func reloadAndMaintainOffset() {
-        if !messageLoadMoreControl.isRefreshing {
-            reloadData()
-            return
-        }
+    public func reloadDataAndKeepOffset() {
+        // stop scrolling
+        self.setContentOffset(self.contentOffset, animated: false)
         
-        // wait util the refreshing animation is stop
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            // stop scrolling
-            self.setContentOffset(self.contentOffset, animated: false)
-            
-            // calculate the offset and reloadData
-            let beforeContentSize = self.contentSize
-            self.reloadData()
-            self.layoutIfNeeded()
-            let afterContentSize = self.contentSize
-            
-            // reset the contentOffset after data is updated
-            self.setContentOffset(CGPoint(
-                x: self.contentOffset.x + (afterContentSize.width - beforeContentSize.width),
-                y: self.contentOffset.y + (afterContentSize.height - beforeContentSize.height)), animated: false)
-            
-            self.messageLoadMoreControl.endRefreshing()
-        }
+        // calculate the offset and reloadData
+        let beforeContentSize = self.contentSize
+        self.reloadData()
+        self.layoutIfNeeded()
+        let afterContentSize = self.contentSize
+        
+        // reset the contentOffset after data is updated
+        self.setContentOffset(CGPoint(
+            x: self.contentOffset.x + (afterContentSize.width - beforeContentSize.width),
+            y: self.contentOffset.y + (afterContentSize.height - beforeContentSize.height)), animated: false)
     }
 
 }
