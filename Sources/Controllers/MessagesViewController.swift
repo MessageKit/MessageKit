@@ -251,6 +251,18 @@ extension MessagesViewController: UICollectionViewDataSource {
         return messagesLayoutDelegate.footerViewSize(for: message, at: indexPath, in: messagesCollectionView)
     }
 
+    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        guard let lastVisibleIndexPath = messagesCollectionView.indexPathsForVisibleItems.sorted().last else { return }
+
+        coordinator.animate(alongsideTransition: { (context:UIViewControllerTransitionCoordinatorContext) in
+            self.messagesCollectionView.scrollToItem(at: lastVisibleIndexPath, at: .top, animated: false)
+        }, completion: { _ in
+            // For some reason, after animated scrolling we can scroll a bit more
+            self.messagesCollectionView.scrollToItem(at: lastVisibleIndexPath, at: .top, animated: true)
+        })
+    }
 }
 
 // MARK: - Keyboard Handling
@@ -258,42 +270,58 @@ extension MessagesViewController: UICollectionViewDataSource {
 fileprivate extension MessagesViewController {
 
     func addKeyboardObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardDidChangeFrame, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleTextViewDidBeginEditing), name: .UITextViewTextDidBeginEditing, object: messageInputBar.inputTextView)
     }
 
     func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardDidChangeFrame, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UITextViewTextDidBeginEditing, object: messageInputBar.inputTextView)
     }
 
     @objc
-    func handleTextViewDidBeginEditing(_ notification: Notification) {
+    private func handleTextViewDidBeginEditing(_ notification: Notification) {
         if scrollsToBottomOnKeybordBeginsEditing {
             messagesCollectionView.scrollToBottom(animated: true)
         }
     }
 
+    /// iPad supports undocked and split keyboard modes.
+    /// https://support.apple.com/en-us/HT207521
+    /// When you drag the keyboard in those states across the screen
+    /// `UIKeyboardFrameEndUserInfoKey` in `UIKeyboardWillChangeFrame` notification has zero height.
+    /// This leads to wierd animations and an incorrect state of `messagesCollectionView` bottom inset.
+    /// Luckly we always receive the keyboard end frame in `UIKeyboardDidChangeFrame` notification.
+    /// We can use it to animate the UI to the correct state.
+    ///
+    /// So, if the keyboard end frame in `UIKeyboardWillChangeFrame` has zero height,
+    /// we ignore it and calculate layout adjustments in `UIKeyboardDidChangeFrame` handler instead.
     @objc
-    func handleKeyboardDidChangeState(_ notification: Notification) {
-
+    private func handleKeyboardDidChangeState(_ notification: Notification) {
         guard let keyboardEndFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
 
-        if (keyboardEndFrame.origin.y + keyboardEndFrame.size.height) > UIScreen.main.bounds.height {
-            // Hardware keyboard is found
-            let bottomInset = view.frame.size.height - keyboardEndFrame.origin.y - iPhoneXBottomInset
-            messagesCollectionView.contentInset.bottom = bottomInset
-            messagesCollectionView.scrollIndicatorInsets.bottom = bottomInset
+        let bottomInset = calculateBottomInset(with: keyboardEndFrame)
+        let shouldUpdateBottomInset = bottomInset != messagesCollectionView.contentInset.bottom
 
-        } else {
-            //Software keyboard is found
-            let bottomInset = keyboardEndFrame.height > keyboardOffsetFrame.height ? (keyboardEndFrame.height - iPhoneXBottomInset) : keyboardOffsetFrame.height
-            messagesCollectionView.contentInset.bottom = bottomInset
-            messagesCollectionView.scrollIndicatorInsets.bottom = bottomInset
+        guard shouldUpdateBottomInset else { return }
+
+        UIView.animate(withDuration: 0.5) {
+            self.adjustBottomContentInset(bottomInset ?? 0)
         }
-        
     }
-    
+
+    @objc
+    private func handleKeyboardWillChangeState(_ notification: Notification) {
+        guard let keyboardEndFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
+
+        // When we drag undocked keyboard `keyboardEndFrame` has zero height, we ignore it to avoid weird UI layout
+        guard let bottomInset = calculateBottomInset(with: keyboardEndFrame) else { return }
+
+        adjustBottomContentInset(bottomInset)
+    }
+
     fileprivate var keyboardOffsetFrame: CGRect {
         guard let inputFrame = inputAccessoryView?.frame else { return .zero }
         return CGRect(origin: inputFrame.origin, size: CGSize(width: inputFrame.width, height: inputFrame.height - iPhoneXBottomInset))
@@ -303,11 +331,40 @@ fileprivate extension MessagesViewController {
     /// is larger than the required offset for the MessagesCollectionView
     ///
     /// - Returns: The safeAreaInsets.bottom if its an iPhoneX, else 0
-    fileprivate var iPhoneXBottomInset: CGFloat {
+    private var iPhoneXBottomInset: CGFloat {
         if #available(iOS 11.0, *) {
             guard UIScreen.main.nativeBounds.height == 2436 else { return 0 }
             return view.safeAreaInsets.bottom
         }
         return 0
+    }
+
+    private func calculateBottomInset(with keyboardEndFrame: CGRect) -> CGFloat? {
+        // Happens when the user drags undocked keyboard
+        guard keyboardEndFrame.height > 0 else { return nil }
+
+        let keyboardFrame = view.convert(keyboardEndFrame, from: UIScreen.main.coordinateSpace)
+        let intersection = keyboardFrame.intersection(view.bounds)
+
+        let keyboardHeight: CGFloat
+
+        // check if keyboard covers our view
+        if intersection.height > 0 {
+            // We can't use `intersection.height` as `keyboardHeight` because the keyboard can be in undocked mode
+            keyboardHeight = view.bounds.maxY - keyboardFrame.minY
+        } else {
+            keyboardHeight = 0
+        }
+
+        return keyboardHeight - iPhoneXBottomInset
+    }
+
+    private func adjustBottomContentInset(_ bottomInset: CGFloat) {
+        // adjust the scrolling position, so when the keyboard changes its size
+        let contentOffsetAdjustment = bottomInset - messagesCollectionView.contentInset.bottom
+        messagesCollectionView.contentOffset.y += contentOffsetAdjustment
+
+        messagesCollectionView.contentInset.bottom = bottomInset
+        messagesCollectionView.scrollIndicatorInsets.bottom = bottomInset
     }
 }
