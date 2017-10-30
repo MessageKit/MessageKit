@@ -23,6 +23,132 @@
  */
 
 import UIKit
+extension NSTextStorage {
+    
+    var attributedString: NSAttributedString {
+        let range = NSRange(location: 0, length: mutableString.length)
+        return attributedSubstring(from: range)
+    }
+    
+    var mutableAttributedString: NSMutableAttributedString {
+        return NSMutableAttributedString(attributedString: attributedString)
+    }
+    
+    func addAttribute(key: NSAttributedStringKey, value: AnyObject, range: NSRange? = nil) {
+        let range = range ?? NSRange(location: 0, length: length)
+        addAttribute(key, value: value, range: range)
+    }
+    
+}
+
+open class AttributeLabel: UIView {
+    
+    private lazy var layoutManager: NSLayoutManager = {
+        let manager = NSLayoutManager()
+        manager.addTextContainer(self.textContainer)
+        return manager
+    }()
+    
+    private lazy var textContainer: NSTextContainer = {
+        let container = NSTextContainer()
+        container.lineFragmentPadding = 0
+        container.maximumNumberOfLines = 0
+        container.lineBreakMode = .byWordWrapping
+        container.size = bounds.size
+        return container
+    }()
+    
+    private lazy var textStorage: NSTextStorage = {
+        let storage = NSTextStorage(attributedString: NSAttributedString())
+        storage.addLayoutManager(layoutManager)
+        return storage
+    }()
+    
+    // MARK: -
+    
+    public var attributedText: NSAttributedString? {
+        get {
+            return textStorage.attributedString
+        }
+        set {
+            let string = newValue ?? NSAttributedString(string: "")
+            textStorage.setAttributedString(string)
+            setNeedsDisplay()
+        }
+    }
+    
+    public var text: String? {
+        get {
+            return textStorage.string
+        }
+        set {
+            let string = NSAttributedString(string: newValue ?? "")
+            textStorage.setAttributedString(string)
+            setNeedsDisplay()
+        }
+    }
+    
+    public var font: UIFont = UIFont.systemFont(ofSize: 10.0) {
+        didSet {
+            // Once we have detectors we won't apply these to detected ranges
+            textStorage.addAttribute(key: .font, value: font)
+            setNeedsDisplay()
+        }
+    }
+    
+    public var textColor: UIColor = .darkText {
+        didSet {
+            textStorage.addAttribute(key: .foregroundColor, value: textColor)
+            setNeedsDisplay()
+        }
+    }
+    
+    public var lineBreakMode: NSLineBreakMode = .byWordWrapping {
+        didSet {
+            textContainer.lineBreakMode = lineBreakMode
+            setNeedsDisplay()
+        }
+    }
+    
+    public var numberOfLines: Int = 0 {
+        didSet {
+            textContainer.maximumNumberOfLines = numberOfLines
+            setNeedsDisplay()
+        }
+    }
+    
+    //    public var lineFragmentPadding: CGFloat = 0 {
+    //        didSet {
+    //            // todo
+    //            //textContainer.lineFragmentPadding = lineFragmentPadding
+    //        }
+    //    }
+    //
+    //    public var textAlignment: NSTextAlignment = .center {
+    //        didSet {
+    //            // todo
+    //        }
+    //    }
+    
+    
+    public var textInsets: UIEdgeInsets = .zero {
+        didSet { setNeedsDisplay() }
+    }
+    
+    open override func draw(_ rect: CGRect) {
+        
+        let insetRect = UIEdgeInsetsInsetRect(rect, textInsets)
+        textContainer.size = insetRect.size
+        
+        let range = layoutManager.glyphRange(for: textContainer)
+        let origin = insetRect.origin
+        
+        layoutManager.drawBackground(forGlyphRange: range, at: origin)
+        layoutManager.drawGlyphs(forGlyphRange: range, at: origin)
+        
+    }
+    
+}
 
 open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
