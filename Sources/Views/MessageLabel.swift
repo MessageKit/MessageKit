@@ -43,28 +43,25 @@ extension NSTextStorage {
 
 open class AttributeLabel: UIView {
     
-    private lazy var layoutManager: NSLayoutManager = {
-        let manager = NSLayoutManager()
-        manager.addTextContainer(self.textContainer)
-        return manager
-    }()
+    // MARK: - Text Internals
     
-    private lazy var textContainer: NSTextContainer = {
-        let container = NSTextContainer()
-        container.lineFragmentPadding = 0
-        container.maximumNumberOfLines = 0
-        container.lineBreakMode = .byWordWrapping
-        container.size = bounds.size
-        return container
-    }()
+    private var layoutManager: NSLayoutManager
     
-    private lazy var textStorage: NSTextStorage = {
-        let storage = NSTextStorage(attributedString: NSAttributedString())
-        storage.addLayoutManager(layoutManager)
-        return storage
-    }()
+    private var textContainer: NSTextContainer
     
-    // MARK: -
+    private var textStorage: NSTextStorage
+    
+    // MARK: - Detected Ranges
+    
+    private var phoneRanges: [NSRange] = []
+    
+    private var addressRanges: [NSRange] = []
+    
+    private var dateRanges: [NSRange] = []
+    
+    private var urlRanges: [NSRange] = []
+    
+    // MARK: - Properties [Public]
     
     public var attributedText: NSAttributedString? {
         get {
@@ -73,6 +70,11 @@ open class AttributeLabel: UIView {
         set {
             let string = newValue ?? NSAttributedString(string: "")
             textStorage.setAttributedString(string)
+            
+            setStorageByParsing(text: string) {
+                self.setNeedsDisplay()
+            }
+            
             setNeedsDisplay()
         }
     }
@@ -84,34 +86,20 @@ open class AttributeLabel: UIView {
         set {
             let string = addLocalAttributes(to: newValue)
             textStorage.setAttributedString(string)
+            
+            setStorageByParsing(text: string) {
+                self.setNeedsDisplay()
+            }
+            
             setNeedsDisplay()
         }
     }
     
-    func addLocalAttributes(to string: String?) -> NSAttributedString {
-        
-        guard let string = string, string != "" else {
-            return NSAttributedString(string: "")
-        }
-        
-        let attributes: [NSAttributedStringKey: AnyObject] = [
-            .font: font,
-            .foregroundColor: textColor
-        ]
-        
-        let mutableString = NSMutableAttributedString(string: string)
-        
-        // Later we will exclude detected ranges
-        let range = NSRange(location: 0, length: mutableString.length)
-        mutableString.addAttributes(attributes, range: range)
-        
-        return NSAttributedString(attributedString: mutableString)
-    }
-    
     public var font: UIFont = UIFont.systemFont(ofSize: 10.0) {
         didSet {
-            // Once we have detectors we won't apply these to detected ranges
             textStorage.addAttribute(key: .font, value: font)
+            // Doesn't apply to detected ranges
+            addAttributesToTextStorage(for: enabledDetectors)
             setNeedsDisplay()
         }
     }
@@ -119,6 +107,8 @@ open class AttributeLabel: UIView {
     public var textColor: UIColor = .darkText {
         didSet {
             textStorage.addAttribute(key: .foregroundColor, value: textColor)
+            // Doesn't apply to detected ranges
+            addAttributesToTextStorage(for: enabledDetectors)
             setNeedsDisplay()
         }
     }
@@ -155,6 +145,65 @@ open class AttributeLabel: UIView {
         didSet { setNeedsDisplay() }
     }
     
+    public var enabledDetectors: [DetectorType] = []
+    
+    public var phoneAttributes: [NSAttributedStringKey: AnyObject] = [:] {
+        didSet {
+            addAttributesToTextStorage(for: [.phoneNumber])
+            setNeedsDisplay()
+        }
+    }
+    
+    public var addressAttributes: [NSAttributedStringKey: AnyObject] = [:] {
+        didSet {
+            addAttributesToTextStorage(for: [.address])
+            setNeedsDisplay()
+        }
+    }
+    
+    public var urlAttributes: [NSAttributedStringKey: AnyObject] = [:] {
+        didSet {
+            addAttributesToTextStorage(for: [.url])
+            setNeedsDisplay()
+        }
+    }
+    
+    public var dateAttributes: [NSAttributedStringKey: AnyObject] = [:] {
+        didSet {
+            addAttributesToTextStorage(for: [.date])
+            setNeedsDisplay()
+        }
+    }
+    
+    // MARK: - Initializers
+    
+    public override init(frame: CGRect) {
+        
+        // Text Container
+        self.textContainer = NSTextContainer()
+        self.textContainer.lineFragmentPadding = 0
+        self.textContainer.maximumNumberOfLines = 0
+        self.textContainer.lineBreakMode = .byWordWrapping
+        self.textContainer.size = frame.size
+        
+        // Layout Manager
+        self.layoutManager = NSLayoutManager()
+        self.layoutManager.addTextContainer(self.textContainer)
+        
+        // Text Storage
+        self.textStorage = NSTextStorage(attributedString: NSAttributedString(string: ""))
+        textStorage.addLayoutManager(layoutManager)
+
+        super.init(frame: frame)
+
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Methods
+    
     open override func draw(_ rect: CGRect) {
         
         let insetRect = UIEdgeInsetsInsetRect(rect, textInsets)
@@ -166,6 +215,103 @@ open class AttributeLabel: UIView {
         layoutManager.drawBackground(forGlyphRange: range, at: origin)
         layoutManager.drawGlyphs(forGlyphRange: range, at: origin)
         
+    }
+    
+    // MARK: - Adding Attributes
+    
+    func addLocalAttributes(to string: String?) -> NSAttributedString {
+        
+        guard let string = string, string != "" else {
+            return NSAttributedString(string: "")
+        }
+        
+        let attributes: [NSAttributedStringKey: AnyObject] = [
+            .font: font,
+            .foregroundColor: textColor
+        ]
+        
+        let mutableString = NSMutableAttributedString(string: string)
+        
+        // Later we will exclude detected ranges
+        let range = NSRange(location: 0, length: mutableString.length)
+        mutableString.addAttributes(attributes, range: range)
+        
+        return NSAttributedString(attributedString: mutableString)
+    }
+    
+    func addAttributesToTextStorage(for detectors: [DetectorType]) {
+        
+        for detector in detectors {
+            switch detector {
+            case .address:
+                for range in addressRanges {
+                    textStorage.mutableAttributedString.addAttributes(addressAttributes, range: range)
+                }
+            case .phoneNumber:
+                for range in phoneRanges {
+                    textStorage.mutableAttributedString.addAttributes(phoneAttributes, range: range)
+                }
+            case .date:
+                for range in dateRanges {
+                    textStorage.mutableAttributedString.addAttributes(dateAttributes, range: range)
+                }
+            case .url:
+                for range in urlRanges {
+                    textStorage.mutableAttributedString.addAttributes(urlAttributes, range: range)
+                }
+            }
+        }
+    }
+    
+    // MARK: - Parsing
+    
+    func setStorageByParsing(text: NSAttributedString?, completion: @escaping () -> Void) {
+        
+        removeAllDetectedRanges()
+        
+        guard let text = text, text.length > 0, !enabledDetectors.isEmpty else { return }
+        
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let `self` = self, let results = self.parse(text: text.string) else { return }
+            self.setDetectedRanges(for: results)
+            self.addAttributesToTextStorage(for: self.enabledDetectors)
+            completion()
+        }
+
+    }
+    
+    private func parse(text: String) -> [NSTextCheckingResult]? {
+        let checkingTypes = enabledDetectors.reduce(0) { $0 | $1.textCheckingType.rawValue }
+        let detector = try? NSDataDetector(types: checkingTypes)
+        let string = NSString(string: text)
+        let range = NSRange(location: 0, length: string.length)
+        return detector?.matches(in: text, options: [], range: range)
+    }
+    
+    private func setDetectedRanges(for checkingResults: [NSTextCheckingResult]) {
+        guard !checkingResults.isEmpty else { return }
+        
+        for result in checkingResults {
+            switch result.resultType {
+            case NSTextCheckingResult.CheckingType.address:
+                addressRanges.append(result.range)
+            case NSTextCheckingResult.CheckingType.date:
+                dateRanges.append(result.range)
+            case NSTextCheckingResult.CheckingType.phoneNumber:
+                phoneRanges.append(result.range)
+            case NSTextCheckingResult.CheckingType.link:
+                urlRanges.append(result.range)
+            default:
+                fatalError("Received an unrecognized NSTextCheckingResult.CheckingType")
+            }
+        }
+    }
+    
+    func removeAllDetectedRanges() {
+        phoneRanges.removeAll()
+        addressRanges.removeAll()
+        dateRanges.removeAll()
+        urlRanges.removeAll()
     }
     
 }
