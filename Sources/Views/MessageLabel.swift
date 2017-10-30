@@ -22,6 +22,17 @@
  SOFTWARE.
  */
 
+// Missing UILabel Properties
+
+// adjustsFontSizeToFitWidth
+// allowsDefaultTighteningForTruncation
+// baselineAdjustment
+// minimumScaleFactor
+// highlightedTextColor
+// isHighlighted
+// shadowColor
+// shadowOffset
+
 import UIKit
 extension NSTextStorage {
     
@@ -41,29 +52,11 @@ extension NSTextStorage {
     
 }
 
-open class AttributeLabel: UIView {
-    
-    // MARK: - Text Internals
-    
-    private var layoutManager: NSLayoutManager
-    
-    private var textContainer: NSTextContainer
-    
-    private var textStorage: NSTextStorage
-    
-    // MARK: - Detected Ranges
-    
-    private var phoneRanges: [NSRange] = []
-    
-    private var addressRanges: [NSRange] = []
-    
-    private var dateRanges: [NSRange] = []
-    
-    private var urlRanges: [NSRange] = []
-    
+open class AttributeLabel: UIView, UIGestureRecognizerDelegate {
+
     // MARK: - Properties [Public]
     
-    private var isConfiguring: Bool = false
+    public weak var delegate: MessageLabelDelegate?
     
     public var attributedText: NSAttributedString? {
         get {
@@ -121,6 +114,13 @@ open class AttributeLabel: UIView {
         }
     }
     
+    public var lineFragmentPadding: CGFloat = 0 {
+        didSet {
+            textContainer.lineFragmentPadding = lineFragmentPadding
+            if !isConfiguring { setNeedsDisplay() }
+        }
+    }
+    
     public var numberOfLines: Int = 0 {
         didSet {
             textContainer.maximumNumberOfLines = numberOfLines
@@ -133,6 +133,66 @@ open class AttributeLabel: UIView {
             if !isConfiguring { setNeedsDisplay() }
         }
     }
+
+    public var textInsets: UIEdgeInsets = .zero {
+        didSet {
+            if !isConfiguring { setNeedsDisplay() }
+        }
+    }
+    
+    public var enabledDetectors: [DetectorType] = [] {
+        didSet {
+            setStorageByParsing(text: attributedText) {
+                if !self.isConfiguring { self.setNeedsDisplay() }
+            }
+        }
+    }
+    
+    public var phoneAttributes: [NSAttributedStringKey: Any] = [:] {
+        didSet {
+            updateDetectorAttributes(for: .phoneNumber)
+            if !isConfiguring { setNeedsDisplay() }
+        }
+    }
+    
+    public var addressAttributes: [NSAttributedStringKey: Any] = [:] {
+        didSet {
+            updateDetectorAttributes(for: .address)
+            if !isConfiguring { setNeedsDisplay() }
+        }
+    }
+    
+    public var urlAttributes: [NSAttributedStringKey: Any] = [:] {
+        didSet {
+            updateDetectorAttributes(for: .url)
+            if !isConfiguring { setNeedsDisplay() }
+        }
+    }
+    
+    public var dateAttributes: [NSAttributedStringKey: Any] = [:] {
+        didSet {
+            updateDetectorAttributes(for: .date)
+            if !isConfiguring { setNeedsDisplay() }
+        }
+    }
+    
+    // MARK: - Properties [Private]
+    
+    private var layoutManager: NSLayoutManager
+    
+    private var textContainer: NSTextContainer
+    
+    private var textStorage: NSTextStorage
+    
+    private var phoneResults: [NSRange: String?] = [:]
+    
+    private var addressResults: [NSRange: Any?] = [:]
+    
+    private var dateResults: [NSRange: Date?] = [:]
+    
+    private var urlResults: [NSRange: URL?] = [:]
+    
+    private var isConfiguring: Bool = false
     
     private var paragraphStyle: NSParagraphStyle {
         
@@ -149,68 +209,35 @@ open class AttributeLabel: UIView {
         
     }
     
-    public var textInsets: UIEdgeInsets = .zero {
-        didSet {
-            if !isConfiguring { setNeedsDisplay() }
-        }
-    }
-    
-    public var enabledDetectors: [DetectorType] = [] {
-        didSet {
-            setStorageByParsing(text: attributedText) {
-                if !self.isConfiguring { self.setNeedsDisplay() }
-            }
-        }
-    }
-    
-    public var phoneAttributes: [NSAttributedStringKey: AnyObject] = [:] {
-        didSet {
-            updateDetectorAttributes(for: .phoneNumber)
-            if !isConfiguring { setNeedsDisplay() }
-        }
-    }
-    
-    public var addressAttributes: [NSAttributedStringKey: AnyObject] = [:] {
-        didSet {
-            updateDetectorAttributes(for: .address)
-            if !isConfiguring { setNeedsDisplay() }
-        }
-    }
-    
-    public var urlAttributes: [NSAttributedStringKey: AnyObject] = [:] {
-        didSet {
-            updateDetectorAttributes(for: .url)
-            if !isConfiguring { setNeedsDisplay() }
-        }
-    }
-    
-    public var dateAttributes: [NSAttributedStringKey: AnyObject] = [:] {
-        didSet {
-            updateDetectorAttributes(for: .date)
-            if !isConfiguring { setNeedsDisplay() }
-        }
-    }
-    
     // MARK: - Initializers
     
     public override init(frame: CGRect) {
         
-        // Text Container
         self.textContainer = NSTextContainer()
-        self.textContainer.lineFragmentPadding = 0
-        self.textContainer.maximumNumberOfLines = 0
-        self.textContainer.lineBreakMode = .byWordWrapping
+        self.textContainer.lineFragmentPadding = lineFragmentPadding
+        self.textContainer.maximumNumberOfLines = numberOfLines
+        self.textContainer.lineBreakMode = lineBreakMode
         self.textContainer.size = frame.size
         
-        // Layout Manager
         self.layoutManager = NSLayoutManager()
         self.layoutManager.addTextContainer(self.textContainer)
         
-        // Text Storage
         self.textStorage = NSTextStorage(attributedString: NSAttributedString(string: ""))
         textStorage.addLayoutManager(layoutManager)
         
         super.init(frame: frame)
+        
+        let defaultAttributes: [NSAttributedStringKey: Any] = [
+            .underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
+            .underlineColor: self.textColor
+        ]
+        
+        self.addressAttributes = defaultAttributes
+        self.phoneAttributes = defaultAttributes
+        self.dateAttributes = defaultAttributes
+        self.urlAttributes = defaultAttributes
+        
+        setupGestureRecognizers()
         
     }
     
@@ -218,7 +245,7 @@ open class AttributeLabel: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Methods
+    // MARK: - Methods [Public]
     
     open override func draw(_ rect: CGRect) {
         
@@ -233,16 +260,16 @@ open class AttributeLabel: UIView {
         
     }
     
-    func configure(configurationBlock: () -> Void) {
+    public func configure(configurationBlock: () -> Void) {
         isConfiguring = true
         configurationBlock()
         isConfiguring = false
         setNeedsDisplay()
     }
     
-    // MARK: - Adding Attributes
+    // MARK: - Methods [Private]
     
-    func addLocalAttributes(to string: String?) -> NSAttributedString {
+    private func addLocalAttributes(to string: String?) -> NSAttributedString {
         
         guard let string = string, string != "" else {
             return NSAttributedString(string: "")
@@ -263,7 +290,7 @@ open class AttributeLabel: UIView {
         return NSAttributedString(attributedString: mutableString)
     }
     
-    private func applyAttributes(_ attributes: [NSAttributedStringKey: AnyObject], to ranges: [NSRange]) {
+    private func applyAttributes(_ attributes: [NSAttributedStringKey: Any], to ranges: [NSRange]) {
         
         guard !attributes.isEmpty || !ranges.isEmpty else { return }
         
@@ -273,36 +300,56 @@ open class AttributeLabel: UIView {
         
     }
     
-    func updateDetectorAttributes(for detector: DetectorType) {
-        guard enabledDetectors.contains(detector) else { return }
+    func detectedRanges(for detectorType: DetectorType) -> [NSRange]? {
         
-        switch detector {
-        case .address:
-            for range in addressRanges {
-                textStorage.mutableAttributedString.addAttributes(addressAttributes, range: range)
-            }
-        case .phoneNumber:
-            for range in phoneRanges {
-                textStorage.mutableAttributedString.addAttributes(phoneAttributes, range: range)
-            }
-        case .date:
-            for range in dateRanges {
-                textStorage.mutableAttributedString.addAttributes(dateAttributes, range: range)
-            }
-        case .url:
-            for range in urlRanges {
-                textStorage.mutableAttributedString.addAttributes(urlAttributes, range: range)
-            }
+        let ranges = { (results: [NSRange: Any?]) -> [NSRange]? in
+            guard !results.isEmpty else { return nil }
+            return results.map { $0.key }
         }
         
+        switch detectorType {
+        case .address:
+            return ranges(addressResults)
+        case .phoneNumber:
+            return ranges(phoneResults)
+        case .date:
+            return ranges(dateResults)
+        case .url:
+            return ranges(urlResults)
+        }
     }
     
-    func updateDetectorAttributes(for key: NSAttributedStringKey? = nil) {
+    private func updateDetectorAttributes(for detector: DetectorType) {
+        guard enabledDetectors.contains(detector) else { return }
+        guard let ranges = detectedRanges(for: detector) else { return }
+        let attributes = detectorAttributes(for: detector)
+        applyAttributes(attributes, to: ranges)
+    }
+    
+    func detectorAttributes(for detectorType: DetectorType) -> [NSAttributedStringKey: Any] {
+        switch detectorType {
+        case .address: return addressAttributes
+        case .date: return dateAttributes
+        case .phoneNumber: return phoneAttributes
+        case .url: return urlAttributes
+        }
+    }
+    
+    func detectorResults(for detectorType: DetectorType) -> [NSRange: Any?] {
+        switch detectorType {
+        case .address: return addressResults
+        case .phoneNumber: return phoneResults
+        case .date: return dateResults
+        case .url: return urlResults
+        }
+    }
+    
+    private func updateDetectorAttributes(for key: NSAttributedStringKey? = nil) {
         
         guard !enabledDetectors.isEmpty else { return }
         
-        let selectedAttributes = { (attributes: [NSAttributedStringKey: AnyObject], key: NSAttributedStringKey?)
-                            -> [NSAttributedStringKey: AnyObject]? in
+        let selectedAttributes = { (attributes: [NSAttributedStringKey: Any], key: NSAttributedStringKey?)
+                            -> [NSAttributedStringKey: Any]? in
             
             // Key was found so we are applying selective attributes
             if let key = key {
@@ -316,42 +363,30 @@ open class AttributeLabel: UIView {
         }
 
         for detector in enabledDetectors {
-            
-            switch detector {
-            case .address:
-                guard let attributes = selectedAttributes(addressAttributes, key) else { break }
-                applyAttributes(attributes, to: addressRanges)
-            case .phoneNumber:
-                guard let attributes = selectedAttributes(phoneAttributes, key) else { break }
-                applyAttributes(attributes, to: phoneRanges)
-            case .date:
-                guard let attributes = selectedAttributes(dateAttributes, key) else { break }
-                applyAttributes(attributes, to: dateRanges)
-            case .url:
-                guard let attributes = selectedAttributes(urlAttributes, key) else { break }
-                applyAttributes(attributes, to: urlRanges)
+            if let ranges = detectedRanges(for: detector) {
+                let attributes = detectorAttributes(for: detector)
+                guard let selected = selectedAttributes(attributes, key) else { continue }
+                applyAttributes(selected, to: ranges)
             }
-
         }
         
     }
     
-    // MARK: - Parsing
-    
-    func setStorageByParsing(text: NSAttributedString?, completion: @escaping () -> Void) {
+    private func setStorageByParsing(text: NSAttributedString?, completion: @escaping () -> Void) {
         
-        removeAllDetectedRanges()
+        removeAllDetectedResults()
 
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             
+            defer { completion() }
+            
             guard let `self` = self else { return }
             guard let text = text, text.length > 0, !self.enabledDetectors.isEmpty else { return }
-            guard let results = self.parse(text: text.string) else { return }
+            guard let checkingResults = self.parse(text: text.string) else { return }
   
-            self.setDetectedRanges(for: results)
+            self.setDetectorResults(for: checkingResults)
             self.updateDetectorAttributes()
-            
-            completion()
+
         }
         
     }
@@ -364,30 +399,161 @@ open class AttributeLabel: UIView {
         return detector?.matches(in: text, options: [], range: range)
     }
     
-    private func setDetectedRanges(for checkingResults: [NSTextCheckingResult]) {
+    private func setDetectorResults(for checkingResults: [NSTextCheckingResult]) {
         guard !checkingResults.isEmpty else { return }
         
         for result in checkingResults {
             switch result.resultType {
             case NSTextCheckingResult.CheckingType.address:
-                addressRanges.append(result.range)
+                addressResults[result.range] = result.addressComponents
             case NSTextCheckingResult.CheckingType.date:
-                dateRanges.append(result.range)
+                dateResults[result.range] = result.date
             case NSTextCheckingResult.CheckingType.phoneNumber:
-                phoneRanges.append(result.range)
+                phoneResults[result.range] = result.phoneNumber
             case NSTextCheckingResult.CheckingType.link:
-                urlRanges.append(result.range)
+                urlResults[result.range] = result.url
             default:
                 fatalError("Received an unrecognized NSTextCheckingResult.CheckingType")
             }
         }
     }
     
-    func removeAllDetectedRanges() {
-        phoneRanges.removeAll()
-        addressRanges.removeAll()
-        dateRanges.removeAll()
-        urlRanges.removeAll()
+    private func removeAllDetectedResults() {
+        phoneResults.removeAll()
+        addressResults.removeAll()
+        dateResults.removeAll()
+        urlResults.removeAll()
+    }
+    
+    // MARK: - Gesture Handling
+    
+    private func stringIndex(at location: CGPoint) -> Int? {
+        guard textStorage.length > 0 else { return nil }
+        
+        var location = location
+        let textOffset = CGPoint(x: textInsets.left, y: textInsets.right) // <- bug?
+        
+        location.x -= textOffset.x
+        location.y -= textOffset.y
+        
+        let glyphIndex = layoutManager.glyphIndex(for: location, in: textContainer)
+        
+        let lineRect = layoutManager.lineFragmentUsedRect(forGlyphAt: glyphIndex, effectiveRange: nil)
+        
+        let rectContainsLocation = lineRect.contains(location)
+        
+        return rectContainsLocation ? layoutManager.characterIndexForGlyph(at: glyphIndex) : nil
+        
+    }
+    
+    private func setupGestureRecognizers() {
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
+        addGestureRecognizer(tapGesture)
+        tapGesture.delegate = self
+        
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
+        addGestureRecognizer(longPressGesture)
+        tapGesture.delegate = self
+        
+        isUserInteractionEnabled = true
+    }
+    
+    @objc
+    func handleGesture(_ gesture: UIGestureRecognizer) {
+        
+        let touchLocation = gesture.location(ofTouch: 0, in: self)
+        guard let index = stringIndex(at: touchLocation) else { return }
+        
+        var detectorRangeMap: [DetectorType: [NSRange]] = [:]
+        
+        for detector in enabledDetectors where !enabledDetectors.isEmpty {
+            detectorRangeMap[detector] = detectedRanges(for: detector)
+        }
+        
+        for (detectorType, ranges) in detectorRangeMap {
+            for nsRange in ranges {
+                guard let range = Range(nsRange), range.contains(index) else { continue }
+                let results = detectorResults(for: detectorType)
+                guard !results.isEmpty, let value = results[nsRange] else { continue }
+                forwardToDelegateMethod(for: detectorType, value: value)
+            }
+        }
+    }
+    
+    private func forwardToDelegateMethod(for detector: DetectorType, value: Any?) {
+        switch detector {
+        case .address:
+            guard let addressComponents = value as? [String: String] else { return }
+            handleAddress(addressComponents)
+        case .phoneNumber:
+            guard let phoneNumber = value as? String else { return }
+            handlePhoneNumber(phoneNumber)
+        case .date:
+            guard let date = value as? Date else { return }
+            handleDate(date)
+        case .url:
+            guard let url = value as? URL else { return }
+            handleURL(url)
+        }
+    }
+    
+    private func handleAddress(_ addressComponents: [String: String]) {
+        delegate?.didSelectAddress(addressComponents)
+    }
+    
+    private func handleDate(_ date: Date) {
+        delegate?.didSelectDate(date)
+    }
+    
+    private func handleURL(_ url: URL) {
+        delegate?.didSelectURL(url)
+    }
+    
+    private func handlePhoneNumber(_ phoneNumber: String) {
+        delegate?.didSelectPhoneNumber(phoneNumber)
+    }
+    
+    // MARK: UIGestureRecognizer Delegate
+    
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    //swiftlint:disable cyclomatic_complexity
+    // Yeah we're disabling this because the whole file is a mess :D
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        
+        let touchLocation = touch.location(in: self)
+        
+        var activeRanges: [NSRange] = []
+        
+        for detector in enabledDetectors where !enabledDetectors.isEmpty {
+            guard let ranges = detectedRanges(for: detector) else { continue }
+            activeRanges.append(contentsOf: ranges)
+        }
+        
+        switch true {
+        case gestureRecognizer.view != self.superview && gestureRecognizer.view != self:
+            return true
+        case gestureRecognizer.view == self.superview:
+            guard let index = stringIndex(at: touchLocation) else { return true }
+            for nsRange in activeRanges {
+                guard let range = Range(nsRange) else { return true }
+                if range.contains(index) { return false }
+            }
+            return true
+        case gestureRecognizer.view == self:
+            guard let index = stringIndex(at: touchLocation) else { return false }
+            for nsRange in activeRanges {
+                guard let range = Range(nsRange) else { return false }
+                if range.contains(index) { return true}
+            }
+            return false
+        default:
+            return true
+        }
+        
     }
     
 }
