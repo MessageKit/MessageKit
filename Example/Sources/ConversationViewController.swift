@@ -382,8 +382,7 @@ extension ConversationViewController: MessageInputBarDelegate {
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
         messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date()))
         inputBar.inputTextView.text = String()
-        messagesCollectionView.reloadData()
-        messagesCollectionView.scrollToBottom()
+        messagesCollectionView.scrollToBottom(animated: true)
     }
 
 }

@@ -64,8 +64,19 @@ open class MessagesCollectionView: UICollectionView {
     // MARK: - Methods
 
     public func scrollToBottom(animated: Bool = false) {
-        guard let indexPath = indexPathForLastItem else { return }
-        scrollToItem(at: indexPath, at: .bottom, animated: animated)
+//        guard let indexPath = indexPathForLastItem else { return }
+//        scrollToItem(at: indexPath, at: .bottom, animated: animated)
+
+        // Work in progress here :)
+
+        guard indexPathForLastItem != nil else { return }
+
+        // This works fairly reliably, but using `DispatchQueue.main.async` might not let you invoke this method from an animation block :(
+        DispatchQueue.main.async {
+            self.layoutIfNeeded()
+            let scrollRect = CGRect(x: 0, y: self.contentSize.height - 1, width: 1, height: 1)
+            self.scrollRectToVisible(scrollRect, animated: animated)
+        }
     }
 
 }
