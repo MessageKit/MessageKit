@@ -82,10 +82,30 @@ open class AttributeLabel: UIView {
             return textStorage.string
         }
         set {
-            let string = NSAttributedString(string: newValue ?? "")
+            let string = addLocalAttributes(to: newValue)
             textStorage.setAttributedString(string)
             setNeedsDisplay()
         }
+    }
+    
+    func addLocalAttributes(to string: String?) -> NSAttributedString {
+        
+        guard let string = string, string != "" else {
+            return NSAttributedString(string: "")
+        }
+        
+        let attributes: [NSAttributedStringKey: AnyObject] = [
+            .font: font,
+            .foregroundColor: textColor
+        ]
+        
+        let mutableString = NSMutableAttributedString(string: string)
+        
+        // Later we will exclude detected ranges
+        let range = NSRange(location: 0, length: mutableString.length)
+        mutableString.addAttributes(attributes, range: range)
+        
+        return NSAttributedString(attributedString: mutableString)
     }
     
     public var font: UIFont = UIFont.systemFont(ofSize: 10.0) {
