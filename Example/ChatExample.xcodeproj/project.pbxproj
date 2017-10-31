@@ -11,7 +11,6 @@
 		882B5E811CF7D53600B6E160 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E781CF7D53600B6E160 /* AppDelegate.swift */; };
 		882B5E821CF7D53600B6E160 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 882B5E791CF7D53600B6E160 /* Assets.xcassets */; };
 		882B5E831CF7D53600B6E160 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 882B5E7A1CF7D53600B6E160 /* LaunchScreen.storyboard */; };
-		882B5E841CF7D53600B6E160 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 882B5E7C1CF7D53600B6E160 /* Main.storyboard */; };
 		882B5E851CF7D53600B6E160 /* InboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E7E1CF7D53600B6E160 /* InboxViewController.swift */; };
 		882B5E871CF7D53600B6E160 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E801CF7D53600B6E160 /* SettingsViewController.swift */; };
 		882B5E901CF7D56000B6E160 /* ChatExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E8E1CF7D56000B6E160 /* ChatExampleUITests.swift */; };
@@ -57,7 +56,7 @@
 		0364943D08CDBE656E6F6DF8 /* Pods-ChatExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatExampleTests/Pods-ChatExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2AC6E3F5C11E39F57598DBE6 /* Pods_ChatExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37D3EAC31F390E5F00DD6A55 /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
-		37F8BCD41F38F3A8003C12C2 /* Avatar.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Avatar.playground; path = Playgrounds/Avatar.playground; sourceTree = "<group>"; };
+		37F8BCD41F38F3A8003C12C2 /* Avatar.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Avatar.playground; path = Playgrounds/Avatar.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		3B316705C4717C3B4C916D62 /* Pods_ChatExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F0AC85B38034EC92CCBC7D /* Pods_ChatExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		882B5E331CF7D4B900B6E160 /* ChatExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,7 +65,6 @@
 		882B5E781CF7D53600B6E160 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		882B5E791CF7D53600B6E160 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		882B5E7B1CF7D53600B6E160 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		882B5E7D1CF7D53600B6E160 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		882B5E7E1CF7D53600B6E160 /* InboxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxViewController.swift; sourceTree = "<group>"; };
 		882B5E7F1CF7D53600B6E160 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		882B5E801CF7D53600B6E160 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -159,7 +157,6 @@
 				882B5E791CF7D53600B6E160 /* Assets.xcassets */,
 				882B5E7F1CF7D53600B6E160 /* Info.plist */,
 				882B5E7A1CF7D53600B6E160 /* LaunchScreen.storyboard */,
-				882B5E7C1CF7D53600B6E160 /* Main.storyboard */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -270,6 +267,7 @@
 				TargetAttributes = {
 					882B5E321CF7D4B900B6E160 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 9EUCWD26TP;
 						LastSwiftMigration = 0800;
 					};
 					882B5E481CF7D4B900B6E160 = {
@@ -308,7 +306,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				882B5E841CF7D53600B6E160 /* Main.storyboard in Resources */,
 				882B5E821CF7D53600B6E160 /* Assets.xcassets in Resources */,
 				882B5E831CF7D53600B6E160 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -470,7 +467,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ChatExample/Pods-ChatExample-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/MessageKit/MessageKitAssets.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/MessageKit/MessageKitAssets.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -535,14 +532,6 @@
 				882B5E7B1CF7D53600B6E160 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		882B5E7C1CF7D53600B6E160 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				882B5E7D1CF7D53600B6E160 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -657,7 +646,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9EUCWD26TP;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.messagekit.ChatExample;
@@ -672,7 +661,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 9EUCWD26TP;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.messagekit.ChatExample;

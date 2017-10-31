@@ -30,7 +30,9 @@ class ConversationViewController: MessagesViewController {
 
     var messageList: [MockMessage] = [] {
         didSet {
-            messagesCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.messagesCollectionView.reloadData()
+            }
         }
     }
 
@@ -38,7 +40,11 @@ class ConversationViewController: MessagesViewController {
         super.viewDidLoad()
 
         DispatchQueue.global(qos: .userInitiated).async {
-            self.messageList = SampleData.shared.getMessages(count: 100)
+            SampleData.shared.getMessages(count: 10) { messages in
+                DispatchQueue.main.async {
+                    self.messageList = messages
+                }
+            }
         }
 
         messagesCollectionView.messagesDataSource = self
@@ -46,6 +52,7 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
+        messageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
         scrollsToBottomOnFirstLayout = true //default false
         scrollsToBottomOnKeybordBeginsEditing = true // default false
 
@@ -55,7 +62,7 @@ class ConversationViewController: MessagesViewController {
                                                             action: #selector(handleKeyboardButton))
     }
     
-  @objc func handleKeyboardButton() {
+    @objc func handleKeyboardButton() {
         
         let actionSheetController = UIAlertController(title: "Change Keyboard Style", message: nil, preferredStyle: .actionSheet)
         let actions = [
@@ -77,6 +84,7 @@ class ConversationViewController: MessagesViewController {
             UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         ]
         actions.forEach { actionSheetController.addAction($0) }
+        actionSheetController.view.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
         present(actionSheetController, animated: true, completion: nil)
     }
     
@@ -91,14 +99,17 @@ class ConversationViewController: MessagesViewController {
             makeButton(named: "ic_camera").onTextViewDidChange { button, textView in
                 button.isEnabled = textView.text.isEmpty
             },
-            makeButton(named: "ic_at").onSelected { _ in
+            makeButton(named: "ic_at").onSelected {
+                $0.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
                 print("@ Selected")
             },
-            makeButton(named: "ic_hashtag").onSelected { _ in
+            makeButton(named: "ic_hashtag").onSelected {
+                $0.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
                 print("# Selected")
             },
             .flexibleSpace,
             makeButton(named: "ic_library").onTextViewDidChange { button, textView in
+                button.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
                 button.isEnabled = textView.text.isEmpty
             },
             messageInputBar.sendButton
@@ -113,7 +124,7 @@ class ConversationViewController: MessagesViewController {
                     $0.layer.borderColor = $0.titleColor(for: .disabled)?.cgColor
                     $0.backgroundColor = .white
                 }.onEnabled {
-                    $0.backgroundColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                    $0.backgroundColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
                     $0.layer.borderColor = UIColor.clear.cgColor
                 }.onSelected {
                     // We use a transform becuase changing the size would cause the other views to relayout
@@ -150,7 +161,7 @@ class ConversationViewController: MessagesViewController {
         messageInputBar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         messageInputBar.setRightStackViewWidthConstant(to: 36, animated: true)
         messageInputBar.setStackViewItems([messageInputBar.sendButton], forStack: .right, animated: true)
-        messageInputBar.sendButton.imageView?.backgroundColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+        messageInputBar.sendButton.imageView?.backgroundColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
         messageInputBar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         messageInputBar.sendButton.setSize(CGSize(width: 36, height: 36), animated: true)
         messageInputBar.sendButton.image = #imageLiteral(resourceName: "ic_up")
@@ -163,6 +174,7 @@ class ConversationViewController: MessagesViewController {
     func defaultStyle() {
         messageInputBar.inputTextView.resignFirstResponder()
         let newMessageInputBar = MessageInputBar()
+        newMessageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
         newMessageInputBar.delegate = self
         messageInputBar = newMessageInputBar
         reloadInputViews()
@@ -177,7 +189,7 @@ class ConversationViewController: MessagesViewController {
                 $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
                 $0.setSize(CGSize(width: 30, height: 30), animated: true)
             }.onSelected {
-                $0.tintColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                $0.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
             }.onDeselected {
                 $0.tintColor = UIColor.lightGray
             }.onTouchUpInside { _ in
@@ -222,7 +234,11 @@ extension ConversationViewController: MessagesDataSource {
 
 // MARK: - MessagesDisplayDelegate
 
-extension ConversationViewController: MessagesDisplayDelegate {
+extension ConversationViewController: MessagesDisplayDelegate, TextMessageDisplayDelegate {
+    
+    func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return isFromCurrentSender(message: message) ? UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1) : UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+    }
 
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? .white : .darkText

@@ -26,18 +26,59 @@ import UIKit
 
 public protocol MessagesDataSource: class {
 
+    /// The `Sender` of new messages in the `MessagesCollectionView`.
     func currentSender() -> Sender
 
+    /// A helper method to determine if a given message is from the current sender.
+    ///
+    /// - Parameters:
+    ///   - message: The message to check if it was sent by the current Sender.
+    ///
+    /// The default implementation of this method checks for equality between the message's `Sender`
+    /// and the current Sender.
     func isFromCurrentSender(message: MessageType) -> Bool
 
+    /// The message to be used for a `MessagesCollectionViewCell` at the given `IndexPath`.
+    ///
+    /// - Parameters:
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which the message will be displayed.
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType
 
+    /// The number of messages to be displayed in the `MessagesCollectionView`.
+    ///
+    /// - Parameters:
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which the messages will be displayed.
     func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int
 
+    /// The `Avatar` information to be used by the `AvatarView`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is `Avatar()`.
     func avatar(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar
 
+    /// The attributed text to be used for cell's top label.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is `nil`.
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
 
+    /// The attributed text to be used for cell's bottom label.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is `nil`.
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
 
 }
