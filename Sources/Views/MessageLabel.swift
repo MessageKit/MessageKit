@@ -64,7 +64,6 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
         }
         set {
             let string = newValue ?? NSAttributedString(string: "")
-            // we may have to add paragraph attributes here
             textStorage.setAttributedString(string)
             
             setStorageByParsing(text: string) {
@@ -80,7 +79,8 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
             return textStorage.string
         }
         set {
-            let string = addLocalAttributes(to: newValue)
+            let attributedString = NSAttributedString(string: newValue ?? "")
+            let string = addLocalAttributes(to: attributedString)
             textStorage.setAttributedString(string)
             
             setStorageByParsing(text: string) {
@@ -94,7 +94,7 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
     public var font: UIFont = UIFont.systemFont(ofSize: 10.0) {
         didSet {
             textStorage.addAttribute(key: .font, value: font)
-            updateDetectorAttributes(for: .font)
+            updateDetectorAttributes()
             if !isConfiguring { setNeedsDisplay() }
         }
     }
@@ -102,7 +102,7 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
     public var textColor: UIColor = .darkText {
         didSet {
             textStorage.addAttribute(key: .foregroundColor, value: textColor)
-            updateDetectorAttributes(for: .foregroundColor)
+            updateDetectorAttributes()
             if !isConfiguring { setNeedsDisplay() }
         }
     }
@@ -127,9 +127,10 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
             if !isConfiguring { setNeedsDisplay() }
         }
     }
-    public var textAlignment: NSTextAlignment = .center {
+    public var textAlignment: NSTextAlignment = .left {
         didSet {
-            textStorage.addAttribute(key: .paragraphStyle, value: paragraphStyle)
+            let style = paragraphStyle(from: textStorage.attributedString)
+            textStorage.addAttribute(key: .paragraphStyle, value: style)
             if !isConfiguring { setNeedsDisplay() }
         }
     }
@@ -140,7 +141,7 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    public var enabledDetectors: [DetectorType] = [] {
+    public var enabledDetectors: [DetectorType] = [.address, .phoneNumber, .date, .url] {
         didSet {
             setStorageByParsing(text: attributedText) {
                 if !self.isConfiguring { self.setNeedsDisplay() }
@@ -186,7 +187,7 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
     
     private var phoneResults: [NSRange: String?] = [:]
     
-    private var addressResults: [NSRange: Any?] = [:]
+    private var addressResults: [NSRange: [NSTextCheckingKey: String]?] = [:]
     
     private var dateResults: [NSRange: Date?] = [:]
     
@@ -194,19 +195,17 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
     
     private var isConfiguring: Bool = false
     
-    private var paragraphStyle: NSParagraphStyle {
+    func paragraphStyle(from string: NSAttributedString) -> NSParagraphStyle {
         
-        guard textStorage.attributedString.length > 0 else { return NSParagraphStyle() }
+        guard string.length > 0 else { return NSParagraphStyle() }
         
-        var range = NSRange(location: 0, length: textStorage.length)
-        let existingStyle = textStorage.attributedString.attribute(.paragraphStyle, at: 0, effectiveRange: &range) as? NSMutableParagraphStyle
+        var range = NSRange(location: 0, length: string.length)
+        let existingStyle = string.attribute(.paragraphStyle, at: 0, effectiveRange: &range) as? NSMutableParagraphStyle
         let style = existingStyle ?? NSMutableParagraphStyle()
         
         style.lineBreakMode = lineBreakMode
         style.alignment = textAlignment
-        
-        
-        
+
         return style
         
     }
@@ -231,7 +230,7 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
         
         let defaultAttributes: [NSAttributedStringKey: Any] = [
             .underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
-            .underlineColor: self.textColor
+            .underlineColor: UIColor.darkText
         ]
         
         self.addressAttributes = defaultAttributes
@@ -252,13 +251,13 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
     // MARK: - Methods [Public]
     
     open override func draw(_ rect: CGRect) {
-        
+
         let insetRect = UIEdgeInsetsInsetRect(rect, textInsets)
-        textContainer.size = insetRect.size
-        
+        textContainer.size = CGSize(width: insetRect.width, height: rect.height) // <- bug maybe?
+
         let range = layoutManager.glyphRange(for: textContainer)
         let origin = insetRect.origin
-        
+
         layoutManager.drawBackground(forGlyphRange: range, at: origin)
         layoutManager.drawGlyphs(forGlyphRange: range, at: origin)
         
@@ -273,19 +272,19 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
     
     // MARK: - Methods [Private]
     
-    private func addLocalAttributes(to string: String?) -> NSAttributedString {
+    private func addLocalAttributes(to string: NSAttributedString?) -> NSAttributedString {
         
-        guard let string = string, string != "" else {
+        guard let string = string, string.length > 0 else {
             return NSAttributedString(string: "")
         }
         
         let attributes: [NSAttributedStringKey: AnyObject] = [
             .font: font,
             .foregroundColor: textColor,
-            .paragraphStyle: paragraphStyle
+            .paragraphStyle: paragraphStyle(from: string)
         ]
         
-        let mutableString = NSMutableAttributedString(string: string)
+        let mutableString = NSMutableAttributedString(attributedString: string)
         
         // Later we will exclude detected ranges
         let range = NSRange(location: 0, length: mutableString.length)
@@ -297,9 +296,11 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
     private func applyAttributes(_ attributes: [NSAttributedStringKey: Any], to ranges: [NSRange]) {
         
         guard !attributes.isEmpty || !ranges.isEmpty else { return }
-        
+
         for range in ranges {
-            textStorage.mutableAttributedString.addAttributes(attributes, range: range)
+            let attributedString = textStorage.mutableAttributedString
+            attributedString.addAttributes(attributes, range: range)
+            textStorage.setAttributedString(attributedString)
         }
         
     }
@@ -414,6 +415,7 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
             switch result.resultType {
             case NSTextCheckingResult.CheckingType.address:
                 addressResults[result.range] = result.addressComponents
+                //print(result.addressComponents)
             case NSTextCheckingResult.CheckingType.date:
                 dateResults[result.range] = result.date
             case NSTextCheckingResult.CheckingType.phoneNumber:
