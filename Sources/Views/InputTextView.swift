@@ -156,10 +156,12 @@ open class InputTextView: UITextView {
         
         addSubview(placeholderLabel)
         placeholderLabelConstraintSet = NSLayoutConstraintSet(
-            top:    placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: placeholderLabelInsets.top),
-            bottom: placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -placeholderLabelInsets.bottom),
-            left:   placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderLabelInsets.left),
-            width:  placeholderLabel.widthAnchor.constraint(equalTo: widthAnchor, constant: -(placeholderLabelInsets.left + placeholderLabelInsets.right))
+            top:     placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: placeholderLabelInsets.top),
+            bottom:  placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -placeholderLabelInsets.bottom),
+            left:    placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderLabelInsets.left),
+            right:   placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: (placeholderLabelInsets.left + placeholderLabelInsets.right)),
+            centerX: placeholderLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            centerY: placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
             ).activate()
     }
     
