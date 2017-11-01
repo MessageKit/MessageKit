@@ -95,7 +95,9 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
         didSet {
             textStorage.addAttribute(key: .font, value: font)
             updateDetectorAttributes()
-            if !isConfiguring { setNeedsDisplay() }
+            if !isConfiguring {
+                setNeedsDisplay()
+            }
         }
     }
     
@@ -185,13 +187,13 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
     
     private var textStorage: NSTextStorage
     
-    private var phoneResults: [NSRange: String?] = [:]
+    private var phoneResults: [NSRange: String] = [:]
     
-    private var addressResults: [NSRange: [NSTextCheckingKey: String]?] = [:]
+    private var addressResults: [NSRange: [NSTextCheckingKey: String]] = [:]
     
-    private var dateResults: [NSRange: Date?] = [:]
+    private var dateResults: [NSRange: Date] = [:]
     
-    private var urlResults: [NSRange: URL?] = [:]
+    private var urlResults: [NSRange: URL] = [:]
     
     private var isConfiguring: Bool = false
     
@@ -491,10 +493,20 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    func foo(value: Any?) {
+        let isCheckSucceeded = value is [NSTextCheckingKey: String]
+        print("Value is [NSTextCheckingKey: String]: \(isCheckSucceeded)")
+        let castSucceeded = value as? [String: String] != nil
+        print("The cast to [String: String] worked: \(castSucceeded)")
+    }
+    
     private func forwardToDelegateMethod(for detector: DetectorType, value: Any?) {
         switch detector {
         case .address:
-            guard let addressComponents = value as? [String: String] else { return }
+            // Some weird stuff going on here
+            // [NSTextCheckingKey: String] -> Any? -> Any? -> [NSString: String] -> [String: String]
+            guard let keyComponents = value as? [NSString: String] else { return }
+            let addressComponents = keyComponents as [String: String]
             handleAddress(addressComponents)
         case .phoneNumber:
             guard let phoneNumber = value as? String else { return }
