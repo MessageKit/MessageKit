@@ -171,6 +171,6 @@ open class InputTextView: UITextView {
         placeholderLabelConstraintSet?.top?.constant = placeholderLabelInsets.top
         placeholderLabelConstraintSet?.bottom?.constant = -placeholderLabelInsets.bottom
         placeholderLabelConstraintSet?.left?.constant = placeholderLabelInsets.left
-        placeholderLabelConstraintSet?.width?.constant = -(placeholderLabelInsets.left + placeholderLabelInsets.right)
+        placeholderLabelConstraintSet?.right?.constant = -placeholderLabelInsets.right
     }
 }
