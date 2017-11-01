@@ -61,9 +61,10 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
     
     public var attributedText: NSAttributedString? {
         get {
-            return textStorage.attributedString
+            return _textSync
         }
         set {
+            _textSync = newValue
             let newString = newValue ?? NSAttributedString(string: "")
             updateTextStorage(text: newString)
         }
@@ -71,39 +72,18 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
     
     public var text: String? {
         get {
-            return textStorage.string
+            return _textSync?.string
         }
         set {
             let newString = NSAttributedString(string: newValue ?? "")
             let attributedString = addLocalAttributes(to: newString)
+            _textSync = newValue == nil ? nil : attributedString
             updateTextStorage(text: attributedString)
         }
     }
     
-    func updateTextStorage(text: NSAttributedString) {
-        
-        textStorage.setAttributedString(text)
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            
-            // Cleanup old results anytime we modify text
-            self.removeAllDetectedResults()
-            
-            guard text.length > 0 && !self.enabledDetectors.isEmpty else { return }
-            guard let checkingResults = self.parse(text: text.string) else { return }
-            
-            self.setDetectorResults(for: checkingResults)
-            self.updateDetectorAttributes()
-            
-            DispatchQueue.main.async {
-                // Concerned about a race condition so
-                // not checking isConfiguring here
-                self.setNeedsDisplay()
-            }
-        }
-        
-        if !isConfiguring { setNeedsDisplay() }
-    }
+    // Text sync won't acurately represent detector attributes
+    private var _textSync: NSAttributedString?
     
     public var font: UIFont = UIFont.systemFont(ofSize: 17.0) {
         didSet {
@@ -148,13 +128,6 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
         didSet {
             if !isConfiguring { setNeedsDisplay() }
         }
-    }
-    
-    func updateTextStorage(key: NSAttributedStringKey, value: AnyObject) {
-        textStorage.addAttribute(key: key, value: value)
-        // Reapply detector attributes in case they were overriden
-        updateDetectorAttributes(for: key)
-        if !isConfiguring { setNeedsDisplay() }
     }
     
     public var enabledDetectors: [DetectorType] = [.address, .phoneNumber, .date, .url] {
@@ -268,8 +241,45 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
     }
     
     private func setupTextStorage() {
-        textStorage.setAttributedString(NSAttributedString(string: ""))
+        let attributedString = NSAttributedString(string: "")
+        _textSync = attributedString
+        textStorage.setAttributedString(attributedString)
         textStorage.addLayoutManager(layoutManager)
+    }
+    
+    // MARK: - Manager TextStorage
+    
+    func updateTextStorage(text: NSAttributedString) {
+        
+        textStorage.setAttributedString(text)
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            
+            // Cleanup old results anytime we modify text
+            self.removeAllDetectedResults()
+            
+            guard text.length > 0 && !self.enabledDetectors.isEmpty else { return }
+            guard let checkingResults = self.parse(text: text.string) else { return }
+            
+            self.setDetectorResults(for: checkingResults)
+            self.updateDetectorAttributes()
+            
+            DispatchQueue.main.async {
+                // Concerned about a race condition so
+                // not checking isConfiguring here
+                self.setNeedsDisplay()
+            }
+        }
+        
+        if !isConfiguring { setNeedsDisplay() }
+    }
+    
+    
+    private func updateTextStorage(key: NSAttributedStringKey, value: AnyObject) {
+        textStorage.addAttribute(key: key, value: value)
+        // Reapply detector attributes in case they were overriden
+        updateDetectorAttributes(for: key)
+        if !isConfiguring { setNeedsDisplay() }
     }
     
 
@@ -301,6 +311,7 @@ open class MessageLabel: UIView, UIGestureRecognizerDelegate {
             let attributedString = textStorage.mutableAttributedString
             attributedString.addAttributes(attributes, range: range)
             textStorage.setAttributedString(attributedString)
+            _textSync = attributedString
         }
         
     }
