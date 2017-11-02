@@ -8,13 +8,20 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
++- **Breaking Change** Fixed all instances of misspelled `inital` property.  `Avatar.inital` has changed to `Avatar.initial` and the initializer has changed from `public init(image: UIImage? = nil, initals: String = "?")` to `public init(image: UIImage? = nil, initials: String = "?")`. [#298](https://github.com/MessageKit/MessageKit/issues/298) by [@sidmclaughlin](https://github.com/sidmclaughlin).
+
+## [[Prerelease] 0.10.1](https://github.com/MessageKit/MessageKit/releases/tag/0.10.1)
+
+### Fixed
+
+-  Fixed a bug that caused a race condition to be met when invalidating the `intrinsicContentSize` of the `MessageInputBar` which froze the app during a "Select" or "Select All" long press
+[#313](https://github.com/MessageKit/MessageKit/pull/313) by [@zhongwuzw](https://github.com/nathantannar4).
+
 -  Fixed a bug that the `placeholderLabel` `subview` of `InputTextView` leads to ambiguous content size because of uncorrect `Auto Layout`.
 [#310](https://github.com/MessageKit/MessageKit/pull/310) by [@zhongwuzw](https://github.com/zhongwuzw).
 
 -  Fixed a bug that the `leftStackView`、`rightStackView` `subview` of `MessageInputBar` leads to ambiguous `Auto Layout` issue because of typo.
 [#311](https://github.com/MessageKit/MessageKit/pull/311) by [@zhongwuzw](https://github.com/zhongwuzw).
-
-- Fixed all instances of misspelled `inital` property.  `Avatar.inital` has changed to `Avatar.initial` and the initializer has changed from `public init(image: UIImage? = nil, initals: String = "?")` to `public init(image: UIImage? = nil, initials: String = "?")` [#298](https://github.com/MessageKit/MessageKit/issues/298) by [@sidmclaughlin](https://github.com/sidmclaughlin)
 
 ### Changed
 
