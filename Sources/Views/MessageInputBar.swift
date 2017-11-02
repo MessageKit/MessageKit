@@ -134,15 +134,14 @@ open class MessageInputBar: UIView {
                 isOverMaxHeight = false
             }
         }
-        inputTextView.invalidateIntrinsicContentSize()
 
         let size = CGSize(width: bounds.width, height: heightToFit)
 
         if previousIntrinsicContentSize != size {
             delegate?.messageInputBar(self, didChangeIntrinsicContentTo: size)
+            previousIntrinsicContentSize = size
         }
 
-        previousIntrinsicContentSize = size
         return size
     }
     
