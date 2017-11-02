@@ -6,6 +6,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+## [[Prerelease] 0.10.1](https://github.com/MessageKit/MessageKit/releases/tag/0.10.1)
+
 ### Fixed
 
 -  Fixed a bug that caused a race condition to be met when invalidating the `intrinsicContentSize` of the `MessageInputBar` which froze the app during a "Select" or "Select All" long press
