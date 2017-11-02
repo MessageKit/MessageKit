@@ -134,15 +134,14 @@ open class MessageInputBar: UIView {
                 isOverMaxHeight = false
             }
         }
-        inputTextView.invalidateIntrinsicContentSize()
 
         let size = CGSize(width: bounds.width, height: heightToFit)
 
         if previousIntrinsicContentSize != size {
             delegate?.messageInputBar(self, didChangeIntrinsicContentTo: size)
+            previousIntrinsicContentSize = size
         }
 
-        previousIntrinsicContentSize = size
         return size
     }
     
@@ -252,14 +251,14 @@ open class MessageInputBar: UIView {
         textViewHeightAnchor = inputTextView.heightAnchor.constraint(equalToConstant: maxHeight)
         
         leftStackViewLayoutSet = NSLayoutConstraintSet(
-            top:    inputTextView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
+            top:    leftStackView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
             bottom: leftStackView.bottomAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: 0),
             left:   leftStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
             width:  leftStackView.widthAnchor.constraint(equalToConstant: leftStackViewWidthContant)
         )
         
         rightStackViewLayoutSet = NSLayoutConstraintSet(
-            top:    inputTextView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
+            top:    rightStackView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
             bottom: rightStackView.bottomAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: 0),
             right:  rightStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right),
             width:  rightStackView.widthAnchor.constraint(equalToConstant: rightStackViewWidthContant)
