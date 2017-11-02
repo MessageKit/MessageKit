@@ -14,7 +14,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 -  Fixed a bug that the `leftStackView`、`rightStackView` `subview` of `MessageInputBar` leads to ambiguous `Auto Layout` issue because of typo.
 [#311](https://github.com/MessageKit/MessageKit/pull/311) by [@zhongwuzw](https://github.com/zhongwuzw).
 
-- Fixed all instances of misspelled `inital` property. [#298](https://github.com/MessageKit/MessageKit/issues/298) by [@sidmclaughlin](https://github.com/sidmclaughlin)
+- Fixed all instances of misspelled `inital` property.  `Avatar.inital` has changed to `Avatar.initial` and the initializer has changed from `public init(image: UIImage? = nil, initals: String = "?")` to `public init(image: UIImage? = nil, initials: String = "?")` [#298](https://github.com/MessageKit/MessageKit/issues/298) by [@sidmclaughlin](https://github.com/sidmclaughlin)
 
 ### Changed
 
