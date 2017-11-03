@@ -73,7 +73,7 @@ open class MessageInputBar: UIView {
                 blurView.fillSuperview()
             }
             blurView.isHidden = !isTranslucent
-            backgroundView.backgroundColor = isTranslucent ? (backgroundView.backgroundColor?.withAlphaComponent(0.7) ?? UIColor.white.withAlphaComponent(0.7)) : .white
+            backgroundView.backgroundColor = isTranslucent ? (backgroundView.backgroundColor?.withAlphaComponent(0.75) ?? UIColor.white.withAlphaComponent(0.75)) : .white
         }
     }
     
@@ -85,8 +85,13 @@ open class MessageInputBar: UIView {
      
      ## Important Notes ##
      1. It's axis is initially set to .vertical
+     2. It's alignment is initially set to .fill
      */
-    open let topStackView = InputStackView(axis: .vertical, spacing: 0)
+    open let topStackView: InputStackView = {
+        let stackView = InputStackView(axis: .vertical, spacing: 0)
+        stackView.alignment = .fill
+        return stackView
+    }()
     
     /**
      The InputStackView at the InputStackView.left position
@@ -203,7 +208,7 @@ open class MessageInputBar: UIView {
     /// The intrinsicContentSize can change a lot so the delegate method
     /// `inputBar(self, didChangeIntrinsicContentTo: size)` only needs to be called
     /// when it's different
-    private var previousIntrinsicContentSize: CGSize?
+    private(set) public var previousIntrinsicContentSize: CGSize?
     
     /// A boolean that indicates if the maxTextViewHeight has been met. Keeping track of this
     /// improves the performance
@@ -218,14 +223,14 @@ open class MessageInputBar: UIView {
     }
     
     /// The fixed widthAnchor constant of the leftStackView
-    private(set) var leftStackViewWidthConstant: CGFloat = 0 {
+    private(set) public var leftStackViewWidthConstant: CGFloat = 0 {
         didSet {
             leftStackViewLayoutSet?.width?.constant = leftStackViewWidthConstant
         }
     }
     
     /// The fixed widthAnchor constant of the rightStackView
-    private(set) var rightStackViewWidthConstant: CGFloat = 52 {
+    private(set) public var rightStackViewWidthConstant: CGFloat = 52 {
         didSet {
             rightStackViewLayoutSet?.width?.constant = rightStackViewWidthConstant
         }
@@ -255,7 +260,6 @@ open class MessageInputBar: UIView {
     
     private var textViewLayoutSet: NSLayoutConstraintSet?
     private var textViewHeightAnchor: NSLayoutConstraint?
-    private var topStackViewHeightAnchor: NSLayoutConstraint?
     private var topStackViewLayoutSet: NSLayoutConstraintSet?
     private var leftStackViewLayoutSet: NSLayoutConstraintSet?
     private var rightStackViewLayoutSet: NSLayoutConstraintSet?
@@ -425,6 +429,7 @@ open class MessageInputBar: UIView {
                 textViewHeightAnchor?.isActive = false
                 inputTextView.isScrollEnabled = false
                 isOverMaxTextViewHeight = false
+                inputTextView.invalidateIntrinsicContentSize()
             }
         }
         return CGSize(width: bounds.width, height: heightToFit)
@@ -435,7 +440,7 @@ open class MessageInputBar: UIView {
     /// Layout the given UIStackView's
     ///
     /// - Parameter positions: The UIStackView's to layout
-    public func layoutStackViews(_ positions: [InputStackView.Position] = [.left, .right, .bottom]) {
+    public func layoutStackViews(_ positions: [InputStackView.Position] = [.left, .right, .bottom, .top]) {
         
         for position in positions {
             switch position {
