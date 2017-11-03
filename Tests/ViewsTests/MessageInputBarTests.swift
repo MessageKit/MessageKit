@@ -43,23 +43,17 @@ class MessageInputBarTests: XCTestCase {
         XCTAssertFalse(sut.blurView.translatesAutoresizingMaskIntoConstraints)
     }
 
-    func testBlurEffectIsHidden_isTrueAfterInit() {
-        XCTAssertTrue(sut.blurView.isHidden)
-    }
-
     func testIsTranslucent_isFalseForDefault() {
         XCTAssertFalse(sut.isTranslucent)
     }
 
     func testUISetups_forIsTranslucentIsTrue() {
         sut.isTranslucent = true
-        XCTAssertEqual(sut.backgroundColor, UIColor.clear)
         XCTAssertFalse(sut.blurView.isHidden)
     }
 
     func testUISetups_forIsTranslucentIsFalse() {
         sut.isTranslucent = false
-        XCTAssertEqual(sut.backgroundColor, UIColor.white)
         XCTAssertTrue(sut.blurView.isHidden)
     }
 
