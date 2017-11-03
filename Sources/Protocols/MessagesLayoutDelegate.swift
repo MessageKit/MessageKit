@@ -22,6 +22,31 @@
  SOFTWARE.
  */
 
+public struct AvatarPosition {
+    
+    public enum Horizontal {
+        case cellLeading
+        case cellTrailing
+    }
+    
+    public enum Vertical {
+        case cellTop
+        case cellBottom
+        case messageTop
+        case messageBottom
+        case messageCenter
+    }
+    
+    public var horizontal: Horizontal
+    public var vertical: Vertical
+    
+    public init(horizontal: Horizontal, vertical: Vertical) {
+        self.horizontal = horizontal
+        self.vertical = vertical
+    }
+    
+}
+
 import Foundation
 
 /// A protocol used by the `MessagesCollectionViewFlowLayout` object to determine
@@ -65,6 +90,8 @@ public protocol MessagesLayoutDelegate: class {
     ///
     /// The default value returned by this method is `AvatarAlignment.cellBottom`.
     func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment
+    
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition
 
     /// Specifies the horizontal alignment of a `MessageCollectionViewCell`'s top label.
     ///
@@ -145,9 +172,16 @@ public extension MessagesLayoutDelegate {
             return UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
         }
     }
-
-    func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
-        return .cellBottom
+    
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            return AvatarPosition(horizontal: .cellLeading, vertical: .messageBottom)
+        }
+        if dataSource.isFromCurrentSender(message: message) {
+            return AvatarPosition(horizontal: .cellTrailing, vertical: .messageBottom)
+        } else {
+            return AvatarPosition(horizontal: .cellLeading, vertical: .messageBottom)
+        }
     }
 
     func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
@@ -175,3 +209,5 @@ public extension MessagesLayoutDelegate {
     }
 
 }
+
+

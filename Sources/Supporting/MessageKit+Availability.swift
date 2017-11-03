@@ -24,6 +24,17 @@
 
 import Foundation
 
+// MARK: - MessagesLayoutDelegate
+
+extension MessagesLayoutDelegate {
+    
+    @available(*, deprecated: 0.10.0, message: "Removed in MessageKit 0.11.0. Please use avatarPosition(for:at:in:) instead.")
+    func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
+        fatalError("Please use avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition instead.")
+    }
+
+}
+
 // MARK: - MessagesViewController
 
 public extension MessagesViewController {
