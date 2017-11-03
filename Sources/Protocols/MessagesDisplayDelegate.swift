@@ -77,7 +77,7 @@ public protocol MessagesDisplayDelegate: class {
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     ///
     /// The default value returned by this method is `MessageStyle.bubble`.
-    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle
+    func textMessageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> TextMessageStyle
 
     /// Specifies the background color of the `MessageContainerView`.
     ///
@@ -127,8 +127,8 @@ public protocol MessagesDisplayDelegate: class {
 
 public extension MessagesDisplayDelegate {
 
-    func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
-        return .bubble
+    func textMessageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> TextMessageStyle {
+        return .bubble(radius: 8.0, corners: .allCorners)
     }
 
     func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
