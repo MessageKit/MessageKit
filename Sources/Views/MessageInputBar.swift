@@ -73,7 +73,8 @@ open class MessageInputBar: UIView {
                 blurView.fillSuperview()
             }
             blurView.isHidden = !isTranslucent
-            backgroundView.backgroundColor = isTranslucent ? (backgroundView.backgroundColor?.withAlphaComponent(0.75) ?? UIColor.white.withAlphaComponent(0.75)) : .white
+            let color: UIColor = backgroundView.backgroundColor ?? .white
+            backgroundView.backgroundColor = isTranslucent ? color.withAlphaComponent(0.75) : .white
         }
     }
     
@@ -208,11 +209,11 @@ open class MessageInputBar: UIView {
     /// The intrinsicContentSize can change a lot so the delegate method
     /// `inputBar(self, didChangeIntrinsicContentTo: size)` only needs to be called
     /// when it's different
-    private(set) public var previousIntrinsicContentSize: CGSize?
+    public private(set) var previousIntrinsicContentSize: CGSize?
     
     /// A boolean that indicates if the maxTextViewHeight has been met. Keeping track of this
     /// improves the performance
-    private(set) public var isOverMaxTextViewHeight = false
+    public private(set) var isOverMaxTextViewHeight = false
     
     /// The maximum height that the InputTextView can reach
     open var maxHeight: CGFloat = UIScreen.main.bounds.height / 3 {
@@ -223,30 +224,30 @@ open class MessageInputBar: UIView {
     }
     
     /// The fixed widthAnchor constant of the leftStackView
-    private(set) public var leftStackViewWidthConstant: CGFloat = 0 {
+    public private(set) var leftStackViewWidthConstant: CGFloat = 0 {
         didSet {
             leftStackViewLayoutSet?.width?.constant = leftStackViewWidthConstant
         }
     }
     
     /// The fixed widthAnchor constant of the rightStackView
-    private(set) public var rightStackViewWidthConstant: CGFloat = 52 {
+    public private(set) var rightStackViewWidthConstant: CGFloat = 52 {
         didSet {
             rightStackViewLayoutSet?.width?.constant = rightStackViewWidthConstant
         }
     }
     
     /// The InputBarItems held in the leftStackView
-    private(set) public var leftStackViewItems: [InputBarButtonItem] = []
+    public private(set) var leftStackViewItems: [InputBarButtonItem] = []
     
     /// The InputBarItems held in the rightStackView
-    private(set) public var rightStackViewItems: [InputBarButtonItem] = []
+    public private(set) var rightStackViewItems: [InputBarButtonItem] = []
     
     /// The InputBarItems held in the bottomStackView
-    private(set) public var bottomStackViewItems: [InputBarButtonItem] = []
+    public private(set) var bottomStackViewItems: [InputBarButtonItem] = []
     
     /// The InputBarItems held in the topStackView
-    private(set) public var topStackViewItems: [InputBarButtonItem] = []
+    public private(set) var topStackViewItems: [InputBarButtonItem] = []
     
     /// The InputBarItems held to make use of their hooks but they are not automatically added to a UIStackView
     open var nonStackViewItems: [InputBarButtonItem] = []
