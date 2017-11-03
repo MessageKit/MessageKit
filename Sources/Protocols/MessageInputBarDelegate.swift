@@ -26,7 +26,7 @@ import Foundation
 import UIKit
 
 /// MessageInputBarDelegate is a protocol that can recieve notifications from the MessageInputBar
-public protocol MessageInputBarDelegate: class {
+public protocol MessageInputBarDelegate: AnyObject {
     
     /// Called when the default send button has been selected
     ///

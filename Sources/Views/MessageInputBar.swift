@@ -79,7 +79,7 @@ open class MessageInputBar: UIView {
      */
     open let bottomStackView = InputStackView(axis: .horizontal, spacing: 15)
         
-    open lazy var inputTextView: InputTextView = { [weak self] in
+    open lazy var inputTextView: InputTextView = {
         let textView = InputTextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.messageInputBar = self
@@ -319,6 +319,10 @@ open class MessageInputBar: UIView {
     /// - Parameter positions: The UIStackView's to layout
     public func layoutStackViews(_ positions: [InputStackView.Position] = [.left, .right, .bottom]) {
         
+        guard let _ = superview else {
+            return
+        }
+        
         for position in positions {
             switch position {
             case .left:
@@ -378,6 +382,9 @@ open class MessageInputBar: UIView {
                     $0.parentStackViewPosition = position
                     leftStackView.addArrangedSubview($0)
                 }
+                guard let _ = superview else {
+                    return
+                }
                 leftStackView.layoutIfNeeded()
             case .right:
                 rightStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -387,6 +394,9 @@ open class MessageInputBar: UIView {
                     $0.parentStackViewPosition = position
                     rightStackView.addArrangedSubview($0)
                 }
+                guard let _ = superview else {
+                    return
+                }
                 rightStackView.layoutIfNeeded()
             case .bottom:
                 bottomStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -395,6 +405,9 @@ open class MessageInputBar: UIView {
                     $0.messageInputBar = self
                     $0.parentStackViewPosition = position
                     bottomStackView.addArrangedSubview($0)
+                }
+                guard let _ = superview else {
+                    return
                 }
                 bottomStackView.layoutIfNeeded()
             }
@@ -414,6 +427,9 @@ open class MessageInputBar: UIView {
         performLayout(animated) {
             self.leftStackViewWidthContant = newValue
             self.layoutStackViews([.left])
+            guard let _ = self.superview else {
+                return
+            }
             self.layoutIfNeeded()
         }
     }
@@ -427,6 +443,9 @@ open class MessageInputBar: UIView {
         performLayout(animated) {
             self.rightStackViewWidthContant = newValue
             self.layoutStackViews([.right])
+            guard let _ = self.superview else {
+                return
+            }
             self.layoutIfNeeded()
         }
     }

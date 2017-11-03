@@ -25,7 +25,7 @@
 import Foundation
 
 /// A protocol used by the `MessagesViewController` to customize the appearance of a `TextMessageCell`.
-public protocol TextMessageDisplayDelegate: class {
+public protocol TextMessageDisplayDelegate: AnyObject {
 
     /// Specifies the color of the text for a `TextMessageCell`.
     ///

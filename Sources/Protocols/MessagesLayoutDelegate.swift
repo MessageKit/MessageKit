@@ -26,7 +26,7 @@ import Foundation
 
 /// A protocol used by the `MessagesCollectionViewFlowLayout` object to determine
 /// the size and layout of a `MessageCollectionViewCell` and its contents.
-public protocol MessagesLayoutDelegate: class {
+public protocol MessagesLayoutDelegate: AnyObject {
 
     /// Specifies the insets for the text rect of the `MessageLabel` in a `TextMessageCell`.
     ///

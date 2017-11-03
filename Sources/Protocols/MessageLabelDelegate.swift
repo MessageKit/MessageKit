@@ -24,7 +24,7 @@
 
 import Foundation
 
-public protocol MessageLabelDelegate: class {
+public protocol MessageLabelDelegate: AnyObject {
 
     func didSelectAddress(_ addressComponents: [String: String])
 
