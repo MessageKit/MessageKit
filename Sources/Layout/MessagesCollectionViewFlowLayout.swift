@@ -780,7 +780,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         
         guard attributes.cellBottomLabelSize != .zero else { return .zero }
         
-        var origin = CGPoint(x: 0, y: contentFrame.height - attributes.cellBottomLabelSize.height)
+        var origin = CGPoint(x: 0, y: attributes.cellTopLabelSize.height + attributes.messageContainerSize.height + attributes.messageVerticalPadding)
         
         switch (attributes.cellBottomLabelAlignment, attributes.avatarHorizontal) {
         case (.cellLeading, _):
@@ -792,7 +792,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         case (.messageLeading, .cellLeading):
             origin.x = attributes.avatarSize.width + attributes.messageContainerPadding.left
         case (.messageLeading, .cellTrailing):
-            origin.x = contentFrame.width - attributes.avatarSize.width - attributes.messageContainerPadding.right - attributes.cellBottomLabelSize.width
+            origin.x = contentFrame.width - attributes.avatarSize.width - attributes.messageContainerPadding.right - attributes.messageContainerSize.width
         case (.messageTrailing, .cellTrailing):
             origin.x = contentFrame.width - attributes.avatarSize.width - attributes.messageContainerPadding.right - attributes.cellBottomLabelSize.width
         case (.messageTrailing, .cellLeading):
