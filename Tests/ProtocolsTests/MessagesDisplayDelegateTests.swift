@@ -88,7 +88,7 @@ class MessagesDisplayDelegateTests: XCTestCase {
     func testAvatarDefaultState() {
         XCTAssertNotNil(sut.dataProvider.avatar(for: sut.dataProvider.messages[0],
                                                 at: IndexPath(item: 0, section: 0),
-                                                in: sut.messagesCollectionView).initals)
+                                                in: sut.messagesCollectionView).initials)
     }
 
     func testCellTopLabelDefaultState() {
