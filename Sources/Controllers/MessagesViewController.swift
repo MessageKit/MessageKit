@@ -141,6 +141,20 @@ open class MessagesViewController: UIViewController {
             let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             NSLayoutConstraint.activate([top, bottom, trailing, leading])
         }
+        adjustScrollViewInset()
+    }
+    
+    @objc
+    private func adjustScrollViewInset() {
+        if #available(iOS 11.0, *) {
+            // No need to add a to the top contentInset
+        } else {
+            let navigationBarInset = navigationController?.navigationBar.frame.height ?? 0
+            let statusBarInset: CGFloat = view.bounds.height > view.bounds.width ? 20 : 0 // No status bar in landscape
+            let topInset = navigationBarInset + statusBarInset
+            messagesCollectionView.contentInset.top = topInset
+            messagesCollectionView.scrollIndicatorInsets.top = topInset
+        }
     }
 }
 
@@ -260,11 +274,13 @@ fileprivate extension MessagesViewController {
     func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleTextViewDidBeginEditing), name: .UITextViewTextDidBeginEditing, object: messageInputBar.inputTextView)
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustScrollViewInset), name: .UIDeviceOrientationDidChange, object: nil)
     }
 
     func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UITextViewTextDidBeginEditing, object: messageInputBar.inputTextView)
+        NotificationCenter.default.removeObserver(self, name: .UIDeviceOrientationDidChange, object: nil)
     }
 
     @objc
