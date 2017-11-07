@@ -66,6 +66,7 @@ open class MessagesViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = false
         view.backgroundColor = .white
@@ -147,10 +148,10 @@ open class MessagesViewController: UIViewController {
     @objc
     private func adjustScrollViewInset() {
         if #available(iOS 11.0, *) {
-            // No need to add a to the top contentInset
+            // No need to add to the top contentInset
         } else {
             let navigationBarInset = navigationController?.navigationBar.frame.height ?? 0
-            let statusBarInset: CGFloat = view.bounds.height > view.bounds.width ? 20 : 0 // No status bar in landscape
+            let statusBarInset: CGFloat = UIApplication.shared.isStatusBarHidden ? 0 : 20
             let topInset = navigationBarInset + statusBarInset
             messagesCollectionView.contentInset.top = topInset
             messagesCollectionView.scrollIndicatorInsets.top = topInset
