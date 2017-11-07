@@ -8,9 +8,14 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
-+- **Breaking Change** Fixed all instances of misspelled `inital` property. `Avatar.inital` has changed to `Avatar.initial` 
+- **Breaking Change** Fixed all instances of misspelled `inital` property. `Avatar.inital` has changed to `Avatar.initial` 
 and the initializer has changed from `public init(image: UIImage? = nil, initals: String = "?")` to `public init(image: UIImage? = nil, initials: String = "?")`. 
 [#298](https://github.com/MessageKit/MessageKit/issues/298) by [@sidmclaughlin](https://github.com/sidmclaughlin).
+
+- Fixed `cellbottomLabel` origin X for the `.messageLeading` alignment and
+origin Y so that the `cellBottomLabel` is always under the `MessageContainerView`.
+[#326](https://github.com/MessageKit/MessageKit/pull/326) by [@SD10](https://github.com/sd10). 
+
 
 ## [[Prerelease] 0.10.1](https://github.com/MessageKit/MessageKit/releases/tag/0.10.1)
 
