@@ -50,3 +50,29 @@ public extension MessagesViewController {
     }
 
 }
+
+extension MessagesCollectionViewFlowLayout {
+    
+    /// A Boolean value that determines if the `AvatarView` is always on the leading
+    /// side of a MessageCollectionViewCell.
+    ///
+    /// Setting this property to `true` causes `avatarAlwaysTrailing` to be set to `false`.
+    ///
+    /// The default value of this property is `false`.
+    @available(*, deprecated: 0.11.0, message: "Removed in MessageKit 0.11.0. Please use the avatarPosition(for:at:in) delegate method.")
+    open var avatarAlwaysLeading: Bool {
+        fatalError("Fatal Error: avatarAlwaysLeading is no longer supported")
+    }
+    
+    /// A Boolean value that determines if the `AvatarView` is always on the trailing
+    /// side of a `MessageCollectionViewCell`.
+    ///
+    /// Setting this property to `true` causes `avatarAlwaysLeading` to be set to `false`.
+    ///
+    /// The default value of this property is `false`.
+    @available(*, deprecated: 0.11.0, message: "Removed in MessageKit 0.11.0. Please use the avatarPosition(for:at:in) delegate method.")
+    open var avatarAlwaysTrailing: Bool {
+        fatalError("Fatal Error: avatarAlwaysTrailing is no longer supported")
+    }
+    
+}
