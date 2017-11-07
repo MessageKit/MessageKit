@@ -40,34 +40,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
 
-    /// A Boolean value that determines if the `AvatarView` is always on the leading
-    /// side of a MessageCollectionViewCell.
-    ///
-    /// Setting this property to `true` causes `avatarAlwaysTrailing` to be set to `false`.
-    ///
-    /// The default value of this property is `false`.
-    open var avatarAlwaysLeading: Bool {
-        willSet {
-            if newValue {
-                avatarAlwaysTrailing = false
-            }
-        }
-    }
-
-    /// A Boolean value that determines if the `AvatarView` is always on the trailing
-    /// side of a `MessageCollectionViewCell`.
-    ///
-    /// Setting this property to `true` causes `avatarAlwaysLeading` to be set to `false`.
-    ///
-    /// The default value of this property is `false`.
-    open var avatarAlwaysTrailing: Bool {
-        willSet {
-            if newValue {
-                avatarAlwaysLeading = false
-            }
-        }
-    }
-
     /// Determines the maximum number of `MessageCollectionViewCell` attributes to cache.
     ///
     /// The default value of this property is 500.
@@ -126,9 +98,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
         messageLabelFont = UIFont.preferredFont(forTextStyle: .body)
         emojiLabelFont = messageLabelFont.withSize(2 * messageLabelFont.pointSize)
-
-        avatarAlwaysLeading = false
-        avatarAlwaysTrailing = false
 
         super.init()
 
@@ -224,8 +193,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         let attributes = messageIntermediateLayoutAttributes(for: indexPath)
         return CGSize(width: itemWidth, height: attributes.itemHeight)
     }
-    
-    
 
 }
 
@@ -334,18 +301,23 @@ fileprivate extension MessagesCollectionViewFlowLayout {
     
     // A
     
-    /// Returns the horizontal alignment of the `AvatarView` for a given `MessageType`.
+    /// Returns the `AvatarPosition` for a given `MessageType`.
     ///
     /// - Parameters:
     ///   - attributes: The `MessageIntermediateLayoutAttributes` containing the `MessageType` object.
-    func avatarHorizontalAlignment(for attributes: MessageIntermediateLayoutAttributes) -> AvatarHorizontalAlignment {
+    func avatarPosition(for attributes: MessageIntermediateLayoutAttributes) -> AvatarPosition {
+        var position = messagesLayoutDelegate.avatarPosition(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
         
-        if avatarAlwaysTrailing { return .cellTrailing }
-        if avatarAlwaysLeading { return .cellLeading }
-        
-        return messagesDataSource.isFromCurrentSender(message: attributes.message) ? .cellTrailing : .cellLeading
+        switch position.horizontal {
+        case .cellTrailing, .cellLeading:
+            break
+        case .natural:
+            position.horizontal = messagesDataSource.isFromCurrentSender(message: attributes.message) ? .cellTrailing : .cellLeading
+        }
 
+        return position
     }
+    
     
     // B
     
@@ -355,23 +327,6 @@ fileprivate extension MessagesCollectionViewFlowLayout {
     ///   - attributes: The `MessageIntermediateLayoutAttributes` containing the `MessageType` object.
     func avatarSize(for attributes: MessageIntermediateLayoutAttributes) -> CGSize {
         return messagesLayoutDelegate.avatarSize(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
-    }
-    
-    // C
-    
-    /// Returns the vertical alignment of the `AvatarView` for a given `MessageType`.
-    ///
-    /// - Parameters:
-    ///   - attributes: The `MessageIntermediateLayoutAttributes` containing the `MessageType` object.
-    func avatarVerticalAlignment(for attributes: MessageIntermediateLayoutAttributes) -> AvatarAlignment {
-        return messagesLayoutDelegate.avatarAlignment(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
-    }
-    
-    func avatarPosition(for attributes: MessageIntermediateLayoutAttributes) -> AvatarPosition {
-        var position = messagesLayoutDelegate.avatarPosition(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
-        if avatarAlwaysLeading { position.horizontal = .cellLeading }
-        if avatarAlwaysTrailing { position.horizontal = .cellTrailing }
-        return position
     }
     
 }
@@ -566,6 +521,9 @@ private extension MessagesCollectionViewFlowLayout {
             
         case (.messageLeading, .cellTrailing, _), (.messageTrailing, .cellLeading, _):
             return attributes.messageContainerSize.width + avatarWidth - attributes.cellBottomLabelHorizontalInsets
+            
+        case (_, .natural, _):
+            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
         }
         
     }
@@ -650,6 +608,9 @@ private extension MessagesCollectionViewFlowLayout {
             
         case (.messageLeading, .cellTrailing, _), (.messageTrailing, .cellLeading, _):
             return attributes.messageContainerSize.width + avatarWidth - attributes.cellTopLabelHorizontalInsets
+
+        case (_, .natural, _):
+            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
         }
         
     }
@@ -730,6 +691,8 @@ fileprivate extension MessagesCollectionViewFlowLayout {
             origin.x = 0
         case .cellTrailing:
             origin.x = contentFrame.width - attributes.avatarSize.width
+        case .natural:
+            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
         }
         
         switch attributes.avatarPosition.vertical {
@@ -769,6 +732,8 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         case .cellTrailing:
             origin.x = contentFrame.width - attributes.avatarSize.width - attributes.messageContainerSize.width - attributes.messageContainerPadding.right
             origin.y = attributes.cellTopLabelSize.height + attributes.messageContainerPadding.top
+        case .natural:
+            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
         }
         
         return origin
@@ -802,6 +767,8 @@ fileprivate extension MessagesCollectionViewFlowLayout {
             origin.x = contentFrame.width - attributes.avatarSize.width - attributes.messageContainerPadding.right - attributes.cellBottomLabelSize.width
         case (.messageTrailing, .cellLeading):
             origin.x = attributes.avatarSize.width + attributes.messageContainerPadding.left + attributes.messageContainerSize.width - attributes.cellBottomLabelSize.width
+        case (_, .natural):
+            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
         }
         
         return origin
@@ -835,6 +802,8 @@ fileprivate extension MessagesCollectionViewFlowLayout {
             origin.x = contentFrame.width - attributes.avatarSize.width - attributes.messageContainerPadding.right - attributes.cellTopLabelSize.width
         case (.messageTrailing, .cellLeading):
             origin.x = contentFrame.width - attributes.messageContainerPadding.right - attributes.cellTopLabelSize.width
+        case (_, .natural):
+            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
         }
         
         return origin

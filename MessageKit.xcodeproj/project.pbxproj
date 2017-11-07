@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F82D1431FB1B75B00B81A88 /* AvatarPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F82D1421FB1B75B00B81A88 /* AvatarPosition.swift */; };
 		38C57C791F9AE3E50043CC03 /* SeparatorLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C57C781F9AE3E50043CC03 /* SeparatorLine.swift */; };
 		38C57C7C1F9AE4890043CC03 /* InputStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C57C7B1F9AE4870043CC03 /* InputStackView.swift */; };
 		88916B2D1CF0DF2F00469F91 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88916B221CF0DF2F00469F91 /* MessageKit.framework */; };
@@ -36,11 +37,9 @@
 		B7A03F281F866895006AEF79 /* LocationMessageSnapshotOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F1D1F866895006AEF79 /* LocationMessageSnapshotOptions.swift */; };
 		B7A03F291F866895006AEF79 /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F1E1F866895006AEF79 /* Sender.swift */; };
 		B7A03F2A1F866895006AEF79 /* MessageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F1F1F866895006AEF79 /* MessageStyle.swift */; };
-		B7A03F2B1F866895006AEF79 /* AvatarHorizontalAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F201F866895006AEF79 /* AvatarHorizontalAlignment.swift */; };
 		B7A03F2C1F866895006AEF79 /* DetectorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F211F866895006AEF79 /* DetectorType.swift */; };
 		B7A03F2D1F866895006AEF79 /* LabelAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F221F866895006AEF79 /* LabelAlignment.swift */; };
 		B7A03F2E1F866895006AEF79 /* MessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F231F866895006AEF79 /* MessageData.swift */; };
-		B7A03F2F1F866895006AEF79 /* AvatarAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F241F866895006AEF79 /* AvatarAlignment.swift */; };
 		B7A03F331F866940006AEF79 /* MessageDateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F301F866940006AEF79 /* MessageDateHeaderView.swift */; };
 		B7A03F341F866940006AEF79 /* MessageFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F311F866940006AEF79 /* MessageFooterView.swift */; };
 		B7A03F351F866940006AEF79 /* MessageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F321F866940006AEF79 /* MessageHeaderView.swift */; };
@@ -88,6 +87,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F82D1421FB1B75B00B81A88 /* AvatarPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPosition.swift; sourceTree = "<group>"; };
 		38C57C781F9AE3E50043CC03 /* SeparatorLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorLine.swift; sourceTree = "<group>"; };
 		38C57C7B1F9AE4870043CC03 /* InputStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputStackView.swift; sourceTree = "<group>"; };
 		88916B221CF0DF2F00469F91 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,11 +119,9 @@
 		B7A03F1D1F866895006AEF79 /* LocationMessageSnapshotOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMessageSnapshotOptions.swift; sourceTree = "<group>"; };
 		B7A03F1E1F866895006AEF79 /* Sender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
 		B7A03F1F1F866895006AEF79 /* MessageStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageStyle.swift; sourceTree = "<group>"; };
-		B7A03F201F866895006AEF79 /* AvatarHorizontalAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarHorizontalAlignment.swift; sourceTree = "<group>"; };
 		B7A03F211F866895006AEF79 /* DetectorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectorType.swift; sourceTree = "<group>"; };
 		B7A03F221F866895006AEF79 /* LabelAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelAlignment.swift; sourceTree = "<group>"; };
 		B7A03F231F866895006AEF79 /* MessageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageData.swift; sourceTree = "<group>"; };
-		B7A03F241F866895006AEF79 /* AvatarAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarAlignment.swift; sourceTree = "<group>"; };
 		B7A03F301F866940006AEF79 /* MessageDateHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDateHeaderView.swift; sourceTree = "<group>"; };
 		B7A03F311F866940006AEF79 /* MessageFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageFooterView.swift; sourceTree = "<group>"; };
 		B7A03F321F866940006AEF79 /* MessageHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageHeaderView.swift; sourceTree = "<group>"; };
@@ -333,8 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				B7A03F1C1F866895006AEF79 /* Avatar.swift */,
-				B7A03F241F866895006AEF79 /* AvatarAlignment.swift */,
-				B7A03F201F866895006AEF79 /* AvatarHorizontalAlignment.swift */,
+				1F82D1421FB1B75B00B81A88 /* AvatarPosition.swift */,
 				B7A03F211F866895006AEF79 /* DetectorType.swift */,
 				B7A03F221F866895006AEF79 /* LabelAlignment.swift */,
 				B7A03F1D1F866895006AEF79 /* LocationMessageSnapshotOptions.swift */,
@@ -538,7 +535,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7A03F2B1F866895006AEF79 /* AvatarHorizontalAlignment.swift in Sources */,
 				B7A03F3C1F866946006AEF79 /* LocationMessageCell.swift in Sources */,
 				38C57C7C1F9AE4890043CC03 /* InputStackView.swift in Sources */,
 				B7A03F5B1F8669CA006AEF79 /* MessageType.swift in Sources */,
@@ -588,7 +584,7 @@
 				38C57C791F9AE3E50043CC03 /* SeparatorLine.swift in Sources */,
 				B7A03F2C1F866895006AEF79 /* DetectorType.swift in Sources */,
 				B7A03F271F866895006AEF79 /* Avatar.swift in Sources */,
-				B7A03F2F1F866895006AEF79 /* AvatarAlignment.swift in Sources */,
+				1F82D1431FB1B75B00B81A88 /* AvatarPosition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
