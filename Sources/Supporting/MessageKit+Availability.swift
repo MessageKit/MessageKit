@@ -1,18 +1,18 @@
 /*
  MIT License
-
+ 
  Copyright (c) 2017 MessageKit
-
+ 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
-
+ 
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
-
+ 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,21 +24,34 @@
 
 import Foundation
 
+// MARK: - AvatarAlignment
+
+@available(*, deprecated: 0.11.0, message: "Removed in MessageKit 0.11.0. Please use AvatarPosition instead.")
+public enum AvatarAlignment {}
+
 // MARK: - MessagesLayoutDelegate
 
 extension MessagesLayoutDelegate {
     
-    @available(*, deprecated: 0.10.0, message: "Removed in MessageKit 0.11.0. Please use avatarPosition(for:at:in:) instead.")
-    func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
+    /// Specifies the vertical alignment for the `AvatarView` in a `MessageCollectionViewCell`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is `AvatarAlignment.cellBottom`.
+    @available(*, deprecated: 0.11.0, message: "Removed in MessageKit 0.11.0. Please use avatarPosition(for:at:in:) instead.")
+    public func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
         fatalError("Please use avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition instead.")
     }
-
+    
 }
 
 // MARK: - MessagesViewController
 
 public extension MessagesViewController {
-
+    
     @available(*, deprecated: 0.10.0, message: "Removed in MessageKit 0.10.0. Please use the messagesCollectionView.contentInsets.top property.")
     public var additionalTopContentInset: CGFloat {
         get {
@@ -48,7 +61,7 @@ public extension MessagesViewController {
             messagesCollectionView.contentInset.top = newValue
         }
     }
-
+    
 }
 
 extension MessagesCollectionViewFlowLayout {
@@ -60,7 +73,7 @@ extension MessagesCollectionViewFlowLayout {
     ///
     /// The default value of this property is `false`.
     @available(*, deprecated: 0.11.0, message: "Removed in MessageKit 0.11.0. Please use the avatarPosition(for:at:in) delegate method.")
-    open var avatarAlwaysLeading: Bool {
+    public var avatarAlwaysLeading: Bool {
         fatalError("Fatal Error: avatarAlwaysLeading is no longer supported")
     }
     
@@ -70,8 +83,8 @@ extension MessagesCollectionViewFlowLayout {
     /// Setting this property to `true` causes `avatarAlwaysLeading` to be set to `false`.
     ///
     /// The default value of this property is `false`.
-    @available(*, deprecated: 0.11.0, message: "Removed in MessageKit 0.11.0. Please use the avatarPosition(for:at:in) delegate method.")
-    open var avatarAlwaysTrailing: Bool {
+    @available(*, deprecated: 0.11.0, message: "Removed in MessageKit 0.11.0. Please use the avatarPosition(for:at:in) delegate method instead.")
+    public var avatarAlwaysTrailing: Bool {
         fatalError("Fatal Error: avatarAlwaysTrailing is no longer supported")
     }
     
