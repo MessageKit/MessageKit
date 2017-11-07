@@ -35,13 +35,13 @@ public struct Avatar {
     /// The placeholder initials to be used in the case where no image is provided.
     ///
     /// The default value of this property is "?".
-    public var initials: String = "?"
+    public var initals: String = "?"
     
     // MARK: - Initializer
     
-    public init(image: UIImage? = nil, initials: String = "?") {
+    public init(image: UIImage? = nil, initals: String = "?") {
         self.image = image
-        self.initials = initials
+        self.initals = initals
     }
     
 }

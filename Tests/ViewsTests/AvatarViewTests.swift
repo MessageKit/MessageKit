@@ -41,7 +41,7 @@ class AvatarViewTests: XCTestCase {
     }
 
     func testNoParams() {
-        XCTAssertEqual(avatarView.avatar.initials, "?")
+        XCTAssertEqual(avatarView.avatar.initals, "?")
         XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
         XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
     }
@@ -49,15 +49,15 @@ class AvatarViewTests: XCTestCase {
     func testWithImage() {
         let avatar = Avatar(image: UIImage())
         avatarView.set(avatar: avatar)
-        XCTAssertEqual(avatar.initials, "?")
+        XCTAssertEqual(avatar.initals, "?")
         XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
         XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
     }
 
-    func testInitialsOnly() {
-        let avatar = Avatar(initials: "DL")
+    func testInitalsOnly() {
+        let avatar = Avatar(initals: "DL")
         avatarView.set(avatar: avatar)
-        XCTAssertEqual(avatar.initials, "DL")
+        XCTAssertEqual(avatar.initals, "DL")
         XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
         XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
     }

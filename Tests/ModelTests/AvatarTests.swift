@@ -30,7 +30,7 @@ class AvatarTests: XCTestCase {
     func testDefaultInit() {
         let avatar = Avatar()
         XCTAssertNil(avatar.image)
-        XCTAssertEqual(avatar.initials, "?")
+        XCTAssertEqual(avatar.initals, "?")
     }
 
 }
