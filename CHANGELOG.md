@@ -8,8 +8,12 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
-+- **Breaking Change** Added a top `InputStackView` to `MessageInputBar`. This adds the addition of the `.top` case to `InputStackView.Position`.
+- **Breaking Change** Added a top `InputStackView` to `MessageInputBar`. This adds the addition of the `.top` case to `InputStackView.Position`.
 [#320](https://github.com/MessageKit/MessageKit/issues/320) by [@nathantannar4](https://github.com/nathantannar4).
+
+- **Breaking Change** Added `AvatarPosition` and `avatarPosition(for:at:in)` to configure an
+`AvatarView`'s vertical and horizontal position in a `MessageCollectionViewCell`.
+[#322](https://github.com/MessageKit/MessageKit/pull/322) by [@SD10](https://github.com/sd10).
 
 ### Fixed
 
@@ -20,6 +24,15 @@ and the initializer has changed from `public init(image: UIImage? = nil, initals
 - Fixed `cellbottomLabel` origin X for the `.messageLeading` alignment and
 origin Y so that the `cellBottomLabel` is always under the `MessageContainerView`.
 [#326](https://github.com/MessageKit/MessageKit/pull/326) by [@SD10](https://github.com/sd10). 
+
+### Removed
+
+- **Breaking Change** Removed `AvatarAlignment` and `avatarAlignment(for:at:in)` delegate method
+in favor of new `AvatarPosition` representing both vertical and horizontal alignments. 
+[#322](https://github.com/MessageKit/MessageKit/pull/322) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Removed the `avatarAlwaysLeading` and `avatarAlwaysTrailing` properties of `MessagesCollectionViewFlowLayout`.
+[#322](https://github.com/MessageKit/MessageKit/pull/322) by [@SD10](https://github.com/sd10).
 
 
 ## [[Prerelease] 0.10.1](https://github.com/MessageKit/MessageKit/releases/tag/0.10.1)
