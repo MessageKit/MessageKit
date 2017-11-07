@@ -6,6 +6,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+
 ### Added
 
 +- **Breaking Change** Added a top `InputStackView` to `MessageInputBar`. This adds the addition of the `.top` case to `InputStackView.Position`.
@@ -16,6 +17,13 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 +- **Breaking Change** Fixed all instances of misspelled `inital` property. `Avatar.inital` has changed to `Avatar.initial` 
 and the initializer has changed from `public init(image: UIImage? = nil, initals: String = "?")` to `public init(image: UIImage? = nil, initials: String = "?")`. 
 [#298](https://github.com/MessageKit/MessageKit/issues/298) by [@sidmclaughlin](https://github.com/sidmclaughlin).
+=======
+### Fixed
+
+- Fixed `cellbottomLabel` origin X for the `.messageLeading` alignment and
+origin Y so that the `cellBottomLabel` is always under the `MessageContainerView`.
+[#326](https://github.com/MessageKit/MessageKit/pull/326) by [@SD10](https://github.com/sd10). 
+
 
 ## [[Prerelease] 0.10.1](https://github.com/MessageKit/MessageKit/releases/tag/0.10.1)
 
