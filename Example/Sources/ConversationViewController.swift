@@ -281,10 +281,6 @@ extension ConversationViewController: MessagesLayoutDelegate {
         }
     }
 
-    func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
-        return .messageBottom
-    }
-
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
 
         return CGSize(width: messagesCollectionView.bounds.width, height: 10)
