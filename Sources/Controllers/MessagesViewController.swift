@@ -75,7 +75,6 @@ open class MessagesViewController: UIViewController {
         setupConstraints()
         registerReusableViews()
         setupDelegates()
-
     }
 
     open override func viewDidLayoutSubviews() {
@@ -92,6 +91,8 @@ open class MessagesViewController: UIViewController {
                 messagesCollectionView.scrollToBottom(animated: false)
             }
         }
+        
+        adjustScrollViewContentInset()
     }
 
     // MARK: - Initializers
@@ -130,15 +131,14 @@ open class MessagesViewController: UIViewController {
     private func setupConstraints() {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
+        let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor)
+        let bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+
         if #available(iOS 11.0, *) {
-            let top = messagesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-            let bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
             let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
             NSLayoutConstraint.activate([top, bottom, trailing, leading])
         } else {
-            let top = messagesCollectionView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor)
-            let bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor)
             let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
             let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             NSLayoutConstraint.activate([top, bottom, trailing, leading])
@@ -283,13 +283,12 @@ fileprivate extension MessagesViewController {
 
         if (keyboardEndFrame.origin.y + keyboardEndFrame.size.height) > UIScreen.main.bounds.height {
             // Hardware keyboard is found
-            let bottomInset = view.frame.size.height - keyboardEndFrame.origin.y - iPhoneXBottomInset
+            let bottomInset = view.frame.size.height - keyboardEndFrame.origin.y
             messagesCollectionView.contentInset.bottom = bottomInset
             messagesCollectionView.scrollIndicatorInsets.bottom = bottomInset
-
         } else {
             //Software keyboard is found
-            let bottomInset = keyboardEndFrame.height > keyboardOffsetFrame.height ? (keyboardEndFrame.height - iPhoneXBottomInset) : keyboardOffsetFrame.height
+            let bottomInset = keyboardEndFrame.height > keyboardOffsetFrame.height ? keyboardEndFrame.height : keyboardOffsetFrame.height
             messagesCollectionView.contentInset.bottom = bottomInset
             messagesCollectionView.scrollIndicatorInsets.bottom = bottomInset
         }
@@ -298,18 +297,13 @@ fileprivate extension MessagesViewController {
     
     fileprivate var keyboardOffsetFrame: CGRect {
         guard let inputFrame = inputAccessoryView?.frame else { return .zero }
-        return CGRect(origin: inputFrame.origin, size: CGSize(width: inputFrame.width, height: inputFrame.height - iPhoneXBottomInset))
+        return CGRect(origin: inputFrame.origin, size: CGSize(width: inputFrame.width, height: inputFrame.height))
     }
     
-    /// On the iPhone X the inputAccessoryView is anchored to the layoutMarginesGuide.bottom anchor so the frame of the inputAccessoryView
-    /// is larger than the required offset for the MessagesCollectionView
-    ///
-    /// - Returns: The safeAreaInsets.bottom if its an iPhoneX, else 0
-    fileprivate var iPhoneXBottomInset: CGFloat {
-        if #available(iOS 11.0, *) {
-            guard UIScreen.main.nativeBounds.height == 2436 else { return 0 }
-            return view.safeAreaInsets.bottom
-        }
-        return 0
+    fileprivate func adjustScrollViewContentInset() {
+        let topInset = navigationController?.navigationBar.frame.maxY ?? 0
+        
+        messagesCollectionView.contentInset.top = topInset
+        messagesCollectionView.scrollIndicatorInsets.top = topInset
     }
 }
