@@ -290,6 +290,7 @@ fileprivate extension MessagesViewController {
             let bottomInset = keyboardEndFrame.height > keyboardOffsetFrame.height ? (keyboardEndFrame.height - iPhoneXBottomInset) : keyboardOffsetFrame.height
             messagesCollectionView.contentInset.bottom = bottomInset
             messagesCollectionView.scrollIndicatorInsets.bottom = bottomInset
+            messagesCollectionView.scrollToBottom(animated: true)
         }
         
     }
