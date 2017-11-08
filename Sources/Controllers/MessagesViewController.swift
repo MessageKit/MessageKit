@@ -152,6 +152,26 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
         guard let messagesFlowLayout = collectionViewLayout as? MessagesCollectionViewFlowLayout else { return .zero }
         return messagesFlowLayout.sizeForItem(at: indexPath)
     }
+    
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return .zero }
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return .zero }
+        guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
+        // Could pose a problem if subclass behaviors allows more than one item per section
+        let indexPath = IndexPath(item: 0, section: section)
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        return messagesLayoutDelegate.headerViewSize(for: message, at: indexPath, in: messagesCollectionView)
+    }
+    
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return .zero }
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return .zero }
+        guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
+        // Could pose a problem if subclass behaviors allows more than one item per section
+        let indexPath = IndexPath(item: 0, section: section)
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        return messagesLayoutDelegate.footerViewSize(for: message, at: indexPath, in: messagesCollectionView)
+    }
 
 }
 
@@ -230,27 +250,7 @@ extension MessagesViewController: UICollectionViewDataSource {
         }
 
     }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return .zero }
-        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return .zero }
-        guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
-        // Could pose a problem if subclass behaviors allows more than one item per section
-        let indexPath = IndexPath(item: 0, section: section)
-        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        return messagesLayoutDelegate.headerViewSize(for: message, at: indexPath, in: messagesCollectionView)
-    }
-
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return .zero }
-        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return .zero }
-        guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
-        // Could pose a problem if subclass behaviors allows more than one item per section
-        let indexPath = IndexPath(item: 0, section: section)
-        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        return messagesLayoutDelegate.footerViewSize(for: message, at: indexPath, in: messagesCollectionView)
-    }
-
+    
 }
 
 // MARK: - Keyboard Handling
