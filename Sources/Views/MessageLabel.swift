@@ -432,8 +432,12 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
         switch detectorType {
         case .address:
-            guard let addressComponents = value as? [String: String] else { return }
-            handleAddress(addressComponents)
+            var transformedAddressComponents = [String: String]()
+            guard let addressComponents = value as? [NSTextCheckingKey: String] else { return }
+            addressComponents.forEach { (key, value) in
+                transformedAddressComponents[key.rawValue] = value
+            }
+            handleAddress(transformedAddressComponents)
         case .phoneNumber:
             guard let phoneNumber = value as? String else { return }
             handlePhoneNumber(phoneNumber)
