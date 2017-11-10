@@ -49,7 +49,7 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         return textStorage
     }()
 
-    private lazy var rangesForDetectors: [DetectorType: [(NSRange, Any?)]] = [:]
+    private lazy var rangesForDetectors: [DetectorType: [(NSRange, MessageTextCheckingType)]] = [:]
 
     // MARK: - Public Properties
 
@@ -321,13 +321,13 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
     private func detectorAttributes(for checkingResultType: NSTextCheckingResult.CheckingType) -> [NSAttributedStringKey: Any] {
         switch checkingResultType {
-        case NSTextCheckingResult.CheckingType.address:
+        case .address:
             return addressAttributes
-        case NSTextCheckingResult.CheckingType.date:
+        case .date:
             return dateAttributes
-        case NSTextCheckingResult.CheckingType.phoneNumber:
+        case .phoneNumber:
             return phoneNumberAttributes
-        case NSTextCheckingResult.CheckingType.link:
+        case .link:
             return urlAttributes
         default:
             fatalError("Received an unrecognized NSTextCheckingResult.CheckingType")
@@ -349,24 +349,24 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         for result in checkingResults {
 
             switch result.resultType {
-            case NSTextCheckingResult.CheckingType.address:
+            case .address:
                 var ranges = rangesForDetectors[.address] ?? []
-                let tuple = (result.range, result.addressComponents) as (NSRange, Any?)
+                let tuple: (NSRange, MessageTextCheckingType) = (result.range, .addressComponents(result.addressComponents))
                 ranges.append(tuple)
                 rangesForDetectors.updateValue(ranges, forKey: .address)
-            case NSTextCheckingResult.CheckingType.date:
+            case .date:
                 var ranges = rangesForDetectors[.date] ?? []
-                let tuple = (result.range, result.date) as (NSRange, Any?)
+                let tuple: (NSRange, MessageTextCheckingType) = (result.range, .date(result.date))
                 ranges.append(tuple)
                 rangesForDetectors.updateValue(ranges, forKey: .date)
-            case NSTextCheckingResult.CheckingType.phoneNumber:
+            case .phoneNumber:
                 var ranges = rangesForDetectors[.phoneNumber] ?? []
-                let tuple = (result.range, result.phoneNumber) as (NSRange, Any?)
+                let tuple: (NSRange, MessageTextCheckingType) = (result.range, .phoneNumber(result.phoneNumber))
                 ranges.append(tuple)
                 rangesForDetectors.updateValue(ranges, forKey: .phoneNumber)
-            case NSTextCheckingResult.CheckingType.link:
+            case .link:
                 var ranges = rangesForDetectors[.url] ?? []
-                let tuple = (result.range, result.url) as (NSRange, Any?)
+                let tuple: (NSRange, MessageTextCheckingType) = (result.range, .link(result.url))
                 ranges.append(tuple)
                 rangesForDetectors.updateValue(ranges, forKey: .url)
             default:
@@ -428,20 +428,24 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         }
     }
 
-    private func handleGesture(for detectorType: DetectorType, value: Any?) {
-
-        switch detectorType {
-        case .address:
-            guard let addressComponents = value as? [String: String] else { return }
-            handleAddress(addressComponents)
-        case .phoneNumber:
-            guard let phoneNumber = value as? String else { return }
+    private func handleGesture(for detectorType: DetectorType, value: MessageTextCheckingType) {
+        
+        switch value {
+        case let .addressComponents(addressComponents):
+            var transformedAddressComponents = [String: String]()
+            guard let addressComponents = addressComponents else { return }
+            addressComponents.forEach { (key, value) in
+                transformedAddressComponents[key.rawValue] = value
+            }
+            handleAddress(transformedAddressComponents)
+        case let .phoneNumber(phoneNumber):
+            guard let phoneNumber = phoneNumber else { return }
             handlePhoneNumber(phoneNumber)
-        case .date:
-            guard let date = value as? Date else { return }
+        case let .date(date):
+            guard let date = date else { return }
             handleDate(date)
-        case .url:
-            guard let url = value as? URL else { return }
+        case let .link(url):
+            guard let url = url else { return }
             handleURL(url)
         }
     }
@@ -462,4 +466,11 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         delegate?.didSelectPhoneNumber(phoneNumber)
     }
     
+}
+
+fileprivate enum MessageTextCheckingType {
+    case addressComponents([NSTextCheckingKey: String]?)
+    case date(Date?)
+    case phoneNumber(String?)
+    case link(URL?)
 }
