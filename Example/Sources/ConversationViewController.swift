@@ -64,6 +64,7 @@ class ConversationViewController: MessagesViewController {
     
     @objc func handleKeyboardButton() {
         
+        messageInputBar.inputTextView.resignFirstResponder()
         let actionSheetController = UIAlertController(title: "Change Keyboard Style", message: nil, preferredStyle: .actionSheet)
         let actions = [
             UIAlertAction(title: "Slack", style: .default, handler: { _ in
@@ -172,7 +173,6 @@ class ConversationViewController: MessagesViewController {
     }
     
     func defaultStyle() {
-        messageInputBar.inputTextView.resignFirstResponder()
         let newMessageInputBar = MessageInputBar()
         newMessageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
         newMessageInputBar.delegate = self
@@ -279,10 +279,6 @@ extension ConversationViewController: MessagesLayoutDelegate {
         } else {
             return .messageTrailing(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10))
         }
-    }
-
-    func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
-        return .messageBottom
     }
 
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {

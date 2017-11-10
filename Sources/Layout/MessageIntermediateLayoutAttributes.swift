@@ -40,8 +40,7 @@ final class MessageIntermediateLayoutAttributes {
 
     // AvatarView
     var avatarSize: CGSize = .zero
-    var avatarVertical: AvatarAlignment = .messageBottom
-    var avatarHorizontal: AvatarHorizontalAlignment = .cellLeading
+    var avatarPosition = AvatarPosition(horizontal: .cellLeading, vertical: .cellBottom)
 
     // MessageContainerView
     var messageContainerSize: CGSize = .zero

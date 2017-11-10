@@ -55,16 +55,17 @@ public protocol MessagesLayoutDelegate: class {
     ///
     /// All other Senders: `UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)`
     func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
-
-    /// Specifies the vertical alignment for the `AvatarView` in a `MessageCollectionViewCell`.
+    
+    /// Specifies the vertical and horizontal alignment for the `AvatarView` in a `MessageCollectionViewCell`.
     ///
     /// - Parameters:
     ///   - message: The `MessageType` that will be displayed by this cell.
     ///   - indexPath: The `IndexPath` of the cell.
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     ///
-    /// The default value returned by this method is `AvatarAlignment.cellBottom`.
-    func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment
+    /// The default value returned by this method is an `AvatarPosition` with
+    /// `Horizontal.natural` and `Vertical.messageBottom`.
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition
 
     /// Specifies the horizontal alignment of a `MessageCollectionViewCell`'s top label.
     ///
@@ -146,10 +147,6 @@ public extension MessagesLayoutDelegate {
         }
     }
 
-    func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
-        return .cellBottom
-    }
-
     func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
         guard let dataSource = messagesCollectionView.messagesDataSource else { return .cellCenter(.zero) }
         return dataSource.isFromCurrentSender(message: message) ? .messageTrailing(.zero) : .messageLeading(.zero)
@@ -163,6 +160,10 @@ public extension MessagesLayoutDelegate {
     func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return CGSize(width: 30, height: 30)
     }
+    
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
+        return AvatarPosition(horizontal: .natural, vertical: .messageBottom)
+    }
 
     func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else { return .zero }
@@ -175,3 +176,5 @@ public extension MessagesLayoutDelegate {
     }
 
 }
+
+
