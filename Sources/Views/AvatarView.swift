@@ -89,7 +89,7 @@ open class AvatarView: UIView {
         if width == 0 || height == 0 {return UIImage()}
         var font = placeholderFont
 
-        _ = UIGraphicsBeginImageContext(CGSize(width: width, height: height))
+      _ = UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height: height), false, UIScreen.main.scale)
         let context = UIGraphicsGetCurrentContext()!
 
         //// Text Drawing
