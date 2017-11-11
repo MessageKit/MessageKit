@@ -117,19 +117,17 @@ open class MessageInputBar: UIView {
     
     open override var intrinsicContentSize: CGSize {
         let maxSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
-        let sizeToFit = inputTextView.sizeThatFits(maxSize)
-        var heightToFit = sizeToFit.height.rounded() + padding.top + padding.bottom
-
+        let sizeToFitHeight = inputTextView.sizeThatFits(maxSize).height.rounded()
+        var heightToFit = sizeToFitHeight + padding.top + padding.bottom
+        
         if heightToFit >= maxHeight {
             if !isOverMaxHeight {
-                textViewHeightAnchor?.isActive = true
                 inputTextView.isScrollEnabled = true
                 isOverMaxHeight = true
             }
             heightToFit = maxHeight
         } else {
             if isOverMaxHeight {
-                textViewHeightAnchor?.isActive = false
                 inputTextView.isScrollEnabled = false
                 isOverMaxHeight = false
             }
@@ -140,6 +138,9 @@ open class MessageInputBar: UIView {
         if previousIntrinsicContentSize != size {
             delegate?.messageInputBar(self, didChangeIntrinsicContentTo: size)
             previousIntrinsicContentSize = size
+            textViewLayoutSet?.height?.constant = sizeToFitHeight
+            inputTextView.setNeedsUpdateConstraints()
+            inputTextView.updateConstraintsIfNeeded()
         }
 
         return size
@@ -150,7 +151,7 @@ open class MessageInputBar: UIView {
     /// The maximum intrinsicContentSize height. When reached the delegate 'didChangeIntrinsicContentTo' will be called.
     open var maxHeight: CGFloat = UIScreen.main.bounds.height / 3 {
         didSet {
-            textViewHeightAnchor?.constant = maxHeight
+            textViewLayoutSet?.height?.constant = maxHeight
             invalidateIntrinsicContentSize()
         }
     }
@@ -189,7 +190,6 @@ open class MessageInputBar: UIView {
     // MARK: - Auto-Layout Management
     
     private var textViewLayoutSet: NSLayoutConstraintSet?
-    private var textViewHeightAnchor: NSLayoutConstraint?
     private var leftStackViewLayoutSet: NSLayoutConstraintSet?
     private var rightStackViewLayoutSet: NSLayoutConstraintSet?
     private var bottomStackViewLayoutSet: NSLayoutConstraintSet?
@@ -246,9 +246,9 @@ open class MessageInputBar: UIView {
             top:    inputTextView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
             bottom: inputTextView.bottomAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: -textViewPadding.bottom),
             left:   inputTextView.leftAnchor.constraint(equalTo: leftStackView.rightAnchor, constant: textViewPadding.left),
-            right:  inputTextView.rightAnchor.constraint(equalTo: rightStackView.leftAnchor, constant: -textViewPadding.right)
+            right:  inputTextView.rightAnchor.constraint(equalTo: rightStackView.leftAnchor, constant: -textViewPadding.right),
+            height: inputTextView.heightAnchor.constraint(equalToConstant: maxHeight)
             ).activate()
-        textViewHeightAnchor = inputTextView.heightAnchor.constraint(equalToConstant: maxHeight)
         
         leftStackViewLayoutSet = NSLayoutConstraintSet(
             top:    leftStackView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
