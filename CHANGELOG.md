@@ -12,6 +12,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 origin Y so that the `cellBottomLabel` is always under the `MessageContainerView`.
 [#326](https://github.com/MessageKit/MessageKit/pull/326) by [@SD10](https://github.com/sd10). 
 
+- Fixed pixelation of `AvatarView`'s placeholder text initials.
+[#343](https://github.com/MessageKit/MessageKit/pull/343) by [@johnnyoin](https://github.com/johnnyoin).
+
 ## [[Prerelease] 0.10.1](https://github.com/MessageKit/MessageKit/releases/tag/0.10.1)
 
 ### Fixed
