@@ -307,13 +307,14 @@ open class MessageInputBar: UIView {
         addSubview(leftStackView)
         addSubview(rightStackView)
         addSubview(bottomStackView)
-        topStackView.addArrangedSubview(separatorLine)
+        addSubview(separatorLine)
         setStackViewItems([sendButton], forStack: .right, animated: false)
     }
     
     /// Sets up the initial constraints of each subview
     private func setupConstraints() {
         
+        separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 1)
         topStackViewLayoutSet = NSLayoutConstraintSet(
             top:    topStackView.topAnchor.constraint(equalTo: topAnchor, constant: topStackViewPadding.top),
             bottom: topStackView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -padding.top),
