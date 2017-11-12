@@ -6,6 +6,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+## [[Prerelease] 0.10.2](https://github.com/MessageKit/MessageKit/releases/tag/0.10.2)
+
 ### Fixed
 
 - Fixed `contentInset.top` adjustment of the `MessagesCollectionView` on iOS versions less than 11 where it was found that messages appeared under the navigation var
@@ -17,6 +19,12 @@ origin Y so that the `cellBottomLabel` is always under the `MessageContainerView
 
 - Fixed pixelation of `AvatarView`'s placeholder text initials.
 [#343](https://github.com/MessageKit/MessageKit/pull/343) by [@johnnyoin](https://github.com/johnnyoin).
+
+- Fixed `MessageLabel` address detection handler.
+[#341](https://github.com/MessageKit/MessageKit/pull/341) by [@zhongwuzw](https://github.com/zhongwuzw)
+
+- Fixed crash for escaping block in `InputBarItem`’s `setSize(newValue:animated)` method.
+[#342](https://github.com/MessageKit/MessageKit/pull/342) by [@zhongwuzw](https://github.com/zhongwuzw).
 
 ## [[Prerelease] 0.10.1](https://github.com/MessageKit/MessageKit/releases/tag/0.10.1)
 
