@@ -74,11 +74,7 @@ open class MessageInputBar: UIView {
             }
             blurView.isHidden = !isTranslucent
             let color: UIColor = backgroundView.backgroundColor ?? .white
-            backgroundView.backgroundColor = isTranslucent ? color.withAlphaComponent(0.75) : color.withAlphaComponent(1.0)
-            
-            let bgColor: UIColor = backgroundColor ?? .inputBarGray
-            backgroundColor = isTranslucent ? bgColor.withAlphaComponent(0.75) : bgColor.withAlphaComponent(1.0)
-            
+            backgroundView.backgroundColor = isTranslucent ? color.withAlphaComponent(0.75) : .white
         }
     }
     
