@@ -41,16 +41,9 @@ open class MessageInputBar: UIView {
     open var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        view.backgroundColor = .inputBarGray
         return view
     }()
-    
-    /// Also sets the backgroundView's backgroundColor to the newValue
-    open override var backgroundColor: UIColor? {
-        didSet {
-            backgroundView.backgroundColor = backgroundColor
-        }
-    }
     
     /**
      A UIVisualEffectView that adds a blur effect to make the view appear transparent.
@@ -73,11 +66,8 @@ open class MessageInputBar: UIView {
                 blurView.fillSuperview()
             }
             blurView.isHidden = !isTranslucent
-            let color: UIColor = backgroundView.backgroundColor ?? .white
+            let color: UIColor = backgroundView.backgroundColor ?? .inputBarGray
             backgroundView.backgroundColor = isTranslucent ? color.withAlphaComponent(0.75) : color.withAlphaComponent(1.0)
-            
-            let bgColor: UIColor = backgroundColor ?? .inputBarGray
-            backgroundColor = isTranslucent ? bgColor.withAlphaComponent(0.75) : bgColor.withAlphaComponent(1.0)
         }
     }
     
@@ -294,7 +284,6 @@ open class MessageInputBar: UIView {
     /// Sets up the default properties
     open func setup() {
         
-        backgroundColor = .inputBarGray
         autoresizingMask = [.flexibleHeight]
         setupSubviews()
         setupConstraints()
