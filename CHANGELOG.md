@@ -25,6 +25,9 @@ and the initializer has changed from `public init(image: UIImage? = nil, initals
 origin Y so that the `cellBottomLabel` is always under the `MessageContainerView`.
 [#326](https://github.com/MessageKit/MessageKit/pull/326) by [@SD10](https://github.com/sd10). 
 
+- Fixed `MessageInputBar`'s `translucent` functionality.
+[#348](https://github.com/MessageKit/MessageKit/pull/348) by [@zhongwuzw](https://github.com/zhongwuzw). 
+
 ### Removed
 
 - **Breaking Change** Removed `AvatarAlignment` and `avatarAlignment(for:at:in)` delegate method
