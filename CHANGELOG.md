@@ -6,6 +6,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Fixed
+
+Fixes infinite loop when dismissing keyboard on iPhone X.
+[#350](https://github.com/MessageKit/MessageKit/pull/350) by [@nathantannar4](https://github.com/nathantannar4).
+
 ## [[Prerelease] 0.10.2](https://github.com/MessageKit/MessageKit/releases/tag/0.10.2)
 
 ### Fixed
