@@ -65,7 +65,6 @@ final class MessageIntermediateLayoutAttributes {
     }
 
     // Cell Top Label
-    var cellBottomLabelText: NSAttributedString?
     var cellTopLabelSize: CGSize = .zero
     var cellTopLabelMaxWidth: CGFloat = 0
     var cellTopLabelAlignment: LabelAlignment = .cellLeading(.zero)
@@ -81,7 +80,6 @@ final class MessageIntermediateLayoutAttributes {
     }
 
     // Cell Bottom Label
-    var cellTopLabelText: NSAttributedString?
     var cellBottomLabelSize: CGSize = .zero
     var cellBottomLabelMaxWidth: CGFloat = 0
     var cellBottomLabelAlignment: LabelAlignment = .cellTrailing(.zero)

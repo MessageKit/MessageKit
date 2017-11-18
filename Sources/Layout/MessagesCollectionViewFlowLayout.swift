@@ -241,13 +241,11 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         attributes.messageContainerSize = messageContainerSize(for: attributes)
         
         // Cell Bottom Label
-        attributes.cellBottomLabelText = cellBottomLabelText(for: attributes) // little concerned about storing text here TODO
         attributes.cellBottomLabelAlignment = cellBottomLabelAlignment(for: attributes)
         attributes.cellBottomLabelMaxWidth = cellBottomLabelMaxWidth(for: attributes)
         attributes.cellBottomLabelSize = cellBottomLabelSize(for: attributes)
         
         // Cell Top Label
-        attributes.cellTopLabelText = cellTopLabelText(for: attributes) // little concerned about storing text here TODO
         attributes.cellTopLabelAlignment = cellTopLabelAlignment(for: attributes)
         attributes.cellTopLabelMaxWidth = cellTopLabelMaxWidth(for: attributes)
         attributes.cellTopLabelSize = cellTopLabelSize(for: attributes)
@@ -460,19 +458,9 @@ private extension MessagesCollectionViewFlowLayout {
     
 }
 
-// MARK: - Cell Bottom Label Calculations  [ H - K ]
+// MARK: - Cell Bottom Label Calculations  [ I - K ]
 
 private extension MessagesCollectionViewFlowLayout {
-    
-    // H
-    
-    /// Returns the attributed text for the cell's bottom label.
-    ///
-    /// - Parameters:
-    ///   - attributes: The `MessageIntermediateLayoutAttributes` containing the `MessageType` object.
-    func cellBottomLabelText(for attributes: MessageIntermediateLayoutAttributes) -> NSAttributedString? {
-        return messagesDataSource.cellBottomLabelAttributedText(for: attributes.message, at: attributes.indexPath)
-    }
     
     // I
     
@@ -491,8 +479,6 @@ private extension MessagesCollectionViewFlowLayout {
     /// - Parameters:
     ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating the max width.
     func cellBottomLabelMaxWidth(for attributes: MessageIntermediateLayoutAttributes) -> CGFloat {
-        
-        guard attributes.cellBottomLabelText != nil else { return 0 }
         
         let labelHorizontal = attributes.cellBottomLabelAlignment
         let avatarHorizontal = attributes.avatarPosition.horizontal
@@ -535,8 +521,11 @@ private extension MessagesCollectionViewFlowLayout {
     /// - Parameters:
     ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating label's size.
     func cellBottomLabelSize(for attributes: MessageIntermediateLayoutAttributes) -> CGSize {
-        guard let bottomLabelText = attributes.cellBottomLabelText else { return .zero }
         
+        let text = messagesDataSource.cellBottomLabelAttributedText(for: attributes.message, at: attributes.indexPath)
+        
+        guard let bottomLabelText = text else { return .zero }
+
         var bottomLabelSize = labelSize(for: bottomLabelText, considering: attributes.cellBottomLabelMaxWidth)
         bottomLabelSize.width += attributes.cellBottomLabelHorizontalInsets
         bottomLabelSize.height += attributes.cellBottomLabelVerticalInsets
@@ -547,21 +536,11 @@ private extension MessagesCollectionViewFlowLayout {
 
 }
 
-// MARK: - Cell Top Label Size Calculations [ L - O ]
+// MARK: - Cell Top Label Size Calculations [ L - N ]
 
 private extension MessagesCollectionViewFlowLayout {
     
     // L
-    
-    /// Returns the attributed text for the cell's top label.
-    ///
-    /// - Parameters:
-    ///   - attributes: The `MessageIntermediateLayoutAttributes` containing the `MessageType` object.
-    func cellTopLabelText(for attributes: MessageIntermediateLayoutAttributes) -> NSAttributedString? {
-        return messagesDataSource.cellTopLabelAttributedText(for: attributes.message, at: attributes.indexPath)
-    }
-    
-    // M
     
     /// Returns the alignment of the cell's top label.
     ///
@@ -571,15 +550,13 @@ private extension MessagesCollectionViewFlowLayout {
         return messagesLayoutDelegate.cellTopLabelAlignment(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
     }
     
-    // N
+    // M
     
     /// Returns the max available width for the cell's top label considering the specified layout information.
     ///
     /// - Parameters:
     ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating the max width.
     func cellTopLabelMaxWidth(for attributes: MessageIntermediateLayoutAttributes) -> CGFloat {
-        
-        guard attributes.cellTopLabelText != nil else { return 0 }
         
         let labelHorizontal = attributes.cellTopLabelAlignment
         let avatarHorizontal = attributes.avatarPosition.horizontal
@@ -615,15 +592,18 @@ private extension MessagesCollectionViewFlowLayout {
         
     }
     
-    // O
+    // N
     
     /// Returns the size of the cell's top label considering the specified layout information.
     ///
     /// - Parameters:
     ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating label's size.
     func cellTopLabelSize(for attributes: MessageIntermediateLayoutAttributes) -> CGSize {
-        guard let topLabelText = attributes.cellTopLabelText else { return .zero }
         
+        let text = messagesDataSource.cellTopLabelAttributedText(for: attributes.message, at: attributes.indexPath)
+        
+        guard let topLabelText = text else { return .zero }
+
         var topLabelSize = labelSize(for: topLabelText, considering: attributes.cellTopLabelMaxWidth)
         topLabelSize.width += attributes.cellTopLabelHorizontalInsets
         topLabelSize.height += attributes.cellTopLabelVerticalInsets
