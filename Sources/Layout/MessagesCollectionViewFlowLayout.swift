@@ -284,7 +284,6 @@ fileprivate extension MessagesCollectionViewFlowLayout {
             attributes.messageLabelFont = messageLabelFont
         }
         
-        attributes.messagePadding = intermediateAttributes.messageContainerPadding
         attributes.messageLabelInsets = intermediateAttributes.messageLabelInsets
         attributes.cellTopLabelInsets = intermediateAttributes.cellTopLabelAlignment.insets
         attributes.cellBottomLabelInsets = intermediateAttributes.cellBottomLabelAlignment.insets
