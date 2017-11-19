@@ -408,7 +408,7 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
         addGestureRecognizer(longPressGesture)
-        tapGesture.delegate = self
+        longPressGesture.delegate = self
 
         isUserInteractionEnabled = true
     }
