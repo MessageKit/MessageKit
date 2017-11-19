@@ -61,7 +61,7 @@ public extension TextMessageDisplayDelegate {
     }
 
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
-        return [.url, .address, .phoneNumber, .date]
+        return []
     }
 
 }
