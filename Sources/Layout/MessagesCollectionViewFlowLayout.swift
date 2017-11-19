@@ -272,6 +272,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         attributes.topLabelFrame = intermediateAttributes.topLabelFrame
         attributes.bottomLabelFrame = intermediateAttributes.bottomLabelFrame
         attributes.avatarFrame = intermediateAttributes.avatarFrame
+        attributes.messageLabelInsets = intermediateAttributes.messageLabelInsets
         
         switch intermediateAttributes.message.data {
         case .emoji:
@@ -279,13 +280,9 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         default:
             attributes.messageLabelFont = messageLabelFont
         }
-        
-        attributes.messageLabelInsets = intermediateAttributes.messageLabelInsets
-        attributes.topLabelInsets = intermediateAttributes.topLabelAlignment.insets
-        attributes.bottomLabelInsets = intermediateAttributes.bottomLabelAlignment.insets
-        
+
     }
-    
+
 }
 
 final class MessageFinalLayoutAttributes {
@@ -500,25 +497,25 @@ private extension MessagesCollectionViewFlowLayout {
         switch (labelHorizontal, avatarHorizontal, avatarVertical) {
             
         case (.cellLeading, .cellTrailing, .cellBottom), (.cellTrailing, .cellLeading, .cellBottom):
-            return itemWidth - avatarWidth - attributes.bottomLabelHorizontalInsets
+            return itemWidth - avatarWidth - attributes.bottomLabelHorizontalPadding
             
         case (.cellLeading, _, _), (.cellTrailing, _, _):
-            return itemWidth - attributes.bottomLabelHorizontalInsets
+            return itemWidth - attributes.bottomLabelHorizontalPadding
             
         case (.cellCenter, .cellLeading, .cellBottom), (.cellCenter, .cellTrailing, .cellBottom):
-            return itemWidth - (avatarWidth * 2) - attributes.bottomLabelHorizontalInsets
+            return itemWidth - (avatarWidth * 2) - attributes.bottomLabelHorizontalPadding
             
         case (.cellCenter, .cellLeading, _), (.cellCenter, .cellTrailing, _):
-            return itemWidth - attributes.bottomLabelHorizontalInsets
+            return itemWidth - attributes.bottomLabelHorizontalPadding
             
         case (.messageTrailing, .cellLeading, .cellBottom), (.messageLeading, .cellTrailing, .cellBottom):
-            return attributes.messageContainerSize.width - attributes.bottomLabelHorizontalInsets
+            return attributes.messageContainerSize.width - attributes.bottomLabelHorizontalPadding
             
         case (.messageLeading, .cellLeading, _), (.messageTrailing, .cellTrailing, _):
-            return itemWidth - avatarWidth - attributes.bottomLabelHorizontalInsets
+            return itemWidth - avatarWidth - attributes.bottomLabelHorizontalPadding
             
         case (.messageLeading, .cellTrailing, _), (.messageTrailing, .cellLeading, _):
-            return attributes.messageContainerSize.width + avatarWidth - attributes.bottomLabelHorizontalInsets
+            return attributes.messageContainerSize.width + avatarWidth - attributes.bottomLabelHorizontalPadding
             
         case (_, .natural, _):
             fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
@@ -538,11 +535,7 @@ private extension MessagesCollectionViewFlowLayout {
         
         guard let bottomLabelText = text else { return .zero }
 
-        var bottomLabelSize = labelSize(for: bottomLabelText, considering: attributes.bottomLabelMaxWidth)
-        bottomLabelSize.width += attributes.bottomLabelHorizontalInsets
-        bottomLabelSize.height += attributes.bottomLabelVerticalInsets
-        
-        return bottomLabelSize
+        return labelSize(for: bottomLabelText, considering: attributes.bottomLabelMaxWidth)
         
     }
 
@@ -578,25 +571,25 @@ private extension MessagesCollectionViewFlowLayout {
         switch (labelHorizontal, avatarHorizontal, avatarVertical) {
             
         case (.cellLeading, .cellTrailing, .cellTop), (.cellTrailing, .cellLeading, .cellTop):
-            return itemWidth - avatarWidth - attributes.topLabelHorizontalInsets
+            return itemWidth - avatarWidth - attributes.topLabelHorizontalPadding
             
         case (.cellLeading, _, _), (.cellTrailing, _, _):
-            return itemWidth - attributes.topLabelHorizontalInsets
+            return itemWidth - attributes.topLabelHorizontalPadding
             
         case (.cellCenter, .cellLeading, .cellTop), (.cellCenter, .cellTrailing, .cellTop):
-            return itemWidth - (avatarWidth * 2) - attributes.topLabelHorizontalInsets
+            return itemWidth - (avatarWidth * 2) - attributes.topLabelHorizontalPadding
             
         case (.cellCenter, .cellLeading, _), (.cellCenter, .cellTrailing, _):
-            return itemWidth - attributes.topLabelHorizontalInsets
+            return itemWidth - attributes.topLabelHorizontalPadding
             
         case (.messageTrailing, .cellLeading, .cellTop), (.messageLeading, .cellTrailing, .cellTop):
-            return attributes.messageContainerSize.width - attributes.topLabelHorizontalInsets
+            return attributes.messageContainerSize.width - attributes.topLabelHorizontalPadding
             
         case (.messageLeading, .cellLeading, _), (.messageTrailing, .cellTrailing, _):
-            return itemWidth - avatarWidth - attributes.topLabelHorizontalInsets
+            return itemWidth - avatarWidth - attributes.topLabelHorizontalPadding
             
         case (.messageLeading, .cellTrailing, _), (.messageTrailing, .cellLeading, _):
-            return attributes.messageContainerSize.width + avatarWidth - attributes.topLabelHorizontalInsets
+            return attributes.messageContainerSize.width + avatarWidth - attributes.topLabelHorizontalPadding
 
         case (_, .natural, _):
             fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
@@ -616,11 +609,8 @@ private extension MessagesCollectionViewFlowLayout {
         
         guard let topLabelText = text else { return .zero }
 
-        var topLabelSize = labelSize(for: topLabelText, considering: attributes.topLabelMaxWidth)
-        topLabelSize.width += attributes.topLabelHorizontalInsets
-        topLabelSize.height += attributes.topLabelVerticalInsets
-        
-        return topLabelSize
+        return labelSize(for: topLabelText, considering: attributes.topLabelMaxWidth)
+
     }
     
 }

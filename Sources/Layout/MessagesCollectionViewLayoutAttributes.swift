@@ -36,10 +36,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
     var messageLabelInsets: UIEdgeInsets = .zero
 
     var topLabelFrame: CGRect = .zero
-    var topLabelInsets: UIEdgeInsets = .zero
-
     var bottomLabelFrame: CGRect = .zero
-    var bottomLabelInsets: UIEdgeInsets = .zero
 
     // MARK: - Methods
 
@@ -51,9 +48,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
         copy.messageLabelFont = messageLabelFont
         copy.messageLabelInsets = messageLabelInsets
         copy.topLabelFrame = topLabelFrame
-        copy.topLabelInsets = topLabelInsets
         copy.bottomLabelFrame = bottomLabelFrame
-        copy.bottomLabelInsets = bottomLabelInsets
         return copy
         // swiftlint:enable force_cast
     }

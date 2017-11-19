@@ -84,7 +84,7 @@ final class MessageIntermediateLayoutAttributes {
         guard messageContainerSize != .zero else { return .zero }
         
         var origin: CGPoint = .zero
-        origin.y = topLabelSize.height + messageContainerPadding.top
+        origin.y = topLabelSize.height + messageContainerPadding.top + topLabelVerticalPadding
         
         switch avatarPosition.horizontal {
         case .cellLeading:
@@ -110,17 +110,19 @@ final class MessageIntermediateLayoutAttributes {
         
         var origin = CGPoint.zero
         
+        origin.y = topLabelPadding.top
+        
         switch topLabelAlignment {
         case .cellLeading:
-            break
+            origin.x = topLabelPadding.left
         case .cellCenter:
-            origin.x = cellFrame.midX
+            origin.x = cellFrame.midX + topLabelPadding.left - topLabelPadding.right
         case .cellTrailing:
-            origin.x = cellFrame.maxX - topLabelSize.width
+            origin.x = cellFrame.maxX - topLabelSize.width - topLabelPadding.right
         case .messageLeading:
-            origin.x = messageContainerFrame.minX
+            origin.x = messageContainerFrame.minX + topLabelPadding.left
         case .messageTrailing:
-            origin.x = messageContainerFrame.maxX - topLabelSize.width
+            origin.x = messageContainerFrame.maxX - topLabelSize.width - topLabelPadding.right
         }
         
         return CGRect(origin: origin, size: topLabelSize)
@@ -138,19 +140,19 @@ final class MessageIntermediateLayoutAttributes {
         
         var origin: CGPoint = .zero
         
-        origin.y = messageContainerFrame.maxY + messageContainerPadding.bottom
+        origin.y = messageContainerFrame.maxY + messageContainerPadding.bottom + bottomLabelPadding.top
         
         switch bottomLabelAlignment {
         case .cellLeading:
-            break
+            origin.x = bottomLabelPadding.left
         case .cellCenter:
-            origin.x = cellFrame.midX
+            origin.x = cellFrame.midX + bottomLabelPadding.left - bottomLabelPadding.right
         case .cellTrailing:
-            origin.x = cellFrame.maxX - bottomLabelSize.width
+            origin.x = cellFrame.maxX - bottomLabelSize.width - bottomLabelPadding.right
         case .messageLeading:
-            origin.x = messageContainerFrame.minX
+            origin.x = messageContainerFrame.minX + bottomLabelPadding.left
         case .messageTrailing:
-            origin.x = messageContainerFrame.maxX - bottomLabelSize.width
+            origin.x = messageContainerFrame.maxX - bottomLabelSize.width - bottomLabelPadding.right
         }
         
         return CGRect(origin: origin, size: bottomLabelSize)
@@ -170,22 +172,30 @@ final class MessageIntermediateLayoutAttributes {
 
 extension MessageIntermediateLayoutAttributes {
     
-    var bottomLabelVerticalInsets: CGFloat {
+    var bottomLabelPadding: UIEdgeInsets {
+        return bottomLabelAlignment.insets
+    }
+    
+    var bottomLabelVerticalPadding: CGFloat {
         let bottomLabelInsets = bottomLabelAlignment.insets
         return bottomLabelInsets.top + bottomLabelInsets.bottom
     }
     
-    var bottomLabelHorizontalInsets: CGFloat {
+    var bottomLabelHorizontalPadding: CGFloat {
         let bottomLabelInsets = bottomLabelAlignment.insets
         return bottomLabelInsets.left + bottomLabelInsets.right
     }
     
-    var topLabelVerticalInsets: CGFloat {
+    var topLabelPadding: UIEdgeInsets {
+        return topLabelAlignment.insets
+    }
+    
+    var topLabelVerticalPadding: CGFloat {
         let topLabelInsets = topLabelAlignment.insets
         return topLabelInsets.top + topLabelInsets.bottom
     }
     
-    var topLabelHorizontalInsets: CGFloat {
+    var topLabelHorizontalPadding: CGFloat {
         let topLabelInsets = topLabelAlignment.insets
         return topLabelInsets.left + topLabelInsets.right
     }

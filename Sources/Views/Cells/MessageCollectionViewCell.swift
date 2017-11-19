@@ -38,11 +38,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
 
     open var avatarView: AvatarView = AvatarView()
 
-    open var cellTopLabel: MessageLabel = {
-        let topLabel = MessageLabel()
-        topLabel.enabledDetectors = []
-        return topLabel
-    }()
+    open var cellTopLabel = UILabel()
 
     open var messageContentView: ContentView = {
         let contentView = ContentView()
@@ -51,11 +47,7 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
         return contentView
     }()
 
-    open var cellBottomLabel: MessageLabel = {
-        let bottomLabel = MessageLabel()
-        bottomLabel.enabledDetectors = []
-        return bottomLabel
-    }()
+    open var cellBottomLabel = UILabel()
 
     open weak var delegate: MessageCellDelegate?
 
@@ -95,12 +87,8 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
 
         messageContainerView.frame = attributes.messageContainerFrame
         messageContentView.frame = messageContainerView.bounds
-
         cellTopLabel.frame = attributes.topLabelFrame
-        cellTopLabel.textInsets = attributes.topLabelInsets
-
         cellBottomLabel.frame = attributes.bottomLabelFrame
-        cellBottomLabel.textInsets = attributes.bottomLabelInsets
 
     }
 
