@@ -57,7 +57,11 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
     open weak var delegate: MessageLabelDelegate?
 
-    open var enabledDetectors: [DetectorType] = [.phoneNumber, .address, .date, .url]
+    open var enabledDetectors: [DetectorType] = [] {
+        didSet {
+            setTextStorage(shouldParse: true)
+        }
+    }
 
     open override var attributedText: NSAttributedString? {
         didSet {
