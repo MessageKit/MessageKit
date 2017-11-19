@@ -177,13 +177,11 @@ extension MessageIntermediateLayoutAttributes {
     }
     
     var bottomLabelVerticalPadding: CGFloat {
-        let bottomLabelInsets = bottomLabelAlignment.insets
-        return bottomLabelInsets.top + bottomLabelInsets.bottom
+        return bottomLabelPadding.top + bottomLabelPadding.bottom
     }
     
     var bottomLabelHorizontalPadding: CGFloat {
-        let bottomLabelInsets = bottomLabelAlignment.insets
-        return bottomLabelInsets.left + bottomLabelInsets.right
+        return bottomLabelPadding.left + bottomLabelPadding.right
     }
     
     var topLabelPadding: UIEdgeInsets {
@@ -191,13 +189,11 @@ extension MessageIntermediateLayoutAttributes {
     }
     
     var topLabelVerticalPadding: CGFloat {
-        let topLabelInsets = topLabelAlignment.insets
-        return topLabelInsets.top + topLabelInsets.bottom
+        return topLabelPadding.top + topLabelPadding.bottom
     }
     
     var topLabelHorizontalPadding: CGFloat {
-        let topLabelInsets = topLabelAlignment.insets
-        return topLabelInsets.left + topLabelInsets.right
+        return topLabelPadding.left + topLabelPadding.right
     }
     
     var messageLabelVerticalInsets: CGFloat {

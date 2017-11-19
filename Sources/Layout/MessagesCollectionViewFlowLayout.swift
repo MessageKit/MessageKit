@@ -285,23 +285,6 @@ fileprivate extension MessagesCollectionViewFlowLayout {
 
 }
 
-final class MessageFinalLayoutAttributes {
-    
-    
-    
-    var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
-    var messageContainerFrame: CGRect = .zero
-    var messageLabelInsets: UIEdgeInsets = .zero
-    
-    var cellTopLabelFrame: CGRect = .zero
-    var cellTopLabelInsets: UIEdgeInsets = .zero
-    
-    var cellBottomLabelFrame: CGRect = .zero
-    var cellBottomLabelInsets: UIEdgeInsets = .zero
-    
-    
-}
-
 // MARK: - Avatar Calculations [ A - C ]
 
 fileprivate extension MessagesCollectionViewFlowLayout {
