@@ -357,7 +357,6 @@ open class MessageInputBar: UIView {
             topStackViewLayoutSet?.right = topStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: topStackViewPadding.right)
             leftStackViewLayoutSet?.left = leftStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
             rightStackViewLayoutSet?.right = rightStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
-            bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -padding.bottom)
             bottomStackViewLayoutSet?.left = bottomStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
             bottomStackViewLayoutSet?.right = bottomStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
         }
@@ -367,8 +366,25 @@ open class MessageInputBar: UIView {
         bottomStackViewLayoutSet?.activate()
     }
     
+<<<<<<< HEAD
     /// Updates the constraint constants that correspond to the padding UIEdgeInsets
     private func updatePadding() {
+=======
+    open override func didMoveToWindow() {
+        super.didMoveToWindow()
+        if #available(iOS 11.0, *) {
+            guard let window = window else { return }
+            
+            // bottomAnchor must be set to the window to avoid a memory leak issue
+            bottomStackViewLayoutSet?.bottom?.isActive = false
+            bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+            bottomStackViewLayoutSet?.bottom?.isActive = true
+        }
+    }
+    
+    private func updateViewContraints() {
+        
+>>>>>>> master
         textViewLayoutSet?.top?.constant = padding.top
         leftStackViewLayoutSet?.top?.constant = padding.top
         leftStackViewLayoutSet?.left?.constant = padding.left

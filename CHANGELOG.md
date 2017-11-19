@@ -21,10 +21,21 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 and the initializer has changed from `public init(image: UIImage? = nil, initals: String = "?")` to `public init(image: UIImage? = nil, initials: String = "?")`. 
 [#298](https://github.com/MessageKit/MessageKit/issues/298) by [@sidmclaughlin](https://github.com/sidmclaughlin).
 
+- Fixes infinite loop when dismissing keyboard on iPhone X.
+[#350](https://github.com/MessageKit/MessageKit/pull/350) by [@nathantannar4](https://github.com/nathantannar4).
+
+## [[Prerelease] 0.10.2](https://github.com/MessageKit/MessageKit/releases/tag/0.10.2)
+
+### Fixed
+
+- Fixed `contentInset.top` adjustment of the `MessagesCollectionView` on iOS versions less than 11 where it was found that messages appeared under the navigation var
+[#334](https://github.com/MessageKit/MessageKit/pull/334) by [@nathantannar4](https://github.com/nathantannar4).
+
 - Fixed `cellbottomLabel` origin X for the `.messageLeading` alignment and
 origin Y so that the `cellBottomLabel` is always under the `MessageContainerView`.
 [#326](https://github.com/MessageKit/MessageKit/pull/326) by [@SD10](https://github.com/sd10). 
 
+<<<<<<< HEAD
 ### Removed
 
 - **Breaking Change** Removed `AvatarAlignment` and `avatarAlignment(for:at:in)` delegate method
@@ -34,6 +45,16 @@ in favor of new `AvatarPosition` representing both vertical and horizontal align
 - **Breaking Change** Removed the `avatarAlwaysLeading` and `avatarAlwaysTrailing` properties of `MessagesCollectionViewFlowLayout`.
 [#322](https://github.com/MessageKit/MessageKit/pull/322) by [@SD10](https://github.com/sd10).
 
+=======
+- Fixed pixelation of `AvatarView`'s placeholder text initials.
+[#343](https://github.com/MessageKit/MessageKit/pull/343) by [@johnnyoin](https://github.com/johnnyoin).
+
+- Fixed `MessageLabel` address detection handler.
+[#341](https://github.com/MessageKit/MessageKit/pull/341) by [@zhongwuzw](https://github.com/zhongwuzw)
+
+- Fixed crash for escaping block in `InputBarItem`’s `setSize(newValue:animated)` method.
+[#342](https://github.com/MessageKit/MessageKit/pull/342) by [@zhongwuzw](https://github.com/zhongwuzw).
+>>>>>>> master
 
 ## [[Prerelease] 0.10.1](https://github.com/MessageKit/MessageKit/releases/tag/0.10.1)
 

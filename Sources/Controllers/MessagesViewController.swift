@@ -66,11 +66,14 @@ open class MessagesViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = false
         view.backgroundColor = .white
         messagesCollectionView.keyboardDismissMode = .interactive
-
+        messagesCollectionView.alwaysBounceVertical = true
+        
+        
         setupSubviews()
         setupConstraints()
         registerReusableViews()
@@ -140,6 +143,20 @@ open class MessagesViewController: UIViewController {
             let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
             let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             NSLayoutConstraint.activate([top, bottom, trailing, leading])
+        }
+        adjustScrollViewInset()
+    }
+    
+    @objc
+    private func adjustScrollViewInset() {
+        if #available(iOS 11.0, *) {
+            // No need to add to the top contentInset
+        } else {
+            let navigationBarInset = navigationController?.navigationBar.frame.height ?? 0
+            let statusBarInset: CGFloat = UIApplication.shared.isStatusBarHidden ? 0 : 20
+            let topInset = navigationBarInset + statusBarInset
+            messagesCollectionView.contentInset.top = topInset
+            messagesCollectionView.scrollIndicatorInsets.top = topInset
         }
     }
 }
@@ -260,11 +277,13 @@ fileprivate extension MessagesViewController {
     func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleTextViewDidBeginEditing), name: .UITextViewTextDidBeginEditing, object: messageInputBar.inputTextView)
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustScrollViewInset), name: .UIDeviceOrientationDidChange, object: nil)
     }
 
     func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UITextViewTextDidBeginEditing, object: messageInputBar.inputTextView)
+        NotificationCenter.default.removeObserver(self, name: .UIDeviceOrientationDidChange, object: nil)
     }
 
     @objc
