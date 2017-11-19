@@ -50,6 +50,8 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
     }()
 
     private lazy var rangesForDetectors: [DetectorType: [(NSRange, MessageTextCheckingType)]] = [:]
+    
+    private var isConfiguring: Bool = false
 
     // MARK: - Public Properties
 
@@ -84,14 +86,14 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
     open override var lineBreakMode: NSLineBreakMode {
         didSet {
             textContainer.lineBreakMode = lineBreakMode
-            setNeedsDisplay()
+            if !isConfiguring { setNeedsDisplay() }
         }
     }
 
     open override var numberOfLines: Int {
         didSet {
             textContainer.maximumNumberOfLines = numberOfLines
-            setNeedsDisplay()
+            if !isConfiguring { setNeedsDisplay() }
         }
     }
 
@@ -103,35 +105,35 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
     open var textInsets: UIEdgeInsets = .zero {
         didSet {
-            setNeedsDisplay()
+            if !isConfiguring { setNeedsDisplay() }
         }
     }
 
     open var addressAttributes: [NSAttributedStringKey: Any] = [:] {
         didSet {
             updateAttributes(for: .address)
-            setNeedsDisplay()
+            if !isConfiguring { setNeedsDisplay() }
         }
     }
 
     open var dateAttributes: [NSAttributedStringKey: Any] = [:] {
         didSet {
             updateAttributes(for: .date)
-            setNeedsDisplay()
+            if !isConfiguring { setNeedsDisplay() }
         }
     }
 
     open var phoneNumberAttributes: [NSAttributedStringKey: Any] = [:] {
         didSet {
             updateAttributes(for: .phoneNumber)
-            setNeedsDisplay()
+            if !isConfiguring { setNeedsDisplay() }
         }
     }
 
     open var urlAttributes: [NSAttributedStringKey: Any] = [:] {
         didSet {
             updateAttributes(for: .url)
-            setNeedsDisplay()
+            if !isConfiguring { setNeedsDisplay() }
         }
     }
 
@@ -178,6 +180,13 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
     }
 
     // MARK: - Public Methods
+    
+    public func configure(block: () -> Void) {
+        isConfiguring = true
+        block()
+        isConfiguring = false
+        setNeedsDisplay()
+    }
 
     // MARK: UIGestureRecognizer Delegate
 
@@ -252,7 +261,7 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         let modifiedText = NSAttributedString(attributedString: mutableText)
         textStorage.setAttributedString(modifiedText)
 
-        setNeedsDisplay()
+        if !isConfiguring { setNeedsDisplay() }
 
     }
     
