@@ -96,11 +96,11 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
         messageContainerView.frame = attributes.messageContainerFrame
         messageContentView.frame = messageContainerView.bounds
 
-        cellTopLabel.frame = attributes.cellTopLabelFrame
-        cellTopLabel.textInsets = attributes.cellTopLabelInsets
+        cellTopLabel.frame = attributes.topLabelFrame
+        cellTopLabel.textInsets = attributes.topLabelInsets
 
-        cellBottomLabel.frame = attributes.cellBottomLabelFrame
-        cellBottomLabel.textInsets = attributes.cellBottomLabelInsets
+        cellBottomLabel.frame = attributes.bottomLabelFrame
+        cellBottomLabel.textInsets = attributes.bottomLabelInsets
 
     }
 

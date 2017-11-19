@@ -57,10 +57,11 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     /// The default value of this property is 2x the `messageLabelFont`.
     private var emojiLabelFont: UIFont
 
+    typealias MessageID = String
+    
     /// The cache for `MessageIntermediateLayoutAttributes`.
     /// The key is the `messageId` of the `MessageType`.
     fileprivate var intermediateAttributesCache: [MessageID: MessageIntermediateLayoutAttributes] = [:]
-    typealias MessageID = String
     
     /// Convenience property for accessing the layout object's `MessagesCollectionView`.
     fileprivate var messagesCollectionView: MessagesCollectionView {
@@ -241,14 +242,14 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         attributes.messageContainerSize = messageContainerSize(for: attributes)
         
         // Cell Bottom Label
-        attributes.cellBottomLabelAlignment = cellBottomLabelAlignment(for: attributes)
-        attributes.cellBottomLabelMaxWidth = cellBottomLabelMaxWidth(for: attributes)
-        attributes.cellBottomLabelSize = cellBottomLabelSize(for: attributes)
+        attributes.bottomLabelAlignment = cellBottomLabelAlignment(for: attributes)
+        attributes.bottomLabelMaxWidth = cellBottomLabelMaxWidth(for: attributes)
+        attributes.bottomLabelSize = cellBottomLabelSize(for: attributes)
         
         // Cell Top Label
-        attributes.cellTopLabelAlignment = cellTopLabelAlignment(for: attributes)
-        attributes.cellTopLabelMaxWidth = cellTopLabelMaxWidth(for: attributes)
-        attributes.cellTopLabelSize = cellTopLabelSize(for: attributes)
+        attributes.topLabelAlignment = cellTopLabelAlignment(for: attributes)
+        attributes.topLabelMaxWidth = cellTopLabelMaxWidth(for: attributes)
+        attributes.topLabelSize = cellTopLabelSize(for: attributes)
         
         // Cell Height
         attributes.itemHeight = cellHeight(for: attributes)
@@ -265,17 +266,12 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         
         let intermediateAttributes = messageIntermediateLayoutAttributes(for: attributes.indexPath)
         
-        let messageOrigin = messageContainerOrigin(for: intermediateAttributes, and: attributes.frame)
-        attributes.messageContainerFrame = CGRect(origin: messageOrigin, size: intermediateAttributes.messageContainerSize)
+        intermediateAttributes.cellFrame = attributes.frame
         
-        let avaOrigin = avatarOrigin(for: intermediateAttributes, and: attributes.frame)
-        attributes.avatarFrame = CGRect(origin: avaOrigin, size: intermediateAttributes.avatarSize)
-        
-        let topLabelOrigin = cellTopLabelOrigin(for: intermediateAttributes, and: attributes.frame)
-        attributes.cellTopLabelFrame = CGRect(origin: topLabelOrigin, size: intermediateAttributes.cellTopLabelSize)
-        
-        let bottomLabelOrigin = cellBottomLabelOrigin(for: intermediateAttributes, and: attributes.frame)
-        attributes.cellBottomLabelFrame = CGRect(origin: bottomLabelOrigin, size: intermediateAttributes.cellBottomLabelSize)
+        attributes.messageContainerFrame = intermediateAttributes.messageContainerFrame
+        attributes.topLabelFrame = intermediateAttributes.topLabelFrame
+        attributes.bottomLabelFrame = intermediateAttributes.bottomLabelFrame
+        attributes.avatarFrame = intermediateAttributes.avatarFrame
         
         switch intermediateAttributes.message.data {
         case .emoji:
@@ -285,10 +281,27 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         }
         
         attributes.messageLabelInsets = intermediateAttributes.messageLabelInsets
-        attributes.cellTopLabelInsets = intermediateAttributes.cellTopLabelAlignment.insets
-        attributes.cellBottomLabelInsets = intermediateAttributes.cellBottomLabelAlignment.insets
+        attributes.topLabelInsets = intermediateAttributes.topLabelAlignment.insets
+        attributes.bottomLabelInsets = intermediateAttributes.bottomLabelAlignment.insets
         
     }
+    
+}
+
+final class MessageFinalLayoutAttributes {
+    
+    
+    
+    var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
+    var messageContainerFrame: CGRect = .zero
+    var messageLabelInsets: UIEdgeInsets = .zero
+    
+    var cellTopLabelFrame: CGRect = .zero
+    var cellTopLabelInsets: UIEdgeInsets = .zero
+    
+    var cellBottomLabelFrame: CGRect = .zero
+    var cellBottomLabelInsets: UIEdgeInsets = .zero
+    
     
 }
 
@@ -479,7 +492,7 @@ private extension MessagesCollectionViewFlowLayout {
     ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating the max width.
     func cellBottomLabelMaxWidth(for attributes: MessageIntermediateLayoutAttributes) -> CGFloat {
         
-        let labelHorizontal = attributes.cellBottomLabelAlignment
+        let labelHorizontal = attributes.bottomLabelAlignment
         let avatarHorizontal = attributes.avatarPosition.horizontal
         let avatarVertical = attributes.avatarPosition.vertical
         let avatarWidth = attributes.avatarSize.width
@@ -487,25 +500,25 @@ private extension MessagesCollectionViewFlowLayout {
         switch (labelHorizontal, avatarHorizontal, avatarVertical) {
             
         case (.cellLeading, .cellTrailing, .cellBottom), (.cellTrailing, .cellLeading, .cellBottom):
-            return itemWidth - avatarWidth - attributes.cellBottomLabelHorizontalInsets
+            return itemWidth - avatarWidth - attributes.bottomLabelHorizontalInsets
             
         case (.cellLeading, _, _), (.cellTrailing, _, _):
-            return itemWidth - attributes.cellBottomLabelHorizontalInsets
+            return itemWidth - attributes.bottomLabelHorizontalInsets
             
         case (.cellCenter, .cellLeading, .cellBottom), (.cellCenter, .cellTrailing, .cellBottom):
-            return itemWidth - (avatarWidth * 2) - attributes.cellBottomLabelHorizontalInsets
+            return itemWidth - (avatarWidth * 2) - attributes.bottomLabelHorizontalInsets
             
         case (.cellCenter, .cellLeading, _), (.cellCenter, .cellTrailing, _):
-            return itemWidth - attributes.cellBottomLabelHorizontalInsets
+            return itemWidth - attributes.bottomLabelHorizontalInsets
             
         case (.messageTrailing, .cellLeading, .cellBottom), (.messageLeading, .cellTrailing, .cellBottom):
-            return attributes.messageContainerSize.width - attributes.cellBottomLabelHorizontalInsets
+            return attributes.messageContainerSize.width - attributes.bottomLabelHorizontalInsets
             
         case (.messageLeading, .cellLeading, _), (.messageTrailing, .cellTrailing, _):
-            return itemWidth - avatarWidth - attributes.cellBottomLabelHorizontalInsets
+            return itemWidth - avatarWidth - attributes.bottomLabelHorizontalInsets
             
         case (.messageLeading, .cellTrailing, _), (.messageTrailing, .cellLeading, _):
-            return attributes.messageContainerSize.width + avatarWidth - attributes.cellBottomLabelHorizontalInsets
+            return attributes.messageContainerSize.width + avatarWidth - attributes.bottomLabelHorizontalInsets
             
         case (_, .natural, _):
             fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
@@ -525,9 +538,9 @@ private extension MessagesCollectionViewFlowLayout {
         
         guard let bottomLabelText = text else { return .zero }
 
-        var bottomLabelSize = labelSize(for: bottomLabelText, considering: attributes.cellBottomLabelMaxWidth)
-        bottomLabelSize.width += attributes.cellBottomLabelHorizontalInsets
-        bottomLabelSize.height += attributes.cellBottomLabelVerticalInsets
+        var bottomLabelSize = labelSize(for: bottomLabelText, considering: attributes.bottomLabelMaxWidth)
+        bottomLabelSize.width += attributes.bottomLabelHorizontalInsets
+        bottomLabelSize.height += attributes.bottomLabelVerticalInsets
         
         return bottomLabelSize
         
@@ -557,7 +570,7 @@ private extension MessagesCollectionViewFlowLayout {
     ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating the max width.
     func cellTopLabelMaxWidth(for attributes: MessageIntermediateLayoutAttributes) -> CGFloat {
         
-        let labelHorizontal = attributes.cellTopLabelAlignment
+        let labelHorizontal = attributes.topLabelAlignment
         let avatarHorizontal = attributes.avatarPosition.horizontal
         let avatarVertical = attributes.avatarPosition.vertical
         let avatarWidth = attributes.avatarSize.width
@@ -565,25 +578,25 @@ private extension MessagesCollectionViewFlowLayout {
         switch (labelHorizontal, avatarHorizontal, avatarVertical) {
             
         case (.cellLeading, .cellTrailing, .cellTop), (.cellTrailing, .cellLeading, .cellTop):
-            return itemWidth - avatarWidth - attributes.cellTopLabelHorizontalInsets
+            return itemWidth - avatarWidth - attributes.topLabelHorizontalInsets
             
         case (.cellLeading, _, _), (.cellTrailing, _, _):
-            return itemWidth - attributes.cellTopLabelHorizontalInsets
+            return itemWidth - attributes.topLabelHorizontalInsets
             
         case (.cellCenter, .cellLeading, .cellTop), (.cellCenter, .cellTrailing, .cellTop):
-            return itemWidth - (avatarWidth * 2) - attributes.cellTopLabelHorizontalInsets
+            return itemWidth - (avatarWidth * 2) - attributes.topLabelHorizontalInsets
             
         case (.cellCenter, .cellLeading, _), (.cellCenter, .cellTrailing, _):
-            return itemWidth - attributes.cellTopLabelHorizontalInsets
+            return itemWidth - attributes.topLabelHorizontalInsets
             
         case (.messageTrailing, .cellLeading, .cellTop), (.messageLeading, .cellTrailing, .cellTop):
-            return attributes.messageContainerSize.width - attributes.cellTopLabelHorizontalInsets
+            return attributes.messageContainerSize.width - attributes.topLabelHorizontalInsets
             
         case (.messageLeading, .cellLeading, _), (.messageTrailing, .cellTrailing, _):
-            return itemWidth - avatarWidth - attributes.cellTopLabelHorizontalInsets
+            return itemWidth - avatarWidth - attributes.topLabelHorizontalInsets
             
         case (.messageLeading, .cellTrailing, _), (.messageTrailing, .cellLeading, _):
-            return attributes.messageContainerSize.width + avatarWidth - attributes.cellTopLabelHorizontalInsets
+            return attributes.messageContainerSize.width + avatarWidth - attributes.topLabelHorizontalInsets
 
         case (_, .natural, _):
             fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
@@ -603,9 +616,9 @@ private extension MessagesCollectionViewFlowLayout {
         
         guard let topLabelText = text else { return .zero }
 
-        var topLabelSize = labelSize(for: topLabelText, considering: attributes.cellTopLabelMaxWidth)
-        topLabelSize.width += attributes.cellTopLabelHorizontalInsets
-        topLabelSize.height += attributes.cellTopLabelVerticalInsets
+        var topLabelSize = labelSize(for: topLabelText, considering: attributes.topLabelMaxWidth)
+        topLabelSize.width += attributes.topLabelHorizontalInsets
+        topLabelSize.height += attributes.topLabelVerticalInsets
         
         return topLabelSize
     }
@@ -628,166 +641,24 @@ private extension MessagesCollectionViewFlowLayout {
         
         switch attributes.avatarPosition.vertical {
         case .cellTop:
-            cellHeight += max(attributes.avatarSize.height, attributes.cellTopLabelSize.height)
-            cellHeight += attributes.cellBottomLabelSize.height
+            cellHeight += max(attributes.avatarSize.height, attributes.topLabelSize.height)
+            cellHeight += attributes.bottomLabelSize.height
             cellHeight += attributes.messageContainerSize.height
             cellHeight += attributes.messageVerticalPadding
         case .cellBottom:
-            cellHeight += max(attributes.avatarSize.height, attributes.cellBottomLabelSize.height)
-            cellHeight += attributes.cellTopLabelSize.height
+            cellHeight += max(attributes.avatarSize.height, attributes.bottomLabelSize.height)
+            cellHeight += attributes.topLabelSize.height
             cellHeight += attributes.messageContainerSize.height
             cellHeight += attributes.messageVerticalPadding
         case .messageTop, .messageCenter, .messageBottom:
             cellHeight += max(attributes.avatarSize.height, attributes.messageContainerSize.height)
             cellHeight += attributes.messageVerticalPadding
-            cellHeight += attributes.cellTopLabelSize.height
-            cellHeight += attributes.cellBottomLabelSize.height
+            cellHeight += attributes.topLabelSize.height
+            cellHeight += attributes.bottomLabelSize.height
         }
         
         return cellHeight
     }
     
-}
-
-// MARK: - Cell Content Origin Calculations [ Q - T ]
-
-fileprivate extension MessagesCollectionViewFlowLayout {
-    
-    // Q
-    
-    /// Returns the origin point for the `AvatarView`'s frame.
-    ///
-    /// - Parameters:
-    ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating origin.
-    private func avatarOrigin(for attributes: MessageIntermediateLayoutAttributes, and contentFrame: CGRect) -> CGPoint {
-        
-        guard attributes.avatarSize != .zero else { return .zero }
-        
-        var origin = CGPoint.zero
-        
-        switch attributes.avatarPosition.horizontal {
-        case .cellLeading:
-            origin.x = 0
-        case .cellTrailing:
-            origin.x = contentFrame.width - attributes.avatarSize.width
-        case .natural:
-            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
-        }
-        
-        switch attributes.avatarPosition.vertical {
-        case .cellTop:
-            origin.y = 0
-        case .cellBottom:
-            origin.y = contentFrame.height - attributes.avatarSize.height
-        case .messageTop:
-            origin.y = attributes.cellTopLabelSize.height + attributes.messageContainerPadding.top
-        case .messageBottom:
-            origin.y = contentFrame.height - attributes.avatarSize.height - attributes.cellBottomLabelSize.height - attributes.messageContainerPadding.bottom
-        case .messageCenter:
-            let messageMidY = attributes.messageContainerSize.height / 2
-            let avatarMidY = attributes.avatarSize.height / 2
-            origin.y = attributes.cellTopLabelSize.height + attributes.messageContainerPadding.top + messageMidY - avatarMidY
-        }
-        
-        return origin
-    }
-    
-    // R
-    
-    /// Returns the origin point for the `MessageContainerView`'s frame.
-    ///
-    /// - Parameters:
-    ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating origin.
-    private func messageContainerOrigin(for attributes: MessageIntermediateLayoutAttributes, and contentFrame: CGRect) -> CGPoint {
-        
-        guard attributes.messageContainerSize != .zero else { return .zero }
-        
-        var origin = CGPoint.zero
-        
-        switch attributes.avatarPosition.horizontal {
-        case .cellLeading:
-            origin.x = attributes.avatarSize.width + attributes.messageContainerPadding.left
-            origin.y = attributes.cellTopLabelSize.height + attributes.messageContainerPadding.top
-        case .cellTrailing:
-            origin.x = contentFrame.width - attributes.avatarSize.width - attributes.messageContainerSize.width - attributes.messageContainerPadding.right
-            origin.y = attributes.cellTopLabelSize.height + attributes.messageContainerPadding.top
-        case .natural:
-            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
-        }
-        
-        return origin
-        
-    }
-    
-    // S
-    
-    /// Returns the origin point for the cell's bottom label's frame.
-    ///
-    /// - Parameters:
-    ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating origin.
-    private func cellBottomLabelOrigin(for attributes: MessageIntermediateLayoutAttributes, and contentFrame: CGRect) -> CGPoint {
-        
-        guard attributes.cellBottomLabelSize != .zero else { return .zero }
-        
-        var origin = CGPoint(x: 0, y: attributes.cellTopLabelSize.height + attributes.messageContainerSize.height + attributes.messageVerticalPadding)
-        
-        switch (attributes.cellBottomLabelAlignment, attributes.avatarPosition.horizontal) {
-        case (.cellLeading, _):
-            origin.x = 0
-        case (.cellCenter, _):
-            origin.x = contentFrame.width / 2 - (attributes.cellBottomLabelSize.width / 2)
-        case (.cellTrailing, _):
-            origin.x = contentFrame.width - attributes.cellBottomLabelSize.width
-        case (.messageLeading, .cellLeading):
-            origin.x = attributes.avatarSize.width + attributes.messageContainerPadding.left
-        case (.messageLeading, .cellTrailing):
-            origin.x = contentFrame.width - attributes.avatarSize.width - attributes.messageContainerPadding.right - attributes.messageContainerSize.width
-        case (.messageTrailing, .cellTrailing):
-            origin.x = contentFrame.width - attributes.avatarSize.width - attributes.messageContainerPadding.right - attributes.cellBottomLabelSize.width
-        case (.messageTrailing, .cellLeading):
-            origin.x = attributes.avatarSize.width + attributes.messageContainerPadding.left + attributes.messageContainerSize.width - attributes.cellBottomLabelSize.width
-        case (_, .natural):
-            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
-        }
-        
-        return origin
-        
-    }
-    
-    // T
-    
-    /// Returns the origin point for the cell's top label's frame.
-    ///
-    /// - Parameters:
-    ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating origin.
-    fileprivate func cellTopLabelOrigin(for attributes: MessageIntermediateLayoutAttributes, and contentFrame: CGRect) -> CGPoint {
-        
-        guard attributes.cellTopLabelSize != .zero else { return .zero }
-        
-        var origin = CGPoint.zero
-        
-        switch (attributes.cellTopLabelAlignment, attributes.avatarPosition.horizontal) {
-        case (.cellLeading, _):
-            origin.x = 0
-        case (.cellCenter, _):
-            origin.x = contentFrame.width / 2 - (attributes.cellTopLabelSize.width / 2)
-        case (.cellTrailing, _):
-            origin.x = contentFrame.width - attributes.cellTopLabelSize.width
-        case (.messageLeading, .cellLeading):
-            origin.x = attributes.avatarSize.width + attributes.messageContainerPadding.left
-        case (.messageLeading, .cellTrailing):
-            origin.x = contentFrame.width - attributes.avatarSize.width - attributes.messageContainerPadding.right - attributes.messageContainerSize.width
-        case (.messageTrailing, .cellTrailing):
-            origin.x = contentFrame.width - attributes.avatarSize.width - attributes.messageContainerPadding.right - attributes.cellTopLabelSize.width
-        case (.messageTrailing, .cellLeading):
-            origin.x = contentFrame.width - attributes.messageContainerPadding.right - attributes.cellTopLabelSize.width
-        case (_, .natural):
-            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
-        }
-        
-        return origin
-        
-    }
-
 }
 
