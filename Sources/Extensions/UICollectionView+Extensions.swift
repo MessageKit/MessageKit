@@ -25,7 +25,7 @@
 import Foundation
 
 /// Optional Cell Protocol to Simplify registration/cell type loading in a generic way
-public protocol CollectionViewReusable: class {
+public protocol CollectionViewReusable: AnyObject {
     static func reuseIdentifier() -> String
 }
 

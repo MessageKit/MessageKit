@@ -24,7 +24,7 @@
 
 import UIKit
 
-public protocol MessagesDataSource: class {
+public protocol MessagesDataSource: AnyObject {
 
     /// The `Sender` of new messages in the `MessagesCollectionView`.
     func currentSender() -> Sender

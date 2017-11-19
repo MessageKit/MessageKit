@@ -41,16 +41,9 @@ open class MessageInputBar: UIView {
     open var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        view.backgroundColor = .inputBarGray
         return view
     }()
-    
-    /// Also sets the backgroundView's backgroundColor to the newValue
-    open override var backgroundColor: UIColor? {
-        didSet {
-            backgroundView.backgroundColor = backgroundColor
-        }
-    }
     
     /**
      A UIVisualEffectView that adds a blur effect to make the view appear transparent.
@@ -73,8 +66,8 @@ open class MessageInputBar: UIView {
                 blurView.fillSuperview()
             }
             blurView.isHidden = !isTranslucent
-            let color: UIColor = backgroundView.backgroundColor ?? .white
-            backgroundView.backgroundColor = isTranslucent ? color.withAlphaComponent(0.75) : .white
+            let color: UIColor = backgroundView.backgroundColor ?? .inputBarGray
+            backgroundView.backgroundColor = isTranslucent ? color.withAlphaComponent(0.75) : color.withAlphaComponent(1.0)
         }
     }
     
@@ -120,7 +113,7 @@ open class MessageInputBar: UIView {
     open let bottomStackView = InputStackView(axis: .horizontal, spacing: 15)
     
     /// The InputTextView a user can input a message in
-    open lazy var inputTextView: InputTextView = { [weak self] in
+    open lazy var inputTextView: InputTextView = {
         let textView = InputTextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.messageInputBar = self
@@ -291,7 +284,6 @@ open class MessageInputBar: UIView {
     /// Sets up the default properties
     open func setup() {
         
-        backgroundColor = .inputBarGray
         autoresizingMask = [.flexibleHeight]
         setupSubviews()
         setupConstraints()
@@ -307,13 +299,14 @@ open class MessageInputBar: UIView {
         addSubview(leftStackView)
         addSubview(rightStackView)
         addSubview(bottomStackView)
-        topStackView.addArrangedSubview(separatorLine)
+        addSubview(separatorLine)
         setStackViewItems([sendButton], forStack: .right, animated: false)
     }
     
     /// Sets up the initial constraints of each subview
     private func setupConstraints() {
         
+        separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 1)
         topStackViewLayoutSet = NSLayoutConstraintSet(
             top:    topStackView.topAnchor.constraint(equalTo: topAnchor, constant: topStackViewPadding.top),
             bottom: topStackView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -padding.top),
@@ -459,6 +452,8 @@ open class MessageInputBar: UIView {
     /// - Parameter positions: The UIStackView's to layout
     public func layoutStackViews(_ positions: [InputStackView.Position] = [.left, .right, .bottom, .top]) {
         
+        guard superview != nil else { return }
+        
         for position in positions {
             switch position {
             case .left:
@@ -523,6 +518,7 @@ open class MessageInputBar: UIView {
                     $0.parentStackViewPosition = position
                     leftStackView.addArrangedSubview($0)
                 }
+                guard superview != nil else { return }
                 leftStackView.layoutIfNeeded()
             case .right:
                 rightStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -532,6 +528,7 @@ open class MessageInputBar: UIView {
                     $0.parentStackViewPosition = position
                     rightStackView.addArrangedSubview($0)
                 }
+                guard superview != nil else { return }
                 rightStackView.layoutIfNeeded()
             case .bottom:
                 bottomStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -541,6 +538,7 @@ open class MessageInputBar: UIView {
                     $0.parentStackViewPosition = position
                     bottomStackView.addArrangedSubview($0)
                 }
+                guard superview != nil else { return }
                 bottomStackView.layoutIfNeeded()
             case .top:
                 topStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -550,6 +548,7 @@ open class MessageInputBar: UIView {
                     $0.parentStackViewPosition = position
                     topStackView.addArrangedSubview($0)
                 }
+                guard superview != nil else { return }
                 topStackView.layoutIfNeeded()
             }
         }
@@ -568,6 +567,7 @@ open class MessageInputBar: UIView {
         performLayout(animated) {
             self.leftStackViewWidthConstant = newValue
             self.layoutStackViews([.left])
+            guard self.superview != nil else { return }
             self.layoutIfNeeded()
         }
     }
@@ -581,6 +581,7 @@ open class MessageInputBar: UIView {
         performLayout(animated) {
             self.rightStackViewWidthConstant = newValue
             self.layoutStackViews([.right])
+            guard self.superview != nil else { return }
             self.layoutIfNeeded()
         }
     }

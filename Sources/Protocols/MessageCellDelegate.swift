@@ -25,7 +25,7 @@
 import Foundation
 
 /// A protocol used by `MessageCollectionViewCell` subclasses to detect taps in the cell's contents.
-public protocol MessageCellDelegate: class, MessageLabelDelegate {
+public protocol MessageCellDelegate: MessageLabelDelegate {
 
     /// Triggered when a touch occurs in the `MessageContainerView`.
     ///

@@ -159,10 +159,13 @@ open class InputTextView: UITextView {
             top:     placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: placeholderLabelInsets.top),
             bottom:  placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -placeholderLabelInsets.bottom),
             left:    placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderLabelInsets.left),
-            right:   placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: (placeholderLabelInsets.left + placeholderLabelInsets.right)),
+            right:   placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -placeholderLabelInsets.right),
             centerX: placeholderLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             centerY: placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
-            ).activate()
+            )
+        placeholderLabelConstraintSet?.centerX?.priority = .defaultLow
+        placeholderLabelConstraintSet?.centerY?.priority = .defaultLow
+        placeholderLabelConstraintSet?.activate()
     }
     
     /// Updates the placeholderLabels constraint constants to match the placeholderLabelInsets
