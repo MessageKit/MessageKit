@@ -358,11 +358,7 @@ open class MessageInputBar: UIView {
         rightStackViewLayoutSet?.activate()
         bottomStackViewLayoutSet?.activate()
     }
-    
-<<<<<<< HEAD
-    /// Updates the constraint constants that correspond to the padding UIEdgeInsets
-    private func updatePadding() {
-=======
+
     open override func didMoveToWindow() {
         super.didMoveToWindow()
         if #available(iOS 11.0, *) {
@@ -375,9 +371,8 @@ open class MessageInputBar: UIView {
         }
     }
     
-    private func updateViewContraints() {
-        
->>>>>>> master
+    private func updatePadding() {
+
         textViewLayoutSet?.top?.constant = padding.top
         leftStackViewLayoutSet?.top?.constant = padding.top
         leftStackViewLayoutSet?.left?.constant = padding.left
