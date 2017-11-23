@@ -350,7 +350,6 @@ open class MessageInputBar: UIView {
             topStackViewLayoutSet?.right = topStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: topStackViewPadding.right)
             leftStackViewLayoutSet?.left = leftStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
             rightStackViewLayoutSet?.right = rightStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
-            bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -padding.bottom)
             bottomStackViewLayoutSet?.left = bottomStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
             bottomStackViewLayoutSet?.right = bottomStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
         }
@@ -366,7 +365,9 @@ open class MessageInputBar: UIView {
             guard let window = window else { return }
             
             // bottomAnchor must be set to the window to avoid a memory leak issue
-            bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+            bottomStackViewLayoutSet?.bottom?.isActive = false
+            bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+            bottomStackViewLayoutSet?.bottom?.isActive = true
         }
     }
     
@@ -420,7 +421,7 @@ open class MessageInputBar: UIView {
     open func calculateIntrinsicContentSize() -> CGSize {
         
         let maxTextViewSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
-        var heightToFit = inputTextView.sizeThatFits(maxTextViewSize).height.rounded()
+        var heightToFit = inputTextView.sizeThatFits(maxTextViewSize).height.rounded() + padding.top + padding.bottom + textViewPadding.bottom + topStackView.bounds.height + bottomStackView.bounds.height
         if heightToFit >= maxHeight {
             if !isOverMaxTextViewHeight {
                 textViewHeightAnchor?.isActive = true
@@ -545,6 +546,7 @@ open class MessageInputBar: UIView {
                 guard superview != nil else { return }
                 topStackView.layoutIfNeeded()
             }
+            invalidateIntrinsicContentSize()
         }
         
         performLayout(animated) {
