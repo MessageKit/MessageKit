@@ -41,16 +41,9 @@ open class MessageInputBar: UIView {
     open var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        view.backgroundColor = .inputBarGray
         return view
     }()
-    
-    /// Also sets the backgroundView's backgroundColor to the newValue
-    open override var backgroundColor: UIColor? {
-        didSet {
-            backgroundView.backgroundColor = backgroundColor
-        }
-    }
     
     /**
      A UIVisualEffectView that adds a blur effect to make the view appear transparent.
@@ -73,11 +66,8 @@ open class MessageInputBar: UIView {
                 blurView.fillSuperview()
             }
             blurView.isHidden = !isTranslucent
-            let color: UIColor = backgroundView.backgroundColor ?? .white
+            let color: UIColor = backgroundView.backgroundColor ?? .inputBarGray
             backgroundView.backgroundColor = isTranslucent ? color.withAlphaComponent(0.75) : color.withAlphaComponent(1.0)
-            
-            let bgColor: UIColor = backgroundColor ?? .inputBarGray
-            backgroundColor = isTranslucent ? bgColor.withAlphaComponent(0.75) : bgColor.withAlphaComponent(1.0)
         }
     }
     
@@ -294,7 +284,6 @@ open class MessageInputBar: UIView {
     /// Sets up the default properties
     open func setup() {
         
-        backgroundColor = .inputBarGray
         autoresizingMask = [.flexibleHeight]
         setupSubviews()
         setupConstraints()
@@ -310,13 +299,14 @@ open class MessageInputBar: UIView {
         addSubview(leftStackView)
         addSubview(rightStackView)
         addSubview(bottomStackView)
-        topStackView.addArrangedSubview(separatorLine)
+        addSubview(separatorLine)
         setStackViewItems([sendButton], forStack: .right, animated: false)
     }
     
     /// Sets up the initial constraints of each subview
     private func setupConstraints() {
         
+        separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 1)
         topStackViewLayoutSet = NSLayoutConstraintSet(
             top:    topStackView.topAnchor.constraint(equalTo: topAnchor, constant: topStackViewPadding.top),
             bottom: topStackView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -padding.top),
@@ -360,7 +350,6 @@ open class MessageInputBar: UIView {
             topStackViewLayoutSet?.right = topStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: topStackViewPadding.right)
             leftStackViewLayoutSet?.left = leftStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
             rightStackViewLayoutSet?.right = rightStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
-            bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -padding.bottom)
             bottomStackViewLayoutSet?.left = bottomStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
             bottomStackViewLayoutSet?.right = bottomStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
         }
@@ -369,9 +358,19 @@ open class MessageInputBar: UIView {
         rightStackViewLayoutSet?.activate()
         bottomStackViewLayoutSet?.activate()
     }
+
+    open override func didMoveToWindow() {
+        super.didMoveToWindow()
+        if #available(iOS 11.0, *) {
+            guard let window = window else { return }
+            
+            // bottomAnchor must be set to the window to avoid a memory leak issue
+            bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+        }
+    }
     
-    /// Updates the constraint constants that correspond to the padding UIEdgeInsets
     private func updatePadding() {
+
         textViewLayoutSet?.top?.constant = padding.top
         leftStackViewLayoutSet?.top?.constant = padding.top
         leftStackViewLayoutSet?.left?.constant = padding.left
