@@ -365,9 +365,7 @@ open class MessageInputBar: UIView {
             guard let window = window else { return }
             
             // bottomAnchor must be set to the window to avoid a memory leak issue
-            bottomStackViewLayoutSet?.bottom?.isActive = false
-            bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
-            bottomStackViewLayoutSet?.bottom?.isActive = true
+            bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
         }
     }
     
