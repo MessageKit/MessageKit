@@ -421,7 +421,7 @@ open class MessageInputBar: UIView {
     open func calculateIntrinsicContentSize() -> CGSize {
         
         let maxTextViewSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
-        var heightToFit = inputTextView.sizeThatFits(maxTextViewSize).height.rounded()
+        var heightToFit = inputTextView.sizeThatFits(maxTextViewSize).height.rounded() + padding.top + padding.bottom + textViewPadding.bottom + topStackView.bounds.height + bottomStackView.bounds.height
         if heightToFit >= maxHeight {
             if !isOverMaxTextViewHeight {
                 textViewHeightAnchor?.isActive = true
@@ -546,6 +546,7 @@ open class MessageInputBar: UIView {
                 guard superview != nil else { return }
                 topStackView.layoutIfNeeded()
             }
+            invalidateIntrinsicContentSize()
         }
         
         performLayout(animated) {
