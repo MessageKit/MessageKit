@@ -51,17 +51,9 @@ class MessageCollectionViewCellTests: XCTestCase {
         XCTAssertTrue(cell.messageContainerView.layer.masksToBounds)
     }
 
-    func testCellTopLabelPropertySetup() {
-        XCTAssertEqual(cell.cellTopLabel.enabledDetectors, [])
-    }
-
     func testMessageContentViewPropertiesSetup() {
         XCTAssertTrue(cell.messageContentView.clipsToBounds)
         XCTAssertTrue(cell.messageContentView.isUserInteractionEnabled)
-    }
-
-    func testCellBottomLabelPropertiesSetup() {
-        XCTAssertEqual(cell.cellBottomLabel.enabledDetectors, [])
     }
 
     func testPrepareForReuse() {
@@ -79,10 +71,8 @@ class MessageCollectionViewCellTests: XCTestCase {
         XCTAssertEqual(cell.avatarView.frame, layoutAttributes.frame)
         XCTAssertEqual(cell.messageContainerView.frame, layoutAttributes.messageContainerFrame)
         XCTAssertEqual(cell.messageContentView.frame, cell.messageContainerView.frame)
-        XCTAssertEqual(cell.cellTopLabel.frame, layoutAttributes.cellTopLabelFrame)
-        XCTAssertEqual(cell.cellTopLabel.textInsets, layoutAttributes.cellTopLabelInsets)
-        XCTAssertEqual(cell.cellBottomLabel.frame, layoutAttributes.cellBottomLabelFrame)
-        XCTAssertEqual(cell.cellBottomLabel.textInsets, layoutAttributes.cellBottomLabelInsets)
+        XCTAssertEqual(cell.cellTopLabel.frame, layoutAttributes.topLabelFrame)
+        XCTAssertEqual(cell.cellBottomLabel.frame, layoutAttributes.bottomLabelFrame)
     }
 
 }

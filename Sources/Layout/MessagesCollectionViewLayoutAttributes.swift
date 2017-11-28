@@ -31,16 +31,12 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
 
     var avatarFrame: CGRect = .zero
 
-    var messageContainerFrame: CGRect = .zero
-    var messagePadding: UIEdgeInsets = .zero
     var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
+    var messageContainerFrame: CGRect = .zero
     var messageLabelInsets: UIEdgeInsets = .zero
 
-    var cellTopLabelFrame: CGRect = .zero
-    var cellTopLabelInsets: UIEdgeInsets = .zero
-
-    var cellBottomLabelFrame: CGRect = .zero
-    var cellBottomLabelInsets: UIEdgeInsets = .zero
+    var topLabelFrame: CGRect = .zero
+    var bottomLabelFrame: CGRect = .zero
 
     // MARK: - Methods
 
@@ -51,10 +47,8 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
         copy.messageContainerFrame = messageContainerFrame
         copy.messageLabelFont = messageLabelFont
         copy.messageLabelInsets = messageLabelInsets
-        copy.cellTopLabelFrame = cellTopLabelFrame
-        copy.cellTopLabelInsets = cellTopLabelInsets
-        copy.cellBottomLabelFrame = cellBottomLabelFrame
-        copy.cellBottomLabelInsets = cellBottomLabelInsets
+        copy.topLabelFrame = topLabelFrame
+        copy.bottomLabelFrame = bottomLabelFrame
         return copy
         // swiftlint:enable force_cast
     }
