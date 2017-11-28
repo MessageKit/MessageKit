@@ -109,10 +109,10 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
         if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {
 
             let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
-            let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
+            let messageStyle = displayDelegate.textMessageStyle(for: message, at: indexPath, in: messagesCollectionView)
 
-            messageContainerView.backgroundColor = messageColor
             messageContainerView.style = messageStyle
+            messageContainerView.messageShapeLayer.fillColor = UIColor.red.cgColor
         }
 
         // Make sure we set all data source properties after configuring display delegate properties
