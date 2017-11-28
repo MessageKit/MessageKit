@@ -17,8 +17,12 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Changed
 
+- **Breaking Change** The `cellTopLabel` and `cellBottomLabel` properties of `MessageCollectionViewCell` are no longer
+typed as `MessageLabel` and are now regular `UILabel`s.
+[#355](https://github.com/MessageKit/MessageKit/pull/355) by [@SD10](https://github.com/sd10).
+
 - All `DetectorType`s for `MessageLabel` are disabled by default.
-[#356](https://github.com/MessageKit/MessageKit/pull/356) by [@SD10](https://github.com/sd10). 
+[#356](https://github.com/MessageKit/MessageKit/pull/356) by [@SD10](https://github.com/sd10).
 
 ### Fixed
 
