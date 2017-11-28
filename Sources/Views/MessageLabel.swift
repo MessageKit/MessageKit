@@ -50,100 +50,94 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
     }()
 
     private lazy var rangesForDetectors: [DetectorType: [(NSRange, MessageTextCheckingType)]] = [:]
+    
+    private var isConfiguring: Bool = false
 
     // MARK: - Public Properties
 
     open weak var delegate: MessageLabelDelegate?
 
-    open var enabledDetectors: [DetectorType] = [.phoneNumber, .address, .date, .url]
+    open var enabledDetectors: [DetectorType] = [] {
+        didSet {
+            setTextStorage(shouldParse: true)
+        }
+    }
 
     open override var attributedText: NSAttributedString? {
         didSet {
-            guard attributedText != oldValue else { return }
-            setTextStorage()
+            setTextStorage(shouldParse: true)
         }
     }
 
     open override var text: String? {
         didSet {
-            guard text != oldValue else { return }
-            setTextStorage()
+            setTextStorage(shouldParse: true)
         }
     }
 
     open override var font: UIFont! {
         didSet {
-            guard font != oldValue else { return }
-            guard let attributedText = attributedText else { return }
-            textStorage.setAttributedString(attributedText)
-            setNeedsDisplay()
+            setTextStorage(shouldParse: false)
         }
     }
 
     open override var textColor: UIColor! {
         didSet {
-            guard textColor != oldValue else { return }
-            guard let attributedText = attributedText else { return }
-            textStorage.setAttributedString(attributedText)
-            setNeedsDisplay()
+            setTextStorage(shouldParse: false)
         }
     }
 
     open override var lineBreakMode: NSLineBreakMode {
         didSet {
-            guard lineBreakMode != oldValue else { return }
             textContainer.lineBreakMode = lineBreakMode
-            setNeedsDisplay()
+            if !isConfiguring { setNeedsDisplay() }
         }
     }
 
     open override var numberOfLines: Int {
         didSet {
-            guard numberOfLines != oldValue else { return }
             textContainer.maximumNumberOfLines = numberOfLines
-            setNeedsDisplay()
+            if !isConfiguring { setNeedsDisplay() }
         }
     }
 
     open override var textAlignment: NSTextAlignment {
         didSet {
-            guard textAlignment != oldValue else { return }
-            setTextStorage()
+            setTextStorage(shouldParse: false)
         }
     }
 
     open var textInsets: UIEdgeInsets = .zero {
         didSet {
-            guard textInsets != oldValue else { return }
-            setNeedsDisplay()
+            if !isConfiguring { setNeedsDisplay() }
         }
     }
 
     open var addressAttributes: [NSAttributedStringKey: Any] = [:] {
         didSet {
             updateAttributes(for: .address)
-            setNeedsDisplay()
+            if !isConfiguring { setNeedsDisplay() }
         }
     }
 
     open var dateAttributes: [NSAttributedStringKey: Any] = [:] {
         didSet {
             updateAttributes(for: .date)
-            setNeedsDisplay()
+            if !isConfiguring { setNeedsDisplay() }
         }
     }
 
     open var phoneNumberAttributes: [NSAttributedStringKey: Any] = [:] {
         didSet {
             updateAttributes(for: .phoneNumber)
-            setNeedsDisplay()
+            if !isConfiguring { setNeedsDisplay() }
         }
     }
 
     open var urlAttributes: [NSAttributedStringKey: Any] = [:] {
         didSet {
             updateAttributes(for: .url)
-            setNeedsDisplay()
+            if !isConfiguring { setNeedsDisplay() }
         }
     }
 
@@ -190,6 +184,13 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
     }
 
     // MARK: - Public Methods
+    
+    public func configure(block: () -> Void) {
+        isConfiguring = true
+        block()
+        isConfiguring = false
+        setNeedsDisplay()
+    }
 
     // MARK: UIGestureRecognizer Delegate
 
@@ -232,60 +233,53 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
     // MARK: - Private Methods
 
-    private func setTextStorage() {
-
-        // Anytime we update the text storage we need to clear the previous ranges
-        rangesForDetectors.removeAll()
+    private func setTextStorage(shouldParse: Bool) {
 
         guard let attributedText = attributedText, attributedText.length > 0 else {
             textStorage.setAttributedString(NSAttributedString())
             setNeedsDisplay()
             return
         }
-
-        guard let checkingResults = parse(text: attributedText, for: enabledDetectors), checkingResults.isEmpty == false else {
-            let textWithParagraphAttributes = addParagraphStyleAttribute(to: attributedText)
-            textStorage.setAttributedString(textWithParagraphAttributes)
-            setNeedsDisplay()
-            return
+        
+        let style = paragraphStyle(for: attributedText)
+        let range = NSRange(location: 0, length: attributedText.length)
+        
+        let mutableText = NSMutableAttributedString(attributedString: attributedText)
+        mutableText.addAttribute(.paragraphStyle, value: style, range: range)
+        
+        if shouldParse {
+            rangesForDetectors.removeAll()
+            let results = parse(text: mutableText)
+            setRangesForDetectors(in: results)
+        }
+        
+        for (detector, rangeTuples) in rangesForDetectors {
+            if enabledDetectors.contains(detector) {
+                let attributes = detectorAttributes(for: detector)
+                rangeTuples.forEach { (range, _) in
+                    mutableText.addAttributes(attributes, range: range)
+                }
+            }
         }
 
-        setRangesForDetectors(in: checkingResults)
+        let modifiedText = NSAttributedString(attributedString: mutableText)
+        textStorage.setAttributedString(modifiedText)
 
-        let textWithDetectorAttributes = addDetectorAttributes(to: attributedText, for: checkingResults)
-        let textWithParagraphAttributes = addParagraphStyleAttribute(to: textWithDetectorAttributes)
-
-        textStorage.setAttributedString(textWithParagraphAttributes)
-
-        setNeedsDisplay()
+        if !isConfiguring { setNeedsDisplay() }
 
     }
-
-    private func addParagraphStyleAttribute(to text: NSAttributedString) -> NSAttributedString {
-
-        let mutableAttributedString = NSMutableAttributedString(attributedString: text)
-        var textRange = NSRange(location: 0, length: 0)
-
-      let paragraphStyle = text.attribute(NSAttributedStringKey.paragraphStyle, at: 0, effectiveRange: &textRange) as? NSMutableParagraphStyle ?? NSMutableParagraphStyle()
-        paragraphStyle.lineBreakMode = lineBreakMode
-        paragraphStyle.alignment = textAlignment
-
-      mutableAttributedString.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: textRange)
-
-        return mutableAttributedString
-
-    }
-
-    private func addDetectorAttributes(to text: NSAttributedString, for checkingResults: [NSTextCheckingResult]) -> NSAttributedString {
-
-        let mutableAttributedString = NSMutableAttributedString(attributedString: text)
-
-        checkingResults.forEach { result in
-            let attributes = detectorAttributes(for: result.resultType)
-            mutableAttributedString.addAttributes(attributes, range: result.range)
-        }
-
-        return mutableAttributedString
+    
+    private func paragraphStyle(for text: NSAttributedString) -> NSParagraphStyle {
+        guard text.length > 0 else { return NSParagraphStyle() }
+        
+        var range = NSRange(location: 0, length: text.length)
+        let existingStyle = text.attribute(.paragraphStyle, at: 0, effectiveRange: &range) as? NSMutableParagraphStyle
+        let style = existingStyle ?? NSMutableParagraphStyle()
+        
+        style.lineBreakMode = lineBreakMode
+        style.alignment = textAlignment
+        
+        return style
     }
 
     private func updateAttributes(for detectorType: DetectorType) {
@@ -336,16 +330,18 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
     // MARK: - Parsing Text
 
-    private func parse(text: NSAttributedString, for detectorTypes: [DetectorType]) -> [NSTextCheckingResult]? {
-        guard detectorTypes.isEmpty == false else { return nil }
-        let checkingTypes = detectorTypes.reduce(0) { $0 | $1.textCheckingType.rawValue }
+    private func parse(text: NSAttributedString) -> [NSTextCheckingResult] {
+        guard enabledDetectors.isEmpty == false else { return [] }
+        let checkingTypes = enabledDetectors.reduce(0) { $0 | $1.textCheckingType.rawValue }
         let detector = try? NSDataDetector(types: checkingTypes)
-
-        return detector?.matches(in: text.string, options: [], range: NSRange(location: 0, length: text.length))
+        let range = NSRange(location: 0, length: text.length)
+        return detector?.matches(in: text.string, options: [], range: range) ?? []
     }
 
     private func setRangesForDetectors(in checkingResults: [NSTextCheckingResult]) {
 
+        guard checkingResults.isEmpty == false else { return }
+        
         for result in checkingResults {
 
             switch result.resultType {
@@ -388,15 +384,17 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         location.x -= textOffset.x
         location.y -= textOffset.y
 
-        let glyphIndex = layoutManager.glyphIndex(for: location, in: textContainer)
+        let index = layoutManager.glyphIndex(for: location, in: textContainer)
 
-        let lineRect = layoutManager.lineFragmentUsedRect(forGlyphAt: glyphIndex, effectiveRange: nil)
-
+        let lineRect = layoutManager.lineFragmentUsedRect(forGlyphAt: index, effectiveRange: nil)
+        
+        var characterIndex: Int?
+        
         if lineRect.contains(location) {
-            return layoutManager.characterIndexForGlyph(at: glyphIndex)
-        } else {
-            return nil
+            characterIndex = layoutManager.characterIndexForGlyph(at: index)
         }
+        
+        return characterIndex
 
     }
 
@@ -408,7 +406,7 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
         addGestureRecognizer(longPressGesture)
-        tapGesture.delegate = self
+        longPressGesture.delegate = self
 
         isUserInteractionEnabled = true
     }

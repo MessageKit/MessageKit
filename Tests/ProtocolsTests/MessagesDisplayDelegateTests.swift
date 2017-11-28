@@ -226,11 +226,11 @@ class TextMessageDisplayDelegateTests: XCTestCase {
         XCTAssertEqual(textColor, .darkText)
     }
 
-    func testEnableDetectors_returnsUrlAddressPhoneNumberAndDateForDefault() {
+    func testEnableDetectors_returnsEmptyForDefault() {
         let detectors = sut.enabledDetectors(for: sut.dataProvider.messages[1],
                                              at: IndexPath(item: 0, section: 0),
                                              in: sut.messagesCollectionView)
-        let expectedDetectors: [DetectorType] = [.url, .address, .phoneNumber, .date]
+        let expectedDetectors: [DetectorType] = []
 
         XCTAssertEqual(detectors, expectedDetectors)
     }
