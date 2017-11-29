@@ -448,8 +448,7 @@ open class MessageInputBar: UIView {
             }
         }
         let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + textViewPadding.top + textViewPadding.bottom
-        let verticalStackViewHeight = bottomStackView.frame.height + topStackView.frame.height
-        let height = inputTextViewHeight + totalPadding + verticalStackViewHeight
+        let height = inputTextViewHeight + totalPadding
         return CGSize(width: bounds.width, height: height)
     }
     
