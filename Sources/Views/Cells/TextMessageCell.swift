@@ -64,7 +64,7 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
 
-        if let displayDelegate = messagesCollectionView.messagesDisplayDelegate as? TextMessageDisplayDelegate {
+        if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {
             let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
             let detectors = displayDelegate.enabledDetectors(for: message, at: indexPath, in: messagesCollectionView)
             
@@ -72,7 +72,6 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
                 messageContentView.textColor = textColor
                 messageContentView.enabledDetectors = detectors
             }
-
         }
 
         switch message.data {

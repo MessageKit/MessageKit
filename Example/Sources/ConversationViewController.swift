@@ -234,7 +234,9 @@ extension ConversationViewController: MessagesDataSource {
 
 // MARK: - MessagesDisplayDelegate
 
-extension ConversationViewController: MessagesDisplayDelegate, TextMessageDisplayDelegate {
+extension ConversationViewController: MessagesDisplayDelegate {
+
+    // MARK: - All Messages
     
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1) : UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
@@ -250,6 +252,28 @@ extension ConversationViewController: MessagesDisplayDelegate, TextMessageDispla
 //        let configurationClosure = { (view: MessageContainerView) in}
 //        return .custom(configurationClosure)
     }
+
+    // MARK: - Location Messages
+
+    func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView? {
+        let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
+        let pinImage = #imageLiteral(resourceName: "pin")
+        annotationView.image = pinImage
+        annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
+        return annotationView
+    }
+
+    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)? {
+        return { view in
+            view.layer.transform = CATransform3DMakeScale(0, 0, 0)
+            view.alpha = 0.0
+            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [], animations: {
+                view.layer.transform = CATransform3DIdentity
+                view.alpha = 1.0
+            }, completion: nil)
+        }
+    }
+
 
 }
 
@@ -286,21 +310,13 @@ extension ConversationViewController: MessagesLayoutDelegate {
         return CGSize(width: messagesCollectionView.bounds.width, height: 10)
     }
 
-}
-
-// MARK: - LocationMessageLayoutDelegate
-
-extension ConversationViewController: LocationMessageLayoutDelegate {
+    // MARK: - Location Messages
 
     func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return 200
     }
 
 }
-
-// MARK: - MediaMessageLayoutDelegate
-
-extension ConversationViewController: MediaMessageLayoutDelegate {}
 
 // MARK: - MessageCellDelegate
 
@@ -342,31 +358,6 @@ extension ConversationViewController: MessageLabelDelegate {
 
     func didSelectURL(_ url: URL) {
         print("URL Selected: \(url)")
-    }
-
-}
-
-// MARK: - LocationMessageDisplayDelegate
-
-extension ConversationViewController: LocationMessageDisplayDelegate {
-
-    func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView? {
-        let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
-        let pinImage = #imageLiteral(resourceName: "pin")
-        annotationView.image = pinImage
-        annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
-        return annotationView
-    }
-
-    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)? {
-        return { view in
-            view.layer.transform = CATransform3DMakeScale(0, 0, 0)
-            view.alpha = 0.0
-            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [], animations: {
-                view.layer.transform = CATransform3DIdentity
-                view.alpha = 1.0
-            }, completion: nil)
-        }
     }
 
 }

@@ -45,6 +45,11 @@ in favor of new `AvatarPosition` representing both vertical and horizontal align
 - **Breaking Change** Removed the `avatarAlwaysLeading` and `avatarAlwaysTrailing` properties of `MessagesCollectionViewFlow$
 [#322](https://github.com/MessageKit/MessageKit/pull/322) by [@SD10](https://github.com/sd10).
 
+- **Breaking Change** Removed `LocationMessageDisplayDelegate` & `TextMessageDisplayDelegate` and moved their methods
+into the `MessagesDisplayDelegate` protocol. Removed `LocationMessageLayoutDelegate` & `MediaMessageLayoutDelegate` and
+moved their methods into the `MessagesLayoutDelegate` protocol.
+[#363](https://github.com/MessageKit/MessageKit/pull/363) by [@SD10](https://github.com/sd10).
+
 ## [[Prerelease] 0.10.2](https://github.com/MessageKit/MessageKit/releases/tag/0.10.2)
 
 ### Fixed
