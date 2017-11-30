@@ -24,6 +24,20 @@
 
 import Foundation
 
+// MARK: - Deprecated Protocols
+
+@available(*, deprecated: 0.11.0, message: "Now typealias for MessagesDisplayDelegate")
+typealias LocationMessageDisplayDelegate = MessagesDisplayDelegate
+
+@available(*, deprecated: 0.11.0, message: "Now typealias for MessagesDisplayDelegate")
+typealias TextMessageDisplayDelegate = MessagesDisplayDelegate
+
+@available(*, deprecated: 0.11.0, message: "Now typealias for MessagesLayoutDelegate")
+typealias LocationMessageLayoutDelegate = MessagesLayoutDelegate
+
+@available(*, deprecated: 0.11.0, message: "Now typealias for MessagesLayoutDelegate")
+typealias MediaMessageLayoutDelegate = MessagesLayoutDelegate
+
 // MARK: - AvatarAlignment
 
 @available(*, deprecated: 0.11.0, message: "Removed in MessageKit 0.11.0. Please use AvatarPosition instead.")

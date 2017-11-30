@@ -37,7 +37,7 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
 
         switch message.data {
         case .location(let location):
-            guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate as? LocationMessageDisplayDelegate else { return }
+            guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else { return }
             let options = displayDelegate.snapshotOptionsForLocation(message: message, at: indexPath, in: messagesCollectionView)
             let annotationView = displayDelegate.annotationViewForLocation(message: message, at: indexPath, in: messagesCollectionView)
             let animationBlock = displayDelegate.animationBlockForLocation(message: message, at: indexPath, in: messagesCollectionView)
