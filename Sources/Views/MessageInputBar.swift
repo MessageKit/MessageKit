@@ -216,6 +216,10 @@ open class MessageInputBar: UIView {
         }
     }
     
+    private var inputBarMinusTextViewHeight: CGFloat {
+        return topStackViewPadding.top + padding.top + textViewPadding.bottom + padding.bottom + topStackView.bounds.height + bottomStackView.bounds.height
+    }
+    
     /// The fixed widthAnchor constant of the leftStackView
     public private(set) var leftStackViewWidthConstant: CGFloat = 0 {
         didSet {
@@ -421,14 +425,16 @@ open class MessageInputBar: UIView {
     open func calculateIntrinsicContentSize() -> CGSize {
         
         let maxTextViewSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
-        var heightToFit = inputTextView.sizeThatFits(maxTextViewSize).height.rounded()
-        if heightToFit >= maxHeight {
+        let inputTextViewHeight = inputTextView.sizeThatFits(maxTextViewSize).height.rounded()
+        var heightToFit: CGFloat = inputBarMinusTextViewHeight
+        
+        if inputTextViewHeight >= maxHeight {
             if !isOverMaxTextViewHeight {
                 textViewHeightAnchor?.isActive = true
                 inputTextView.isScrollEnabled = true
                 isOverMaxTextViewHeight = true
             }
-            heightToFit = maxHeight
+            heightToFit += maxHeight
         } else {
             if isOverMaxTextViewHeight {
                 textViewHeightAnchor?.isActive = false
@@ -436,6 +442,7 @@ open class MessageInputBar: UIView {
                 isOverMaxTextViewHeight = false
                 inputTextView.invalidateIntrinsicContentSize()
             }
+            heightToFit += inputTextViewHeight
         }
         return CGSize(width: bounds.width, height: heightToFit)
     }
