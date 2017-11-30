@@ -429,7 +429,6 @@ open class MessageInputBar: UIView {
         var heightToFit: CGFloat = inputBarMinusTextViewHeight
         
         if inputTextViewHeight >= maxHeight {
-            
             if !isOverMaxTextViewHeight {
                 textViewHeightAnchor?.isActive = true
                 inputTextView.isScrollEnabled = true
@@ -554,7 +553,6 @@ open class MessageInputBar: UIView {
                 guard superview != nil else { return }
                 topStackView.layoutIfNeeded()
             }
-            invalidateIntrinsicContentSize()
         }
         
         performLayout(animated) {
