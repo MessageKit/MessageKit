@@ -553,6 +553,7 @@ open class MessageInputBar: UIView {
                 guard superview != nil else { return }
                 topStackView.layoutIfNeeded()
             }
+            invalidateIntrinsicContentSize()
         }
         
         performLayout(animated) {
