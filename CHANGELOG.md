@@ -15,6 +15,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 `AvatarView`'s vertical and horizontal position in a `MessageCollectionViewCell`.
 [#322](https://github.com/MessageKit/MessageKit/pull/322) by [@SD10](https://github.com/sd10).
 
+- Added `shouldCacheLayoutAttributes(for:MessageType)-> Bool` method to `MessagesLayoutDelegate`
+to manage whether a `MessageType`'s layout information is cached or not.
+[#364](https://github.com/MessageKit/MessageKit/pull/322) by [@SD10](https://github.com/sd10).
+
 ### Changed
 
 - **Breaking Change** The `cellTopLabel` and `cellBottomLabel` properties of `MessageCollectionViewCell` are no longer
