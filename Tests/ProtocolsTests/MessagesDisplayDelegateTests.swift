@@ -237,7 +237,12 @@ class TextMessageDisplayDelegateTests: XCTestCase {
 
 }
 
-private class MockMessagesViewController: MessagesViewController, MessagesDisplayDelegate, TextMessageDisplayDelegate, MessagesLayoutDelegate {
+private class MockMessagesViewController: MessagesViewController, MessagesDisplayDelegate, MessagesLayoutDelegate {
+
+    func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 200
+    }
+
 
     var dataProvider: MockMessagesDataSource!
 
