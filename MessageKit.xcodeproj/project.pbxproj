@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F087D451FD274FD00E95A45 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1F7FC8C71FD26F49006CC979 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1F087D461FD274FD00E95A45 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1F7FC8C51FD26F33006CC979 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1F7FC8C61FD26F33006CC979 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F7FC8C51FD26F33006CC979 /* Quick.framework */; };
 		1F7FC8C81FD26F49006CC979 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F7FC8C71FD26F49006CC979 /* Nimble.framework */; };
+		1F7FC8CC1FD2700B006CC979 /* MessagesViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7FC8CB1FD2700B006CC979 /* MessagesViewControllerSpec.swift */; };
 		1F82D1431FB1B75B00B81A88 /* AvatarPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F82D1421FB1B75B00B81A88 /* AvatarPosition.swift */; };
 		38C57C791F9AE3E50043CC03 /* SeparatorLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C57C781F9AE3E50043CC03 /* SeparatorLine.swift */; };
 		38C57C7C1F9AE4890043CC03 /* InputStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C57C7B1F9AE4870043CC03 /* InputStackView.swift */; };
@@ -85,10 +88,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1F087D431FD274D300E95A45 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1F087D451FD274FD00E95A45 /* Nimble.framework in CopyFiles */,
+				1F087D461FD274FD00E95A45 /* Quick.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		1F7FC8C31FD26F22006CC979 /* Carthage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Carthage; sourceTree = "<group>"; };
 		1F7FC8C51FD26F33006CC979 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		1F7FC8C71FD26F49006CC979 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		1F7FC8CB1FD2700B006CC979 /* MessagesViewControllerSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewControllerSpec.swift; sourceTree = "<group>"; };
 		1F82D1421FB1B75B00B81A88 /* AvatarPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarPosition.swift; sourceTree = "<group>"; };
 		38C57C781F9AE3E50043CC03 /* SeparatorLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorLine.swift; sourceTree = "<group>"; };
 		38C57C7B1F9AE4870043CC03 /* InputStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputStackView.swift; sourceTree = "<group>"; };
@@ -283,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				8962AC7D1F87AB230030B058 /* MessagesViewControllerTests.swift */,
+				1F7FC8CB1FD2700B006CC979 /* MessagesViewControllerSpec.swift */,
 			);
 			path = ControllersTest;
 			sourceTree = "<group>";
@@ -457,6 +476,7 @@
 				88916B281CF0DF2F00469F91 /* Sources */,
 				88916B291CF0DF2F00469F91 /* Frameworks */,
 				88916B2A1CF0DF2F00469F91 /* Resources */,
+				1F087D431FD274D300E95A45 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -605,6 +625,7 @@
 				8962AC911F87AB860030B058 /* MessagesViewControllerTests.swift in Sources */,
 				8962AC901F87AB7D0030B058 /* MessageDateHeaderViewTests.swift in Sources */,
 				8962AC8F1F87AB7D0030B058 /* MessageInputBarTests.swift in Sources */,
+				1F7FC8CC1FD2700B006CC979 /* MessagesViewControllerSpec.swift in Sources */,
 				8962AC8A1F87AB7D0030B058 /* MessagesCollectionViewTests.swift in Sources */,
 				8962AC8D1F87AB7D0030B058 /* MessageCollectionViewCellTests.swift in Sources */,
 				8962AC961F87AB860030B058 /* SenderTests.swift in Sources */,

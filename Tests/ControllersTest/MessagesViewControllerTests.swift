@@ -59,10 +59,6 @@ class MessagesViewControllerTests: XCTestCase {
         XCTAssertTrue(sut.messagesCollectionView.collectionViewLayout is MessagesCollectionViewFlowLayout)
     }
 
-    func testMessageCollectionView_isNotNilAfterViewDidLoad() {
-        XCTAssertNotNil(sut.messageInputBar)
-    }
-
     func testMessageCollectionView_hasMessageCollectionFlowLayoutAfterViewDidLoad() {
         let layout = sut.messagesCollectionView.collectionViewLayout
 
@@ -70,22 +66,11 @@ class MessagesViewControllerTests: XCTestCase {
         XCTAssertTrue(layout is MessagesCollectionViewFlowLayout)
     }
 
-    func testMessageInputBar_isNotNilAfterViewDidLoad() {
-        XCTAssertNotNil(sut.messageInputBar)
-    }
-
-    func testViewDidLoad_shouldSetBackgroundColorToWhite() {
-        XCTAssertEqual(sut.view.backgroundColor, UIColor.white)
-    }
 
     func testViewDidLoad_shouldAddMessageCollectionViewInSubviews() {
         let messageColelctionViews = sut.view.subviews.filter { $0 is MessagesCollectionView }
 
         XCTAssertEqual(messageColelctionViews.count, 1)
-    }
-
-    func testViewDidLoad_shouldSetAutomaticallyAdjustsScrollViewInsetsToFalse() {
-        XCTAssertFalse(sut.automaticallyAdjustsScrollViewInsets)
     }
 
     func testViewDidLoad_shouldSetCollectionViewDelegate() {
@@ -105,21 +90,6 @@ class MessagesViewControllerTests: XCTestCase {
     func testViewDidLoad_shouldSetDelegateAndDataSourceToTheSameObject() {
         XCTAssertEqual(sut.messagesCollectionView.delegate as? MessagesViewController,
                        sut.messagesCollectionView.dataSource as? MessagesViewController)
-    }
-
-    func testShouldAutorotate_isFalse() {
-        XCTAssertFalse(sut.shouldAutorotate)
-    }
-
-    func testInputAccessoryView_shouldReturnsMessageInputBarAfterViewDidLoad() {
-        let inputAccessoryView = sut.inputAccessoryView
-
-        XCTAssertNotNil(inputAccessoryView)
-        XCTAssertEqual(inputAccessoryView, sut.messageInputBar)
-    }
-
-    func testCanBecomeFirstResponder_isTrue() {
-        XCTAssertTrue(sut.canBecomeFirstResponder)
     }
 
     func testNumberOfSectionWithoutData_isZero() {
