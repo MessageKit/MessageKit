@@ -213,8 +213,10 @@ fileprivate extension MessagesCollectionViewFlowLayout {
             return intermediateAttributes
         } else {
             let newAttributes = createMessageIntermediateLayoutAttributes(for: message, at: indexPath)
+
+            let shouldCache = messagesLayoutDelegate.shouldCacheLayoutAttributes(for: message) && intermediateAttributesCache.count < attributesCacheMaxSize
             
-            if intermediateAttributesCache.count < attributesCacheMaxSize {
+            if shouldCache {
                 intermediateAttributesCache[message.messageId] = newAttributes
             }
             return newAttributes
