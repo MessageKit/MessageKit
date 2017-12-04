@@ -472,31 +472,33 @@ private extension MessagesCollectionViewFlowLayout {
         let avatarHorizontal = attributes.avatarPosition.horizontal
         let avatarVertical = attributes.avatarPosition.vertical
         let avatarWidth = attributes.avatarSize.width
-        
-        switch (labelHorizontal, avatarHorizontal, avatarVertical) {
-            
-        case (.cellLeading, .cellTrailing, .cellBottom), (.cellTrailing, .cellLeading, .cellBottom):
-            return itemWidth - avatarWidth - attributes.bottomLabelHorizontalPadding
-            
-        case (.cellLeading, _, _), (.cellTrailing, _, _):
-            return itemWidth - attributes.bottomLabelHorizontalPadding
-            
-        case (.cellCenter, .cellLeading, .cellBottom), (.cellCenter, .cellTrailing, .cellBottom):
-            return itemWidth - (avatarWidth * 2) - attributes.bottomLabelHorizontalPadding
-            
-        case (.cellCenter, .cellLeading, _), (.cellCenter, .cellTrailing, _):
-            return itemWidth - attributes.bottomLabelHorizontalPadding
-            
-        case (.messageTrailing, .cellLeading, .cellBottom), (.messageLeading, .cellTrailing, .cellBottom):
-            return attributes.messageContainerSize.width - attributes.bottomLabelHorizontalPadding
-            
-        case (.messageLeading, .cellLeading, _), (.messageTrailing, .cellTrailing, _):
-            return itemWidth - avatarWidth - attributes.bottomLabelHorizontalPadding
-            
-        case (.messageLeading, .cellTrailing, _), (.messageTrailing, .cellLeading, _):
-            return attributes.messageContainerSize.width + avatarWidth - attributes.bottomLabelHorizontalPadding
-            
-        case (_, .natural, _):
+
+
+        switch (labelHorizontal, avatarHorizontal) {
+
+        case (.cellLeading, _), (.cellTrailing, _):
+            let width = itemWidth - attributes.bottomLabelHorizontalPadding
+            return avatarVertical != .cellBottom ? width : width - avatarWidth
+
+        case (.cellCenter, _):
+            let width = itemWidth - attributes.bottomLabelHorizontalPadding
+            return avatarVertical != .cellBottom ? width : width - (avatarWidth * 2)
+
+        case (.messageTrailing, .cellLeading):
+            let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.left
+            return avatarVertical != .cellBottom ? width : width + avatarWidth
+
+        case (.messageLeading, .cellTrailing):
+            let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.right
+            return avatarVertical != .cellBottom ? width : width + avatarWidth
+
+        case (.messageLeading, .cellLeading):
+            return itemWidth - avatarWidth - attributes.messageContainerPadding.left - attributes.bottomLabelHorizontalPadding
+
+        case (.messageTrailing, .cellTrailing):
+            return itemWidth - avatarWidth - attributes.messageContainerPadding.right - attributes.bottomLabelHorizontalPadding
+
+        case (_, .natural):
             fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
         }
         
@@ -547,30 +549,31 @@ private extension MessagesCollectionViewFlowLayout {
         let avatarVertical = attributes.avatarPosition.vertical
         let avatarWidth = attributes.avatarSize.width
         
-        switch (labelHorizontal, avatarHorizontal, avatarVertical) {
-            
-        case (.cellLeading, .cellTrailing, .cellTop), (.cellTrailing, .cellLeading, .cellTop):
-            return itemWidth - avatarWidth - attributes.topLabelHorizontalPadding
-            
-        case (.cellLeading, _, _), (.cellTrailing, _, _):
-            return itemWidth - attributes.topLabelHorizontalPadding
-            
-        case (.cellCenter, .cellLeading, .cellTop), (.cellCenter, .cellTrailing, .cellTop):
-            return itemWidth - (avatarWidth * 2) - attributes.topLabelHorizontalPadding
-            
-        case (.cellCenter, .cellLeading, _), (.cellCenter, .cellTrailing, _):
-            return itemWidth - attributes.topLabelHorizontalPadding
-            
-        case (.messageTrailing, .cellLeading, .cellTop), (.messageLeading, .cellTrailing, .cellTop):
-            return attributes.messageContainerSize.width - attributes.topLabelHorizontalPadding
-            
-        case (.messageLeading, .cellLeading, _), (.messageTrailing, .cellTrailing, _):
-            return itemWidth - avatarWidth - attributes.topLabelHorizontalPadding
-            
-        case (.messageLeading, .cellTrailing, _), (.messageTrailing, .cellLeading, _):
-            return attributes.messageContainerSize.width + avatarWidth - attributes.topLabelHorizontalPadding
+        switch (labelHorizontal, avatarHorizontal) {
 
-        case (_, .natural, _):
+        case (.cellLeading, _), (.cellTrailing, _):
+            let width = itemWidth - attributes.topLabelHorizontalPadding
+            return avatarVertical != .cellTop ? width : width - avatarWidth
+
+        case (.cellCenter, _):
+            let width = itemWidth - attributes.topLabelHorizontalPadding
+            return avatarVertical != .cellTop ? width : width - (avatarWidth * 2)
+
+        case (.messageTrailing, .cellLeading):
+            let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.left
+            return avatarVertical != .cellTop ? width : width + avatarWidth
+
+        case (.messageLeading, .cellTrailing):
+            let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.right
+            return avatarVertical != .cellTop ? width : width + avatarWidth
+
+        case (.messageLeading, .cellLeading):
+            return itemWidth - avatarWidth - attributes.messageContainerPadding.left - attributes.topLabelHorizontalPadding
+
+        case (.messageTrailing, .cellTrailing):
+            return itemWidth - avatarWidth - attributes.messageContainerPadding.right - attributes.topLabelHorizontalPadding
+
+        case (_, .natural):
             fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
         }
         
