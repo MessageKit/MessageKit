@@ -51,7 +51,7 @@ then get the `MessageType` for this cell through the `MessagesDataSource` method
 
 ```Swift
 func didTapMessage<T>(in cell: MessageCollectionViewCell<T>) {
-    guard let indexPath = cell.indexPath(for: cell) else { return }
+    guard let indexPath = messagesCollectionView.indexPath(for: cell) else { return }
     guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return }
     let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 }
