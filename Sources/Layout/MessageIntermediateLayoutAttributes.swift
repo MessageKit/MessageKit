@@ -62,11 +62,11 @@ final class MessageIntermediateLayoutAttributes {
         case .cellBottom:
             origin.y = cellFrame.height - avatarSize.height
         case .messageTop:
-            origin.y = messageContainerFrame.maxY
+            origin.y = messageContainerFrame.minY
         case .messageBottom:
             origin.y = messageContainerFrame.maxY - avatarSize.height
         case .messageCenter:
-            origin.y = messageContainerFrame.midY
+            origin.y = messageContainerFrame.midY - (avatarSize.height/2)
         }
         
         return CGRect(origin: origin, size: avatarSize)
