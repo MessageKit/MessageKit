@@ -51,7 +51,7 @@ final class MessageIntermediateLayoutAttributes {
         case .cellLeading:
             break
         case .cellTrailing:
-            origin.x = cellFrame.maxX - avatarSize.width
+            origin.x = cellFrame.width - avatarSize.width
         case .natural:
             fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
         }
@@ -60,7 +60,7 @@ final class MessageIntermediateLayoutAttributes {
         case .cellTop:
             break
         case .cellBottom:
-            origin.y = cellFrame.maxY - avatarSize.height
+            origin.y = cellFrame.height - avatarSize.height
         case .messageTop:
             origin.y = messageContainerFrame.maxY
         case .messageBottom:
@@ -90,7 +90,7 @@ final class MessageIntermediateLayoutAttributes {
         case .cellLeading:
             origin.x = avatarSize.width + messageContainerPadding.left
         case .cellTrailing:
-            origin.x = cellFrame.maxX - avatarSize.width - messageContainerSize.width - messageContainerPadding.right
+            origin.x = cellFrame.width - avatarSize.width - messageContainerSize.width - messageContainerPadding.right
         case .natural:
             fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
         }
@@ -116,9 +116,9 @@ final class MessageIntermediateLayoutAttributes {
         case .cellLeading:
             origin.x = topLabelPadding.left
         case .cellCenter:
-            origin.x = cellFrame.midX + topLabelPadding.left - topLabelPadding.right
+            origin.x = (cellFrame.width/2) + topLabelPadding.left - topLabelPadding.right
         case .cellTrailing:
-            origin.x = cellFrame.maxX - topLabelSize.width - topLabelPadding.right
+            origin.x = cellFrame.width - topLabelSize.width - topLabelPadding.right
         case .messageLeading:
             origin.x = messageContainerFrame.minX + topLabelPadding.left
         case .messageTrailing:
@@ -146,9 +146,9 @@ final class MessageIntermediateLayoutAttributes {
         case .cellLeading:
             origin.x = bottomLabelPadding.left
         case .cellCenter:
-            origin.x = cellFrame.midX + bottomLabelPadding.left - bottomLabelPadding.right
+            origin.x = (cellFrame.width/2) + bottomLabelPadding.left - bottomLabelPadding.right
         case .cellTrailing:
-            origin.x = cellFrame.maxX - bottomLabelSize.width - bottomLabelPadding.right
+            origin.x = cellFrame.width - bottomLabelSize.width - bottomLabelPadding.right
         case .messageLeading:
             origin.x = messageContainerFrame.minX + bottomLabelPadding.left
         case .messageTrailing:
