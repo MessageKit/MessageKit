@@ -38,7 +38,11 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
 
     open var avatarView: AvatarView = AvatarView()
 
-    open var cellTopLabel = UILabel()
+    open var cellTopLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
+    }()
 
     open var messageContentView: ContentView = {
         let contentView = ContentView()
@@ -47,7 +51,11 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
         return contentView
     }()
 
-    open var cellBottomLabel = UILabel()
+    open var cellBottomLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
+    }()
 
     open weak var delegate: MessageCellDelegate?
 
@@ -69,13 +77,11 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
     // MARK: - Methods
 
     internal func setupSubviews() {
-
         contentView.addSubview(cellTopLabel)
         contentView.addSubview(messageContainerView)
         messageContainerView.addSubview(messageContentView)
         contentView.addSubview(avatarView)
         contentView.addSubview(cellBottomLabel)
-
     }
 
     open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {

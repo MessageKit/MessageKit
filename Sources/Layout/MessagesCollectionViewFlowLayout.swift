@@ -485,12 +485,12 @@ private extension MessagesCollectionViewFlowLayout {
             return avatarVertical != .cellBottom ? width : width - (avatarWidth * 2)
 
         case (.messageTrailing, .cellLeading):
-            let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.left
-            return avatarVertical != .cellBottom ? width : width + avatarWidth
+            let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.left - attributes.bottomLabelHorizontalPadding
+            return avatarVertical == .cellBottom ? width : width + avatarWidth
 
         case (.messageLeading, .cellTrailing):
-            let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.right
-            return avatarVertical != .cellBottom ? width : width + avatarWidth
+            let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.right - attributes.bottomLabelHorizontalPadding
+            return avatarVertical == .cellBottom ? width : width + avatarWidth
 
         case (.messageLeading, .cellLeading):
             return itemWidth - avatarWidth - attributes.messageContainerPadding.left - attributes.bottomLabelHorizontalPadding
@@ -515,9 +515,7 @@ private extension MessagesCollectionViewFlowLayout {
         let text = messagesDataSource.cellBottomLabelAttributedText(for: attributes.message, at: attributes.indexPath)
         
         guard let bottomLabelText = text else { return .zero }
-
         return labelSize(for: bottomLabelText, considering: attributes.bottomLabelMaxWidth)
-        
     }
 
 }
@@ -560,12 +558,12 @@ private extension MessagesCollectionViewFlowLayout {
             return avatarVertical != .cellTop ? width : width - (avatarWidth * 2)
 
         case (.messageTrailing, .cellLeading):
-            let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.left
-            return avatarVertical != .cellTop ? width : width + avatarWidth
+            let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.left - attributes.topLabelHorizontalPadding
+            return avatarVertical == .cellTop ? width : width + avatarWidth
 
         case (.messageLeading, .cellTrailing):
-            let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.right
-            return avatarVertical != .cellTop ? width : width + avatarWidth
+            let width = attributes.messageContainerSize.width + attributes.messageContainerPadding.right - attributes.topLabelHorizontalPadding
+            return avatarVertical == .cellTop ? width : width + avatarWidth
 
         case (.messageLeading, .cellLeading):
             return itemWidth - avatarWidth - attributes.messageContainerPadding.left - attributes.topLabelHorizontalPadding
