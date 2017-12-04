@@ -47,8 +47,12 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
         super.apply(layoutAttributes)
 
         guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else { return }
-        messageContentView.textInsets = attributes.messageLabelInsets
-        messageContentView.font = attributes.messageLabelFont
+        
+        messageContentView.configure {
+            messageContentView.textInsets = attributes.messageLabelInsets
+            messageContentView.font = attributes.messageLabelFont
+        }
+
     }
 
     open override func prepareForReuse() {
@@ -60,11 +64,14 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
 
-        if let displayDelegate = messagesCollectionView.messagesDisplayDelegate as? TextMessageDisplayDelegate {
+        if let displayDelegate = messagesCollectionView.messagesDisplayDelegate {
             let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
             let detectors = displayDelegate.enabledDetectors(for: message, at: indexPath, in: messagesCollectionView)
-            messageContentView.textColor = textColor
-            messageContentView.enabledDetectors = detectors
+            
+            messageContentView.configure {
+                messageContentView.textColor = textColor
+                messageContentView.enabledDetectors = detectors
+            }
         }
 
         switch message.data {

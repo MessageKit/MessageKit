@@ -244,7 +244,7 @@ class MessagesViewControllerTests: XCTestCase {
 
 }
 
-private class MockLayoutDelegate: MessagesLayoutDelegate, LocationMessageLayoutDelegate, MediaMessageLayoutDelegate {
+private class MockLayoutDelegate: MessagesLayoutDelegate {
 
     // MARK: - LocationMessageLayoutDelegate
 
