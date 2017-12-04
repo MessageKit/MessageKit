@@ -42,6 +42,9 @@ and the initializer has changed from `public init(image: UIImage? = nil, initals
 - Fixes infinite loop when dismissing keyboard on iPhone X.
 [#350](https://github.com/MessageKit/MessageKit/pull/350) by [@nathantannar4](https://github.com/nathantannar4).
 
+- Fixed incorrect sizing of `cellTopLabel` and `cellBottomLabel`.
+[#371](https://github.com/MessageKit/MessageKit/pull/371/commits/949796d68d175d2f2c8700ed0cb769935aee2184) by [@SD10](https://github.com/sd10).
+
 ### Removed
 
 - **Breaking Change** Removed `AvatarAlignment` and `avatarAlignment(for:at:in)` delegate method
