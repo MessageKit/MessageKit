@@ -91,8 +91,7 @@ final class MessagesViewControllerSpec: QuickSpec {
                 }
 
                 it("uses interactive keyboard dismissal") {
-                    // hack until I figure out a better way
-                    expect(messagesCollectionView.keyboardDismissMode.rawValue).to(be(2))
+                    expect(messagesCollectionView.keyboardDismissMode).to(equal(UIScrollViewKeyboardDismissMode.interactive))
                 }
 
                 it("it always bounces vertical") {
