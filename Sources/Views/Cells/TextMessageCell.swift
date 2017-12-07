@@ -35,12 +35,6 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
         }
     }
 
-    override var messageTapGesture: UITapGestureRecognizer? {
-        didSet {
-            messageTapGesture?.delegate = messageContentView
-        }
-    }
-
     // MARK: - Methods
 
     open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
@@ -82,6 +76,11 @@ open class TextMessageCell: MessageCollectionViewCell<MessageLabel> {
         default:
             break
         }
+    }
+    
+    /// Handle `ContentView`'s tap gesture, return false when `ContentView` don't needs to handle gesture
+    open override func cellContentView(canHandle touchPoint: CGPoint) -> Bool {
+        return messageContentView.handleGesture(touchPoint)
     }
     
 }
