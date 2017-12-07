@@ -369,6 +369,7 @@ open class MessageInputBar: UIView {
             rightStackViewLayoutSet?.right = rightStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
             bottomStackViewLayoutSet?.left = bottomStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
             bottomStackViewLayoutSet?.right = bottomStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
+            bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -padding.bottom)
         }
         activateConstraints()
     }
@@ -379,11 +380,10 @@ open class MessageInputBar: UIView {
             // Respect iPhone X safeAreaInsets
             guard UIScreen.main.nativeBounds.height == 2436 else { return }
             if let window = window {
-                bottomStackViewLayoutSet?.bottom?.isActive = false
-                bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
-                // Needs to be less than .defaultHigh so constraints don't break
-                bottomStackViewLayoutSet?.bottom?.priority = UILayoutPriority(rawValue: 750)
-                activateConstraints()
+                let windowConstraint = bottomStackView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+                windowConstraint.constant = -padding.bottom
+                windowConstraint.priority = UILayoutPriority(rawValue: 750)
+                windowConstraint.isActive = true
             }
         }
     }
