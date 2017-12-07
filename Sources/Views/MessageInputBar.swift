@@ -479,8 +479,8 @@ open class MessageInputBar: UIView {
                 bottomStackView.setNeedsLayout()
                 bottomStackView.layoutIfNeeded()
             case .top:
-                bottomStackView.setNeedsLayout()
-                bottomStackView.layoutIfNeeded()
+                topStackView.setNeedsLayout()
+                topStackView.layoutIfNeeded()
             }
         }
     }
