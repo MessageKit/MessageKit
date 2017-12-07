@@ -148,17 +148,18 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
         }
         
         let touchLocation = gesture.location(in: self)
-        if messageContainerView.frame.contains(touchLocation) && !cellContentView(canHandle: convert(touchLocation, to: messageContentView)) {
+        
+        switch true {
+        case messageContainerView.frame.contains(touchLocation) && !cellContentView(canHandle: convert(touchLocation, to: messageContentView)):
             delegate?.didTapMessage(in: self)
-        }
-        else if cellTopLabel.frame.contains(touchLocation) {
+        case cellTopLabel.frame.contains(touchLocation):
             delegate?.didTapTopLabel(in: self)
-        }
-        else if cellBottomLabel.frame.contains(touchLocation) {
+        case cellBottomLabel.frame.contains(touchLocation):
             delegate?.didTapBottomLabel(in: self)
-        }
-        else if avatarView.frame.contains(touchLocation) {
+        case avatarView.frame.contains(touchLocation):
             delegate?.didTapAvatar(in: self)
+        default:
+            break
         }
     
     }
