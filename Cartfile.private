@@ -1,0 +1,2 @@
+github "Quick/Quick" ~> 1.2.0
+github "Quick/Nimble" ~> 7.0.3
