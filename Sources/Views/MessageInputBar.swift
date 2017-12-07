@@ -204,7 +204,7 @@ open class MessageInputBar: UIView {
     public private(set) var isOverMaxTextViewHeight = false
     
     /// The maximum height that the InputTextView can reach
-    open var maxTextViewHeight: CGFloat = (UIScreen.main.bounds.height / 3).rounded(.down) {
+    open var maxTextViewHeight: CGFloat = (UIScreen.main.bounds.height / 5).rounded(.down) {
         didSet {
             textViewHeightAnchor?.constant = maxTextViewHeight
             invalidateIntrinsicContentSize()
@@ -355,7 +355,7 @@ open class MessageInputBar: UIView {
         )
         
         bottomStackViewLayoutSet = NSLayoutConstraintSet(
-            top:    bottomStackView.topAnchor.constraint(equalTo: inputTextView.bottomAnchor),
+            top:    bottomStackView.topAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: textViewPadding.bottom),
             bottom: bottomStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
             left:   bottomStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
             right:  bottomStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
@@ -369,14 +369,6 @@ open class MessageInputBar: UIView {
             rightStackViewLayoutSet?.right = rightStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
             bottomStackViewLayoutSet?.left = bottomStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
             bottomStackViewLayoutSet?.right = bottomStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
-            
-            // Change the priorities so constraints don't break when the MessageInputBar is anchored to the bottom of the window
-            // in `didMoveToWindow()`. They need to be set before applied for the first time.
-            if UIScreen.main.nativeBounds.height == 2436 {
-                textViewLayoutSet?.top?.priority = .defaultLow
-                textViewLayoutSet?.bottom?.priority = .defaultLow
-                bottomStackViewLayoutSet?.top?.priority = .defaultLow
-            }
         }
         activateConstraints()
     }
@@ -389,7 +381,8 @@ open class MessageInputBar: UIView {
             if let window = window {
                 bottomStackViewLayoutSet?.bottom?.isActive = false
                 bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
-                
+                // Needs to be less than .defaultHigh so constraints don't break
+                bottomStackViewLayoutSet?.bottom?.priority = UILayoutPriority(rawValue: 750)
                 activateConstraints()
             }
         }
@@ -459,10 +452,12 @@ open class MessageInputBar: UIView {
                 isOverMaxTextViewHeight = false
             }
         }
+        
+        // Calculate the required height
         let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + textViewPadding.top + textViewPadding.bottom
         let verticalStackViewHeight = topStackView.bounds.height + bottomStackView.bounds.height
-        let height = inputTextViewHeight + totalPadding + verticalStackViewHeight
-        return CGSize(width: bounds.width, height: height)
+        let requiredHeight = inputTextViewHeight + totalPadding + verticalStackViewHeight
+        return CGSize(width: bounds.width, height: requiredHeight)
     }
     
     /// Layout the given InputStackView's
@@ -636,7 +631,6 @@ open class MessageInputBar: UIView {
         items.forEach { $0.textViewDidChangeAction(with: inputTextView) }
 
         delegate?.messageInputBar(self, textViewTextDidChangeTo: trimmedText)
-        
         
         if requiredInputTextViewHeight != inputTextView.bounds.height {
             // Prevent un-needed content size invalidation
