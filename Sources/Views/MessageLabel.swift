@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
+open class MessageLabel: UILabel {
 
     // MARK: - Private Properties
 
@@ -161,8 +161,6 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         self.phoneNumberAttributes = defaultAttributes
         self.urlAttributes = defaultAttributes
 
-        setupGestureRecognizers()
-
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -190,45 +188,6 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
         block()
         isConfiguring = false
         setNeedsDisplay()
-    }
-
-    // MARK: UIGestureRecognizer Delegate
-
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-
-    //swiftlint:disable cyclomatic_complexity
-    // Yeah we're disabling this because the whole file is a mess :D
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-
-        let touchLocation = touch.location(in: self)
-
-        switch true {
-        case gestureRecognizer.view != self.superview && gestureRecognizer.view != self:
-            return true
-        case gestureRecognizer.view == self.superview:
-            guard let index = stringIndex(at: touchLocation) else { return true }
-            for (_, ranges) in rangesForDetectors {
-                for (nsRange, _) in ranges {
-                  guard let range = Range(nsRange) else { return true }
-                    if range.contains(index) { return false }
-                }
-            }
-            return true
-        case gestureRecognizer.view == self:
-            guard let index = stringIndex(at: touchLocation) else { return false }
-            for (_, ranges) in rangesForDetectors {
-                for (nsRange, _) in ranges {
-                    guard let range = Range(nsRange) else { return false }
-                    if range.contains(index) { return true }
-                }
-            }
-            return false
-        default:
-            return true
-        }
-
     }
 
     // MARK: - Private Methods
@@ -398,32 +357,19 @@ open class MessageLabel: UILabel, UIGestureRecognizerDelegate {
 
     }
 
-    private func setupGestureRecognizers() {
+  func handleGesture(_ touchLocation: CGPoint) -> Bool {
 
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
-        addGestureRecognizer(tapGesture)
-        tapGesture.delegate = self
-
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
-        addGestureRecognizer(longPressGesture)
-        longPressGesture.delegate = self
-
-        isUserInteractionEnabled = true
-    }
-
-  @objc func handleGesture(_ gesture: UIGestureRecognizer) {
-
-        let touchLocation = gesture.location(ofTouch: 0, in: self)
-        guard let index = stringIndex(at: touchLocation) else { return }
+        guard let index = stringIndex(at: touchLocation) else { return false}
 
         for (detectorType, ranges) in rangesForDetectors {
-            for (nsRange, value) in ranges {
-                guard let range = Range(nsRange) else { return }
+            for (range, value) in ranges {
                 if range.contains(index) {
                     handleGesture(for: detectorType, value: value)
+                    return true
                 }
             }
         }
+        return false
     }
 
     private func handleGesture(for detectorType: DetectorType, value: MessageTextCheckingType) {

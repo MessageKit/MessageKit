@@ -59,8 +59,6 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
 
     open weak var delegate: MessageCellDelegate?
 
-    var messageTapGesture: UITapGestureRecognizer?
-
     // MARK: - Initializer
 
     public override init(frame: CGRect) {
@@ -137,42 +135,37 @@ open class MessageCollectionViewCell<ContentView: UIView>: UICollectionViewCell,
     }
 
     func setupGestureRecognizers() {
-
-        let avatarTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
-        avatarView.addGestureRecognizer(avatarTapGesture)
-        avatarView.isUserInteractionEnabled = true
-
-        let messageTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapMessage))
-        messageContainerView.addGestureRecognizer(messageTapGesture)
-        messageContainerView.isUserInteractionEnabled = true
-        self.messageTapGesture = messageTapGesture
-
-        let topLabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapTopLabel))
-        cellTopLabel.addGestureRecognizer(topLabelTapGesture)
-        cellTopLabel.isUserInteractionEnabled = true
-
-        let bottomlabelTapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBottomLabel))
-        cellBottomLabel.addGestureRecognizer(bottomlabelTapGesture)
-        cellBottomLabel.isUserInteractionEnabled = true
-
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+        contentView.addGestureRecognizer(tapGesture)
+        
     }
-
-    // MARK: - Delegate Methods
-
-  @objc func didTapAvatar() {
-        delegate?.didTapAvatar(in: self)
+    
+    /// Handle tap gesture on contentView and its subviews like messageContainerView, cellTopLabel, cellBottomLabel, avatarView ....
+    @objc func handleTapGesture(_ gesture: UIGestureRecognizer) {
+        guard gesture.state == .ended else {
+            return
+        }
+        
+        let touchLocation = gesture.location(in: self)
+        if messageContainerView.frame.contains(touchLocation) && !cellContentView(canHandle: convert(touchLocation, to: messageContentView)) {
+            delegate?.didTapMessage(in: self)
+        }
+        else if cellTopLabel.frame.contains(touchLocation) {
+            delegate?.didTapTopLabel(in: self)
+        }
+        else if cellBottomLabel.frame.contains(touchLocation) {
+            delegate?.didTapBottomLabel(in: self)
+        }
+        else if avatarView.frame.contains(touchLocation) {
+            delegate?.didTapAvatar(in: self)
+        }
+    
     }
-
-  @objc func didTapMessage() {
-        delegate?.didTapMessage(in: self)
-    }
-
-  @objc func didTapTopLabel() {
-        delegate?.didTapTopLabel(in: self)
-    }
-
-  @objc func didTapBottomLabel() {
-        delegate?.didTapBottomLabel(in: self)
+    
+    /// Handle `ContentView`'s tap gesture, return false when `ContentView` don't needs to handle gesture
+    open func cellContentView(canHandle touchPoint: CGPoint) -> Bool {
+        return false
     }
 
 }
