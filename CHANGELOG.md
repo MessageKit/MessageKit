@@ -17,7 +17,6 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 `AvatarView`'s vertical and horizontal position in a `MessageCollectionViewCell`.
 [#322](https://github.com/MessageKit/MessageKit/pull/322) by [@SD10](https://github.com/sd10).
 
-<<<<<<< HEAD
 - Added `shouldCacheLayoutAttributes(for:MessageType)-> Bool` method to `MessagesLayoutDelegate`
 to manage whether a `MessageType`'s layout information is cached or not.
 [#364](https://github.com/MessageKit/MessageKit/pull/322) by [@SD10](https://github.com/sd10).
@@ -30,12 +29,9 @@ typed as `MessageLabel` and are now regular `UILabel`s.
 
 - All `DetectorType`s for `MessageLabel` are disabled by default.
 [#356](https://github.com/MessageKit/MessageKit/pull/356) by [@SD10](https://github.com/sd10).
-=======
-### Changed
 
 - **Breaking Change** Changed the name of  `MessageInputBar`'s property `maxHeight` to `maxTextViewHeight` as the property is the max height the `InputTextView` can have, not the `MessageInputBar` itself.
-[#361](https://github.com/MessageKit/MessageKit/pull/361) by [@nathantannar4](https://github.com/nathantannar4).
->>>>>>> bottomAnchorSize
+[#380](https://github.com/MessageKit/MessageKit/pull/380) by [@nathantannar4](https://github.com/nathantannar4).
 
 ### Fixed
 
