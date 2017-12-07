@@ -66,7 +66,6 @@ class MessagesViewControllerTests: XCTestCase {
         XCTAssertTrue(layout is MessagesCollectionViewFlowLayout)
     }
 
-
     func testViewDidLoad_shouldAddMessageCollectionViewInSubviews() {
         let messageColelctionViews = sut.view.subviews.filter { $0 is MessagesCollectionView }
 

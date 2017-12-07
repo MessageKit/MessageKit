@@ -66,13 +66,11 @@ open class MessagesViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = false
         view.backgroundColor = .white
         messagesCollectionView.keyboardDismissMode = .interactive
         messagesCollectionView.alwaysBounceVertical = true
-        
         
         setupSubviews()
         setupConstraints()

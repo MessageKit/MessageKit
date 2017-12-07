@@ -309,8 +309,7 @@ fileprivate extension MessagesCollectionViewFlowLayout {
 
         return position
     }
-    
-    
+
     // B
     
     /// Returns the size of the `AvatarView` for a given `MessageType`.
@@ -473,7 +472,6 @@ private extension MessagesCollectionViewFlowLayout {
         let avatarVertical = attributes.avatarPosition.vertical
         let avatarWidth = attributes.avatarSize.width
 
-
         switch (labelHorizontal, avatarHorizontal) {
 
         case (.cellLeading, _), (.cellTrailing, _):
@@ -631,4 +629,3 @@ private extension MessagesCollectionViewFlowLayout {
     }
     
 }
-

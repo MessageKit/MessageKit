@@ -144,8 +144,6 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   - messagesCollectionView: The collection view requesting the information
     /// - Returns: Your customized animation block.
     func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)?
-
-
 }
 
 public extension MessagesDisplayDelegate {

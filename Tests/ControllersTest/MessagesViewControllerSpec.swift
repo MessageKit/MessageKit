@@ -37,7 +37,6 @@ final class MessagesViewControllerSpec: QuickSpec {
         }
 
         describe("default property values") {
-
             it("does not scroll to bottom on first layout") {
                 expect(controller.scrollsToBottomOnFirstLayout).to(beFalse())
             }
