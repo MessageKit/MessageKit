@@ -204,11 +204,17 @@ open class MessageInputBar: UIView {
     public private(set) var isOverMaxTextViewHeight = false
     
     /// The maximum height that the InputTextView can reach
-    open var maxTextViewHeight: CGFloat = UIScreen.main.bounds.height / 3 {
+    open var maxTextViewHeight: CGFloat = (UIScreen.main.bounds.height / 3).rounded(.down) {
         didSet {
             textViewHeightAnchor?.constant = maxTextViewHeight
             invalidateIntrinsicContentSize()
         }
+    }
+    
+    /// The height that will fit the current text in the InputTextView based on its current bounds
+    public var requiredInputTextViewHeight: CGFloat {
+        let maxTextViewSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
+        return inputTextView.sizeThatFits(maxTextViewSize).height.rounded(.down)
     }
     
     /// The fixed widthAnchor constant of the leftStackView
@@ -363,6 +369,14 @@ open class MessageInputBar: UIView {
             rightStackViewLayoutSet?.right = rightStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
             bottomStackViewLayoutSet?.left = bottomStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
             bottomStackViewLayoutSet?.right = bottomStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
+            
+            // Change the priorities so constraints don't break when the MessageInputBar is anchored to the bottom of the window
+            // in `didMoveToWindow()`. They need to be set before applied for the first time.
+            if UIScreen.main.nativeBounds.height == 2436 {
+                textViewLayoutSet?.top?.priority = .defaultLow
+                textViewLayoutSet?.bottom?.priority = .defaultLow
+                bottomStackViewLayoutSet?.top?.priority = .defaultLow
+            }
         }
         activateConstraints()
     }
@@ -375,8 +389,8 @@ open class MessageInputBar: UIView {
             if let window = window {
                 bottomStackViewLayoutSet?.bottom?.isActive = false
                 bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+                
                 activateConstraints()
-                textViewHeightAnchor?.isActive = true
             }
         }
     }
@@ -414,6 +428,7 @@ open class MessageInputBar: UIView {
     /// Invalidates the view’s intrinsic content size
     open override func invalidateIntrinsicContentSize() {
         super.invalidateIntrinsicContentSize()
+        [topStackView, bottomStackView, inputTextView].forEach { $0.invalidateIntrinsicContentSize() }
         cachedIntrinsicContentSize = calculateIntrinsicContentSize()
         if previousIntrinsicContentSize != cachedIntrinsicContentSize {
             delegate?.messageInputBar(self, didChangeIntrinsicContentTo: cachedIntrinsicContentSize)
@@ -421,13 +436,15 @@ open class MessageInputBar: UIView {
         }
     }
     
-    /// Calculates the correct intrinsicContentSize of the MessageInputBar
+    // MARK: - Layout Helper Methods
+    
+    /// Calculates the correct intrinsicContentSize of the MessageInputBar. This takes into account the various padding edge
+    /// insets, InputTextView's height and top/bottom InputStackView's heights.
     ///
     /// - Returns: The required intrinsicContentSize
     open func calculateIntrinsicContentSize() -> CGSize {
         
-        let maxTextViewSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
-        var inputTextViewHeight = inputTextView.sizeThatFits(maxTextViewSize).height.rounded()
+        var inputTextViewHeight = requiredInputTextViewHeight
         if inputTextViewHeight >= maxTextViewHeight {
             if !isOverMaxTextViewHeight {
                 textViewHeightAnchor?.isActive = true
@@ -440,17 +457,15 @@ open class MessageInputBar: UIView {
                 textViewHeightAnchor?.isActive = false
                 inputTextView.isScrollEnabled = false
                 isOverMaxTextViewHeight = false
-                inputTextView.invalidateIntrinsicContentSize()
             }
         }
         let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + textViewPadding.top + textViewPadding.bottom
-        let height = inputTextViewHeight + totalPadding
+        let verticalStackViewHeight = topStackView.bounds.height + bottomStackView.bounds.height
+        let height = inputTextViewHeight + totalPadding + verticalStackViewHeight
         return CGSize(width: bounds.width, height: height)
     }
     
-    // MARK: - Layout Helper Methods
-    
-    /// Layout the given UIStackView's
+    /// Layout the given InputStackView's
     ///
     /// - Parameter positions: The UIStackView's to layout
     public func layoutStackViews(_ positions: [InputStackView.Position] = [.left, .right, .bottom, .top]) {
@@ -621,14 +636,18 @@ open class MessageInputBar: UIView {
         items.forEach { $0.textViewDidChangeAction(with: inputTextView) }
 
         delegate?.messageInputBar(self, textViewTextDidChangeTo: trimmedText)
-        invalidateIntrinsicContentSize()
+        
+        
+        if requiredInputTextViewHeight != inputTextView.bounds.height {
+            // Prevent un-needed content size invalidation
+            invalidateIntrinsicContentSize()
+        }
     }
     
     /// Calls each items `keyboardEditingBeginsAction` method
     /// Invalidates the intrinsicContentSize so that the keyboard does not overlap the view
     @objc
     open func textViewDidBeginEditing() {
-        invalidateIntrinsicContentSize()
         items.forEach { $0.keyboardEditingBeginsAction() }
     }
     
