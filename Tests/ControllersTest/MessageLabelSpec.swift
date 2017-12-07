@@ -26,6 +26,7 @@ import Quick
 import Nimble
 @testable import MessageKit
 
+//swiftlint:disable todo
 final class MessageLabelSpec: QuickSpec {
 
     //swiftlint:disable function_body_length
@@ -44,8 +45,8 @@ final class MessageLabelSpec: QuickSpec {
                     messageLabel.addressAttributes = [.foregroundColor: expectedColor]
                     messageLabel.text = "One Infinite Loop Cupertino, CA 95014"
                     messageLabel.enabledDetectors = [.address]
-                    var attributes = messageLabel.textAttributes
-                    var textColor = attributes?[.foregroundColor] as? UIColor
+                    let attributes = messageLabel.textAttributes
+                    let textColor = attributes?[.foregroundColor] as? UIColor
                     expect(textColor).toNot(beNil())
                     expect(textColor).to(equal(expectedColor))
                 }
@@ -84,6 +85,161 @@ final class MessageLabelSpec: QuickSpec {
                     let textFont = attributes?[.font] as? UIFont
                     expect(textFont).toNot(beNil())
                     expect(textFont).to(equal(expectedFont))
+                }
+            }
+        }
+
+        describe("the synchronization between text and attributedText") {
+            context("when attributedText is set to a non-nil value") {
+                it("updates text with that value") {
+                    let expectedText = "Some text"
+                    messageLabel.attributedText = NSAttributedString(string: expectedText)
+                    expect(messageLabel.text).to(equal(expectedText))
+                }
+            }
+            context("when attributedText is set to nil") {
+                it("updates text with the nil value") {
+                    messageLabel.text = "Not nil"
+                    messageLabel.attributedText = nil
+                    // Known issue: property is never nil, only empty string
+                    expect(messageLabel.text).to(equal(""))
+                }
+            }
+            context("when text is set to a non-nil value") {
+                it("updates attributedText with that value") {
+                    let expectedText = "Some text"
+                    messageLabel.text = expectedText
+                    expect(messageLabel.attributedText?.string).to(equal(expectedText))
+                }
+            }
+            context("when text is set to a nil value") {
+                it("updates attributedText with that value") {
+                    messageLabel.attributedText = NSAttributedString(string: "Not nil")
+                    messageLabel.text = nil
+                    // Known issue: property is never nil, only empty string
+                    let emptyString = NSAttributedString(string: "")
+                    expect(messageLabel.attributedText).to(equal(emptyString))
+                }
+            }
+        }
+
+        describe("the labels text drawing rect") {
+            context("when textInset is .zero") {
+                it("does not inset the text rect") {
+
+                }
+            }
+            context("when the textInset is not .zero") {
+                it("insets the text rect") {
+
+                }
+            }
+            context("when the textInset is updated") {
+                it("updates the text rect") {
+
+                }
+            }
+        }
+
+        // TODO: - Not working
+        // This does not work for MessageLabel, the properties don't sync
+        describe("the synchronization between attributedText and format API") {
+            context("when font property is set") {
+                it("updates the font of attributedText") {
+
+                }
+            }
+            context("when textColor property is set") {
+                it("updates the textColor of attributedText") {
+
+                }
+            }
+            context("when lineBreakMode property is set") {
+                it("updates the lineBreakMode of attributedText") {
+
+                }
+            }
+            context("when the textAlignment property is set") {
+                it("updates the textAlignment of attributedText") {
+
+                }
+            }
+        }
+
+        describe("updating the attributes of detected text") {
+            context("addressAttributes is set to a new value") {
+                it("updates ranges for detected addresses") {
+
+                }
+            }
+            context("phoneNumberAttributes is set to a new value") {
+                it("updates ranges for detected phone numbers") {
+
+                }
+            }
+            context("dateAttributes is set to a new value") {
+                it("updates ranges for detected dates") {
+
+                }
+            }
+            context("urlAttributes is set to a new value") {
+                it("updates ranges for detected urls") {
+
+                }
+            }
+        }
+
+        describe("text dectection of multiple DetectorTypes") {
+            context("contains address, date, url, and phone number") {
+                it("applies addressAttributes to detected addresses") {
+
+                }
+                it("applies phoneNumberAttributes to detected phone numbers") {
+
+                }
+                it("applies urlAttributes to detected urls") {
+
+                }
+                it("applies dateAttributes to detected dates") {
+
+                }
+                it("does not apply attributes to non detected ranges") {
+                    
+                }
+            }
+        }
+
+        describe("touch handling for detected text") {
+            context("message text contains detected address") {
+                context("touch occurs on address") {
+
+                }
+                context("touch does not occur on address") {
+
+                }
+            }
+            context("message text contains detected phone number") {
+                context("touch occurs on phone number") {
+
+                }
+                context("touch does not occur on phone number") {
+
+                }
+            }
+            context("message text contains detected url") {
+                context("touch occurs on url") {
+
+                }
+                context("touch does not occur on url") {
+
+                }
+            }
+            context("message text contains detected date") {
+                context("touch occurs on date") {
+
+                }
+                context("touch does not occur on date") {
+
                 }
             }
         }
