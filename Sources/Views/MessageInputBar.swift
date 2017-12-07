@@ -381,9 +381,12 @@ open class MessageInputBar: UIView {
             if let window = window {
                 bottomStackViewLayoutSet?.bottom?.isActive = false
                 bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+                
                 // Needs to be less than .defaultHigh so constraints don't break
                 bottomStackViewLayoutSet?.bottom?.priority = UILayoutPriority(rawValue: 750)
-                activateConstraints()
+                
+                bottomStackViewLayoutSet?.bottom?.constant = padding.bottom
+                bottomStackViewLayoutSet?.bottom?.isActive = true
             }
         }
     }
@@ -401,6 +404,7 @@ open class MessageInputBar: UIView {
         bottomStackViewLayoutSet?.left?.constant = padding.left
         bottomStackViewLayoutSet?.right?.constant = -padding.right
         bottomStackViewLayoutSet?.bottom?.constant = -padding.bottom
+        invalidateIntrinsicContentSize()
     }
     
     /// Updates the constraint constants that correspond to the inputTextViewPadding UIEdgeInsets
@@ -409,6 +413,7 @@ open class MessageInputBar: UIView {
         textViewLayoutSet?.right?.constant = -textViewPadding.right
         textViewLayoutSet?.bottom?.constant = -textViewPadding.bottom
         bottomStackViewLayoutSet?.top?.constant = textViewPadding.bottom
+        invalidateIntrinsicContentSize()
     }
     
     /// Updates the constraint constants that correspond to the topStackViewPadding UIEdgeInsets
@@ -416,12 +421,12 @@ open class MessageInputBar: UIView {
         topStackViewLayoutSet?.top?.constant = topStackViewPadding.top
         topStackViewLayoutSet?.left?.constant = topStackViewPadding.left
         topStackViewLayoutSet?.right?.constant = -topStackViewPadding.right
+        invalidateIntrinsicContentSize()
     }
     
     /// Invalidates the view’s intrinsic content size
     open override func invalidateIntrinsicContentSize() {
         super.invalidateIntrinsicContentSize()
-        [topStackView, bottomStackView, inputTextView].forEach { $0.invalidateIntrinsicContentSize() }
         cachedIntrinsicContentSize = calculateIntrinsicContentSize()
         if previousIntrinsicContentSize != cachedIntrinsicContentSize {
             delegate?.messageInputBar(self, didChangeIntrinsicContentTo: cachedIntrinsicContentSize)
@@ -450,12 +455,17 @@ open class MessageInputBar: UIView {
                 textViewHeightAnchor?.isActive = false
                 inputTextView.isScrollEnabled = false
                 isOverMaxTextViewHeight = false
+                inputTextView.invalidateIntrinsicContentSize()
             }
         }
         
         // Calculate the required height
         let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + textViewPadding.top + textViewPadding.bottom
-        let verticalStackViewHeight = topStackView.bounds.height + bottomStackView.bounds.height
+        let topStackViewHeight = topStackView.arrangedSubviews.count > 0 ? topStackView.bounds.height : 0
+        print("top: ", topStackViewHeight)
+        let bottomStackViewHeight = bottomStackView.arrangedSubviews.count > 0 ? bottomStackView.bounds.height : 0
+        print("bottom: ", bottomStackViewHeight)
+        let verticalStackViewHeight = topStackViewHeight + bottomStackViewHeight
         let requiredHeight = inputTextViewHeight + totalPadding + verticalStackViewHeight
         return CGSize(width: bounds.width, height: requiredHeight)
     }
@@ -479,8 +489,8 @@ open class MessageInputBar: UIView {
                 bottomStackView.setNeedsLayout()
                 bottomStackView.layoutIfNeeded()
             case .top:
-                bottomStackView.setNeedsLayout()
-                bottomStackView.layoutIfNeeded()
+                topStackView.setNeedsLayout()
+                topStackView.layoutIfNeeded()
             }
         }
     }
