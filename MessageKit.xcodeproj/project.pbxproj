@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F066E1D1FDA3C1700E11013 /* SenderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E1C1FDA3C1700E11013 /* SenderSpec.swift */; };
+		1F066E211FDA3DEA00E11013 /* AvatarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E201FDA3DEA00E11013 /* AvatarSpec.swift */; };
+		1F066E231FDA3F0200E11013 /* DetectorTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E221FDA3F0200E11013 /* DetectorTypeSpec.swift */; };
 		1F087D451FD274FD00E95A45 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1F7FC8C71FD26F49006CC979 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1F087D461FD274FD00E95A45 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1F7FC8C51FD26F33006CC979 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1F7FC8C61FD26F33006CC979 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F7FC8C51FD26F33006CC979 /* Quick.framework */; };
@@ -26,9 +29,6 @@
 		8962AC911F87AB860030B058 /* MessagesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC7D1F87AB230030B058 /* MessagesViewControllerTests.swift */; };
 		8962AC941F87AB860030B058 /* MessageKitDateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */; };
 		8962AC951F87AB860030B058 /* MessageStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC751F87AB230030B058 /* MessageStyleTests.swift */; };
-		8962AC961F87AB860030B058 /* SenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC761F87AB230030B058 /* SenderTests.swift */; };
-		8962AC971F87AB860030B058 /* DetectorTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC771F87AB230030B058 /* DetectorTypeTests.swift */; };
-		8962AC981F87AB860030B058 /* AvatarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC781F87AB230030B058 /* AvatarTests.swift */; };
 		8962AC991F87AB860030B058 /* MessagesDisplayDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC811F87AB230030B058 /* MessagesDisplayDelegateTests.swift */; };
 		8962AC9A1F87ABB20030B058 /* MockMessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC7A1F87AB230030B058 /* MockMessagesDataSource.swift */; };
 		8962AC9C1F87ABC60030B058 /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC7B1F87AB230030B058 /* MockMessage.swift */; };
@@ -103,6 +103,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1F066E1C1FDA3C1700E11013 /* SenderSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderSpec.swift; sourceTree = "<group>"; };
+		1F066E201FDA3DEA00E11013 /* AvatarSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarSpec.swift; sourceTree = "<group>"; };
+		1F066E221FDA3F0200E11013 /* DetectorTypeSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorTypeSpec.swift; sourceTree = "<group>"; };
 		1F7FC8C31FD26F22006CC979 /* Carthage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Carthage; sourceTree = "<group>"; };
 		1F7FC8C51FD26F33006CC979 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		1F7FC8C71FD26F49006CC979 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -114,9 +117,6 @@
 		88916B2C1CF0DF2F00469F91 /* MessageKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessageKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitDateFormatterTests.swift; sourceTree = "<group>"; };
 		8962AC751F87AB230030B058 /* MessageStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageStyleTests.swift; sourceTree = "<group>"; };
-		8962AC761F87AB230030B058 /* SenderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderTests.swift; sourceTree = "<group>"; };
-		8962AC771F87AB230030B058 /* DetectorTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorTypeTests.swift; sourceTree = "<group>"; };
-		8962AC781F87AB230030B058 /* AvatarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarTests.swift; sourceTree = "<group>"; };
 		8962AC7A1F87AB230030B058 /* MockMessagesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMessagesDataSource.swift; sourceTree = "<group>"; };
 		8962AC7B1F87AB230030B058 /* MockMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMessage.swift; sourceTree = "<group>"; };
 		8962AC7D1F87AB230030B058 /* MessagesViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewControllerTests.swift; sourceTree = "<group>"; };
@@ -266,6 +266,9 @@
 		88916B411CF0DF5900469F91 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				1F066E201FDA3DEA00E11013 /* AvatarSpec.swift */,
+				1F066E221FDA3F0200E11013 /* DetectorTypeSpec.swift */,
+				1F066E1C1FDA3C1700E11013 /* SenderSpec.swift */,
 				8962AC7C1F87AB230030B058 /* ControllersTest */,
 				8962AC791F87AB230030B058 /* Mocks */,
 				8962AC731F87AB230030B058 /* ModelTests */,
@@ -281,9 +284,6 @@
 			children = (
 				8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */,
 				8962AC751F87AB230030B058 /* MessageStyleTests.swift */,
-				8962AC761F87AB230030B058 /* SenderTests.swift */,
-				8962AC771F87AB230030B058 /* DetectorTypeTests.swift */,
-				8962AC781F87AB230030B058 /* AvatarTests.swift */,
 			);
 			path = ModelTests;
 			sourceTree = "<group>";
@@ -619,17 +619,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				8962AC8C1F87AB7D0030B058 /* AvatarViewTests.swift in Sources */,
-				8962AC971F87AB860030B058 /* DetectorTypeTests.swift in Sources */,
 				8962AC941F87AB860030B058 /* MessageKitDateFormatterTests.swift in Sources */,
 				8962AC8E1F87AB7D0030B058 /* InputTextViewTests.swift in Sources */,
 				8962AC911F87AB860030B058 /* MessagesViewControllerTests.swift in Sources */,
+				1F066E231FDA3F0200E11013 /* DetectorTypeSpec.swift in Sources */,
+				1F066E211FDA3DEA00E11013 /* AvatarSpec.swift in Sources */,
 				8962AC901F87AB7D0030B058 /* MessageDateHeaderViewTests.swift in Sources */,
 				8962AC8F1F87AB7D0030B058 /* MessageInputBarTests.swift in Sources */,
+				1F066E1D1FDA3C1700E11013 /* SenderSpec.swift in Sources */,
 				1F7FC8CC1FD2700B006CC979 /* MessagesViewControllerSpec.swift in Sources */,
 				8962AC8A1F87AB7D0030B058 /* MessagesCollectionViewTests.swift in Sources */,
 				8962AC8D1F87AB7D0030B058 /* MessageCollectionViewCellTests.swift in Sources */,
-				8962AC961F87AB860030B058 /* SenderTests.swift in Sources */,
-				8962AC981F87AB860030B058 /* AvatarTests.swift in Sources */,
 				8962AC991F87AB860030B058 /* MessagesDisplayDelegateTests.swift in Sources */,
 				8962AC8B1F87AB7D0030B058 /* InputBarItemTests.swift in Sources */,
 				8962AC951F87AB860030B058 /* MessageStyleTests.swift in Sources */,
