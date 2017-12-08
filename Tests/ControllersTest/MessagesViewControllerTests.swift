@@ -66,27 +66,6 @@ class MessagesViewControllerTests: XCTestCase {
         XCTAssertTrue(layout is MessagesCollectionViewFlowLayout)
     }
 
-
-    func testViewDidLoad_shouldAddMessageCollectionViewInSubviews() {
-        let messageColelctionViews = sut.view.subviews.filter { $0 is MessagesCollectionView }
-
-        XCTAssertEqual(messageColelctionViews.count, 1)
-    }
-
-    func testViewDidLoad_shouldSetCollectionViewDelegate() {
-        let delegate = sut.messagesCollectionView.delegate
-
-        XCTAssertNotNil(delegate)
-        XCTAssertTrue(delegate is MessagesViewController)
-    }
-
-    func testViewDidLoad_shouldSetCollectionViewDataSource() {
-        let dataSource = sut.messagesCollectionView.dataSource
-
-        XCTAssertNotNil(dataSource)
-        XCTAssertTrue(dataSource is MessagesViewController)
-    }
-
     func testViewDidLoad_shouldSetDelegateAndDataSourceToTheSameObject() {
         XCTAssertEqual(sut.messagesCollectionView.delegate as? MessagesViewController,
                        sut.messagesCollectionView.dataSource as? MessagesViewController)
