@@ -26,6 +26,7 @@ import Quick
 import Nimble
 @testable import MessageKit
 
+//swiftlint:disable function_body_length
 final class MessagesViewControllerSpec: QuickSpec {
 
     override func spec() {
