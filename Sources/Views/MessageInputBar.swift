@@ -308,13 +308,13 @@ open class MessageInputBar: UIView {
                                                name: .UIDeviceOrientationDidChange, object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MessageInputBar.textViewDidChange),
-                                               name: .UITextViewTextDidChange, object: nil)
+                                               name: .UITextViewTextDidChange, object: inputTextView)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MessageInputBar.textViewDidBeginEditing),
-                                               name: .UITextViewTextDidBeginEditing, object: nil)
+                                               name: .UITextViewTextDidBeginEditing, object: inputTextView)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MessageInputBar.textViewDidEndEditing),
-                                               name: .UITextViewTextDidEndEditing, object: nil)
+                                               name: .UITextViewTextDidEndEditing, object: inputTextView)
     }
     
     /// Adds all of the subviews
