@@ -205,18 +205,38 @@ open class MessageInputBar: UIView {
     /// improves the performance
     public private(set) var isOverMaxTextViewHeight = false
     
-    /// The maximum height that the InputTextView can reach
-    open var maxTextViewHeight: CGFloat = (UIScreen.main.bounds.height / 5).rounded(.down) {
+    private var isTraitCollectionDidChanged = false {
         didSet {
-            textViewHeightAnchor?.constant = maxTextViewHeight
+            defaultMaxTextViewHeight = (UIScreen.main.bounds.height / 5).rounded(.down)
+        }
+    }
+    
+    private var defaultMaxTextViewHeight = (UIScreen.main.bounds.height / 5).rounded(.down)
+    
+    /// The maximum height that the InputTextView can reach
+    open var maxTextViewHeight: CGFloat {
+        get {
+            if isSetMaxTextViewHeight {
+                return internalMaxTextViewHeight
+            }
+            return defaultMaxTextViewHeight
+        }
+        set {
+            isSetMaxTextViewHeight = true
+            internalMaxTextViewHeight = newValue
+            textViewHeightAnchor?.constant = newValue
             invalidateIntrinsicContentSize()
         }
     }
     
+    private var internalMaxTextViewHeight: CGFloat = 0
+    
+    private var isSetMaxTextViewHeight: Bool = false
+    
     /// The height that will fit the current text in the InputTextView based on its current bounds
     public var requiredInputTextViewHeight: CGFloat {
         let maxTextViewSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
-        return inputTextView.sizeThatFits(maxTextViewSize).height.rounded(.down)
+        return inputTextView.sizeThatFits(maxTextViewSize).height.rounded(.up)
     }
     
     /// The fixed widthAnchor constant of the leftStackView
@@ -303,9 +323,6 @@ open class MessageInputBar: UIView {
     /// Adds the required notification observers
     private func setupObservers() {
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(MessageInputBar.orientationDidChange),
-                                               name: .UIDeviceOrientationDidChange, object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(MessageInputBar.textViewDidChange),
                                                name: .UITextViewTextDidChange, object: inputTextView)
@@ -458,20 +475,23 @@ open class MessageInputBar: UIView {
         
         var inputTextViewHeight = requiredInputTextViewHeight
         if inputTextViewHeight >= maxTextViewHeight {
-            if !isOverMaxTextViewHeight {
+            if !isOverMaxTextViewHeight || isTraitCollectionDidChanged {
+                textViewHeightAnchor?.constant = maxTextViewHeight
                 textViewHeightAnchor?.isActive = true
                 inputTextView.isScrollEnabled = true
                 isOverMaxTextViewHeight = true
             }
             inputTextViewHeight = maxTextViewHeight
         } else {
-            if isOverMaxTextViewHeight {
+            if isOverMaxTextViewHeight || isTraitCollectionDidChanged {
                 textViewHeightAnchor?.isActive = false
                 inputTextView.isScrollEnabled = false
                 isOverMaxTextViewHeight = false
                 inputTextView.invalidateIntrinsicContentSize()
             }
         }
+        
+        isTraitCollectionDidChanged = false
         
         // Calculate the required height
         let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + textViewPadding.top + textViewPadding.bottom
@@ -636,9 +656,12 @@ open class MessageInputBar: UIView {
     // MARK: - Notifications/Hooks
     
     /// Invalidates the intrinsicContentSize
-    @objc
-    open func orientationDidChange() {
-        invalidateIntrinsicContentSize()
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass || traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+            isTraitCollectionDidChanged = true
+            invalidateIntrinsicContentSize()
+        }
     }
     
     /// Enables/Disables the sendButton based on the InputTextView's text being empty
