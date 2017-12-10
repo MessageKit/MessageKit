@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F066E131FD90BB600E11013 /* MessagesViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7FC8CB1FD2700B006CC979 /* MessagesViewControllerSpec.swift */; };
+		1F066E141FD90BB700E11013 /* MessageLabelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E101FD90A0600E11013 /* MessageLabelSpec.swift */; };
 		1F066E1D1FDA3C1700E11013 /* SenderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E1C1FDA3C1700E11013 /* SenderSpec.swift */; };
 		1F066E211FDA3DEA00E11013 /* AvatarSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E201FDA3DEA00E11013 /* AvatarSpec.swift */; };
 		1F066E231FDA3F0200E11013 /* DetectorTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E221FDA3F0200E11013 /* DetectorTypeSpec.swift */; };
@@ -14,7 +16,6 @@
 		1F087D461FD274FD00E95A45 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1F7FC8C51FD26F33006CC979 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1F7FC8C61FD26F33006CC979 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F7FC8C51FD26F33006CC979 /* Quick.framework */; };
 		1F7FC8C81FD26F49006CC979 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F7FC8C71FD26F49006CC979 /* Nimble.framework */; };
-		1F7FC8CC1FD2700B006CC979 /* MessagesViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7FC8CB1FD2700B006CC979 /* MessagesViewControllerSpec.swift */; };
 		1F82D1431FB1B75B00B81A88 /* AvatarPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F82D1421FB1B75B00B81A88 /* AvatarPosition.swift */; };
 		38C57C791F9AE3E50043CC03 /* SeparatorLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C57C781F9AE3E50043CC03 /* SeparatorLine.swift */; };
 		38C57C7C1F9AE4890043CC03 /* InputStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C57C7B1F9AE4870043CC03 /* InputStackView.swift */; };
@@ -103,6 +104,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1F066E101FD90A0600E11013 /* MessageLabelSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLabelSpec.swift; sourceTree = "<group>"; };
 		1F066E1C1FDA3C1700E11013 /* SenderSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderSpec.swift; sourceTree = "<group>"; };
 		1F066E201FDA3DEA00E11013 /* AvatarSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarSpec.swift; sourceTree = "<group>"; };
 		1F066E221FDA3F0200E11013 /* DetectorTypeSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorTypeSpec.swift; sourceTree = "<group>"; };
@@ -300,8 +302,9 @@
 		8962AC7C1F87AB230030B058 /* ControllersTest */ = {
 			isa = PBXGroup;
 			children = (
-				8962AC7D1F87AB230030B058 /* MessagesViewControllerTests.swift */,
+				1F066E101FD90A0600E11013 /* MessageLabelSpec.swift */,
 				1F7FC8CB1FD2700B006CC979 /* MessagesViewControllerSpec.swift */,
+				8962AC7D1F87AB230030B058 /* MessagesViewControllerTests.swift */,
 			);
 			path = ControllersTest;
 			sourceTree = "<group>";
@@ -619,6 +622,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8962AC8C1F87AB7D0030B058 /* AvatarViewTests.swift in Sources */,
+				1F066E141FD90BB700E11013 /* MessageLabelSpec.swift in Sources */,
+				8962AC971F87AB860030B058 /* DetectorTypeTests.swift in Sources */,
 				8962AC941F87AB860030B058 /* MessageKitDateFormatterTests.swift in Sources */,
 				8962AC8E1F87AB7D0030B058 /* InputTextViewTests.swift in Sources */,
 				8962AC911F87AB860030B058 /* MessagesViewControllerTests.swift in Sources */,
@@ -626,6 +631,7 @@
 				1F066E211FDA3DEA00E11013 /* AvatarSpec.swift in Sources */,
 				8962AC901F87AB7D0030B058 /* MessageDateHeaderViewTests.swift in Sources */,
 				8962AC8F1F87AB7D0030B058 /* MessageInputBarTests.swift in Sources */,
+				1F066E131FD90BB600E11013 /* MessagesViewControllerSpec.swift in Sources */,
 				1F066E1D1FDA3C1700E11013 /* SenderSpec.swift in Sources */,
 				1F7FC8CC1FD2700B006CC979 /* MessagesViewControllerSpec.swift in Sources */,
 				8962AC8A1F87AB7D0030B058 /* MessagesCollectionViewTests.swift in Sources */,

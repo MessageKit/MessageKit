@@ -243,7 +243,6 @@ private class MockMessagesViewController: MessagesViewController, MessagesDispla
         return 200
     }
 
-
     var dataProvider: MockMessagesDataSource!
 
     override func viewDidLoad() {
