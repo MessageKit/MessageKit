@@ -205,38 +205,21 @@ open class MessageInputBar: UIView {
     /// improves the performance
     public private(set) var isOverMaxTextViewHeight = false
     
-    private var isTraitCollectionDidChanged = false {
-        didSet {
-            defaultMaxTextViewHeight = (UIScreen.main.bounds.height / 5).rounded(.down)
-        }
-    }
-    
-    private var defaultMaxTextViewHeight = (UIScreen.main.bounds.height / 5).rounded(.down)
+    /// A boolean that determines if the maxTextViewHeight should be auto updated on device rotation
+    open var shouldAutoUpdateMaxTextViewHeight = true
     
     /// The maximum height that the InputTextView can reach
-    open var maxTextViewHeight: CGFloat {
-        get {
-            if isSetMaxTextViewHeight {
-                return internalMaxTextViewHeight
-            }
-            return defaultMaxTextViewHeight
-        }
-        set {
-            isSetMaxTextViewHeight = true
-            internalMaxTextViewHeight = newValue
-            textViewHeightAnchor?.constant = newValue
+    open var maxTextViewHeight: CGFloat = 0 {
+        didSet {
+            textViewHeightAnchor?.constant = maxTextViewHeight
             invalidateIntrinsicContentSize()
         }
     }
     
-    private var internalMaxTextViewHeight: CGFloat = 0
-    
-    private var isSetMaxTextViewHeight: Bool = false
-    
     /// The height that will fit the current text in the InputTextView based on its current bounds
     public var requiredInputTextViewHeight: CGFloat {
         let maxTextViewSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
-        return inputTextView.sizeThatFits(maxTextViewSize).height.rounded(.up)
+        return inputTextView.sizeThatFits(maxTextViewSize).height.rounded(.down)
     }
     
     /// The fixed widthAnchor constant of the leftStackView
@@ -386,6 +369,7 @@ open class MessageInputBar: UIView {
             left:   inputTextView.leftAnchor.constraint(equalTo: leftStackView.rightAnchor, constant: textViewPadding.left),
             right:  inputTextView.rightAnchor.constraint(equalTo: rightStackView.leftAnchor, constant: -textViewPadding.right)
         )
+        maxTextViewHeight = calculateMaxTextViewHeight()
         textViewHeightAnchor = inputTextView.heightAnchor.constraint(equalToConstant: maxTextViewHeight)
         
         leftStackViewLayoutSet = NSLayoutConstraintSet(
@@ -475,7 +459,7 @@ open class MessageInputBar: UIView {
         
         var inputTextViewHeight = requiredInputTextViewHeight
         if inputTextViewHeight >= maxTextViewHeight {
-            if !isOverMaxTextViewHeight || isTraitCollectionDidChanged {
+            if !isOverMaxTextViewHeight {
                 textViewHeightAnchor?.constant = maxTextViewHeight
                 textViewHeightAnchor?.isActive = true
                 inputTextView.isScrollEnabled = true
@@ -483,15 +467,13 @@ open class MessageInputBar: UIView {
             }
             inputTextViewHeight = maxTextViewHeight
         } else {
-            if isOverMaxTextViewHeight || isTraitCollectionDidChanged {
+            if isOverMaxTextViewHeight {
                 textViewHeightAnchor?.isActive = false
                 inputTextView.isScrollEnabled = false
                 isOverMaxTextViewHeight = false
                 inputTextView.invalidateIntrinsicContentSize()
             }
         }
-        
-        isTraitCollectionDidChanged = false
         
         // Calculate the required height
         let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + textViewPadding.top + textViewPadding.bottom
@@ -500,6 +482,16 @@ open class MessageInputBar: UIView {
         let verticalStackViewHeight = topStackViewHeight + bottomStackViewHeight
         let requiredHeight = inputTextViewHeight + totalPadding + verticalStackViewHeight
         return CGSize(width: bounds.width, height: requiredHeight)
+    }
+    
+    /// Returns the max height the InputTextView can grow to based on the UIScreen
+    ///
+    /// - Returns: Max Height
+    open func calculateMaxTextViewHeight() -> CGFloat {
+        if traitCollection.verticalSizeClass == .regular {
+            return (UIScreen.main.bounds.height / 3).rounded(.down)
+        }
+        return (UIScreen.main.bounds.height / 5).rounded(.down)
     }
     
     /// Layout the given InputStackView's
@@ -659,7 +651,9 @@ open class MessageInputBar: UIView {
     open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass || traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
-            isTraitCollectionDidChanged = true
+            if shouldAutoUpdateMaxTextViewHeight {
+                maxTextViewHeight = calculateMaxTextViewHeight()
+            }
             invalidateIntrinsicContentSize()
         }
     }
