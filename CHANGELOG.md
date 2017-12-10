@@ -11,6 +11,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - **Breaking Change** Changed the name of  `MessageInputBar`'s property `maxHeight` to `maxTextViewHeight` as the property is the max height the `InputTextView` can have, not the `MessageInputBar` itself.
 [#380](https://github.com/MessageKit/MessageKit/pull/380) by [@nathantannar4](https://github.com/nathantannar4).
 
+- **Breaking Change**  Adds a new view `contentView` of type `UIView` to the MessageInputBar to hold the main subviews of the `MessageInputBar`. Reduces complexity of constraints for easier testing/debugging.
+[#384](https://github.com/MessageKit/MessageKit/pull/384) by [@nathantannar4](https://github.com/nathantannar4).
+
 ## [[Prerelease] 0.11.0](https://github.com/MessageKit/MessageKit/releases/tag/0.11.0)
 
 ### Added

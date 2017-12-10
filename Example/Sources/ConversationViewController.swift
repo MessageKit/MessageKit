@@ -78,10 +78,8 @@ class ConversationViewController: MessagesViewController {
         
         if isTyping {
             
-            messageInputBar.topStackView.arrangedSubviews.forEach {
-                messageInputBar.topStackView.removeArrangedSubview($0)
-                $0.removeFromSuperview()
-            }
+            messageInputBar.topStackView.arrangedSubviews.first?.removeFromSuperview()
+            messageInputBar.topStackViewPadding = .zero
             
         } else {
             
@@ -93,7 +91,8 @@ class ConversationViewController: MessagesViewController {
             
             messageInputBar.topStackViewPadding.top = 6
             messageInputBar.topStackViewPadding.left = 12
-            // The backgroundView doesn't include the topStackView. This is so things in the topStackView can have transparent backgrounds if you need it that way
+            
+            // The backgroundView doesn't include the topStackView. This is so things in the topStackView can have transparent backgrounds if you need it that way or another color all together
             messageInputBar.backgroundColor = messageInputBar.backgroundView.backgroundColor
             
         }
