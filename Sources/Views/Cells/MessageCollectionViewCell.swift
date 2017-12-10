@@ -27,7 +27,7 @@ import UIKit
 open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusable {
 
     open class func reuseIdentifier() -> String {
-        return "messagekit.cell.messagecell"
+        return "messagekit.cell.base-cell"
     }
 
     open var avatarView = AvatarView()
