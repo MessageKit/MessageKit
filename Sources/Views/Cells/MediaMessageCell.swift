@@ -25,6 +25,7 @@
 import UIKit
 
 open class MediaMessageCell: MessageCollectionViewCell {
+
     open override class func reuseIdentifier() -> String { return "messagekit.cell.mediamessage" }
 
     // MARK: - Properties
