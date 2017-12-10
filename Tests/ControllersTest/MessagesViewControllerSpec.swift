@@ -26,6 +26,7 @@ import Quick
 import Nimble
 @testable import MessageKit
 
+//swiftlint:disable function_body_length
 final class MessagesViewControllerSpec: QuickSpec {
 
     override func spec() {
@@ -37,64 +38,129 @@ final class MessagesViewControllerSpec: QuickSpec {
         }
 
         describe("default property values") {
-            it("does not scroll to bottom on first layout") {
-                expect(controller.scrollsToBottomOnFirstLayout).to(beFalse())
+            context("after initialization") {
+                it("sets scrollsToBottomOnFirstLayout to false") {
+                    expect(controller.scrollsToBottomOnFirstLayout).to(beFalse())
+                }
+                it("sets scrollsToBottomOnKeyboardBeginsEditing to false") {
+                    expect(controller.scrollsToBottomOnKeybordBeginsEditing).to(beFalse())
+                }
+                it("sets canBecomeFirstResponder to true") {
+                    expect(controller.canBecomeFirstResponder).to(beTrue())
+                }
+                it("sets shouldAutorotate to false") {
+                    expect(controller.shouldAutorotate).to(beFalse())
+                }
+                it("sets inputAccessoryView to the messageInputBar") {
+                    expect(controller.inputAccessoryView).toNot(beNil())
+                    expect(controller.inputAccessoryView is MessageInputBar).to(beTrue())
+                }
+                it("has a MessagesCollectionView") {
+                    expect(controller.messagesCollectionView).toNot(beNil())
+                }
             }
-
-            it("does not scroll to bottom on begins editing") {
-                expect(controller.scrollsToBottomOnKeybordBeginsEditing).to(beFalse())
-            }
-
-            it("can become first responder") {
-                expect(controller.canBecomeFirstResponder).to(beTrue())
-            }
-
-            it("does not autorotate") {
-                expect(controller.shouldAutorotate).to(beFalse())
-            }
-
-            it("has an inputAccessoryView of type MessageInputBar") {
-                expect(controller.inputAccessoryView).toNot(beNil())
-                expect(controller.inputAccessoryView is MessageInputBar).to(beTrue())
-            }
-
-            it("has a MessagesCollectionView") {
-                expect(controller.messagesCollectionView).toNot(beNil())
+            context("after viewDidLoad") {
+                beforeEach {
+                    controller.view.layoutIfNeeded()
+                }
+                it("sets automaticallyAdjustsScrollViewInsets to false") {
+                    expect(controller.automaticallyAdjustsScrollViewInsets).to(beFalse())
+                }
+                it("sets extendedLayoutIncludesOpaqueBars to true") {
+                    expect(controller.extendedLayoutIncludesOpaqueBars).to(beTrue())
+                }
+                it("sets the background color to be white") {
+                    expect(controller.view.backgroundColor).to(be(UIColor.white))
+                }
+                it("sets keyboardDismissMode to .interactive") {
+                    let dismissMode = controller.messagesCollectionView.keyboardDismissMode
+                    expect(dismissMode).to(equal(UIScrollViewKeyboardDismissMode.interactive))
+                }
+                it("sets alwaysBounceVertical to true") {
+                    expect(controller.messagesCollectionView.alwaysBounceVertical).to(beTrue())
+                }
             }
         }
 
-        describe("after viewDidLoad") {
+        describe("subviews setup") {
+            it("should add messagesCollectionView as a subview of root view") {
+                let subviews = controller.view.subviews
+                let hasView = subviews.contains(controller.messagesCollectionView)
+                expect(hasView).to(beTrue())
+            }
+        }
 
+        describe("delegate and datasource setup") {
             beforeEach {
-                controller.viewDidLoad()
+                controller.view.layoutIfNeeded()
             }
-
-            it("does not automatically adjust scroll view insets") {
-                expect(controller.automaticallyAdjustsScrollViewInsets).to(beFalse())
+            it("should set messagesCollectionView.dataSource") {
+                let delegate = controller.messagesCollectionView.delegate
+                expect(delegate).to(be(controller))
             }
-
-            it("includes opaque bars in extended layout") {
-                expect(controller.extendedLayoutIncludesOpaqueBars).to(beTrue())
+            it("should set messagesCollectionView.delegate") {
+                let dataSource = controller.messagesCollectionView.dataSource
+                expect(dataSource).to(be(controller))
             }
+        }
 
-            it("has a background color of white") {
-                expect(controller.view.backgroundColor).to(be(UIColor.white))
+        describe("the top contentInset") {
+            context("when controller is root view controller") {
+
             }
+            context("when controller is nested in a UINavigationController") {
 
-            describe("messagesCollectionView properties") {
+            }
+        }
 
-                var messagesCollectionView: MessagesCollectionView!
+        describe("the bottom contentInset") {
+            context("when keyboard is showing") {
+                it("should be the height of the MessageInputBar + keyboard") {
 
-                beforeEach {
-                    messagesCollectionView = controller.messagesCollectionView
                 }
+            }
+            context("when keyboard is not showing") {
+                it("should be the height of the MessageInputBar") {
 
-                it("uses interactive keyboard dismissal") {
-                    expect(messagesCollectionView.keyboardDismissMode).to(equal(UIScrollViewKeyboardDismissMode.interactive))
                 }
+            }
+        }
 
-                it("it always bounces vertical") {
-                    expect(messagesCollectionView.alwaysBounceVertical).to(beTrue())
+        describe("scrolling behavior when keyboard begins editing") {
+            context("scrollsToBottomOnKeybordBeginsEditing is true") {
+                it("should scroll to bottom") {
+
+                }
+            }
+            context("scrollsToBottomOnKeybordBeginsEditing is false") {
+                it("should not scroll to bottom") {
+
+                }
+            }
+        }
+
+        describe("scrolling behavior on first layout") {
+            context("scrollsToBottomOnFirstLayout is true") {
+                it("should scroll to bottom") {
+
+                }
+            }
+            context("scrollsToBottomOnFirstLayout is false") {
+                it("should not scroll to bottom") {
+
+                }
+            }
+        }
+
+        describe("calling messagesCollectionView.scrollToBottom()") {
+            context("all messages are visible") {
+                it("should scroll to bottom") {
+
+                }
+            }
+            context("not all messages are visible") {
+                it("should scroll to bottom") {
+
                 }
             }
         }

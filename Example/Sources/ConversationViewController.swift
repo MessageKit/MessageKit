@@ -35,6 +35,8 @@ class ConversationViewController: MessagesViewController {
             }
         }
     }
+    
+    var isTyping = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,10 +58,44 @@ class ConversationViewController: MessagesViewController {
         scrollsToBottomOnFirstLayout = true //default false
         scrollsToBottomOnKeybordBeginsEditing = true // default false
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(handleKeyboardButton))
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
+                            style: .plain,
+                            target: self,
+                            action: #selector(handleKeyboardButton)),
+            UIBarButtonItem(image: UIImage(named: "ic_typing"),
+                            style: .plain,
+                            target: self,
+                            action: #selector(handleTyping))
+        ]
+    }
+    
+    @objc func handleTyping() {
+        
+        defer {
+            isTyping = !isTyping
+        }
+        
+        if isTyping {
+            
+            messageInputBar.topStackView.arrangedSubviews.first?.removeFromSuperview()
+            messageInputBar.topStackViewPadding = .zero
+            
+        } else {
+            
+            let label = UILabel()
+            label.text = "nathan.tannar is typing..."
+            label.font = UIFont.boldSystemFont(ofSize: 16)
+            messageInputBar.topStackView.addArrangedSubview(label)
+            
+            
+            messageInputBar.topStackViewPadding.top = 6
+            messageInputBar.topStackViewPadding.left = 12
+            
+            // The backgroundView doesn't include the topStackView. This is so things in the topStackView can have transparent backgrounds if you need it that way or another color all together
+            messageInputBar.backgroundColor = messageInputBar.backgroundView.backgroundColor
+            
+        }
     }
     
     @objc func handleKeyboardButton() {
@@ -93,6 +129,7 @@ class ConversationViewController: MessagesViewController {
 
     func slack() {
         defaultStyle()
+        messageInputBar.backgroundView.backgroundColor = .white
         messageInputBar.isTranslucent = false
         messageInputBar.inputTextView.backgroundColor = .clear
         messageInputBar.inputTextView.layer.borderWidth = 0
@@ -150,6 +187,7 @@ class ConversationViewController: MessagesViewController {
     func iMessage() {
         defaultStyle()
         messageInputBar.isTranslucent = false
+        messageInputBar.backgroundView.backgroundColor = .white
         messageInputBar.separatorLine.isHidden = true
         messageInputBar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
