@@ -46,8 +46,7 @@ final class MessageLabelSpec: QuickSpec {
                     messageLabel.text = "One Infinite Loop Cupertino, CA 95014"
                     messageLabel.enabledDetectors = [.address]
                     let attributes = messageLabel.textAttributes
-                    let textColor = attributes?[.foregroundColor] as? UIColor
-                    expect(textColor).toNot(beNil())
+                    let textColor = attributes[.foregroundColor] as? UIColor
                     expect(textColor).to(equal(expectedColor))
                 }
             }
@@ -58,8 +57,7 @@ final class MessageLabelSpec: QuickSpec {
                     messageLabel.text = "1-800-555-1234"
                     messageLabel.enabledDetectors = [.phoneNumber]
                     let attributes = messageLabel.textAttributes
-                    let textFont = attributes?[.font] as? UIFont
-                    expect(textFont).toNot(beNil())
+                    let textFont = attributes[.font] as? UIFont
                     expect(textFont).to(equal(expectedFont))
                 }
             }
@@ -70,8 +68,7 @@ final class MessageLabelSpec: QuickSpec {
                     messageLabel.text = "https://github.com/MessageKit"
                     messageLabel.enabledDetectors = [.url]
                     let attributes = messageLabel.textAttributes
-                    let textColor = attributes?[.foregroundColor] as? UIColor
-                    expect(textColor).toNot(beNil())
+                    let textColor = attributes[.foregroundColor] as? UIColor
                     expect(textColor).to(equal(expectedColor))
                 }
             }
@@ -82,8 +79,7 @@ final class MessageLabelSpec: QuickSpec {
                     messageLabel.text = "Today"
                     messageLabel.enabledDetectors = [.date]
                     let attributes = messageLabel.textAttributes
-                    let textFont = attributes?[.font] as? UIFont
-                    expect(textFont).toNot(beNil())
+                    let textFont = attributes[.font] as? UIFont
                     expect(textFont).to(equal(expectedFont))
                 }
             }
@@ -250,9 +246,9 @@ final class MessageLabelSpec: QuickSpec {
 
 fileprivate extension MessageLabel {
 
-    var textAttributes: [NSAttributedStringKey: Any]? {
+    var textAttributes: [NSAttributedStringKey: Any] {
         let length = attributedText!.length
         var range = NSRange(location: 0, length: length)
-        return attributedText?.attributes(at: 0, effectiveRange: &range)
+        return attributedText!.attributes(at: 0, effectiveRange: &range)
     }
 }
