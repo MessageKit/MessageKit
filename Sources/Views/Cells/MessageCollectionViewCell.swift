@@ -32,7 +32,12 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
     open var avatarView = AvatarView()
 
-    open var messageContainerView = MessageContainerView()
+    open var messageContainerView: MessageContainerView = {
+        let containerView = MessageContainerView()
+        containerView.clipsToBounds = true
+        containerView.layer.masksToBounds = true
+        return containerView
+    }()
 
     open var cellTopLabel: UILabel = {
         let label = UILabel()
@@ -50,6 +55,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
     override public init(frame: CGRect) {
         super.init(frame: frame)
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         setupSubviews()
         setupGestureRecognizers()
     }

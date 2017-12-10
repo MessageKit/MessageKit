@@ -40,6 +40,7 @@ class MessagesViewControllerTests: XCTestCase {
 
         sut = MessagesViewController()
         sut.messagesCollectionView.messagesLayoutDelegate = layoutDelegate
+        sut.messagesCollectionView.messagesDisplayDelegate = layoutDelegate
         _ = sut.view
         sut.beginAppearanceTransition(true, animated: true)
         sut.endAppearanceTransition()
@@ -193,7 +194,7 @@ class MessagesViewControllerTests: XCTestCase {
 
 }
 
-private class MockLayoutDelegate: MessagesLayoutDelegate {
+private class MockLayoutDelegate: MessagesLayoutDelegate, MessagesDisplayDelegate {
 
     // MARK: - LocationMessageLayoutDelegate
 
