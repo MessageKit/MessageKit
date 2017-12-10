@@ -460,7 +460,6 @@ open class MessageInputBar: UIView {
         var inputTextViewHeight = requiredInputTextViewHeight
         if inputTextViewHeight >= maxTextViewHeight {
             if !isOverMaxTextViewHeight {
-                textViewHeightAnchor?.constant = maxTextViewHeight
                 textViewHeightAnchor?.isActive = true
                 inputTextView.isScrollEnabled = true
                 isOverMaxTextViewHeight = true
