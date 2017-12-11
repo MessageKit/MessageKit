@@ -87,3 +87,14 @@ extension MessagesCollectionViewFlowLayout {
     }
     
 }
+
+extension MessagesViewController {
+    /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
+    /// bottom on the view's first layout.
+    ///
+    /// The default value of this property is `false`.
+    @available(*, deprecated: 0.11.1, message: "Removed in MessageKit 0.11.1.")
+    open var scrollsToBottomOnFirstLayout: Bool {
+        fatalError("Fatal Error: scrollsToBottomOnFirstLayout is no longer supported")
+    }
+}
