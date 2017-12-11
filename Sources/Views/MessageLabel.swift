@@ -78,7 +78,10 @@ open class MessageLabel: UILabel {
         }
         set {
             if let text = newValue {
-                attributedText = NSAttributedString(string: text)
+                let mutableText = NSMutableAttributedString(string: text)
+                let range = NSRange(location: 0, length: mutableText.length)
+                mutableText.addAttributes([.font: font], range: range)
+                attributedText = mutableText
             } else {
                 attributedText = nil
             }
