@@ -41,6 +41,18 @@ extension UIView {
 	    NSLayoutConstraint.activate(constraints)
     }
 
+    func centerInSuperview() {
+        guard let superview = self.superview else {
+            return
+        }
+        translatesAutoresizingMaskIntoConstraints = false
+        let constraints: [NSLayoutConstraint] = [
+            centerXAnchor.constraint(equalTo: superview.centerXAnchor),
+            centerYAnchor.constraint(equalTo: superview.centerYAnchor)
+        ]
+        NSLayoutConstraint.activate(constraints)
+    }
+
     @discardableResult
     func addConstraints(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightConstant: CGFloat = 0, widthConstant: CGFloat = 0, heightConstant: CGFloat = 0) -> [NSLayoutConstraint] {
         

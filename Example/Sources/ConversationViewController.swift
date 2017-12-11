@@ -326,6 +326,10 @@ extension ConversationViewController: MessagesDisplayDelegate {
 
 extension ConversationViewController: MessagesLayoutDelegate {
 
+    func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
+        return [.url, .address, .phoneNumber, .date]
+    }
+
     func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
         return AvatarPosition(horizontal: .natural, vertical: .messageBottom)
     }
@@ -371,19 +375,19 @@ extension ConversationViewController: MessagesLayoutDelegate {
 
 extension ConversationViewController: MessageCellDelegate {
 
-    func didTapAvatar<T>(in cell: MessageCollectionViewCell<T>) {
+    func didTapAvatar(in cell: MessageCollectionViewCell) {
         print("Avatar tapped")
     }
 
-    func didTapMessage<T>(in cell: MessageCollectionViewCell<T>) {
+    func didTapMessage(in cell: MessageCollectionViewCell) {
         print("Message tapped")
     }
 
-    func didTapTopLabel<T>(in cell: MessageCollectionViewCell<T>) {
+    func didTapTopLabel(in cell: MessageCollectionViewCell) {
         print("Top label tapped")
     }
 
-    func didTapBottomLabel<T>(in cell: MessageCollectionViewCell<T>) {
+    func didTapBottomLabel(in cell: MessageCollectionViewCell) {
         print("Bottom label tapped")
     }
 
