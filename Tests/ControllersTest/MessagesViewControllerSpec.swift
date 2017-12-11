@@ -39,9 +39,6 @@ final class MessagesViewControllerSpec: QuickSpec {
 
         describe("default property values") {
             context("after initialization") {
-                it("sets scrollsToBottomOnFirstLayout to false") {
-                    expect(controller.scrollsToBottomOnFirstLayout).to(beFalse())
-                }
                 it("sets scrollsToBottomOnKeyboardBeginsEditing to false") {
                     expect(controller.scrollsToBottomOnKeybordBeginsEditing).to(beFalse())
                 }
@@ -133,19 +130,6 @@ final class MessagesViewControllerSpec: QuickSpec {
                 }
             }
             context("scrollsToBottomOnKeybordBeginsEditing is false") {
-                it("should not scroll to bottom") {
-
-                }
-            }
-        }
-
-        describe("scrolling behavior on first layout") {
-            context("scrollsToBottomOnFirstLayout is true") {
-                it("should scroll to bottom") {
-
-                }
-            }
-            context("scrollsToBottomOnFirstLayout is false") {
                 it("should not scroll to bottom") {
 
                 }
