@@ -58,7 +58,6 @@ open class LocationMessageCell: MessageCollectionViewCell {
 
         let snapshotOptions = MKMapSnapshotOptions()
         snapshotOptions.region = MKCoordinateRegion(center: location.coordinate, span: options.span)
-        //snapshotOptions.size = imageView.frame.size
         snapshotOptions.showsBuildings = options.showsBuildings
         snapshotOptions.showsPointsOfInterest = options.showsPointsOfInterest
 
