@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0EE91E661FDEC888005420A2 /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE91E651FDEC887005420A2 /* CGRect+Extensions.swift */; };
 		1F066E131FD90BB600E11013 /* MessagesViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7FC8CB1FD2700B006CC979 /* MessagesViewControllerSpec.swift */; };
 		1F066E141FD90BB700E11013 /* MessageLabelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E101FD90A0600E11013 /* MessageLabelSpec.swift */; };
 		1F066E1D1FDA3C1700E11013 /* SenderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E1C1FDA3C1700E11013 /* SenderSpec.swift */; };
@@ -104,6 +105,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0EE91E651FDEC887005420A2 /* CGRect+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
 		1F066E101FD90A0600E11013 /* MessageLabelSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLabelSpec.swift; sourceTree = "<group>"; };
 		1F066E1C1FDA3C1700E11013 /* SenderSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderSpec.swift; sourceTree = "<group>"; };
 		1F066E201FDA3DEA00E11013 /* AvatarSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarSpec.swift; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 		B09643981F295D43004D0129 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0EE91E651FDEC887005420A2 /* CGRect+Extensions.swift */,
 				B7A03F671F8669EB006AEF79 /* Bundle+Extensions.swift */,
 				B7A03F681F8669EB006AEF79 /* NSAttributedString+Extensions.swift */,
 				B7A03F691F8669EB006AEF79 /* String+Extensions.swift */,
@@ -604,6 +607,7 @@
 				B7A03F251F866895006AEF79 /* NSConstraintLayoutSet.swift in Sources */,
 				B7A03F341F866940006AEF79 /* MessageFooterView.swift in Sources */,
 				B7A03F621F8669CA006AEF79 /* MessageInputBarDelegate.swift in Sources */,
+				0EE91E661FDEC888005420A2 /* CGRect+Extensions.swift in Sources */,
 				B7A03F181F86682C006AEF79 /* MessagesCollectionViewFlowLayout.swift in Sources */,
 				B7A03F2A1F866895006AEF79 /* MessageStyle.swift in Sources */,
 				B7A03F4D1F86694F006AEF79 /* MessagesCollectionView.swift in Sources */,
