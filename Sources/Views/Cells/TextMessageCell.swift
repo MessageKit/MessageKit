@@ -44,7 +44,7 @@ open class TextMessageCell: MessageCollectionViewCell {
         super.apply(layoutAttributes)
         if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
             messageLabel.configure {
-                messageLabel.frame = attributes.messageContainerFrame
+                messageLabel.frame = messageContainerView.bounds
                 messageLabel.textInsets = attributes.messageLabelInsets
                 messageLabel.font = attributes.messageLabelFont
             }
@@ -60,11 +60,6 @@ open class TextMessageCell: MessageCollectionViewCell {
     open override func setupSubviews() {
         super.setupSubviews()
         messageContainerView.addSubview(messageLabel)
-        setupConstraints()
-    }
-
-    open func setupConstraints() {
-        messageLabel.fillSuperview()
     }
 
     open func configure(_ message: MessageType, _ textColor: UIColor, _ detectors: [DetectorType]) {
