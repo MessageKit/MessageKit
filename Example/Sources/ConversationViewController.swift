@@ -32,6 +32,7 @@ class ConversationViewController: MessagesViewController {
         didSet {
             DispatchQueue.main.async {
                 self.messagesCollectionView.reloadData()
+                self.messagesCollectionView.scrollToBottom()
             }
         }
     }
@@ -55,7 +56,6 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
         messageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
-        scrollsToBottomOnFirstLayout = true //default false
         scrollsToBottomOnKeybordBeginsEditing = true // default false
 
         navigationItem.rightBarButtonItems = [

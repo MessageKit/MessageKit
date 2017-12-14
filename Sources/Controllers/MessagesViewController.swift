@@ -34,12 +34,6 @@ open class MessagesViewController: UIViewController {
 
     /// The `MessageInputBar` used as the `inputAccessoryView` in the view controller.
     open var messageInputBar = MessageInputBar()
-    
-    /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
-    /// bottom on the view's first layout.
-    ///
-    /// The default value of this property is `false`.
-    open var scrollsToBottomOnFirstLayout: Bool = false
 
     /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
     /// bottom whenever the `InputTextView` begins editing.
@@ -88,11 +82,6 @@ open class MessagesViewController: UIViewController {
             addKeyboardObservers()
             messagesCollectionView.contentInset.bottom = keyboardOffsetFrame.height
             messagesCollectionView.scrollIndicatorInsets.bottom = keyboardOffsetFrame.height
-            
-            //Scroll to bottom at first load
-            if scrollsToBottomOnFirstLayout {
-                messagesCollectionView.scrollToBottom(animated: false)
-            }
         }
     }
 
