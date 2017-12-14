@@ -520,7 +520,6 @@ open class MessageInputBar: UIView {
                     $0.parentStackViewPosition = position
                     leftStackView.addArrangedSubview($0)
                 }
-                guard superview != nil else { return }
                 leftStackView.layoutIfNeeded()
             case .right:
                 rightStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -530,7 +529,6 @@ open class MessageInputBar: UIView {
                     $0.parentStackViewPosition = position
                     rightStackView.addArrangedSubview($0)
                 }
-                guard superview != nil else { return }
                 rightStackView.layoutIfNeeded()
             case .bottom:
                 bottomStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -540,7 +538,6 @@ open class MessageInputBar: UIView {
                     $0.parentStackViewPosition = position
                     bottomStackView.addArrangedSubview($0)
                 }
-                guard superview != nil else { return }
                 bottomStackView.layoutIfNeeded()
             case .top:
                 topStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -550,7 +547,6 @@ open class MessageInputBar: UIView {
                     $0.parentStackViewPosition = position
                     topStackView.addArrangedSubview($0)
                 }
-                guard superview != nil else { return }
                 topStackView.layoutIfNeeded()
             }
             invalidateIntrinsicContentSize()
