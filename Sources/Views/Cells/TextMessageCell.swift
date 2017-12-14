@@ -67,7 +67,9 @@ open class TextMessageCell: MessageCollectionViewCell {
         messageLabel.fillSuperview()
     }
 
-    open func configure(_ message: MessageType, _ textColor: UIColor, _ detectors: [DetectorType]) {
+    open func configure(_ message: MessageType,
+                        _ textColor: UIColor,
+                        _ detectors: [DetectorType]) {
 
         messageLabel.configure {
             messageLabel.textColor = textColor
