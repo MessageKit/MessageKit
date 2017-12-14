@@ -32,9 +32,6 @@ open class MediaMessageCell: MessageCollectionViewCell {
 
     open lazy var playButtonView: PlayButtonView = {
         let playButtonView = PlayButtonView()
-        playButtonView.frame.size = CGSize(width: 35, height: 35)
-        playButtonView.center = messageContainerView.center
-        playButtonView.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
         return playButtonView
     }()
 
@@ -44,6 +41,8 @@ open class MediaMessageCell: MessageCollectionViewCell {
 
     open func setupConstraints() {
         imageView.fillSuperview()
+        playButtonView.centerInSuperview()
+        playButtonView.constraint(equalTo: CGSize(width: 35, height: 35))
     }
 
     open override func setupSubviews() {
