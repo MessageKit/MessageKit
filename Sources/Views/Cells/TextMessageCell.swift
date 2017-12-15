@@ -44,7 +44,6 @@ open class TextMessageCell: MessageCollectionViewCell {
         super.apply(layoutAttributes)
         if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
             messageLabel.configure {
-                messageLabel.frame = attributes.messageContainerFrame
                 messageLabel.textInsets = attributes.messageLabelInsets
                 messageLabel.font = attributes.messageLabelFont
             }
@@ -62,7 +61,7 @@ open class TextMessageCell: MessageCollectionViewCell {
         messageContainerView.addSubview(messageLabel)
         setupConstraints()
     }
-
+    
     open func setupConstraints() {
         messageLabel.fillSuperview()
     }
