@@ -64,20 +64,10 @@ open class MessagesCollectionView: UICollectionView {
     // MARK: - Methods
 
     public func scrollToBottom(animated: Bool = false) {
-        guard let indexPath = indexPathForLastItem else { return }
-        
         let collectionViewContentHeight = collectionViewLayout.collectionViewContentSize.height
-        let isContentTooSmall = (collectionViewContentHeight < bounds.height * 2)
-        
-        if isContentTooSmall {
-            performBatchUpdates(nil) { _ in
-                self.scrollRectToVisible(CGRect(0.0, collectionViewContentHeight - 1.0, 1.0, 1.0), animated: animated)
-            }
-            return
-        }
-        
+
         performBatchUpdates(nil) { _ in
-            self.scrollToItem(at: indexPath, at: .bottom, animated: animated)
+            self.scrollRectToVisible(CGRect(0.0, collectionViewContentHeight - 1.0, 1.0, 1.0), animated: animated)
         }
     }
 
