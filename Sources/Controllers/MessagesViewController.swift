@@ -232,8 +232,14 @@ extension MessagesViewController: UICollectionViewDataSource {
         switch message.data {
         case .text, .attributedText, .emoji:
             let cell = messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
-            let detectors = displayDelegate.enabledDetectors(for: message, at: indexPath, in: messagesCollectionView)
             let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
+            let detectors = displayDelegate.enabledDetectors(for: message, at: indexPath, in: messagesCollectionView)
+            cell.messageLabel.configure {
+                for detector in detectors {
+                    let attributes = displayDelegate.detectorAttributes(for: detector, and: message, at: indexPath)
+                    cell.messageLabel.setAttributes(attributes, detector: detector)
+                }
+            }
             cell.configure(message, textColor, detectors)
             commonConfigure(cell)
             return cell

@@ -126,31 +126,39 @@ open class MessageLabel: UILabel {
         }
     }
 
-    open var addressAttributes: [NSAttributedStringKey: Any] = [:] {
-        didSet {
-            updateAttributes(for: .address)
-            if !isConfiguring { setNeedsDisplay() }
-        }
-    }
+    private var attributesNeedUpdate = false
 
-    open var dateAttributes: [NSAttributedStringKey: Any] = [:] {
-        didSet {
-            updateAttributes(for: .date)
-            if !isConfiguring { setNeedsDisplay() }
-        }
-    }
+    private static var defaultAttributes: [NSAttributedStringKey: Any] = {
+        return [
+            NSAttributedStringKey.foregroundColor: UIColor.darkText,
+            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
+            NSAttributedStringKey.underlineColor: UIColor.darkText
+        ]
+    }()
 
-    open var phoneNumberAttributes: [NSAttributedStringKey: Any] = [:] {
-        didSet {
-            updateAttributes(for: .phoneNumber)
-            if !isConfiguring { setNeedsDisplay() }
-        }
-    }
+    open internal(set) var addressAttributes: [NSAttributedStringKey: Any] = defaultAttributes
 
-    open var urlAttributes: [NSAttributedStringKey: Any] = [:] {
-        didSet {
-            updateAttributes(for: .url)
-            if !isConfiguring { setNeedsDisplay() }
+    open internal(set) var dateAttributes: [NSAttributedStringKey: Any] = defaultAttributes
+
+    open internal(set) var phoneNumberAttributes: [NSAttributedStringKey: Any] = defaultAttributes
+
+    open internal(set) var urlAttributes: [NSAttributedStringKey: Any] = defaultAttributes
+
+    public func setAttributes(_ attributes: [NSAttributedStringKey: Any], detector: DetectorType) {
+        switch detector {
+        case .phoneNumber:
+            phoneNumberAttributes = attributes
+        case .address:
+            addressAttributes = attributes
+        case .date:
+            dateAttributes = attributes
+        case .url:
+            urlAttributes = attributes
+        }
+        if isConfiguring {
+            attributesNeedUpdate = true
+        } else {
+            updateAttributes(for: [detector])
         }
     }
 
@@ -158,22 +166,8 @@ open class MessageLabel: UILabel {
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-
-        // Message Label Specific
         self.numberOfLines = 0
         self.lineBreakMode = .byWordWrapping
-
-        let defaultAttributes: [NSAttributedStringKey: Any] = [
-          NSAttributedStringKey.foregroundColor: self.textColor,
-          NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
-          NSAttributedStringKey.underlineColor: self.textColor
-        ]
-
-        self.addressAttributes = defaultAttributes
-        self.dateAttributes = defaultAttributes
-        self.phoneNumberAttributes = defaultAttributes
-        self.urlAttributes = defaultAttributes
-
     }
 
     public required init?(coder aDecoder: NSCoder) {
@@ -199,6 +193,10 @@ open class MessageLabel: UILabel {
     public func configure(block: () -> Void) {
         isConfiguring = true
         block()
+        if attributesNeedUpdate {
+            updateAttributes(for: enabledDetectors)
+        }
+        attributesNeedUpdate = false
         isConfiguring = false
         setNeedsDisplay()
     }
@@ -254,21 +252,22 @@ open class MessageLabel: UILabel {
         return style
     }
 
-    private func updateAttributes(for detectorType: DetectorType) {
+    private func updateAttributes(for detectors: [DetectorType]) {
 
         guard let attributedText = attributedText, attributedText.length > 0 else { return }
         let mutableAttributedString = NSMutableAttributedString(attributedString: attributedText)
 
-        guard let rangeTuples = rangesForDetectors[detectorType] else { return }
+        for detector in detectors {
+            guard let rangeTuples = rangesForDetectors[detector] else { return }
 
-        for (range, _)  in rangeTuples {
-            let attributes = detectorAttributes(for: detectorType)
-            mutableAttributedString.addAttributes(attributes, range: range)
+            for (range, _)  in rangeTuples {
+                let attributes = detectorAttributes(for: detector)
+                mutableAttributedString.addAttributes(attributes, range: range)
+            }
+
+            let updatedString = NSAttributedString(attributedString: mutableAttributedString)
+            textStorage.setAttributedString(updatedString)
         }
-
-        let updatedString = NSAttributedString(attributedString: mutableAttributedString)
-        textStorage.setAttributedString(updatedString)
-
     }
 
     private func detectorAttributes(for detectorType: DetectorType) -> [NSAttributedStringKey: Any] {
