@@ -215,7 +215,7 @@ open class MessageLabel: UILabel {
         let range = NSRange(location: 0, length: newText.length)
         
         let mutableText = NSMutableAttributedString(attributedString: newText)
-        mutableText.addAttribute(.paragraphStyle, value: style, range: range)
+        mutableText.addAttributes([.paragraphStyle: style, .foregroundColor: textColor], range: range)
         
         if shouldParse {
             rangesForDetectors.removeAll()
