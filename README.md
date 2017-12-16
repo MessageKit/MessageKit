@@ -115,6 +115,12 @@ Add your app to the list of apps using this library and make a pull request.
 
 *Please provide attribution, it is greatly appreciated.*
 
+## Core Team
+
+- [@SD10](https://github.com/sd10), Steven Deutsch
+- [@nathantannar4](https://github.com/nathantannar4), Nathan Tannar
+- [@zhongwuzw](https://github.com/zhongwuzw), Wu Zhong
+
 ## Thanks
 
 Many thanks to [**the contributors**](https://github.com/MessageKit/MessageKit/graphs/contributors) of this project.
