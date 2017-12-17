@@ -176,7 +176,7 @@ final class SampleData {
 
     func getMessages(count: Int, completion: ([MockMessage]) -> Void) {
         var messages: [MockMessage] = []
-        for _ in 0...count {
+        for _ in 0..<count {
             messages.append(randomMessage())
         }
         completion(messages)

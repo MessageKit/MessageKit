@@ -24,6 +24,20 @@
 
 import Foundation
 
+// MARK: - Deprecated Protocols
+
+@available(*, deprecated: 0.11.0, message: "LocationMessageDisplayDelegate has been deprecated in favor of MessagesDisplayDelegate")
+typealias LocationMessageDisplayDelegate = MessagesDisplayDelegate
+
+@available(*, deprecated: 0.11.0, message: "TextMessageDisplayDelegate has been deprecated in favor of MessagesDisplayDelegate")
+typealias TextMessageDisplayDelegate = MessagesDisplayDelegate
+
+@available(*, deprecated: 0.11.0, message: "LocationMessageLayoutDelegate has been deprecated in favor of MessagesDisplayDelegate")
+typealias LocationMessageLayoutDelegate = MessagesLayoutDelegate
+
+@available(*, deprecated: 0.11.0, message: "MediaMessageLayoutDelegate has been deprecated in favor of MessagesDisplayDelegate")
+typealias MediaMessageLayoutDelegate = MessagesLayoutDelegate
+
 // MARK: - AvatarAlignment
 
 @available(*, deprecated: 0.11.0, message: "Removed in MessageKit 0.11.0. Please use AvatarPosition instead.")
@@ -44,22 +58,6 @@ extension MessagesLayoutDelegate {
     @available(*, deprecated: 0.11.0, message: "Removed in MessageKit 0.11.0. Please use avatarPosition(for:at:in:) instead.")
     public func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
         fatalError("Please use avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition instead.")
-    }
-    
-}
-
-// MARK: - MessagesViewController
-
-public extension MessagesViewController {
-    
-    @available(*, deprecated: 0.10.0, message: "Removed in MessageKit 0.10.0. Please use the messagesCollectionView.contentInsets.top property.")
-    public var additionalTopContentInset: CGFloat {
-        get {
-            return messagesCollectionView.contentInset.top
-        }
-        set {
-            messagesCollectionView.contentInset.top = newValue
-        }
     }
     
 }
@@ -88,4 +86,15 @@ extension MessagesCollectionViewFlowLayout {
         fatalError("Fatal Error: avatarAlwaysTrailing is no longer supported")
     }
     
+}
+
+extension MessagesViewController {
+    /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
+    /// bottom on the view's first layout.
+    ///
+    /// The default value of this property is `false`.
+    @available(*, deprecated: 0.11.1, message: "Removed in MessageKit 0.11.1.")
+    open var scrollsToBottomOnFirstLayout: Bool {
+        fatalError("Fatal Error: scrollsToBottomOnFirstLayout is no longer supported")
+    }
 }

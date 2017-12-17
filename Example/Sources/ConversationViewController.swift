@@ -32,9 +32,12 @@ class ConversationViewController: MessagesViewController {
         didSet {
             DispatchQueue.main.async {
                 self.messagesCollectionView.reloadData()
+                self.messagesCollectionView.scrollToBottom()
             }
         }
     }
+    
+    var isTyping = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,14 +56,47 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
         messageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
-        scrollsToBottomOnFirstLayout = true //default false
         scrollsToBottomOnKeybordBeginsEditing = true // default false
         scrollsOnKeyboardFrameChanges = true // default false
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(handleKeyboardButton))
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
+                            style: .plain,
+                            target: self,
+                            action: #selector(handleKeyboardButton)),
+            UIBarButtonItem(image: UIImage(named: "ic_typing"),
+                            style: .plain,
+                            target: self,
+                            action: #selector(handleTyping))
+        ]
+    }
+    
+    @objc func handleTyping() {
+        
+        defer {
+            isTyping = !isTyping
+        }
+        
+        if isTyping {
+            
+            messageInputBar.topStackView.arrangedSubviews.first?.removeFromSuperview()
+            messageInputBar.topStackViewPadding = .zero
+            
+        } else {
+            
+            let label = UILabel()
+            label.text = "nathan.tannar is typing..."
+            label.font = UIFont.boldSystemFont(ofSize: 16)
+            messageInputBar.topStackView.addArrangedSubview(label)
+            
+            
+            messageInputBar.topStackViewPadding.top = 6
+            messageInputBar.topStackViewPadding.left = 12
+            
+            // The backgroundView doesn't include the topStackView. This is so things in the topStackView can have transparent backgrounds if you need it that way or another color all together
+            messageInputBar.backgroundColor = messageInputBar.backgroundView.backgroundColor
+            
+        }
     }
     
     @objc func handleKeyboardButton() {
@@ -94,6 +130,7 @@ class ConversationViewController: MessagesViewController {
 
     func slack() {
         defaultStyle()
+        messageInputBar.backgroundView.backgroundColor = .white
         messageInputBar.isTranslucent = false
         messageInputBar.inputTextView.backgroundColor = .clear
         messageInputBar.inputTextView.layer.borderWidth = 0
@@ -151,6 +188,7 @@ class ConversationViewController: MessagesViewController {
     func iMessage() {
         defaultStyle()
         messageInputBar.isTranslucent = false
+        messageInputBar.backgroundView.backgroundColor = .white
         messageInputBar.separatorLine.isHidden = true
         messageInputBar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
@@ -221,28 +259,47 @@ extension ConversationViewController: MessagesDataSource {
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let name = message.sender.displayName
-      return NSAttributedString(string: name, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption1)])
+        return NSAttributedString(string: name, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption1)])
     }
 
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
+        
+        struct ConversationDateFormatter {
+            static let formatter: DateFormatter = {
+                let formatter = DateFormatter()
+                formatter.dateStyle = .medium
+                return formatter
+            }()
+        }
+        let formatter = ConversationDateFormatter.formatter
         let dateString = formatter.string(from: message.sentDate)
-      return NSAttributedString(string: dateString, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
+        return NSAttributedString(string: dateString, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
 
 }
 
 // MARK: - MessagesDisplayDelegate
 
-extension ConversationViewController: MessagesDisplayDelegate, TextMessageDisplayDelegate {
-    
-    func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1) : UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
-    }
+extension ConversationViewController: MessagesDisplayDelegate {
+
+    // MARK: - Text Messages
 
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? .white : .darkText
+    }
+
+    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedStringKey : Any] {
+        return MessageLabel.defaultAttributes
+    }
+
+    func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
+        return [.url, .address, .phoneNumber, .date]
+    }
+
+    // MARK: - All Messages
+    
+    func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return isFromCurrentSender(message: message) ? UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1) : UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
     }
 
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
@@ -252,11 +309,37 @@ extension ConversationViewController: MessagesDisplayDelegate, TextMessageDispla
 //        return .custom(configurationClosure)
     }
 
+    // MARK: - Location Messages
+
+    func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView? {
+        let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
+        let pinImage = #imageLiteral(resourceName: "pin")
+        annotationView.image = pinImage
+        annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
+        return annotationView
+    }
+
+    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)? {
+        return { view in
+            view.layer.transform = CATransform3DMakeScale(0, 0, 0)
+            view.alpha = 0.0
+            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [], animations: {
+                view.layer.transform = CATransform3DIdentity
+                view.alpha = 1.0
+            }, completion: nil)
+        }
+    }
+
+
 }
 
 // MARK: - MessagesLayoutDelegate
 
 extension ConversationViewController: MessagesLayoutDelegate {
+
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
+        return AvatarPosition(horizontal: .natural, vertical: .messageBottom)
+    }
 
     func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
         if isFromCurrentSender(message: message) {
@@ -287,11 +370,7 @@ extension ConversationViewController: MessagesLayoutDelegate {
         return CGSize(width: messagesCollectionView.bounds.width, height: 10)
     }
 
-}
-
-// MARK: - LocationMessageLayoutDelegate
-
-extension ConversationViewController: LocationMessageLayoutDelegate {
+    // MARK: - Location Messages
 
     func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return 200
@@ -299,27 +378,23 @@ extension ConversationViewController: LocationMessageLayoutDelegate {
 
 }
 
-// MARK: - MediaMessageLayoutDelegate
-
-extension ConversationViewController: MediaMessageLayoutDelegate {}
-
 // MARK: - MessageCellDelegate
 
 extension ConversationViewController: MessageCellDelegate {
 
-    func didTapAvatar<T>(in cell: MessageCollectionViewCell<T>) {
+    func didTapAvatar(in cell: MessageCollectionViewCell) {
         print("Avatar tapped")
     }
 
-    func didTapMessage<T>(in cell: MessageCollectionViewCell<T>) {
+    func didTapMessage(in cell: MessageCollectionViewCell) {
         print("Message tapped")
     }
 
-    func didTapTopLabel<T>(in cell: MessageCollectionViewCell<T>) {
+    func didTapTopLabel(in cell: MessageCollectionViewCell) {
         print("Top label tapped")
     }
 
-    func didTapBottomLabel<T>(in cell: MessageCollectionViewCell<T>) {
+    func didTapBottomLabel(in cell: MessageCollectionViewCell) {
         print("Bottom label tapped")
     }
 
@@ -347,31 +422,6 @@ extension ConversationViewController: MessageLabelDelegate {
 
 }
 
-// MARK: - LocationMessageDisplayDelegate
-
-extension ConversationViewController: LocationMessageDisplayDelegate {
-
-    func annotationViewForLocation(message: MessageType, at indexPath: IndexPath, in messageCollectionView: MessagesCollectionView) -> MKAnnotationView? {
-        let annotationView = MKAnnotationView(annotation: nil, reuseIdentifier: nil)
-        let pinImage = #imageLiteral(resourceName: "pin")
-        annotationView.image = pinImage
-        annotationView.centerOffset = CGPoint(x: 0, y: -pinImage.size.height / 2)
-        return annotationView
-    }
-
-    func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)? {
-        return { view in
-            view.layer.transform = CATransform3DMakeScale(0, 0, 0)
-            view.alpha = 0.0
-            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [], animations: {
-                view.layer.transform = CATransform3DIdentity
-                view.alpha = 1.0
-            }, completion: nil)
-        }
-    }
-
-}
-
 // MARK: - MessageInputBarDelegate
 
 extension ConversationViewController: MessageInputBarDelegate {
@@ -379,7 +429,7 @@ extension ConversationViewController: MessageInputBarDelegate {
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
         messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date()))
         inputBar.inputTextView.text = String()
-        messagesCollectionView.reloadData()
+        messagesCollectionView.insertSections([messageList.count - 1])
         messagesCollectionView.scrollToBottom()
     }
 

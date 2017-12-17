@@ -22,16 +22,13 @@
  SOFTWARE.
  */
 
-import XCTest
-@testable import MessageKit
+import Foundation
 
-class DetectorTypeTests: XCTestCase {
-
-    func testTextCheckingType() {
-        XCTAssertEqual(DetectorType.address.textCheckingType, .address)
-        XCTAssertEqual(DetectorType.date.textCheckingType, .date)
-        XCTAssertEqual(DetectorType.phoneNumber.textCheckingType, .phoneNumber)
-        XCTAssertEqual(DetectorType.url.textCheckingType, .link)
+extension CGRect {
+    
+    init(_ x: CGFloat, _ y: CGFloat, _ w: CGFloat, _ h: CGFloat) {
+        self.init(x: x, y: y, width: w, height: h)
     }
 
 }
+

@@ -2,14 +2,14 @@ platform :ios, '9.0'
 
 target 'ChatExample' do
   use_frameworks!
-  pod 'MessageKit', :path => '../MessageKit.podspec'
+  pod 'MessageKit', :path => '../'
 
-  target 'ChatExampleTests' do
-    inherit! :search_paths
-  end
+target 'ChatExampleTests' do
+  inherit! :search_paths
+end
 
-  target 'ChatExampleUITests' do
-    inherit! :search_paths
-  end
+target 'ChatExampleUITests' do
+  inherit! :search_paths
+end
 
 end

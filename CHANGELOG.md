@@ -8,6 +8,51 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
+- Added `detectorAttributes(for:and:at:)` method to `MessagesDisplayDelegate` allowing `DetectorType`
+attributes to be set outside of the cell.
+[#397](https://github.com/MessageKit/MessageKit/pull/397) by [@SD10](https://github.com/sd10).
+
+### Fixed
+
+- Fixed `indexPathForLastItem` bug when `numberOfSections` equal to 1. 
+[#395](https://github.com/MessageKit/MessageKit/issues/395) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- Fixed `scrollToBottom(animated:)` not work in some situations.
+[#395](https://github.com/MessageKit/MessageKit/issues/395) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+### Changed
+
+- **Breaking Change** The `MessageLabel` properties `addressAttributes`, `dateAttributes`, `phoneNumberAttributes`,
+and `urlAttributes` are now read only. Please use `setAttributes(_:detector:)` to set these properties. 
+[#397](https://github.com/MessageKit/MessageKit/pull/397) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Removed the generic constraint `<ContentView: UIView>` from `MessageCollectionViewCell`.
+[#391](https://github.com/MessageKit/MessageKit/pull/391) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** The `configure(message:indexPath:messagesCollectionView)` method of `LocationMessageCell`,
+`MediaMessageCell`, `TextMessageCell`, and `MessageCollectionViewCell` has been replaced by methods that take the
+delegate return values as arguments.
+[#391](https://github.com/MessageKit/MessageKit/pull/391) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** The `contentView` property has been renamed to `imageView` for `LocationMessageCell` and `MediaMessageCell`
+and `messageLabel` for `TextMessageCell`.
+[#391](https://github.com/MessageKit/MessageKit/pull/391) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Changed the name of  `MessageInputBar`'s property `maxHeight` to `maxTextViewHeight` as the property is the max height the `InputTextView` can have, not the `MessageInputBar` itself.
+[#380](https://github.com/MessageKit/MessageKit/pull/380) by [@nathantannar4](https://github.com/nathantannar4).
+
+- **Breaking Change**  Adds a new view `contentView` of type `UIView` to the MessageInputBar to hold the main subviews of the `MessageInputBar`. Reduces complexity of constraints for easier testing/debugging.
+[#384](https://github.com/MessageKit/MessageKit/pull/384) by [@nathantannar4](https://github.com/nathantannar4).
+
+### Removed
+
+- **Breaking Change** Removed `scrollsToBottomOnFirstLayout` flag of `MessagesViewController`.
+[#395](https://github.com/MessageKit/MessageKit/pull/395) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+## [[Prerelease] 0.11.0](https://github.com/MessageKit/MessageKit/releases/tag/0.11.0)
+
+### Added
+
 - **Breaking Change** Added a top `InputStackView` to `MessageInputBar`. This adds the addition of the `.top` case to `InputStackView.Position`.
 [#320](https://github.com/MessageKit/MessageKit/issues/320) by [@nathantannar4](https://github.com/nathantannar4).
 
@@ -15,25 +60,67 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 `AvatarView`'s vertical and horizontal position in a `MessageCollectionViewCell`.
 [#322](https://github.com/MessageKit/MessageKit/pull/322) by [@SD10](https://github.com/sd10).
 
+- Added `shouldCacheLayoutAttributes(for:MessageType)-> Bool` method to `MessagesLayoutDelegate`
+to manage whether a `MessageType`'s layout information is cached or not.
+[#364](https://github.com/MessageKit/MessageKit/pull/322) by [@SD10](https://github.com/sd10).
+
+### Changed
+
+- **Breaking Change** The `cellTopLabel` and `cellBottomLabel` properties of `MessageCollectionViewCell` are no longer
+typed as `MessageLabel` and are now regular `UILabel`s.
+[#355](https://github.com/MessageKit/MessageKit/pull/355) by [@SD10](https://github.com/sd10).
+
+- All `DetectorType`s for `MessageLabel` are disabled by default.
+[#356](https://github.com/MessageKit/MessageKit/pull/356) by [@SD10](https://github.com/sd10).
+
 ### Fixed
 
 - **Breaking Change** Fixed all instances of misspelled `inital` property. `Avatar.inital` has changed to `Avatar.initial` 
 and the initializer has changed from `public init(image: UIImage? = nil, initals: String = "?")` to `public init(image: UIImage? = nil, initials: String = "?")`. 
 [#298](https://github.com/MessageKit/MessageKit/issues/298) by [@sidmclaughlin](https://github.com/sidmclaughlin).
 
-- Fixed `cellbottomLabel` origin X for the `.messageLeading` alignment and
-origin Y so that the `cellBottomLabel` is always under the `MessageContainerView`.
-[#326](https://github.com/MessageKit/MessageKit/pull/326) by [@SD10](https://github.com/sd10). 
+- Fixed `MessageInputBar`'s `translucent` functionality.
+[#348](https://github.com/MessageKit/MessageKit/pull/348) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- Fixes infinite loop when dismissing keyboard on iPhone X.
+[#350](https://github.com/MessageKit/MessageKit/pull/350) by [@nathantannar4](https://github.com/nathantannar4).
+
+- Fixed incorrect sizing of `cellTopLabel` and `cellBottomLabel`.
+[#371](https://github.com/MessageKit/MessageKit/pull/371/commits/949796d68d175d2f2c8700ed0cb769935aee2184) by [@SD10](https://github.com/sd10).
 
 ### Removed
 
 - **Breaking Change** Removed `AvatarAlignment` and `avatarAlignment(for:at:in)` delegate method
-in favor of new `AvatarPosition` representing both vertical and horizontal alignments. 
+in favor of new `AvatarPosition` representing both vertical and horizontal alignments.
 [#322](https://github.com/MessageKit/MessageKit/pull/322) by [@SD10](https://github.com/sd10).
 
-- **Breaking Change** Removed the `avatarAlwaysLeading` and `avatarAlwaysTrailing` properties of `MessagesCollectionViewFlowLayout`.
+- **Breaking Change** Removed the `avatarAlwaysLeading` and `avatarAlwaysTrailing` properties of `MessagesCollectionViewFlow$
 [#322](https://github.com/MessageKit/MessageKit/pull/322) by [@SD10](https://github.com/sd10).
 
+- **Breaking Change** Removed `LocationMessageDisplayDelegate` & `TextMessageDisplayDelegate` and moved their methods
+into the `MessagesDisplayDelegate` protocol. Removed `LocationMessageLayoutDelegate` & `MediaMessageLayoutDelegate` and
+moved their methods into the `MessagesLayoutDelegate` protocol.
+[#363](https://github.com/MessageKit/MessageKit/pull/363) by [@SD10](https://github.com/sd10).
+
+## [[Prerelease] 0.10.2](https://github.com/MessageKit/MessageKit/releases/tag/0.10.2)
+
+### Fixed
+
+- Fixed `contentInset.top` adjustment of the `MessagesCollectionView` on iOS versions less than 11 where it was found that messages appeared under the navigation var
+[#334](https://github.com/MessageKit/MessageKit/pull/334) by [@nathantannar4](https://github.com/nathantannar4).
+
+- Fixed `cellbottomLabel` origin X for the `.messageLeading` alignment and
+origin Y so that the `cellBottomLabel` is always under the `MessageContainerView`.
+[#326](https://github.com/MessageKit/MessageKit/pull/326) by [@SD10](https://github.com/sd10). 
+
+- Fixed pixelation of `AvatarView`'s placeholder text initials.
+[#343](https://github.com/MessageKit/MessageKit/pull/343) by [@johnnyoin](https://github.com/johnnyoin).
+
+- Fixed `MessageLabel` address detection handler.
+[#341](https://github.com/MessageKit/MessageKit/pull/341) by [@zhongwuzw](https://github.com/zhongwuzw)
+
+- Fixed crash for escaping block in `InputBarItem`’s `setSize(newValue:animated)` method.
+[#342](https://github.com/MessageKit/MessageKit/pull/342) by [@zhongwuzw](https://github.com/zhongwuzw).
 
 ## [[Prerelease] 0.10.1](https://github.com/MessageKit/MessageKit/releases/tag/0.10.1)
 

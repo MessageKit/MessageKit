@@ -75,7 +75,10 @@ public struct AvatarPosition {
     public init(horizontal: Horizontal, vertical: Vertical) {
         self.horizontal = horizontal
         self.vertical = vertical
-        
+    }
+
+    public init(vertical: Vertical) {
+        self.init(horizontal: .natural, vertical: vertical)
     }
     
 }
