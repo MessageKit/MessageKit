@@ -41,11 +41,11 @@ open class MessagesViewController: UIViewController {
     /// The default value of this property is `false`.
     open var scrollsToBottomOnKeybordBeginsEditing: Bool = false
     
-    /// A Boolean value that determines whether the `MessagesCollectionView` scrolls
-    /// according to the change of the height of the keyboard.
+    /// A Boolean value that determines whether the `MessagesCollectionView`
+    /// maintains it's current position when the height of the `MessageInputBar` changes.
     ///
     /// The default value of this property is `false`.
-    open var maintainPositionOnKeyboardFrameChange: Bool = false
+    open var maintainPositionOnKeyboardFrameChanged: Bool = false
 
     open override var canBecomeFirstResponder: Bool {
         return true
@@ -336,7 +336,7 @@ fileprivate extension MessagesViewController {
             
             messageCollectionViewBottomInset = afterBottomInset
             
-            if maintainPositionOnKeyboardFrameChange {
+            if maintainPositionOnKeyboardFrameChanged {
                 messagesCollectionView.setContentOffset(contentOffset, animated: false)
             }
         }

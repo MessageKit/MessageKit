@@ -8,6 +8,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
+- Added `maintainPositionOnKeyboardFrameChanged: Bool` property to maintain the current position of the 
+`MessagesCollectionView` when the height of the `MessageInputBar` changes.
+[#340](https://github.com/MessageKit/MessageKit/pull/340) by [@KEN-chan](https://github.com/KEN-chan).
+
 - Added `detectorAttributes(for:and:at:)` method to `MessagesDisplayDelegate` allowing `DetectorType`
 attributes to be set outside of the cell.
 [#397](https://github.com/MessageKit/MessageKit/pull/397) by [@SD10](https://github.com/sd10).

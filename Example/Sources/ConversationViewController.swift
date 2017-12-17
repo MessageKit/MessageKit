@@ -57,7 +57,7 @@ class ConversationViewController: MessagesViewController {
         messageInputBar.delegate = self
         messageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
         scrollsToBottomOnKeybordBeginsEditing = true // default false
-        maintainPositionOnKeyboardFrameChange = true // default false
+        maintainPositionOnKeyboardFrameChanged = true // default false
 
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
