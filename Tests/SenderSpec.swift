@@ -22,24 +22,28 @@
  SOFTWARE.
  */
 
-import Foundation
+import Quick
+import Nimble
+@testable import MessageKit
 
-/// An enum representing the verical alignment for an `AvatarView`.
-public enum AvatarAlignment {
+final class SenderSpec: QuickSpec {
 
-    /// Aligns the `AvatarView`'s top edge to the cell's top edge.
-    case cellTop
-    
-    /// Aligns the `AvatarView`'s bottom edge to the cell's bottom edge.
-    case cellBottom
-    
-    /// Aligns the `AvatarView`'s top edge to the `MessageContainerView`'s top edge.
-    case messageTop
-    
-    /// Aligns the `AvatarView`'s bottom edge to the `MessageContainerView`s bottom edge.
-    case messageBottom
-    
-    /// Aligns the `AvatarView` center to the `MessageContainerView` center.
-    case messageCenter
-    
+    override func spec() {
+        describe("equality between two Senders") {
+            context("they have the same id ") {
+                it("should be equal") {
+                    let sender1 = Sender(id: "1", displayName: "Steven")
+                    let sender2 = Sender(id: "1", displayName: "Nathan")
+                    expect(sender1).to(equal(sender2))
+                }
+            }
+            context("they have a different id") {
+                it("should not be equal") {
+                    let sender1 = Sender(id: "1", displayName: "Steven")
+                    let sender2 = Sender(id: "2", displayName: "Nathan")
+                    expect(sender1).toNot(equal(sender2))
+                }
+            }
+        }
+    }
 }

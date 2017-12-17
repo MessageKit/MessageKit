@@ -183,8 +183,8 @@ open class InputBarButtonItem: UIButton {
     open func setSize(_ newValue: CGSize?, animated: Bool) {
         size = newValue
         if animated, let position = parentStackViewPosition {
-            messageInputBar?.performLayout(animated) {
-                self.messageInputBar?.layoutStackViews([position])
+            messageInputBar?.performLayout(animated) { [weak self] in
+                self?.messageInputBar?.layoutStackViews([position])
             }
         }
     }

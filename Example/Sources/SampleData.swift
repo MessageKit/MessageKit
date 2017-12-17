@@ -176,7 +176,7 @@ final class SampleData {
 
     func getMessages(count: Int, completion: ([MockMessage]) -> Void) {
         var messages: [MockMessage] = []
-        for _ in 0...count {
+        for _ in 0..<count {
             messages.append(randomMessage())
         }
         completion(messages)
@@ -185,11 +185,11 @@ final class SampleData {
     func getAvatarFor(sender: Sender) -> Avatar {
         switch sender {
         case dan:
-            return Avatar(image: #imageLiteral(resourceName: "Dan-Leonard"), initals: "DL")
+            return Avatar(image: #imageLiteral(resourceName: "Dan-Leonard"), initials: "DL")
         case steven:
-            return Avatar(initals: "S")
+            return Avatar(initials: "S")
         case jobs:
-            return Avatar(image: #imageLiteral(resourceName: "Steve-Jobs"), initals: "SJ")
+            return Avatar(image: #imageLiteral(resourceName: "Steve-Jobs"), initials: "SJ")
         case cook:
             return Avatar(image: #imageLiteral(resourceName: "Tim-Cook"))
         default:

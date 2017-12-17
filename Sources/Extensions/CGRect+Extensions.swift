@@ -22,30 +22,13 @@
  SOFTWARE.
  */
 
-import XCTest
-@testable import MessageKit
+import Foundation
 
-class SenderTests: XCTestCase {
-
-    var senderBob: Sender!
-
-    override func setUp() {
-        super.setUp()
-        senderBob = Sender(id: "id1", displayName: "Bob")
+extension CGRect {
+    
+    init(_ x: CGFloat, _ y: CGFloat, _ w: CGFloat, _ h: CGFloat) {
+        self.init(x: x, y: y, width: w, height: h)
     }
 
-    override func tearDown() {
-        super.tearDown()
-        senderBob = nil
-    }
-
-    func testEquatableWithSameID() {
-        let alsoSenderBob = Sender(id: "id1", displayName: "Bob")
-        XCTAssertEqual(senderBob, alsoSenderBob)
-    }
-
-    func testEquatableWithDifferentID() {
-        let anotherSenderBob = Sender(id: "id2", displayName: "Bob")
-        XCTAssertNotEqual(senderBob, anotherSenderBob)
-    }
 }
+

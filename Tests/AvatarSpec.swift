@@ -22,17 +22,23 @@
  SOFTWARE.
  */
 
-import Foundation
+import Quick
+import Nimble
+@testable import MessageKit
 
-// MARK: - AvatarVerticalAlignment
+final class AvatarSpec: QuickSpec {
 
-/// An enum representing the horizontal alignment of an `AvatarView`.
-internal enum AvatarHorizontalAlignment {
-    
-    /// Positions the `AvatarView` on the side closest to the cell's leading edge.
-    case cellLeading
-    
-    /// Positions the `AvatarView` on the side closest to the cell's trailing edge.
-    case cellTrailing
-
+    override func spec() {
+        describe("default property values") {
+            context("after intialization") {
+                let avatar = Avatar()
+                it("should set image to nil") {
+                    expect(avatar.image).to(beNil())
+                }
+                it("should set initials to ?") {
+                    expect(avatar.initials).to(equal("?"))
+                }
+            }
+        }
+    }
 }

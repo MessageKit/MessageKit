@@ -39,8 +39,9 @@ open class InputStackView: UIStackView {
     /// - left: Left Stack View
     /// - right: Bottom Stack View
     /// - bottom: Left Stack View
+    /// - top: Top Stack View
     public enum Position {
-        case left, right, bottom
+        case left, right, bottom, top
     }
     
     // MARK: Initialization
@@ -66,6 +67,6 @@ open class InputStackView: UIStackView {
     open func setup() {
         translatesAutoresizingMaskIntoConstraints = false
         distribution = .fill
-        alignment = .fill
+        alignment = .bottom
     }
 }

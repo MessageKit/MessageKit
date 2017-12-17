@@ -29,34 +29,26 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
 
     // MARK: - Properties
 
-    var avatarHorizontalAlignment = AvatarHorizontalAlignment.cellLeading
     var avatarFrame: CGRect = .zero
 
-    var messageContainerFrame: CGRect = .zero
-    var messagePadding: UIEdgeInsets = .zero
     var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
+    var messageContainerFrame: CGRect = .zero
     var messageLabelInsets: UIEdgeInsets = .zero
 
-    var cellTopLabelFrame: CGRect = .zero
-    var cellTopLabelInsets: UIEdgeInsets = .zero
-
-    var cellBottomLabelFrame: CGRect = .zero
-    var cellBottomLabelInsets: UIEdgeInsets = .zero
+    var topLabelFrame: CGRect = .zero
+    var bottomLabelFrame: CGRect = .zero
 
     // MARK: - Methods
 
     override func copy(with zone: NSZone? = nil) -> Any {
         // swiftlint:disable force_cast
         let copy = super.copy(with: zone) as! MessagesCollectionViewLayoutAttributes
-        copy.avatarHorizontalAlignment = avatarHorizontalAlignment
         copy.avatarFrame = avatarFrame
         copy.messageContainerFrame = messageContainerFrame
         copy.messageLabelFont = messageLabelFont
         copy.messageLabelInsets = messageLabelInsets
-        copy.cellTopLabelFrame = cellTopLabelFrame
-        copy.cellTopLabelInsets = cellTopLabelInsets
-        copy.cellBottomLabelFrame = cellBottomLabelFrame
-        copy.cellBottomLabelInsets = cellBottomLabelInsets
+        copy.topLabelFrame = topLabelFrame
+        copy.bottomLabelFrame = bottomLabelFrame
         return copy
         // swiftlint:enable force_cast
     }

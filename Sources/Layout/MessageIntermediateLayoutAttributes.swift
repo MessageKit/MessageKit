@@ -31,70 +31,184 @@ final class MessageIntermediateLayoutAttributes {
     // Message
     var message: MessageType
     var indexPath: IndexPath
+    
+    // Cell
     var itemHeight: CGFloat = 0
-
-    init(message: MessageType, indexPath: IndexPath) {
-        self.message = message
-        self.indexPath = indexPath
-    }
+    var cellFrame: CGRect = .zero
 
     // AvatarView
+    var avatarPosition = AvatarPosition(horizontal: .cellLeading, vertical: .cellBottom)
     var avatarSize: CGSize = .zero
-    var avatarVertical: AvatarAlignment = .messageBottom
-    var avatarHorizontal: AvatarHorizontalAlignment = .cellLeading
+    
+    lazy var avatarFrame: CGRect = {
+        
+        guard avatarSize != .zero else { return .zero }
+        
+        var origin = CGPoint.zero
+        
+        switch avatarPosition.horizontal {
+        case .cellLeading:
+            break
+        case .cellTrailing:
+            origin.x = cellFrame.width - avatarSize.width
+        case .natural:
+            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
+        }
+        
+        switch avatarPosition.vertical {
+        case .cellTop:
+            break
+        case .cellBottom:
+            origin.y = cellFrame.height - avatarSize.height
+        case .messageTop:
+            origin.y = messageContainerFrame.minY
+        case .messageBottom:
+            origin.y = messageContainerFrame.maxY - avatarSize.height
+        case .messageCenter:
+            origin.y = messageContainerFrame.midY - (avatarSize.height/2)
+        }
+        
+        return CGRect(origin: origin, size: avatarSize)
+        
+    }()
 
     // MessageContainerView
     var messageContainerSize: CGSize = .zero
     var messageContainerMaxWidth: CGFloat = 0
     var messageContainerPadding: UIEdgeInsets = .zero
     var messageLabelInsets: UIEdgeInsets = .zero
+    
+    lazy var messageContainerFrame: CGRect = {
+        
+        guard messageContainerSize != .zero else { return .zero }
+        
+        var origin: CGPoint = .zero
+        origin.y = topLabelSize.height + messageContainerPadding.top + topLabelVerticalPadding
+        
+        switch avatarPosition.horizontal {
+        case .cellLeading:
+            origin.x = avatarSize.width + messageContainerPadding.left
+        case .cellTrailing:
+            origin.x = cellFrame.width - avatarSize.width - messageContainerSize.width - messageContainerPadding.right
+        case .natural:
+            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
+        }
+        
+        return CGRect(origin: origin, size: messageContainerSize)
+        
+    }()
+    
+    // Cell Top Label
+    var topLabelAlignment: LabelAlignment = .cellLeading(.zero)
+    var topLabelSize: CGSize = .zero
+    var topLabelMaxWidth: CGFloat = 0
+    
+    lazy var topLabelFrame: CGRect = {
+        
+        guard topLabelSize != .zero else { return .zero }
+        
+        var origin = CGPoint.zero
+        
+        origin.y = topLabelPadding.top
+        
+        switch topLabelAlignment {
+        case .cellLeading:
+            origin.x = topLabelPadding.left
+        case .cellCenter:
+            origin.x = (cellFrame.width/2) + topLabelPadding.left - topLabelPadding.right
+        case .cellTrailing:
+            origin.x = cellFrame.width - topLabelSize.width - topLabelPadding.right
+        case .messageLeading:
+            origin.x = messageContainerFrame.minX + topLabelPadding.left
+        case .messageTrailing:
+            origin.x = messageContainerFrame.maxX - topLabelSize.width - topLabelPadding.right
+        }
+        
+        return CGRect(origin: origin, size: topLabelSize)
+        
+    }()
 
+    // Cell Bottom Label
+    var bottomLabelAlignment: LabelAlignment = .cellTrailing(.zero)
+    var bottomLabelSize: CGSize = .zero
+    var bottomLabelMaxWidth: CGFloat = 0
+    
+    lazy var bottomLabelFrame: CGRect = {
+        
+        guard bottomLabelSize != .zero else { return .zero }
+        
+        var origin: CGPoint = .zero
+        
+        origin.y = messageContainerFrame.maxY + messageContainerPadding.bottom + bottomLabelPadding.top
+        
+        switch bottomLabelAlignment {
+        case .cellLeading:
+            origin.x = bottomLabelPadding.left
+        case .cellCenter:
+            origin.x = (cellFrame.width/2) + bottomLabelPadding.left - bottomLabelPadding.right
+        case .cellTrailing:
+            origin.x = cellFrame.width - bottomLabelSize.width - bottomLabelPadding.right
+        case .messageLeading:
+            origin.x = messageContainerFrame.minX + bottomLabelPadding.left
+        case .messageTrailing:
+            origin.x = messageContainerFrame.maxX - bottomLabelSize.width - bottomLabelPadding.right
+        }
+        
+        return CGRect(origin: origin, size: bottomLabelSize)
+
+    }()
+    
+    // MARK: - Initializer
+    
+    init(message: MessageType, indexPath: IndexPath) {
+        self.message = message
+        self.indexPath = indexPath
+    }
+
+}
+
+// MARK: - Helpers
+
+extension MessageIntermediateLayoutAttributes {
+    
+    var bottomLabelPadding: UIEdgeInsets {
+        return bottomLabelAlignment.insets
+    }
+    
+    var bottomLabelVerticalPadding: CGFloat {
+        return bottomLabelPadding.top + bottomLabelPadding.bottom
+    }
+    
+    var bottomLabelHorizontalPadding: CGFloat {
+        return bottomLabelPadding.left + bottomLabelPadding.right
+    }
+    
+    var topLabelPadding: UIEdgeInsets {
+        return topLabelAlignment.insets
+    }
+    
+    var topLabelVerticalPadding: CGFloat {
+        return topLabelPadding.top + topLabelPadding.bottom
+    }
+    
+    var topLabelHorizontalPadding: CGFloat {
+        return topLabelPadding.left + topLabelPadding.right
+    }
+    
     var messageLabelVerticalInsets: CGFloat {
         return messageLabelInsets.top + messageLabelInsets.bottom
     }
-
+    
     var messageLabelHorizontalInsets: CGFloat {
         return messageLabelInsets.left + messageLabelInsets.right
     }
-
+    
     var messageVerticalPadding: CGFloat {
         return messageContainerPadding.top + messageContainerPadding.bottom
     }
-
+    
     var messageHorizontalPadding: CGFloat {
         return messageContainerPadding.left + messageContainerPadding.right
-    }
-
-    // Cell Top Label
-    var cellBottomLabelText: NSAttributedString?
-    var cellTopLabelSize: CGSize = .zero
-    var cellTopLabelMaxWidth: CGFloat = 0
-    var cellTopLabelAlignment: LabelAlignment = .cellLeading(.zero)
-
-    var cellTopLabelVerticalInsets: CGFloat {
-        let cellTopLabelInsets = cellTopLabelAlignment.insets
-        return cellTopLabelInsets.top + cellTopLabelInsets.bottom
-    }
-
-    var cellTopLabelHorizontalInsets: CGFloat {
-        let cellTopLabelInsets = cellTopLabelAlignment.insets
-        return cellTopLabelInsets.left + cellTopLabelInsets.right
-    }
-
-    // Cell Bottom Label
-    var cellTopLabelText: NSAttributedString?
-    var cellBottomLabelSize: CGSize = .zero
-    var cellBottomLabelMaxWidth: CGFloat = 0
-    var cellBottomLabelAlignment: LabelAlignment = .cellTrailing(.zero)
-
-    var cellBottomLabelVerticalInsets: CGFloat {
-        let cellBottomLabelInsets = cellBottomLabelAlignment.insets
-        return cellBottomLabelInsets.top + cellBottomLabelInsets.bottom
-    }
-
-    var cellBottomLabelHorizontalInsets: CGFloat {
-        let cellBottomLabelInsets = cellBottomLabelAlignment.insets
-        return cellBottomLabelInsets.left + cellBottomLabelInsets.right
     }
 
 }

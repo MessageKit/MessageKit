@@ -83,31 +83,32 @@ open class AvatarView: UIView {
         self.init(frame: .zero)
     }
 
-    private func getImageFrom(initals: String) -> UIImage {
+    private func getImageFrom(initials: String) -> UIImage {
         let width = frame.width
         let height = frame.height
         if width == 0 || height == 0 {return UIImage()}
         var font = placeholderFont
 
-        _ = UIGraphicsBeginImageContext(CGSize(width: width, height: height))
+        _ = UIGraphicsBeginImageContextWithOptions(CGSize(width: width, height: height), false, UIScreen.main.scale)
+        defer { UIGraphicsEndImageContext() }
         let context = UIGraphicsGetCurrentContext()!
 
         //// Text Drawing
         let textRect = calculateTextRect(outerViewWidth: width, outerViewHeight: height)
         if adjustsFontSizeToFitWidth,
-            initals.width(considering: textRect.height, and: font) > textRect.width {
-            let newFontSize = calculateFontSize(text: initals, font: font, width: textRect.width, height: textRect.height)
+            initials.width(considering: textRect.height, and: font) > textRect.width {
+            let newFontSize = calculateFontSize(text: initials, font: font, width: textRect.width, height: textRect.height)
             font = placeholderFont.withSize(newFontSize)
         }
 
         let textStyle = NSMutableParagraphStyle()
         textStyle.alignment = .center
-      let textFontAttributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: font, NSAttributedStringKey.foregroundColor: placeholderTextColor, NSAttributedStringKey.paragraphStyle: textStyle]
+        let textFontAttributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: font, NSAttributedStringKey.foregroundColor: placeholderTextColor, NSAttributedStringKey.paragraphStyle: textStyle]
 
-        let textTextHeight: CGFloat = initals.boundingRect(with: CGSize(width: textRect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes, context: nil).height
+        let textTextHeight: CGFloat = initials.boundingRect(with: CGSize(width: textRect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes, context: nil).height
         context.saveGState()
         context.clip(to: textRect)
-        initals.draw(in: CGRect(x: textRect.minX, y: textRect.minY + (textRect.height - textTextHeight) / 2, width: textRect.width, height: textTextHeight), withAttributes: textFontAttributes)
+        initials.draw(in: CGRect(textRect.minX, textRect.minY + (textRect.height - textTextHeight) / 2, textRect.width, textTextHeight), withAttributes: textFontAttributes)
         context.restoreGState()
         guard let renderedImage = UIGraphicsGetImageFromCurrentImageContext() else { assertionFailure("Could not create image from context"); return UIImage()}
         return renderedImage
@@ -145,7 +146,7 @@ open class AvatarView: UIView {
         let startX = (outerViewWidth - w)/2
         let startY = (outerViewHeight - h)/2
         // In case the font exactly fits to the region, put 2 pixel both left and right
-        return CGRect(x: startX+2, y: startY, width: w-4, height: h)
+        return CGRect(startX+2, startY, w-4, h)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -162,14 +163,14 @@ open class AvatarView: UIView {
         imageView.contentMode = .scaleAspectFill
         imageView.frame = frame
         addSubview(imageView)
-        imageView.image = avatar.image ?? getImageFrom(initals: avatar.initals)
+        imageView.image = avatar.image ?? getImageFrom(initials: avatar.initials)
         setCorner(radius: nil)
     }
 
     // MARK: - Open setters
 
     open func set(avatar: Avatar) {
-        imageView.image = avatar.image ?? getImageFrom(initals: avatar.initals)
+        imageView.image = avatar.image ?? getImageFrom(initials: avatar.initials)
     }
 
     open func setCorner(radius: CGFloat?) {

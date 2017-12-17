@@ -23,24 +23,13 @@
  */
 
 import Foundation
+import AVFoundation
 
 /// A protocol used by the `MessagesCollectionViewFlowLayout` object to determine
 /// the size and layout of a `MessageCollectionViewCell` and its contents.
-public protocol MessagesLayoutDelegate: class {
+public protocol MessagesLayoutDelegate: AnyObject {
 
-    /// Specifies the insets for the text rect of the `MessageLabel` in a `TextMessageCell`.
-    ///
-    /// - Parameters:
-    ///   - message: A `MessageType` with a `MessageData` case of `.text` or `.attributedText` to which these insets will apply.
-    ///   - indexPath: The `IndexPath` of the cell.
-    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-    ///
-    /// The default value returned by this method is determined by the messages `Sender`:
-    ///
-    /// Current Sender: `UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)`
-    ///
-    /// All other Senders: `UIEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)`
-    func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
+    // MARK: - All Messages
 
     /// Specifies the padding around the `MessageContainerView` in a `MessageCollectionViewCell`.
     ///
@@ -55,16 +44,17 @@ public protocol MessagesLayoutDelegate: class {
     ///
     /// All other Senders: `UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)`
     func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
-
-    /// Specifies the vertical alignment for the `AvatarView` in a `MessageCollectionViewCell`.
+    
+    /// Specifies the vertical and horizontal alignment for the `AvatarView` in a `MessageCollectionViewCell`.
     ///
     /// - Parameters:
     ///   - message: The `MessageType` that will be displayed by this cell.
     ///   - indexPath: The `IndexPath` of the cell.
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     ///
-    /// The default value returned by this method is `AvatarAlignment.cellBottom`.
-    func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment
+    /// The default value returned by this method is an `AvatarPosition` with
+    /// `Horizontal.natural` and `Vertical.messageBottom`.
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition
 
     /// Specifies the horizontal alignment of a `MessageCollectionViewCell`'s top label.
     ///
@@ -124,18 +114,82 @@ public protocol MessagesLayoutDelegate: class {
     /// The default value returned by this method is a size of `GGSize.zero`.
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
+    // MARK: - Text Messages
+
+    /// Specifies the insets for the text rect of the `MessageLabel` in a `TextMessageCell`.
+    ///
+    /// - Parameters:
+    ///   - message: A `MessageType` with a `MessageData` case of `.text` or `.attributedText` to which these insets will apply.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is determined by the messages `Sender`:
+    ///
+    /// Current Sender: `UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)`
+    ///
+    /// All other Senders: `UIEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)`
+    func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
+
+    // MARK: - Media Messages
+
+    /// Specifies the width for a `MessageContainerView`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - maxWidth: The max available width for the `MessageContainerView` respecting the cell's other content.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is the `maxWidth`.
+    func widthForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
+
+    /// Specifies the height for a `MessageContainerView`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - maxWidth: The max available width for the `MessageContainerView` respecting the cell's other content.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method uses `AVMakeRect(aspectRatio:insideRect:)` with a bounding
+    /// rect using the `maxWidth` and `.greatestFiniteMagnitude` for the height.
+    func heightForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
+
+    // MARK: - Location Messages
+
+    /// Specifies the width for a `MessageContainerView`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - maxWidth: The max available width for the `MessageContainerView` respecting the cell's other content.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is the `maxWidth`.
+    func widthForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
+
+    /// Specifies the height for a `MessageContainerView`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - maxWidth: The max available width for the `MessageContainerView` respecting the cell's other content.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
+
+    /// Specifies whether the layout attributes for a given `MessageType`
+    /// should be cached by the `MessagesCollectionViewFlowLayout`.
+    /// - Parameters:
+    ///   - message: The `MessageType` whose attributes to cache.
+    ///
+    /// The default value returned by this method is `false`.
+    func shouldCacheLayoutAttributes(for message: MessageType) -> Bool
+
 }
 
 public extension MessagesLayoutDelegate {
 
-    func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
-        guard let dataSource = messagesCollectionView.messagesDataSource else { return .zero }
-        if dataSource.isFromCurrentSender(message: message) {
-            return UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)
-        } else {
-            return UIEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)
-        }
-    }
+    // MARK: - All Messages Defaults
 
     func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
         guard let dataSource = messagesCollectionView.messagesDataSource else { return .zero }
@@ -144,10 +198,6 @@ public extension MessagesLayoutDelegate {
         } else {
             return UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
         }
-    }
-
-    func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
-        return .cellBottom
     }
 
     func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
@@ -163,6 +213,10 @@ public extension MessagesLayoutDelegate {
     func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return CGSize(width: 30, height: 30)
     }
+    
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
+        return AvatarPosition(horizontal: .natural, vertical: .messageBottom)
+    }
 
     func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else { return .zero }
@@ -172,6 +226,43 @@ public extension MessagesLayoutDelegate {
 
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return .zero
+    }
+
+    func shouldCacheLayoutAttributes(for message: MessageType) -> Bool {
+        return false
+    }
+
+    // MARK: - Text Messages Defaults
+
+    func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
+        guard let dataSource = messagesCollectionView.messagesDataSource else { return .zero }
+        if dataSource.isFromCurrentSender(message: message) {
+            return UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)
+        } else {
+            return UIEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)
+        }
+    }
+
+    // MARK: - Media Messages Defaults
+
+    func widthForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return maxWidth
+    }
+
+    func heightForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        switch message.data {
+        case .photo(let image), .video(_, let image):
+            let boundingRect = CGRect(origin: .zero, size: CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
+            return AVMakeRect(aspectRatio: image.size, insideRect: boundingRect).height
+        default:
+            return 0
+        }
+    }
+
+    // MARK: - Location Messages Defaults
+
+    func widthForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return maxWidth
     }
 
 }

@@ -88,7 +88,7 @@ class MessagesDisplayDelegateTests: XCTestCase {
     func testAvatarDefaultState() {
         XCTAssertNotNil(sut.dataProvider.avatar(for: sut.dataProvider.messages[0],
                                                 at: IndexPath(item: 0, section: 0),
-                                                in: sut.messagesCollectionView).initals)
+                                                in: sut.messagesCollectionView).initials)
     }
 
     func testCellTopLabelDefaultState() {
@@ -226,18 +226,22 @@ class TextMessageDisplayDelegateTests: XCTestCase {
         XCTAssertEqual(textColor, .darkText)
     }
 
-    func testEnableDetectors_returnsUrlAddressPhoneNumberAndDateForDefault() {
+    func testEnableDetectors_returnsEmptyForDefault() {
         let detectors = sut.enabledDetectors(for: sut.dataProvider.messages[1],
                                              at: IndexPath(item: 0, section: 0),
                                              in: sut.messagesCollectionView)
-        let expectedDetectors: [DetectorType] = [.url, .address, .phoneNumber, .date]
+        let expectedDetectors: [DetectorType] = []
 
         XCTAssertEqual(detectors, expectedDetectors)
     }
 
 }
 
-private class MockMessagesViewController: MessagesViewController, MessagesDisplayDelegate, TextMessageDisplayDelegate, MessagesLayoutDelegate {
+private class MockMessagesViewController: MessagesViewController, MessagesDisplayDelegate, MessagesLayoutDelegate {
+
+    func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 200
+    }
 
     var dataProvider: MockMessagesDataSource!
 
@@ -245,8 +249,10 @@ private class MockMessagesViewController: MessagesViewController, MessagesDispla
         super.viewDidLoad()
 
         dataProvider = makeDataSource()
+        messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messagesDataSource = dataProvider
         messagesCollectionView.messagesLayoutDelegate = self
+
     }
 
     private func makeDataSource() -> MockMessagesDataSource {

@@ -30,29 +30,8 @@ open class PlayButtonView: UIView {
 
     open let triangleView = UIView()
 
-    private var triangleHeightConstraint: NSLayoutConstraint?
-    private var triangleWidthConstraint: NSLayoutConstraint?
     private var triangleCenterXConstraint: NSLayoutConstraint?
-
-    private var triangleViewSize: CGSize {
-        return CGSize(width: frame.width/2, height: frame.height/2)
-    }
-
-    open override var frame: CGRect {
-        didSet {
-            updateTriangleConstraints()
-            applyCornerRadius()
-            applyTriangleMask()
-        }
-    }
-
-    open override var bounds: CGRect {
-        didSet {
-            updateTriangleConstraints()
-            applyCornerRadius()
-            applyTriangleMask()
-        }
-    }
+    private var cacheFrame: CGRect = .zero
 
     // MARK: - Initializers
 
@@ -61,8 +40,6 @@ open class PlayButtonView: UIView {
 
         setupSubviews()
         setupConstraints()
-        applyCornerRadius()
-        applyTriangleMask()
 
         triangleView.clipsToBounds = true
         triangleView.backgroundColor = .black
@@ -74,6 +51,17 @@ open class PlayButtonView: UIView {
     }
 
     // MARK: - Methods
+    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        guard !cacheFrame.equalTo(frame) else { return }
+        cacheFrame = frame
+        
+        updateTriangleConstraints()
+        applyCornerRadius()
+        applyTriangleMask()
+    }
 
     private func setupSubviews() {
         addSubview(triangleView)
@@ -82,13 +70,11 @@ open class PlayButtonView: UIView {
     private func setupConstraints() {
         triangleView.translatesAutoresizingMaskIntoConstraints = false
 
-        let centerX = triangleView.centerXAnchor.constraint(equalTo: centerXAnchor, constant: triangleViewSize.width/8)
+        let centerX = triangleView.centerXAnchor.constraint(equalTo: centerXAnchor)
         let centerY = triangleView.centerYAnchor.constraint(equalTo: centerYAnchor)
-        let width = triangleView.widthAnchor.constraint(equalToConstant: triangleViewSize.width)
-        let height = triangleView.heightAnchor.constraint(equalToConstant: triangleViewSize.height)
+        let width = triangleView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5)
+        let height = triangleView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5)
 
-        triangleWidthConstraint = width
-        triangleHeightConstraint = height
         triangleCenterXConstraint = centerX
 
         NSLayoutConstraint.activate([centerX, centerY, width, height])
@@ -113,13 +99,11 @@ open class PlayButtonView: UIView {
     }
 
     private func updateTriangleConstraints() {
-        triangleWidthConstraint?.constant = triangleViewSize.width
-        triangleHeightConstraint?.constant = triangleViewSize.height
-        triangleCenterXConstraint?.constant = triangleViewSize.width/8
+        triangleCenterXConstraint?.constant = frame.width/8
     }
 
     private func applyTriangleMask() {
-        let rect = CGRect(origin: .zero, size: triangleViewSize)
+        let rect = CGRect(origin: .zero, size: triangleView.bounds.size)
         triangleView.layer.mask = triangleMask(for: rect)
     }
 

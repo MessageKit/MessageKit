@@ -2,8 +2,29 @@
   <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo">
 </p>
 
-[![Build Status](https://travis-ci.org/MessageKit/MessageKit.svg)](https://travis-ci.org/MessageKit/MessageKit) [![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
-
+[![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=59c302b7bc1f7f00013f20a2&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/59c302b7bc1f7f00013f20a2/build/latest)
+[![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+<a href="https://swift.org">
+ <img src="https://img.shields.io/badge/Swift-4-orange.svg"
+      alt="Swift" />
+</a>
+<a href="https://cocoapods.org/">
+  <img src="https://cocoapod-badges.herokuapp.com/v/MessageKit/badge.png"
+      alt="CocoaPods">
+</a>
+<a href="https://developer.apple.com/xcode">
+  <img src="https://img.shields.io/badge/Xcode-9-blue.svg"
+      alt="Xcode">
+</a>
+<a href="https://opensource.org/licenses/MIT">
+  <img src="https://img.shields.io/badge/License-MIT-red.svg"
+      alt="MIT">
+</a>
+<a href="https://github.com/MessageKit/MessageKit/issues">
+   <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"
+        alt="Contributions Welcome">
+</a>
 
 ## Table of Contents
 
@@ -93,6 +114,12 @@ Click here to join [Slack](https://join.slack.com/t/messagekit/shared_invite/MjI
 Add your app to the list of apps using this library and make a pull request.
 
 *Please provide attribution, it is greatly appreciated.*
+
+## Core Team
+
+- [@SD10](https://github.com/sd10), Steven Deutsch
+- [@nathantannar4](https://github.com/nathantannar4), Nathan Tannar
+- [@zhongwuzw](https://github.com/zhongwuzw), Wu Zhong
 
 ## Thanks
 

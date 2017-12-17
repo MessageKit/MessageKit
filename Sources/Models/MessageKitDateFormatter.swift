@@ -28,7 +28,7 @@ open class MessageKitDateFormatter {
 
     // MARK: - Properties
 
-    static let shared = MessageKitDateFormatter()
+    public static let shared = MessageKitDateFormatter()
 
     private let formatter = DateFormatter()
 
