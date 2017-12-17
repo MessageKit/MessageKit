@@ -8,6 +8,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
+- Added `reloadDataAndKeepOffset()` method to `MessagesCollectionView` to maintain the current position
+when reloading data.
+[#284](https://github.com/MessageKit/MessageKit/pull/284) by [@azurechen](https://github.com/azurechen).
+
 - Added `maintainPositionOnKeyboardFrameChanged: Bool` property to maintain the current position of the 
 `MessagesCollectionView` when the height of the `MessageInputBar` changes.
 [#340](https://github.com/MessageKit/MessageKit/pull/340) by [@KEN-chan](https://github.com/KEN-chan).

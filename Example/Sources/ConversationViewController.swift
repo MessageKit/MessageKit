@@ -102,7 +102,7 @@ class ConversationViewController: MessagesViewController {
     }
     
     @objc func loadMoreMessages() {
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: DispatchTime.now() + 4) {
             SampleData.shared.getMessages(count: 10) { messages in
                 DispatchQueue.main.async {
                     self.messageList.insert(contentsOf: messages, at: 0)
