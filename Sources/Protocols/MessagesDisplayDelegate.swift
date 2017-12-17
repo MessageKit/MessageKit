@@ -206,7 +206,7 @@ public extension MessagesDisplayDelegate {
     }
 
     func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedStringKey: Any] {
-        return [:]
+        return MessageLabel.defaultAttributes
     }
 
     // MARK: - Location Messages Defaults

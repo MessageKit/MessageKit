@@ -64,27 +64,14 @@ open class MessageLabel: UILabel {
     }
 
     open override var attributedText: NSAttributedString? {
-        get {
-            return textStorage
-        }
-        set {
-            setTextStorage(newValue, shouldParse: true)
+        didSet {
+            setTextStorage(attributedText, shouldParse: true)
         }
     }
 
     open override var text: String? {
-        get {
-            return textStorage.string
-        }
-        set {
-            if let text = newValue {
-                let mutableText = NSMutableAttributedString(string: text)
-                let range = NSRange(location: 0, length: mutableText.length)
-                mutableText.addAttributes([.font: font], range: range)
-                attributedText = mutableText
-            } else {
-                attributedText = nil
-            }
+        didSet {
+            setTextStorage(attributedText, shouldParse: true)
         }
     }
 
@@ -128,7 +115,7 @@ open class MessageLabel: UILabel {
 
     private var attributesNeedUpdate = false
 
-    private static var defaultAttributes: [NSAttributedStringKey: Any] = {
+    public static var defaultAttributes: [NSAttributedStringKey: Any] = {
         return [
             NSAttributedStringKey.foregroundColor: UIColor.darkText,
             NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
