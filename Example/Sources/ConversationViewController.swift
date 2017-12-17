@@ -288,7 +288,7 @@ extension ConversationViewController: MessagesDisplayDelegate {
     }
 
     func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedStringKey : Any] {
-        return [.foregroundColor: UIColor.darkText, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue]
+        return MessageLabel.defaultAttributes
     }
 
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
