@@ -70,5 +70,22 @@ open class MessagesCollectionView: UICollectionView {
             self.scrollRectToVisible(CGRect(0.0, collectionViewContentHeight - 1.0, 1.0, 1.0), animated: animated)
         }
     }
+    
+    public func reloadDataAndKeepOffset() {
+        // stop scrolling
+        setContentOffset(contentOffset, animated: false)
+        
+        // calculate the offset and reloadData
+        let beforeContentSize = contentSize
+        reloadData()
+        layoutIfNeeded()
+        let afterContentSize = contentSize
+        
+        // reset the contentOffset after data is updated
+        let newOffset = CGPoint(
+            x: contentOffset.x + (afterContentSize.width - beforeContentSize.width),
+            y: contentOffset.y + (afterContentSize.height - beforeContentSize.height))
+        setContentOffset(newOffset, animated: false)
+    }
 
 }

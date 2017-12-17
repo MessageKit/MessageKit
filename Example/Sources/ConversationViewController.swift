@@ -28,24 +28,21 @@ import MapKit
 
 class ConversationViewController: MessagesViewController {
 
-    var messageList: [MockMessage] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.messagesCollectionView.reloadData()
-                self.messagesCollectionView.scrollToBottom()
-            }
-        }
-    }
+    let refreshControl = UIRefreshControl()
+    
+    var messageList: [MockMessage] = []
     
     var isTyping = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    
         DispatchQueue.global(qos: .userInitiated).async {
             SampleData.shared.getMessages(count: 10) { messages in
                 DispatchQueue.main.async {
                     self.messageList = messages
+                    self.messagesCollectionView.reloadData()
+                    self.messagesCollectionView.scrollToBottom()
                 }
             }
         }
@@ -55,10 +52,14 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
+
         messageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
         scrollsToBottomOnKeybordBeginsEditing = true // default false
         maintainPositionOnKeyboardFrameChanged = true // default false
-
+        
+        messagesCollectionView.addSubview(refreshControl)
+        refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
+        
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
                             style: .plain,
@@ -96,6 +97,19 @@ class ConversationViewController: MessagesViewController {
             // The backgroundView doesn't include the topStackView. This is so things in the topStackView can have transparent backgrounds if you need it that way or another color all together
             messageInputBar.backgroundColor = messageInputBar.backgroundView.backgroundColor
             
+        }
+
+    }
+    
+    @objc func loadMoreMessages() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            SampleData.shared.getMessages(count: 10) { messages in
+                DispatchQueue.main.async {
+                    self.messageList.insert(contentsOf: messages, at: 0)
+                    self.messagesCollectionView.reloadDataAndKeepOffset()
+                    self.refreshControl.endRefreshing()
+                }
+            }
         }
     }
     
