@@ -28,6 +28,9 @@ attributes to be set outside of the cell.
 - Fixed `scrollToBottom(animated:)` not work in some situations.
 [#395](https://github.com/MessageKit/MessageKit/issues/395) by [@zhongwuzw](https://github.com/zhongwuzw).
 
+- Fixed a bug where new messages using `.attributedText(NSAttributedString)` have the incorrect font.
+[#412](https://github.com/MessageKit/MessageKit/issues/412) by [@SD10](https://github.com/sd10).
+
 ### Changed
 
 - **Breaking Change** The `MessageLabel` properties `addressAttributes`, `dateAttributes`, `phoneNumberAttributes`,
