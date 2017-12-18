@@ -302,12 +302,12 @@ fileprivate extension MessagesViewController {
             let afterBottomInset = keyboardEndFrame.height > keyboardOffsetFrame.height ? (keyboardEndFrame.height - iPhoneXBottomInset) : keyboardOffsetFrame.height
             let differenceOfBottomInset = afterBottomInset - messageCollectionViewBottomInset
             let contentOffset = CGPoint(x: messagesCollectionView.contentOffset.x, y: messagesCollectionView.contentOffset.y + differenceOfBottomInset)
-            
-            messageCollectionViewBottomInset = afterBottomInset
-            
+
             if maintainPositionOnKeyboardFrameChanged {
                 messagesCollectionView.setContentOffset(contentOffset, animated: false)
             }
+
+            messageCollectionViewBottomInset = afterBottomInset
         }
     }
     
