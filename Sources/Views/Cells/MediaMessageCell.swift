@@ -24,33 +24,31 @@
 
 import UIKit
 
-open class MediaMessageCell: MessageCollectionViewCell<UIImageView> {
+open class MediaMessageCell: MessageCollectionViewCell {
+
     open override class func reuseIdentifier() -> String { return "messagekit.cell.mediamessage" }
 
     // MARK: - Properties
 
     open lazy var playButtonView: PlayButtonView = {
         let playButtonView = PlayButtonView()
-        playButtonView.frame.size = CGSize(width: 35, height: 35)
         return playButtonView
     }()
 
+    open var imageView = UIImageView()
+
     // MARK: - Methods
 
-    private func setupConstraints() {
-        playButtonView.translatesAutoresizingMaskIntoConstraints = false
-
-        let centerX = playButtonView.centerXAnchor.constraint(equalTo: messageContainerView.centerXAnchor)
-        let centerY = playButtonView.centerYAnchor.constraint(equalTo: messageContainerView.centerYAnchor)
-        let width = playButtonView.widthAnchor.constraint(equalToConstant: playButtonView.bounds.width)
-        let height = playButtonView.heightAnchor.constraint(equalToConstant: playButtonView.bounds.height)
-
-        NSLayoutConstraint.activate([centerX, centerY, width, height])
+    open func setupConstraints() {
+        imageView.fillSuperview()
+        playButtonView.centerInSuperview()
+        playButtonView.constraint(equalTo: CGSize(width: 35, height: 35))
     }
 
-    override func setupSubviews() {
+    open override func setupSubviews() {
         super.setupSubviews()
-        messageContentView.addSubview(playButtonView)
+        messageContainerView.addSubview(imageView)
+        messageContainerView.addSubview(playButtonView)
         setupConstraints()
     }
 
@@ -58,14 +56,13 @@ open class MediaMessageCell: MessageCollectionViewCell<UIImageView> {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         switch message.data {
         case .photo(let image):
-            messageContentView.image = image
+            imageView.image = image
             playButtonView.isHidden = true
         case .video(_, let image):
-            messageContentView.image = image
+            imageView.image = image
             playButtonView.isHidden = false
         default:
             break
         }
     }
-
 }

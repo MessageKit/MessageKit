@@ -25,48 +25,44 @@
 import UIKit
 import MapKit
 
-open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
+open class LocationMessageCell: MessageCollectionViewCell {
+
     open override class func reuseIdentifier() -> String { return "messagekit.cell.location" }
 
     // MARK: - Properties
 
     open var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
-    open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
-        super.configure(with: message, at: indexPath, and: messagesCollectionView)
+    open var imageView = UIImageView()
 
-        switch message.data {
-        case .location(let location):
-            guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else { return }
-            let options = displayDelegate.snapshotOptionsForLocation(message: message, at: indexPath, in: messagesCollectionView)
-            let annotationView = displayDelegate.annotationViewForLocation(message: message, at: indexPath, in: messagesCollectionView)
-            let animationBlock = displayDelegate.animationBlockForLocation(message: message, at: indexPath, in: messagesCollectionView)
-            setMapSnaphotImage(for: location, annotationView: annotationView, options: options, animation: animationBlock)
-        default:
-            break
-        }
-    }
-
-    override func setupSubviews() {
+    open override func setupSubviews() {
         super.setupSubviews()
-        messageContentView.addSubview(activityIndicator)
+        imageView.contentMode = .scaleAspectFill
+        messageContainerView.addSubview(imageView)
+        messageContainerView.addSubview(activityIndicator)
         setupConstraints()
     }
 
-    private func setupConstraints() {
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        let centerX = activityIndicator.centerXAnchor.constraint(equalTo: messageContentView.centerXAnchor)
-        let centerY = activityIndicator.centerYAnchor.constraint(equalTo: messageContentView.centerYAnchor)
-        NSLayoutConstraint.activate([centerX, centerY])
+    open func setupConstraints() {
+        imageView.fillSuperview()
+        activityIndicator.centerInSuperview()
     }
 
-    open func setMapSnaphotImage(for location: CLLocation, annotationView: MKAnnotationView?, options: LocationMessageSnapshotOptions, animation: ((UIImageView) -> Void)?) {
+    open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+        super.configure(with: message, at: indexPath, and: messagesCollectionView)
+        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
+            fatalError("MessagesDisplayDelegate is not set.")
+        }
+        let options = displayDelegate.snapshotOptionsForLocation(message: message, at: indexPath, in: messagesCollectionView)
+        let annotationView = displayDelegate.annotationViewForLocation(message: message, at: indexPath, in: messagesCollectionView)
+        let animationBlock = displayDelegate.animationBlockForLocation(message: message, at: indexPath, in: messagesCollectionView)
+
+        guard case let .location(location) = message.data else { fatalError("") }
 
         activityIndicator.startAnimating()
 
         let snapshotOptions = MKMapSnapshotOptions()
         snapshotOptions.region = MKCoordinateRegion(center: location.coordinate, span: options.span)
-        snapshotOptions.size = messageContainerView.frame.size
         snapshotOptions.showsBuildings = options.showsBuildings
         snapshotOptions.showsPointsOfInterest = options.showsPointsOfInterest
 
@@ -81,7 +77,7 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
             }
 
             guard let annotationView = annotationView else {
-                self.messageContentView.image = snapshot.image
+                self.imageView.image = snapshot.image
                 return
             }
 
@@ -100,8 +96,10 @@ open class LocationMessageCell: MessageCollectionViewCell<UIImageView> {
             let composedImage = UIGraphicsGetImageFromCurrentImageContext()
 
             UIGraphicsEndImageContext()
-            self.messageContentView.image = composedImage
-            animation?(self.messageContentView)
+            self.imageView.image = composedImage
+            animationBlock?(self.imageView)
         }
+        
+        
     }
 }

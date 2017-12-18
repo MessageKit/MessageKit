@@ -28,21 +28,21 @@ import MapKit
 
 class ConversationViewController: MessagesViewController {
 
-    var messageList: [MockMessage] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.messagesCollectionView.reloadData()
-            }
-        }
-    }
+    let refreshControl = UIRefreshControl()
+    
+    var messageList: [MockMessage] = []
+    
+    var isTyping = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    
         DispatchQueue.global(qos: .userInitiated).async {
             SampleData.shared.getMessages(count: 10) { messages in
                 DispatchQueue.main.async {
                     self.messageList = messages
+                    self.messagesCollectionView.reloadData()
+                    self.messagesCollectionView.scrollToBottom()
                 }
             }
         }
@@ -52,14 +52,65 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
-        messageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
-        scrollsToBottomOnFirstLayout = true //default false
-        scrollsToBottomOnKeybordBeginsEditing = true // default false
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(handleKeyboardButton))
+        messageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
+        scrollsToBottomOnKeybordBeginsEditing = true // default false
+        maintainPositionOnKeyboardFrameChanged = true // default false
+        
+        messagesCollectionView.addSubview(refreshControl)
+        refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
+        
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
+                            style: .plain,
+                            target: self,
+                            action: #selector(handleKeyboardButton)),
+            UIBarButtonItem(image: UIImage(named: "ic_typing"),
+                            style: .plain,
+                            target: self,
+                            action: #selector(handleTyping))
+        ]
+    }
+    
+    @objc func handleTyping() {
+        
+        defer {
+            isTyping = !isTyping
+        }
+        
+        if isTyping {
+            
+            messageInputBar.topStackView.arrangedSubviews.first?.removeFromSuperview()
+            messageInputBar.topStackViewPadding = .zero
+            
+        } else {
+            
+            let label = UILabel()
+            label.text = "nathan.tannar is typing..."
+            label.font = UIFont.boldSystemFont(ofSize: 16)
+            messageInputBar.topStackView.addArrangedSubview(label)
+            
+            
+            messageInputBar.topStackViewPadding.top = 6
+            messageInputBar.topStackViewPadding.left = 12
+            
+            // The backgroundView doesn't include the topStackView. This is so things in the topStackView can have transparent backgrounds if you need it that way or another color all together
+            messageInputBar.backgroundColor = messageInputBar.backgroundView.backgroundColor
+            
+        }
+
+    }
+    
+    @objc func loadMoreMessages() {
+        DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: DispatchTime.now() + 4) {
+            SampleData.shared.getMessages(count: 10) { messages in
+                DispatchQueue.main.async {
+                    self.messageList.insert(contentsOf: messages, at: 0)
+                    self.messagesCollectionView.reloadDataAndKeepOffset()
+                    self.refreshControl.endRefreshing()
+                }
+            }
+        }
     }
     
     @objc func handleKeyboardButton() {
@@ -93,6 +144,7 @@ class ConversationViewController: MessagesViewController {
 
     func slack() {
         defaultStyle()
+        messageInputBar.backgroundView.backgroundColor = .white
         messageInputBar.isTranslucent = false
         messageInputBar.inputTextView.backgroundColor = .clear
         messageInputBar.inputTextView.layer.borderWidth = 0
@@ -150,6 +202,7 @@ class ConversationViewController: MessagesViewController {
     func iMessage() {
         defaultStyle()
         messageInputBar.isTranslucent = false
+        messageInputBar.backgroundView.backgroundColor = .white
         messageInputBar.separatorLine.isHidden = true
         messageInputBar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         messageInputBar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
@@ -243,14 +296,24 @@ extension ConversationViewController: MessagesDataSource {
 
 extension ConversationViewController: MessagesDisplayDelegate {
 
+    // MARK: - Text Messages
+
+    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return isFromCurrentSender(message: message) ? .white : .darkText
+    }
+
+    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedStringKey : Any] {
+        return MessageLabel.defaultAttributes
+    }
+
+    func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
+        return [.url, .address, .phoneNumber, .date]
+    }
+
     // MARK: - All Messages
     
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1) : UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
-    }
-
-    func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .white : .darkText
     }
 
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
@@ -280,8 +343,6 @@ extension ConversationViewController: MessagesDisplayDelegate {
             }, completion: nil)
         }
     }
-
-
 }
 
 // MARK: - MessagesLayoutDelegate
@@ -333,19 +394,19 @@ extension ConversationViewController: MessagesLayoutDelegate {
 
 extension ConversationViewController: MessageCellDelegate {
 
-    func didTapAvatar<T>(in cell: MessageCollectionViewCell<T>) {
+    func didTapAvatar(in cell: MessageCollectionViewCell) {
         print("Avatar tapped")
     }
 
-    func didTapMessage<T>(in cell: MessageCollectionViewCell<T>) {
+    func didTapMessage(in cell: MessageCollectionViewCell) {
         print("Message tapped")
     }
 
-    func didTapTopLabel<T>(in cell: MessageCollectionViewCell<T>) {
+    func didTapTopLabel(in cell: MessageCollectionViewCell) {
         print("Top label tapped")
     }
 
-    func didTapBottomLabel<T>(in cell: MessageCollectionViewCell<T>) {
+    func didTapBottomLabel(in cell: MessageCollectionViewCell) {
         print("Bottom label tapped")
     }
 
@@ -378,7 +439,10 @@ extension ConversationViewController: MessageLabelDelegate {
 extension ConversationViewController: MessageInputBarDelegate {
 
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-        messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date()))
+        let attributedText = NSAttributedString(string: text, attributes: [.font: UIFont.systemFont(ofSize: 8), .foregroundColor: UIColor.blue])
+        let id = UUID().uuidString
+        let message = MockMessage(attributedText: attributedText, sender: currentSender(), messageId: id, date: Date())
+        messageList.append(message)
         inputBar.inputTextView.text = String()
         messagesCollectionView.insertSections([messageList.count - 1])
         messagesCollectionView.scrollToBottom()

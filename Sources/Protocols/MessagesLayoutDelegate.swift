@@ -155,7 +155,6 @@ public protocol MessagesLayoutDelegate: AnyObject {
     /// rect using the `maxWidth` and `.greatestFiniteMagnitude` for the height.
     func heightForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
 
-
     // MARK: - Location Messages
 
     /// Specifies the width for a `MessageContainerView`.
@@ -267,5 +266,3 @@ public extension MessagesLayoutDelegate {
     }
 
 }
-
-

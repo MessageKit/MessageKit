@@ -40,8 +40,8 @@ open class MessagesCollectionView: UICollectionView {
 
     private var indexPathForLastItem: IndexPath? {
 
-        let lastSection = numberOfSections > 0 ? numberOfSections - 1 : 0
-        guard lastSection > 0, numberOfItems(inSection: lastSection) > 0 else { return nil }
+        let lastSection = numberOfSections - 1
+        guard lastSection >= 0, numberOfItems(inSection: lastSection) > 0 else { return nil }
         return IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
 
     }
@@ -64,8 +64,28 @@ open class MessagesCollectionView: UICollectionView {
     // MARK: - Methods
 
     public func scrollToBottom(animated: Bool = false) {
-        guard let indexPath = indexPathForLastItem else { return }
-        scrollToItem(at: indexPath, at: .bottom, animated: animated)
+        let collectionViewContentHeight = collectionViewLayout.collectionViewContentSize.height
+
+        performBatchUpdates(nil) { _ in
+            self.scrollRectToVisible(CGRect(0.0, collectionViewContentHeight - 1.0, 1.0, 1.0), animated: animated)
+        }
+    }
+    
+    public func reloadDataAndKeepOffset() {
+        // stop scrolling
+        setContentOffset(contentOffset, animated: false)
+        
+        // calculate the offset and reloadData
+        let beforeContentSize = contentSize
+        reloadData()
+        layoutIfNeeded()
+        let afterContentSize = contentSize
+        
+        // reset the contentOffset after data is updated
+        let newOffset = CGPoint(
+            x: contentOffset.x + (afterContentSize.width - beforeContentSize.width),
+            y: contentOffset.y + (afterContentSize.height - beforeContentSize.height))
+        setContentOffset(newOffset, animated: false)
     }
 
 }

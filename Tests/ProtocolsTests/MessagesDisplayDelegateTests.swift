@@ -243,15 +243,16 @@ private class MockMessagesViewController: MessagesViewController, MessagesDispla
         return 200
     }
 
-
     var dataProvider: MockMessagesDataSource!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         dataProvider = makeDataSource()
+        messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messagesDataSource = dataProvider
         messagesCollectionView.messagesLayoutDelegate = self
+
     }
 
     private func makeDataSource() -> MockMessagesDataSource {

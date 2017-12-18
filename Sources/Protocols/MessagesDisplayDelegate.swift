@@ -110,6 +110,15 @@ public protocol MessagesDisplayDelegate: AnyObject {
     /// The default value returned by this method is all available detector types.
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType]
 
+    /// Specifies the attributes for a given `DetectorType`
+    ///
+    /// - Parameters:
+    ///   - detector: The `DetectorType` for the applied attributes.
+    ///   - message: A `MessageType` with a `MessageData` case of `.text` or `.attributedText`
+    ///   to which the detectors will apply.
+    ///   - indexPath: The `IndexPath` of the cell.
+    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedStringKey: Any]
+
     // MARK: - Location Messages
 
     /// Ask the delegate for a LocationMessageSnapshotOptions instance to customize the MapView on the given message
@@ -144,8 +153,6 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   - messagesCollectionView: The collection view requesting the information
     /// - Returns: Your customized animation block.
     func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)?
-
-
 }
 
 public extension MessagesDisplayDelegate {
@@ -196,6 +203,10 @@ public extension MessagesDisplayDelegate {
 
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
         return []
+    }
+
+    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedStringKey: Any] {
+        return MessageLabel.defaultAttributes
     }
 
     // MARK: - Location Messages Defaults
