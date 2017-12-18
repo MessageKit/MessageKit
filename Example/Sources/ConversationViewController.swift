@@ -267,10 +267,6 @@ extension ConversationViewController: MessagesDataSource {
         return messageList[indexPath.section]
     }
 
-    func avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
-        return SampleData.shared.getAvatarFor(sender: message.sender)
-    }
-
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let name = message.sender.displayName
         return NSAttributedString(string: name, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption1)])
@@ -321,6 +317,11 @@ extension ConversationViewController: MessagesDisplayDelegate {
         return .bubbleTail(corner, .curved)
 //        let configurationClosure = { (view: MessageContainerView) in}
 //        return .custom(configurationClosure)
+    }
+    
+    func configureImageForAvatarView(avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
+        avatarView.set(avatar: avatar)
     }
 
     // MARK: - Location Messages

@@ -51,16 +51,6 @@ public protocol MessagesDataSource: AnyObject {
     ///   - messagesCollectionView: The `MessagesCollectionView` in which the messages will be displayed.
     func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int
 
-    /// The `Avatar` information to be used by the `AvatarView`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` that will be displayed by this cell.
-    ///   - indexPath: The `IndexPath` of the cell.
-    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-    ///
-    /// The default value returned by this method is `Avatar()`.
-    func avatar(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar
-
     /// The attributed text to be used for cell's top label.
     ///
     /// - Parameters:
@@ -87,10 +77,6 @@ public extension MessagesDataSource {
 
     func isFromCurrentSender(message: MessageType) -> Bool {
         return message.sender == currentSender()
-    }
-
-    func avatar(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
-        return Avatar()
     }
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {

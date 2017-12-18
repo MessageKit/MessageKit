@@ -102,15 +102,15 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
         let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
         let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
+        
+        displayDelegate.configureImageForAvatarView(avatarView: avatarView, for: message, at: indexPath, in: messagesCollectionView)
 
         messageContainerView.backgroundColor = messageColor
         messageContainerView.style = messageStyle
 
-        let avatar = dataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
         let topText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
         let bottomText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
 
-        avatarView.set(avatar: avatar)
         cellTopLabel.attributedText = topText
         cellBottomLabel.attributedText = bottomText
     }
