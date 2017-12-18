@@ -279,8 +279,13 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         switch intermediateAttributes.message.data {
         case .emoji:
             attributes.messageLabelFont = emojiLabelFont
-        default:
+        case .text:
             attributes.messageLabelFont = messageLabelFont
+        case .attributedText(let text):
+            guard let font = text.attribute(.font, at: 0, effectiveRange: nil) as? UIFont else { return }
+            attributes.messageLabelFont = font
+        default:
+            break
         }
 
     }
