@@ -6,6 +6,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+## [[Prerelease] 0.12.0](https://github.com/MessageKit/MessageKit/releases/tag/0.12.0)
+
 ### Added
 
 - Added `reloadDataAndKeepOffset()` method to `MessagesCollectionView` to maintain the current position
