@@ -343,8 +343,6 @@ extension ConversationViewController: MessagesDisplayDelegate {
             }, completion: nil)
         }
     }
-
-
 }
 
 // MARK: - MessagesLayoutDelegate
@@ -441,7 +439,10 @@ extension ConversationViewController: MessageLabelDelegate {
 extension ConversationViewController: MessageInputBarDelegate {
 
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-        messageList.append(MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date()))
+        let attributedText = NSAttributedString(string: text, attributes: [.font: UIFont.systemFont(ofSize: 8), .foregroundColor: UIColor.blue])
+        let id = UUID().uuidString
+        let message = MockMessage(attributedText: attributedText, sender: currentSender(), messageId: id, date: Date())
+        messageList.append(message)
         inputBar.inputTextView.text = String()
         messagesCollectionView.insertSections([messageList.count - 1])
         messagesCollectionView.scrollToBottom()

@@ -32,6 +32,10 @@ attributes to be set outside of the cell.
 `MessagesDisplayDelegate` method.
 [#414](https://github.com/MessageKit/MessageKit/issues/414) by [@SD10](https://github.com/sd10).
 
+- Fixed a bug where new messages using `.attributedText(NSAttributedString)` have the incorrect font.
+[#412](https://github.com/MessageKit/MessageKit/issues/412) by [@SD10](https://github.com/sd10).
+
+
 ### Changed
 
 - **Breaking Change** The `MessageLabel` properties `addressAttributes`, `dateAttributes`, `phoneNumberAttributes`,
