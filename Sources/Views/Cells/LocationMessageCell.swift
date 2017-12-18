@@ -35,13 +35,9 @@ open class LocationMessageCell: MessageCollectionViewCell {
 
     open var imageView = UIImageView()
 
-    open func configure(_ location: CLLocation, _ options: LocationMessageSnapshotOptions, _ annotationView: MKAnnotationView?, _ animationBlock: ((UIImageView) -> Void)?) {
-
-        setMapSnaphotImage(for: location, annotationView: annotationView, options: options, animation: animationBlock)
-    }
-
     open override func setupSubviews() {
         super.setupSubviews()
+        imageView.contentMode = .scaleAspectFill
         messageContainerView.addSubview(imageView)
         messageContainerView.addSubview(activityIndicator)
         setupConstraints()
@@ -52,7 +48,16 @@ open class LocationMessageCell: MessageCollectionViewCell {
         activityIndicator.centerInSuperview()
     }
 
-    open func setMapSnaphotImage(for location: CLLocation, annotationView: MKAnnotationView?, options: LocationMessageSnapshotOptions, animation: ((UIImageView) -> Void)?) {
+    open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+        super.configure(with: message, at: indexPath, and: messagesCollectionView)
+        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
+            fatalError("MessagesDisplayDelegate is not set.")
+        }
+        let options = displayDelegate.snapshotOptionsForLocation(message: message, at: indexPath, in: messagesCollectionView)
+        let annotationView = displayDelegate.annotationViewForLocation(message: message, at: indexPath, in: messagesCollectionView)
+        let animationBlock = displayDelegate.animationBlockForLocation(message: message, at: indexPath, in: messagesCollectionView)
+
+        guard case let .location(location) = message.data else { fatalError("") }
 
         activityIndicator.startAnimating()
 
@@ -92,7 +97,9 @@ open class LocationMessageCell: MessageCollectionViewCell {
 
             UIGraphicsEndImageContext()
             self.imageView.image = composedImage
-            animation?(self.imageView)
+            animationBlock?(self.imageView)
         }
+        
+        
     }
 }

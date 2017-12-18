@@ -90,11 +90,27 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         }
     }
 
-    open func configureAvatar(_ avatar: Avatar) {
-        avatarView.set(avatar: avatar)
-    }
+    open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            fatalError("MessagesDataSource is not set.")
+        }
+        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
+            fatalError("MessagesDisplayDelegate is not set.")
+        }
 
-    open func configureAccessoryLabels(_ topText: NSAttributedString?, _ bottomText: NSAttributedString?) {
+        delegate = messagesCollectionView.messageCellDelegate
+
+        let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
+        let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
+
+        messageContainerView.backgroundColor = messageColor
+        messageContainerView.style = messageStyle
+
+        let avatar = dataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
+        let topText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
+        let bottomText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
+
+        avatarView.set(avatar: avatar)
         cellTopLabel.attributedText = topText
         cellBottomLabel.attributedText = bottomText
     }

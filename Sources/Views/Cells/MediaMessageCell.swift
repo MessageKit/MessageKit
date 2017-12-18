@@ -52,7 +52,8 @@ open class MediaMessageCell: MessageCollectionViewCell {
         setupConstraints()
     }
 
-    open func configure(_ message: MessageType) {
+    open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
+        super.configure(with: message, at: indexPath, and: messagesCollectionView)
         switch message.data {
         case .photo(let image):
             imageView.image = image
