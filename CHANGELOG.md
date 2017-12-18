@@ -28,6 +28,10 @@ attributes to be set outside of the cell.
 - Fixed `scrollToBottom(animated:)` not work in some situations.
 [#395](https://github.com/MessageKit/MessageKit/issues/395) by [@zhongwuzw](https://github.com/zhongwuzw).
 
+- Fixed `.attributedText(NSAttributedString)` messages that were not using the `textColor` from the
+`MessagesDisplayDelegate` method.
+[#414](https://github.com/MessageKit/MessageKit/issues/414) by [@SD10](https://github.com/sd10).
+
 ### Changed
 
 - **Breaking Change** The `MessageLabel` properties `addressAttributes`, `dateAttributes`, `phoneNumberAttributes`,
@@ -35,11 +39,6 @@ and `urlAttributes` are now read only. Please use `setAttributes(_:detector:)` t
 [#397](https://github.com/MessageKit/MessageKit/pull/397) by [@SD10](https://github.com/sd10).
 
 - **Breaking Change** Removed the generic constraint `<ContentView: UIView>` from `MessageCollectionViewCell`.
-[#391](https://github.com/MessageKit/MessageKit/pull/391) by [@SD10](https://github.com/sd10).
-
-- **Breaking Change** The `configure(message:indexPath:messagesCollectionView)` method of `LocationMessageCell`,
-`MediaMessageCell`, `TextMessageCell`, and `MessageCollectionViewCell` has been replaced by methods that take the
-delegate return values as arguments.
 [#391](https://github.com/MessageKit/MessageKit/pull/391) by [@SD10](https://github.com/sd10).
 
 - **Breaking Change** The `contentView` property has been renamed to `imageView` for `LocationMessageCell` and `MediaMessageCell`
