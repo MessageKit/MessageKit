@@ -161,14 +161,18 @@ open class AvatarView: UIImageView {
         contentMode = .scaleAspectFill
         layer.masksToBounds = true
         clipsToBounds = true
-        contentMode = .scaleAspectFill
         setCorner(radius: nil)
     }
 
     // MARK: - Open setters
     
     open func set(avatar: Avatar) {
-        image = avatar.image ?? getImageFrom(initials: avatar.initials)
+        if let image = avatar.image {
+            self.image = image
+        }
+        else {
+            initials = avatar.initials
+        }
     }
 
     open func setCorner(radius: CGFloat?) {
