@@ -93,7 +93,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     ///
     /// The default image configured by this method is `?`.
-    func configureImageForAvatarView(avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
+    func configureAvatarView(avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
 
     // MARK: - Text Messages
 
@@ -205,9 +205,8 @@ public extension MessagesDisplayDelegate {
         return messagesCollectionView.dequeueReusableFooterView(MessageFooterView.self, for: indexPath)
     }
     
-    func configureImageForAvatarView(avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
-        let avatar = Avatar()
-        avatarView.set(avatar: avatar)
+    func configureAvatarView(avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        avatarView.initials = "?"
     }
 
     // MARK: - Text Messages Defaults

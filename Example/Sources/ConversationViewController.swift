@@ -319,7 +319,7 @@ extension ConversationViewController: MessagesDisplayDelegate {
 //        return .custom(configurationClosure)
     }
     
-    func configureImageForAvatarView(avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+    func configureAvatarView(avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
         avatarView.set(avatar: avatar)
     }
