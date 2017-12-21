@@ -16,10 +16,6 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - **Breaking Change** Removed `avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)` method of `MessagesDataSource`, use `configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)` instead.
 [#416](https://github.com/MessageKit/MessageKit/pull/416) by [@zhongwuzw](https://github.com/zhongwuzw).
 
-### Changed
-- **Breaking Change** Moved the `handleTapGesture(_ gesture: UIGestureRecognizer)` method from `MessagesCollectionViewCell` to `MessagesCollectionView`.
-- [#417](https://github.com/MessageKit/MessageKit/pull/417) by [@zhongwuzw](https://github.com/zhongwuzw).
-
 ## [[Prerelease] 0.12.0](https://github.com/MessageKit/MessageKit/releases/tag/0.12.0)
 
 ### Added
