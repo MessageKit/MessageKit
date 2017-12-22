@@ -59,6 +59,9 @@ open class MessagesViewController: UIViewController {
         return false
     }
     
+    /// Indicated selected indexPath when handle menu action
+    fileprivate var selectedIndexPathForMenu: IndexPath?
+    
     /// A Boolean value used to determine if `viewDidLayoutSubviews()` has been called.
     private var isFirstLayout: Bool = true
     
@@ -84,6 +87,7 @@ open class MessagesViewController: UIViewController {
         setupConstraints()
         registerReusableViews()
         setupDelegates()
+        addMenuControllerObservers()
 
     }
 
@@ -100,6 +104,7 @@ open class MessagesViewController: UIViewController {
 
     deinit {
         removeKeyboardObservers()
+        removeMenuControllerObservers()
     }
 
     // MARK: - Methods [Private]
@@ -188,7 +193,40 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         return messagesLayoutDelegate.footerViewSize(for: message, at: indexPath, in: messagesCollectionView)
     }
-
+    
+    public func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return false }
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        
+        switch message.data {
+        case .text, .attributedText, .emoji, .photo:
+            selectedIndexPathForMenu = indexPath
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        return (action == NSSelectorFromString("copy:"))
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { fatalError("Please set messagesDataSource") }
+        let pasteBoard = UIPasteboard.general
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        
+        switch message.data {
+        case .text(let text), .emoji(let text):
+            pasteBoard.string = text
+        case .attributedText(let attributedText):
+            pasteBoard.string = attributedText.string
+        case .photo(let image):
+            pasteBoard.image = image
+        default:
+            break
+        }
+    }
 }
 
 // MARK: - UICollectionViewDataSource Conformance
@@ -326,5 +364,37 @@ fileprivate extension MessagesViewController {
             return view.safeAreaInsets.bottom
         }
         return 0
+    }
+}
+
+// MARK: - Menu Handling
+extension MessagesViewController {
+    /// Add observer for `UIMenuControllerWillShowMenu` notification
+    fileprivate func addMenuControllerObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(aNotification:)), name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+    }
+    
+    /// Remove observer for `UIMenuControllerWillShowMenu` notification
+    fileprivate func removeMenuControllerObservers() {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+    }
+    
+    /// Show menuController and set target rect to selected bubble
+    @objc func menuControllerWillShow(aNotification:Notification) {
+        if let currentMenuController = aNotification.object as? UIMenuController,
+            let selectedIndexPath = selectedIndexPathForMenu {
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+            defer {
+                NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(aNotification:)), name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+                selectedIndexPathForMenu = nil
+            }
+            
+            currentMenuController.setMenuVisible(false, animated: false)
+            
+            guard let selectedCell = messagesCollectionView.cellForItem(at: selectedIndexPath) as? MessageCollectionViewCell else { return }
+            let selectedCellMessageBubbleFrame = selectedCell.convert(selectedCell.messageContainerView.frame, to: view)
+            currentMenuController.setTargetRect(selectedCellMessageBubbleFrame, in: view)
+            currentMenuController.setMenuVisible(true, animated: true)
+        }
     }
 }
