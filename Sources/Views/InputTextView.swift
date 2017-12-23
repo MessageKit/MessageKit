@@ -49,6 +49,13 @@ open class InputTextView: UITextView {
         }
     }
     
+    /// The images that are currently stored as NSTextAttachment's
+    open var images: [UIImage] {
+        return getAttachedImages()
+    }
+    
+    open var isImagePasteEnabled: Bool = true
+    
     /// A UILabel that holds the InputTextView's placeholder text
     open let placeholderLabel: UILabel = {
         let label = UILabel()
@@ -148,6 +155,7 @@ open class InputTextView: UITextView {
         layer.cornerRadius = 5.0
         layer.borderWidth = 1.25
         layer.borderColor = UIColor.lightGray.cgColor
+        allowsEditingTextAttributes = false
         setupPlaceholderLabel()
     }
     
@@ -176,4 +184,84 @@ open class InputTextView: UITextView {
         placeholderLabelConstraintSet?.left?.constant = placeholderLabelInsets.left
         placeholderLabelConstraintSet?.right?.constant = -placeholderLabelInsets.right
     }
+    
+    // MARK: - Image Paste Support
+    
+    open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        
+        if action == NSSelectorFromString("paste:") && UIPasteboard.general.image != nil {
+            return isImagePasteEnabled
+        }
+        return super.canPerformAction(action, withSender: sender)
+    }
+    
+    open override func paste(_ sender: Any?) {
+        
+        guard let image = UIPasteboard.general.image else {
+            return super.paste(sender)
+        }
+        pasteImageInTextContainer(with: image)
+    }
+    
+    /// Addes a new UIImage to the NSTextContainer as an NSTextAttachment
+    ///
+    /// - Parameter image: The image to add
+    private func pasteImageInTextContainer(with image: UIImage) {
+        
+        let font = self.font ?? UIFont.preferredFont(forTextStyle: .body)
+        let textColor = self.textColor ?? .black
+        
+        let attributes: [NSAttributedStringKey:Any] = [
+            NSAttributedStringKey.font : font,
+            NSAttributedStringKey.foregroundColor : textColor,
+        ]
+
+        // Add the new image as an NSTextAttachment
+        let attributedImageString = NSAttributedString(attachment: textAttachment(using: image))
+        
+        let newAttributedStingComponent = NSMutableAttributedString(string: "")
+        newAttributedStingComponent.append(attributedImageString)
+        newAttributedStingComponent.addAttributes(attributes, range: NSRange(location: 0, length: newAttributedStingComponent.length))
+        
+        // Paste over selected text and advance selectedRange
+        textStorage.replaceCharacters(in: selectedRange, with: newAttributedStingComponent)
+        selectedRange = NSRange(location: selectedRange.location + 1, length: 1)
+    
+        // Broadcast a notification to recievers such as the MessageInputBar which will handle resizing
+        NotificationCenter.default.post(name: .UITextViewTextDidChange, object: self)
+    }
+    
+    /// Returns an NSTextAttachment the provided image that will fit inside the NSTextContainer
+    ///
+    /// - Parameter image: The image to create an attachment with
+    /// - Returns: The formatted NSTextAttachment
+    private func textAttachment(using image: UIImage) -> NSTextAttachment {
+        
+        guard let cgImage = image.cgImage else { return NSTextAttachment() }
+        let scale = image.size.width / (frame.width - 2 * (textContainerInset.left + textContainerInset.right))
+        let textAttachment = NSTextAttachment()
+        textAttachment.image = UIImage(cgImage: cgImage, scale: scale, orientation: .up)
+        return textAttachment
+    }
+    
+    /// Returns all images that exist as NSTextAttachment's
+    ///
+    /// - Returns: An array of type UIImage
+    private func getAttachedImages() -> [UIImage] {
+        
+        var images = [UIImage]()
+        let range = NSRange(location: 0, length: attributedText.length)
+        attributedText.enumerateAttribute(.attachment, in: range, options: [], using: { value, range, stop -> Void in
+            
+            if let attachment = value as? NSTextAttachment {
+                if let image = attachment.image {
+                    images.append(image)
+                } else if let image = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location) {
+                    images.append(image)
+                }
+            }
+        })
+        return images
+    }
+    
 }

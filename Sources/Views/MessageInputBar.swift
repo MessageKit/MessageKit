@@ -666,7 +666,7 @@ open class MessageInputBar: UIView {
     open func textViewDidChange() {
         let trimmedText = inputTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        sendButton.isEnabled = !trimmedText.isEmpty
+        sendButton.isEnabled = !trimmedText.isEmpty || inputTextView.images.count > 0
         inputTextView.placeholderLabel.isHidden = !inputTextView.text.isEmpty
 
         items.forEach { $0.textViewDidChangeAction(with: inputTextView) }
