@@ -446,7 +446,7 @@ extension ConversationViewController: MessageInputBarDelegate {
             
             let attributedText = NSAttributedString(string: text, attributes: [.font: UIFont.systemFont(ofSize: 8), .foregroundColor: UIColor.blue])
             
-            let message = MockMessage(text: text, sender: currentSender(), messageId: UUID().uuidString, date: Date())
+            let message = MockMessage(attributedText: attributedText, sender: currentSender(), messageId: UUID().uuidString, date: Date())
             messageList.append(message)
             messagesCollectionView.insertSections([messageList.count - 1])
         }
