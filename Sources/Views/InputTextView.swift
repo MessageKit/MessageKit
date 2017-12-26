@@ -51,7 +51,11 @@ open class InputTextView: UITextView {
     
     /// The images that are currently stored as NSTextAttachment's
     open var images: [UIImage] {
-        return getAttachedImages()
+        return parseForAttachedImages()
+    }
+    
+    open var components: [Any] {
+        return parseForComponents()
     }
     
     open var isImagePasteEnabled: Bool = true
@@ -157,6 +161,7 @@ open class InputTextView: UITextView {
         layer.borderColor = UIColor.lightGray.cgColor
         allowsEditingTextAttributes = false
         setupPlaceholderLabel()
+        setupObservers()
     }
     
     /// Adds the placeholderLabel to the view and sets up its initial constraints
@@ -174,6 +179,14 @@ open class InputTextView: UITextView {
         placeholderLabelConstraintSet?.centerX?.priority = .defaultLow
         placeholderLabelConstraintSet?.centerY?.priority = .defaultLow
         placeholderLabelConstraintSet?.activate()
+    }
+    
+    /// Adds the required notification observers
+    private func setupObservers() {
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(InputTextView.redrawTextAttachments),
+                                               name: .UIDeviceOrientationDidChange, object: nil)
     }
     
     /// Updates the placeholderLabels constraint constants to match the placeholderLabelInsets
@@ -207,25 +220,36 @@ open class InputTextView: UITextView {
     ///
     /// - Parameter image: The image to add
     private func pasteImageInTextContainer(with image: UIImage) {
-        
-        let font = self.font ?? UIFont.preferredFont(forTextStyle: .body)
-        let textColor = self.textColor ?? .black
-        
+       
+        // The attributes that should be applied to the new NSAttributedString to match the current attributes
         let attributes: [NSAttributedStringKey:Any] = [
-            NSAttributedStringKey.font : font,
-            NSAttributedStringKey.foregroundColor : textColor,
+            NSAttributedStringKey.font : font ?? UIFont.preferredFont(forTextStyle: .body),
+            NSAttributedStringKey.foregroundColor : textColor ?? .black,
         ]
 
         // Add the new image as an NSTextAttachment
         let attributedImageString = NSAttributedString(attachment: textAttachment(using: image))
         
-        let newAttributedStingComponent = NSMutableAttributedString(string: "")
+        
+        let newAttributedStingComponent: NSMutableAttributedString
+        if attributedText.length == 0 {
+            newAttributedStingComponent = NSMutableAttributedString(string: "")
+        } else {
+            // Add a new line character before the image, this is what iMessage does
+            newAttributedStingComponent = NSMutableAttributedString(string: "\n")
+        }
         newAttributedStingComponent.append(attributedImageString)
+        
+        // Add a new line character after the image, this is what iMessage does
+        newAttributedStingComponent.append(NSAttributedString(string: "\n"))
+        
         newAttributedStingComponent.addAttributes(attributes, range: NSRange(location: 0, length: newAttributedStingComponent.length))
         
-        // Paste over selected text and advance selectedRange
+        // Paste over selected text
         textStorage.replaceCharacters(in: selectedRange, with: newAttributedStingComponent)
-        selectedRange = NSRange(location: selectedRange.location + 1, length: 1)
+        
+        // Advance the range to the selected range plus the number of characters added
+        selectedRange = NSRange(location: selectedRange.location + 3, length: 1)
     
         // Broadcast a notification to recievers such as the MessageInputBar which will handle resizing
         NotificationCenter.default.post(name: .UITextViewTextDidChange, object: self)
@@ -247,7 +271,7 @@ open class InputTextView: UITextView {
     /// Returns all images that exist as NSTextAttachment's
     ///
     /// - Returns: An array of type UIImage
-    private func getAttachedImages() -> [UIImage] {
+    private func parseForAttachedImages() -> [UIImage] {
         
         var images = [UIImage]()
         let range = NSRange(location: 0, length: attributedText.length)
@@ -256,12 +280,63 @@ open class InputTextView: UITextView {
             if let attachment = value as? NSTextAttachment {
                 if let image = attachment.image {
                     images.append(image)
-                } else if let image = attachment.image(forBounds: attachment.bounds, textContainer: nil, characterIndex: range.location) {
+                } else if let image = attachment.image(forBounds: attachment.bounds,
+                                                       textContainer: nil,
+                                                       characterIndex: range.location) {
                     images.append(image)
                 }
             }
         })
         return images
+    }
+    
+    /// Returns an array of components (either a String or UIImage) that makes up the textContainer in
+    /// the order that they were typed
+    ///
+    /// - Returns: An array of objects guaranteed to be of UIImage or String
+    private func parseForComponents() -> [Any] {
+        
+        var components = [Any]()
+        let range = NSRange(location: 0, length: attributedText.length)
+        attributedText.enumerateAttributes(in: range, options: []) { (object, range, stop) in
+            
+            if object.keys.contains(.attachment){
+                if let attachment = object[.attachment] as? NSTextAttachment {
+                    if let image = attachment.image {
+                        components.append(image)
+                    } else if let image = attachment.image(forBounds: attachment.bounds,
+                                                           textContainer: nil,
+                                                           characterIndex: range.location) {
+                        components.append(image)
+                    }
+                }
+            } else {
+                let stringValue = attributedText.attributedSubstring(from: range).string.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !stringValue.isEmpty {
+                    components.append(stringValue)
+                }
+            }
+        }
+        return components
+    }
+    
+    /// Redraws the NSTextAttachments in the NSTextContainer to fit the current bounds
+    @objc
+    private func redrawTextAttachments() {
+        
+        guard images.count > 0 else { return }
+        let range = NSRange(location: 0, length: attributedText.length)
+        attributedText.enumerateAttribute(.attachment, in: range, options: [], using: { value, range, stop -> Void in
+            if let attachment = value as? NSTextAttachment, let image = attachment.image {
+                
+                // Calculates a new width/height ratio to fit the image in the current frame
+                let newWidth = frame.width - 2 * (textContainerInset.left + textContainerInset.right)
+                let ratio = image.size.height / image.size.width
+                attachment.bounds = CGRect(x: bounds.origin.x, y: bounds.origin.y,
+                                           width: newWidth, height: ratio * newWidth)
+            }
+        })
+        layoutManager.invalidateLayout(forCharacterRange: range, actualCharacterRange: nil)
     }
     
 }
