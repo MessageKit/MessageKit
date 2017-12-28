@@ -240,8 +240,10 @@ open class InputTextView: UITextView {
             ]
         newAttributedStingComponent.addAttributes(attributes, range: NSRange(location: 0, length: newAttributedStingComponent.length))
         
+        textStorage.beginEditing()
         // Paste over selected text
         textStorage.replaceCharacters(in: selectedRange, with: newAttributedStingComponent)
+        textStorage.endEditing()
         
         // Advance the range to the selected range plus the number of characters added
         let location = selectedRange.location + (isEmpty ? 2 : 3)
@@ -328,8 +330,7 @@ open class InputTextView: UITextView {
                 // Calculates a new width/height ratio to fit the image in the current frame
                 let newWidth = frame.width - 2 * (textContainerInset.left + textContainerInset.right)
                 let ratio = image.size.height / image.size.width
-                attachment.bounds = CGRect(x: bounds.origin.x, y: bounds.origin.y,
-                                           width: newWidth, height: ratio * newWidth)
+                attachment.bounds.size = CGSize(width: newWidth, height: ratio * newWidth)
             }
         })
         layoutManager.invalidateLayout(forCharacterRange: range, actualCharacterRange: nil)
