@@ -220,36 +220,32 @@ open class InputTextView: UITextView {
     ///
     /// - Parameter image: The image to add
     private func pasteImageInTextContainer(with image: UIImage) {
-       
-        // The attributes that should be applied to the new NSAttributedString to match the current attributes
-        let attributes: [NSAttributedStringKey:Any] = [
-            NSAttributedStringKey.font : font ?? UIFont.preferredFont(forTextStyle: .body),
-            NSAttributedStringKey.foregroundColor : textColor ?? .black,
-        ]
 
         // Add the new image as an NSTextAttachment
         let attributedImageString = NSAttributedString(attachment: textAttachment(using: image))
         
+        let isEmpty = attributedText.length == 0
         
-        let newAttributedStingComponent: NSMutableAttributedString
-        if attributedText.length == 0 {
-            newAttributedStingComponent = NSMutableAttributedString(string: "")
-        } else {
-            // Add a new line character before the image, this is what iMessage does
-            newAttributedStingComponent = NSMutableAttributedString(string: "\n")
-        }
+        // Add a new line character before the image, this is what iMessage does
+        let newAttributedStingComponent = isEmpty ? NSMutableAttributedString(string: "") : NSMutableAttributedString(string: "\n")
         newAttributedStingComponent.append(attributedImageString)
         
         // Add a new line character after the image, this is what iMessage does
         newAttributedStingComponent.append(NSAttributedString(string: "\n"))
         
+        // The attributes that should be applied to the new NSAttributedString to match the current attributes
+        let attributes: [NSAttributedStringKey:Any] = [
+            NSAttributedStringKey.font : font ?? UIFont.preferredFont(forTextStyle: .body),
+            NSAttributedStringKey.foregroundColor : textColor ?? .black,
+            ]
         newAttributedStingComponent.addAttributes(attributes, range: NSRange(location: 0, length: newAttributedStingComponent.length))
         
         // Paste over selected text
         textStorage.replaceCharacters(in: selectedRange, with: newAttributedStingComponent)
         
         // Advance the range to the selected range plus the number of characters added
-        selectedRange = NSRange(location: selectedRange.location + 3, length: 1)
+        let location = selectedRange.location + (isEmpty ? 2 : 3)
+        selectedRange = NSRange(location: location, length: 0)
     
         // Broadcast a notification to recievers such as the MessageInputBar which will handle resizing
         NotificationCenter.default.post(name: .UITextViewTextDidChange, object: self)
