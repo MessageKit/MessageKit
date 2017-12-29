@@ -6,6 +6,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Fixed
+
+- Fixed `LocationMessageCell` reuse bug, to avoid inconsistency when get capture image asynchronously. 
+[#428](https://github.com/MessageKit/MessageKit/pull/428) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 ## [[Prerelease] 0.12.0](https://github.com/MessageKit/MessageKit/releases/tag/0.12.0)
 
 ### Added
