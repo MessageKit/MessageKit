@@ -98,6 +98,31 @@ final class MessageIntermediateLayoutAttributes {
         
     }()
 
+    // AccessoryView
+    var accessoryViewSize: CGSize = .zero
+    var accessoryViewPadding: UIEdgeInsets = .zero
+
+    lazy var accessoryViewFrame: CGRect = {
+
+        guard accessoryViewSize != .zero else { return .zero }
+
+        var origin: CGPoint = .zero
+
+        origin.y = messageContainerFrame.origin.y + messageContainerSize.height / 2 - accessoryViewSize.height / 2
+
+        switch avatarPosition.horizontal {
+        case .cellLeading:
+            origin.x = messageContainerFrame.origin.x + messageContainerSize.width + accessoryViewPadding.left
+        case .cellTrailing:
+            origin.x = messageContainerFrame.origin.x - accessoryViewPadding.right - accessoryViewSize.width
+        case .natural:
+            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
+        }
+
+        return CGRect(origin: origin, size: accessoryViewSize)
+
+    }()
+
     // Cell Top Label
     var topLabelAlignment: LabelAlignment = .cellLeading(.zero)
     var topLabelSize: CGSize = .zero
@@ -158,31 +183,6 @@ final class MessageIntermediateLayoutAttributes {
 
     }()
 
-    // AccessoryView
-    var accessoryViewSize: CGSize = .zero
-    var accessoryViewPadding: UIEdgeInsets = .zero
-
-    lazy var accessoryViewFrame: CGRect = {
-
-        guard accessoryViewSize != .zero else { return .zero }
-
-        var origin: CGPoint = .zero
-
-        origin.y = messageContainerFrame.origin.y + messageContainerSize.height / 2 - accessoryViewSize.height / 2
-
-        switch avatarPosition.horizontal {
-        case .cellLeading:
-            origin.x = messageContainerFrame.origin.x + messageContainerSize.width + accessoryViewPadding.left
-        case .cellTrailing:
-            origin.x = messageContainerFrame.origin.x - accessoryViewPadding.right - accessoryViewSize.width
-        case .natural:
-            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
-        }
-
-        return CGRect(origin: origin, size: accessoryViewSize)
-
-    }()
-
     // MARK: - Initializer
     
     init(message: MessageType, indexPath: IndexPath) {
@@ -194,6 +194,17 @@ final class MessageIntermediateLayoutAttributes {
 
 // MARK: - Helpers
 
+extension UIEdgeInsets {
+    var horizontalTotal: CGFloat {
+        return left + right
+    }
+
+    var verticalTotal: CGFloat {
+        return top + bottom
+    }
+}
+
+// TODO: Replace attributes below with padding.verticalTotal etc because they're too specific
 extension MessageIntermediateLayoutAttributes {
     
     var bottomLabelPadding: UIEdgeInsets {
@@ -227,13 +238,4 @@ extension MessageIntermediateLayoutAttributes {
     var messageLabelHorizontalInsets: CGFloat {
         return messageLabelInsets.left + messageLabelInsets.right
     }
-    
-    var messageVerticalPadding: CGFloat {
-        return messageContainerPadding.top + messageContainerPadding.bottom
-    }
-    
-    var messageHorizontalPadding: CGFloat {
-        return messageContainerPadding.left + messageContainerPadding.right
-    }
-
 }

@@ -226,17 +226,17 @@ extension MessagesViewController: UICollectionViewDataSource {
         switch message.data {
         case .text, .attributedText, .emoji:
             let cell = messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
-            messagesDataSource.additionalConfig(for: cell, at: indexPath)
+            messagesDataSource.configCell(cell, for: message, at: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         case .photo, .video:
     	    let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCell.self, for: indexPath)
-            messagesDataSource.additionalConfig(for: cell, at: indexPath)
+            messagesDataSource.configCell(cell, for: message, at: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         case .location:
     	    let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
-            messagesDataSource.additionalConfig(for: cell, at: indexPath)
+            messagesDataSource.configCell(cell, for: message, at: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         }

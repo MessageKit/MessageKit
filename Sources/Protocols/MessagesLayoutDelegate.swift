@@ -104,6 +104,16 @@ public protocol MessagesLayoutDelegate: AnyObject {
     /// The default value returned by this method is a size of `30 x 30`.
     func accessoryViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
+    /// Specifies the padding around the `AccessoryView` in a `MessageCollectionViewCell`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is zero.
+    func accessoryViewPadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
+
     /// Specifies the size to use for a `MessageHeaderView`.
     ///
     /// - Parameters:

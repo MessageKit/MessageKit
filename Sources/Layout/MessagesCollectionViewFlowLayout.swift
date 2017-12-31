@@ -233,11 +233,19 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         
         let attributes = MessageIntermediateLayoutAttributes(message: message, indexPath: indexPath)
         
-        // None of these are dependent on other attributes
+        // Attributes that have no dependencies on other attributes
+
+        // Avatar
         attributes.avatarPosition = avatarPosition(for: attributes)
         attributes.avatarSize = avatarSize(for: attributes)
+        // AccessoryView
+        attributes.accessoryViewSize = accessoryViewSize(for: attributes)
+        attributes.accessoryViewPadding = accessoryViewPadding(for: attributes)
+        // MessageContainer & Label
         attributes.messageContainerPadding = messageContainerPadding(for: attributes)
         attributes.messageLabelInsets = messageLabelInsets(for: attributes)
+
+        // Attributes that depends on the above attributes
 
         // MessageContainerView
         attributes.messageContainerMaxWidth = messageContainerMaxWidth(for: attributes)
@@ -255,9 +263,6 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         
         // Cell Height
         attributes.itemHeight = cellHeight(for: attributes)
-
-        // AccessoryView
-        attributes.accessoryViewSize = accessoryViewSize(for: attributes)
 
         return attributes
     }
@@ -343,6 +348,13 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         return messagesLayoutDelegate.accessoryViewSize(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
     }
 
+    /// Returns the padding to be used around the `MessageContainerView` for a given `MessageType`.
+    ///
+    /// - Parameters:
+    ///   - attributes: The `MessageIntermediateLayoutAttributes` containing the `MessageType` object.
+    func accessoryViewPadding(for attributes: MessageIntermediateLayoutAttributes) -> UIEdgeInsets {
+        return messagesLayoutDelegate.accessoryViewPadding(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
+    }
 }
 
 // MARK: - General Label Size Calculations
@@ -415,12 +427,17 @@ private extension MessagesCollectionViewFlowLayout {
     /// - Parameters:
     ///   - attributes: The `MessageIntermediateLayoutAttributes` to consider when calculating the max width.
     func messageContainerMaxWidth(for attributes: MessageIntermediateLayoutAttributes) -> CGFloat {
-        
+
+        let base: CGFloat = itemWidth
+            - attributes.avatarSize.width
+            - attributes.accessoryViewSize.width - attributes.accessoryViewPadding.horizontalTotal
+            - attributes.messageContainerPadding.horizontalTotal
+
         switch attributes.message.data {
         case .text, .attributedText:
-            return itemWidth - attributes.avatarSize.width - attributes.messageHorizontalPadding - attributes.messageLabelHorizontalInsets
+            return base - attributes.messageLabelHorizontalInsets
         default:
-            return itemWidth - attributes.avatarSize.width - attributes.messageHorizontalPadding
+            return base
         }
         
     }
@@ -635,15 +652,15 @@ private extension MessagesCollectionViewFlowLayout {
             cellHeight += max(attributes.avatarSize.height, attributes.topLabelSize.height)
             cellHeight += attributes.bottomLabelSize.height
             cellHeight += attributes.messageContainerSize.height
-            cellHeight += attributes.messageVerticalPadding
+            cellHeight += attributes.messageContainerPadding.verticalTotal
         case .cellBottom:
             cellHeight += max(attributes.avatarSize.height, attributes.bottomLabelSize.height)
             cellHeight += attributes.topLabelSize.height
             cellHeight += attributes.messageContainerSize.height
-            cellHeight += attributes.messageVerticalPadding
+            cellHeight += attributes.messageContainerPadding.verticalTotal
         case .messageTop, .messageCenter, .messageBottom:
             cellHeight += max(attributes.avatarSize.height, attributes.messageContainerSize.height)
-            cellHeight += attributes.messageVerticalPadding
+            cellHeight += attributes.messageContainerPadding.verticalTotal
             cellHeight += attributes.topLabelSize.height
             cellHeight += attributes.bottomLabelSize.height
         }

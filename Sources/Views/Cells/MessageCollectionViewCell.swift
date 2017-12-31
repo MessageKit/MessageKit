@@ -51,6 +51,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         return label
     }()
 
+    // Should only add customized subviews, but not change accessoryView itself.
     open var accessoryView: UIView = .init()
 
     open weak var delegate: MessageCellDelegate?

@@ -81,14 +81,15 @@ public protocol MessagesDataSource: AnyObject {
     /// The default value returned by this method is `nil`.
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
 
-    /// Additional config for a cell, called in cellForItem method. e.g. customize accessoryView.   
+    /// A chance to config a cell before it's presented e.g. customize accessoryView.
     ///
     /// - Parameters:
     ///   - cell: The `MessageCollectionViewCell` that can be configured.
+    ///   - message: The `MessageType` that will be displayed by this cell.
     ///   - indexPath: The `IndexPath` of the cell.
     ///
     /// The default value returned by this method is `nil`.
-    func additionalConfig(for cell: MessageCollectionViewCell, at indexPath: IndexPath)
+    func configCell(_ cell: MessageCollectionViewCell, for message: MessageType, at indexPath: IndexPath)
 }
 
 public extension MessagesDataSource {
@@ -109,5 +110,5 @@ public extension MessagesDataSource {
         return nil
     }
 
-    func additionalConfig(for cell: MessageCollectionViewCell, at indexPath: IndexPath) {}
+    func configCell(_ cell: MessageCollectionViewCell, for message: MessageType, at indexPath: IndexPath) {}
 }
