@@ -238,11 +238,11 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         attributes.avatarSize = avatarSize(for: attributes)
         attributes.messageContainerPadding = messageContainerPadding(for: attributes)
         attributes.messageLabelInsets = messageLabelInsets(for: attributes)
-        
+
         // MessageContainerView
         attributes.messageContainerMaxWidth = messageContainerMaxWidth(for: attributes)
         attributes.messageContainerSize = messageContainerSize(for: attributes)
-        
+
         // Cell Bottom Label
         attributes.bottomLabelAlignment = cellBottomLabelAlignment(for: attributes)
         attributes.bottomLabelMaxWidth = cellBottomLabelMaxWidth(for: attributes)
@@ -255,7 +255,10 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         
         // Cell Height
         attributes.itemHeight = cellHeight(for: attributes)
-        
+
+        // AccessoryView
+        attributes.accessoryViewSize = accessoryViewSize(for: attributes)
+
         return attributes
     }
     
@@ -274,8 +277,9 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         attributes.topLabelFrame = intermediateAttributes.topLabelFrame
         attributes.bottomLabelFrame = intermediateAttributes.bottomLabelFrame
         attributes.avatarFrame = intermediateAttributes.avatarFrame
+        attributes.accessoryViewFrame = intermediateAttributes.accessoryViewFrame
         attributes.messageLabelInsets = intermediateAttributes.messageLabelInsets
-        
+
         switch intermediateAttributes.message.data {
         case .emoji:
             attributes.messageLabelFont = emojiLabelFont
@@ -325,6 +329,20 @@ fileprivate extension MessagesCollectionViewFlowLayout {
         return messagesLayoutDelegate.avatarSize(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
     }
     
+}
+
+// MARK: - Accessory View
+
+fileprivate extension MessagesCollectionViewFlowLayout {
+
+    /// Returns the size of the `AccessoryView` for a given `MessageType`.
+    ///
+    /// - Parameters:
+    ///   - attributes: The `MessageIntermediateLayoutAttributes` containing the `MessageType` object.
+    func accessoryViewSize(for attributes: MessageIntermediateLayoutAttributes) -> CGSize {
+        return messagesLayoutDelegate.accessoryViewSize(for: attributes.message, at: attributes.indexPath, in: messagesCollectionView)
+    }
+
 }
 
 // MARK: - General Label Size Calculations
