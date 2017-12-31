@@ -72,6 +72,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
     }
 
     open override func prepareForReuse() {
+        super.prepareForReuse()
         cellTopLabel.text = nil
         cellTopLabel.attributedText = nil
         cellBottomLabel.text = nil
