@@ -242,7 +242,7 @@ public extension MessagesLayoutDelegate {
         return .zero
     }
 
-    func accessoryViewPadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
+    func accessoryViewPadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
         return .zero
     }
 
