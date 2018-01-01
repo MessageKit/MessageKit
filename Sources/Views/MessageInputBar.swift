@@ -236,6 +236,9 @@ open class MessageInputBar: UIView {
         }
     }
     
+    /// The plugins that extend the functionality of the MessageInputBar
+    open var plugins = [MessageInputBarPlugin]()
+    
     /// The InputBarItems held in the leftStackView
     public private(set) var leftStackViewItems: [InputBarButtonItem] = []
     
@@ -452,6 +455,7 @@ open class MessageInputBar: UIView {
             delegate?.messageInputBar(self, didChangeIntrinsicContentTo: cachedIntrinsicContentSize)
             previousIntrinsicContentSize = cachedIntrinsicContentSize
         }
+        plugins.forEach { $0.reload() }
     }
     
     // MARK: - Layout Helper Methods
@@ -699,10 +703,11 @@ open class MessageInputBar: UIView {
     // MARK: - User Actions
     
     /// Calls the delegates `didPressSendButtonWith` method
-    /// Assumes that the InputTextView's text has been set to empty and calls `inputTextViewDidChange()`
-    /// Invalidates each of the inputManagers
+    /// Assumes that the InputTextView's text has been set to empty and calls `textViewDidChange()`
+    /// Invalidates each of the plugins
     open func didSelectSendButton() {
         delegate?.messageInputBar(self, didPressSendButtonWith: inputTextView.text)
         textViewDidChange()
+        plugins.forEach { $0.invalidate() }
     }
 }
