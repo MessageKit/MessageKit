@@ -245,7 +245,7 @@ open class MessageLabel: UILabel {
         let mutableAttributedString = NSMutableAttributedString(attributedString: attributedText)
 
         for detector in detectors {
-            guard let rangeTuples = rangesForDetectors[detector] else { return }
+            guard let rangeTuples = rangesForDetectors[detector] else { continue }
 
             for (range, _)  in rangeTuples {
                 let attributes = detectorAttributes(for: detector)
