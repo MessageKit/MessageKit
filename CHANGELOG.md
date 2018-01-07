@@ -16,6 +16,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Added `configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)` method in `MessagesDisplayDelegate` `protocol` to configure `avatarView`.
 [#416](https://github.com/MessageKit/MessageKit/pull/416) by [@zhongwuzw](https://github.com/zhongwuzw).
 
+- Added `UIImage` paste support to the `InputTextView`. Images can easily be accessed using the `InputTextView.images` property. See the example project for an updated use case.  [#423](https://github.com/MessageKit/MessageKit/pull/423) by [@nathantannar4](https://github.com/nathantannar4).
+
 ### Removed
 
 - **Breaking Change** Removed `avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)` method of `MessagesDataSource`, use `configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)` instead.
