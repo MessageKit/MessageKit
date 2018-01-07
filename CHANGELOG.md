@@ -6,10 +6,15 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+## [[Prerelease] 0.12.1](https://github.com/MessageKit/MessageKit/releases/tag/0.12.1)
+
 ### Fixed
 
 - Fixed `LocationMessageCell` reuse bug, to avoid inconsistency when get capture image asynchronously. 
 [#428](https://github.com/MessageKit/MessageKit/pull/428) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- Fixed `MessageLabel` detector attributes not being applied due to early exit.
+[#429](https://github.com/MessageKit/MessageKit/pull/429) by [@antoinelamy](https://github.com/antoinelamy).
 
 ## [[Prerelease] 0.12.0](https://github.com/MessageKit/MessageKit/releases/tag/0.12.0)
 
