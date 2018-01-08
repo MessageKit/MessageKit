@@ -6,6 +6,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Fixed
+
+- Fixed wrong `contentInset` calculation when `navigationBar` is `hidden`
+[#444](https://github.com/MessageKit/MessageKit/pull/444) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 ## [[Prerelease] 0.12.1](https://github.com/MessageKit/MessageKit/releases/tag/0.12.1)
 
 ### Fixed
