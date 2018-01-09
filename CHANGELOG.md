@@ -11,7 +11,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Added `configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)` method in `MessagesDisplayDelegate` `protocol` to configure `avatarView`.
 [#416](https://github.com/MessageKit/MessageKit/pull/416) by [@zhongwuzw](https://github.com/zhongwuzw).
 
-- Added copy support for message bubble.
+- Added copy support for image, text, and emoji messages.
 [#418](https://github.com/MessageKit/MessageKit/pull/418) by [@zhongwuzw](https://github.com/zhongwuzw).
 
 ### Removed

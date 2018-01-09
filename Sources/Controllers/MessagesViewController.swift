@@ -369,23 +369,30 @@ fileprivate extension MessagesViewController {
 
 // MARK: - Menu Handling
 extension MessagesViewController {
+    private var navigationBarFrame: CGRect {
+        guard let navigationController = navigationController, !navigationController.navigationBar.isHidden else {
+            return .zero
+        }
+        return navigationController.navigationBar.frame
+    }
+    
     /// Add observer for `UIMenuControllerWillShowMenu` notification
     fileprivate func addMenuControllerObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(aNotification:)), name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(notification:)), name: .UIMenuControllerWillShowMenu, object: nil)
     }
     
     /// Remove observer for `UIMenuControllerWillShowMenu` notification
     fileprivate func removeMenuControllerObservers() {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIMenuControllerWillShowMenu, object: nil)
     }
     
     /// Show menuController and set target rect to selected bubble
-    @objc func menuControllerWillShow(aNotification:Notification) {
-        if let currentMenuController = aNotification.object as? UIMenuController,
+    @objc func menuControllerWillShow(notification: Notification) {
+        if let currentMenuController = notification.object as? UIMenuController,
             let selectedIndexPath = selectedIndexPathForMenu {
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+            NotificationCenter.default.removeObserver(self, name: .UIMenuControllerWillShowMenu, object: nil)
             defer {
-                NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(aNotification:)), name: NSNotification.Name.UIMenuControllerWillShowMenu, object: nil)
+                NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(notification:)), name: .UIMenuControllerWillShowMenu, object: nil)
                 selectedIndexPathForMenu = nil
             }
             
@@ -393,7 +400,34 @@ extension MessagesViewController {
             
             guard let selectedCell = messagesCollectionView.cellForItem(at: selectedIndexPath) as? MessageCollectionViewCell else { return }
             let selectedCellMessageBubbleFrame = selectedCell.convert(selectedCell.messageContainerView.frame, to: view)
-            currentMenuController.setTargetRect(selectedCellMessageBubbleFrame, in: view)
+            
+            var messageInputBarFrame: CGRect = .zero
+            if let messageInputBarSuperview = messageInputBar.superview {
+                messageInputBarFrame = view.convert(messageInputBar.frame, from: messageInputBarSuperview)
+            }
+            
+            var topNavigationBarFrame: CGRect = navigationBarFrame
+            if navigationBarFrame != .zero, let navigationBarSuperview = navigationController?.navigationBar.superview {
+                topNavigationBarFrame = view.convert(navigationController!.navigationBar.frame, from: navigationBarSuperview)
+            }
+            
+            let menuHeight = currentMenuController.menuFrame.height
+            
+            let selectedCellMessageBubblePlusMenuFrame = CGRect(selectedCellMessageBubbleFrame.origin.x, selectedCellMessageBubbleFrame.origin.y - menuHeight, selectedCellMessageBubbleFrame.size.width, selectedCellMessageBubbleFrame.size.height + 2 * menuHeight)
+            
+            var targetRect: CGRect = selectedCellMessageBubbleFrame
+            currentMenuController.arrowDirection = .default
+            
+            /// Message bubble intersects with navigationBar and keyboard
+            if selectedCellMessageBubblePlusMenuFrame.intersects(topNavigationBarFrame) && selectedCellMessageBubblePlusMenuFrame.intersects(messageInputBarFrame) {
+                let centerY = (selectedCellMessageBubblePlusMenuFrame.intersection(messageInputBarFrame).minY + selectedCellMessageBubblePlusMenuFrame.intersection(topNavigationBarFrame).maxY) / 2
+                targetRect = CGRect(selectedCellMessageBubblePlusMenuFrame.midX, centerY, 1, 1)
+            } /// Message bubble only intersects with navigationBar
+            else if selectedCellMessageBubblePlusMenuFrame.intersects(topNavigationBarFrame) {
+                currentMenuController.arrowDirection = .up
+            }
+            
+            currentMenuController.setTargetRect(targetRect, in: view)
             currentMenuController.setMenuVisible(true, animated: true)
         }
     }
