@@ -267,4 +267,7 @@ private class MockMessagesViewController: MessagesViewController, MessagesDispla
         return dataSource
     }
 
+    func snapshotOptionsForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LocationMessageSnapshotOptions {
+        return LocationMessageSnapshotOptions()
+    }
 }
