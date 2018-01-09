@@ -62,6 +62,8 @@ extension MessagesLayoutDelegate {
     
 }
 
+// MARK: - MessagesCollectionViewFlowLayout
+
 extension MessagesCollectionViewFlowLayout {
     
     /// A Boolean value that determines if the `AvatarView` is always on the leading
@@ -87,6 +89,25 @@ extension MessagesCollectionViewFlowLayout {
     }
     
 }
+
+// MARK: - MessagesDataSource
+
+extension MessagesDataSource {
+    /// The `Avatar` information to be used by the `AvatarView`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is `Avatar()`.
+    @available(*, deprecated: 0.12.1, message: "Removed in MessageKit 0.12.1.")
+    func avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
+        fatalError("Fatal Error: avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) is no longer supported")
+    }
+}
+
+// MARK: - MessagesViewController
 
 extension MessagesViewController {
     /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the

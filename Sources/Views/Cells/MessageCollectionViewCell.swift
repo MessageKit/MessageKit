@@ -57,7 +57,6 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         super.init(frame: frame)
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         setupSubviews()
-        setupGestureRecognizers()
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -103,29 +102,21 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
         let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
         let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
+        
+        displayDelegate.configureAvatarView(avatarView, for: message, at: indexPath, in: messagesCollectionView)
 
         messageContainerView.backgroundColor = messageColor
         messageContainerView.style = messageStyle
 
-        let avatar = dataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
         let topText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
         let bottomText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
 
-        avatarView.set(avatar: avatar)
         cellTopLabel.attributedText = topText
         cellBottomLabel.attributedText = bottomText
     }
 
-    func setupGestureRecognizers() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
-        contentView.addGestureRecognizer(tapGesture)
-    }
-
     /// Handle tap gesture on contentView and its subviews like messageContainerView, cellTopLabel, cellBottomLabel, avatarView ....
-    @objc
     open func handleTapGesture(_ gesture: UIGestureRecognizer) {
-        guard gesture.state == .ended else { return }
-
         let touchLocation = gesture.location(in: self)
 
         switch true {

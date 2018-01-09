@@ -267,10 +267,6 @@ extension ConversationViewController: MessagesDataSource {
         return messageList[indexPath.section]
     }
 
-    func avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
-        return SampleData.shared.getAvatarFor(sender: message.sender)
-    }
-
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let name = message.sender.displayName
         return NSAttributedString(string: name, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption1)])
@@ -321,6 +317,11 @@ extension ConversationViewController: MessagesDisplayDelegate {
         return .bubbleTail(corner, .curved)
 //        let configurationClosure = { (view: MessageContainerView) in}
 //        return .custom(configurationClosure)
+    }
+    
+    func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
+        avatarView.set(avatar: avatar)
     }
 
     // MARK: - Location Messages
@@ -444,12 +445,29 @@ extension ConversationViewController: MessageLabelDelegate {
 extension ConversationViewController: MessageInputBarDelegate {
 
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-        let attributedText = NSAttributedString(string: text, attributes: [.font: UIFont.systemFont(ofSize: 8), .foregroundColor: UIColor.blue])
-        let id = UUID().uuidString
-        let message = MockMessage(attributedText: attributedText, sender: currentSender(), messageId: id, date: Date())
-        messageList.append(message)
+        
+        // Each NSTextAttachment that contains an image will count as one empty character in the text: String
+        
+        for component in inputBar.inputTextView.components {
+            
+            if let image = component as? UIImage {
+                
+                let imageMessage = MockMessage(image: image, sender: currentSender(), messageId: UUID().uuidString, date: Date())
+                messageList.append(imageMessage)
+                messagesCollectionView.insertSections([messageList.count - 1])
+                
+            } else if let text = component as? String {
+                
+                let attributedText = NSAttributedString(string: text, attributes: [.font: UIFont.systemFont(ofSize: 15), .foregroundColor: UIColor.blue])
+                
+                let message = MockMessage(attributedText: attributedText, sender: currentSender(), messageId: UUID().uuidString, date: Date())
+                messageList.append(message)
+                messagesCollectionView.insertSections([messageList.count - 1])
+            }
+            
+        }
+        
         inputBar.inputTextView.text = String()
-        messagesCollectionView.insertSections([messageList.count - 1])
         messagesCollectionView.scrollToBottom()
     }
 
