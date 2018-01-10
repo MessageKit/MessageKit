@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017 MessageKit
+ Copyright (c) 2017-2018 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -343,6 +343,11 @@ extension ConversationViewController: MessagesDisplayDelegate {
                 view.alpha = 1.0
             }, completion: nil)
         }
+    }
+    
+    func snapshotOptionsForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LocationMessageSnapshotOptions {
+        
+        return LocationMessageSnapshotOptions()
     }
 }
 
