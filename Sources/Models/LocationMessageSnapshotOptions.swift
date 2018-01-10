@@ -44,21 +44,21 @@ public struct LocationMessageSnapshotOptions {
     /// A Boolean value indicating whether the snapshot image should display buildings.
     ///
     /// The default value of this property is `false`.
-    public var showsBuildings = false
+    public var showsBuildings: Bool
     
     /// A Boolean value indicating whether the snapshot image should display points of interest.
     ///
     /// The default value of this property is `false`.
-    public var showsPointsOfInterest = false
+    public var showsPointsOfInterest: Bool
     
     /// The span of the snapshot.
     ///
     /// The default value of this property uses a width of `0` and height of `0`.
-    public var span: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0, longitudeDelta: 0)
+    public var span: MKCoordinateSpan
     
     /// The scale of the snapshot.
     ///
     /// The default value of this property uses the `UIScreen.main.scale`.
-    public var scale: CGFloat = UIScreen.main.scale
+    public var scale: CGFloat
     
 }
