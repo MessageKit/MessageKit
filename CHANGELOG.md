@@ -8,6 +8,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
+- Fixed message rendering when `MessagesViewController` sliding back.
+[#454](https://github.com/MessageKit/MessageKit/pull/454) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 - Fixed `iPhoneX` `MessageInputBar` transparent bottom area when `keyboardDismissMode` is `interactive`.
 [#425](https://github.com/MessageKit/MessageKit/pull/425) by [@zhongwuzw](https://github.com/zhongwuzw).
 
