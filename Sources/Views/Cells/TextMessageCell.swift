@@ -45,6 +45,7 @@ open class TextMessageCell: MessageCollectionViewCell {
         if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
             messageLabel.textInsets = attributes.messageLabelInsets
             messageLabel.font = attributes.messageLabelFont
+            messageContainerView.layoutIfNeeded()
         }
     }
 
