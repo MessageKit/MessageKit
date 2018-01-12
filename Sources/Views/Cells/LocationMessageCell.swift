@@ -99,7 +99,5 @@ open class LocationMessageCell: MessageCollectionViewCell {
             self.imageView.image = composedImage
             animationBlock?(self.imageView)
         }
-        
-        
     }
 }

@@ -53,7 +53,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
     open weak var delegate: MessageCellDelegate?
 
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         setupSubviews()

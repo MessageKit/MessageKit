@@ -169,8 +169,7 @@ open class AvatarView: UIImageView {
     open func set(avatar: Avatar) {
         if let image = avatar.image {
             self.image = image
-        }
-        else {
+        } else {
             initials = avatar.initials
         }
     }

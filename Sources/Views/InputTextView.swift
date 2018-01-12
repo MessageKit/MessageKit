@@ -234,9 +234,9 @@ open class InputTextView: UITextView {
         newAttributedStingComponent.append(NSAttributedString(string: "\n"))
         
         // The attributes that should be applied to the new NSAttributedString to match the current attributes
-        let attributes: [NSAttributedStringKey:Any] = [
-            NSAttributedStringKey.font : font ?? UIFont.preferredFont(forTextStyle: .body),
-            NSAttributedStringKey.foregroundColor : textColor ?? .black,
+        let attributes: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.font: font ?? UIFont.preferredFont(forTextStyle: .body),
+            NSAttributedStringKey.foregroundColor: textColor ?? .black
             ]
         newAttributedStingComponent.addAttributes(attributes, range: NSRange(location: 0, length: newAttributedStingComponent.length))
         
@@ -298,7 +298,7 @@ open class InputTextView: UITextView {
         let range = NSRange(location: 0, length: attributedText.length)
         attributedText.enumerateAttributes(in: range, options: []) { (object, range, stop) in
             
-            if object.keys.contains(.attachment){
+            if object.keys.contains(.attachment) {
                 if let attachment = object[.attachment] as? NSTextAttachment {
                     if let image = attachment.image {
                         components.append(image)
