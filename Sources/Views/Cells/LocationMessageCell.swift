@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 MessageKit
+ Copyright (c) 2017-2018 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,8 @@ open class LocationMessageCell: MessageCollectionViewCell {
     open var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
     open var imageView = UIImageView()
+    
+    private weak var snapShotter: MKMapSnapshotter?
 
     open override func setupSubviews() {
         super.setupSubviews()
@@ -46,6 +48,11 @@ open class LocationMessageCell: MessageCollectionViewCell {
     open func setupConstraints() {
         imageView.fillSuperview()
         activityIndicator.centerInSuperview()
+    }
+    
+    open override func prepareForReuse() {
+        super.prepareForReuse()
+        snapShotter?.cancel()
     }
 
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
@@ -67,6 +74,7 @@ open class LocationMessageCell: MessageCollectionViewCell {
         snapshotOptions.showsPointsOfInterest = options.showsPointsOfInterest
 
         let snapShotter = MKMapSnapshotter(options: snapshotOptions)
+        self.snapShotter = snapShotter
         snapShotter.start { (snapshot, error) in
             defer {
                 self.activityIndicator.stopAnimating()
