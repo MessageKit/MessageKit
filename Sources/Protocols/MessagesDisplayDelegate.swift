@@ -212,7 +212,9 @@ public extension MessagesDisplayDelegate {
     // MARK: - Text Messages Defaults
 
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        guard let dataSource = messagesCollectionView.messagesDataSource else { return .darkText }
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
         return dataSource.isFromCurrentSender(message: message) ? .white : .darkText
     }
 

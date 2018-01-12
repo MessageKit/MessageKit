@@ -283,7 +283,7 @@ open class MessageLabel: UILabel {
         case .link:
             return urlAttributes
         default:
-            fatalError("Received an unrecognized NSTextCheckingResult.CheckingType")
+            fatalError(MessageKitError.unrecognizedCheckingResult)
         }
     }
 

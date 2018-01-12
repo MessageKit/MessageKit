@@ -32,23 +32,36 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return .zero }
-        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return .zero }
-        guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
+
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+        guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
+            fatalError(MessageKitError.nilMessagesLayoutDeleagte)
+        }
         // Could pose a problem if subclass behaviors allows more than one item per section
         let indexPath = IndexPath(item: 0, section: section)
-        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        return messagesLayoutDelegate.headerViewSize(for: message, at: indexPath, in: messagesCollectionView)
+        let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        return layoutDelegate.headerViewSize(for: message, at: indexPath, in: messagesCollectionView)
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        guard let messagesCollectionView = collectionView as? MessagesCollectionView else { return .zero }
-        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return .zero }
-        guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else { return .zero }
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+        guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
+            fatalError(MessageKitError.nilMessagesLayoutDeleagte)
+        }
         // Could pose a problem if subclass behaviors allows more than one item per section
         let indexPath = IndexPath(item: 0, section: section)
-        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        return messagesLayoutDelegate.footerViewSize(for: message, at: indexPath, in: messagesCollectionView)
+        let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        return layoutDelegate.footerViewSize(for: message, at: indexPath, in: messagesCollectionView)
     }
 
     open func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
@@ -69,7 +82,9 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
     }
 
     open func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { fatalError("Please set messagesDataSource") }
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
         let pasteBoard = UIPasteboard.general
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 

@@ -91,10 +91,10 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
     open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         guard let dataSource = messagesCollectionView.messagesDataSource else {
-            fatalError("MessagesDataSource is not set.")
+            fatalError(MessageKitError.nilMessagesDataSource)
         }
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError("MessagesDisplayDelegate is not set.")
+            fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
 
         delegate = messagesCollectionView.messageCellDelegate

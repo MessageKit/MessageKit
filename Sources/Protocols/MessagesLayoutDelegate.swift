@@ -192,7 +192,9 @@ public extension MessagesLayoutDelegate {
     // MARK: - All Messages Defaults
 
     func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
-        guard let dataSource = messagesCollectionView.messagesDataSource else { return .zero }
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
         if dataSource.isFromCurrentSender(message: message) {
             return UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
         } else {
@@ -201,12 +203,16 @@ public extension MessagesLayoutDelegate {
     }
 
     func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
-        guard let dataSource = messagesCollectionView.messagesDataSource else { return .cellCenter(.zero) }
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
         return dataSource.isFromCurrentSender(message: message) ? .messageTrailing(.zero) : .messageLeading(.zero)
     }
 
     func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
-        guard let dataSource = messagesCollectionView.messagesDataSource else { return .cellCenter(.zero) }
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
         return dataSource.isFromCurrentSender(message: message) ? .messageLeading(.zero) : .messageTrailing(.zero)
     }
 
@@ -219,7 +225,9 @@ public extension MessagesLayoutDelegate {
     }
 
     func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else { return .zero }
+        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
+            fatalError(MessageKitError.nilMessagesDisplayDelegate)
+        }
         let shouldDisplay = displayDelegate.shouldDisplayHeader(for: message, at: indexPath, in: messagesCollectionView)
         return shouldDisplay ? CGSize(width: messagesCollectionView.bounds.width, height: 12) : .zero
     }
@@ -235,7 +243,9 @@ public extension MessagesLayoutDelegate {
     // MARK: - Text Messages Defaults
 
     func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
-        guard let dataSource = messagesCollectionView.messagesDataSource else { return .zero }
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
         if dataSource.isFromCurrentSender(message: message) {
             return UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)
         } else {
@@ -264,5 +274,4 @@ public extension MessagesLayoutDelegate {
     func widthForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return maxWidth
     }
-
 }

@@ -27,29 +27,30 @@ import UIKit
 extension MessagesViewController: UICollectionViewDataSource {
 
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
-        guard let collectionView = collectionView as? MessagesCollectionView else { return 0 }
-
+        guard let collectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
         // Each message is its own section
         return collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
     }
 
     open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let collectionView = collectionView as? MessagesCollectionView else { return 0 }
-
+        guard let collectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
         let messageCount = collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
         // There will only ever be 1 message per section
         return messageCount > 0 ? 1 : 0
-
     }
 
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
-            fatalError("Managed collectionView: \(collectionView.debugDescription) is not a MessagesCollectionView.")
+            fatalError(MessageKitError.notMessagesCollectionView)
         }
 
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
-            fatalError("MessagesDataSource has not been set.")
+            fatalError(MessageKitError.nilMessagesDataSource)
         }
 
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
@@ -73,15 +74,15 @@ extension MessagesViewController: UICollectionViewDataSource {
     open func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
-            fatalError("Managed collectionView: \(collectionView.debugDescription) is not a MessagesCollectionView.")
+            fatalError(MessageKitError.notMessagesCollectionView)
         }
 
         guard let dataSource = messagesCollectionView.messagesDataSource else {
-            fatalError("MessagesDataSource has not been set.")
+            fatalError(MessageKitError.nilMessagesDataSource)
         }
 
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError("MessagesDisplayDelegate has not been set.")
+            fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
 
         let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
@@ -92,7 +93,7 @@ extension MessagesViewController: UICollectionViewDataSource {
         case UICollectionElementKindSectionFooter:
             return displayDelegate.messageFooterView(for: message, at: indexPath, in: messagesCollectionView)
         default:
-            fatalError("Unrecognized element of kind: \(kind)")
+            fatalError(MessageKitError.unrecognizedSectionKind)
         }
     }
 }
