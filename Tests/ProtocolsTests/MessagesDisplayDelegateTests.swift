@@ -212,7 +212,8 @@ class TextMessageDisplayDelegateTests: XCTestCase {
     }
 
     func testTextColorWithoutDataSource_returnsDarkTextForDefault() {
-        sut.messagesCollectionView.messagesDataSource = nil
+        let dataSource = sut.makeDataSource()
+        sut.messagesCollectionView.messagesDataSource = dataSource
         let textColor = sut.textColor(for: sut.dataProvider.messages[1],
                                       at: IndexPath(item: 0, section: 0),
                                       in: sut.messagesCollectionView)
@@ -249,7 +250,7 @@ private class MockMessagesViewController: MessagesViewController, MessagesDispla
 
     }
 
-    private func makeDataSource() -> MockMessagesDataSource {
+    fileprivate func makeDataSource() -> MockMessagesDataSource {
         let dataSource = MockMessagesDataSource()
         dataSource.messages.append(MockMessage(text: "Text 1",
                                                sender: dataSource.senders[0],

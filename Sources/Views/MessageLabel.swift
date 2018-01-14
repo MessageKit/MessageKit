@@ -412,7 +412,7 @@ open class MessageLabel: UILabel {
     
 }
 
-fileprivate enum MessageTextCheckingType {
+private enum MessageTextCheckingType {
     case addressComponents([NSTextCheckingKey: String]?)
     case date(Date?)
     case phoneNumber(String?)
