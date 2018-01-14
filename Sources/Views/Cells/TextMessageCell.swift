@@ -64,7 +64,7 @@ open class TextMessageCell: MessageCollectionViewCell {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
 
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError("MessagesDisplayDelegate not set.")
+            fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
 
         let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)

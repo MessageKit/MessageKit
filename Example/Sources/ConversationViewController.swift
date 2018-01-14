@@ -58,17 +58,17 @@ class ConversationViewController: MessagesViewController {
         maintainPositionOnKeyboardFrameChanged = true // default false
         
         messagesCollectionView.addSubview(refreshControl)
-        refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(ConversationViewController.loadMoreMessages), for: .valueChanged)
         
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
                             style: .plain,
                             target: self,
-                            action: #selector(handleKeyboardButton)),
+                            action: #selector(ConversationViewController.handleKeyboardButton)),
             UIBarButtonItem(image: UIImage(named: "ic_typing"),
                             style: .plain,
                             target: self,
-                            action: #selector(handleTyping))
+                            action: #selector(ConversationViewController.handleTyping))
         ]
     }
     

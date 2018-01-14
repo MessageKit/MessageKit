@@ -234,9 +234,9 @@ open class InputTextView: UITextView {
         newAttributedStingComponent.append(NSAttributedString(string: "\n"))
         
         // The attributes that should be applied to the new NSAttributedString to match the current attributes
-        let attributes: [NSAttributedStringKey:Any] = [
-            NSAttributedStringKey.font : font ?? UIFont.preferredFont(forTextStyle: .body),
-            NSAttributedStringKey.foregroundColor : textColor ?? .black,
+        let attributes: [NSAttributedStringKey: Any] = [
+            NSAttributedStringKey.font: font ?? UIFont.preferredFont(forTextStyle: .body),
+            NSAttributedStringKey.foregroundColor: textColor ?? .black
             ]
         newAttributedStingComponent.addAttributes(attributes, range: NSRange(location: 0, length: newAttributedStingComponent.length))
         
@@ -273,7 +273,7 @@ open class InputTextView: UITextView {
         
         var images = [UIImage]()
         let range = NSRange(location: 0, length: attributedText.length)
-        attributedText.enumerateAttribute(.attachment, in: range, options: [], using: { value, range, stop -> Void in
+        attributedText.enumerateAttribute(.attachment, in: range, options: [], using: { value, range, _ -> Void in
             
             if let attachment = value as? NSTextAttachment {
                 if let image = attachment.image {
@@ -296,9 +296,9 @@ open class InputTextView: UITextView {
         
         var components = [Any]()
         let range = NSRange(location: 0, length: attributedText.length)
-        attributedText.enumerateAttributes(in: range, options: []) { (object, range, stop) in
+        attributedText.enumerateAttributes(in: range, options: []) { (object, range, _) in
             
-            if object.keys.contains(.attachment){
+            if object.keys.contains(.attachment) {
                 if let attachment = object[.attachment] as? NSTextAttachment {
                     if let image = attachment.image {
                         components.append(image)
@@ -324,7 +324,7 @@ open class InputTextView: UITextView {
         
         guard images.count > 0 else { return }
         let range = NSRange(location: 0, length: attributedText.length)
-        attributedText.enumerateAttribute(.attachment, in: range, options: [], using: { value, range, stop -> Void in
+        attributedText.enumerateAttribute(.attachment, in: range, options: [], using: { value, _, _ -> Void in
             if let attachment = value as? NSTextAttachment, let image = attachment.image {
                 
                 // Calculates a new width/height ratio to fit the image in the current frame

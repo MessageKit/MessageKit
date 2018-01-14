@@ -53,7 +53,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
     open weak var delegate: MessageCellDelegate?
 
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         setupSubviews()
@@ -92,10 +92,10 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
     open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         guard let dataSource = messagesCollectionView.messagesDataSource else {
-            fatalError("MessagesDataSource is not set.")
+            fatalError(MessageKitError.nilMessagesDataSource)
         }
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError("MessagesDisplayDelegate is not set.")
+            fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
 
         delegate = messagesCollectionView.messageCellDelegate

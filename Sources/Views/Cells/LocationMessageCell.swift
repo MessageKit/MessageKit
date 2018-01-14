@@ -58,7 +58,7 @@ open class LocationMessageCell: MessageCollectionViewCell {
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError("MessagesDisplayDelegate is not set.")
+            fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
         let options = displayDelegate.snapshotOptionsForLocation(message: message, at: indexPath, in: messagesCollectionView)
         let annotationView = displayDelegate.annotationViewForLocation(message: message, at: indexPath, in: messagesCollectionView)
@@ -107,7 +107,5 @@ open class LocationMessageCell: MessageCollectionViewCell {
             self.imageView.image = composedImage
             animationBlock?(self.imageView)
         }
-        
-        
     }
 }
