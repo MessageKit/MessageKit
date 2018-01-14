@@ -94,6 +94,7 @@ open class MessagesViewController: UIViewController {
             addKeyboardObservers()
             messageCollectionViewBottomInset = keyboardOffsetFrame.height
         }
+        adjustScrollViewInset()
     }
 
     // MARK: - Initializers
@@ -143,7 +144,6 @@ open class MessagesViewController: UIViewController {
             let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             NSLayoutConstraint.activate([top, bottom, trailing, leading])
         }
-        adjustScrollViewInset()
     }
     
     @objc
@@ -151,7 +151,10 @@ open class MessagesViewController: UIViewController {
         if #available(iOS 11.0, *) {
             // No need to add to the top contentInset
         } else {
-            let navigationBarInset = navigationController?.navigationBar.frame.height ?? 0
+            var navigationBarInset: CGFloat = 0
+            if let navigationController = navigationController, !navigationController.isNavigationBarHidden {
+                navigationBarInset = navigationController.navigationBar.frame.height
+            }
             let statusBarInset: CGFloat = UIApplication.shared.isStatusBarHidden ? 0 : 20
             let topInset = navigationBarInset + statusBarInset
             messagesCollectionView.contentInset.top = topInset
@@ -273,13 +276,11 @@ fileprivate extension MessagesViewController {
     func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleTextViewDidBeginEditing), name: .UITextViewTextDidBeginEditing, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(adjustScrollViewInset), name: .UIDeviceOrientationDidChange, object: nil)
     }
 
     func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UITextViewTextDidBeginEditing, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIDeviceOrientationDidChange, object: nil)
     }
 
     @objc
