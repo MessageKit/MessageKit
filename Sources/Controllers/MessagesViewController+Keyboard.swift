@@ -29,9 +29,9 @@ extension MessagesViewController {
     // MARK: - Register / Unregister Observers
 
     func addKeyboardObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidChangeState), name: .UIKeyboardWillChangeFrame, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleTextViewDidBeginEditing), name: .UITextViewTextDidBeginEditing, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(adjustScrollViewInset), name: .UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleKeyboardDidChangeState(_:)), name: .UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleTextViewDidBeginEditing(_:)), name: .UITextViewTextDidBeginEditing, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.adjustScrollViewInset), name: .UIDeviceOrientationDidChange, object: nil)
     }
 
     func removeKeyboardObservers() {
@@ -43,7 +43,7 @@ extension MessagesViewController {
     // MARK: - Notification Handlers
 
     @objc
-    fileprivate func handleTextViewDidBeginEditing(_ notification: Notification) {
+    private func handleTextViewDidBeginEditing(_ notification: Notification) {
         if scrollsToBottomOnKeybordBeginsEditing {
             guard let inputTextView = notification.object as? InputTextView, inputTextView === messageInputBar.inputTextView else { return }
             messagesCollectionView.scrollToBottom(animated: true)
@@ -51,7 +51,7 @@ extension MessagesViewController {
     }
 
     @objc
-    fileprivate func handleKeyboardDidChangeState(_ notification: Notification) {
+    private func handleKeyboardDidChangeState(_ notification: Notification) {
         guard let keyboardEndFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
 
         if (keyboardEndFrame.origin.y + keyboardEndFrame.size.height) > UIScreen.main.bounds.height {
@@ -96,7 +96,7 @@ extension MessagesViewController {
     /// for the MessagesCollectionView.
     ///
     /// - Returns: The safeAreaInsets.bottom if its an iPhoneX, else 0
-    fileprivate var iPhoneXBottomInset: CGFloat {
+    private var iPhoneXBottomInset: CGFloat {
         if #available(iOS 11.0, *) {
             guard UIScreen.main.nativeBounds.height == 2436 else { return 0 }
             return view.safeAreaInsets.bottom

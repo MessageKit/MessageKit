@@ -30,7 +30,7 @@ extension MessagesViewController {
 
     /// Add observer for `UIMenuControllerWillShowMenu` notification
     func addMenuControllerObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(notification:)), name: .UIMenuControllerWillShowMenu, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(_:)), name: .UIMenuControllerWillShowMenu, object: nil)
     }
 
     /// Remove observer for `UIMenuControllerWillShowMenu` notification
@@ -42,7 +42,7 @@ extension MessagesViewController {
 
     /// Show menuController and set target rect to selected bubble
     @objc
-    fileprivate func menuControllerWillShow(notification: Notification) {
+    private func menuControllerWillShow(_ notification: Notification) {
 
         guard let currentMenuController = notification.object as? UIMenuController,
             let selectedIndexPath = selectedIndexPathForMenu else { return }
@@ -50,7 +50,7 @@ extension MessagesViewController {
         NotificationCenter.default.removeObserver(self, name: .UIMenuControllerWillShowMenu, object: nil)
         defer {
             NotificationCenter.default.addObserver(self,
-                                                   selector: #selector(MessagesViewController.menuControllerWillShow(notification:)),
+                                                   selector: #selector(MessagesViewController.menuControllerWillShow(_:)),
                                                    name: .UIMenuControllerWillShowMenu, object: nil)
             selectedIndexPathForMenu = nil
         }
@@ -92,7 +92,7 @@ extension MessagesViewController {
 
     // MARK: - Helpers
 
-    fileprivate var navigationBarFrame: CGRect {
+    private var navigationBarFrame: CGRect {
         guard let navigationController = navigationController, !navigationController.navigationBar.isHidden else {
             return .zero
         }

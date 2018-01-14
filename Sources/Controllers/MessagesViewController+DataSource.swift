@@ -40,7 +40,7 @@ extension MessagesViewController: UICollectionViewDataSource {
         }
         let messageCount = collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
         // There will only ever be 1 message per section
-        return messageCount > 0 ? 2 : 0
+        return messageCount > 0 ? 1 : 0
     }
 
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -53,28 +53,21 @@ extension MessagesViewController: UICollectionViewDataSource {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
 
-        let isMessageCell = indexPath.row == 0
-
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
-        if isMessageCell {
-
-            switch message.data {
-            case .text, .attributedText, .emoji:
-                let cell = messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
-                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-                return cell
-            case .photo, .video:
-                let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCell.self, for: indexPath)
-                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-                return cell
-            case .location:
-                let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
-                cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-                return cell
-            }
-        } else {
-            return messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
+        switch message.data {
+        case .text, .attributedText, .emoji:
+            let cell = messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .photo, .video:
+            let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .location:
+            let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
         }
     }
 
