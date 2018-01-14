@@ -27,7 +27,6 @@ import UIKit
 class TextFieldTableViewCell: UITableViewCell {
 
     static let identifier = "TextFieldTableViewCellIdentifier"
-    static let height: CGFloat = 40.0
     
     var mainLabel = UILabel()
     var textField = UITextField()

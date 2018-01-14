@@ -37,7 +37,6 @@ final class SettingsViewController: UITableViewController {
     
     @objc func onDoneWithPickerView() {
         let selectedMessagesCount = messagesPicker.selectedRow(inComponent: 0)
-        print("selected \(selectedMessagesCount) messages count")
         UserDefaults.standard.setMockMessages(count: selectedMessagesCount)
         view.endEditing(false)
         tableView.reloadData()
@@ -83,11 +82,7 @@ final class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.row == 0 {
-            return configureTextFieldTableViewCell(at: indexPath)
-        } else {
-            return UITableViewCell()
-        }
+        return indexPath.row == 0 ? configureTextFieldTableViewCell(at: indexPath) : UITableViewCell()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
