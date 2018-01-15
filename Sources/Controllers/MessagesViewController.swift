@@ -82,6 +82,12 @@ open class MessagesViewController: UIViewController {
         setupDelegates()
         addMenuControllerObservers()
     }
+    
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.layoutIfNeeded()
+        messagesCollectionView.collectionViewLayout.invalidateLayout()
+    }
 
     open override func viewDidLayoutSubviews() {
         // Hack to prevent animation of the contentInset after viewDidAppear
