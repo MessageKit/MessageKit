@@ -76,6 +76,11 @@ class MessageCollectionViewCellTests: XCTestCase {
 
 extension MessageCollectionViewCellTests {
 
-    fileprivate class MockMessagesDisplayDelegate: MessagesDisplayDelegate { }
+    fileprivate class MockMessagesDisplayDelegate: MessagesDisplayDelegate {
+        
+        func snapshotOptionsForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LocationMessageSnapshotOptions {
+            return LocationMessageSnapshotOptions()
+        }
+    }
 
 }

@@ -53,11 +53,10 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
     open weak var delegate: MessageCellDelegate?
 
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         setupSubviews()
-        setupGestureRecognizers()
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -93,39 +92,31 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
     open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         guard let dataSource = messagesCollectionView.messagesDataSource else {
-            fatalError("MessagesDataSource is not set.")
+            fatalError(MessageKitError.nilMessagesDataSource)
         }
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError("MessagesDisplayDelegate is not set.")
+            fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
 
         delegate = messagesCollectionView.messageCellDelegate
 
         let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
         let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
+        
+        displayDelegate.configureAvatarView(avatarView, for: message, at: indexPath, in: messagesCollectionView)
 
         messageContainerView.backgroundColor = messageColor
         messageContainerView.style = messageStyle
 
-        let avatar = dataSource.avatar(for: message, at: indexPath, in: messagesCollectionView)
         let topText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
         let bottomText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
 
-        avatarView.set(avatar: avatar)
         cellTopLabel.attributedText = topText
         cellBottomLabel.attributedText = bottomText
     }
 
-    func setupGestureRecognizers() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
-        contentView.addGestureRecognizer(tapGesture)
-    }
-
     /// Handle tap gesture on contentView and its subviews like messageContainerView, cellTopLabel, cellBottomLabel, avatarView ....
-    @objc
     open func handleTapGesture(_ gesture: UIGestureRecognizer) {
-        guard gesture.state == .ended else { return }
-
         let touchLocation = gesture.location(in: self)
 
         switch true {
@@ -140,6 +131,13 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         default:
             break
         }
+    }
+    
+    /// Handle long press gesture, return true when gestureRecognizer's touch point in `messageContainerView`'s frame
+    open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        let touchPoint = gestureRecognizer.location(in: self)
+        guard gestureRecognizer.isKind(of: UILongPressGestureRecognizer.self) else { return false }
+        return messageContainerView.frame.contains(touchPoint)
     }
 
     /// Handle `ContentView`'s tap gesture, return false when `ContentView` doesn't needs to handle gesture

@@ -52,7 +52,7 @@ final class MessageIntermediateLayoutAttributes {
         case .cellTrailing:
             origin.x = cellFrame.width - avatarSize.width
         case .natural:
-            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
+            fatalError(MessageKitError.avatarPositionUnresolved)
         }
         
         switch avatarPosition.vertical {
@@ -91,7 +91,7 @@ final class MessageIntermediateLayoutAttributes {
         case .cellTrailing:
             origin.x = cellFrame.width - avatarSize.width - messageContainerSize.width - messageContainerPadding.right
         case .natural:
-            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
+            fatalError(MessageKitError.avatarPositionUnresolved)
         }
         
         return CGRect(origin: origin, size: messageContainerSize)

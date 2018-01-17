@@ -50,7 +50,7 @@ public struct Sender {
 extension Sender: Equatable {
 
     /// Two senders are considered equal if they have the same id.
-    static public func == (left: Sender, right: Sender) -> Bool {
+    public static func == (left: Sender, right: Sender) -> Bool {
         return left.id == right.id
     }
 

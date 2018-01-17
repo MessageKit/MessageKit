@@ -27,8 +27,108 @@ import MessageKit
 
 final class SettingsViewController: UITableViewController {
 
+    // MARK: - Properties
+    
+    var selectedMockMessagesCount: Int = 20
+    
+    // MARK: - Picker
+    
+    var messagesPicker = UIPickerView()
+    
+    @objc func onDoneWithPickerView() {
+        let selectedMessagesCount = messagesPicker.selectedRow(inComponent: 0)
+        UserDefaults.standard.setMockMessages(count: selectedMessagesCount)
+        view.endEditing(false)
+        tableView.reloadData()
+    }
+    
+    @objc func dismissPickerView() {
+        view.endEditing(false)
+    }
+    
+    private func configurePickerView() {
+        messagesPicker.dataSource = self
+        messagesPicker.delegate = self
+        messagesPicker.backgroundColor = .white
+    }
+    
+    // MARK: - Toolbar
+    
+    var messagesToolbar = UIToolbar()
+    
+    private func configureToolbar() {
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(onDoneWithPickerView))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(dismissPickerView))
+        messagesToolbar.items = [cancelButton, spaceButton, doneButton]
+        messagesToolbar.sizeToFit()
+    }
+    
+    // MARK: - View lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(TextFieldTableViewCell.self, forCellReuseIdentifier: TextFieldTableViewCell.identifier)
+        
+        configurePickerView()
+        configureToolbar()
     }
+    
+    // MARK: - TableViewDelegate & TableViewDataSource
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        return indexPath.row == 0 ? configureTextFieldTableViewCell(at: indexPath) : UITableViewCell()
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let cell = tableView.cellForRow(at: indexPath)
+        
+        cell?.contentView.subviews.forEach {
+            if $0 is UITextField {
+                $0.becomeFirstResponder()
+            }
+        }
+    }
+    
+    // MARK: - Helper
+    
+    private func configureTextFieldTableViewCell(at indexPath: IndexPath) -> TextFieldTableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldTableViewCell.identifier, for: indexPath) as! TextFieldTableViewCell
+        cell.mainLabel.text = "Mock messages count:"
+        
+        let messagesCount = UserDefaults.standard.mockMessagesCount()
+        cell.textField.text = "\(messagesCount)"
+        
+        cell.textField.inputView = messagesPicker
+        cell.textField.inputAccessoryView = messagesToolbar
+        
+        return cell
+    }
+}
 
+// MARK: - UIPickerViewDelegate, UIPickerViewDataSource
+extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 100
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return "\(row)"
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedMockMessagesCount = row
+    }
 }
