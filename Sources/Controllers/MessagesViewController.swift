@@ -90,6 +90,7 @@ open class MessagesViewController: UIViewController {
             addKeyboardObservers()
             messageCollectionViewBottomInset = keyboardOffsetFrame.height
         }
+        adjustScrollViewInset()
     }
 
     // MARK: - Initializers
@@ -147,6 +148,5 @@ open class MessagesViewController: UIViewController {
             let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             NSLayoutConstraint.activate([top, bottom, trailing, leading])
         }
-        adjustScrollViewInset()
     }
 }

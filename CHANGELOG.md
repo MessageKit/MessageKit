@@ -16,6 +16,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Fixed `iPhoneX` `MessageInputBar` transparent bottom area when `keyboardDismissMode` is `interactive`.
 [#425](https://github.com/MessageKit/MessageKit/pull/425) by [@zhongwuzw](https://github.com/zhongwuzw).
 
+- Fixed wrong `contentInset` calculation when `navigationBar` is `hidden`
+[#444](https://github.com/MessageKit/MessageKit/pull/444) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 ### Added
 
 - Added `configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)` method in `MessagesDisplayDelegate` `protocol` to configure `avatarView`.
@@ -40,6 +43,7 @@ See the example project for an updated use case.
 
 - **Breaking Change** Changed `AvatarView` from type `UIView` to type `UIImageView`.
  [#417](https://github.com/MessageKit/MessageKit/pull/417) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 
 ## [[Prerelease] 0.12.1](https://github.com/MessageKit/MessageKit/releases/tag/0.12.1)
 
