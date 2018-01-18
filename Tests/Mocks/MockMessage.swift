@@ -48,7 +48,7 @@ struct MockMessage: MessageType {
     }
 
     init(image: UIImage, sender: Sender, messageId: String) {
-        self.init(data: .photo(image), sender: sender, messageId: messageId)
+        self.init(data: .photo(url: nil, image: image), sender: sender, messageId: messageId)
     }
 
     init(thumbnail: UIImage, sender: Sender, messageId: String) {
