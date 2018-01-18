@@ -6,6 +6,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Fixed
+
+- Fixed message bubble tail orientation invalidation in `iOS9`.
+[#469](https://github.com/MessageKit/MessageKit/pull/469) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 ## [[Prerelease] 0.13.0](https://github.com/MessageKit/MessageKit/releases/tag/0.13.0)
 
 ### Fixed

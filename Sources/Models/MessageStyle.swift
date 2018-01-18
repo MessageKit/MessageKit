@@ -89,7 +89,7 @@ public enum MessageStyle {
             image = UIImage(cgImage: cgImage, scale: image.scale, orientation: corner.imageOrientation)
         }
 
-        return stretch(image).withRenderingMode(.alwaysTemplate)
+        return stretch(image)
     }
 
     // MARK: - Private
