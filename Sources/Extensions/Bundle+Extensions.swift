@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 MessageKit
+ Copyright (c) 2017-2018 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -30,11 +30,11 @@ extension Bundle {
         let podBundle = Bundle(for: MessagesViewController.self)
         
         guard let resourceBundleUrl = podBundle.url(forResource: "MessageKitAssets", withExtension: "bundle") else {
-            fatalError("MessageKit: Could not create path to the assets bundle")
+            fatalError(MessageKitError.couldNotCreateAssetsPath)
         }
         
         guard let resourceBundle = Bundle(url: resourceBundleUrl) else {
-            fatalError("MessageKit: Could not load the assets bundle")
+            fatalError(MessageKitError.couldNotLoadAssetsBundle)
         }
         
         return resourceBundle

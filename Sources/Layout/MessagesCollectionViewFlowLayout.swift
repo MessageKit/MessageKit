@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 MessageKit
+ Copyright (c) 2017-2018 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -66,7 +66,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     /// Convenience property for accessing the layout object's `MessagesCollectionView`.
     fileprivate var messagesCollectionView: MessagesCollectionView {
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
-            fatalError("MessagesCollectionViewFlowLayout is being used on a foreign type.")
+            fatalError(MessageKitError.layoutUsedOnForeignType)
         }
         return messagesCollectionView
     }
@@ -74,7 +74,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     /// Convenience property for unwrapping the `MessagesCollectionView`'s `MessagesDataSource`.
     fileprivate var messagesDataSource: MessagesDataSource {
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
-            fatalError("MessagesDataSource has not been set.")
+            fatalError(MessageKitError.nilMessagesDataSource)
         }
         return messagesDataSource
     }
@@ -82,7 +82,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     /// Convenience property for unwrapping the `MessagesCollectionView`'s `MessagesLayoutDelegate`.
     fileprivate var messagesLayoutDelegate: MessagesLayoutDelegate {
         guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
-            fatalError("MessagesLayoutDeleagte has not been set.")
+            fatalError(MessageKitError.nilMessagesLayoutDeleagte)
         }
         return messagesLayoutDelegate
     }
@@ -104,7 +104,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
         sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(handleOrientationChange), name: .UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MessagesCollectionViewFlowLayout.handleOrientationChange(_:)), name: .UIDeviceOrientationDidChange, object: nil)
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -537,7 +537,7 @@ private extension MessagesCollectionViewFlowLayout {
             return itemWidth - avatarWidth - attributes.messageContainerPadding.right - attributes.bottomLabelHorizontalPadding
 
         case (_, .natural):
-            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
+            fatalError(MessageKitError.avatarPositionUnresolved)
         }
         
     }
@@ -610,7 +610,7 @@ private extension MessagesCollectionViewFlowLayout {
             return itemWidth - avatarWidth - attributes.messageContainerPadding.right - attributes.topLabelHorizontalPadding
 
         case (_, .natural):
-            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
+            fatalError(MessageKitError.avatarPositionUnresolved)
         }
         
     }

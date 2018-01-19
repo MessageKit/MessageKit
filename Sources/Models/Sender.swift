@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017 MessageKit
+ Copyright (c) 2017-2018 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -50,7 +50,7 @@ public struct Sender {
 extension Sender: Equatable {
 
     /// Two senders are considered equal if they have the same id.
-    static public func == (left: Sender, right: Sender) -> Bool {
+    public static func == (left: Sender, right: Sender) -> Bool {
         return left.id == right.id
     }
 

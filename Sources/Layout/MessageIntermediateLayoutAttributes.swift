@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 MessageKit
+ Copyright (c) 2017-2018 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,7 @@ final class MessageIntermediateLayoutAttributes {
         case .cellTrailing:
             origin.x = cellFrame.width - avatarSize.width
         case .natural:
-            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
+            fatalError(MessageKitError.avatarPositionUnresolved)
         }
         
         switch avatarPosition.vertical {
@@ -91,7 +91,7 @@ final class MessageIntermediateLayoutAttributes {
         case .cellTrailing:
             origin.x = cellFrame.width - avatarSize.width - messageContainerSize.width - messageContainerPadding.right
         case .natural:
-            fatalError("AvatarPosition Horizontal.natural needs to be resolved.")
+            fatalError(MessageKitError.avatarPositionUnresolved)
         }
         
         return CGRect(origin: origin, size: messageContainerSize)

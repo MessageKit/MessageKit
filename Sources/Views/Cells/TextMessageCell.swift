@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 MessageKit
+ Copyright (c) 2017-2018 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -45,6 +45,7 @@ open class TextMessageCell: MessageCollectionViewCell {
         if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
             messageLabel.textInsets = attributes.messageLabelInsets
             messageLabel.font = attributes.messageLabelFont
+            messageLabel.frame = messageContainerView.bounds
         }
     }
 
@@ -57,18 +58,13 @@ open class TextMessageCell: MessageCollectionViewCell {
     open override func setupSubviews() {
         super.setupSubviews()
         messageContainerView.addSubview(messageLabel)
-        setupConstraints()
-    }
-    
-    open func setupConstraints() {
-        messageLabel.fillSuperview()
     }
 
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
 
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError("MessagesDisplayDelegate not set.")
+            fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
 
         let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)

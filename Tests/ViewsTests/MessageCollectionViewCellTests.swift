@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017 MessageKit
+ Copyright (c) 2017-2018 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -76,6 +76,11 @@ class MessageCollectionViewCellTests: XCTestCase {
 
 extension MessageCollectionViewCellTests {
 
-    fileprivate class MockMessagesDisplayDelegate: MessagesDisplayDelegate { }
+    fileprivate class MockMessagesDisplayDelegate: MessagesDisplayDelegate {
+        
+        func snapshotOptionsForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LocationMessageSnapshotOptions {
+            return LocationMessageSnapshotOptions()
+        }
+    }
 
 }

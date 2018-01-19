@@ -6,6 +6,60 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Fixed
+
+- Fixed message bubble tail orientation invalidation in `iOS9`.
+[#469](https://github.com/MessageKit/MessageKit/pull/469) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+## [[Prerelease] 0.13.0](https://github.com/MessageKit/MessageKit/releases/tag/0.13.0)
+
+### Fixed
+
+- Fixed message rendering when `MessagesViewController` sliding back.
+[#454](https://github.com/MessageKit/MessageKit/pull/454) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- Fixed `iPhoneX` `MessageInputBar` transparent bottom area when `keyboardDismissMode` is `interactive`.
+[#425](https://github.com/MessageKit/MessageKit/pull/425) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- Fixed wrong `contentInset` calculation when `navigationBar` is `hidden`
+[#444](https://github.com/MessageKit/MessageKit/pull/444) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+### Added
+
+- Added `configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)` method in `MessagesDisplayDelegate` `protocol` to configure `avatarView`.
+[#416](https://github.com/MessageKit/MessageKit/pull/416) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- Added copy support for image, text, and emoji messages.
+[#418](https://github.com/MessageKit/MessageKit/pull/418) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- Added `UIImage` paste support to the `InputTextView`. Images can easily be accessed using the `InputTextView.images` property. 
+See the example project for an updated use case.  
+[#423](https://github.com/MessageKit/MessageKit/pull/423) by [@nathantannar4](https://github.com/nathantannar4).
+
+### Removed
+
+- **Breaking Change** Removed `avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)` method of `MessagesDataSource`, use `configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)` instead.
+[#416](https://github.com/MessageKit/MessageKit/pull/416) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+### Changed
+
+- **Breaking Change** Moved the `handleTapGesture(_ gesture: UIGestureRecognizer)` method from `MessagesCollectionViewCell` to `MessagesCollectionView`.
+[#417](https://github.com/MessageKit/MessageKit/pull/417) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- **Breaking Change** Changed `AvatarView` from type `UIView` to type `UIImageView`.
+ [#417](https://github.com/MessageKit/MessageKit/pull/417) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+
+## [[Prerelease] 0.12.1](https://github.com/MessageKit/MessageKit/releases/tag/0.12.1)
+
+### Fixed
+
+- Fixed `LocationMessageCell` reuse bug, to avoid inconsistency when get capture image asynchronously. 
+[#428](https://github.com/MessageKit/MessageKit/pull/428) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- Fixed `MessageLabel` detector attributes not being applied due to early exit.
+[#429](https://github.com/MessageKit/MessageKit/pull/429) by [@antoinelamy](https://github.com/antoinelamy).
+
 ## [[Prerelease] 0.12.0](https://github.com/MessageKit/MessageKit/releases/tag/0.12.0)
 
 ### Added

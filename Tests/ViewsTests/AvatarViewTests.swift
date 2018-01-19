@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 MessageKit
+ Copyright (c) 2017-2018 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,6 @@ class AvatarViewTests: XCTestCase {
     }
 
     func testNoParams() {
-        XCTAssertEqual(avatarView.avatar.initials, "?")
         XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
         XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
     }
@@ -57,6 +56,7 @@ class AvatarViewTests: XCTestCase {
     func testInitialsOnly() {
         let avatar = Avatar(initials: "DL")
         avatarView.set(avatar: avatar)
+        XCTAssertEqual(avatarView.initials, avatar.initials)
         XCTAssertEqual(avatar.initials, "DL")
         XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
         XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)

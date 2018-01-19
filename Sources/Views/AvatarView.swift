@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 MessageKit
+ Copyright (c) 2017-2018 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,27 +24,25 @@
 
 import Foundation
 
-open class AvatarView: UIView {
+open class AvatarView: UIImageView {
 
     // MARK: - Properties
-
-    open var avatar: Avatar = Avatar()
-
-    open var imageView = UIImageView()
-
-    public var image: UIImage? {
-        return imageView.image
+    
+    open var initials: String? {
+        didSet {
+            setImageFrom(initials: initials)
+        }
     }
 
     open var placeholderFont: UIFont = UIFont.preferredFont(forTextStyle: .caption1) {
         didSet {
-            set(avatar: avatar)
+            setImageFrom(initials: initials)
         }
     }
 
     open var placeholderTextColor: UIColor = .white {
         didSet {
-            set(avatar: avatar)
+            setImageFrom(initials: initials)
         }
     }
 
@@ -61,14 +59,12 @@ open class AvatarView: UIView {
     // MARK: - Overridden Properties
     open override var frame: CGRect {
         didSet {
-            imageView.frame = bounds
             setCorner(radius: self.radius)
         }
     }
 
     open override var bounds: CGRect {
         didSet {
-            imageView.frame = bounds
             setCorner(radius: self.radius)
         }
     }
@@ -81,6 +77,11 @@ open class AvatarView: UIView {
 
     convenience public init() {
         self.init(frame: .zero)
+    }
+    
+    private func setImageFrom(initials: String?) {
+        guard let initials = initials else { return }
+        image = getImageFrom(initials: initials)
     }
 
     private func getImageFrom(initials: String) -> UIImage {
@@ -160,17 +161,17 @@ open class AvatarView: UIView {
         contentMode = .scaleAspectFill
         layer.masksToBounds = true
         clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
-        imageView.frame = frame
-        addSubview(imageView)
-        imageView.image = avatar.image ?? getImageFrom(initials: avatar.initials)
         setCorner(radius: nil)
     }
 
     // MARK: - Open setters
-
+    
     open func set(avatar: Avatar) {
-        imageView.image = avatar.image ?? getImageFrom(initials: avatar.initials)
+        if let image = avatar.image {
+            self.image = image
+        } else {
+            initials = avatar.initials
+        }
     }
 
     open func setCorner(radius: CGFloat?) {

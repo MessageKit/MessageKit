@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017 MessageKit
+ Copyright (c) 2017-2018 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -93,7 +93,13 @@ class MessageKitDateFormatterTests: XCTestCase {
 
         ///Day of last week
         startOfWeek = (Calendar.current as NSCalendar).date(byAdding: .day, value: -2, to: startOfWeek, options: [])!
-        formatter.dateFormat = "E, d MMM, h:mm a"
+        
+        if Calendar.current.isDate(startOfWeek, equalTo: Date(), toGranularity: .year) {
+            formatter.dateFormat = "E, d MMM, h:mm a"
+        } else {
+            formatter.dateFormat = "MMM d, yyyy, h:mm a"
+        }
+        
         XCTAssertEqual(MessageKitDateFormatter.shared.string(from: startOfWeek), formatter.string(from: startOfWeek))
     }
 

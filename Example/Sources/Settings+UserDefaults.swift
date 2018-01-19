@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,21 @@
 
 import Foundation
 
-extension UIColor {
-
-    static let incomingGray = UIColor(red: 230/255, green: 230/255, blue: 235/255, alpha: 1.0)
-
-    static let outgoingGreen = UIColor(red: 69/255, green: 214/255, blue: 93/255, alpha: 1.0)
-
-    static let inputBarGray = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
-
-    static let playButtonLightGray = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1.0)
-
-    static let sendButtonBlue = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
-
+extension UserDefaults {
+    
+    static let messagesKey = "mockMessages"
+    
+    // MARK: - Mock Messages
+    
+    func setMockMessages(count: Int) {
+        set(count, forKey: "mockMessages")
+        synchronize()
+    }
+    
+    func mockMessagesCount() -> Int {
+        if let value = object(forKey: "mockMessages") as? Int {
+            return value
+        }
+        return 20
+    }
 }

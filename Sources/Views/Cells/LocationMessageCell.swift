@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 MessageKit
+ Copyright (c) 2017-2018 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,8 @@ open class LocationMessageCell: MessageCollectionViewCell {
     open var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
     open var imageView = UIImageView()
+    
+    private weak var snapShotter: MKMapSnapshotter?
 
     open override func setupSubviews() {
         super.setupSubviews()
@@ -47,11 +49,16 @@ open class LocationMessageCell: MessageCollectionViewCell {
         imageView.fillSuperview()
         activityIndicator.centerInSuperview()
     }
+    
+    open override func prepareForReuse() {
+        super.prepareForReuse()
+        snapShotter?.cancel()
+    }
 
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError("MessagesDisplayDelegate is not set.")
+            fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
         let options = displayDelegate.snapshotOptionsForLocation(message: message, at: indexPath, in: messagesCollectionView)
         let annotationView = displayDelegate.annotationViewForLocation(message: message, at: indexPath, in: messagesCollectionView)
@@ -67,6 +74,7 @@ open class LocationMessageCell: MessageCollectionViewCell {
         snapshotOptions.showsPointsOfInterest = options.showsPointsOfInterest
 
         let snapShotter = MKMapSnapshotter(options: snapshotOptions)
+        self.snapShotter = snapShotter
         snapShotter.start { (snapshot, error) in
             defer {
                 self.activityIndicator.stopAnimating()
@@ -99,7 +107,5 @@ open class LocationMessageCell: MessageCollectionViewCell {
             self.imageView.image = composedImage
             animationBlock?(self.imageView)
         }
-        
-        
     }
 }

@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 MessageKit
+ Copyright (c) 2017-2018 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -83,12 +83,6 @@ class MessagesDisplayDelegateTests: XCTestCase {
                                                   in: sut.messagesCollectionView)
 
         XCTAssertEqual(backgroundColor, .clear)
-    }
-
-    func testAvatarDefaultState() {
-        XCTAssertNotNil(sut.dataProvider.avatar(for: sut.dataProvider.messages[0],
-                                                at: IndexPath(item: 0, section: 0),
-                                                in: sut.messagesCollectionView).initials)
     }
 
     func testCellTopLabelDefaultState() {
@@ -218,7 +212,8 @@ class TextMessageDisplayDelegateTests: XCTestCase {
     }
 
     func testTextColorWithoutDataSource_returnsDarkTextForDefault() {
-        sut.messagesCollectionView.messagesDataSource = nil
+        let dataSource = sut.makeDataSource()
+        sut.messagesCollectionView.messagesDataSource = dataSource
         let textColor = sut.textColor(for: sut.dataProvider.messages[1],
                                       at: IndexPath(item: 0, section: 0),
                                       in: sut.messagesCollectionView)
@@ -255,7 +250,7 @@ private class MockMessagesViewController: MessagesViewController, MessagesDispla
 
     }
 
-    private func makeDataSource() -> MockMessagesDataSource {
+    fileprivate func makeDataSource() -> MockMessagesDataSource {
         let dataSource = MockMessagesDataSource()
         dataSource.messages.append(MockMessage(text: "Text 1",
                                                sender: dataSource.senders[0],
@@ -267,4 +262,7 @@ private class MockMessagesViewController: MessagesViewController, MessagesDispla
         return dataSource
     }
 
+    func snapshotOptionsForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LocationMessageSnapshotOptions {
+        return LocationMessageSnapshotOptions()
+    }
 }
