@@ -28,7 +28,7 @@ import SafariServices
 
 final class InboxViewController: UITableViewController {
 
-    let cells = ["Example", "Settings", "Source Code", "Contributers"]
+    let cells = ["Example", "Settings", "Source Code", "Contributors"]
     
     // MARK: - View Life Cycle
     
@@ -83,7 +83,7 @@ final class InboxViewController: UITableViewController {
             guard let url = URL(string: "https://github.com/MessageKit/MessageKit") else { return }
             let webViewController = SFSafariViewController(url: url)
             present(webViewController, animated: true, completion: nil)
-        case "Contributers":
+        case "Contributors":
             guard let url = URL(string: "https://github.com/orgs/MessageKit/teams/contributors/members") else { return }
             let webViewController = SFSafariViewController(url: url)
             present(webViewController, animated: true, completion: nil)
