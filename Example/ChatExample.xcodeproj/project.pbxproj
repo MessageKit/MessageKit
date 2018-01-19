@@ -58,7 +58,6 @@
 		0364943D08CDBE656E6F6DF8 /* Pods-ChatExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatExampleTests/Pods-ChatExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2AC6E3F5C11E39F57598DBE6 /* Pods_ChatExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37D3EAC31F390E5F00DD6A55 /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
-		37F8BCD41F38F3A8003C12C2 /* Avatar.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Avatar.playground; path = Playgrounds/Avatar.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		3B316705C4717C3B4C916D62 /* Pods_ChatExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F0AC85B38034EC92CCBC7D /* Pods_ChatExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		882B5E331CF7D4B900B6E160 /* ChatExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,7 +154,6 @@
 				B0655A321F23E90800542A83 /* ConversationViewController.swift */,
 				37D3EAC31F390E5F00DD6A55 /* SampleData.swift */,
 				882B5E7E1CF7D53600B6E160 /* InboxViewController.swift */,
-				37F8BCD41F38F3A8003C12C2 /* Avatar.playground */,
 				B096438A1F288D47004D0129 /* MockMessage.swift */,
 				882B5E801CF7D53600B6E160 /* SettingsViewController.swift */,
 				882B5E791CF7D53600B6E160 /* Assets.xcassets */,
