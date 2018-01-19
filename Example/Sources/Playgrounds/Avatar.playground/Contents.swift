@@ -17,7 +17,7 @@ var avatarObject = Avatar(image: testImage)
 avatarView.set(avatar: avatarObject)
 
 //: If you don't have a picture for the user you can pass in there initals instead.
-avatarObject = Avatar(initals: "DL")
+avatarObject = Avatar(initials: "DL")
 avatarView.set(avatar: avatarObject)
 
 //: Want rounded squares instead of circles just adjust the radius with the method .setCorner(radius: CGFLoat)`.
