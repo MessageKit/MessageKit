@@ -61,9 +61,9 @@ extension MessagesViewController {
             //Software keyboard is found
             let afterBottomInset = keyboardEndFrame.height > keyboardOffsetFrame.height ? (keyboardEndFrame.height - iPhoneXBottomInset) : keyboardOffsetFrame.height
             let differenceOfBottomInset = afterBottomInset - messageCollectionViewBottomInset
-            let contentOffset = CGPoint(x: messagesCollectionView.contentOffset.x, y: messagesCollectionView.contentOffset.y + differenceOfBottomInset)
 
-            if maintainPositionOnKeyboardFrameChanged {
+            if maintainPositionOnKeyboardFrameChanged && differenceOfBottomInset != 0 {
+                let contentOffset = CGPoint(x: messagesCollectionView.contentOffset.x, y: messagesCollectionView.contentOffset.y + differenceOfBottomInset)
                 messagesCollectionView.setContentOffset(contentOffset, animated: false)
             }
 
