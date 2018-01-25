@@ -38,7 +38,7 @@ public protocol MessagesDataSource: AnyObject {
     /// and the current Sender.
     func isFromCurrentSender(message: MessageType) -> Bool
 
-    /// The message to be used for a `MessagesCollectionViewCell` at the given `IndexPath`.
+    /// The message to be used for a `MessageCollectionViewCell` at the given `IndexPath`.
     ///
     /// - Parameters:
     ///   - indexPath: The `IndexPath` of the cell.

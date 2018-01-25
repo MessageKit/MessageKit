@@ -24,7 +24,7 @@
 
 import UIKit
 
-/// The layout attributes used by a `MessagesCollectionViewCell` to layout its subviews.
+/// The layout attributes used by a `MessageCollectionViewCell` to layout its subviews.
 final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
 
     // MARK: - Properties

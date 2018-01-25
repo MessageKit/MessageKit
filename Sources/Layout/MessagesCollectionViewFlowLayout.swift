@@ -26,7 +26,7 @@ import UIKit
 import AVFoundation
 
 /// The layout object used by `MessagesCollectionView` to determine the size of all
-/// framework provided `MessagesCollectionViewCell` subclasses.
+/// framework provided `MessageCollectionViewCell` subclasses.
 open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - Properties [Public]
@@ -87,7 +87,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return messagesLayoutDelegate
     }
 
-    /// The width of an item in the `MessagesCollectionViewCell`.
+    /// The width of an item in the `MessageCollectionViewCell`.
     fileprivate var itemWidth: CGFloat {
         guard let collectionView = collectionView else { return 0 }
         return collectionView.frame.width - sectionInset.left - sectionInset.right

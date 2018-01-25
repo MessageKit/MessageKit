@@ -25,7 +25,7 @@
 import Foundation
 import MapKit
 
-/// A protocol used by the `MessagesViewController` to customize the appearance of a `MessagesCollectionViewCell`.
+/// A protocol used by the `MessagesViewController` to customize the appearance of a `MessageCollectionViewCell`.
 public protocol MessagesDisplayDelegate: AnyObject {
 
     // MARK: - All Messages
