@@ -317,7 +317,7 @@ open class InputBarButtonItem: UIButton {
     }
     
     /// An InputBarButtonItem that's spacing property is set to be .fixed with the width arguement
-    open static func fixedSpace(_ width: CGFloat) -> InputBarButtonItem {
+    open class func fixedSpace(_ width: CGFloat) -> InputBarButtonItem {
         let item = InputBarButtonItem()
         item.setSize(.zero, animated: false)
         item.spacing = .fixed(width)
