@@ -11,6 +11,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Optimize `collectionView` scroll behavior when abruptly stops scrolling.
 [#470](https://github.com/MessageKit/MessageKit/pull/470) by [@zhongwuzw](https://github.com/zhongwuzw).
 
+- Fixed `messageInputBar` sendButton not disabled in some situations.
+[#475](https://github.com/MessageKit/MessageKit/pull/475) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 ## [[Prerelease] 0.13.0](https://github.com/MessageKit/MessageKit/releases/tag/0.13.0)
 
 ### Fixed
