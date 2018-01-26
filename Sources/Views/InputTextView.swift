@@ -39,12 +39,14 @@ open class InputTextView: UITextView {
     
     open override var text: String! {
         didSet {
+            postTextViewDidChangeNotification()
             placeholderLabel.isHidden = !text.isEmpty
         }
     }
     
     open override var attributedText: NSAttributedString! {
         didSet {
+            postTextViewDidChangeNotification()
             placeholderLabel.isHidden = !text.isEmpty
         }
     }
@@ -196,6 +198,12 @@ open class InputTextView: UITextView {
         placeholderLabelConstraintSet?.bottom?.constant = -placeholderLabelInsets.bottom
         placeholderLabelConstraintSet?.left?.constant = placeholderLabelInsets.left
         placeholderLabelConstraintSet?.right?.constant = -placeholderLabelInsets.right
+    }
+    
+    // MARK: - Notification
+    
+    private func postTextViewDidChangeNotification() {
+        NotificationCenter.default.post(name: .UITextViewTextDidChange, object: self)
     }
     
     // MARK: - Image Paste Support

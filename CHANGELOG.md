@@ -6,7 +6,15 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### [[Prerelease] 0.13.1](https://github.com/MessageKit/MessageKit/releases/tag/0.13.1)
+
 ### Fixed
+
+- Optimize `collectionView` scroll behavior when abruptly stops scrolling.
+[#470](https://github.com/MessageKit/MessageKit/pull/470) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- Fixed `messageInputBar` sendButton not disabled in some situations.
+[#475](https://github.com/MessageKit/MessageKit/pull/475) by [@zhongwuzw](https://github.com/zhongwuzw).
 
 - Fixed message bubble tail orientation invalidation in `iOS9`.
 [#469](https://github.com/MessageKit/MessageKit/pull/469) by [@zhongwuzw](https://github.com/zhongwuzw).
