@@ -38,6 +38,8 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
     var topLabelFrame: CGRect = .zero
     var bottomLabelFrame: CGRect = .zero
 
+    var accessoryViewFrame: CGRect = .zero
+
     // MARK: - Methods
 
     override func copy(with zone: NSZone? = nil) -> Any {
@@ -49,6 +51,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
         copy.messageLabelInsets = messageLabelInsets
         copy.topLabelFrame = topLabelFrame
         copy.bottomLabelFrame = bottomLabelFrame
+        copy.accessoryViewFrame = accessoryViewFrame
         return copy
         // swiftlint:enable force_cast
     }

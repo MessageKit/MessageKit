@@ -51,6 +51,9 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         return label
     }()
 
+    // Should only add customized subviews, but not change accessoryView itself.
+    open var accessoryView: UIView = .init()
+
     open weak var delegate: MessageCellDelegate?
 
     public override init(frame: CGRect) {
@@ -68,6 +71,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         contentView.addSubview(avatarView)
         contentView.addSubview(cellTopLabel)
         contentView.addSubview(cellBottomLabel)
+        contentView.addSubview(accessoryView)
     }
 
     open override func prepareForReuse() {
@@ -76,6 +80,9 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         cellTopLabel.attributedText = nil
         cellBottomLabel.text = nil
         cellBottomLabel.attributedText = nil
+        for view in accessoryView.subviews {
+            view.removeFromSuperview()
+        }
     }
 
     // MARK: - Configuration
@@ -87,6 +94,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
             cellTopLabel.frame = attributes.topLabelFrame
             cellBottomLabel.frame = attributes.bottomLabelFrame
             messageContainerView.frame = attributes.messageContainerFrame
+            accessoryView.frame = attributes.accessoryViewFrame
         }
     }
 
