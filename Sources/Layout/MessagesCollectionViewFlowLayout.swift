@@ -61,10 +61,11 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     typealias MessageID = String
     
-    /// The cache for `MessageIntermediateLayoutAttributes`.
+    /// The cache for `MessageCellLayoutContext`.
     /// The key is the `messageId` of the `MessageType`.
     fileprivate var layoutContextCache: [MessageID: MessageCellLayoutContext] = [:]
 
+    /// The `MessageCellLayoutContext` for the current cell.
     var currentLayoutContext: MessageCellLayoutContext!
 
     // MARK: - Initializers
