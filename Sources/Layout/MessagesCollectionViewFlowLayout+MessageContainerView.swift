@@ -89,36 +89,36 @@ extension MessagesCollectionViewFlowLayout {
 extension MessagesCollectionViewFlowLayout {
 
     internal func _messageLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
-        guard let cachedInsets = cellLayoutContext.messageLabelInsets else {
+        guard let cachedInsets = currentLayoutContext.messageLabelInsets else {
             let insets = messageLabelInsets(for: message, at: indexPath)
-            cellLayoutContext.messageLabelInsets = insets
+            currentLayoutContext.messageLabelInsets = insets
             return insets
         }
         return cachedInsets
     }
 
     internal func _messageContainerPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
-        guard let cachedPadding = cellLayoutContext.messageContainerPadding else {
+        guard let cachedPadding = currentLayoutContext.messageContainerPadding else {
             let padding = messageContainerPadding(for: message, at: indexPath)
-            cellLayoutContext.messageContainerPadding = padding
+            currentLayoutContext.messageContainerPadding = padding
             return padding
         }
         return cachedPadding
     }
 
     internal func _messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
-        guard let cachedMaxWidth = cellLayoutContext.messageContainerMaxWidth else {
+        guard let cachedMaxWidth = currentLayoutContext.messageContainerMaxWidth else {
             let maxWidth = messageContainerMaxWidth(for: message, at: indexPath)
-            cellLayoutContext.messageContainerMaxWidth = maxWidth
+            currentLayoutContext.messageContainerMaxWidth = maxWidth
             return maxWidth
         }
         return cachedMaxWidth
     }
 
     internal func _messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
-        guard let cachedSize = cellLayoutContext.messageContainerSize else {
+        guard let cachedSize = currentLayoutContext.messageContainerSize else {
             let size = messageContainerSize(for: message, at: indexPath)
-            cellLayoutContext.messageContainerSize = size
+            currentLayoutContext.messageContainerSize = size
             return size
         }
         return cachedSize

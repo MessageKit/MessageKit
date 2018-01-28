@@ -51,18 +51,18 @@ extension MessagesCollectionViewFlowLayout {
 
     internal func _avatarPosition(for message: MessageType, at indexPath: IndexPath) -> AvatarPosition {
 
-        guard let cachedPosition = cellLayoutContext.avatarPosition else {
+        guard let cachedPosition = currentLayoutContext.avatarPosition else {
             let position = avatarPosition(for: message, at: indexPath)
-            cellLayoutContext.avatarPosition = position
+            currentLayoutContext.avatarPosition = position
             return position
         }
         return cachedPosition
     }
 
     internal func _avatarSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
-        guard let cachedSize = cellLayoutContext.avatarSize else {
+        guard let cachedSize = currentLayoutContext.avatarSize else {
             let size = avatarSize(for: message, at: indexPath)
-            cellLayoutContext.avatarSize = size
+            currentLayoutContext.avatarSize = size
             return size
         }
         return cachedSize
