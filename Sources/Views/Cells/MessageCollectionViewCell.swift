@@ -146,7 +146,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
     // MARK: - Origin Calculations
 
-    func layoutAvatarView(with attributes: MessagesCollectionViewLayoutAttributes) {
+    open func layoutAvatarView(with attributes: MessagesCollectionViewLayoutAttributes) {
         guard attributes.avatarSize != .zero else { return }
 
         var origin = CGPoint.zero
@@ -176,7 +176,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         avatarView.frame = CGRect(origin: origin, size: attributes.avatarSize)
     }
 
-    func layoutMessageContainerView(with attributes: MessagesCollectionViewLayoutAttributes) {
+    open func layoutMessageContainerView(with attributes: MessagesCollectionViewLayoutAttributes) {
         guard attributes.messageContainerSize != .zero else { return }
 
         var origin: CGPoint = .zero
@@ -194,7 +194,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         messageContainerView.frame = CGRect(origin: origin, size: attributes.messageContainerSize)
     }
 
-    func layoutTopLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
+    open func layoutTopLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
         guard attributes.topLabelSize != .zero else { return }
 
         let topLabelAlignment = attributes.topLabelAlignment
@@ -221,7 +221,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         cellTopLabel.frame = CGRect(origin: origin, size: topLabelSize)
     }
 
-    func layoutBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
+    open func layoutBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
         guard attributes.bottomLabelSize != .zero else { return }
 
         let bottomLabelAlignment = attributes.bottomLabelAlignment

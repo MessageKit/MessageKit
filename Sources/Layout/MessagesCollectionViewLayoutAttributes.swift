@@ -25,7 +25,7 @@
 import UIKit
 
 /// The layout attributes used by a `MessageCollectionViewCell` to layout its subviews.
-final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
+open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
 
     // MARK: - Properties
 
@@ -45,7 +45,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
 
     // MARK: - Methods
 
-    override func copy(with zone: NSZone? = nil) -> Any {
+    open override func copy(with zone: NSZone? = nil) -> Any {
         // swiftlint:disable force_cast
         let copy = super.copy(with: zone) as! MessagesCollectionViewLayoutAttributes
         copy.avatarSize = avatarSize
@@ -62,7 +62,7 @@ final class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttrib
         // swiftlint:enable force_cast
     }
 
-    override func isEqual(_ object: Any?) -> Bool {
+    open override func isEqual(_ object: Any?) -> Bool {
 
         // MARK: - LEAVE this as is
         // swiftlint:disable unused_optional_binding
