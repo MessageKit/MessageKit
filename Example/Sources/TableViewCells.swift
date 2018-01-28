@@ -24,9 +24,17 @@
 
 import UIKit
 
-class TextFieldTableViewCell: UITableViewCell {
+protocol UITableViewCellIdentifier {
+    static var identifier: String { get }
+}
 
-    static let identifier = "TextFieldTableViewCellIdentifier"
+// MARK: - TextFieldTableViewCell
+
+class TextFieldTableViewCell: UITableViewCell, UITableViewCellIdentifier {
+
+    // MARK: - Properties
+
+    static var identifier = "TextFieldTableViewCellIdentifier"
     
     var mainLabel = UILabel()
     var textField = UITextField()
@@ -58,5 +66,59 @@ class TextFieldTableViewCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - LabelSwitchTableViewCell
+
+protocol LabelSwitchTableViewDelegate: class {
+    func labelSwitchTableViewCell(_ cell: LabelSwitchTableViewCell, onSwitchValueChanged isOn: Bool)
+}
+
+class LabelSwitchTableViewCell: UITableViewCell, UITableViewCellIdentifier {
+
+    // MARK: - Properties
+
+    static let identifier = "LabelSwitchTableViewCellIdentifier"
+
+    weak var delegate: LabelSwitchTableViewDelegate?
+
+    var mainLabel = UILabel()
+    var cellSwitch = UISwitch()
+
+    // MARK: - View lifecycle
+
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        mainLabel.translatesAutoresizingMaskIntoConstraints = false
+        cellSwitch.translatesAutoresizingMaskIntoConstraints = false
+
+        contentView.addSubview(mainLabel)
+        contentView.addSubview(cellSwitch)
+
+        NSLayoutConstraint.activate([
+            mainLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            mainLabel.widthAnchor.constraint(equalToConstant: 200),
+            mainLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+
+            cellSwitch.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+
+            cellSwitch.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            cellSwitch.widthAnchor.constraint(equalToConstant: 50)
+        ])
+
+        cellSwitch.addTarget(self, action: #selector(onSwitchValueChanged), for: .valueChanged)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Actions
+
+    @objc func onSwitchValueChanged() {
+        let isOn = cellSwitch.isOn
+        delegate?.labelSwitchTableViewCell(self, onSwitchValueChanged: isOn)
     }
 }

@@ -29,7 +29,9 @@ final class SampleData {
 
     static let shared = SampleData()
 
-    private init() {}
+    private init() {
+        updateMessageTypes()
+    }
 
     let messageTextValues = [
         "Ok",
@@ -70,7 +72,7 @@ final class SampleData {
 
     var now = Date()
 
-    let messageTypes = ["Text", "Text", "Text", "AttributedText", "Photo", "Video", "Location", "Emoji"]
+    var messageTypes = ["text", "attributedText", "photo", "video", "location", "emoji"]
 
     let attributes = ["Font1", "Font2", "Font3", "Font4", "Color", "Combo"]
 
@@ -154,20 +156,20 @@ final class SampleData {
         let date = dateAddingRandomTime()
 
         switch messageTypes[randomMessageType] {
-        case "Text":
+        case "text":
             return MockMessage(text: messageTextValues[randomNumberText], sender: sender, messageId: uniqueID, date: date)
-        case "AttributedText":
+        case "attributedText":
             let attributedText = attributedString(with: messageTextValues[randomNumberText])
             return MockMessage(attributedText: attributedText, sender: senders[randomNumberSender], messageId: uniqueID, date: date)
-        case "Photo":
+        case "photo":
             let image = messageImages[randomNumberImage]
             return MockMessage(image: image, sender: sender, messageId: uniqueID, date: date)
-        case "Video":
+        case "video":
             let image = messageImages[randomNumberImage]
             return MockMessage(thumbnail: image, sender: sender, messageId: uniqueID, date: date)
-        case "Location":
+        case "location":
             return MockMessage(location: locations[randomNumberLocation], sender: sender, messageId: uniqueID, date: date)
-        case "Emoji":
+        case "emoji":
             return MockMessage(emoji: emojis[randomNumberEmoji], sender: sender, messageId: uniqueID, date: date)
         default:
             fatalError("Unrecognized mock message type")
@@ -197,4 +199,35 @@ final class SampleData {
         }
     }
 
+    func updateMessageTypes() {
+        resetMessageTypes()
+
+        if UserDefaults.standard.shouldHideTextMessages() {
+            hideMessageTypes(types: .text(""))
+        }
+
+        if UserDefaults.standard.shouldHideAttributedTextMessages() {
+            hideMessageTypes(types: .attributedText(NSAttributedString()))
+        }
+
+        if UserDefaults.standard.shouldHidePhotoMessages() {
+            hideMessageTypes(types: .photo(UIImage()))
+        }
+
+        if UserDefaults.standard.shouldHideVideoMessages() {
+            hideMessageTypes(types: .video(file: URL(string: "http://")!, thumbnail: UIImage()))
+        }
+    }
+
+    func hideMessageTypes(types: MessageData...) {
+        types.forEach { type in
+            if let indexToRemove = messageTypes.index(of: type.rawValue) {
+                messageTypes.remove(at: indexToRemove)
+            }
+        }
+    }
+
+    func resetMessageTypes() {
+        messageTypes = ["text", "attributedText", "photo", "video", "location", "emoji"]
+    }
 }
