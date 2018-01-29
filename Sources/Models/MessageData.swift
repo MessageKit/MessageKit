@@ -26,7 +26,7 @@ import Foundation
 import class CoreLocation.CLLocation
 
 /// An enum representing the kind of message and its underlying data.
-public enum MessageData: Equatable {
+public enum MessageData {
 
     /// A standard text message.
     ///
@@ -61,68 +61,4 @@ public enum MessageData: Equatable {
 //    case custom(Any)
 //    
 //    case placeholder
-
-    // MARK: - Equatable
-
-    public static func ==(lhs: MessageData, rhs: MessageData) -> Bool {
-        switch (lhs, rhs) {
-        case (let .text(string1), let .text(string2)):
-            return true
-
-        case (let .attributedText(string1), let .attributedText(string2)):
-            return true
-
-        case (let .photo(image1), let .photo(image2)):
-             return true
-
-        case (let .video(file: url1, thumbnail: thumbnail1), let .video(file: url2, thumbnail: thumbnail2)):
-            return true
-
-        case (let .location(location1), let .location(location2)):
-            return true
-
-        case (let .emoji(string1), let .emoji(string2)):
-            return true
-
-        default:
-            return false
-        }
-    }
-}
-
-extension MessageData: RawRepresentable {
-    public typealias RawValue = String
-
-    public init?(rawValue: RawValue) {
-        switch rawValue {
-        case "text": self = .text("")
-        case "attributedText": self = .attributedText(NSAttributedString())
-        case "photo": self = .photo(UIImage())
-        case "video": self = .video(file: URL(string: "")!, thumbnail: UIImage())
-        case "emoji": self = .emoji("")
-        default: return nil
-        }
-    }
-
-    public var rawValue: RawValue {
-        switch self {
-        case let .text(string1):
-            return "text"
-
-        case let .attributedText(string1):
-            return "attributedText"
-
-        case let .photo(image1):
-            return "photo"
-
-        case let .video(file: url1, thumbnail: thumbnail1):
-            return "video"
-
-        case let .location(location1):
-            return "location"
-
-        case let .emoji(string1):
-            return "emoji"
-        }
-    }
 }

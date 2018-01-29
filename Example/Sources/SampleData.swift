@@ -203,25 +203,25 @@ final class SampleData {
         resetMessageTypes()
 
         if UserDefaults.standard.shouldHideTextMessages() {
-            hideMessageTypes(types: .text(""))
+            hideMessageTypes(types: "text")
         }
 
         if UserDefaults.standard.shouldHideAttributedTextMessages() {
-            hideMessageTypes(types: .attributedText(NSAttributedString()))
+            hideMessageTypes(types: "attributedText")
         }
 
         if UserDefaults.standard.shouldHidePhotoMessages() {
-            hideMessageTypes(types: .photo(UIImage()))
+            hideMessageTypes(types: "photo")
         }
 
         if UserDefaults.standard.shouldHideVideoMessages() {
-            hideMessageTypes(types: .video(file: URL(string: "http://")!, thumbnail: UIImage()))
+            hideMessageTypes(types: "video")
         }
     }
 
-    func hideMessageTypes(types: MessageData...) {
+    func hideMessageTypes(types: String...) {
         types.forEach { type in
-            if let indexToRemove = messageTypes.index(of: type.rawValue) {
+            if let indexToRemove = messageTypes.index(of: type) {
                 messageTypes.remove(at: indexToRemove)
             }
         }

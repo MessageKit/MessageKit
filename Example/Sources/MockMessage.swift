@@ -32,37 +32,38 @@ struct MockMessage: MessageType {
 	var sender: Sender
 	var sentDate: Date
 	var data: MessageData
+    var type: String
 	
-    init(data: MessageData, sender: Sender, messageId: String, date: Date) {
+    init(data: MessageData, sender: Sender, messageId: String, date: Date, type: String) {
 		self.data = data
 		self.sender = sender
 		self.messageId = messageId
 		self.sentDate = date
+        self.type = type
 	}
 	
     init(text: String, sender: Sender, messageId: String, date: Date) {
-        self.init(data: .text(text), sender: sender, messageId: messageId, date: date)
+        self.init(data: .text(text), sender: sender, messageId: messageId, date: date, type: "text")
 	}
 	
     init(attributedText: NSAttributedString, sender: Sender, messageId: String, date: Date) {
-        self.init(data: .attributedText(attributedText), sender: sender, messageId: messageId, date: date)
+        self.init(data: .attributedText(attributedText), sender: sender, messageId: messageId, date: date, type: "attributedText")
 	}
 
     init(image: UIImage, sender: Sender, messageId: String, date: Date) {
-        self.init(data: .photo(image), sender: sender, messageId: messageId, date: date)
+        self.init(data: .photo(image), sender: sender, messageId: messageId, date: date, type: "photo")
     }
 
     init(thumbnail: UIImage, sender: Sender, messageId: String, date: Date) {
         let url = URL(fileURLWithPath: "")
-        self.init(data: .video(file: url, thumbnail: thumbnail), sender: sender, messageId: messageId, date: date)
+        self.init(data: .video(file: url, thumbnail: thumbnail), sender: sender, messageId: messageId, date: date, type: "video")
     }
 
     init(location: CLLocation, sender: Sender, messageId: String, date: Date) {
-        self.init(data: .location(location), sender: sender, messageId: messageId, date: date)
+        self.init(data: .location(location), sender: sender, messageId: messageId, date: date, type: "location")
     }
 
     init(emoji: String, sender: Sender, messageId: String, date: Date) {
-        self.init(data: .emoji(emoji), sender: sender, messageId: messageId, date: date)
+        self.init(data: .emoji(emoji), sender: sender, messageId: messageId, date: date, type: "emoji")
     }
-
 }

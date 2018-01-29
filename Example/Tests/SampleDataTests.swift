@@ -19,7 +19,7 @@
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
+ SOFTWARE.s
  */
 
 import XCTest
@@ -27,7 +27,7 @@ import MessageKit
 import MapKit
 @testable import ChatExample
 
-class SampleDataTests: XCTestCase {
+final class SampleDataTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -44,13 +44,13 @@ class SampleDataTests: XCTestCase {
         let testExpectation = expectation(description: "hideTextMessagesExpectation")
 
         // Given
-        SampleData.shared.hideMessageTypes(types: .text(""))
+        SampleData.shared.hideMessageTypes(types: "text")
 
         // When
         SampleData.shared.getMessages(count: 50) { messages in
             messages.forEach { message in
                 // Then
-                XCTAssertTrue(message.data != .text(""), "messageData is type .text, expected all but .text")
+                XCTAssertNotEqual(message.type, "text", "messageData is type .text, expected all but .text")
             }
             testExpectation.fulfill()
         }
@@ -62,13 +62,13 @@ class SampleDataTests: XCTestCase {
         let testExpectation = expectation(description: "hideAttributedTextMessagesExpectation")
 
         // Given
-        SampleData.shared.hideMessageTypes(types: .attributedText(NSAttributedString()))
+        SampleData.shared.hideMessageTypes(types: "attributedText")
 
         // When
         SampleData.shared.getMessages(count: 50) { messages in
             messages.forEach { message in
                 // Then
-                XCTAssertTrue(message.data != .attributedText(NSAttributedString()), "messageData is type .attributedText, expected all but .attributedText")
+                XCTAssertNotEqual(message.type, "attributedText", "messageData is type .attributedText, expected all but .attributedText")
             }
             testExpectation.fulfill()
         }
@@ -80,13 +80,13 @@ class SampleDataTests: XCTestCase {
         let testExpectation = expectation(description: "hidePhotoMessagesExpectation")
 
         // Given
-        SampleData.shared.hideMessageTypes(types: .photo(UIImage()))
+        SampleData.shared.hideMessageTypes(types: "photo")
 
         // When
         SampleData.shared.getMessages(count: 50) { messages in
             messages.forEach { message in
                 // Then
-                XCTAssertTrue(message.data != .photo(UIImage()), "messageData is type .photo, expected all but .photo")
+                XCTAssertNotEqual(message.type, "photo", "messageData is type .photo, expected all but .photo")
             }
             testExpectation.fulfill()
         }
@@ -98,13 +98,13 @@ class SampleDataTests: XCTestCase {
         let testExpectation = expectation(description: "hideVideoMessagesExpectation")
 
         // Given
-        SampleData.shared.hideMessageTypes(types: .video(file: URL(string: "http://")!, thumbnail: UIImage()))
+        SampleData.shared.hideMessageTypes(types: "video")
 
         // When
         SampleData.shared.getMessages(count: 50) { messages in
             messages.forEach { message in
                 // Then
-                XCTAssertTrue(message.data != .video(file: URL(string: "http://")!, thumbnail: UIImage()), "messageData is type .video, expected all but .video")
+                XCTAssertNotEqual(message.type, "video", "messageData is type .video, expected all but .video")
             }
             testExpectation.fulfill()
         }
@@ -116,13 +116,13 @@ class SampleDataTests: XCTestCase {
         let testExpectation = expectation(description: "hideLocationMessagesExpectation")
 
         // Given
-        SampleData.shared.hideMessageTypes(types: .location(CLLocation(latitude: 0, longitude: 0)))
+        SampleData.shared.hideMessageTypes(types: "location")
 
         // When
         SampleData.shared.getMessages(count: 50) { messages in
             messages.forEach { message in
                 // Then
-                XCTAssertTrue(message.data != .location(CLLocation(latitude: 0, longitude: 0)), "messageData is type .location, expected all but .location")
+                XCTAssertNotEqual(message.type, "location", "messageData is type .location, expected all but .location")
             }
             testExpectation.fulfill()
         }
@@ -134,13 +134,13 @@ class SampleDataTests: XCTestCase {
         let testExpectation = expectation(description: "hideEmojiMessagesExpectation")
 
         // Given
-        SampleData.shared.hideMessageTypes(types: .emoji(""))
+        SampleData.shared.hideMessageTypes(types: "emoji")
 
         // When
         SampleData.shared.getMessages(count: 50) { messages in
             messages.forEach { message in
                 // Then
-                XCTAssertTrue(message.data != .emoji(""), "messageData is type .emoji, expected all but .emoji")
+                XCTAssertNotEqual(message.type, "emoji", "messageData is type .emoji, expected all but .emoji")
             }
             testExpectation.fulfill()
         }
