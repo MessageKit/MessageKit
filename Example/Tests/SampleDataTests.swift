@@ -28,7 +28,7 @@ import MapKit
 @testable import ChatExample
 
 final class SampleDataTests: XCTestCase {
-    
+
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -38,113 +38,5 @@ final class SampleDataTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
         SampleData.shared.resetMessageTypes()
-    }
-    
-    func testHideTextMessages() {
-        let testExpectation = expectation(description: "hideTextMessagesExpectation")
-
-        // Given
-        SampleData.shared.hideMessageTypes(types: "text")
-
-        // When
-        SampleData.shared.getMessages(count: 50) { messages in
-            messages.forEach { message in
-                // Then
-                XCTAssertNotEqual(message.type, "text", "messageData is type .text, expected all but .text")
-            }
-            testExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 10)
-    }
-
-    func testHideAttributedTextMessages() {
-        let testExpectation = expectation(description: "hideAttributedTextMessagesExpectation")
-
-        // Given
-        SampleData.shared.hideMessageTypes(types: "attributedText")
-
-        // When
-        SampleData.shared.getMessages(count: 50) { messages in
-            messages.forEach { message in
-                // Then
-                XCTAssertNotEqual(message.type, "attributedText", "messageData is type .attributedText, expected all but .attributedText")
-            }
-            testExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 10)
-    }
-
-    func testHidePhotoMessages() {
-        let testExpectation = expectation(description: "hidePhotoMessagesExpectation")
-
-        // Given
-        SampleData.shared.hideMessageTypes(types: "photo")
-
-        // When
-        SampleData.shared.getMessages(count: 50) { messages in
-            messages.forEach { message in
-                // Then
-                XCTAssertNotEqual(message.type, "photo", "messageData is type .photo, expected all but .photo")
-            }
-            testExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 10)
-    }
-
-    func testHideVideoMessages() {
-        let testExpectation = expectation(description: "hideVideoMessagesExpectation")
-
-        // Given
-        SampleData.shared.hideMessageTypes(types: "video")
-
-        // When
-        SampleData.shared.getMessages(count: 50) { messages in
-            messages.forEach { message in
-                // Then
-                XCTAssertNotEqual(message.type, "video", "messageData is type .video, expected all but .video")
-            }
-            testExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 10)
-    }
-
-    func testHideLocationMessages() {
-        let testExpectation = expectation(description: "hideLocationMessagesExpectation")
-
-        // Given
-        SampleData.shared.hideMessageTypes(types: "location")
-
-        // When
-        SampleData.shared.getMessages(count: 50) { messages in
-            messages.forEach { message in
-                // Then
-                XCTAssertNotEqual(message.type, "location", "messageData is type .location, expected all but .location")
-            }
-            testExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 10)
-    }
-
-    func testHideEmojiMessages() {
-        let testExpectation = expectation(description: "hideEmojiMessagesExpectation")
-
-        // Given
-        SampleData.shared.hideMessageTypes(types: "emoji")
-
-        // When
-        SampleData.shared.getMessages(count: 50) { messages in
-            messages.forEach { message in
-                // Then
-                XCTAssertNotEqual(message.type, "emoji", "messageData is type .emoji, expected all but .emoji")
-            }
-            testExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 10)
     }
 }
