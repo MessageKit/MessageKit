@@ -72,7 +72,7 @@ final class SampleData {
 
     var now = Date()
 
-    var messageTypes = ["text", "attributedText", "photo", "video", "location", "emoji"]
+    var messageTypes: [String] = []
 
     let attributes = ["Font1", "Font2", "Font3", "Font4", "Color", "Combo"]
 
@@ -202,32 +202,24 @@ final class SampleData {
     func updateMessageTypes() {
         resetMessageTypes()
 
-        if UserDefaults.standard.shouldHideTextMessages() {
-            hideMessageTypes(types: "text")
+        if !UserDefaults.standard.shouldHideTextMessages() {
+            messageTypes.append("text")
         }
 
-        if UserDefaults.standard.shouldHideAttributedTextMessages() {
-            hideMessageTypes(types: "attributedText")
+        if !UserDefaults.standard.shouldHideAttributedTextMessages() {
+            messageTypes.append("attributedText")
         }
 
-        if UserDefaults.standard.shouldHidePhotoMessages() {
-            hideMessageTypes(types: "photo")
+        if !UserDefaults.standard.shouldHidePhotoMessages() {
+            messageTypes.append("photo")
         }
 
-        if UserDefaults.standard.shouldHideVideoMessages() {
-            hideMessageTypes(types: "video")
-        }
-    }
-
-    func hideMessageTypes(types: String...) {
-        types.forEach { type in
-            if let indexToRemove = messageTypes.index(of: type) {
-                messageTypes.remove(at: indexToRemove)
-            }
+        if !UserDefaults.standard.shouldHideVideoMessages() {
+            messageTypes.append("video")
         }
     }
 
     func resetMessageTypes() {
-        messageTypes = ["text", "attributedText", "photo", "video", "location", "emoji"]
+        messageTypes = ["location", "emoji"]
     }
 }
