@@ -23,9 +23,6 @@
  */
 
 import XCTest
-import MessageKit
-import MapKit
-@testable import ChatExample
 
 final class SampleDataTests: XCTestCase {
 
