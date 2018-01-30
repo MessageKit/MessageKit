@@ -33,6 +33,15 @@ class ConversationViewController: MessagesViewController {
     var messageList: [MockMessage] = []
     
     var isTyping = false
+    
+    /// The object that manages autocomplete
+    open lazy var autocompleteManager: AutocompleteManager = { [unowned self] in
+        let manager = AutocompleteManager(for: self.messageInputBar.inputTextView)
+        manager.delegate = self
+        manager.dataSource = self
+        manager.autocompletePrefixes = ["@","#"]
+        return manager
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +64,7 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
 
-        messageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
+        messageInputBar.sendButton.setTitleColor(UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1), for: .normal)
         scrollsToBottomOnKeybordBeginsEditing = true // default false
         maintainPositionOnKeyboardFrameChanged = true // default false
         
@@ -72,6 +81,7 @@ class ConversationViewController: MessagesViewController {
                             target: self,
                             action: #selector(ConversationViewController.handleTyping))
         ]
+        messageInputBar.inputManagers = [autocompleteManager]
     }
     
     @objc func handleTyping() {
@@ -232,6 +242,14 @@ class ConversationViewController: MessagesViewController {
         newMessageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
         newMessageInputBar.delegate = self
         messageInputBar = newMessageInputBar
+        
+        /// The object that manages autocomplete
+        autocompleteManager = AutocompleteManager(for: messageInputBar.inputTextView)
+        autocompleteManager.delegate = self
+        autocompleteManager.dataSource = self
+        autocompleteManager.autocompletePrefixes = ["@","#"]
+        messageInputBar.inputManagers = [autocompleteManager]
+        
         reloadInputViews()
     }
     
@@ -473,4 +491,55 @@ extension ConversationViewController: MessageInputBarDelegate {
         messagesCollectionView.scrollToBottom()
     }
 
+}
+
+extension ConversationViewController: AutocompleteManagerDelegate, AutocompleteManagerDataSource {
+    
+    // MARK: - AutocompleteManagerDataSource
+    
+    func autocompleteManager(_ manager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String] {
+        
+        if prefix == "@" {
+            return ["nathan.tannar", "steve.jobs", "tim.cook", "steven.deutsch","dan.leonard", "zhongwuzw"]
+        } else if prefix == "#" {
+            return ["Apple", "Microsoft","MessageKit","GitHub","OpenSource","Swift"]
+        }
+        return []
+    }
+    
+    func autocompleteManager(_ manager: AutocompleteManager, replacementTextFor arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> String {
+        
+        // custom replacement text, the default returns is shown below
+        return String(arguments.prefix) + arguments.autocompleteText
+    }
+    
+    // This is only needed to override the default cell
+    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
+        
+        let cell = manager.defaultCell(in: tableView, at: indexPath, for: arguments)
+        // or provide your own logic
+        return cell
+    }
+    
+    // MARK: - AutocompleteManagerDelegate
+    
+    func autocompleteManager(_ manager: AutocompleteManager, shouldBecomeVisible: Bool) {
+        setAutocompleteManager(active: shouldBecomeVisible)
+    }
+    
+    // MARK: - AutocompleteManagerDelegate Helper
+    
+    func setAutocompleteManager(active: Bool) {
+        
+        let topStackView = messageInputBar.topStackView
+        if active && !topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
+            topStackView.insertArrangedSubview(autocompleteManager.tableView, at: topStackView.arrangedSubviews.count)
+            topStackView.layoutIfNeeded()
+            messageInputBar.invalidateIntrinsicContentSize()
+        } else if !active && topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
+            topStackView.removeArrangedSubview(autocompleteManager.tableView)
+            topStackView.layoutIfNeeded()
+            messageInputBar.invalidateIntrinsicContentSize()
+        }
+    }
 }

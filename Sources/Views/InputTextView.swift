@@ -319,10 +319,17 @@ open class InputTextView: UITextView {
             } else {
                 let stringValue = attributedText.attributedSubstring(from: range).string.trimmingCharacters(in: .whitespacesAndNewlines)
                 if !stringValue.isEmpty {
-                    components.append(stringValue)
+                    if let lastComponent = components.last as? String {
+                        // Appent to the last component
+                        components[components.count - 1] = lastComponent + " " + stringValue
+                    } else {
+                        // Previous component was an image
+                        components.append(stringValue)
+                    }
                 }
             }
         }
+        print(components)
         return components
     }
     
