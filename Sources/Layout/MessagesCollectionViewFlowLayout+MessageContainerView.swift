@@ -28,14 +28,38 @@ import Foundation
 
 extension MessagesCollectionViewFlowLayout {
 
+    /// Returns the insets of the `MessageLabel` in a `TextMessageCell` for
+    /// the `MessageType` at a given `IndexPath`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` for the given `IndexPath`.
+    ///   - indexPath: The `IndexPath` for the given `MessageType`.
+    ///
+    /// - Note: The default implementation of this method retrieves its value from
+    ///         `messageLabelInset(for:at:in)` in `MessagesLayoutDelegate`.
     open func messageLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
         return messagesLayoutDelegate.messageLabelInset(for: message, at: indexPath, in: messagesCollectionView)
     }
 
+    /// Returns the padding around the `MessageContainerView` in a `MessageCollectionViewCell`
+    /// for the `MessageType` at a given `IndexPath`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` for the given `IndexPath`.
+    ///   - indexPath: The `IndexPath` for the given `MessageType`.
+    ///
+    /// - Note: The default implementation of this method retrieves its value from
+    ///         `messagePadding(for:at:in)` in `MessagesLayoutDelegate`.
     open func messageContainerPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
         return messagesLayoutDelegate.messagePadding(for: message, at: indexPath, in: messagesCollectionView)
     }
 
+    /// Returns the maximum width of the `MessageContainerView` in a `MessageCollectionViewCell`
+    /// for the `MessageType` at a given `IndexPath`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` for the given `IndexPath`.
+    ///   - indexPath: The `IndexPath` for the given `MessageType`.
     open func messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
         let avatarWidth = _avatarSize(for: message, at: indexPath).width
         let messagePadding = _messageContainerPadding(for: message, at: indexPath)
@@ -49,6 +73,12 @@ extension MessagesCollectionViewFlowLayout {
         }
     }
 
+    /// Returns the size of the `MessageContainerView` in a `MessageCollectionViewCell`
+    /// for the `MessageType` at a given `IndexPath`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` for the given `IndexPath`.
+    ///   - indexPath: The `IndexPath` for the given `MessageType`.
     open func messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let maxWidth = _messageContainerMaxWidth(for: message, at: indexPath)
 

@@ -29,34 +29,33 @@ import AVFoundation
 /// framework provided `MessageCollectionViewCell` subclasses.
 open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
-    /// A type property representing the `MessagesCollectionViewLayoutAttributes` to be used.
     open override class var layoutAttributesClass: AnyClass {
         return MessagesCollectionViewLayoutAttributes.self
     }
 
-    /// The width of an item in the `MessageCollectionViewCell`.
+    /// The width of an item in the `MessagesCollectionView`.
     internal var itemWidth: CGFloat {
         guard let collectionView = collectionView else { return 0 }
         return collectionView.frame.width - sectionInset.left - sectionInset.right
     }
 
-    /// Font to be used by `TextMessageCell` for `MessageData.text(String)` case.
+    /// The font to be used by `TextMessageCell` for `MessageData.text(String)` case.
     ///
-    /// The default value of this property is `UIFont.preferredFont(forTextStyle: .body)`
+    /// Note: The default value of this property is `UIFont.preferredFont(forTextStyle: .body)`
     open var messageLabelFont: UIFont {
         didSet {
             emojiLabelFont = messageLabelFont.withSize(2 * messageLabelFont.pointSize)
         }
     }
 
-    /// Font to be used by `TextMessageCell` for `MessageData.emoji(String)` case.
+    /// The font to be used by `TextMessageCell` for `MessageData.emoji(String)` case.
     ///
-    /// The default value of this property is 2x the `messageLabelFont`.
+    /// Note: The default value of this property is 2x the `messageLabelFont`.
     internal var emojiLabelFont: UIFont
 
     /// Determines the maximum number of `MessageCollectionViewCell` attributes to cache.
     ///
-    /// The default value of this property is 500.
+    /// Note: The default value of this property is 500.
     open var attributesCacheMaxSize: Int = 500 {
         didSet {
             layoutContextCache.countLimit = attributesCacheMaxSize
@@ -70,7 +69,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     fileprivate var layoutContextCache = NSCache<MessageID, MessageCellLayoutContext>()
 
     /// The `MessageCellLayoutContext` for the current cell.
-    var currentLayoutContext: MessageCellLayoutContext!
+    internal var currentLayoutContext: MessageCellLayoutContext!
 
     // MARK: - Initializers
 
@@ -99,7 +98,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
 extension MessagesCollectionViewFlowLayout {
 
-    /// Removes the cached layout information for a given `MessageType` using the `messageId`.
+    /// Removes the cached layout information for a given `MessageType`.
     ///
     /// - Parameters:
     ///   - message: The `MessageType` whose cached layout information is to be removed.
@@ -107,10 +106,10 @@ extension MessagesCollectionViewFlowLayout {
         removeCachedAttributes(for: message.messageId)
     }
 
-    /// Removes the cached layout information for a `MessageType` given its `messageId`.
+    /// Removes the cached layout information for a `MessageType` with a given `messageId`.
     ///
     /// - Parameters:
-    ///   - messageId: The `messageId` for the `MessageType` whose cached layout information is to be removed.
+    ///   - messageId: The id for the `MessageType` whose cached layout information is to be removed.
     public func removeCachedAttributes(for messageId: String) {
         layoutContextCache.removeObject(forKey: messageId as NSString)
     }

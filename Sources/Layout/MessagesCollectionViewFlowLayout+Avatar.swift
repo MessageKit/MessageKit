@@ -28,6 +28,15 @@ import Foundation
 
 extension MessagesCollectionViewFlowLayout {
 
+
+    /// Returns the `AvatarPosition` for the `MessageType` at a given `IndexPath`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` for the given `IndexPath`.
+    ///   - indexPath: The `IndexPath` for the given `MessageType`.
+    ///
+    /// - Note: The default implementation of this method retrieves its value from
+    ///         `avatarPosition(for:at:in)` in `MessagesLayoutDelegate`.
     open func avatarPosition(for message: MessageType, at indexPath: IndexPath) -> AvatarPosition {
         var position = messagesLayoutDelegate.avatarPosition(for: message, at: indexPath, in: messagesCollectionView)
 
@@ -40,6 +49,13 @@ extension MessagesCollectionViewFlowLayout {
         return position
     }
 
+    /// Returns the `AvatarSize` for the `MessageType` at a given `IndexPath`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` for the given `IndexPath`.
+    ///   - indexPath: The `IndexPath` for the given `MessageType`.
+    /// - Note: The default implementation of this method retrieves its value from
+    ///         `avatarSize(for:at:in)` in `MessagesLayoutDelegate`.
     open func avatarSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         return messagesLayoutDelegate.avatarSize(for: message, at: indexPath, in: messagesCollectionView)
     }

@@ -83,6 +83,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
     open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
         guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else { return }
+        // Call this before other laying out other subviews
         layoutMessageContainerView(with: attributes)
         layoutAvatarView(with: attributes)
         layoutBottomLabel(with: attributes)
@@ -146,6 +147,8 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
 
     // MARK: - Origin Calculations
 
+    /// Positions the cell's `AvatarView`.
+    /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutAvatarView(with attributes: MessagesCollectionViewLayoutAttributes) {
         guard attributes.avatarSize != .zero else { return }
 
@@ -176,6 +179,8 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         avatarView.frame = CGRect(origin: origin, size: attributes.avatarSize)
     }
 
+    /// Positions the cell's `MessageContainerView`.
+    /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutMessageContainerView(with attributes: MessagesCollectionViewLayoutAttributes) {
         guard attributes.messageContainerSize != .zero else { return }
 
@@ -194,6 +199,8 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         messageContainerView.frame = CGRect(origin: origin, size: attributes.messageContainerSize)
     }
 
+    /// Positions the cell's top label.
+    /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutTopLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
         guard attributes.topLabelSize != .zero else { return }
 
@@ -221,6 +228,8 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         cellTopLabel.frame = CGRect(origin: origin, size: topLabelSize)
     }
 
+    /// Positions the cell's bottom label.
+    /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
         guard attributes.bottomLabelSize != .zero else { return }
 

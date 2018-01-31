@@ -28,6 +28,11 @@ import Foundation
 
 extension MessagesCollectionViewFlowLayout {
 
+    /// Returns the height of a `MessageCollectionViewCell`'s content at a given `IndexPath`
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` for the given `IndexPath`.
+    ///   - indexPath: The `IndexPath` for the given `MessageType`.
     open func cellContentHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
         let avatarPosition = _avatarPosition(for: message, at: indexPath)
         let avatarHeight = _avatarSize(for: message, at: indexPath).height
@@ -59,7 +64,8 @@ extension MessagesCollectionViewFlowLayout {
         return cellHeight
     }
 
-    /// The size for the `MessageCollectionViewCell` considering all of the cell's contents.
+    /// Returns the size for the `MessageCollectionViewCell` at a given `IndexPath`
+    /// considering all of the cell's content.
     ///
     /// - Parameters:
     ///   - indexPath: The `IndexPath` of the cell.

@@ -30,10 +30,26 @@ extension MessagesCollectionViewFlowLayout {
 
     // Top Label
 
+    /// Returns the `LabelAlignment` of the `MessageCollectionViewCell`'s top label
+    /// for the `MessageType` at a given `IndexPath`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` for the given `IndexPath`.
+    ///   - indexPath: The `IndexPath` for the given `MessageType`.
+    /// - Note: The default implementation of this method retrieves its value from
+    ///         `cellTopLabelAlignment(for:at:in)` in `MessagesLayoutDelegate`.
     open func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment {
         return messagesLayoutDelegate.cellTopLabelAlignment(for: message, at: indexPath, in: messagesCollectionView)
     }
 
+    /// Returns the size of the `MessageCollectionViewCell`'s top label
+    /// for the `MessageType` at a given `IndexPath`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` for the given `IndexPath`.
+    ///   - indexPath: The `IndexPath` for the given `MessageType`.
+    ///
+    /// - Note: The default implementation of this method sizes the label to fit.
     open func cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let text = messagesDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
         guard let topLabelText = text else { return .zero }
@@ -41,6 +57,12 @@ extension MessagesCollectionViewFlowLayout {
         return labelSize(for: topLabelText, considering: maxWidth)
     }
 
+    /// Returns the maximum width of the `MessageCollectionViewCell`'s top label
+    /// for the `MessageType` at a given `IndexPath`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` for the given `IndexPath`.
+    ///   - indexPath: The `IndexPath` for the given `MessageType`.
     open func cellTopLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
         let labelAlignment = _cellTopLabelAlignment(for: message, at: indexPath)
         let avatarPosition = _avatarPosition(for: message, at: indexPath)
@@ -82,10 +104,26 @@ extension MessagesCollectionViewFlowLayout {
 
     // Bottom Label
 
+    /// Returns the `LabelAlignment` of the `MessageCollectionViewCell`'s bottom label
+    /// for the `MessageType` at a given `IndexPath`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` for the given `IndexPath`.
+    ///   - indexPath: The `IndexPath` for the given `MessageType`.
+    /// - Note: The default implementation of this method retrieves its value from
+    ///         `cellBottomLabelAlignment(for:at:in)` in `MessagesLayoutDelegate`.
     open func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment {
         return messagesLayoutDelegate.cellBottomLabelAlignment(for: message, at: indexPath, in: messagesCollectionView)
     }
 
+    /// Returns the size of the `MessageCollectionViewCell`'s bottom label
+    /// for the `MessageType` at a given `IndexPath`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` for the given `IndexPath`.
+    ///   - indexPath: The `IndexPath` for the given `MessageType`.
+    ///
+    /// - Note: The default implementation of this method sizes the label to fit.
     open func cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let text = messagesDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
         guard let bottomLabelText = text else { return .zero }
@@ -93,6 +131,12 @@ extension MessagesCollectionViewFlowLayout {
         return labelSize(for: bottomLabelText, considering: maxWidth)
     }
 
+    /// Returns the maximum width of the `MessageCollectionViewCell`'s bottom label
+    /// for the `MessageType` at a given `IndexPath`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` for the given `IndexPath`.
+    ///   - indexPath: The `IndexPath` for the given `MessageType`.
     open func cellBottomLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         let labelAlignment = _cellBottomLabelAlignment(for: message, at: indexPath)
@@ -135,8 +179,6 @@ extension MessagesCollectionViewFlowLayout {
 }
 
 // MARK: - Internal
-// These methods are responsible for wrapping their open counterparts
-// and getting / caching the return value.
 
 extension MessagesCollectionViewFlowLayout {
 

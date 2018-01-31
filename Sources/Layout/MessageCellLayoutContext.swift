@@ -24,6 +24,8 @@
 
 import Foundation
 
+/// An internal type used to store the attributes used to calculate
+/// the size of a `MessageCollectionViewCell`.
 final class MessageCellLayoutContext {
 
     var itemHeight: CGFloat?
