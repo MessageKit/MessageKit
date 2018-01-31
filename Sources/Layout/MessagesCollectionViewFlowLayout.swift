@@ -57,13 +57,17 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     /// Determines the maximum number of `MessageCollectionViewCell` attributes to cache.
     ///
     /// The default value of this property is 500.
-    open var attributesCacheMaxSize: Int = 500
+    open var attributesCacheMaxSize: Int = 500 {
+        didSet {
+            layoutContextCache.countLimit = attributesCacheMaxSize
+        }
+    }
 
-    typealias MessageID = String
+    typealias MessageID = NSString
     
     /// The cache for `MessageCellLayoutContext`.
     /// The key is the `messageId` of the `MessageType`.
-    fileprivate var layoutContextCache: [MessageID: MessageCellLayoutContext] = [:]
+    fileprivate var layoutContextCache = NSCache<MessageID, MessageCellLayoutContext>()
 
     /// The `MessageCellLayoutContext` for the current cell.
     var currentLayoutContext: MessageCellLayoutContext!
@@ -108,12 +112,12 @@ extension MessagesCollectionViewFlowLayout {
     /// - Parameters:
     ///   - messageId: The `messageId` for the `MessageType` whose cached layout information is to be removed.
     public func removeCachedAttributes(for messageId: String) {
-        layoutContextCache.removeValue(forKey: messageId)
+        layoutContextCache.removeObject(forKey: messageId as NSString)
     }
 
     /// Removes the cached layout information for all `MessageType`s.
     public func removeAllCachedAttributes() {
-        layoutContextCache.removeAll()
+        layoutContextCache.removeAllObjects()
     }
 
     open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
@@ -207,12 +211,11 @@ extension MessagesCollectionViewFlowLayout {
 extension MessagesCollectionViewFlowLayout {
 
     internal func cellLayoutContext(for message: MessageType, at indexPath: IndexPath) -> MessageCellLayoutContext {
-        guard let cachedContext = layoutContextCache[message.messageId] else {
+        guard let cachedContext = layoutContextCache.object(forKey: message.messageId as NSString) else {
             let newContext = newCellLayoutContext(for: message, at: indexPath)
-            let shouldCache = messagesLayoutDelegate.shouldCacheLayoutAttributes(for: message)
 
-            if shouldCache && layoutContextCache.count < attributesCacheMaxSize {
-                layoutContextCache[message.messageId] = newContext
+            if messagesLayoutDelegate.shouldCacheLayoutAttributes(for: message) {
+                layoutContextCache.setObject(newContext, forKey: message.messageId as NSString)
             }
             return newContext
         }

@@ -149,7 +149,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
     open func layoutAvatarView(with attributes: MessagesCollectionViewLayoutAttributes) {
         guard attributes.avatarSize != .zero else { return }
 
-        var origin = CGPoint.zero
+        var origin: CGPoint = .zero
 
         switch attributes.avatarPosition.horizontal {
         case .cellLeading:
@@ -201,7 +201,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         let topLabelPadding = topLabelAlignment.insets
         let topLabelSize = attributes.topLabelSize
 
-        var origin = CGPoint.zero
+        var origin: CGPoint = .zero
 
         origin.y = topLabelPadding.top
 
