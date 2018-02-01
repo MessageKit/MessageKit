@@ -82,3 +82,9 @@ public struct AvatarPosition {
     }
     
 }
+
+extension AvatarPosition: Equatable {
+    public static func == (lhs: AvatarPosition, rhs: AvatarPosition) -> Bool {
+        return lhs.vertical == rhs.vertical && lhs.horizontal == rhs.horizontal
+    }
+}

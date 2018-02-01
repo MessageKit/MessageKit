@@ -68,9 +68,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     /// The key is the `messageId` of the `MessageType`.
     fileprivate var layoutContextCache = NSCache<MessageID, MessageCellLayoutContext>()
 
-    /// The `MessageCellLayoutContext` for the current cell.
-    internal var currentLayoutContext: MessageCellLayoutContext!
-
     // MARK: - Initializers
 
     public override init() {
@@ -222,21 +219,21 @@ extension MessagesCollectionViewFlowLayout {
     }
 
     internal func newCellLayoutContext(for message: MessageType, at indexPath: IndexPath) -> MessageCellLayoutContext {
-        currentLayoutContext = MessageCellLayoutContext()
-        currentLayoutContext.avatarPosition = _avatarPosition(for: message, at: indexPath)
-        currentLayoutContext.avatarSize = _avatarSize(for: message, at: indexPath)
-        currentLayoutContext.messageContainerPadding = _messageContainerPadding(for: message, at: indexPath)
-        currentLayoutContext.messageLabelInsets = _messageLabelInsets(for: message, at: indexPath)
-        currentLayoutContext.messageContainerMaxWidth = _messageContainerMaxWidth(for: message, at: indexPath)
-        currentLayoutContext.messageContainerSize = _messageContainerSize(for: message, at: indexPath)
-        currentLayoutContext.topLabelAlignment = _cellTopLabelAlignment(for: message, at: indexPath)
-        currentLayoutContext.topLabelMaxWidth = _cellTopLabelMaxWidth(for: message, at: indexPath)
-        currentLayoutContext.topLabelSize = _cellTopLabelSize(for: message, at: indexPath)
-        currentLayoutContext.bottomLabelAlignment = _cellBottomLabelAlignment(for: message, at: indexPath)
-        currentLayoutContext.bottomLabelMaxWidth = _cellBottomLabelMaxWidth(for: message, at: indexPath)
-        currentLayoutContext.bottomLabelSize = _cellBottomLabelSize(for: message, at: indexPath)
-        currentLayoutContext.itemHeight = _cellContentHeight(for: message, at: indexPath)
-        return currentLayoutContext
+        let newLayoutContext = MessageCellLayoutContext()
+        newLayoutContext.avatarPosition = _avatarPosition(for: message, at: indexPath)
+        newLayoutContext.avatarSize = _avatarSize(for: message, at: indexPath)
+        newLayoutContext.messageContainerPadding = _messageContainerPadding(for: message, at: indexPath)
+        newLayoutContext.messageLabelInsets = _messageLabelInsets(for: message, at: indexPath)
+        newLayoutContext.messageContainerMaxWidth = _messageContainerMaxWidth(for: message, at: indexPath)
+        newLayoutContext.messageContainerSize = _messageContainerSize(for: message, at: indexPath)
+        newLayoutContext.topLabelAlignment = _cellTopLabelAlignment(for: message, at: indexPath)
+        newLayoutContext.topLabelMaxWidth = _cellTopLabelMaxWidth(for: message, at: indexPath)
+        newLayoutContext.topLabelSize = _cellTopLabelSize(for: message, at: indexPath)
+        newLayoutContext.bottomLabelAlignment = _cellBottomLabelAlignment(for: message, at: indexPath)
+        newLayoutContext.bottomLabelMaxWidth = _cellBottomLabelMaxWidth(for: message, at: indexPath)
+        newLayoutContext.bottomLabelSize = _cellBottomLabelSize(for: message, at: indexPath)
+        newLayoutContext.itemHeight = _cellContentHeight(for: message, at: indexPath)
+        return newLayoutContext
     }
 }
 

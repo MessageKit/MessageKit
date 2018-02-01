@@ -59,3 +59,18 @@ public enum LabelAlignment {
     }
 
 }
+
+extension LabelAlignment: Equatable {
+    public static func == (lhs: LabelAlignment, rhs: LabelAlignment) -> Bool {
+        switch (lhs, rhs) {
+        case let (.cellTrailing(a), .cellTrailing(b)),
+             let (.cellLeading(a), .cellLeading(b)),
+             let (.cellCenter(a), .cellCenter(b)),
+             let (.messageTrailing(a), .messageTrailing(b)),
+             let (.messageLeading(a), .messageLeading(b)):
+            return a == b
+        default:
+            return false
+        }
+    }
+}
