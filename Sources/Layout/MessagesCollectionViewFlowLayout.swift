@@ -66,7 +66,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     /// The cache for `MessageCellLayoutContext`.
     /// The key is the `messageId` of the `MessageType`.
-    fileprivate var layoutContextCache = NSCache<MessageID, MessageCellLayoutContext>()
+    internal var layoutContextCache = NSCache<MessageID, MessageCellLayoutContext>()
 
     // MARK: - Initializers
 
@@ -209,10 +209,6 @@ extension MessagesCollectionViewFlowLayout {
     internal func cellLayoutContext(for message: MessageType, at indexPath: IndexPath) -> MessageCellLayoutContext {
         guard let cachedContext = layoutContextCache.object(forKey: message.messageId as NSString) else {
             let newContext = newCellLayoutContext(for: message, at: indexPath)
-
-            if messagesLayoutDelegate.shouldCacheLayoutAttributes(for: message) {
-                layoutContextCache.setObject(newContext, forKey: message.messageId as NSString)
-            }
             return newContext
         }
         return cachedContext
@@ -220,19 +216,24 @@ extension MessagesCollectionViewFlowLayout {
 
     internal func newCellLayoutContext(for message: MessageType, at indexPath: IndexPath) -> MessageCellLayoutContext {
         let newLayoutContext = MessageCellLayoutContext()
-        newLayoutContext.avatarPosition = _avatarPosition(for: message, at: indexPath)
-        newLayoutContext.avatarSize = _avatarSize(for: message, at: indexPath)
-        newLayoutContext.messageContainerPadding = _messageContainerPadding(for: message, at: indexPath)
-        newLayoutContext.messageLabelInsets = _messageLabelInsets(for: message, at: indexPath)
-        newLayoutContext.messageContainerMaxWidth = _messageContainerMaxWidth(for: message, at: indexPath)
-        newLayoutContext.messageContainerSize = _messageContainerSize(for: message, at: indexPath)
-        newLayoutContext.topLabelAlignment = _cellTopLabelAlignment(for: message, at: indexPath)
-        newLayoutContext.topLabelMaxWidth = _cellTopLabelMaxWidth(for: message, at: indexPath)
-        newLayoutContext.topLabelSize = _cellTopLabelSize(for: message, at: indexPath)
-        newLayoutContext.bottomLabelAlignment = _cellBottomLabelAlignment(for: message, at: indexPath)
-        newLayoutContext.bottomLabelMaxWidth = _cellBottomLabelMaxWidth(for: message, at: indexPath)
-        newLayoutContext.bottomLabelSize = _cellBottomLabelSize(for: message, at: indexPath)
-        newLayoutContext.itemHeight = _cellContentHeight(for: message, at: indexPath)
+        
+        if messagesLayoutDelegate.shouldCacheLayoutAttributes(for: message) {
+            layoutContextCache.setObject(newLayoutContext, forKey: message.messageId as NSString)
+        }
+        
+        newLayoutContext.avatarPosition = _avatarPosition(for: message, at: indexPath, false)
+        newLayoutContext.avatarSize = _avatarSize(for: message, at: indexPath, false)
+        newLayoutContext.messageContainerPadding = _messageContainerPadding(for: message, at: indexPath, false)
+        newLayoutContext.messageLabelInsets = _messageLabelInsets(for: message, at: indexPath, false)
+        newLayoutContext.messageContainerMaxWidth = _messageContainerMaxWidth(for: message, at: indexPath, false)
+        newLayoutContext.messageContainerSize = _messageContainerSize(for: message, at: indexPath, false)
+        newLayoutContext.topLabelAlignment = _cellTopLabelAlignment(for: message, at: indexPath, false)
+        newLayoutContext.topLabelMaxWidth = _cellTopLabelMaxWidth(for: message, at: indexPath, false)
+        newLayoutContext.topLabelSize = _cellTopLabelSize(for: message, at: indexPath, false)
+        newLayoutContext.bottomLabelAlignment = _cellBottomLabelAlignment(for: message, at: indexPath, false)
+        newLayoutContext.bottomLabelMaxWidth = _cellBottomLabelMaxWidth(for: message, at: indexPath, false)
+        newLayoutContext.bottomLabelSize = _cellBottomLabelSize(for: message, at: indexPath, false)
+        newLayoutContext.itemHeight = _cellContentHeight(for: message, at: indexPath, false)
         return newLayoutContext
     }
 }

@@ -83,7 +83,10 @@ extension MessagesCollectionViewFlowLayout {
 
 extension MessagesCollectionViewFlowLayout {
 
-    internal func _cellContentHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
+    internal func _cellContentHeight(for message: MessageType, at indexPath: IndexPath, _ cache: Bool = true) -> CGFloat {
+        if cache, let cachedHeight = layoutContextCache.object(forKey: message.messageId as NSString)?.itemHeight {
+            return cachedHeight
+        }
         return cellContentHeight(for: message, at: indexPath)
     }
 
