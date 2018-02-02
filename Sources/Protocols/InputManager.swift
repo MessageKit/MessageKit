@@ -28,7 +28,7 @@ import UIKit
 public protocol InputManager: class {
     
     /// Should reload the state if the InputManager
-    func reload()
+    func reloadData()
     
     /// Should remove any content that the InputManager is managing
     func invalidate()

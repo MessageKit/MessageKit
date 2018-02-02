@@ -42,8 +42,9 @@ public struct CompletionSource {
     }
 }
 
-open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
+open class AutocompleteManager: NSObject, InputManager {
     
+    /// A structure containing data on the `AutocompleteManager`'s session
     public struct Selection {
         
         let prefix: Character
@@ -59,13 +60,25 @@ open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UIT
         }
     }
     
+    // MARK: - Properties [Public]
+    
+    /// A protocol that passes data to the `AutocompleteManager`
     open weak var dataSource: AutocompleteManagerDataSource?
     
+    /// A protocol that more precisely defines `AutocompleteManager` logic
     open weak var delegate: AutocompleteManagerDelegate?
     
+    /// A reference to the `InputTextView` that the `AutocompleteManager` is using
     private(set) public weak var inputTextView: InputTextView?
     
-    /// The autocomplete table for @mention or #hastag
+    /// An ongoing `Selection` session reference that holds the prefix, range and text to complete with
+    private(set) public var currentSelection: Selection? {
+        didSet {
+            layoutIfNeeded()
+        }
+    }
+    
+    /// The `AutocompleteTableView` that renders available autocompletes for the `currentSelection`
     open lazy var tableView: AutocompleteTableView = { [weak self] in
         let tableView = AutocompleteTableView()
         tableView.register(AutocompleteCell.self, forCellReuseIdentifier: AutocompleteCell.reuseIdentifier)
@@ -77,16 +90,20 @@ open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UIT
         return tableView
     }()
     
-    /// If the autocomplete matches should be made by casting the strings to lowercase. Default value is `FALSE`
+    /// If the autocomplete matches should be made by casting the strings to lowercase.
+    /// Default value is `FALSE`
     open var isCaseSensitive = false
     
-    /// Adds an additional space after the autocompleted text when true. Default value is `TRUE`
+    /// Adds an additional space after the autocompleted text when true.
+    /// Default value is `TRUE`
     open var appendSpaceOnCompletion = true
     
     /// The prefices that the manager will recognize
-    open var autocompletePrefixes: [Character] = ["@", "#"]
+    /// Default value is `["@"]`
+    open var autocompletePrefixes: [Character] = ["@"]
     
-    /// The delimiters that cause a current autocomplete session to become invalidated when typed. Default value is `[" ", "\n"]`
+    /// The delimiters that cause a current autocomplete session to become invalidated when typed.
+    /// Default value is `[" ", "\n"]`
     open var autocompleteDelimiters: [Character] = [" ", "\n"]
     
     /// The default text attributes
@@ -94,10 +111,13 @@ open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UIT
         [.font: UIFont.preferredFont(forTextStyle: .body), .foregroundColor: UIColor.black]
     
     /// The text attributes applied to highlighted substrings for each prefix
+    /// Default value applys blue tint highlighting to the `@` prefix
     open var autocompleteTextAttributes: [Character: [NSAttributedStringKey: Any]] =
         ["@": [.font: UIFont.preferredFont(forTextStyle: .body),
                .foregroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),
                .backgroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.1)]]
+    
+    // MARK: - Properties [Private]
     
     /// A key used for referencing which substrings were autocompletes
     private let NSAttributedAutocompleteKey = NSAttributedStringKey.init("com.messagekit.autocompletekey")
@@ -107,13 +127,6 @@ open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UIT
         var attributes = defaultTextAttributes
         attributes[NSAttributedAutocompleteKey] = false
         return attributes
-    }
-    
-    /// An ongoing selection reference that holds the prefix, range and text to complete with
-    private var currentSelection: Selection? {
-        didSet {
-            needsLayout()
-        }
     }
     
     /// The current autocomplete text options filtered by the text after the prefix
@@ -136,7 +149,7 @@ open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UIT
     // MARK: - InputManager
     
     /// Reloads the InputManager's session
-    open func reload() {
+    open func reloadData() {
         
         /// Checks the last character in the UITextView, if it matches an autocomplete prefix it is registered as the current
         guard let text = inputTextView?.text else { return unregisterCurrentPrefix() }
@@ -162,16 +175,120 @@ open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UIT
         let newAttributedString = NSAttributedString(string: newText, attributes: typingTextAttributes)
         attributedString.append(newAttributedString)
         textView.attributedText = attributedString
-        reload()
+        reloadData()
     }
+    
+    // MARK: - API [Public]
+    
+    /// Replaces the current prefix and filter text with the supplied text
+    ///
+    /// - Parameters:
+    ///   - text: The replacement text
+    open func autocomplete(with selection: Selection) {
+        
+        guard let textView = inputTextView else { return }
+        guard delegate?.autocompleteManager(self, shouldComplete: selection.prefix, with: selection.filter) != false else { return }
+        
+        let textToInsert = String(selection.prefix) + (selection.completion?.text ?? "")
+        
+        // Calculate the range to replace
+        let leftIndex = textView.text.index(textView.text.startIndex, offsetBy: safeOffset(withText: textView.text))
+        let rightIndex = textView.text.index(leftIndex, offsetBy: selection.filter.count)
+        let range = leftIndex...rightIndex
+        
+        // Apply the autocomplete attributes
+        var attrs = autocompleteTextAttributes[selection.prefix] ?? defaultTextAttributes
+        attrs[NSAttributedAutocompleteKey] = true
+        let newAttributedString = NSAttributedString(string: textToInsert, attributes: attrs)
+        
+        // Insert the text
+        let nsrange = NSRange(range, in: textView.text)
+        
+        // Replace the attributedText with a modified version including the autocompete
+        let newAttributedText = textView.attributedText.replacingCharacters(in: nsrange, with: newAttributedString)
+        if appendSpaceOnCompletion {
+            newAttributedText.append(NSAttributedString(string: " ", attributes: typingTextAttributes))
+        }
+        textView.attributedText = newAttributedText
+        
+        // Move Cursor to the end of the inserted text
+        let location = safeOffset(withText: textView.text) + textToInsert.count + (appendSpaceOnCompletion ? 1 : 0)
+        textView.selectedRange = NSRange(location: location, length: 0)
+        
+        //        let newLocation = textToInsert.count + (appendSpaceOnCompletion ? 1 : 0)
+        //        textView.selectedRange = NSRange(location: nsrange.location + newLocation, length: 0)
+        
+        // Unregister
+        unregisterCurrentPrefix()
+    }
+    
+    // MARK: - API [Private]
+    
+    /// Resets the `InputTextView`'s typingAttributes to `defaultTextAttributes`
+    private func preserveTypingAttributes() {
+        
+        var typingAttributes = [String: Any]()
+        typingTextAttributes.forEach { typingAttributes[$0.key.rawValue] = $0.value }
+        inputTextView?.typingAttributes = typingAttributes
+    }
+    
+    /// Initializes a session with a new `Selection` object for the given prefix and range
+    ///
+    /// - Parameters:
+    ///   - prefix: The Character to register as the prefix of the Selection
+    ///   - range: The Range to register for the Selection
+    private func registerCurrentPrefix(to prefix: Character, at range: Range<Int>) {
+        
+        guard delegate?.autocompleteManager(self, shouldRegister: prefix, at: range) != false else { return }
+        currentSelection = Selection(prefix: prefix, range: range, filter: "")
+        delegate?.autocompleteManager(self, shouldBecomeVisible: true)
+    }
+    
+    /// Invalidates the `currentSelection` session if it existed
+    private func unregisterCurrentPrefix() {
+        
+        guard let selection = currentSelection else { return }
+        guard delegate?.autocompleteManager(self, shouldUnregister: selection.prefix) != false else { return }
+        currentSelection = nil
+        delegate?.autocompleteManager(self, shouldBecomeVisible: false)
+    }
+    
+    /// Calls the required methods to relayout the `AutocompleteTableView` in it's superview
+    private func layoutIfNeeded() {
+        
+        tableView.reloadData()
+        
+        // Resize the table to be fit properly in an `InputStackView`
+        tableView.invalidateIntrinsicContentSize()
+        
+        // Layout the table's superview
+        tableView.superview?.layoutIfNeeded()
+    }
+    
+    // MARK: - Helper Methods
+    
+    /// A safe way to generate an offset to the current prefix
+    ///
+    /// - Returns: An offset that is not more than the endIndex or less than the startIndex
+    private func safeOffset(withText text: String) -> Int {
+        
+        guard let range = currentSelection?.range else { return 0 }
+        if text.count == 0 || range.lowerBound < 0 { return 0 }
+        if range.lowerBound > (text.count - 1) { return text.count - 1 }
+        return range.lowerBound
+    }
+    
+}
 
+extension AutocompleteManager: UITextViewDelegate {
+    
     // MARK: - UITextViewDelegate
-   
-    open func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    
+    final public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         // Ensure that the text to be inserted is not using previous attributes
         preserveTypingAttributes()
-
+        
         // range.length > 0: Backspace/removing text
         // range.lowerBound < textView.selectedRange.lowerBound: Ignore trying to delete
         //      the substring if the user is already doing so
@@ -235,114 +352,22 @@ open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UIT
         
         return true
     }
-    
-    // MARK: - Text Attribute Preservation
-    
-    /// Resets the InputTextViews typingAttributes to defaultTextAttributes
-    open func preserveTypingAttributes() {
-        
-        var typingAttributes = [String: Any]()
-        typingTextAttributes.forEach { typingAttributes[$0.key.rawValue] = $0.value }
-        inputTextView?.typingAttributes = typingAttributes
-    }
-    
-    // MARK: - Autocomplete
-    
-    private func registerCurrentPrefix(to prefix: Character, at range: Range<Int>) {
-        
-        guard delegate?.autocompleteManager(self, shouldRegister: prefix, at: range) != false else { return }
-        currentSelection = Selection(prefix: prefix, range: range, filter: "")
-        delegate?.autocompleteManager(self, shouldBecomeVisible: true)
-    }
-    
-    private func unregisterCurrentPrefix() {
-        
-        guard let selection = currentSelection else { return }
-        guard delegate?.autocompleteManager(self, shouldUnregister: selection.prefix) != false else { return }
-        currentSelection = nil
-        delegate?.autocompleteManager(self, shouldBecomeVisible: false)
-    }
 
-    /// Replaces the current prefix and filter text with the supplied text
-    ///
-    /// - Parameters:
-    ///   - text: The replacement text
-    open func autocomplete(with selection: Selection) {
-        
-        guard let textView = inputTextView else { return }
-        guard delegate?.autocompleteManager(self, shouldComplete: selection.prefix, with: selection.filter) != false else { return }
-        
-        let textToInsert = String(selection.prefix) + (selection.completion?.text ?? "")
-        
-        // Calculate the range to replace
-        let leftIndex = textView.text.index(textView.text.startIndex, offsetBy: safeOffset(withText: textView.text))
-        let rightIndex = textView.text.index(leftIndex, offsetBy: selection.filter.count)
-        let range = leftIndex...rightIndex
-        
-        // Apply the autocomplete attributes
-        var attrs = autocompleteTextAttributes[selection.prefix] ?? defaultTextAttributes
-        attrs[NSAttributedAutocompleteKey] = true
-        let newAttributedString = NSAttributedString(string: textToInsert, attributes: attrs)
-        
-        // Insert the text
-        let nsrange = NSRange(range, in: textView.text)
-        
-        // Replace the attributedText with a modified version including the autocompete
-        let newAttributedText = textView.attributedText.replacingCharacters(in: nsrange, with: newAttributedString)
-        if appendSpaceOnCompletion {
-            newAttributedText.append(NSAttributedString(string: " ", attributes: typingTextAttributes))
-        }
-        textView.attributedText = newAttributedText
-        
-        // Move Cursor to the end of the inserted text
-        let location = safeOffset(withText: textView.text) + textToInsert.count + (appendSpaceOnCompletion ? 1 : 0)
-        textView.selectedRange = NSRange(location: location, length: 0)
-        
-//        let newLocation = textToInsert.count + (appendSpaceOnCompletion ? 1 : 0)
-//        textView.selectedRange = NSRange(location: nsrange.location + newLocation, length: 0)
-        
-        // Unregister
-        unregisterCurrentPrefix()
-    }
-    
-    // MARK: - Helper Methods
-    
-    /// A safe way to generate an offset to the current prefix
-    ///
-    /// - Returns: An offset that is not more than the endIndex or less than the startIndex
-    private func safeOffset(withText text: String) -> Int {
-        
-        guard let range = currentSelection?.range else { return 0 }
-        if text.count == 0 || range.lowerBound < 0 { return 0 }
-        if range.lowerBound > (text.count - 1) { return text.count - 1 }
-        return range.lowerBound
-    }
-    
-    // MARK: - Layout
-    
-    /// Calls the required methods to relayout the AutocompleteTableView in it's superview
-    open func needsLayout() {
-        
-        tableView.reloadData()
-        
-        // Resize the table to be fit properly in an InputStackView
-        tableView.invalidateIntrinsicContentSize()
-        
-        // Layout the tables superview
-        tableView.superview?.layoutIfNeeded()
-    }
+}
 
+extension AutocompleteManager: UITableViewDelegate, UITableViewDataSource {
+    
     // MARK: - UITableViewDataSource
     
-    open func numberOfSections(in tableView: UITableView) -> Int {
+    final public func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    final public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return currentAutocompleteOptions.count
     }
     
-    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    final public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard var selection = currentSelection else { return UITableViewCell() }
         selection.completion = currentAutocompleteOptions[indexPath.row]
@@ -352,7 +377,7 @@ open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UIT
     
     // MARK: - UITableViewDelegate
     
-    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    final public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         guard var selection = currentSelection else { return }
         selection.completion = currentAutocompleteOptions[indexPath.row]
