@@ -262,19 +262,6 @@ open class AutocompleteManager: NSObject, InputManager {
         tableView.superview?.layoutIfNeeded()
     }
     
-    // MARK: - Helper Methods
-    
-    /// A safe way to generate an offset to the current prefix
-    ///
-    /// - Returns: An offset that is not more than the endIndex or less than the startIndex
-    private func safeOffset(withText text: String) -> Int {
-        
-        guard let range = currentSession?.range else { return 0 }
-        if text.count == 0 || range.lowerBound < 0 { return 0 }
-        if range.lowerBound > (text.count - 1) { return text.count - 1 }
-        return range.lowerBound
-    }
-    
 }
 
 extension AutocompleteManager: UITextViewDelegate {
@@ -307,6 +294,7 @@ extension AutocompleteManager: UITextViewDelegate {
                     
                     let emptyString = NSAttributedString(string: "", attributes: typingTextAttributes)
                     textView.attributedText = textView.attributedText.replacingCharacters(in: range, with: emptyString)
+                    textView.selectedRange = NSRange(location: range.location, length: 0)
                 })
                 
                 return false
@@ -324,7 +312,7 @@ extension AutocompleteManager: UITextViewDelegate {
         if let prefix = currentSession?.prefix {
             // A prefix is already regsitered so update the filter text
             let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-            let index = newText.index(newText.startIndex, offsetBy: safeOffset(withText: newText))
+            let index = newText.index(newText.startIndex, offsetBy: newText.count)
             currentSession?.filter = newText[index...].components(separatedBy: " ").first?.replacingOccurrences(of: String(prefix), with: "") ?? ""
         }
         
