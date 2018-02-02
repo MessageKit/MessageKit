@@ -38,10 +38,10 @@ public protocol AutocompleteManagerDelegate: class {
     ///
     /// - Parameters:
     ///   - manager: The AutocompleteManager
-    ///   - prefix: The prefix character could be registered
-    ///   - range: The range of the prefix in the UITextView managed by the AutocompleteManager
+    ///   - prefix: The prefix `Character` could be registered
+    ///   - range: The `NSRange` of the prefix in the UITextView managed by the AutocompleteManager
     /// - Returns: If the prefix should be registered. Default is TRUE
-    func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: Character, at range: Range<Int>) -> Bool
+    func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: Character, at range: NSRange) -> Bool
     
     /// Determines if a prefix character should be unregistered to de-initialize the auto-complete selection table
     ///
@@ -64,7 +64,7 @@ public protocol AutocompleteManagerDelegate: class {
 
 public extension AutocompleteManagerDelegate {
     
-    func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: Character, at range: Range<Int>) -> Bool {
+    func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: Character, at range: NSRange) -> Bool {
         return true
     }
     

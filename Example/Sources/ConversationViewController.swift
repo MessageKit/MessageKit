@@ -495,17 +495,17 @@ extension ConversationViewController: AutocompleteManagerDelegate, AutocompleteM
     
     // MARK: - AutocompleteManagerDataSource
     
-    func autocompleteManager(_ manager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [CompletionSource] {
+    func autocompleteManager(_ manager: AutocompleteManager, autocompleteSourceFor prefix: Character) -> [AutocompleteCompletion] {
         
         if prefix == "@" {
             return ["nathan.tannar", "steve.jobs", "tim.cook", "steven.deutsch","dan.leonard", "zhongwuzw"].map {
 //                let displayText = "Some other string"
-//                return CompletionSource($0, displayText: displayText)
-                return CompletionSource($0)
+//                return AutocompleteCompletion($0, displayText: displayText)
+                return AutocompleteCompletion($0)
             }
         } else if prefix == "#" {
             return ["Apple", "Microsoft","MessageKit","GitHub","OpenSource","Swift"].map {
-                return CompletionSource($0)
+                return AutocompleteCompletion($0)
             }
         }
         return []

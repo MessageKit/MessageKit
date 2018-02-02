@@ -48,13 +48,13 @@ extension NSAttributedString {
         return ns
     }
     
-    static func +=(lhs: inout NSAttributedString, rhs: NSAttributedString) {
+    static func += (lhs: inout NSAttributedString, rhs: NSAttributedString) {
         let ns = NSMutableAttributedString(attributedString: lhs)
         ns.append(rhs)
         lhs = ns
     }
     
-    static func +(lhs: NSAttributedString, rhs: NSAttributedString) -> NSAttributedString {
+    static func + (lhs: NSAttributedString, rhs: NSAttributedString) -> NSAttributedString {
         let ns = NSMutableAttributedString(attributedString: lhs)
         ns.append(rhs)
         return NSAttributedString(attributedString: ns)
