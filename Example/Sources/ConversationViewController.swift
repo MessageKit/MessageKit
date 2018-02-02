@@ -466,25 +466,23 @@ extension ConversationViewController: MessageInputBarDelegate {
 
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
         
-        // Each NSTextAttachment that contains an image will count as one empty character in the text: String
-        
         for component in inputBar.inputTextView.components {
-            
+
             if let image = component as? UIImage {
-                
+
                 let imageMessage = MockMessage(image: image, sender: currentSender(), messageId: UUID().uuidString, date: Date())
                 messageList.append(imageMessage)
                 messagesCollectionView.insertSections([messageList.count - 1])
-                
+
             } else if let text = component as? String {
-                
+
                 let attributedText = NSAttributedString(string: text, attributes: [.font: UIFont.systemFont(ofSize: 15), .foregroundColor: UIColor.blue])
-                
+
                 let message = MockMessage(attributedText: attributedText, sender: currentSender(), messageId: UUID().uuidString, date: Date())
                 messageList.append(message)
                 messagesCollectionView.insertSections([messageList.count - 1])
             }
-            
+
         }
         
         inputBar.inputTextView.text = String()
@@ -497,28 +495,20 @@ extension ConversationViewController: AutocompleteManagerDelegate, AutocompleteM
     
     // MARK: - AutocompleteManagerDataSource
     
-    func autocompleteManager(_ manager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String] {
+    func autocompleteManager(_ manager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [CompletionSource] {
         
         if prefix == "@" {
-            return ["nathan.tannar", "steve.jobs", "tim.cook", "steven.deutsch","dan.leonard", "zhongwuzw"]
+            return ["nathan.tannar", "steve.jobs", "tim.cook", "steven.deutsch","dan.leonard", "zhongwuzw"].map {
+//                let displayText = "Some other string"
+//                return CompletionSource($0, displayText: displayText)
+                return CompletionSource($0)
+            }
         } else if prefix == "#" {
-            return ["Apple", "Microsoft","MessageKit","GitHub","OpenSource","Swift"]
+            return ["Apple", "Microsoft","MessageKit","GitHub","OpenSource","Swift"].map {
+                return CompletionSource($0)
+            }
         }
         return []
-    }
-    
-    func autocompleteManager(_ manager: AutocompleteManager, replacementTextFor arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> String {
-        
-        // custom replacement text, the default returns is shown below
-        return String(arguments.prefix) + arguments.autocompleteText
-    }
-    
-    // This is only needed to override the default cell
-    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
-        
-        let cell = manager.defaultCell(in: tableView, at: indexPath, for: arguments)
-        // or provide your own logic
-        return cell
     }
     
     // MARK: - AutocompleteManagerDelegate

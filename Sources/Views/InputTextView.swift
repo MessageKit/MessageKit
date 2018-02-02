@@ -31,7 +31,7 @@ import UIKit
  1. Changing the font, textAlignment or textContainerInset automatically performs the same modifications to the placeholderLabel
  2. Intended to be used in an `MessageInputBar`
  3. Default placeholder text is "New Message"
- 4. Will pass a pasted image it's `MessageInputBar`'s `InputManager`s
+ 4. Will pass a pasted image into the NSTextContainer
  */
 open class InputTextView: UITextView {
     
@@ -56,6 +56,7 @@ open class InputTextView: UITextView {
         return parseForAttachedImages()
     }
     
+    /// An array of String's or UIImage's in the order that they were typed
     open var components: [Any] {
         return parseForComponents()
     }
@@ -329,7 +330,6 @@ open class InputTextView: UITextView {
                 }
             }
         }
-        print(components)
         return components
     }
     
