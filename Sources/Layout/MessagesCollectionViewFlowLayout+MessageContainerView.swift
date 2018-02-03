@@ -119,28 +119,28 @@ extension MessagesCollectionViewFlowLayout {
 extension MessagesCollectionViewFlowLayout {
 
     internal func _messageLabelInsets(for message: MessageType, at indexPath: IndexPath, _ cache: Bool = true) -> UIEdgeInsets {
-        if cache, let cachedInsets = layoutContextCache.object(forKey: message.messageId as NSString)?.messageLabelInsets {
+        if cache, let cachedInsets = layoutContextCache.object(forKey: indexPath as NSIndexPath)?.messageLabelInsets {
             return cachedInsets
         }
         return messageLabelInsets(for: message, at: indexPath)
     }
 
     internal func _messageContainerPadding(for message: MessageType, at indexPath: IndexPath, _ cache: Bool = true) -> UIEdgeInsets {
-        if cache, let cachedPadding = layoutContextCache.object(forKey: message.messageId as NSString)?.messageContainerPadding {
+        if cache, let cachedPadding = layoutContextCache.object(forKey: indexPath as NSIndexPath)?.messageContainerPadding {
             return cachedPadding
         }
         return messageContainerPadding(for: message, at: indexPath)
     }
 
     internal func _messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath, _ cache: Bool = true) -> CGFloat {
-        if cache, let cachedMaxWidth = layoutContextCache.object(forKey: message.messageId as NSString)?.messageContainerMaxWidth {
+        if cache, let cachedMaxWidth = layoutContextCache.object(forKey: indexPath as NSIndexPath)?.messageContainerMaxWidth {
             return cachedMaxWidth
         }
         return messageContainerMaxWidth(for: message, at: indexPath)
     }
 
     internal func _messageContainerSize(for message: MessageType, at indexPath: IndexPath, _ cache: Bool = true) -> CGSize {
-        if cache, let cachedSize = layoutContextCache.object(forKey: message.messageId as NSString)?.messageContainerSize {
+        if cache, let cachedSize = layoutContextCache.object(forKey: indexPath as NSIndexPath)?.messageContainerSize {
             return cachedSize
         }
         return messageContainerSize(for: message, at: indexPath)

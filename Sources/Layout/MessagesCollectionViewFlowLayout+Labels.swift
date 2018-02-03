@@ -185,7 +185,7 @@ extension MessagesCollectionViewFlowLayout {
     // Top Label
 
     internal func _cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, _ cache: Bool = true) -> LabelAlignment {
-        if cache, let cachedAlignment = layoutContextCache.object(forKey: message.messageId as NSString)?.topLabelAlignment {
+        if cache, let cachedAlignment = layoutContextCache.object(forKey: indexPath as NSIndexPath)?.topLabelAlignment {
             return cachedAlignment
         }
         return cellTopLabelAlignment(for: message, at: indexPath)
@@ -193,14 +193,14 @@ extension MessagesCollectionViewFlowLayout {
 
     internal func _cellTopLabelMaxWidth(for message: MessageType, at indexPath: IndexPath, _ cache: Bool = true) ->
         CGFloat {
-        if cache, let cachedMaxWidth = layoutContextCache.object(forKey: message.messageId as NSString)?.topLabelMaxWidth {
+        if cache, let cachedMaxWidth = layoutContextCache.object(forKey: indexPath as NSIndexPath)?.topLabelMaxWidth {
             return cachedMaxWidth
         }
         return cellTopLabelMaxWidth(for: message, at: indexPath)
     }
 
     internal func _cellTopLabelSize(for message: MessageType, at indexPath: IndexPath, _ cache: Bool = true) -> CGSize {
-        if cache, let cachedSize = layoutContextCache.object(forKey: message.messageId as NSString)?.topLabelSize {
+        if cache, let cachedSize = layoutContextCache.object(forKey: indexPath as NSIndexPath)?.topLabelSize {
             return cachedSize
         }
         return cellTopLabelSize(for: message, at: indexPath)
@@ -209,21 +209,21 @@ extension MessagesCollectionViewFlowLayout {
     // Bottom Label
 
     internal func _cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, _ cache: Bool = true) -> LabelAlignment {
-        if cache, let cachedAlignment = layoutContextCache.object(forKey: message.messageId as NSString)?.bottomLabelAlignment {
+        if cache, let cachedAlignment = layoutContextCache.object(forKey: indexPath as NSIndexPath)?.bottomLabelAlignment {
             return cachedAlignment
         }
         return cellBottomLabelAlignment(for: message, at: indexPath)
     }
 
     internal func _cellBottomLabelMaxWidth(for message: MessageType, at indexPath: IndexPath, _ cache: Bool = true) -> CGFloat {
-        if cache, let cachedMaxWidth = layoutContextCache.object(forKey: message.messageId as NSString)?.bottomLabelMaxWidth {
+        if cache, let cachedMaxWidth = layoutContextCache.object(forKey: indexPath as NSIndexPath)?.bottomLabelMaxWidth {
             return cachedMaxWidth
         }
         return cellBottomLabelMaxWidth(for: message, at: indexPath)
     }
 
     internal func _cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath, _ cache: Bool = true) -> CGSize {
-        if cache, let cachedSize = layoutContextCache.object(forKey: message.messageId as NSString)?.bottomLabelSize {
+        if cache, let cachedSize = layoutContextCache.object(forKey: indexPath as NSIndexPath)?.bottomLabelSize {
             return cachedSize
         }
         return cellBottomLabelSize(for: message, at: indexPath)

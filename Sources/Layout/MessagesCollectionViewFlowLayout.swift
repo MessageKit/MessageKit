@@ -62,11 +62,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
 
-    typealias MessageID = NSString
-    
-    /// The cache for `MessageCellLayoutContext`.
-    /// The key is the `messageId` of the `MessageType`.
-    internal var layoutContextCache = NSCache<MessageID, MessageCellLayoutContext>()
+    internal var layoutContextCache = NSCache<NSIndexPath, MessageCellLayoutContext>()
 
     // MARK: - Initializers
 
@@ -95,20 +91,12 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
 extension MessagesCollectionViewFlowLayout {
 
-    /// Removes the cached layout information for a given `MessageType`.
+    /// Removes the cached layout information for a `MessageType` with a given `IndexPath`.
     ///
     /// - Parameters:
-    ///   - message: The `MessageType` whose cached layout information is to be removed.
-    public func removeCachedAttributes(for message: MessageType) {
-        removeCachedAttributes(for: message.messageId)
-    }
-
-    /// Removes the cached layout information for a `MessageType` with a given `messageId`.
-    ///
-    /// - Parameters:
-    ///   - messageId: The id for the `MessageType` whose cached layout information is to be removed.
-    public func removeCachedAttributes(for messageId: String) {
-        layoutContextCache.removeObject(forKey: messageId as NSString)
+    ///   - indexPath: The `IndexPath` for the cell's cached attributes to be removed.
+    public func removeCachedAttributes(for indexPath: IndexPath) {
+        layoutContextCache.removeObject(forKey: indexPath as NSIndexPath)
     }
 
     /// Removes the cached layout information for all `MessageType`s.
@@ -207,7 +195,7 @@ extension MessagesCollectionViewFlowLayout {
 extension MessagesCollectionViewFlowLayout {
 
     internal func cellLayoutContext(for message: MessageType, at indexPath: IndexPath) -> MessageCellLayoutContext {
-        guard let cachedContext = layoutContextCache.object(forKey: message.messageId as NSString) else {
+        guard let cachedContext = layoutContextCache.object(forKey: indexPath as NSIndexPath) else {
             let newContext = newCellLayoutContext(for: message, at: indexPath)
             return newContext
         }
@@ -218,7 +206,7 @@ extension MessagesCollectionViewFlowLayout {
         let newLayoutContext = MessageCellLayoutContext()
         
         if messagesLayoutDelegate.shouldCacheLayoutAttributes(for: message) {
-            layoutContextCache.setObject(newLayoutContext, forKey: message.messageId as NSString)
+            layoutContextCache.setObject(newLayoutContext, forKey: indexPath as NSIndexPath)
         }
         
         newLayoutContext.avatarPosition = _avatarPosition(for: message, at: indexPath, false)
