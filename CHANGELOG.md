@@ -8,27 +8,30 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
-Adds the following methods to `MessagesCollectionViewFlowLayout`:
-- `messageLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets`
-- `messageContainerPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets`
-- `messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
-- `messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
-- `cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment`
-- `cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
-- `cellTopLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
-- `cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment`
-- `cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
-- `cellBottomLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
-- `avatarPosition(for message: MessageType, at indexPath: IndexPath) -> AvatarPosition`
-- `avatarSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
-- `cellContentHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
+- **Breaking Change** Adds `.custom(Any?)` case to `MessageData`.
+[#498](https://github.com/MessageKit/MessageKit/pull/498) by [@SD10](https://github.com/SD10).
+
+- Adds the following methods to `MessagesCollectionViewFlowLayout`:
+  - `messageLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets`
+  - `messageContainerPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets`
+  - `messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
+  - `messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
+  - `cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment`
+  - `cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
+  - `cellTopLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
+  - `cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment`
+  - `cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
+  - `cellBottomLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
+  - `avatarPosition(for message: MessageType, at indexPath: IndexPath) -> AvatarPosition`
+  - `avatarSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
+  - `cellContentHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
 [#491](https://github.com/MessageKit/MessageKit/pull/491) by [@SD10](https://github.com/SD10).
 
-Adds the following methods to `MessageCollectionViewCell`:
-- `layoutAvatarView(with attributes: MessagesCollectionViewLayoutAttributes)`
-- `layoutMessageContainerView(with attributes: MessagesCollectionViewLayoutAttributes)`
-- `layoutTopLabel(with attributes: MessagesCollectionViewLayoutAttributes)`
-- `layoutBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes)`
+- Adds the following methods to `MessageCollectionViewCell`:
+  - `layoutAvatarView(with attributes: MessagesCollectionViewLayoutAttributes)`
+  - `layoutMessageContainerView(with attributes: MessagesCollectionViewLayoutAttributes)`
+  - `layoutTopLabel(with attributes: MessagesCollectionViewLayoutAttributes)`
+  - `layoutBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes)`
 [#491](https://github.com/MessageKit/MessageKit/pull/491) by [@SD10](https://github.com/SD10).
 
 ### [[Prerelease] 0.13.1](https://github.com/MessageKit/MessageKit/releases/tag/0.13.1)

@@ -30,10 +30,10 @@ public enum MessageData {
 
     /// A standard text message.
     ///
-    /// NOTE: The font used for this message will be the value of the
+    /// - Note: The font used for this message will be the value of the
     /// `messageLabelFont` property in the `MessagesCollectionViewFlowLayout` object.
     ///
-    /// Tip: Using `MessageData.attributedText(NSAttributedString)` doesn't require you
+    /// Using `MessageData.attributedText(NSAttributedString)` doesn't require you
     /// to set this property and results in higher performance.
     case text(String)
     
@@ -52,13 +52,17 @@ public enum MessageData {
     /// An emoji message.
     case emoji(String)
 
+    /// A custom message.
+    /// - Note: Using this case requires that you override the following methods and handle this case:
+    ///   - `collectionView(_:cellForItemAt indexPath: IndexPath) -> UICollectionViewCell`
+    ///   - `messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
+    case custom(Any?)
+
     // MARK: - Not supported yet
 
 //    case audio(Data)
 //
 //    case system(String)
-//    
-//    case custom(Any)
 //    
 //    case placeholder
 
