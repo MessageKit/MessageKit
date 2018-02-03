@@ -24,4 +24,10 @@
 
 import Foundation
 
+extension MessagesCollectionViewFlowLayout {
 
+@available(*, deprecated: 0.14.0, message: "Removed in MessageKit 0.14.0. Please use removeCachedAttributes(for indexPath: IndexPath) instead.")
+    public func removeCachedAttributes(for message: MessageType) {
+        fatalError("Removed in MessageKit 0.14.0. Please use removeCachedAttributes(for indexPath: IndexPath) instead.")
+    }
+}
