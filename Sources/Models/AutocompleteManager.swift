@@ -68,8 +68,8 @@ open class AutocompleteManager: NSObject, InputManager {
     /// A protocol that more precisely defines `AutocompleteManager` logic
     open weak var delegate: AutocompleteManagerDelegate?
     
-    /// A reference to the `InputTextView` that the `AutocompleteManager` is using
-    private(set) public weak var inputTextView: InputTextView?
+    /// A reference to the `UITextView` that the `AutocompleteManager` is using
+    private(set) public weak var textView: UITextView?
     
     /// An ongoing session reference that holds the prefix, range and text to complete with
     private(set) public var currentSession: AutocompleteSession? {
@@ -144,10 +144,10 @@ open class AutocompleteManager: NSObject, InputManager {
     
     // MARK: - Initialization
     
-    public init(for textView: InputTextView) {
+    public init(for textView: UITextView) {
         super.init()
-        self.inputTextView = textView
-        self.inputTextView?.delegate = self
+        self.textView = textView
+        self.textView?.delegate = self
     }
     
     // MARK: - InputManager
@@ -156,7 +156,7 @@ open class AutocompleteManager: NSObject, InputManager {
     open func reloadData() {
         
         /// Checks the last character in the UITextView, if it matches an autocomplete prefix it is registered as the current
-        guard let text = inputTextView?.text else { return unregisterCurrentPrefix() }
+        guard let text = textView?.text else { return unregisterCurrentPrefix() }
         let suffix = String(text.suffix(1))
         guard !suffix.isEmpty else { return unregisterCurrentPrefix() }
         let char = Character(suffix)
@@ -175,7 +175,7 @@ open class AutocompleteManager: NSObject, InputManager {
     ///
     /// - Parameter object: A string to append
     open func handleInput(of object: AnyObject) {
-        guard let newText = object as? String, let textView = inputTextView else { return }
+        guard let newText = object as? String, let textView = textView else { return }
         let attributedString = NSMutableAttributedString(attributedString: textView.attributedText)
         let newAttributedString = NSAttributedString(string: newText, attributes: typingTextAttributes)
         attributedString.append(newAttributedString)
@@ -191,7 +191,7 @@ open class AutocompleteManager: NSObject, InputManager {
     ///   - text: The replacement text
     open func autocomplete(with session: AutocompleteSession) {
         
-        guard let textView = inputTextView else { return }
+        guard let textView = textView else { return }
         guard delegate?.autocompleteManager(self, shouldComplete: session.prefix, with: session.filter) != false else { return }
         
         let textToInsert = (keepPrefixOnCompletion ? String(session.prefix) : "") + (session.completion?.text ?? "")
@@ -221,12 +221,12 @@ open class AutocompleteManager: NSObject, InputManager {
     
     // MARK: - API [Private]
     
-    /// Resets the `InputTextView`'s typingAttributes to `defaultTextAttributes`
+    /// Resets the `UITextView`'s typingAttributes to `defaultTextAttributes`
     private func preserveTypingAttributes() {
         
         var typingAttributes = [String: Any]()
         typingTextAttributes.forEach { typingAttributes[$0.key.rawValue] = $0.value }
-        inputTextView?.typingAttributes = typingAttributes
+        textView?.typingAttributes = typingAttributes
     }
     
     /// Initializes a session with a new `Selection` object for the given prefix and range
