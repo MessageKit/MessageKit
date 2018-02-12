@@ -153,10 +153,13 @@ class MessageStyleTests: XCTestCase {
         XCTAssertEqual(originalData, testData)
     }
 
-    func testCachesIdenticalOutlineImages() {
+    func testCachesIdenticalOutlineImagesFromCache() {
         let image1 = MessageStyle.bubbleTail(.topLeft, .pointedEdge).image ?? UIImage()
         let image2 = MessageStyle.bubbleTail(.topLeft, .pointedEdge).image ?? UIImage()
         XCTAssertEqual(image1, image2)
+        // After clearing cache a new image instance will be loaded from disk
+        MessageStyle.bubbleImageCache.removeAllObjects()
+        XCTAssertNotEqual(image1, MessageStyle.bubbleTail(.topLeft, .pointedEdge).image)
     }
 
     private func stretch(_ image: UIImage) -> UIImage {

@@ -102,6 +102,8 @@ public enum MessageStyle {
 
     // MARK: - Private
 
+    internal static let bubbleImageCache = NSCache<NSString, UIImage>()
+
     private var imageName: String? {
         switch self {
         case .bubble:
@@ -128,6 +130,4 @@ public enum MessageStyle {
         let capInsets = UIEdgeInsets(top: center.y, left: center.x, bottom: center.y, right: center.x)
         return image.resizableImage(withCapInsets: capInsets, resizingMode: .stretch)
     }
-
-    private static let bubbleImageCache = NSCache<NSString, UIImage>()
 }
