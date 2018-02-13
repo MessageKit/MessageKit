@@ -77,6 +77,12 @@ public enum MessageStyle {
 
         guard let path = imagePath else { return nil }
 
+        let cache = MessageStyle.bubbleImageCache
+
+        if let cachedImage = cache.object(forKey: path as NSString) {
+            return cachedImage
+        }
+
         guard var image = UIImage(contentsOfFile: path) else { return nil }
 
         switch self {
@@ -89,10 +95,14 @@ public enum MessageStyle {
             image = UIImage(cgImage: cgImage, scale: image.scale, orientation: corner.imageOrientation)
         }
 
-        return stretch(image)
+        let stretchedImage = stretch(image)
+        cache.setObject(stretchedImage, forKey: path as NSString)
+        return stretchedImage
     }
 
     // MARK: - Private
+
+    internal static let bubbleImageCache = NSCache<NSString, UIImage>()
 
     private var imageName: String? {
         switch self {
@@ -120,5 +130,4 @@ public enum MessageStyle {
         let capInsets = UIEdgeInsets(top: center.y, left: center.x, bottom: center.y, right: center.x)
         return image.resizableImage(withCapInsets: capInsets, resizingMode: .stretch)
     }
-
 }
