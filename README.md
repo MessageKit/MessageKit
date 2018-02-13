@@ -113,6 +113,8 @@ Click here to join [Slack](https://join.slack.com/t/messagekit/shared_invite/MjI
 
 Add your app to the list of apps using this library and make a pull request.
 
+- [MediQuo](https://www.mediquo.com)
+
 *Please provide attribution, it is greatly appreciated.*
 
 ## Core Team
