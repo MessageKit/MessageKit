@@ -93,8 +93,9 @@ extension MessagesViewController: UICollectionViewDelegateFlowLayout {
             pasteBoard.string = text
         case .attributedText(let attributedText):
             pasteBoard.string = attributedText.string
-        case .photo(let image):
-            pasteBoard.image = image
+        case .photo(_, _):
+            guard let cell = collectionView.cellForItem(at: indexPath) as? MediaMessageCell else { return }
+            pasteBoard.image = cell.imageView.image
         default:
             break
         }

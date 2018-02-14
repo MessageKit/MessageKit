@@ -41,10 +41,10 @@ public enum MessageData {
     case attributedText(NSAttributedString)
 
     /// A photo message.
-    case photo(UIImage)
+    case photo(url: URL?, image: UIImage?)
 
     /// A video message.
-    case video(file: URL, thumbnail: UIImage)
+    case video(file: URL, thumbnail: UIImage?)
 
     /// A location message.
     case location(CLLocation)
