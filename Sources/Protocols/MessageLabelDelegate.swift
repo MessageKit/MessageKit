@@ -33,6 +33,8 @@ public protocol MessageLabelDelegate: AnyObject {
     func didSelectPhoneNumber(_ phoneNumber: String)
 
     func didSelectURL(_ url: URL)
+    
+    func didSelectTransitInformation(_ transitInformation: [String: String])
 
 }
 
@@ -45,5 +47,8 @@ public extension MessageLabelDelegate {
     func didSelectPhoneNumber(_ phoneNumber: String) {}
 
     func didSelectURL(_ url: URL) {}
+    
+    func didSelectTransitInformation(_ transitInformation: [String: String]) {}
+
 
 }
