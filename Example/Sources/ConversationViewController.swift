@@ -305,7 +305,7 @@ extension ConversationViewController: MessagesDisplayDelegate {
     }
 
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
-        return [.url, .address, .phoneNumber, .date]
+        return [.url, .address, .phoneNumber, .date, .transitInformation]
     }
 
     // MARK: - All Messages
@@ -438,6 +438,10 @@ extension ConversationViewController: MessageLabelDelegate {
 
     func didSelectURL(_ url: URL) {
         print("URL Selected: \(url)")
+    }
+    
+    func didSelectTransitInformation(_ transitInformation: [String : String]) {
+        print("TransitInformation Selected: \(transitInformation)")
     }
 
 }
