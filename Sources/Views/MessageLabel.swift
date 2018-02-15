@@ -335,7 +335,7 @@ open class MessageLabel: UILabel {
                 rangesForDetectors.updateValue(ranges, forKey: .url)
             case .transitInformation:
                 var ranges = rangesForDetectors[.transitInformation] ?? []
-                let tuple: (NSRange, MessageTextCheckingType) = (result.range, .transitInformationComponents(result.components))
+                let tuple: (NSRange, MessageTextCheckingType) = (result.range, .transitInfoComponents(result.components))
                 ranges.append(tuple)
                 rangesForDetectors.updateValue(ranges, forKey: .transitInformation)
 
@@ -406,7 +406,7 @@ open class MessageLabel: UILabel {
         case let .link(url):
             guard let url = url else { return }
             handleURL(url)
-        case let .transitInformationComponents(transitInformation):
+        case let .transitInfoComponents(transitInformation):
             var transformedTransitInformation = [String: String]()
             guard let transitInformation = transitInformation else { return }
             transitInformation.forEach { (key, value) in
@@ -432,8 +432,8 @@ open class MessageLabel: UILabel {
         delegate?.didSelectPhoneNumber(phoneNumber)
     }
     
-    private func handleTransitInformation(_ transitInformationComponents: [String: String]) {
-        delegate?.didSelectTransitInformation(transitInformationComponents)
+    private func handleTransitInformation(_ components: [String: String]) {
+        delegate?.didSelectTransitInformation(components)
     }
     
 }
@@ -443,5 +443,5 @@ private enum MessageTextCheckingType {
     case date(Date?)
     case phoneNumber(String?)
     case link(URL?)
-    case transitInformationComponents([NSTextCheckingKey: String]?)
+    case transitInfoComponents([NSTextCheckingKey: String]?)
 }

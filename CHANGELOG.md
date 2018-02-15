@@ -34,6 +34,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
   - `layoutBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes)`
 [#491](https://github.com/MessageKit/MessageKit/pull/491) by [@SD10](https://github.com/SD10).
 
+- **Breaking Change** Adds new `DetectorType` called `TransitInformation`  to message label.
+[#520](https://github.com/MessageKit/MessageKit/pull/520) by [@nosarj](https://github.com/nosarj).
+
 ### [[Prerelease] 0.13.1](https://github.com/MessageKit/MessageKit/releases/tag/0.13.1)
 
 ### Fixed
