@@ -33,7 +33,7 @@
 * [**Requirements**](#requirements)
 * [**Code of Conduct**](https://github.com/MessageKit/MessageKit/blob/master/Code_of_Conduct.md)
 * [**What's Next**](#whats-next)
-* [**Join the Slack Group**](#join-the-slack-group)
+* [**Contact**](#contact)
 * [**Apps using this library**](#apps-using-this-library)
 * [**License**](#license)
 
@@ -105,9 +105,11 @@ Great! Look over these things first.
 
 Check out the [Releases](https://github.com/MessageKit/MessageKit/releases) to see what we are working on next.
 
-## Join the Slack Group
+## Contact
 
-Click here to join [Slack](https://join.slack.com/t/messagekit/shared_invite/MjI4NzIzNzMyMzU0LTE1MDMwODIzMDUtYzllYzIyNTU4MA)
+Have a question or an issue about MessageKit? Create an [issue](https://github.com/MessageKit/MessageKit/issues/new)!
+
+Interested in contributing to MessageKit? Click here to join our [Slack](https://join.slack.com/t/messagekit/shared_invite/MjI4NzIzNzMyMzU0LTE1MDMwODIzMDUtYzllYzIyNTU4MA).
 
 ### Apps using this library
 
