@@ -28,12 +28,12 @@ public enum MessageStyle {
 
     // MARK: - TailCorner
 
-    public enum TailCorner {
+    public enum TailCorner: String {
 
-        case topLeft
-        case bottomLeft
-        case topRight
-        case bottomRight
+        case topLeft = "topLeft"
+        case bottomLeft = "bottomLeft"
+        case topRight = "topRight"
+        case bottomRight = "bottomRight"
 
         var imageOrientation: UIImageOrientation {
             switch self {
@@ -79,30 +79,39 @@ public enum MessageStyle {
 
         let cache = MessageStyle.bubbleImageCache
 
-        if let cachedImage = cache.object(forKey: path as NSString) {
-            return cachedImage
-        }
-
-        guard var image = UIImage(contentsOfFile: path) else { return nil }
-
         switch self {
         case .none, .custom:
             return nil
         case .bubble, .bubbleOutline:
-            break
+            if let cachedImage = cache.object(forKey: path as NSString) {
+                return cachedImage
+            }
+            guard let image = UIImage(contentsOfFile: path) else { return nil }
+            let stretchedImage = stretch(image)
+            cache.setObject(stretchedImage, forKey: path as NSString)
+            return stretchedImage
         case .bubbleTail(let corner, _), .bubbleTailOutline(_, let corner, _):
+            if let cachedImage = cache.object(forKey: corner.rawValue + path as NSString) {
+                return cachedImage
+            }
+            guard var image = UIImage(contentsOfFile: path) else { return nil }
             guard let cgImage = image.cgImage else { return nil }
             image = UIImage(cgImage: cgImage, scale: image.scale, orientation: corner.imageOrientation)
+            let stretchedImage = stretch(image)
+            cache.setObject(stretchedImage, forKey: corner.rawValue + path as NSString)
+            return stretchedImage
         }
-
-        let stretchedImage = stretch(image)
-        cache.setObject(stretchedImage, forKey: path as NSString)
-        return stretchedImage
     }
 
+    // MARK: - Internal
+    
+    internal static let bubbleImageCache: NSCache<NSString, UIImage> = {
+        let cache = NSCache<NSString, UIImage>()
+        cache.name = "com.messagekit.MessageKit.bubbleImageCache"
+        return cache
+    }()
+    
     // MARK: - Private
-
-    internal static let bubbleImageCache = NSCache<NSString, UIImage>()
 
     private var imageName: String? {
         switch self {
