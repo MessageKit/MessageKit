@@ -81,8 +81,9 @@ open class MessagesViewController: UIViewController {
         registerReusableViews()
         setupDelegates()
         addMenuControllerObservers()
+        addObservers()
     }
-
+    
     open override func viewDidLayoutSubviews() {
         // Hack to prevent animation of the contentInset after viewDidAppear
         if isFirstLayout {
@@ -98,6 +99,8 @@ open class MessagesViewController: UIViewController {
     deinit {
         removeKeyboardObservers()
         removeMenuControllerObservers()
+        removeObservers()
+        clearMemoryCache()
     }
 
     // MARK: - Methods [Private]
@@ -148,5 +151,18 @@ open class MessagesViewController: UIViewController {
             let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             NSLayoutConstraint.activate([top, bottom, trailing, leading])
         }
+    }
+    
+    private func addObservers() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(clearMemoryCache), name: .UIApplicationDidReceiveMemoryWarning, object: nil)
+    }
+    
+    private func removeObservers() {
+        NotificationCenter.default.removeObserver(self, name: .UIApplicationDidReceiveMemoryWarning, object: nil)
+    }
+    
+    @objc private func clearMemoryCache() {
+        MessageStyle.bubbleImageCache.removeAllObjects()
     }
 }
