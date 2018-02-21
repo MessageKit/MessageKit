@@ -30,10 +30,10 @@ public enum MessageStyle {
 
     public enum TailCorner: String {
 
-        case topLeft = "topLeft"
-        case bottomLeft = "bottomLeft"
-        case topRight = "topRight"
-        case bottomRight = "bottomRight"
+        case topLeft
+        case bottomLeft
+        case topRight
+        case bottomRight
 
         var imageOrientation: UIImageOrientation {
             switch self {
