@@ -100,6 +100,7 @@ open class MessagesViewController: UIViewController {
         removeKeyboardObservers()
         removeMenuControllerObservers()
         removeObservers()
+        clearMemoryCache()
     }
 
     // MARK: - Methods [Private]
