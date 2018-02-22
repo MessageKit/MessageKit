@@ -137,8 +137,8 @@ open class MessageInputBar: UIView {
         }
     }()
 
-    /// A boolean that determines if the sendButton's `isEnabled` state should be auto updated on text changes.
-    open var shouldAutoUpdateSendButtonEnabledStateOnTextDidChange = true
+    /// A boolean that determines whether the sendButton's `isEnabled` state should be managed automatically.
+    open var shouldManageSendButtonEnabledState = true
     
     /**
      The anchor constants that inset the contentView
@@ -673,7 +673,7 @@ open class MessageInputBar: UIView {
     open func textViewDidChange() {
         let trimmedText = inputTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        if shouldAutoUpdateSendButtonEnabledStateOnTextDidChange {
+        if shouldManageSendButtonEnabledState {
             sendButton.isEnabled = !trimmedText.isEmpty || inputTextView.images.count > 0
         }
         inputTextView.placeholderLabel.isHidden = !inputTextView.text.isEmpty
