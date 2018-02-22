@@ -6,7 +6,12 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
-### [[Prerelease] 0.13.1](https://github.com/MessageKit/MessageKit/releases/tag/0.13.1)
+### Added
+
+- Added `shouldManageSendButtonEnabledState` to `MessageInputBar` to disable automatically managing `MessageInputBar.sendButton`'s `isEnabled` state when text changes. (Default value is `true`).
+[#530](https://github.com/MessageKit/MessageKit/pull/530) by [@clayellis](https://github.com/clayellis).
+
+## [[Prerelease] 0.13.1](https://github.com/MessageKit/MessageKit/releases/tag/0.13.1)
 
 ### Fixed
 
@@ -43,10 +48,6 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Added `UIImage` paste support to the `InputTextView`. Images can easily be accessed using the `InputTextView.images` property. 
 See the example project for an updated use case.  
 [#423](https://github.com/MessageKit/MessageKit/pull/423) by [@nathantannar4](https://github.com/nathantannar4).
-
-- Added `shouldManageSendButtonEnabledState` to `MessageInputBar` to disable automatically managing `MessageInputBar.sendButton`'s `isEnabled` state when text changes.
-This addition does not current default behavior (the default value is `true`).
-[#530](https://github.com/MessageKit/MessageKit/pull/530) by [@clayellis](https://github.com/clayellis).
 
 ### Removed
 
