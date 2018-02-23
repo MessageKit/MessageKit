@@ -153,8 +153,6 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     // MARK: - UICollectionViewDataSource
 
-    // MARK: - OK
-
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
         guard let collectionView = collectionView as? MessagesCollectionView else {
             fatalError(MessageKitError.notMessagesCollectionView)
