@@ -24,8 +24,11 @@
 
 import UIKit
 
-open class MessageFooterView: UICollectionReusableView, CollectionViewReusable {
-    open class func reuseIdentifier() -> String { return "messagekit.footer.base" }
+open class MessageFooterView: MessageReusableView {
+
+    open override class func reuseIdentifier() -> String {
+        return "messagekit.footer.base"
+    }
 
     // MARK: - Initializers
 

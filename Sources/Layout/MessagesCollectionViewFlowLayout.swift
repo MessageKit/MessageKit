@@ -175,7 +175,7 @@ extension MessagesCollectionViewFlowLayout {
     private func configure(attributes: MessagesCollectionViewLayoutAttributes) {
 
         let indexPath = attributes.indexPath
-        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        let message = messagesDataSource.message(for: indexPath.section, in: messagesCollectionView)
         let context = cellLayoutContext(for: message, at: indexPath)
 
         attributes.avatarSize = context.avatarSize!

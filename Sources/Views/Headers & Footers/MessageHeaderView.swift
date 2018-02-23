@@ -24,8 +24,11 @@
 
 import UIKit
 
-open class MessageHeaderView: UICollectionReusableView, CollectionViewReusable {
-    open class func reuseIdentifier() -> String { return "messagekit.header.base" }
+open class MessageHeaderView: MessageReusableView {
+
+    open override class func reuseIdentifier() -> String {
+        return "messagekit.header.base"
+    }
 
     // MARK: - Properties
 
