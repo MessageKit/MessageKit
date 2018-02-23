@@ -24,8 +24,7 @@
 
 import UIKit
 
-open class MessagesCollectionViewCell: UICollectionViewCell {}
-open class MessageReusableView: UICollectionReusableView {}
+
 
 public protocol MessagesDataSource: AnyObject {
 
@@ -46,7 +45,6 @@ public protocol MessagesDataSource: AnyObject {
     func messageFooterView(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
-
 
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
 
@@ -94,6 +92,5 @@ public extension MessagesDataSource {
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         return nil
     }
-
 }
 
