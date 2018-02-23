@@ -24,7 +24,8 @@
 
 import UIKit
 
-open class MessagesViewController: UIViewController {
+open class MessagesViewController: UIViewController,
+UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     // MARK: - Properties [Public]
 
@@ -147,6 +148,157 @@ open class MessagesViewController: UIViewController {
             let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
             let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             NSLayoutConstraint.activate([top, bottom, trailing, leading])
+        }
+    }
+
+    // MARK: - UICollectionViewDataSource
+
+    open func numberOfSections(in collectionView: UICollectionView) -> Int {
+        guard let collectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
+        // Each message is its own section
+        return collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let collectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
+        let messageCount = collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
+        // There will only ever be 1 message per section
+        return messageCount > 0 ? 1 : 0
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
+
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+
+        switch message.data {
+        case .text, .attributedText, .emoji:
+            let cell = messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .photo, .video:
+            let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .location:
+            let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .custom:
+            fatalError(MessageKitError.customDataUnresolvedCell)
+        }
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
+
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+
+        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
+            fatalError(MessageKitError.nilMessagesDisplayDelegate)
+        }
+
+        let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+
+        switch kind {
+        case UICollectionElementKindSectionHeader:
+            return displayDelegate.messageHeaderView(for: message, at: indexPath, in: messagesCollectionView)
+        case UICollectionElementKindSectionFooter:
+            return displayDelegate.messageFooterView(for: message, at: indexPath, in: messagesCollectionView)
+        default:
+            fatalError(MessageKitError.unrecognizedSectionKind)
+        }
+    }
+
+    // MARK: - UICollectionViewDelegateFlowLayout
+
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let messagesFlowLayout = collectionViewLayout as? MessagesCollectionViewFlowLayout else { return .zero }
+        return messagesFlowLayout.sizeForItem(at: indexPath)
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+        guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
+            fatalError(MessageKitError.nilMessagesLayoutDeleagte)
+        }
+        // Could pose a problem if subclass behaviors allows more than one item per section
+        let indexPath = IndexPath(item: 0, section: section)
+        let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        return layoutDelegate.headerViewSize(for: message, at: indexPath, in: messagesCollectionView)
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+        guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
+            fatalError(MessageKitError.nilMessagesLayoutDeleagte)
+        }
+        // Could pose a problem if subclass behaviors allows more than one item per section
+        let indexPath = IndexPath(item: 0, section: section)
+        let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        return layoutDelegate.footerViewSize(for: message, at: indexPath, in: messagesCollectionView)
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return false }
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+
+        switch message.data {
+        case .text, .attributedText, .emoji, .photo:
+            selectedIndexPathForMenu = indexPath
+            return true
+        default:
+            return false
+        }
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        return (action == NSSelectorFromString("copy:"))
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+        let pasteBoard = UIPasteboard.general
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+
+        switch message.data {
+        case .text(let text), .emoji(let text):
+            pasteBoard.string = text
+        case .attributedText(let attributedText):
+            pasteBoard.string = attributedText.string
+        case .photo(let image):
+            pasteBoard.image = image
+        default:
+            break
         }
     }
 }

@@ -25,8 +25,6 @@
 		1FAC3492201E5346000A1504 /* MessagesCollectionViewFlowLayout+CellSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAC3491201E5346000A1504 /* MessagesCollectionViewFlowLayout+CellSizing.swift */; };
 		1FCA6D30201C1CC900BC3480 /* UIEdgeInsets+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCA6D2F201C1CC900BC3480 /* UIEdgeInsets+Extensions.swift */; };
 		1FF377A420087C82004FD648 /* MessageKitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377A320087C82004FD648 /* MessageKitError.swift */; };
-		1FF377A620087D20004FD648 /* MessagesViewController+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377A520087D20004FD648 /* MessagesViewController+DataSource.swift */; };
-		1FF377A820087D56004FD648 /* MessagesViewController+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377A720087D56004FD648 /* MessagesViewController+Delegate.swift */; };
 		1FF377AA20087D78004FD648 /* MessagesViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377A920087D78004FD648 /* MessagesViewController+Menu.swift */; };
 		1FF377AC20087DA2004FD648 /* MessagesViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */; };
 		38C57C791F9AE3E50043CC03 /* SeparatorLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C57C781F9AE3E50043CC03 /* SeparatorLine.swift */; };
@@ -132,8 +130,6 @@
 		1FAC3491201E5346000A1504 /* MessagesCollectionViewFlowLayout+CellSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesCollectionViewFlowLayout+CellSizing.swift"; sourceTree = "<group>"; };
 		1FCA6D2F201C1CC900BC3480 /* UIEdgeInsets+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Extensions.swift"; sourceTree = "<group>"; };
 		1FF377A320087C82004FD648 /* MessageKitError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitError.swift; sourceTree = "<group>"; };
-		1FF377A520087D20004FD648 /* MessagesViewController+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+DataSource.swift"; sourceTree = "<group>"; };
-		1FF377A720087D56004FD648 /* MessagesViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Delegate.swift"; sourceTree = "<group>"; };
 		1FF377A920087D78004FD648 /* MessagesViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Menu.swift"; sourceTree = "<group>"; };
 		1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Keyboard.swift"; sourceTree = "<group>"; };
 		38C57C781F9AE3E50043CC03 /* SeparatorLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorLine.swift; sourceTree = "<group>"; };
@@ -440,8 +436,6 @@
 			isa = PBXGroup;
 			children = (
 				B7A03F4E1F86697C006AEF79 /* MessagesViewController.swift */,
-				1FF377A520087D20004FD648 /* MessagesViewController+DataSource.swift */,
-				1FF377A720087D56004FD648 /* MessagesViewController+Delegate.swift */,
 				1FF377A920087D78004FD648 /* MessagesViewController+Menu.swift */,
 				1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */,
 			);
@@ -646,14 +640,12 @@
 				0EE91E661FDEC888005420A2 /* CGRect+Extensions.swift in Sources */,
 				B7A03F181F86682C006AEF79 /* MessagesCollectionViewFlowLayout.swift in Sources */,
 				B7A03F2A1F866895006AEF79 /* MessageStyle.swift in Sources */,
-				1FF377A620087D20004FD648 /* MessagesViewController+DataSource.swift in Sources */,
 				B7A03F4D1F86694F006AEF79 /* MessagesCollectionView.swift in Sources */,
 				B7A03F351F866940006AEF79 /* MessageHeaderView.swift in Sources */,
 				B7A03F731F866A06006AEF79 /* MessageKit+Availability.swift in Sources */,
 				B7A03F2D1F866895006AEF79 /* LabelAlignment.swift in Sources */,
 				38C57C791F9AE3E50043CC03 /* SeparatorLine.swift in Sources */,
 				B7A03F2C1F866895006AEF79 /* DetectorType.swift in Sources */,
-				1FF377A820087D56004FD648 /* MessagesViewController+Delegate.swift in Sources */,
 				B7A03F271F866895006AEF79 /* Avatar.swift in Sources */,
 				1FAC348C201E4F88000A1504 /* MessagesCollectionViewFlowLayout+MessageContainerView.swift in Sources */,
 				1F82D1431FB1B75B00B81A88 /* AvatarPosition.swift in Sources */,
