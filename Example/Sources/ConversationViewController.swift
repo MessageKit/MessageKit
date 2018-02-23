@@ -257,16 +257,20 @@ class ConversationViewController: MessagesViewController {
 
 extension ConversationViewController: MessagesDataSource {
 
+    func numberOfItems(for message: MessageType, in section: Int, in messagesCollectionView: MessagesCollectionView) -> Int {
+        return 1
+    }
+
+    func message(for section: Int, in messagesCollectionView: MessagesCollectionView) -> MessageType {
+        return messageList[section]
+    }
+
     func currentSender() -> Sender {
         return SampleData.shared.currentSender
     }
 
     func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int {
         return messageList.count
-    }
-
-    func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
-        return messageList[indexPath.section]
     }
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
@@ -385,9 +389,12 @@ extension ConversationViewController: MessagesLayoutDelegate {
         }
     }
 
-    func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+    func headerViewSize(for message: MessageType, in section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return .zero
+    }
 
-        return CGSize(width: messagesCollectionView.bounds.width, height: 10)
+    func footerViewSize(for message: MessageType, in section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return .zero
     }
 
     // MARK: - Location Messages
