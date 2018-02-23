@@ -70,7 +70,7 @@ extension MessagesCollectionViewFlowLayout {
     /// - Parameters:
     ///   - indexPath: The `IndexPath` of the cell.
     open func sizeForItem(at indexPath: IndexPath) -> CGSize {
-        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        let message = messagesDataSource.message(for: indexPath.section, in: messagesCollectionView)
         let context = cellLayoutContext(for: message, at: indexPath)
         guard let itemHeight = context.itemHeight else {
             fatalError("Unexpectedly received a nil itemHeight")
@@ -93,7 +93,7 @@ extension MessagesCollectionViewFlowLayout {
     }
 
     internal func _sizeForItem(at indexPath: IndexPath) -> CGSize {
-        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        let message = messagesDataSource.message(for: indexPath.section, in: messagesCollectionView)
         let itemHeight = cellContentHeight(for: message, at: indexPath)
         return CGSize(width: itemWidth, height: itemHeight)
     }
