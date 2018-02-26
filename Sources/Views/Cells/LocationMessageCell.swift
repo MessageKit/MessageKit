@@ -66,7 +66,7 @@ open class LocationMessageCell: MessageContentCell {
         let annotationView = displayDelegate.annotationViewForLocation(message: message, at: indexPath, in: messagesCollectionView)
         let animationBlock = displayDelegate.animationBlockForLocation(message: message, at: indexPath, in: messagesCollectionView)
 
-        guard case let .location(location) = message.data else { fatalError("") }
+        guard case let .location(location) = message.messageData(for: indexPath) else { fatalError("") }
 
         activityIndicator.startAnimating()
 

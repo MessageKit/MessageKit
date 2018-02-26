@@ -78,7 +78,7 @@ open class TextMessageCell: MessageContentCell {
                 let attributes = displayDelegate.detectorAttributes(for: detector, and: message, at: indexPath)
                 messageLabel.setAttributes(attributes, detector: detector)
             }
-            switch message.data {
+            switch message.messageData(for: indexPath) {
             case .text(let text), .emoji(let text):
                 messageLabel.text = text
             case .attributedText(let text):

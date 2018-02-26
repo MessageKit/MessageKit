@@ -64,7 +64,7 @@ extension MessagesCollectionViewFlowLayout {
         let avatarWidth = _avatarSize(for: message, at: indexPath).width
         let messagePadding = _messageContainerPadding(for: message, at: indexPath)
 
-        switch message.data {
+        switch message.messageData(for: indexPath) {
         case .text, .attributedText:
             let messageInsets = _messageLabelInsets(for: message, at: indexPath)
             return itemWidth - avatarWidth - messagePadding.horizontal - messageInsets.horizontal
@@ -84,7 +84,7 @@ extension MessagesCollectionViewFlowLayout {
 
         var messageContainerSize: CGSize = .zero
 
-        switch message.data {
+        switch message.messageData(for: indexPath) {
         case .text(let text):
             let messageLabelInsets = _messageLabelInsets(for: message, at: indexPath)
             messageContainerSize = labelSize(for: text, considering: maxWidth, and: messageLabelFont)
