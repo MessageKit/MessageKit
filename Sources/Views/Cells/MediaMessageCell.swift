@@ -56,7 +56,7 @@ open class MediaMessageCell: MessageContentCell {
 
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
-        switch message.data {
+        switch message.messageData(for: indexPath) {
         case .photo(let image):
             imageView.image = image
             playButtonView.isHidden = true

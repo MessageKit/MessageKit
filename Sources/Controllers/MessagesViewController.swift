@@ -242,7 +242,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return false }
         let message = messagesDataSource.message(for: indexPath.section, in: messagesCollectionView)
 
-        switch message.data {
+        switch message.messageData(for: indexPath) {
         case .text, .attributedText, .emoji, .photo:
             selectedIndexPathForMenu = indexPath
             return true
@@ -262,7 +262,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         let pasteBoard = UIPasteboard.general
         let message = messagesDataSource.message(for: indexPath.section, in: messagesCollectionView)
 
-        switch message.data {
+        switch message.messageData(for: indexPath) {
         case .text(let text), .emoji(let text):
             pasteBoard.string = text
         case .attributedText(let attributedText):

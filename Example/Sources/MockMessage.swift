@@ -31,10 +31,18 @@ struct MockMessage: MessageType {
 	var messageId: String
 	var sender: Sender
 	var sentDate: Date
-	var data: MessageData
+	var data: [MessageData]
+    
+    func messageData(for indexPath: IndexPath) -> MessageData {
+        return data[indexPath.row]
+    }
+    
+    func numberOfItems() -> Int {
+        return data.count
+    }
 	
     init(data: MessageData, sender: Sender, messageId: String, date: Date) {
-		self.data = data
+		self.data = [data]
 		self.sender = sender
 		self.messageId = messageId
 		self.sentDate = date

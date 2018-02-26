@@ -191,7 +191,7 @@ extension MessagesCollectionViewFlowLayout {
         attributes.bottomLabelAlignment = context.bottomLabelAlignment!
         attributes.bottomLabelSize = context.bottomLabelSize!
 
-        switch message.data {
+        switch message.messageData(for: indexPath) {
         case .emoji:
             attributes.messageLabelFont = emojiLabelFont
         case .text:

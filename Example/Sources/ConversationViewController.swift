@@ -258,7 +258,7 @@ class ConversationViewController: MessagesViewController {
 extension ConversationViewController: MessagesDataSource {
 
     func numberOfItems(for message: MessageType, in section: Int, in messagesCollectionView: MessagesCollectionView) -> Int {
-        return 1
+        return message.numberOfItems()
     }
 
     func message(for section: Int, in messagesCollectionView: MessagesCollectionView) -> MessageType {

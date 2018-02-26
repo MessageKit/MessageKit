@@ -156,7 +156,7 @@ public extension MessagesDisplayDelegate {
 
     func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
 
-        switch message.data {
+        switch message.messageData(for: indexPath) {
         case .emoji:
             return .clear
         default:

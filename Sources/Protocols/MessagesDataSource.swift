@@ -53,7 +53,7 @@ public protocol MessagesDataSource: AnyObject {
 public extension MessagesDataSource {
 
     func messageCell(at indexPath: IndexPath, for message: MessageType, in messagesCollectionView: MessagesCollectionView) -> MessageCollectionViewCell {
-        switch message.data {
+        switch message.messageData(for: indexPath) {
         case .text, .attributedText, .emoji:
             let cell = messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
