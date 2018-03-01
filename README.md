@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo">
 </p>
 
-[![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=59c302b7bc1f7f00013f20a2&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/59c302b7bc1f7f00013f20a2/build/latest)
+[![CircleCI](https://circleci.com/gh/MessageKit/MessageKit.svg?style=svg)](https://circleci.com/gh/MessageKit/MessageKit)
 [![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 <a href="https://swift.org">

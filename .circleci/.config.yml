@@ -1,0 +1,5 @@
+version: 2
+jobs:
+  build-and-test:
+    macos:
+      xcode: "9.0"
