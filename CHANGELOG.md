@@ -8,6 +8,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
+- **Breaking Change** Adds new `DetectorType` called `.transitInformation`  to message label.
+[#520](https://github.com/MessageKit/MessageKit/pull/520) by [@nosarj](https://github.com/nosarj).
+
 - **Breaking Change** Adds `.custom(Any?)` case to `MessageData`.
 [#498](https://github.com/MessageKit/MessageKit/pull/498) by [@SD10](https://github.com/SD10).
 

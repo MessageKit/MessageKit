@@ -54,6 +54,12 @@ final class DetectorTypeSpec: QuickSpec {
                     expect(phoneNumber).to(equal(NSTextCheckingResult.CheckingType.phoneNumber))
                 }
             }
+            context("case .transitInformation") {
+                it("should equal .transitInformation") {
+                    let transitInformation = DetectorType.transitInformation.textCheckingType
+                    expect(transitInformation).to(equal(NSTextCheckingResult.CheckingType.transitInformation))
+                }
+            }
         }
     }
 }
