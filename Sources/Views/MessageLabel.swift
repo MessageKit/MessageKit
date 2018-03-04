@@ -315,7 +315,7 @@ open class MessageLabel: UILabel {
             switch result.resultType {
             case .address:
                 var ranges = rangesForDetectors[.address] ?? []
-                let tuple: (NSRange, MessageTextCheckingType) = (result.range, .addressComponents(result.components))
+                let tuple: (NSRange, MessageTextCheckingType) = (result.range, .addressComponents(result.addressComponents))
                 ranges.append(tuple)
                 rangesForDetectors.updateValue(ranges, forKey: .address)
             case .date:
