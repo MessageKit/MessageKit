@@ -263,7 +263,7 @@ extension MessagesCollectionViewFlowLayout {
     /// Convenience property for unwrapping the `MessagesCollectionView`'s `MessagesLayoutDelegate`.
     internal var messagesLayoutDelegate: MessagesLayoutDelegate {
         guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
-            fatalError(MessageKitError.nilMessagesLayoutDeleagte)
+            fatalError(MessageKitError.nilMessagesLayoutDelegate)
         }
         return messagesLayoutDelegate
     }
