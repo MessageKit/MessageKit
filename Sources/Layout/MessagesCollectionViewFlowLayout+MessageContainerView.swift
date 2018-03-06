@@ -120,39 +120,31 @@ extension MessagesCollectionViewFlowLayout {
 
 extension MessagesCollectionViewFlowLayout {
 
-    internal func _messageLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
-        guard let cachedInsets = currentLayoutContext.messageLabelInsets else {
-            let insets = messageLabelInsets(for: message, at: indexPath)
-            currentLayoutContext.messageLabelInsets = insets
-            return insets
+    internal func _messageLabelInsets(for message: MessageType, at indexPath: IndexPath, _ cache: Bool = true) -> UIEdgeInsets {
+        if cache, let cachedInsets = layoutContextCache.object(forKey: indexPath as NSIndexPath)?.messageLabelInsets {
+            return cachedInsets
         }
-        return cachedInsets
+        return messageLabelInsets(for: message, at: indexPath)
     }
 
-    internal func _messageContainerPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
-        guard let cachedPadding = currentLayoutContext.messageContainerPadding else {
-            let padding = messageContainerPadding(for: message, at: indexPath)
-            currentLayoutContext.messageContainerPadding = padding
-            return padding
+    internal func _messageContainerPadding(for message: MessageType, at indexPath: IndexPath, _ cache: Bool = true) -> UIEdgeInsets {
+        if cache, let cachedPadding = layoutContextCache.object(forKey: indexPath as NSIndexPath)?.messageContainerPadding {
+            return cachedPadding
         }
-        return cachedPadding
+        return messageContainerPadding(for: message, at: indexPath)
     }
 
-    internal func _messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
-        guard let cachedMaxWidth = currentLayoutContext.messageContainerMaxWidth else {
-            let maxWidth = messageContainerMaxWidth(for: message, at: indexPath)
-            currentLayoutContext.messageContainerMaxWidth = maxWidth
-            return maxWidth
+    internal func _messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath, _ cache: Bool = true) -> CGFloat {
+        if cache, let cachedMaxWidth = layoutContextCache.object(forKey: indexPath as NSIndexPath)?.messageContainerMaxWidth {
+            return cachedMaxWidth
         }
-        return cachedMaxWidth
+        return messageContainerMaxWidth(for: message, at: indexPath)
     }
 
-    internal func _messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
-        guard let cachedSize = currentLayoutContext.messageContainerSize else {
-            let size = messageContainerSize(for: message, at: indexPath)
-            currentLayoutContext.messageContainerSize = size
-            return size
+    internal func _messageContainerSize(for message: MessageType, at indexPath: IndexPath, _ cache: Bool = true) -> CGSize {
+        if cache, let cachedSize = layoutContextCache.object(forKey: indexPath as NSIndexPath)?.messageContainerSize {
+            return cachedSize
         }
-        return cachedSize
+        return messageContainerSize(for: message, at: indexPath)
     }
 }

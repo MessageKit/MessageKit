@@ -62,14 +62,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
 
-    typealias MessageID = NSString
-    
-    /// The cache for `MessageCellLayoutContext`.
-    /// The key is the `messageId` of the `MessageType`.
-    fileprivate var layoutContextCache = NSCache<MessageID, MessageCellLayoutContext>()
-
-    /// The `MessageCellLayoutContext` for the current cell.
-    internal var currentLayoutContext: MessageCellLayoutContext!
+    internal var layoutContextCache = NSCache<NSIndexPath, MessageCellLayoutContext>()
 
     // MARK: - Initializers
 
@@ -98,20 +91,12 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
 extension MessagesCollectionViewFlowLayout {
 
-    /// Removes the cached layout information for a given `MessageType`.
+    /// Removes the cached layout information for a `MessageType` with a given `IndexPath`.
     ///
     /// - Parameters:
-    ///   - message: The `MessageType` whose cached layout information is to be removed.
-    public func removeCachedAttributes(for message: MessageType) {
-        removeCachedAttributes(for: message.messageId)
-    }
-
-    /// Removes the cached layout information for a `MessageType` with a given `messageId`.
-    ///
-    /// - Parameters:
-    ///   - messageId: The id for the `MessageType` whose cached layout information is to be removed.
-    public func removeCachedAttributes(for messageId: String) {
-        layoutContextCache.removeObject(forKey: messageId as NSString)
+    ///   - indexPath: The `IndexPath` for the cell's cached attributes to be removed.
+    public func removeCachedAttributes(for indexPath: IndexPath) {
+        layoutContextCache.removeObject(forKey: indexPath as NSIndexPath)
     }
 
     /// Removes the cached layout information for all `MessageType`s.
@@ -210,33 +195,34 @@ extension MessagesCollectionViewFlowLayout {
 extension MessagesCollectionViewFlowLayout {
 
     internal func cellLayoutContext(for message: MessageType, at indexPath: IndexPath) -> MessageCellLayoutContext {
-        guard let cachedContext = layoutContextCache.object(forKey: message.messageId as NSString) else {
+        guard let cachedContext = layoutContextCache.object(forKey: indexPath as NSIndexPath) else {
             let newContext = newCellLayoutContext(for: message, at: indexPath)
-
-            if messagesLayoutDelegate.shouldCacheLayoutAttributes(for: message) {
-                layoutContextCache.setObject(newContext, forKey: message.messageId as NSString)
-            }
             return newContext
         }
         return cachedContext
     }
 
     internal func newCellLayoutContext(for message: MessageType, at indexPath: IndexPath) -> MessageCellLayoutContext {
-        currentLayoutContext = MessageCellLayoutContext()
-        currentLayoutContext.avatarPosition = _avatarPosition(for: message, at: indexPath)
-        currentLayoutContext.avatarSize = _avatarSize(for: message, at: indexPath)
-        currentLayoutContext.messageContainerPadding = _messageContainerPadding(for: message, at: indexPath)
-        currentLayoutContext.messageLabelInsets = _messageLabelInsets(for: message, at: indexPath)
-        currentLayoutContext.messageContainerMaxWidth = _messageContainerMaxWidth(for: message, at: indexPath)
-        currentLayoutContext.messageContainerSize = _messageContainerSize(for: message, at: indexPath)
-        currentLayoutContext.topLabelAlignment = _cellTopLabelAlignment(for: message, at: indexPath)
-        currentLayoutContext.topLabelMaxWidth = _cellTopLabelMaxWidth(for: message, at: indexPath)
-        currentLayoutContext.topLabelSize = _cellTopLabelSize(for: message, at: indexPath)
-        currentLayoutContext.bottomLabelAlignment = _cellBottomLabelAlignment(for: message, at: indexPath)
-        currentLayoutContext.bottomLabelMaxWidth = _cellBottomLabelMaxWidth(for: message, at: indexPath)
-        currentLayoutContext.bottomLabelSize = _cellBottomLabelSize(for: message, at: indexPath)
-        currentLayoutContext.itemHeight = _cellContentHeight(for: message, at: indexPath)
-        return currentLayoutContext
+        let newLayoutContext = MessageCellLayoutContext()
+        
+        if messagesLayoutDelegate.shouldCacheLayoutAttributes(for: message) {
+            layoutContextCache.setObject(newLayoutContext, forKey: indexPath as NSIndexPath)
+        }
+        
+        newLayoutContext.avatarPosition = _avatarPosition(for: message, at: indexPath, false)
+        newLayoutContext.avatarSize = _avatarSize(for: message, at: indexPath, false)
+        newLayoutContext.messageContainerPadding = _messageContainerPadding(for: message, at: indexPath, false)
+        newLayoutContext.messageLabelInsets = _messageLabelInsets(for: message, at: indexPath, false)
+        newLayoutContext.messageContainerMaxWidth = _messageContainerMaxWidth(for: message, at: indexPath, false)
+        newLayoutContext.messageContainerSize = _messageContainerSize(for: message, at: indexPath, false)
+        newLayoutContext.topLabelAlignment = _cellTopLabelAlignment(for: message, at: indexPath, false)
+        newLayoutContext.topLabelMaxWidth = _cellTopLabelMaxWidth(for: message, at: indexPath, false)
+        newLayoutContext.topLabelSize = _cellTopLabelSize(for: message, at: indexPath, false)
+        newLayoutContext.bottomLabelAlignment = _cellBottomLabelAlignment(for: message, at: indexPath, false)
+        newLayoutContext.bottomLabelMaxWidth = _cellBottomLabelMaxWidth(for: message, at: indexPath, false)
+        newLayoutContext.bottomLabelSize = _cellBottomLabelSize(for: message, at: indexPath, false)
+        newLayoutContext.itemHeight = _cellContentHeight(for: message, at: indexPath, false)
+        return newLayoutContext
     }
 }
 

@@ -66,8 +66,17 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
 
         // MARK: - LEAVE this as is
         // swiftlint:disable unused_optional_binding
-        if let _ = object as? MessagesCollectionViewLayoutAttributes {
-            return super.isEqual(object)
+        if let attributes = object as? MessagesCollectionViewLayoutAttributes {
+            return super.isEqual(attributes) && attributes.avatarSize == avatarSize
+                && attributes.avatarPosition == avatarPosition
+                && attributes.messageContainerSize == messageContainerSize
+                && attributes.messageContainerPadding == messageContainerPadding
+                && attributes.messageLabelFont == messageLabelFont
+                && attributes.messageLabelInsets == messageLabelInsets
+                && attributes.topLabelAlignment == topLabelAlignment
+                && attributes.topLabelSize == topLabelSize
+                && attributes.bottomLabelAlignment == bottomLabelAlignment
+                && attributes.bottomLabelSize == bottomLabelSize
         } else {
             return false
         }

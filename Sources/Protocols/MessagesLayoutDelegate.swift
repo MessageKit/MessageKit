@@ -182,7 +182,7 @@ public protocol MessagesLayoutDelegate: AnyObject {
     /// - Parameters:
     ///   - message: The `MessageType` whose attributes to cache.
     ///
-    /// The default value returned by this method is `false`.
+    /// The default value returned by this method is `true`.
     func shouldCacheLayoutAttributes(for message: MessageType) -> Bool
 
 }
@@ -237,7 +237,7 @@ public extension MessagesLayoutDelegate {
     }
 
     func shouldCacheLayoutAttributes(for message: MessageType) -> Bool {
-        return false
+        return true
     }
 
     // MARK: - Text Messages Defaults
