@@ -50,5 +50,4 @@ public extension MessageLabelDelegate {
     
     func didSelectTransitInformation(_ transitInformation: [String: String]) {}
 
-
 }
