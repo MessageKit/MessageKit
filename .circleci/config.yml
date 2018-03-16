@@ -7,6 +7,9 @@ version: 2
 jobs:
   build-and-test:
 
+    environment:
+      - DESTINATION: "platform=iOS Simulator,name=iPhone 8"
+
     # Specify the Xcode version to use.
     macos:
       xcode: "9.2.0"
@@ -16,14 +19,30 @@ jobs:
 
       # Get the code from the VCS provider.
       - checkout
-
-      # Download CocoaPods specs via HTTPS (faster than Git)
-      # and install CocoaPods.
       - run:
-          name: Install CocoaPods
-          command: |
-            curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
-            pod install
+          name: Update Homebrew
+          command: brew update
+      - run:
+          name: Update carthage
+          command: brew upgrade carthage
+      - run:
+          name: Bootstrap Carthage
+          command: carthage bootstrap --platform ios
+      - run:
+          name: Biuld framework
+          command: xcodebuild build -project MessageKit.xcodeproj -scheme MessageKit -destination "$DESTINATION" CODE_SIGNING_REQUIRED=NO | xcpretty -c
+      - run:
+          name: Biuld and run tests
+          command: xcodebuild test -project MessageKit.xcodeproj -scheme MessageKitTests -destination "$DESTINATION" CODE_SIGNING_REQUIRED=NO | xcpretty -c
+      - run: 
+          name: Fetch CocoaPods Specs
+          command: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
+      - run:
+          name: Update Pods
+          command: cd Example && pod install
+      - run:
+          name: Biuld and analyze Example
+          command: xcodebuild build analyze -workspace Example/ChatExample.xcworkspace -scheme ChatExample -destination "$DESTINATION" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | xcpretty -c
 
       # Run tests.
       #- run:
@@ -45,42 +64,8 @@ jobs:
       #    path: ~/Library/Logs/scan
       #    destination: scan-logs
 
-  deploy:
-    macos:
-      xcode: "9.2.0"
-
-    steps:
-      - checkout
-
-      # Set up code signing via Fastlane Match.
-      #- run:
-      #    name: Set up code signing
-      #    command: fastlane match development --readonly
-
-      # Build the release version of the app.
-      #- run:
-      #    name: Build IPA
-      #    command: fastlane gym
-
-      # Store the IPA file in the build artifacts
-      #- store_artifacts:
-      #    path: ./MyApp.ipa
-      #    destination: ipa
-
-      # Deploy!
-      #- run:
-      #    name: Deploy to App Store
-      #    command: fastlane spaceship
-
 workflows:
   version: 2
   build-and-deploy:
     jobs:
       - build-and-test
-      - deploy:
-          requires:
-            - build-and-test
-          filters:
-            branches:
-              only: master
-
