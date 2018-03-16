@@ -20,8 +20,8 @@ jobs:
           name: Update Homebrew
           command: brew update
       - run:
-          name: Install carthage
-          command: brew install carthage
+          name: Update carthage
+          command: brew upgrade carthage
       - run:
           name: Bootstrap Carthage
           command: carthage bootstrap
