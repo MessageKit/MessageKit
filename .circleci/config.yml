@@ -8,7 +8,7 @@ jobs:
   build-and-test:
 
     environment:
-      DESTINATION: platform=iOS Simulator,name=iPhone 8
+      DESTINATION: "platform=iOS Simulator,name=iPhone 8"
 
     # Specify the Xcode version to use.
     macos:
@@ -27,7 +27,7 @@ jobs:
           command: brew upgrade carthage
       - run:
           name: Bootstrap Carthage
-          command: carthage bootstrap
+          command: carthage bootstrap --platform ios
       - run:
           name: Biuld framework
           command: xcodebuild build -project MessageKit.xcodeproj -scheme MessageKit -destination $DESTINATION CODE_SIGNING_REQUIRED=NO | xcpretty -c
