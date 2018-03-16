@@ -30,10 +30,10 @@ jobs:
           command: carthage bootstrap --platform ios
       - run:
           name: Biuld framework
-          command: xcodebuild build -project MessageKit.xcodeproj -scheme MessageKit -destination $DESTINATION CODE_SIGNING_REQUIRED=NO | xcpretty -c
+          command: xcodebuild build -project MessageKit.xcodeproj -scheme MessageKit -destination "$DESTINATION" CODE_SIGNING_REQUIRED=NO | xcpretty -c
       - run:
           name: Biuld and run tests
-          command: xcodebuild test -project MessageKit.xcodeproj -scheme MessageKitTests -destination $DESTINATION CODE_SIGNING_REQUIRED=NO | xcpretty -c
+          command: xcodebuild test -project MessageKit.xcodeproj -scheme MessageKitTests -destination "$DESTINATION" CODE_SIGNING_REQUIRED=NO | xcpretty -c
       - run: 
           name: Fetch CocoaPods Specs
           command: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
@@ -42,7 +42,7 @@ jobs:
           command: cd Example && pod install
       - run:
           name: Biuld and analyze Example
-          command: xcodebuild build analyze -workspace Example/ChatExample.xcworkspace -scheme ChatExample -destination $DESTINATION ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | xcpretty -c
+          command: xcodebuild build analyze -workspace Example/ChatExample.xcworkspace -scheme ChatExample -destination "$DESTINATION" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | xcpretty -c
 
       # Run tests.
       #- run:
