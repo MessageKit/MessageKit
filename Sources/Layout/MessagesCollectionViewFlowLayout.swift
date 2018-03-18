@@ -62,13 +62,19 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
 
-    open var incomingAvatarSize: CGSize {
-        return CGSize(width: 30, height: 30)
-    }
+    // MARK: - Layout
 
-    open var outgoingAvatarSize: CGSize {
-        return CGSize(width: 30, height: 30)
-    }
+    open var incomingAvatarSize = CGSize(width: 30, height: 30)
+
+    open var outgoingAvatarSize = CGSize(width: 30, height: 30)
+
+    open var incomingMessageLabelInsets = UIEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)
+
+    open var outgoingMessageLabelInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)
+
+    open var incomingMessagePadding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
+
+    open var outgoingMessagePadding = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
 
     typealias MessageID = NSString
     
@@ -326,30 +332,14 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - Message Container Size
 
-    /// Returns the insets of the `MessageLabel` in a `TextMessageCell` for
-    /// the `MessageType` at a given `IndexPath`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` for the given `IndexPath`.
-    ///   - indexPath: The `IndexPath` for the given `MessageType`.
-    ///
-    /// - Note: The default implementation of this method retrieves its value from
-    ///         `messageLabelInset(for:at:in)` in `MessagesLayoutDelegate`.
-    open func messageLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
-        return messagesLayoutDelegate.messageLabelInset(for: message, at: indexPath, in: messagesCollectionView)
+    internal func messageLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
+        let isFromCurrentSender = messagesDataSource.isFromCurrentSender(message: message)
+        return isFromCurrentSender ? outgoingMessageLabelInsets : incomingMessageLabelInsets
     }
 
-    /// Returns the padding around the `MessageContainerView` in a `MessageCollectionViewCell`
-    /// for the `MessageType` at a given `IndexPath`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` for the given `IndexPath`.
-    ///   - indexPath: The `IndexPath` for the given `MessageType`.
-    ///
-    /// - Note: The default implementation of this method retrieves its value from
-    ///         `messagePadding(for:at:in)` in `MessagesLayoutDelegate`.
-    open func messageContainerPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
-        return messagesLayoutDelegate.messagePadding(for: message, at: indexPath, in: messagesCollectionView)
+    internal func messageContainerPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
+        let isFromCurrentSender = messagesDataSource.isFromCurrentSender(message: message)
+        return isFromCurrentSender ? outgoingMessagePadding : incomingMessagePadding
     }
 
     /// Returns the maximum width of the `MessageContainerView` in a `MessageCollectionViewCell`
