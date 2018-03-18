@@ -197,6 +197,7 @@ extension MessagesCollectionViewFlowLayout {
         case .text:
             attributes.messageLabelFont = messageLabelFont
         case .attributedText(let text):
+            guard !text.string.isEmpty else { return }
             guard let font = text.attribute(.font, at: 0, effectiveRange: nil) as? UIFont else { return }
             attributes.messageLabelFont = font
         default:

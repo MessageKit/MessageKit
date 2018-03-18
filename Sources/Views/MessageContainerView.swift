@@ -67,7 +67,7 @@ open class MessageContainerView: UIImageView {
             imageMask.image = bubbleStyle.image
             sizeMaskToView()
             mask = imageMask
-            image = style.image
+            image = style.image?.withRenderingMode(.alwaysTemplate)
             tintColor = color
         case .bubbleTailOutline(let color, let tail, let corner):
             let bubbleStyle: MessageStyle = .bubbleTailOutline(.white, tail, corner)

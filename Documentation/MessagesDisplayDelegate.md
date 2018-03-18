@@ -83,6 +83,8 @@ By default, `messageHeaderView` uses the method `shouldDisplayHeader(for:_:_)` o
 
 By default, `messageFooterView` returns `nil`.
 
+In order to return a custom subclass for the header or footer you will need to register the custom cell via `messagesCollectionView.register` and optionally customise `headerViewSize` or `footerViewSize` within the assigned `MessagesLayoutDelegate`.
+
 ### Customizing a TextMessageCell's text color
 
 ```Swift
