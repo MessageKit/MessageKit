@@ -68,6 +68,10 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     open var outgoingAvatarSize = CGSize(width: 30, height: 30)
 
+    open var incomingAvatarPosition = AvatarPosition(vertical: .messageBottom)
+
+    open var outgoingAvatarPosition = AvatarPosition(vertical: .messageBottom)
+
     open var incomingMessageLabelInsets = UIEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)
 
     open var outgoingMessageLabelInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)
@@ -156,16 +160,9 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - Avatar Size
 
-    /// Returns the `AvatarPosition` for the `MessageType` at a given `IndexPath`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` for the given `IndexPath`.
-    ///   - indexPath: The `IndexPath` for the given `MessageType`.
-    ///
-    /// - Note: The default implementation of this method retrieves its value from
-    ///         `avatarPosition(for:at:in)` in `MessagesLayoutDelegate`.
-    open func avatarPosition(for message: MessageType, at indexPath: IndexPath) -> AvatarPosition {
-        var position = messagesLayoutDelegate.avatarPosition(for: message, at: indexPath, in: messagesCollectionView)
+    internal func avatarPosition(for message: MessageType, at indexPath: IndexPath) -> AvatarPosition {
+        let isFromCurrentSender = messagesDataSource.isFromCurrentSender(message: message)
+        var position = isFromCurrentSender ? outgoingAvatarPosition : incomingAvatarPosition
 
         switch position.horizontal {
         case .cellTrailing, .cellLeading:
