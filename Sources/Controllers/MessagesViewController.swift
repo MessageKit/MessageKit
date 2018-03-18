@@ -165,6 +165,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     @objc private func clearMemoryCache() {
         MessageStyle.bubbleImageCache.removeAllObjects()
+    }
 
 
     // MARK: - UICollectionViewDataSource
