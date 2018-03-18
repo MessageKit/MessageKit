@@ -62,6 +62,14 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
 
+    open var incomingAvatarSize: CGSize {
+        return CGSize(width: 30, height: 30)
+    }
+
+    open var outgoingAvatarSize: CGSize {
+        return CGSize(width: 30, height: 30)
+    }
+
     typealias MessageID = NSString
     
     /// The cache for `MessageCellLayoutContext`.
@@ -162,15 +170,9 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return position
     }
 
-    /// Returns the `AvatarSize` for the `MessageType` at a given `IndexPath`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` for the given `IndexPath`.
-    ///   - indexPath: The `IndexPath` for the given `MessageType`.
-    /// - Note: The default implementation of this method retrieves its value from
-    ///         `avatarSize(for:at:in)` in `MessagesLayoutDelegate`.
-    open func avatarSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
-        return messagesLayoutDelegate.avatarSize(for: message, at: indexPath, in: messagesCollectionView)
+    internal func avatarSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+        let isFromCurrentSender = messagesDataSource.isFromCurrentSender(message: message)
+        return isFromCurrentSender ? outgoingAvatarSize : incomingAvatarSize
     }
 
     // MARK: - Cell Top Label Size
