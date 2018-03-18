@@ -80,6 +80,14 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     open var outgoingMessagePadding = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
 
+    open var incomingCellTopLabelAlignment = LabelAlignment.messageLeading(.zero)
+
+    open var outgoingCellTopLabelAlignment = LabelAlignment.messageTrailing(.zero)
+
+    open var incomingCellBottomLabelAlignment = LabelAlignment.messageTrailing(.zero)
+
+    open var outgoingCellBottomLabelAlignment = LabelAlignment.messageLeading(.zero)
+
     typealias MessageID = NSString
     
     /// The cache for `MessageCellLayoutContext`.
@@ -180,16 +188,10 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - Cell Top Label Size
 
-    /// Returns the `LabelAlignment` of the `MessageCollectionViewCell`'s top label
-    /// for the `MessageType` at a given `IndexPath`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` for the given `IndexPath`.
-    ///   - indexPath: The `IndexPath` for the given `MessageType`.
-    /// - Note: The default implementation of this method retrieves its value from
-    ///         `cellTopLabelAlignment(for:at:in)` in `MessagesLayoutDelegate`.
-    open func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment {
-        return messagesLayoutDelegate.cellTopLabelAlignment(for: message, at: indexPath, in: messagesCollectionView)
+
+    internal func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment {
+        let isFromCurrentSender = messagesDataSource.isFromCurrentSender(message: message)
+        return isFromCurrentSender ? outgoingCellTopLabelAlignment : incomingCellTopLabelAlignment
     }
 
     /// Returns the size of the `MessageCollectionViewCell`'s top label
@@ -254,16 +256,9 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - Cell Bottom Label Size
 
-    /// Returns the `LabelAlignment` of the `MessageCollectionViewCell`'s bottom label
-    /// for the `MessageType` at a given `IndexPath`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` for the given `IndexPath`.
-    ///   - indexPath: The `IndexPath` for the given `MessageType`.
-    /// - Note: The default implementation of this method retrieves its value from
-    ///         `cellBottomLabelAlignment(for:at:in)` in `MessagesLayoutDelegate`.
-    open func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment {
-        return messagesLayoutDelegate.cellBottomLabelAlignment(for: message, at: indexPath, in: messagesCollectionView)
+    internal func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment {
+        let isFromCurrentSender = messagesDataSource.isFromCurrentSender(message: message)
+        return isFromCurrentSender ? outgoingCellBottomLabelAlignment : incomingCellBottomLabelAlignment
     }
 
     /// Returns the size of the `MessageCollectionViewCell`'s bottom label
@@ -531,9 +526,8 @@ extension MessagesCollectionViewFlowLayout {
         guard let cachedContext = layoutContextCache.object(forKey: message.messageId as NSString) else {
             let newContext = newCellLayoutContext(for: message, at: indexPath)
 
-            if messagesLayoutDelegate.shouldCacheLayoutAttributes(for: message) {
-                layoutContextCache.setObject(newContext, forKey: message.messageId as NSString)
-            }
+            layoutContextCache.setObject(newContext, forKey: message.messageId as NSString)
+
             return newContext
         }
         return cachedContext
