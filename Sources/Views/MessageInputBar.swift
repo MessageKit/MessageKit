@@ -332,6 +332,7 @@ open class MessageInputBar: UIView {
         setStackViewItems([sendButton], forStack: .right, animated: false)
     }
     
+    // swiftlint:disable function_body_length colon
     /// Sets up the initial constraints of each subview
     private func setupConstraints() {
         
@@ -397,6 +398,7 @@ open class MessageInputBar: UIView {
         )
         activateConstraints()
     }
+    // swiftlint:enable function_body_length colon
     
     /// Respect iPhone X safeAreaInsets
     /// Adds a constraint to anchor the bottomAnchor of the contentView to the window's safeAreaLayoutGuide.bottomAnchor
@@ -570,14 +572,18 @@ open class MessageInputBar: UIView {
     ///   - animated: If the layout should be animated
     open func setStackViewItems(_ items: [InputBarButtonItem], forStack position: InputStackView.Position, animated: Bool) {
         
+        func setupStackViewItem(_ item: InputBarButtonItem) {
+            item.messageInputBar = self
+            item.parentStackViewPosition = position
+        }
+        
         func setNewItems() {
             switch position {
             case .left:
                 leftStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
                 leftStackViewItems = items
                 leftStackViewItems.forEach {
-                    $0.messageInputBar = self
-                    $0.parentStackViewPosition = position
+                    setupStackViewItem($0)
                     leftStackView.addArrangedSubview($0)
                 }
                 guard superview != nil else { return }
@@ -586,8 +592,7 @@ open class MessageInputBar: UIView {
                 rightStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
                 rightStackViewItems = items
                 rightStackViewItems.forEach {
-                    $0.messageInputBar = self
-                    $0.parentStackViewPosition = position
+                    setupStackViewItem($0)
                     rightStackView.addArrangedSubview($0)
                 }
                 guard superview != nil else { return }
@@ -596,8 +601,7 @@ open class MessageInputBar: UIView {
                 bottomStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
                 bottomStackViewItems = items
                 bottomStackViewItems.forEach {
-                    $0.messageInputBar = self
-                    $0.parentStackViewPosition = position
+                    setupStackViewItem($0)
                     bottomStackView.addArrangedSubview($0)
                 }
                 guard superview != nil else { return }
@@ -606,8 +610,7 @@ open class MessageInputBar: UIView {
                 topStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
                 topStackViewItems = items
                 topStackViewItems.forEach {
-                    $0.messageInputBar = self
-                    $0.parentStackViewPosition = position
+                    setupStackViewItem($0)
                     topStackView.addArrangedSubview($0)
                 }
                 guard superview != nil else { return }
