@@ -24,28 +24,25 @@
 
 import Foundation
 
-public enum DetectorType {
+/// An internal type used to store the attributes used to calculate
+/// the size of a `MessageCollectionViewCell`.
+final class MessageCellLayoutContext {
 
-    case address
-    case date
-    case phoneNumber
-    case url
-    case transitInformation
+    var itemHeight: CGFloat?
 
-    // MARK: - Not supported yet
+    var avatarSize: CGSize?
+    var avatarPosition: AvatarPosition?
 
-    //case mention
-    //case hashtag
-    //case custom
+    var messageContainerSize: CGSize?
+    var messageContainerMaxWidth: CGFloat?
+    var messageContainerPadding: UIEdgeInsets?
+    var messageLabelInsets: UIEdgeInsets?
 
-    var textCheckingType: NSTextCheckingResult.CheckingType {
-        switch self {
-        case .address: return .address
-        case .date: return .date
-        case .phoneNumber: return .phoneNumber
-        case .url: return .link
-        case .transitInformation: return .transitInformation
-        }
-    }
+    var bottomLabelAlignment: LabelAlignment?
+    var bottomLabelSize: CGSize?
+    var bottomLabelMaxWidth: CGFloat?
 
+    var topLabelAlignment: LabelAlignment?
+    var topLabelSize: CGSize?
+    var topLabelMaxWidth: CGFloat?
 }

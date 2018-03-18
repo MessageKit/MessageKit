@@ -24,28 +24,14 @@
 
 import Foundation
 
-public enum DetectorType {
+extension UIEdgeInsets {
 
-    case address
-    case date
-    case phoneNumber
-    case url
-    case transitInformation
+    var vertical: CGFloat {
+        return top + bottom
+    }
 
-    // MARK: - Not supported yet
-
-    //case mention
-    //case hashtag
-    //case custom
-
-    var textCheckingType: NSTextCheckingResult.CheckingType {
-        switch self {
-        case .address: return .address
-        case .date: return .date
-        case .phoneNumber: return .phoneNumber
-        case .url: return .link
-        case .transitInformation: return .transitInformation
-        }
+    var horizontal: CGFloat {
+        return left + right
     }
 
 }

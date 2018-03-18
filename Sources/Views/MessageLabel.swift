@@ -130,6 +130,9 @@ open class MessageLabel: UILabel {
     open internal(set) var phoneNumberAttributes: [NSAttributedStringKey: Any] = defaultAttributes
 
     open internal(set) var urlAttributes: [NSAttributedStringKey: Any] = defaultAttributes
+    
+    open internal(set) var transitInformationAttributes: [NSAttributedStringKey: Any] = defaultAttributes
+
 
     public func setAttributes(_ attributes: [NSAttributedStringKey: Any], detector: DetectorType) {
         switch detector {
@@ -141,6 +144,8 @@ open class MessageLabel: UILabel {
             dateAttributes = attributes
         case .url:
             urlAttributes = attributes
+        case .transitInformation:
+            transitInformationAttributes = attributes
         }
         if isConfiguring {
             attributesNeedUpdate = true
@@ -268,6 +273,8 @@ open class MessageLabel: UILabel {
             return phoneNumberAttributes
         case .url:
             return urlAttributes
+        case .transitInformation:
+            return transitInformationAttributes
         }
 
     }
@@ -282,6 +289,8 @@ open class MessageLabel: UILabel {
             return phoneNumberAttributes
         case .link:
             return urlAttributes
+        case .transitInformation:
+            return transitInformationAttributes
         default:
             fatalError(MessageKitError.unrecognizedCheckingResult)
         }
@@ -324,6 +333,12 @@ open class MessageLabel: UILabel {
                 let tuple: (NSRange, MessageTextCheckingType) = (result.range, .link(result.url))
                 ranges.append(tuple)
                 rangesForDetectors.updateValue(ranges, forKey: .url)
+            case .transitInformation:
+                var ranges = rangesForDetectors[.transitInformation] ?? []
+                let tuple: (NSRange, MessageTextCheckingType) = (result.range, .transitInfoComponents(result.components))
+                ranges.append(tuple)
+                rangesForDetectors.updateValue(ranges, forKey: .transitInformation)
+
             default:
                 fatalError("Received an unrecognized NSTextCheckingResult.CheckingType")
             }
@@ -391,6 +406,13 @@ open class MessageLabel: UILabel {
         case let .link(url):
             guard let url = url else { return }
             handleURL(url)
+        case let .transitInfoComponents(transitInformation):
+            var transformedTransitInformation = [String: String]()
+            guard let transitInformation = transitInformation else { return }
+            transitInformation.forEach { (key, value) in
+                transformedTransitInformation[key.rawValue] = value
+            }
+            handleTransitInformation(transformedTransitInformation)
         }
     }
     
@@ -410,6 +432,10 @@ open class MessageLabel: UILabel {
         delegate?.didSelectPhoneNumber(phoneNumber)
     }
     
+    private func handleTransitInformation(_ components: [String: String]) {
+        delegate?.didSelectTransitInformation(components)
+    }
+    
 }
 
 private enum MessageTextCheckingType {
@@ -417,4 +443,5 @@ private enum MessageTextCheckingType {
     case date(Date?)
     case phoneNumber(String?)
     case link(URL?)
+    case transitInfoComponents([NSTextCheckingKey: String]?)
 }

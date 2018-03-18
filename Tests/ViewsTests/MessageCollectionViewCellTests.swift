@@ -67,9 +67,9 @@ class MessageCollectionViewCellTests: XCTestCase {
         cell.apply(layoutAttributes)
 
         XCTAssertEqual(cell.avatarView.frame, layoutAttributes.frame)
-        XCTAssertEqual(cell.messageContainerView.frame, layoutAttributes.messageContainerFrame)
-        XCTAssertEqual(cell.cellTopLabel.frame, layoutAttributes.topLabelFrame)
-        XCTAssertEqual(cell.cellBottomLabel.frame, layoutAttributes.bottomLabelFrame)
+        XCTAssertEqual(cell.messageContainerView.frame.size, layoutAttributes.messageContainerSize)
+        XCTAssertEqual(cell.cellTopLabel.frame.size, layoutAttributes.topLabelSize)
+        XCTAssertEqual(cell.cellBottomLabel.frame.size, layoutAttributes.bottomLabelSize)
     }
 
 }
