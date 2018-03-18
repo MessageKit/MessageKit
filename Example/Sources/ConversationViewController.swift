@@ -317,8 +317,6 @@ extension ConversationViewController: MessagesDisplayDelegate {
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
         return .bubbleTail(corner, .curved)
-//        let configurationClosure = { (view: MessageContainerView) in}
-//        return .custom(configurationClosure)
     }
     
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
@@ -357,6 +355,14 @@ extension ConversationViewController: MessagesDisplayDelegate {
 
 extension ConversationViewController: MessagesLayoutDelegate {
 
+    func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        if (isFromCurrentSender(message: message) && UserDefaults.standard.needShowSenderAvatar())
+            || (!isFromCurrentSender(message: message) && UserDefaults.standard.needShowReceiverAvatar()) {
+            return CGSize(width: 30, height: 30)
+        }
+        return .zero
+    }
+    
     func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
         return AvatarPosition(horizontal: .natural, vertical: .messageBottom)
     }

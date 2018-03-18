@@ -25,6 +25,20 @@
 import MessageKit
 import CoreLocation
 
+enum MockMessageType: String {
+    
+    case text = "text"
+    case attributedText = "attributedText"
+    case photo = "photo"
+    case video = "video"
+    case location = "location"
+    case emoji = "emoji"
+    
+    static var allTypes: [MockMessageType] {
+        return [.text, .attributedText, .photo, .video, .location, .emoji]
+    }
+}
+
 final class SampleData {
 
     static let shared = SampleData()
@@ -70,7 +84,9 @@ final class SampleData {
 
     var now = Date()
 
-    let messageTypes = ["Text", "Text", "Text", "AttributedText", "Photo", "Video", "Location", "Emoji"]
+    var messageTypes: [MockMessageType] {
+        return UserDefaults.standard.allowedMessageTypes()
+    }
 
     let attributes = ["Font1", "Font2", "Font3", "Font4", "Color", "Combo"]
 
@@ -154,23 +170,21 @@ final class SampleData {
         let date = dateAddingRandomTime()
 
         switch messageTypes[randomMessageType] {
-        case "Text":
+        case .text:
             return MockMessage(text: messageTextValues[randomNumberText], sender: sender, messageId: uniqueID, date: date)
-        case "AttributedText":
+        case .attributedText:
             let attributedText = attributedString(with: messageTextValues[randomNumberText])
             return MockMessage(attributedText: attributedText, sender: senders[randomNumberSender], messageId: uniqueID, date: date)
-        case "Photo":
+        case .photo:
             let image = messageImages[randomNumberImage]
             return MockMessage(image: image, sender: sender, messageId: uniqueID, date: date)
-        case "Video":
+        case .video:
             let image = messageImages[randomNumberImage]
             return MockMessage(thumbnail: image, sender: sender, messageId: uniqueID, date: date)
-        case "Location":
+        case .location:
             return MockMessage(location: locations[randomNumberLocation], sender: sender, messageId: uniqueID, date: date)
-        case "Emoji":
+        case .emoji:
             return MockMessage(emoji: emojis[randomNumberEmoji], sender: sender, messageId: uniqueID, date: date)
-        default:
-            fatalError("Unrecognized mock message type")
         }
     }
 
