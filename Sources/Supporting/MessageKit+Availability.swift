@@ -24,3 +24,40 @@
 
 import Foundation
 
+public extension MessagesLayoutDelegate {
+
+    @available(*, deprecated: 0.14.0, message: "avatarSize(for:at:in) has been removed in MessageKit 0.14.0. Please use the incomingAvatarSize and outgoingAvatarSize properties on MessagesCollectionViewFlowLayout.")
+    func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        fatalError("avatarSize(for:at:in) has been removed in MessageKit 0.14.0. Please use the incomingAvatarSize and outgoingAvatarSize properties on MessagesCollectionViewFlowLayout.")
+    }
+
+    @available(*, deprecated: 0.14.0, message: "avatarPosition(for:at:in) has been removed in MessageKit 0.14.0. Please use the incomingAvatarPosition and outgoingAvatarPosition properties on MessagesCollectionViewFlowLayout.")
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
+        fatalError("avatarPosition(for:at:in) has been removed in MessageKit 0.14.0. Please use the incomingAvatarPosition and outgoingAvatarPosition properties on MessagesCollectionViewFlowLayout.")
+    }
+
+    @available(*, deprecated: 0.14.0, message: "messageLabelInset(for:at:in) has been removed in MessageKit 0.14.0. Please use the incomingMessageLabelInset and outgoingMessageLabelInset properties on MessagesCollectionViewFlowLayout.")
+    func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
+        fatalError("messageLabelInset(for:at:in) has been removed in MessageKit 0.14.0. Please use the incomingMessageLabelInset and outgoingMessageLabelInset properties on MessagesCollectionViewFlowLayout.")
+    }
+
+    @available(*, deprecated: 0.14.0, message: "messagePadding(for:at:in) has been removed in MessageKit 0.14.0. Please use the incomingMessagePadding and outgoingMessagePadding properties on MessagesCollectionViewFlowLayout.")
+    func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
+        fatalError("messagePadding(for:at:in) has been removed in MessageKit 0.14.0. Please use the incomingMessagePadding and outgoingMessagePadding properties on MessagesCollectionViewFlowLayout.")
+    }
+
+    @available(*, deprecated: 0.14.0, message: "cellTopLabelAlignment(for:at:in) has been removed in MessageKit 0.14.0. Please use the incomingCellTopLabelAlignment and outgoingCellTopLabelAlignment properties on MessagesCollectionViewFlowLayout.")
+    func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+        fatalError("cellTopLabelAlignment(for:at:in) has been removed in MessageKit 0.14.0. Please use the incomingCellTopLabelAlignment and outgoingCellTopLabelAlignment properties on MessagesCollectionViewFlowLayout.")
+    }
+
+    @available(*, deprecated: 0.14.0, message: "cellBottomLabelAlignment(for:at:in) has been removed in MessageKit 0.14.0. Please use the incomingCellBottomLabelAlignment and outgoingCellBottomLabelAlignment properties on MessagesCollectionViewFlowLayout.")
+    func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+        fatalError("cellBottomLabelAlignment(for:at:in) has been removed in MessageKit 0.14.0. Please use the incomingCellBottomLabelAlignment and outgoingCellBottomLabelAlignment properties on MessagesCollectionViewFlowLayout.")
+    }
+
+    @available(*, deprecated: 0.14.0, message: "Removed in MessageKit 0.14.0. MessageKit no longer caches cell attributes as it leads to undefined behavior.")
+    func shouldCacheLayoutAttributes(for message: MessageType) -> Bool {
+        fatalError("shouldCacheLayoutAttributes is removed in MessageKit 0.14.0. This deprecation does not require a replacement method.")
+    }
+}
