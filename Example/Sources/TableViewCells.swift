@@ -60,3 +60,47 @@ class TextFieldTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+class SwitchTableViewCell: UITableViewCell {
+    
+    static let identifier = "SwitchTableViewCellIdentifier"
+    
+    private let titleLabel = UILabel()
+    private let switchControl = UISwitch()
+    
+    var title: String = "" {
+        didSet {
+            titleLabel.text = title
+        }
+    }
+    
+    var isEnable: Bool = false {
+        didSet {
+            switchControl.isOn = isEnable
+        }
+    }
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        switchControl.isUserInteractionEnabled = false
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        switchControl.translatesAutoresizingMaskIntoConstraints = false
+        
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(switchControl)
+        
+        NSLayoutConstraint.activate([
+            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20),
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
+            switchControl.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20),
+            switchControl.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ])
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

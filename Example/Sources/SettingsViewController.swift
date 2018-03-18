@@ -25,11 +25,14 @@
 import UIKit
 import MessageKit
 
-final class SettingsViewController: UITableViewController {
-
-    // MARK: - Properties
+enum SettingsSection: Int {
+    case messageCount = 0
+    case allowedMessageTypes = 1
     
-    var selectedMockMessagesCount: Int = 20
+    static var sectionsCount = 2
+}
+
+final class SettingsViewController: UITableViewController {
     
     // MARK: - Picker
     
@@ -69,6 +72,7 @@ final class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(TextFieldTableViewCell.self, forCellReuseIdentifier: TextFieldTableViewCell.identifier)
+        tableView.register(SwitchTableViewCell.self, forCellReuseIdentifier: SwitchTableViewCell.identifier)
         
         configurePickerView()
         configureToolbar()
@@ -76,24 +80,93 @@ final class SettingsViewController: UITableViewController {
     
     // MARK: - TableViewDelegate & TableViewDataSource
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return SettingsSection.sectionsCount
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        switch SettingsSection(rawValue: section)! {
+        case .messageCount:
+            return 3
+        case .allowedMessageTypes:
+            return MockMessageType.allTypes.count
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch SettingsSection(rawValue: section)! {
+        case .messageCount:
+            return "Conversation"
+        case .allowedMessageTypes:
+            return "Allow Message Types"
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        return indexPath.row == 0 ? configureTextFieldTableViewCell(at: indexPath) : UITableViewCell()
+        switch SettingsSection(rawValue: indexPath.section)! {
+        case .messageCount:
+            switch indexPath.row {
+            case 0:
+                return configureTextFieldTableViewCell(at: indexPath)
+            case 1:
+                let title = "Show sender avatar"
+                let isEnable = UserDefaults.standard.needShowSenderAvatar()
+                return configureSliderTableViewCell(title, enable: isEnable, indexPath: indexPath)
+            case 2:
+                let title = "Show receiver avatar"
+                let isEnable = UserDefaults.standard.needShowReceiverAvatar()
+                return configureSliderTableViewCell(title, enable: isEnable, indexPath: indexPath)
+            default:
+                return UITableViewCell()
+            }
+        case .allowedMessageTypes:
+            let type = MockMessageType.allTypes[indexPath.item]
+            let title = type.rawValue.capitalized
+            let isEnable = UserDefaults.standard.isAllowedMessageType(type)
+            return configureSliderTableViewCell(title, enable: isEnable, indexPath: indexPath)
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let cell = tableView.cellForRow(at: indexPath)
-        
-        cell?.contentView.subviews.forEach {
-            if $0 is UITextField {
-                $0.becomeFirstResponder()
+        switch SettingsSection(rawValue: indexPath.section)! {
+        case .messageCount:
+            switch indexPath.row {
+            case 0:
+                let cell = tableView.cellForRow(at: indexPath)
+                
+                cell?.contentView.subviews.forEach {
+                    if $0 is UITextField {
+                        $0.becomeFirstResponder()
+                    }
+                }
+            case 1:
+                guard let cell = tableView.cellForRow(at: indexPath) as? SwitchTableViewCell else { return }
+                let newState = !cell.isEnable
+                UserDefaults.standard.showSenderAvatar(newState)
+                cell.isEnable = newState
+            case 2:
+                guard let cell = tableView.cellForRow(at: indexPath) as? SwitchTableViewCell else { return }
+                let newState = !cell.isEnable
+                UserDefaults.standard.showReceiverAvatar(newState)
+                cell.isEnable = newState
+            default:
+                return
             }
+        case .allowedMessageTypes:
+            guard let cell = tableView.cellForRow(at: indexPath) as? SwitchTableViewCell else { return }
+            let selectedType = MockMessageType.allTypes[indexPath.item]
+            let newState = !cell.isEnable
+            if !newState, UserDefaults.standard.allowedMessageTypes().count <= 1 {
+                return
+            }
+            UserDefaults.standard.messageType(selectedType, allow: newState)
+            cell.isEnable = newState
         }
     }
     
@@ -109,6 +182,13 @@ final class SettingsViewController: UITableViewController {
         cell.textField.inputView = messagesPicker
         cell.textField.inputAccessoryView = messagesToolbar
         
+        return cell
+    }
+    
+    private func configureSliderTableViewCell(_ title: String, enable: Bool, indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SwitchTableViewCell.identifier, for: indexPath) as! SwitchTableViewCell
+        cell.title = title
+        cell.isEnable = enable
         return cell
     }
 }
@@ -129,6 +209,6 @@ extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedMockMessagesCount = row
+        UserDefaults.standard.setMockMessages(count: row)
     }
 }
