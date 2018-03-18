@@ -82,8 +82,9 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         registerReusableViews()
         setupDelegates()
         addMenuControllerObservers()
+        addObservers()
     }
-
+    
     open override func viewDidLayoutSubviews() {
         // Hack to prevent animation of the contentInset after viewDidAppear
         if isFirstLayout {
@@ -99,6 +100,8 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     deinit {
         removeKeyboardObservers()
         removeMenuControllerObservers()
+        removeObservers()
+        clearMemoryCache()
     }
 
     // MARK: - Methods [Private]
@@ -300,5 +303,18 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         default:
             break
         }
+    }
+    
+    private func addObservers() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(clearMemoryCache), name: .UIApplicationDidReceiveMemoryWarning, object: nil)
+    }
+    
+    private func removeObservers() {
+        NotificationCenter.default.removeObserver(self, name: .UIApplicationDidReceiveMemoryWarning, object: nil)
+    }
+    
+    @objc private func clearMemoryCache() {
+        MessageStyle.bubbleImageCache.removeAllObjects()
     }
 }

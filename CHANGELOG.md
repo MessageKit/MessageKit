@@ -37,7 +37,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
   - `layoutBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes)`
 [#491](https://github.com/MessageKit/MessageKit/pull/491) by [@SD10](https://github.com/SD10).
 
-### [[Prerelease] 0.13.1](https://github.com/MessageKit/MessageKit/releases/tag/0.13.1)
+- Added `shouldManageSendButtonEnabledState` to `MessageInputBar` to disable automatically managing `MessageInputBar.sendButton`'s `isEnabled` state when text changes. (Default value is `true`).
+[#530](https://github.com/MessageKit/MessageKit/pull/530) by [@clayellis](https://github.com/clayellis).
+
+## [[Prerelease] 0.13.1](https://github.com/MessageKit/MessageKit/releases/tag/0.13.1)
 
 ### Fixed
 
