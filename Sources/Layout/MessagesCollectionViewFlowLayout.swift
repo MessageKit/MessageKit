@@ -78,12 +78,17 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         didSet { locationMessageAttributesCache.removeAllObjects() }
     }
 
+    open var customMessageLayout: MessageCellLayout? {
+        didSet { customMessageAttributesCache.removeAllObjects() }
+    }
+
     let textMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
     let attributedTextMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
     let emojiMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
     let photoMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
     let videoMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
     let locationMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
+    let customMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
 
     // MARK: - Initializers
 
@@ -110,27 +115,25 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     // MARK: - Attributes
 
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-
         guard let attributesArray = super.layoutAttributesForElements(in: rect) as? [MessagesCollectionViewLayoutAttributes] else {
             return nil
         }
-
-        attributesArray.forEach { attributes in
-            if attributes.representedElementCategory == UICollectionElementCategory.cell {
+        for attributes in attributesArray {
+            if attributes.representedElementCategory == .cell {
                 configure(attributes: attributes)
             }
         }
-
         return attributesArray
     }
 
     open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        guard let attributes = super.layoutAttributesForItem(at: indexPath) as? MessagesCollectionViewLayoutAttributes else { return nil }
+        guard let attributes = super.layoutAttributesForItem(at: indexPath) as? MessagesCollectionViewLayoutAttributes else {
+            return nil
 
-        if attributes.representedElementCategory == UICollectionElementCategory.cell {
+        }
+        if attributes.representedElementCategory == .cell {
             configure(attributes: attributes)
         }
-
         return attributes
 
     }
@@ -161,6 +164,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         photoMessageAttributesCache.removeAllObjects()
         videoMessageAttributesCache.removeAllObjects()
         locationMessageAttributesCache.removeAllObjects()
+        customMessageAttributesCache.removeAllObjects()
     }
 
     public func removeAllCachedAttributes(for messageType: MessageData) {
@@ -168,22 +172,25 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         cache.removeAllObjects()
     }
 
+    public func removeCachedAttributes(for message: MessageType) {
+        let cache = attributeCache(for: message.data)
+        cache.removeObject(forKey: message.messageId as NSString)
+    }
+
+    public func removeCachedAttributes(for messageId: String) {
+        textMessageAttributesCache.removeObject(forKey: messageId as NSString)
+        attributedTextMessageAttributesCache.removeObject(forKey: messageId as NSString)
+        emojiMessageAttributesCache.removeObject(forKey: messageId as NSString)
+        photoMessageAttributesCache.removeObject(forKey: messageId as NSString)
+        videoMessageAttributesCache.removeObject(forKey: messageId as NSString)
+        locationMessageAttributesCache.removeObject(forKey: messageId as NSString)
+        customMessageAttributesCache.removeObject(forKey: messageId as NSString)
+    }
+
     @objc
     private func handleOrientationChange(_ notification: Notification) {
         removeAllCachedAttributes()
         invalidateLayout()
-    }
-
-    func layoutForMessage(message: MessageType) -> MessageCellLayout {
-        switch message.data {
-        case .text: return textMessageLayout
-        case .attributedText: return attributedTextMessageLayout
-        case .emoji: return emojiMessageLayout
-        case .photo: return photoMessageLayout
-        case .video: return videoMessageLayout
-        case .location: return locationMessageLayout
-        case .custom: fatalError()
-        }
     }
 
     // MARK: - Avatar Size
@@ -542,7 +549,23 @@ extension MessagesCollectionViewFlowLayout {
         case .photo: return photoMessageAttributesCache
         case .video: return videoMessageAttributesCache
         case .location: return locationMessageAttributesCache
-        case .custom: fatalError()
+        case .custom: return customMessageAttributesCache
+        }
+    }
+
+    internal func layoutForMessage(message: MessageType) -> MessageCellLayout {
+        switch message.data {
+        case .text: return textMessageLayout
+        case .attributedText: return attributedTextMessageLayout
+        case .emoji: return emojiMessageLayout
+        case .photo: return photoMessageLayout
+        case .video: return videoMessageLayout
+        case .location: return locationMessageLayout
+        case .custom:
+            guard let customLayout = customMessageLayout else {
+                fatalError("Missing MessageCellLayout for MessageData.custom. Please set customMessageLayout")
+            }
+            return customLayout
         }
     }
 
