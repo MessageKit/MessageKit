@@ -45,7 +45,6 @@ public protocol MessageCellLayout {
 
 public struct TextMessageLayout: MessageCellLayout {
 
-
     public var incomingAvatarSize = CGSize(width: 30, height: 30)
     public var outgoingAvatarSize = CGSize(width: 30, height: 30)
 
