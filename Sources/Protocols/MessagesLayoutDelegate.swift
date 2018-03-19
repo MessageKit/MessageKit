@@ -96,6 +96,13 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
 
+    /// Specifies whether the layout attributes for a given `MessageType`
+    /// should be cached by the `MessagesCollectionViewFlowLayout` object.
+    /// - Parameters:
+    ///   - message: The `MessageType` whose attributes to cache.
+    /// The default value returned by this method is `false`.
+    func shouldCacheLayoutAttributes(for message: MessageType) -> Bool
+
 }
 
 public extension MessagesLayoutDelegate {
@@ -112,6 +119,10 @@ public extension MessagesLayoutDelegate {
 
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return .zero
+    }
+
+    func shouldCacheLayoutAttributes(for message: MessageType) -> Bool {
+        return false
     }
 
     // MARK: - Media Messages Defaults
