@@ -24,7 +24,7 @@
 
 import UIKit
 
-protocol MessageCellLayout {
+public protocol MessageCellLayout {
 
     var incomingAvatarSize: CGSize { get set }
     var outgoingAvatarSize: CGSize { get set }
@@ -45,41 +45,42 @@ protocol MessageCellLayout {
 
 public struct TextMessageLayout: MessageCellLayout {
 
-    var incomingAvatarSize = CGSize(width: 30, height: 30)
-    var outgoingAvatarSize = CGSize(width: 30, height: 30)
 
-    var incomingAvatarPosition = AvatarPosition(vertical: .messageBottom)
-    var outgoingAvatarPosition = AvatarPosition(vertical: .messageBottom)
+    public var incomingAvatarSize = CGSize(width: 30, height: 30)
+    public var outgoingAvatarSize = CGSize(width: 30, height: 30)
 
-    var incomingMessageLabelInsets = UIEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)
-    var outgoingMessageLabelInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)
+    public var incomingAvatarPosition = AvatarPosition(vertical: .messageBottom)
+    public var outgoingAvatarPosition = AvatarPosition(vertical: .messageBottom)
 
-    var incomingMessagePadding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
-    var outgoingMessagePadding = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
+    public var incomingMessageLabelInsets = UIEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)
+    public var outgoingMessageLabelInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)
 
-    var incomingCellTopLabelAlignment = LabelAlignment.messageLeading(.zero)
-    var outgoingCellTopLabelAlignment = LabelAlignment.messageTrailing(.zero)
+    public var incomingMessagePadding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
+    public var outgoingMessagePadding = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
 
-    var incomingCellBottomLabelAlignment = LabelAlignment.messageTrailing(.zero)
-    var outgoingCellBottomLabelAlignment = LabelAlignment.messageLeading(.zero)
+    public var incomingCellTopLabelAlignment = LabelAlignment.messageLeading(.zero)
+    public var outgoingCellTopLabelAlignment = LabelAlignment.messageTrailing(.zero)
+
+    public var incomingCellBottomLabelAlignment = LabelAlignment.messageTrailing(.zero)
+    public var outgoingCellBottomLabelAlignment = LabelAlignment.messageLeading(.zero)
 
 }
 
 public struct MediaMessageLayout: MessageCellLayout {
 
-    var incomingAvatarSize = CGSize(width: 30, height: 30)
-    var outgoingAvatarSize = CGSize(width: 30, height: 30)
+    public var incomingAvatarSize = CGSize(width: 30, height: 30)
+    public var outgoingAvatarSize = CGSize(width: 30, height: 30)
 
-    var incomingAvatarPosition = AvatarPosition(vertical: .messageBottom)
-    var outgoingAvatarPosition = AvatarPosition(vertical: .messageBottom)
+    public var incomingAvatarPosition = AvatarPosition(vertical: .messageBottom)
+    public var outgoingAvatarPosition = AvatarPosition(vertical: .messageBottom)
 
-    var incomingMessagePadding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
-    var outgoingMessagePadding = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
+    public var incomingMessagePadding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
+    public var outgoingMessagePadding = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
 
-    var incomingCellTopLabelAlignment = LabelAlignment.messageLeading(.zero)
-    var outgoingCellTopLabelAlignment = LabelAlignment.messageTrailing(.zero)
+    public var incomingCellTopLabelAlignment = LabelAlignment.messageLeading(.zero)
+    public var outgoingCellTopLabelAlignment = LabelAlignment.messageTrailing(.zero)
 
-    var incomingCellBottomLabelAlignment = LabelAlignment.messageTrailing(.zero)
-    var outgoingCellBottomLabelAlignment = LabelAlignment.messageLeading(.zero)
+    public var incomingCellBottomLabelAlignment = LabelAlignment.messageTrailing(.zero)
+    public var outgoingCellBottomLabelAlignment = LabelAlignment.messageLeading(.zero)
 
 }
