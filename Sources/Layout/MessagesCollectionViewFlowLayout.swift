@@ -395,34 +395,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     internal func cellContentHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
         let attributes = intermediateLayoutAttributes(for: message, at: indexPath)
-        let avatarVerticalPosition = attributes.avatarPosition.vertical
-        let avatarHeight = attributes.avatarSize.height
-        let messageContainerHeight = attributes.messageContainerSize.height
-        let bottomLabelHeight = attributes.bottomLabelSize.height
-        let topLabelHeight = attributes.topLabelSize.height
-        let messageVerticalPadding = attributes.messageContainerPadding.vertical
-
-        var cellHeight: CGFloat = 0
-
-        switch avatarVerticalPosition {
-        case .cellTop:
-            cellHeight += max(avatarHeight, topLabelHeight)
-            cellHeight += bottomLabelHeight
-            cellHeight += messageContainerHeight
-            cellHeight += messageVerticalPadding
-        case .cellBottom:
-            cellHeight += max(avatarHeight, bottomLabelHeight)
-            cellHeight += topLabelHeight
-            cellHeight += messageContainerHeight
-            cellHeight += messageVerticalPadding
-        case .messageTop, .messageCenter, .messageBottom:
-            cellHeight += max(avatarHeight, messageContainerHeight)
-            cellHeight += messageVerticalPadding
-            cellHeight += topLabelHeight
-            cellHeight += bottomLabelHeight
-        }
-
-        return cellHeight
+        return attributes.itemHeight
     }
 
     /// Returns the size for the `MessageCollectionViewCell` at a given `IndexPath`
@@ -609,5 +582,36 @@ class MessageIntermediateLayoutAttributes {
 
     var bottomLabelAlignment = LabelAlignment.cellCenter(.zero)
     var bottomLabelSize: CGSize = .zero
+
+    lazy var itemHeight: CGFloat = {
+        let avatarVerticalPosition = avatarPosition.vertical
+        let avatarHeight = avatarSize.height
+        let messageContainerHeight = messageContainerSize.height
+        let bottomLabelHeight = bottomLabelSize.height
+        let topLabelHeight = topLabelSize.height
+        let messageVerticalPadding = messageContainerPadding.vertical
+
+        var cellHeight: CGFloat = 0
+
+        switch avatarVerticalPosition {
+        case .cellTop:
+            cellHeight += max(avatarHeight, topLabelHeight)
+            cellHeight += bottomLabelHeight
+            cellHeight += messageContainerHeight
+            cellHeight += messageVerticalPadding
+        case .cellBottom:
+            cellHeight += max(avatarHeight, bottomLabelHeight)
+            cellHeight += topLabelHeight
+            cellHeight += messageContainerHeight
+            cellHeight += messageVerticalPadding
+        case .messageTop, .messageCenter, .messageBottom:
+            cellHeight += max(avatarHeight, messageContainerHeight)
+            cellHeight += messageVerticalPadding
+            cellHeight += topLabelHeight
+            cellHeight += bottomLabelHeight
+        }
+
+        return cellHeight
+    }()
 
 }
