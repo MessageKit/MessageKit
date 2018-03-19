@@ -52,67 +52,38 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     /// Note: The default value of this property is 2x the `messageLabelFont`.
     internal var emojiLabelFont: UIFont
 
-
     // MARK: - Layout
 
-    open var incomingAvatarSize = CGSize(width: 30, height: 30) {
-        didSet { removeAllCachedAttributes() }
+    open var textMessageLayout = TextMessageLayout() {
+        didSet { textMessageAttributesCache.removeAllObjects() }
     }
 
-    open var outgoingAvatarSize = CGSize(width: 30, height: 30) {
-        didSet { removeAllCachedAttributes() }
+    open var attributedTextMessageLayout = TextMessageLayout() {
+        didSet { attributedTextMessageAttributesCache.removeAllObjects() }
     }
 
-    open var incomingAvatarPosition = AvatarPosition(vertical: .messageBottom) {
-        didSet { removeAllCachedAttributes() }
+    open var emojiMessageLayout = TextMessageLayout() {
+        didSet { emojiMessageAttributesCache.removeAllObjects() }
     }
 
-    open var outgoingAvatarPosition = AvatarPosition(vertical: .messageBottom) {
-        didSet { removeAllCachedAttributes() }
+    open var photoMessageLayout = MediaMessageLayout() {
+        didSet { photoMessageAttributesCache.removeAllObjects() }
     }
 
-    open var incomingMessageLabelInsets = UIEdgeInsets(top: 7, left: 18, bottom: 7, right: 14) {
-        didSet { removeAllCachedAttributes() }
+    open var videoMessageLayout = MediaMessageLayout() {
+        didSet { videoMessageAttributesCache.removeAllObjects() }
     }
 
-    open var outgoingMessageLabelInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18) {
-        didSet { removeAllCachedAttributes() }
+    open var locationMessageLayout = MediaMessageLayout() {
+        didSet { locationMessageAttributesCache.removeAllObjects() }
     }
 
-    open var incomingMessagePadding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30) {
-        didSet { removeAllCachedAttributes() }
-    }
-
-    open var outgoingMessagePadding = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4) {
-        didSet { removeAllCachedAttributes() }
-    }
-
-    open var incomingCellTopLabelAlignment = LabelAlignment.messageLeading(.zero) {
-        didSet { removeAllCachedAttributes() }
-    }
-
-    open var outgoingCellTopLabelAlignment = LabelAlignment.messageTrailing(.zero) {
-        didSet { removeAllCachedAttributes() }
-    }
-
-    open var incomingCellBottomLabelAlignment = LabelAlignment.messageTrailing(.zero) {
-        didSet { removeAllCachedAttributes() }
-    }
-
-    open var outgoingCellBottomLabelAlignment = LabelAlignment.messageLeading(.zero) {
-        didSet { removeAllCachedAttributes() }
-    }
-
-    internal var attributedTextSizeCache = NSCache<NSNumber, NSValue>()
-
-    /// Determines the maximum number of `MessageCollectionViewCell` attributes to cache.
-    ///
-    /// Note: The default value of this property is 500.
-    open var attributesCacheMaxSize: Int = 500 {
-        didSet {
-            attributedTextSizeCache.countLimit = attributesCacheMaxSize
-        }
-    }
+    let textMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
+    let attributedTextMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
+    let emojiMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
+    let photoMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
+    let videoMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
+    let locationMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
 
     // MARK: - Initializers
 
@@ -136,13 +107,13 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         NotificationCenter.default.removeObserver(self)
     }
 
-    // MARK: - Open
-
     // MARK: - Attributes
 
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
 
-        guard let attributesArray = super.layoutAttributesForElements(in: rect) as? [MessagesCollectionViewLayoutAttributes] else { return nil }
+        guard let attributesArray = super.layoutAttributesForElements(in: rect) as? [MessagesCollectionViewLayoutAttributes] else {
+            return nil
+        }
 
         attributesArray.forEach { attributes in
             if attributes.representedElementCategory == UICollectionElementCategory.cell {
@@ -154,7 +125,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
 
     open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-
         guard let attributes = super.layoutAttributesForItem(at: indexPath) as? MessagesCollectionViewLayoutAttributes else { return nil }
 
         if attributes.representedElementCategory == UICollectionElementCategory.cell {
@@ -183,34 +153,68 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return flowLayoutContext
     }
 
+    /// Removes the cached layout information for all `MessageType`s.
+    public func removeAllCachedAttributes() {
+        textMessageAttributesCache.removeAllObjects()
+        attributedTextMessageAttributesCache.removeAllObjects()
+        emojiMessageAttributesCache.removeAllObjects()
+        photoMessageAttributesCache.removeAllObjects()
+        videoMessageAttributesCache.removeAllObjects()
+        locationMessageAttributesCache.removeAllObjects()
+    }
+
+    public func removeAllCachedAttributes(for messageType: MessageData) {
+        let cache = attributeCache(for: messageType)
+        cache.removeAllObjects()
+    }
+
+    @objc
+    private func handleOrientationChange(_ notification: Notification) {
+        removeAllCachedAttributes()
+        invalidateLayout()
+    }
+
+    func layoutForMessage(message: MessageType) -> MessageCellLayout {
+        switch message.data {
+        case .text: return textMessageLayout
+        case .attributedText: return attributedTextMessageLayout
+        case .emoji: return emojiMessageLayout
+        case .photo: return photoMessageLayout
+        case .video: return videoMessageLayout
+        case .location: return locationMessageLayout
+        case .custom: fatalError()
+        }
+    }
+
     // MARK: - Avatar Size
 
     internal func avatarPosition(for message: MessageType, at indexPath: IndexPath) -> AvatarPosition {
+        let layout = layoutForMessage(message: message)
         let isFromCurrentSender = messagesDataSource.isFromCurrentSender(message: message)
-        var position = isFromCurrentSender ? outgoingAvatarPosition : incomingAvatarPosition
+        var position = isFromCurrentSender ? layout.outgoingAvatarPosition : layout.incomingAvatarPosition
 
         switch position.horizontal {
         case .cellTrailing, .cellLeading:
             break
         case .natural:
-            position.horizontal = messagesDataSource.isFromCurrentSender(message: message) ? .cellTrailing : .cellLeading
+            position.horizontal = isFromCurrentSender ? .cellTrailing : .cellLeading
         }
         return position
     }
 
     internal func avatarSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+        let layout = layoutForMessage(message: message)
         let isFromCurrentSender = messagesDataSource.isFromCurrentSender(message: message)
-        return isFromCurrentSender ? outgoingAvatarSize : incomingAvatarSize
+        return isFromCurrentSender ? layout.outgoingAvatarSize : layout.incomingAvatarSize
     }
 
     // MARK: - Cell Top Label Size
 
-
     internal func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment {
+        let layout = layoutForMessage(message: message)
         let isFromCurrentSender = messagesDataSource.isFromCurrentSender(message: message)
-        return isFromCurrentSender ? outgoingCellTopLabelAlignment : incomingCellTopLabelAlignment
+        return isFromCurrentSender ? layout.outgoingCellTopLabelAlignment : layout.incomingCellTopLabelAlignment
     }
-
 
     internal func cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let text = messagesDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
@@ -261,8 +265,9 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     // MARK: - Cell Bottom Label Size
 
     internal func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment {
+        let layout = layoutForMessage(message: message)
         let isFromCurrentSender = messagesDataSource.isFromCurrentSender(message: message)
-        return isFromCurrentSender ? outgoingCellBottomLabelAlignment : incomingCellBottomLabelAlignment
+        return isFromCurrentSender ? layout.outgoingCellBottomLabelAlignment : layout.incomingCellBottomLabelAlignment
     }
 
     internal func cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
@@ -315,13 +320,17 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     // MARK: - Message Container Size
 
     internal func messageLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
+        guard let layout = layoutForMessage(message: message) as? TextMessageLayout else {
+            fatalError("Layout is not TextMessageLayout")
+        }
         let isFromCurrentSender = messagesDataSource.isFromCurrentSender(message: message)
-        return isFromCurrentSender ? outgoingMessageLabelInsets : incomingMessageLabelInsets
+        return isFromCurrentSender ? layout.outgoingMessageLabelInsets : layout.incomingMessageLabelInsets
     }
 
     internal func messageContainerPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
+        let layout = layoutForMessage(message: message)
         let isFromCurrentSender = messagesDataSource.isFromCurrentSender(message: message)
-        return isFromCurrentSender ? outgoingMessagePadding : incomingMessagePadding
+        return isFromCurrentSender ? layout.outgoingMessagePadding : layout.incomingMessagePadding
     }
 
     internal func messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
@@ -378,12 +387,13 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     // MARK: - Cell Size
 
     internal func cellContentHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
-        let avatarVerticalPosition = avatarPosition(for: message, at: indexPath).vertical
-        let avatarHeight = avatarSize(for: message, at: indexPath).height
-        let messageContainerHeight = messageContainerSize(for: message, at: indexPath).height
-        let bottomLabelHeight = cellBottomLabelSize(for: message, at: indexPath).height
-        let topLabelHeight = cellTopLabelSize(for: message, at: indexPath).height
-        let messageVerticalPadding = messageContainerPadding(for: message, at: indexPath).vertical
+        let attributes = intermediateLayoutAttributes(for: message, at: indexPath)
+        let avatarVerticalPosition = attributes.avatarPosition.vertical
+        let avatarHeight = attributes.avatarSize.height
+        let messageContainerHeight = attributes.messageContainerSize.height
+        let bottomLabelHeight = attributes.bottomLabelSize.height
+        let topLabelHeight = attributes.topLabelSize.height
+        let messageVerticalPadding = attributes.messageContainerPadding.vertical
 
         var cellHeight: CGFloat = 0
 
@@ -420,37 +430,27 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
 }
 
-// MARK: - Cache Invalidation
-
-extension MessagesCollectionViewFlowLayout {
-
-    /// Removes the cached layout information for all `MessageType`s.
-    public func removeAllCachedAttributes() {
-        attributedTextSizeCache.removeAllObjects()
-    }
-
-    @objc
-    private func handleOrientationChange(_ notification: Notification) {
-        removeAllCachedAttributes()
-        invalidateLayout()
-    }
-}
-
 // MARK: - MessagesCollectionViewLayoutAttributes
 
 extension MessagesCollectionViewFlowLayout {
 
-    private func configure(attributes: MessagesCollectionViewLayoutAttributes) {
+    private func intermediateLayoutAttributes(for message: MessageType, at indexPath: IndexPath) -> MessageIntermediateLayoutAttributes {
 
-        let indexPath = attributes.indexPath
-        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+        let cache = attributeCache(for: message.data)
+        let cachedAttributes = cache.object(forKey: message.messageId as NSString)
+
+        return cachedAttributes ?? createIntermediateLayoutAttributes(for: message, at: indexPath)
+    }
+
+    private func createIntermediateLayoutAttributes(for message: MessageType, at indexPath: IndexPath) -> MessageIntermediateLayoutAttributes {
+
+        let attributes = MessageIntermediateLayoutAttributes()
 
         attributes.avatarSize = avatarSize(for: message, at: indexPath)
         attributes.avatarPosition = avatarPosition(for: message, at: indexPath)
 
         attributes.messageContainerPadding = messageContainerPadding(for: message, at: indexPath)
         attributes.messageContainerSize = messageContainerSize(for: message, at: indexPath)
-        attributes.messageLabelInsets = messageLabelInsets(for: message, at: indexPath)
 
         attributes.topLabelAlignment = cellTopLabelAlignment(for: message, at: indexPath)
         attributes.topLabelSize = cellTopLabelSize(for: message, at: indexPath)
@@ -461,9 +461,56 @@ extension MessagesCollectionViewFlowLayout {
         switch message.data {
         case .emoji:
             attributes.messageLabelFont = emojiLabelFont
+            attributes.messageLabelInsets = messageLabelInsets(for: message, at: indexPath)
         case .text:
             attributes.messageLabelFont = messageLabelFont
+            attributes.messageLabelInsets = messageLabelInsets(for: message, at: indexPath)
         case .attributedText(let text):
+            attributes.messageLabelInsets = messageLabelInsets(for: message, at: indexPath)
+            attributes.messageLabelFont = messageLabelFont
+            guard !text.string.isEmpty else { return attributes }
+            guard let font = text.attribute(.font, at: 0, effectiveRange: nil) as? UIFont else { return attributes }
+            attributes.messageLabelFont = font
+        default:
+            break
+        }
+
+        let cache = attributeCache(for: message.data)
+        cache.setObject(attributes, forKey: message.messageId as NSString)
+
+        return attributes
+
+    }
+
+    private func configure(attributes: MessagesCollectionViewLayoutAttributes) {
+
+        let indexPath = attributes.indexPath
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+
+        let intermediateAttributes = intermediateLayoutAttributes(for: message, at: indexPath)
+
+        attributes.avatarSize = intermediateAttributes.avatarSize
+        attributes.avatarPosition = intermediateAttributes.avatarPosition
+
+        attributes.messageContainerPadding = intermediateAttributes.messageContainerPadding
+        attributes.messageContainerSize = intermediateAttributes.messageContainerSize
+
+        attributes.topLabelAlignment = intermediateAttributes.topLabelAlignment
+        attributes.topLabelSize = intermediateAttributes.topLabelSize
+
+        attributes.bottomLabelAlignment = intermediateAttributes.bottomLabelAlignment
+        attributes.bottomLabelSize = intermediateAttributes.bottomLabelSize
+
+        switch message.data {
+        case .emoji:
+            attributes.messageLabelFont = emojiLabelFont
+            attributes.messageLabelInsets = intermediateAttributes.messageLabelInsets
+        case .text:
+            attributes.messageLabelFont = messageLabelFont
+            attributes.messageLabelInsets = intermediateAttributes.messageLabelInsets
+        case .attributedText(let text):
+            attributes.messageLabelInsets = intermediateAttributes.messageLabelInsets
+            attributes.messageLabelFont = intermediateAttributes.messageLabelFont
             guard !text.string.isEmpty else { return }
             guard let font = text.attribute(.font, at: 0, effectiveRange: nil) as? UIFont else { return }
             attributes.messageLabelFont = font
@@ -478,20 +525,25 @@ extension MessagesCollectionViewFlowLayout {
 extension MessagesCollectionViewFlowLayout {
 
     internal func labelSize(for attributedText: NSAttributedString, considering maxWidth: CGFloat) -> CGSize {
+        let estimatedHeight = attributedText.height(considering: maxWidth)
+        let estimatedWidth = attributedText.width(considering: estimatedHeight)
 
-        guard let cachedSize = attributedTextSizeCache.object(forKey: attributedText.hash as NSNumber)?.cgSizeValue else {
-            let estimatedHeight = attributedText.height(considering: maxWidth)
-            let estimatedWidth = attributedText.width(considering: estimatedHeight)
+        let finalHeight = estimatedHeight.rounded(.up)
+        let finalWidth = estimatedWidth > maxWidth ? maxWidth : estimatedWidth.rounded(.up)
 
-            let finalHeight = estimatedHeight.rounded(.up)
-            let finalWidth = estimatedWidth > maxWidth ? maxWidth : estimatedWidth.rounded(.up)
+        return CGSize(width: finalWidth, height: finalHeight)
+    }
 
-            let size = CGSize(width: finalWidth, height: finalHeight)
-            attributedTextSizeCache.setObject(size as NSValue, forKey: attributedText.hash as NSNumber)
-            return size
+    internal func attributeCache(for messageData: MessageData) -> NSCache<NSString, MessageIntermediateLayoutAttributes> {
+        switch messageData {
+        case .text: return textMessageAttributesCache
+        case .attributedText: return attributedTextMessageAttributesCache
+        case .emoji: return emojiMessageAttributesCache
+        case .photo: return photoMessageAttributesCache
+        case .video: return videoMessageAttributesCache
+        case .location: return locationMessageAttributesCache
+        case .custom: fatalError()
         }
-
-        return cachedSize
     }
 
     /// Convenience property for accessing the layout object's `MessagesCollectionView`.
@@ -517,4 +569,22 @@ extension MessagesCollectionViewFlowLayout {
         }
         return messagesLayoutDelegate
     }
+}
+
+class MessageIntermediateLayoutAttributes {
+
+    var avatarSize: CGSize = .zero
+    var avatarPosition = AvatarPosition(vertical: .cellBottom)
+
+    var messageContainerSize: CGSize = .zero
+    var messageContainerPadding: UIEdgeInsets = .zero
+    var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
+    var messageLabelInsets: UIEdgeInsets = .zero
+
+    var topLabelAlignment = LabelAlignment.cellCenter(.zero)
+    var topLabelSize: CGSize = .zero
+
+    var bottomLabelAlignment = LabelAlignment.cellCenter(.zero)
+    var bottomLabelSize: CGSize = .zero
+
 }
