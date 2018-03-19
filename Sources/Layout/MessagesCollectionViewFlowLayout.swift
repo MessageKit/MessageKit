@@ -137,49 +137,47 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     private func intermediateLayoutAttributes(for message: MessageType, at indexPath: IndexPath) -> MessageIntermediateLayoutAttributes {
 
         let cache = attributeCache(for: message.data)
-        let cachedAttributes = cache.object(forKey: message.messageId as NSString)
+        guard let cachedAttributes = cache.object(forKey: message.messageId as NSString) else {
+            let attributes = MessageIntermediateLayoutAttributes()
 
-        return cachedAttributes ?? createIntermediateLayoutAttributes(for: message, at: indexPath)
-    }
+            attributes.avatarSize = avatarSize(for: message, at: indexPath)
+            attributes.avatarPosition = avatarPosition(for: message, at: indexPath)
 
-    private func createIntermediateLayoutAttributes(for message: MessageType, at indexPath: IndexPath) -> MessageIntermediateLayoutAttributes {
+            attributes.messageContainerPadding = messageContainerPadding(for: message, at: indexPath)
+            attributes.messageContainerSize = messageContainerSize(for: message, at: indexPath)
 
-        let attributes = MessageIntermediateLayoutAttributes()
+            attributes.topLabelAlignment = cellTopLabelAlignment(for: message, at: indexPath)
+            attributes.topLabelSize = cellTopLabelSize(for: message, at: indexPath)
 
-        attributes.avatarSize = avatarSize(for: message, at: indexPath)
-        attributes.avatarPosition = avatarPosition(for: message, at: indexPath)
+            attributes.bottomLabelAlignment = cellBottomLabelAlignment(for: message, at: indexPath)
+            attributes.bottomLabelSize = cellBottomLabelSize(for: message, at: indexPath)
 
-        attributes.messageContainerPadding = messageContainerPadding(for: message, at: indexPath)
-        attributes.messageContainerSize = messageContainerSize(for: message, at: indexPath)
+            switch message.data {
+            case .emoji:
+                attributes.messageLabelFont = emojiLabelFont
+                attributes.messageLabelInsets = messageLabelInsets(for: message, at: indexPath)
+            case .text:
+                attributes.messageLabelFont = messageLabelFont
+                attributes.messageLabelInsets = messageLabelInsets(for: message, at: indexPath)
+            case .attributedText(let text):
+                attributes.messageLabelInsets = messageLabelInsets(for: message, at: indexPath)
+                attributes.messageLabelFont = messageLabelFont
+                guard !text.string.isEmpty else { return attributes }
+                guard let font = text.attribute(.font, at: 0, effectiveRange: nil) as? UIFont else { return attributes }
+                attributes.messageLabelFont = font
+            default:
+                break
+            }
 
-        attributes.topLabelAlignment = cellTopLabelAlignment(for: message, at: indexPath)
-        attributes.topLabelSize = cellTopLabelSize(for: message, at: indexPath)
+            if messagesLayoutDelegate.shouldCacheLayoutAttributes(for: message) {
+                let cache = attributeCache(for: message.data)
+                cache.setObject(attributes, forKey: message.messageId as NSString)
+            }
 
-        attributes.bottomLabelAlignment = cellBottomLabelAlignment(for: message, at: indexPath)
-        attributes.bottomLabelSize = cellBottomLabelSize(for: message, at: indexPath)
-
-        switch message.data {
-        case .emoji:
-            attributes.messageLabelFont = emojiLabelFont
-            attributes.messageLabelInsets = messageLabelInsets(for: message, at: indexPath)
-        case .text:
-            attributes.messageLabelFont = messageLabelFont
-            attributes.messageLabelInsets = messageLabelInsets(for: message, at: indexPath)
-        case .attributedText(let text):
-            attributes.messageLabelInsets = messageLabelInsets(for: message, at: indexPath)
-            attributes.messageLabelFont = messageLabelFont
-            guard !text.string.isEmpty else { return attributes }
-            guard let font = text.attribute(.font, at: 0, effectiveRange: nil) as? UIFont else { return attributes }
-            attributes.messageLabelFont = font
-        default:
-            break
+            return attributes
         }
 
-        let cache = attributeCache(for: message.data)
-        cache.setObject(attributes, forKey: message.messageId as NSString)
-
-        return attributes
-
+        return cachedAttributes
     }
 
     private func configure(attributes: MessagesCollectionViewLayoutAttributes) {
@@ -454,10 +452,23 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             let height = messagesLayoutDelegate.heightForLocation(message: message, at: indexPath, with: maxWidth, in: messagesCollectionView)
             messageContainerSize = CGSize(width: width, height: height)
         case .custom:
-            fatalError(MessageKitError.customDataUnresolvedSize)
+            return customMessageContainerSize(for: message, at: indexPath)
         }
 
         return messageContainerSize
+    }
+
+    /// Returns the size of the `MessageContainerView` in a `MessageCollectionViewCell`
+    /// for a given `IndexPath` and `MessageType` where the `MessageData` case is `.custom(Any?)`.
+    ///
+    /// - Note:
+    ///   Override this method to size the `MessageContainerView` for messages with `.custom` `MessageData`.
+    ///   The default implementation of this method returns `CGSize.zero`.
+    /// - Parameters:
+    ///   - message: The `MessageType` object for the cell.
+    ///   - indexPath: The `IndexPath` for the cell.
+    open func customMessageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+        return .zero
     }
 
     internal func messageLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {

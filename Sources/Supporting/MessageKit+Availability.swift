@@ -55,9 +55,4 @@ public extension MessagesLayoutDelegate {
     func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
         fatalError("cellBottomLabelAlignment(for:at:in) has been removed in MessageKit 0.14.0. Please use the incomingCellBottomLabelAlignment and outgoingCellBottomLabelAlignment properties on MessagesCollectionViewFlowLayout.")
     }
-
-    @available(*, deprecated: 0.14.0, message: "Removed in MessageKit 0.14.0. MessageKit no longer caches cell attributes as it leads to undefined behavior.")
-    func shouldCacheLayoutAttributes(for message: MessageType) -> Bool {
-        fatalError("shouldCacheLayoutAttributes is removed in MessageKit 0.14.0. This deprecation does not require a replacement method.")
-    }
 }
