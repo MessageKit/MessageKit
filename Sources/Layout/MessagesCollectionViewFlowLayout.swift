@@ -33,7 +33,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return MessagesCollectionViewLayoutAttributes.self
     }
 
-    /// The width of an item in the `MessagesCollectionView`.
     internal var itemWidth: CGFloat {
         guard let collectionView = collectionView else { return 0 }
         return collectionView.frame.width - sectionInset.left - sectionInset.right
@@ -114,9 +113,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             attributedTextSizeCache.countLimit = attributesCacheMaxSize
         }
     }
-
-    /// The `MessageCellLayoutContext` for the current cell.
-    internal var currentLayoutContext: MessageCellLayoutContext!
 
     // MARK: - Initializers
 
@@ -215,28 +211,15 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return isFromCurrentSender ? outgoingCellTopLabelAlignment : incomingCellTopLabelAlignment
     }
 
-    /// Returns the size of the `MessageCollectionViewCell`'s top label
-    /// for the `MessageType` at a given `IndexPath`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` for the given `IndexPath`.
-    ///   - indexPath: The `IndexPath` for the given `MessageType`.
-    ///
-    /// - Note: The default implementation of this method sizes the label to fit.
-    open func cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+
+    internal func cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let text = messagesDataSource.cellTopLabelAttributedText(for: message, at: indexPath)
         guard let topLabelText = text else { return .zero }
         let maxWidth = cellTopLabelMaxWidth(for: message, at: indexPath)
         return labelSize(for: topLabelText, considering: maxWidth)
     }
 
-    /// Returns the maximum width of the `MessageCollectionViewCell`'s top label
-    /// for the `MessageType` at a given `IndexPath`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` for the given `IndexPath`.
-    ///   - indexPath: The `IndexPath` for the given `MessageType`.
-    open func cellTopLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
+    internal func cellTopLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
         let alignment = cellTopLabelAlignment(for: message, at: indexPath)
         let position = avatarPosition(for: message, at: indexPath)
         let avatarWidth = avatarSize(for: message, at: indexPath).width
@@ -282,28 +265,14 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return isFromCurrentSender ? outgoingCellBottomLabelAlignment : incomingCellBottomLabelAlignment
     }
 
-    /// Returns the size of the `MessageCollectionViewCell`'s bottom label
-    /// for the `MessageType` at a given `IndexPath`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` for the given `IndexPath`.
-    ///   - indexPath: The `IndexPath` for the given `MessageType`.
-    ///
-    /// - Note: The default implementation of this method sizes the label to fit.
-    open func cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    internal func cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let text = messagesDataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
         guard let bottomLabelText = text else { return .zero }
         let maxWidth = cellBottomLabelMaxWidth(for: message, at: indexPath)
         return labelSize(for: bottomLabelText, considering: maxWidth)
     }
 
-    /// Returns the maximum width of the `MessageCollectionViewCell`'s bottom label
-    /// for the `MessageType` at a given `IndexPath`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` for the given `IndexPath`.
-    ///   - indexPath: The `IndexPath` for the given `MessageType`.
-    open func cellBottomLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
+    internal func cellBottomLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         let alignment = cellBottomLabelAlignment(for: message, at: indexPath)
         let avatarWidth = avatarSize(for: message, at: indexPath).width
@@ -355,13 +324,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return isFromCurrentSender ? outgoingMessagePadding : incomingMessagePadding
     }
 
-    /// Returns the maximum width of the `MessageContainerView` in a `MessageCollectionViewCell`
-    /// for the `MessageType` at a given `IndexPath`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` for the given `IndexPath`.
-    ///   - indexPath: The `IndexPath` for the given `MessageType`.
-    open func messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
+    internal func messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
         let avatarWidth = avatarSize(for: message, at: indexPath).width
         let messagePadding = messageContainerPadding(for: message, at: indexPath)
 
@@ -374,13 +337,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
 
-    /// Returns the size of the `MessageContainerView` in a `MessageCollectionViewCell`
-    /// for the `MessageType` at a given `IndexPath`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` for the given `IndexPath`.
-    ///   - indexPath: The `IndexPath` for the given `MessageType`.
-    open func messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    internal func messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let maxWidth = messageContainerMaxWidth(for: message, at: indexPath)
 
         var messageContainerSize: CGSize = .zero
@@ -420,12 +377,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - Cell Size
 
-    /// Returns the height of a `MessageCollectionViewCell`'s content at a given `IndexPath`
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` for the given `IndexPath`.
-    ///   - indexPath: The `IndexPath` for the given `MessageType`.
-    open func cellContentHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
+    internal func cellContentHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
         let avatarVerticalPosition = avatarPosition(for: message, at: indexPath).vertical
         let avatarHeight = avatarSize(for: message, at: indexPath).height
         let messageContainerHeight = messageContainerSize(for: message, at: indexPath).height
