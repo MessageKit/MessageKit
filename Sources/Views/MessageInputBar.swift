@@ -339,7 +339,7 @@ open class MessageInputBar: UIView {
     private func setupConstraints() {
         
         // The constraints within the MessageInputBar
-        separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 1)
+        separatorLine.addConstraints(left: leftAnchor, bottom: topStackView.topAnchor, right: rightAnchor)
         backgroundViewBottomAnchor = backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor)
         backgroundViewBottomAnchor?.isActive = true
         backgroundView.addConstraints(topStackView.bottomAnchor, left: leftAnchor, right: rightAnchor)
