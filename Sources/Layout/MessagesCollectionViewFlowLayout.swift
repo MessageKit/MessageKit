@@ -534,7 +534,9 @@ extension MessagesCollectionViewFlowLayout {
             let finalHeight = estimatedHeight.rounded(.up)
             let finalWidth = estimatedWidth > maxWidth ? maxWidth : estimatedWidth.rounded(.up)
 
-            return CGSize(width: finalWidth, height: finalHeight)
+            let size = CGSize(width: finalWidth, height: finalHeight)
+            attributedTextSizeCache.setObject(size as NSValue, forKey: attributedText.hash as NSNumber)
+            return size
         }
 
         return cachedSize
