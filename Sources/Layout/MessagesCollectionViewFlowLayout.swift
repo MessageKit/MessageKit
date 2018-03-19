@@ -44,12 +44,12 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     open var messageLabelFont: UIFont {
         didSet {
             emojiLabelFont = messageLabelFont.withSize(2 * messageLabelFont.pointSize)
+            textMessageAttributesCache.removeAllObjects()
+            attributedTextMessageAttributesCache.removeAllObjects()
+            emojiMessageAttributesCache.removeAllObjects()
         }
     }
 
-    /// The font to be used by `TextMessageCell` for `MessageData.emoji(String)` case.
-    ///
-    /// Note: The default value of this property is 2x the `messageLabelFont`.
     internal var emojiLabelFont: UIFont
 
     // MARK: - Layout
@@ -82,13 +82,13 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         didSet { customMessageAttributesCache.removeAllObjects() }
     }
 
-    let textMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
-    let attributedTextMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
-    let emojiMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
-    let photoMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
-    let videoMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
-    let locationMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
-    let customMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
+    private let textMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
+    private let attributedTextMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
+    private let emojiMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
+    private let photoMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
+    private let videoMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
+    private let locationMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
+    private let customMessageAttributesCache = NSCache<NSString, MessageIntermediateLayoutAttributes>()
 
     // MARK: - Initializers
 
@@ -135,7 +135,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             configure(attributes: attributes)
         }
         return attributes
-
     }
 
     // MARK: - Layout Invalidation
