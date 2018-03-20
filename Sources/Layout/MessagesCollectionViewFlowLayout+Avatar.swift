@@ -27,8 +27,7 @@ import Foundation
 // MARK: - Open
 
 extension MessagesCollectionViewFlowLayout {
-
-
+    
     /// Returns the `AvatarPosition` for the `MessageType` at a given `IndexPath`.
     ///
     /// - Parameters:

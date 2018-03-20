@@ -133,7 +133,6 @@ open class MessageLabel: UILabel {
     
     open internal(set) var transitInformationAttributes: [NSAttributedStringKey: Any] = defaultAttributes
 
-
     public func setAttributes(_ attributes: [NSAttributedStringKey: Any], detector: DetectorType) {
         switch detector {
         case .phoneNumber:
