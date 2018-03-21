@@ -11,6 +11,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Added `shouldManageSendButtonEnabledState` to `MessageInputBar` to disable automatically managing `MessageInputBar.sendButton`'s `isEnabled` state when text changes. (Default value is `true`).
 [#530](https://github.com/MessageKit/MessageKit/pull/530) by [@clayellis](https://github.com/clayellis).
 
+### Fixed
+
+- Fix wrong separated components in messageInputBar.
+[#577](https://github.com/MessageKit/MessageKit/pull/577) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 ## [[Prerelease] 0.13.1](https://github.com/MessageKit/MessageKit/releases/tag/0.13.1)
 
 ### Fixed
