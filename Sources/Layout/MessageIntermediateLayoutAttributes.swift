@@ -24,7 +24,7 @@
 
 import Foundation
 
-class MessageIntermediateLayoutAttributes {
+public class MessageIntermediateLayoutAttributes {
 
     var avatarSize: CGSize = .zero
     var avatarPosition = AvatarPosition(vertical: .cellBottom)
