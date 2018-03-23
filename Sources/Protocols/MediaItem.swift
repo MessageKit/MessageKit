@@ -23,24 +23,15 @@
  */
 
 import Foundation
-@testable import MessageKit
 
-class MockMessagesDataSource: MessagesDataSource {
+public protocol MediaItem {
 
-    var messages: [MessageType] = []
-    let senders: [Sender] = [Sender(id: "sender_1", displayName: "Sender 1"),
-                             Sender(id: "sender_2", displayName: "Sender 2")]
+    var url: URL? { get set }
 
-    func currentSender() -> Sender {
-        return senders[0]
-    }
+    var image: UIImage? { get set }
 
-    func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int {
-        return messages.count
-    }
+    var placeholderImage: UIImage { get set }
 
-    func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
-        return messages[indexPath.section]
-    }
+    var size: CGSize { get set }
 
 }

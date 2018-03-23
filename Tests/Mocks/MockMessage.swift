@@ -24,6 +24,7 @@
 
 import Foundation
 import CoreLocation
+@testable import MessageKit
 
 struct MockMessage: MessageType {
 

@@ -372,19 +372,15 @@ open class TextMessageSizeCalculator: MessageSizeCalculator {
 
 open class MediaMessageSizeCalculator: MessageSizeCalculator {
 
-    // TODO: - Figure out how we are going to size these
-    public var incomingMediaSize: CGSize = .zero
-    public var outgoingMediaSize: CGSize = .zero
-
     open override func messageContainerSize(for message: MessageType) -> CGSize {
         let maxWidth = messageContainerMaxWidth(for: message)
         switch message.data {
-        case .photo(_):
-            // TODO: - Implement actual sizing
-            return CGSize(width: maxWidth, height: 240)
-        case .video(_, _):
-            // TODO: - Implement actual sizing
-            return CGSize(width: maxWidth, height: 240)
+        case .photo(let item):
+            let width = min(item.size.width, maxWidth)
+            return CGSize(width: width, height: item.size.height)
+        case .video(let item):
+            let width = min(item.size.width, maxWidth)
+            return CGSize(width: width, height: item.size.height)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.data)")
         }

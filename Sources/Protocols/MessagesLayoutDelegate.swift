@@ -49,31 +49,6 @@ public protocol MessagesLayoutDelegate: AnyObject {
     /// The default value returned by this method is a size of `GGSize.zero`.
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
-    // MARK: - Media Messages
-
-    /// Specifies the width for a `MessageContainerView`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` that will be displayed by this cell.
-    ///   - indexPath: The `IndexPath` of the cell.
-    ///   - maxWidth: The max available width for the `MessageContainerView` respecting the cell's other content.
-    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-    ///
-    /// The default value returned by this method is the `maxWidth`.
-    func widthForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
-
-    /// Specifies the height for a `MessageContainerView`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` that will be displayed by this cell.
-    ///   - indexPath: The `IndexPath` of the cell.
-    ///   - maxWidth: The max available width for the `MessageContainerView` respecting the cell's other content.
-    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-    ///
-    /// The default value returned by this method uses `AVMakeRect(aspectRatio:insideRect:)` with a bounding
-    /// rect using the `maxWidth` and `.greatestFiniteMagnitude` for the height.
-    func heightForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
-
     // MARK: - Location Messages
 
     /// Specifies the width for a `MessageContainerView`.
@@ -123,22 +98,6 @@ public extension MessagesLayoutDelegate {
 
     func shouldCacheLayoutAttributes(for message: MessageType) -> Bool {
         return false
-    }
-
-    // MARK: - Media Messages Defaults
-
-    func widthForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return maxWidth
-    }
-
-    func heightForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        switch message.data {
-        case .photo(let image), .video(_, let image):
-            let boundingRect = CGRect(origin: .zero, size: CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
-            return AVMakeRect(aspectRatio: image.size, insideRect: boundingRect).height
-        default:
-            return 0
-        }
     }
 
     // MARK: - Location Messages Defaults
