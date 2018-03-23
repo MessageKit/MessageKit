@@ -31,7 +31,7 @@ import UIKit
  1. Changing the font, textAlignment or textContainerInset automatically performs the same modifications to the placeholderLabel
  2. Intended to be used in an `MessageInputBar`
  3. Default placeholder text is "New Message"
- 4. Will pass a pasted image it's `MessageInputBar`'s `InputManager`s
+ 4. Will pass a pasted image into the NSTextContainer
  */
 open class InputTextView: UITextView {
     
@@ -56,6 +56,7 @@ open class InputTextView: UITextView {
         return parseForAttachedImages()
     }
     
+    /// An array of String's or UIImage's in the order that they were typed
     open var components: [Any] {
         return parseForComponents()
     }
@@ -172,10 +173,10 @@ open class InputTextView: UITextView {
         
         addSubview(placeholderLabel)
         placeholderLabelConstraintSet = NSLayoutConstraintSet(
-            top:     placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: placeholderLabelInsets.top),
-            bottom:  placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -placeholderLabelInsets.bottom),
-            left:    placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderLabelInsets.left),
-            right:   placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -placeholderLabelInsets.right),
+            top: placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: placeholderLabelInsets.top),
+            bottom: placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -placeholderLabelInsets.bottom),
+            left: placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderLabelInsets.left),
+            right: placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -placeholderLabelInsets.right),
             centerX: placeholderLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             centerY: placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
             )
@@ -321,7 +322,13 @@ open class InputTextView: UITextView {
             } else {
                 let stringValue = attributedText.attributedSubstring(from: range).string.trimmingCharacters(in: .whitespacesAndNewlines)
                 if !stringValue.isEmpty {
-                    components.append(stringValue)
+                    if let lastComponent = components.last as? String {
+                        // Appent to the last component
+                        components[components.count - 1] = lastComponent + " " + stringValue
+                    } else {
+                        // Previous component was an image
+                        components.append(stringValue)
+                    }
                 }
             }
         }

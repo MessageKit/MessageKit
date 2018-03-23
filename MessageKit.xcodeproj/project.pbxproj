@@ -27,6 +27,14 @@
 		1FF377A420087C82004FD648 /* MessageKitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377A320087C82004FD648 /* MessageKitError.swift */; };
 		1FF377AA20087D78004FD648 /* MessagesViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377A920087D78004FD648 /* MessagesViewController+Menu.swift */; };
 		1FF377AC20087DA2004FD648 /* MessagesViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */; };
+		3868C1C82020657A0019336C /* InputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868C1C72020657A0019336C /* InputManager.swift */; };
+		3868C1CB202065970019336C /* AutocompleteManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868C1C9202065970019336C /* AutocompleteManagerDelegate.swift */; };
+		3868C1CC202065970019336C /* AutocompleteManagerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868C1CA202065970019336C /* AutocompleteManagerDataSource.swift */; };
+		3868C1CE202065B50019336C /* AutocompleteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868C1CD202065B50019336C /* AutocompleteManager.swift */; };
+		3868C1D0202065CC0019336C /* AutocompleteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868C1CF202065CC0019336C /* AutocompleteTableView.swift */; };
+		3868C1D2202065FD0019336C /* AutocompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868C1D1202065FC0019336C /* AutocompleteCell.swift */; };
+		3868C1D4202066B00019336C /* NSMutableAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3868C1D3202066B00019336C /* NSMutableAttributedString+Extensions.swift */; };
+		386ACB3F2026D29E00B71C50 /* AutocompleteManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386ACB3D2026D1A800B71C50 /* AutocompleteManagerTests.swift */; };
 		38C57C791F9AE3E50043CC03 /* SeparatorLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C57C781F9AE3E50043CC03 /* SeparatorLine.swift */; };
 		38C57C7C1F9AE4890043CC03 /* InputStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C57C7B1F9AE4870043CC03 /* InputStackView.swift */; };
 		88916B2D1CF0DF2F00469F91 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88916B221CF0DF2F00469F91 /* MessageKit.framework */; };
@@ -132,6 +140,14 @@
 		1FF377A320087C82004FD648 /* MessageKitError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitError.swift; sourceTree = "<group>"; };
 		1FF377A920087D78004FD648 /* MessagesViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Menu.swift"; sourceTree = "<group>"; };
 		1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Keyboard.swift"; sourceTree = "<group>"; };
+		3868C1C72020657A0019336C /* InputManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputManager.swift; sourceTree = "<group>"; };
+		3868C1C9202065970019336C /* AutocompleteManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteManagerDelegate.swift; sourceTree = "<group>"; };
+		3868C1CA202065970019336C /* AutocompleteManagerDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteManagerDataSource.swift; sourceTree = "<group>"; };
+		3868C1CD202065B50019336C /* AutocompleteManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteManager.swift; sourceTree = "<group>"; };
+		3868C1CF202065CC0019336C /* AutocompleteTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteTableView.swift; sourceTree = "<group>"; };
+		3868C1D1202065FC0019336C /* AutocompleteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteCell.swift; sourceTree = "<group>"; };
+		3868C1D3202066B00019336C /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
+		386ACB3D2026D1A800B71C50 /* AutocompleteManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteManagerTests.swift; sourceTree = "<group>"; };
 		38C57C781F9AE3E50043CC03 /* SeparatorLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorLine.swift; sourceTree = "<group>"; };
 		38C57C7B1F9AE4870043CC03 /* InputStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputStackView.swift; sourceTree = "<group>"; };
 		88916B221CF0DF2F00469F91 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -230,6 +246,7 @@
 		2EB618F01F84676A007FBA0E /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				3868C1D1202065FC0019336C /* AutocompleteCell.swift */,
 				B7A03F381F866946006AEF79 /* LocationMessageCell.swift */,
 				B7A03F391F866946006AEF79 /* MediaMessageCell.swift */,
 				B7A03F7A1F866B85006AEF79 /* MessageCollectionViewCell.swift */,
@@ -302,6 +319,7 @@
 		8962AC731F87AB230030B058 /* ModelTests */ = {
 			isa = PBXGroup;
 			children = (
+				386ACB3D2026D1A800B71C50 /* AutocompleteManagerTests.swift */,
 				8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */,
 				8962AC751F87AB230030B058 /* MessageStyleTests.swift */,
 			);
@@ -372,6 +390,7 @@
 				0EE91E651FDEC887005420A2 /* CGRect+Extensions.swift */,
 				B7A03F671F8669EB006AEF79 /* Bundle+Extensions.swift */,
 				B7A03F681F8669EB006AEF79 /* NSAttributedString+Extensions.swift */,
+				3868C1D3202066B00019336C /* NSMutableAttributedString+Extensions.swift */,
 				B7A03F691F8669EB006AEF79 /* String+Extensions.swift */,
 				B7A03F641F8669EB006AEF79 /* UICollectionView+Extensions.swift */,
 				B7A03F651F8669EB006AEF79 /* UIColor+Extensions.swift */,
@@ -384,6 +403,7 @@
 		B09643991F295D58004D0129 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3868C1CD202065B50019336C /* AutocompleteManager.swift */,
 				B7A03F1C1F866895006AEF79 /* Avatar.swift */,
 				1F82D1421FB1B75B00B81A88 /* AvatarPosition.swift */,
 				B7A03F211F866895006AEF79 /* DetectorType.swift */,
@@ -404,6 +424,7 @@
 			children = (
 				2EB618F01F84676A007FBA0E /* Cells */,
 				2EB618F11F846899007FBA0E /* Headers & Footers */,
+				3868C1CF202065CC0019336C /* AutocompleteTableView.swift */,
 				B7A03F3E1F86694F006AEF79 /* AvatarView.swift */,
 				B7A03F411F86694F006AEF79 /* InputBarItem.swift */,
 				B7A03F401F86694F006AEF79 /* InputTextView.swift */,
@@ -421,6 +442,8 @@
 		B096439B1F295D82004D0129 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				3868C1CA202065970019336C /* AutocompleteManagerDataSource.swift */,
+				3868C1C9202065970019336C /* AutocompleteManagerDelegate.swift */,
 				B7A03F521F8669C9006AEF79 /* MessageCellDelegate.swift */,
 				B7A03F581F8669CA006AEF79 /* MessageInputBarDelegate.swift */,
 				B7A03F551F8669C9006AEF79 /* MessageLabelDelegate.swift */,
@@ -428,6 +451,7 @@
 				B7A03F561F8669C9006AEF79 /* MessagesDisplayDelegate.swift */,
 				B7A03F541F8669C9006AEF79 /* MessagesLayoutDelegate.swift */,
 				B7A03F511F8669C9006AEF79 /* MessageType.swift */,
+				3868C1C72020657A0019336C /* InputManager.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -594,6 +618,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3868C1CE202065B50019336C /* AutocompleteManager.swift in Sources */,
 				B7A03F3C1F866946006AEF79 /* LocationMessageCell.swift in Sources */,
 				1FF377AA20087D78004FD648 /* MessagesViewController+Menu.swift in Sources */,
 				38C57C7C1F9AE4890043CC03 /* InputStackView.swift in Sources */,
@@ -601,10 +626,13 @@
 				B7A03F6F1F8669EB006AEF79 /* String+Extensions.swift in Sources */,
 				1FAC348A201E4DE7000A1504 /* MessagesCollectionViewFlowLayout+Avatar.swift in Sources */,
 				B7A03F491F86694F006AEF79 /* InputBarItem.swift in Sources */,
+				3868C1C82020657A0019336C /* InputManager.swift in Sources */,
 				B7A03F601F8669CA006AEF79 /* MessagesDisplayDelegate.swift in Sources */,
 				B7A03F5C1F8669CA006AEF79 /* MessageCellDelegate.swift in Sources */,
 				1FF377A420087C82004FD648 /* MessageKitError.swift in Sources */,
 				B7A03F4A1F86694F006AEF79 /* MessageInputBar.swift in Sources */,
+				3868C1D2202065FD0019336C /* AutocompleteCell.swift in Sources */,
+				3868C1CB202065970019336C /* AutocompleteManagerDelegate.swift in Sources */,
 				B7A03F4B1F86694F006AEF79 /* MessageContainerView.swift in Sources */,
 				B7A03F281F866895006AEF79 /* LocationMessageSnapshotOptions.swift in Sources */,
 				1FAC3490201E50DF000A1504 /* MessageCellLayoutContext.swift in Sources */,
@@ -617,6 +645,7 @@
 				1FCA6D30201C1CC900BC3480 /* UIEdgeInsets+Extensions.swift in Sources */,
 				B7A03F3D1F866946006AEF79 /* MediaMessageCell.swift in Sources */,
 				B7A03F331F866940006AEF79 /* MessageDateHeaderView.swift in Sources */,
+				3868C1CC202065970019336C /* AutocompleteManagerDataSource.swift in Sources */,
 				B7A03F2E1F866895006AEF79 /* MessageData.swift in Sources */,
 				B7A03F7B1F866B85006AEF79 /* MessageCollectionViewCell.swift in Sources */,
 				B7A03F6B1F8669EB006AEF79 /* UIColor+Extensions.swift in Sources */,
@@ -629,6 +658,7 @@
 				8962AC9C1F87ABC60030B058 /* MockMessage.swift in Sources */,
 				B7A03F611F8669CA006AEF79 /* MessagesDataSource.swift in Sources */,
 				B7A03F6E1F8669EB006AEF79 /* NSAttributedString+Extensions.swift in Sources */,
+				3868C1D0202065CC0019336C /* AutocompleteTableView.swift in Sources */,
 				B7A03F471F86694F006AEF79 /* MessageLabel.swift in Sources */,
 				B7A03F5F1F8669CA006AEF79 /* MessageLabelDelegate.swift in Sources */,
 				B7A03F4C1F86694F006AEF79 /* PlayButtonView.swift in Sources */,
@@ -645,6 +675,7 @@
 				B7A03F731F866A06006AEF79 /* MessageKit+Availability.swift in Sources */,
 				B7A03F2D1F866895006AEF79 /* LabelAlignment.swift in Sources */,
 				38C57C791F9AE3E50043CC03 /* SeparatorLine.swift in Sources */,
+				3868C1D4202066B00019336C /* NSMutableAttributedString+Extensions.swift in Sources */,
 				B7A03F2C1F866895006AEF79 /* DetectorType.swift in Sources */,
 				B7A03F271F866895006AEF79 /* Avatar.swift in Sources */,
 				1FAC348C201E4F88000A1504 /* MessagesCollectionViewFlowLayout+MessageContainerView.swift in Sources */,
@@ -670,6 +701,7 @@
 				1F066E1D1FDA3C1700E11013 /* SenderSpec.swift in Sources */,
 				8962AC8A1F87AB7D0030B058 /* MessagesCollectionViewTests.swift in Sources */,
 				8962AC8D1F87AB7D0030B058 /* MessageCollectionViewCellTests.swift in Sources */,
+				386ACB3F2026D29E00B71C50 /* AutocompleteManagerTests.swift in Sources */,
 				8962AC991F87AB860030B058 /* MessagesDisplayDelegateTests.swift in Sources */,
 				8962AC8B1F87AB7D0030B058 /* InputBarItemTests.swift in Sources */,
 				8962AC951F87AB860030B058 /* MessageStyleTests.swift in Sources */,

@@ -33,6 +33,15 @@ class ConversationViewController: MessagesViewController {
     var messageList: [MockMessage] = []
     
     var isTyping = false
+    
+    /// The object that manages autocomplete
+    open lazy var autocompleteManager: AutocompleteManager = { [unowned self] in
+        let manager = AutocompleteManager(for: self.messageInputBar.inputTextView)
+        manager.delegate = self
+        manager.dataSource = self
+        manager.autocompletePrefixes = ["@","#"]
+        return manager
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +64,7 @@ class ConversationViewController: MessagesViewController {
         messagesCollectionView.messageCellDelegate = self
         messageInputBar.delegate = self
 
-        messageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
+        messageInputBar.sendButton.setTitleColor(UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1), for: .normal)
         scrollsToBottomOnKeybordBeginsEditing = true // default false
         maintainPositionOnKeyboardFrameChanged = true // default false
         
@@ -72,6 +81,7 @@ class ConversationViewController: MessagesViewController {
                             target: self,
                             action: #selector(ConversationViewController.handleTyping))
         ]
+        messageInputBar.inputManagers = [autocompleteManager]
     }
     
     @objc func handleTyping() {
@@ -232,6 +242,14 @@ class ConversationViewController: MessagesViewController {
         newMessageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
         newMessageInputBar.delegate = self
         messageInputBar = newMessageInputBar
+        
+        /// The object that manages autocomplete
+        autocompleteManager = AutocompleteManager(for: messageInputBar.inputTextView)
+        autocompleteManager.delegate = self
+        autocompleteManager.dataSource = self
+        autocompleteManager.autocompletePrefixes = ["@","#"]
+        messageInputBar.inputManagers = [autocompleteManager]
+        
         reloadInputViews()
     }
     
@@ -452,29 +470,70 @@ extension ConversationViewController: MessageInputBarDelegate {
 
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
         
-        // Each NSTextAttachment that contains an image will count as one empty character in the text: String
-        
         for component in inputBar.inputTextView.components {
-            
+
             if let image = component as? UIImage {
-                
+
                 let imageMessage = MockMessage(image: image, sender: currentSender(), messageId: UUID().uuidString, date: Date())
                 messageList.append(imageMessage)
                 messagesCollectionView.insertSections([messageList.count - 1])
-                
+
             } else if let text = component as? String {
-                
+
                 let attributedText = NSAttributedString(string: text, attributes: [.font: UIFont.systemFont(ofSize: 15), .foregroundColor: UIColor.blue])
-                
+
                 let message = MockMessage(attributedText: attributedText, sender: currentSender(), messageId: UUID().uuidString, date: Date())
                 messageList.append(message)
                 messagesCollectionView.insertSections([messageList.count - 1])
             }
-            
+
         }
         
         inputBar.inputTextView.text = String()
         messagesCollectionView.scrollToBottom()
     }
 
+}
+
+extension ConversationViewController: AutocompleteManagerDelegate, AutocompleteManagerDataSource {
+    
+    // MARK: - AutocompleteManagerDataSource
+    
+    func autocompleteManager(_ manager: AutocompleteManager, autocompleteSourceFor prefix: Character) -> [AutocompleteCompletion] {
+        
+        if prefix == "@" {
+            return ["nathan.tannar", "steve.jobs", "tim.cook", "steven.deutsch","dan.leonard", "zhongwuzw"].map {
+//                let displayText = "Some other string"
+//                return AutocompleteCompletion($0, displayText: displayText)
+                return AutocompleteCompletion($0)
+            }
+        } else if prefix == "#" {
+            return ["Apple", "Microsoft","MessageKit","GitHub","OpenSource","Swift"].map {
+                return AutocompleteCompletion($0)
+            }
+        }
+        return []
+    }
+    
+    // MARK: - AutocompleteManagerDelegate
+    
+    func autocompleteManager(_ manager: AutocompleteManager, shouldBecomeVisible: Bool) {
+        setAutocompleteManager(active: shouldBecomeVisible)
+    }
+    
+    // MARK: - AutocompleteManagerDelegate Helper
+    
+    func setAutocompleteManager(active: Bool) {
+        
+        let topStackView = messageInputBar.topStackView
+        if active && !topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
+            topStackView.insertArrangedSubview(autocompleteManager.tableView, at: topStackView.arrangedSubviews.count)
+            topStackView.layoutIfNeeded()
+            messageInputBar.invalidateIntrinsicContentSize()
+        } else if !active && topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
+            topStackView.removeArrangedSubview(autocompleteManager.tableView)
+            topStackView.layoutIfNeeded()
+            messageInputBar.invalidateIntrinsicContentSize()
+        }
+    }
 }

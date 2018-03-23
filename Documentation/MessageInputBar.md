@@ -90,6 +90,44 @@ private var onEnabledAction: InputBarButtonItemAction?
 private var onDisabledAction: InputBarButtonItemAction?
 ```
 
+## AutocompleteManager
+
+The `AutocompleteManager` holds the logic and views required for the autocomplete functionality which makes it easy to subclass and modify if you wish to add additional logic! Then you can set the `messageInputBar`'s autocompleteManager property to your own
+
+See the example for a use case
+
+```swift
+/// If the autocomplete matches should be made by casting the strings to lowercase
+open var isCaseSensitive = false
+
+/// When TRUE, autocompleted text will be highlighted with the UITextView's tintColor with an alpha component
+open var highlightAutocompletes = true
+
+/// The max visible rows visible in the autocomplete table before the user has to scroll throught them
+open var maxVisibleRows = 3
+
+/// The prefices that the manager will recognize
+open var autocompletePrefixes: [Character] = ["@","#"]
+```
+
+### AutocompleteManagerDataSource
+
+By default an `AutocompleteCell` is returned to the `AutocompleteManager` thats title labels text is bolded to match the entered text.
+
+```swift
+// The autocomplete options for a given prefix. Called once when a prefix is entered and then cached until the prefix is unregistered
+func autocomplete(_ autocompleteManager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String]
+
+// Configure the cell to display in the `UITableView`
+func autocomplete(_ autocompleteManager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell
+```
+
+### AutocompleteManagerDelegate
+
+```swift
+func autocomplete(_ autocompleteManager: AutocompleteManager, didComplete prefix: Character, with text: String)
+```
+
 ## Further Questions?
 
 Contact the components author [Nathan Tannar](https://github.com/nathantannar4) on the Slack channel.
