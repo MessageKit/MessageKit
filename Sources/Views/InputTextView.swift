@@ -166,6 +166,7 @@ open class InputTextView: UITextView {
         setupObservers()
     }
     
+    // swiftlint:disable colon
     /// Adds the placeholderLabel to the view and sets up its initial constraints
     private func setupPlaceholderLabel() {
         
@@ -182,6 +183,7 @@ open class InputTextView: UITextView {
         placeholderLabelConstraintSet?.centerY?.priority = .defaultLow
         placeholderLabelConstraintSet?.activate()
     }
+    // swiftlint:enable colon
     
     /// Adds the required notification observers
     private func setupObservers() {
