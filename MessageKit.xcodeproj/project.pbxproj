@@ -24,6 +24,7 @@
 		1FD589602064E08A004B5081 /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD5895F2064E08A004B5081 /* MediaItem.swift */; };
 		1FD589612064E1B5004B5081 /* MockMessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC7A1F87AB230030B058 /* MockMessagesDataSource.swift */; };
 		1FD589622064E1B9004B5081 /* MockMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC7B1F87AB230030B058 /* MockMessage.swift */; };
+		1FD5896420660C1C004B5081 /* LocationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD5896320660C1C004B5081 /* LocationItem.swift */; };
 		1FF377A420087C82004FD648 /* MessageKitError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377A320087C82004FD648 /* MessageKitError.swift */; };
 		1FF377AA20087D78004FD648 /* MessagesViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377A920087D78004FD648 /* MessagesViewController+Menu.swift */; };
 		1FF377AC20087DA2004FD648 /* MessagesViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */; };
@@ -125,6 +126,7 @@
 		1FD5895B205F5B8F004B5081 /* MessageCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellLayout.swift; sourceTree = "<group>"; };
 		1FD5895D205F6E77004B5081 /* MessageIntermediateLayoutAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageIntermediateLayoutAttributes.swift; sourceTree = "<group>"; };
 		1FD5895F2064E08A004B5081 /* MediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
+		1FD5896320660C1C004B5081 /* LocationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationItem.swift; sourceTree = "<group>"; };
 		1FF377A320087C82004FD648 /* MessageKitError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitError.swift; sourceTree = "<group>"; };
 		1FF377A920087D78004FD648 /* MessagesViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Menu.swift"; sourceTree = "<group>"; };
 		1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Keyboard.swift"; sourceTree = "<group>"; };
@@ -425,6 +427,7 @@
 				B7A03F541F8669C9006AEF79 /* MessagesLayoutDelegate.swift */,
 				B7A03F511F8669C9006AEF79 /* MessageType.swift */,
 				1FD5895F2064E08A004B5081 /* MediaItem.swift */,
+				1FD5896320660C1C004B5081 /* LocationItem.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -622,6 +625,7 @@
 				B7A03F471F86694F006AEF79 /* MessageLabel.swift in Sources */,
 				B7A03F5F1F8669CA006AEF79 /* MessageLabelDelegate.swift in Sources */,
 				B7A03F4C1F86694F006AEF79 /* PlayButtonView.swift in Sources */,
+				1FD5896420660C1C004B5081 /* LocationItem.swift in Sources */,
 				B7A03F291F866895006AEF79 /* Sender.swift in Sources */,
 				B7A03F4F1F86697C006AEF79 /* MessagesViewController.swift in Sources */,
 				B7A03F251F866895006AEF79 /* NSConstraintLayoutSet.swift in Sources */,
