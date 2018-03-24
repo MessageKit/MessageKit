@@ -33,7 +33,20 @@ the `MessageData.location` case.
  `isEnabled` state when text changes. (Default value is `true`).
 [#530](https://github.com/MessageKit/MessageKit/pull/530) by [@clayellis](https://github.com/clayellis).
 
+- Added two new methods `cellTopLabelHeight(for:at:in)` and `cellBottomLabelHeight(for:at:in)` to `MessagesLayoutDelegate`
+[#580](https://github.com/MessageKit/MessageKit/pull/580) by [@SD10](https://github.com/sd10).
+
+- Added new class `InsetLabel`.
+[#580](https://github.com/MessageKit/MessageKit/pull/580) by [@SD10](https://github.com/sd10).
+
 ### Changed
+
+- **Breaking Change** Changed `LabelAlignment` to be a `struct` with properties of 
+`textAlignment: NSTextAlignment` and `textInsets: UIEdgeInsets` to position the text in the `cellTopLabel` and `cellBottomLabel`.
+[#580](https://github.com/MessageKit/MessageKit/pull/580) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** The type of `cellTopLabel` and `cellBottomLabel` has been changed to `InsetLabel`.
+[#580](https://github.com/MessageKit/MessageKit/pull/580) by [@SD10](https://github.com/sd10).
 
 - The `MessageData.emoji` case no longer uses a default font of 2x the `messageLabelFont` size.
 You must now set this font explicitly through the `emojiMessageSizeCalculator` on `MessagesCollectionViewFlowLayout`.

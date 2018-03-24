@@ -129,7 +129,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - Top Label
 
-    internal func cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    open func cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let layoutDelegate = messagesLayout.messagesLayoutDelegate
         let collectionView = messagesLayout.messagesCollectionView
         let height = layoutDelegate.cellTopLabelHeight(for: message, at: indexPath, in: collectionView)
