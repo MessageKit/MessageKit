@@ -38,14 +38,16 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return collectionView.frame.width - sectionInset.left - sectionInset.right
     }
 
-
     // MARK: - Initializers
 
     public override init() {
         super.init()
 
-        mediaMessageSizeCalculator.layout = self
         textMessageSizeCalculator.layout = self
+        attributedTextMessageSizeCalculator.layout = self
+        emojiMessageSizeCalculator.layout = self
+        photoMessageSizeCalculator.layout = self
+        videoMessageSizeCalculator.layout = self
         locationMessageSizeCalculator.layout = self
 
         sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
@@ -106,26 +108,35 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     // MARK: - Cell Sizing
 
     var textMessageSizeCalculator = TextMessageSizeCalculator()
-    var mediaMessageSizeCalculator = MediaMessageSizeCalculator()
+    var attributedTextMessageSizeCalculator = TextMessageSizeCalculator()
+    var emojiMessageSizeCalculator = TextMessageSizeCalculator()
+    var photoMessageSizeCalculator = MediaMessageSizeCalculator()
+    var videoMessageSizeCalculator = MediaMessageSizeCalculator()
     var locationMessageSizeCalculator = LocationMessageSizeCalculator()
 
     open func cellSizeCalculatorForItem(at indexPath: IndexPath) -> MessageSizeCalculator {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         switch message.data {
-        case .text, .attributedText, .emoji:
+        case .text:
             return textMessageSizeCalculator
-        case .photo, .video:
-            return mediaMessageSizeCalculator
+        case .attributedText:
+            return attributedTextMessageSizeCalculator
+        case .emoji:
+            return emojiMessageSizeCalculator
+        case .photo:
+            return photoMessageSizeCalculator
+        case .video:
+            return videoMessageSizeCalculator
         case .location:
             return locationMessageSizeCalculator
         case .custom:
-            fatalError("")
+            fatalError("Must return a CellSizeCalculator for MessageData.custom(Any?)")
         }
     }
 
     open func sizeForItem(at indexPath: IndexPath) -> CGSize {
         let calculator = cellSizeCalculatorForItem(at: indexPath)
-        return calculator.sizeForItem(at:indexPath)
+        return calculator.sizeForItem(at: indexPath)
     }
 }
 

@@ -22,27 +22,15 @@
  SOFTWARE.
  */
 
-import UIKit
-
-open class CellSizeCalculator {
-
-    open weak var layout: UICollectionViewFlowLayout?
-
-    public init(layout: UICollectionViewFlowLayout? = nil) {
-        self.layout = layout
-    }
-
-    open func configure(attributes: UICollectionViewLayoutAttributes) {
-        // No-op default
-    }
-
-    open func sizeForItem(at indexPath: IndexPath) -> CGSize {
-        return .zero
-    }
-
-}
+import Foundation
 
 open class MessageSizeCalculator: CellSizeCalculator {
+
+    public var layout: UICollectionViewFlowLayout?
+
+    public init(layout: MessagesCollectionViewFlowLayout? = nil) {
+        self.layout = layout
+    }
 
     public var incomingAvatarSize = CGSize(width: 30, height: 30)
     public var outgoingAvatarSize = CGSize(width: 30, height: 30)
@@ -59,14 +47,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
     public var incomingCellBottomLabelAlignment = LabelAlignment.messageTrailing(.zero)
     public var outgoingCellBottomLabelAlignment = LabelAlignment.messageLeading(.zero)
 
-    internal var messagesLayout: MessagesCollectionViewFlowLayout {
-        guard let layout = layout as? MessagesCollectionViewFlowLayout else {
-            fatalError("Layout object is missing or is not a MessagesCollectionViewFlowLayout")
-        }
-        return layout
-    }
-
-    open override func configure(attributes: UICollectionViewLayoutAttributes) {
+    open func configure(attributes: UICollectionViewLayoutAttributes) {
         guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
 
         let dataSource = messagesLayout.messagesDataSource
@@ -85,14 +66,14 @@ open class MessageSizeCalculator: CellSizeCalculator {
         attributes.bottomLabelSize = cellBottomLabelSize(for: message, at: indexPath)
     }
 
-    open override func sizeForItem(at indexPath: IndexPath) -> CGSize {
+    open func sizeForItem(at indexPath: IndexPath) -> CGSize {
         let dataSource = messagesLayout.messagesDataSource
         let message = dataSource.messageForItem(at: indexPath, in: messagesLayout.messagesCollectionView)
         let itemHeight = cellContentHeight(for: message, at: indexPath)
         return CGSize(width: messagesLayout.itemWidth, height: itemHeight)
     }
 
-    internal func cellContentHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
+    open func cellContentHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         let avatarVerticalPosition = avatarPosition(for: message).vertical
         let avatarHeight = avatarSize(for: message).height
@@ -274,10 +255,19 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return .zero
     }
 
-    internal func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
+    open func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
         let avatarWidth = avatarSize(for: message).width
         let messagePadding = messageContainerPadding(for: message)
         return messagesLayout.itemWidth - avatarWidth - messagePadding.horizontal
+    }
+
+    // MARK: - Helpers
+
+    internal var messagesLayout: MessagesCollectionViewFlowLayout {
+        guard let layout = layout as? MessagesCollectionViewFlowLayout else {
+            fatalError("Layout object is missing or is not a MessagesCollectionViewFlowLayout")
+        }
+        return layout
     }
 
     internal func labelSize(for attributedText: NSAttributedString, considering maxWidth: CGFloat) -> CGSize {
@@ -290,124 +280,3 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return CGSize(width: finalWidth, height: finalHeight)
     }
 }
-
-open class TextMessageSizeCalculator: MessageSizeCalculator {
-
-    public var incomingMessageLabelInsets = UIEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)
-    public var outgoingMessageLabelInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)
-
-    public var messageLabelFont = UIFont.preferredFont(forTextStyle: .body) {
-        didSet {
-            emojiLabelFont = messageLabelFont.withSize(2 * messageLabelFont.pointSize)
-        }
-    }
-
-    internal var emojiLabelFont: UIFont
-
-    public init() {
-        emojiLabelFont = messageLabelFont.withSize(2 * messageLabelFont.pointSize)
-    }
-
-    internal func messageLabelInsets(for message: MessageType) -> UIEdgeInsets {
-        let dataSource = messagesLayout.messagesDataSource
-        let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
-        return isFromCurrentSender ? outgoingMessageLabelInsets : incomingMessageLabelInsets
-    }
-
-    internal override func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
-        let maxWidth = super.messageContainerMaxWidth(for: message)
-        let textInsets = messageLabelInsets(for: message)
-        return maxWidth - textInsets.horizontal
-    }
-
-    open override func messageContainerSize(for message: MessageType) -> CGSize {
-        let maxWidth = messageContainerMaxWidth(for: message)
-
-        var messageContainerSize: CGSize
-        let attributedText: NSAttributedString
-
-        switch message.data {
-        case .text(let text):
-            attributedText = NSAttributedString(string: text, attributes: [.font: messageLabelFont])
-        case .attributedText(let text):
-            attributedText = text
-        case .emoji(let text):
-            attributedText = NSAttributedString(string: text, attributes: [.font: emojiLabelFont])
-        default:
-            fatalError("messageContainerSize received unhandled MessageDataType: \(message.data)")
-        }
-
-        messageContainerSize = labelSize(for: attributedText, considering: maxWidth)
-
-        let messageInsets = messageLabelInsets(for: message)
-        messageContainerSize.width += messageInsets.horizontal
-        messageContainerSize.height += messageInsets.vertical
-
-        return messageContainerSize
-    }
-
-    open override func configure(attributes: UICollectionViewLayoutAttributes) {
-        super.configure(attributes: attributes)
-        guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
-
-        let dataSource = messagesLayout.messagesDataSource
-        let indexPath = attributes.indexPath
-        let message = dataSource.messageForItem(at: indexPath, in: messagesLayout.messagesCollectionView)
-
-        attributes.messageLabelInsets = messageLabelInsets(for: message)
-        attributes.messageLabelFont = messageLabelFont
-
-        switch message.data {
-        case .attributedText(let text):
-            guard !text.string.isEmpty else { return }
-            guard let font = text.attribute(.font, at: 0, effectiveRange: nil) as? UIFont else { return }
-            attributes.messageLabelFont = font
-        case .emoji:
-            attributes.messageLabelFont = emojiLabelFont
-        default:
-            break
-        }
-    }
-}
-
-open class MediaMessageSizeCalculator: MessageSizeCalculator {
-
-    open override func messageContainerSize(for message: MessageType) -> CGSize {
-        let maxWidth = messageContainerMaxWidth(for: message)
-        let sizeForMediaItem = { (maxWidth: CGFloat, item: MediaItem) -> CGSize in
-            if maxWidth < item.size.width {
-                // Maintain the ratio if width is too great
-                let height = maxWidth * item.size.height / item.size.width
-                return CGSize(width: maxWidth, height: height)
-            }
-            return item.size
-        }
-        switch message.data {
-        case .photo(let item):
-            return sizeForMediaItem(maxWidth, item)
-        case .video(let item):
-            return sizeForMediaItem(maxWidth, item)
-        default:
-            fatalError("messageContainerSize received unhandled MessageDataType: \(message.data)")
-        }
-    }
-}
-
-open class LocationMessageSizeCalculator: MessageSizeCalculator {
-
-    open override func messageContainerSize(for message: MessageType) -> CGSize {
-        switch message.data {
-        case .location(let item):
-            let maxWidth = messageContainerMaxWidth(for: message)
-            if maxWidth < item.size.width {
-                // Maintain the ratio if width is too great
-                let height = maxWidth * item.size.height / item.size.width
-                return CGSize(width: maxWidth, height: height)
-            }
-            return item.size
-        default:
-            fatalError("messageContainerSize received unhandled MessageDataType: \(message.data)")
-        }
-    }
-}
-

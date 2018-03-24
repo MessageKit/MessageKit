@@ -49,7 +49,6 @@ public protocol MessagesLayoutDelegate: AnyObject {
     /// The default value returned by this method is a size of `GGSize.zero`.
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
-
     @available(*, deprecated: 1.0, message: "avatarSize(for:at:in) has been removed in MessageKit 1.0")
     func shouldCacheLayoutAttributes(for message: MessageType) -> Bool
 

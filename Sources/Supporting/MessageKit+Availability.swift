@@ -70,4 +70,3 @@ public extension MessagesLayoutDelegate {
         fatalError("shouldCacheLayoutAttributes(for:) has been removed in MessageKit 1.0.")
     }
 }
-
