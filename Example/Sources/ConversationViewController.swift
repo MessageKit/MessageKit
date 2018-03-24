@@ -37,7 +37,7 @@ class ConversationViewController: MessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        let messagesToFetch = UserDefaults.standard.mockMessagesCount()
+        let messagesToFetch = 10000 //UserDefaults.standard.mockMessagesCount()
         
         DispatchQueue.global(qos: .userInitiated).async {
             SampleData.shared.getMessages(count: messagesToFetch) { messages in

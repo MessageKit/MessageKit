@@ -39,14 +39,14 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         return containerView
     }()
 
-    open var cellTopLabel: UILabel = {
-        let label = UILabel()
+    open var cellTopLabel: InsetLabel = {
+        let label = InsetLabel()
         label.numberOfLines = 0
         return label
     }()
 
-    open var cellBottomLabel: UILabel = {
-        let label = UILabel()
+    open var cellBottomLabel: InsetLabel = {
+        let label = InsetLabel()
         label.numberOfLines = 0
         return label
     }()
@@ -185,7 +185,7 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
         guard attributes.messageContainerSize != .zero else { return }
 
         var origin: CGPoint = .zero
-        origin.y = attributes.topLabelSize.height + attributes.messageContainerPadding.top + attributes.topLabelAlignment.insets.vertical
+        origin.y = attributes.topLabelSize.height + attributes.messageContainerPadding.top
 
         switch attributes.avatarPosition.horizontal {
         case .cellLeading:
@@ -204,28 +204,10 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
     open func layoutTopLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
         guard attributes.topLabelSize != .zero else { return }
 
-        let topLabelAlignment = attributes.topLabelAlignment
-        let topLabelPadding = topLabelAlignment.insets
-        let topLabelSize = attributes.topLabelSize
+        cellTopLabel.textAlignment = attributes.topLabelAlignment.textAlignment
+        cellTopLabel.textInsets = attributes.topLabelAlignment.textInsets
 
-        var origin: CGPoint = .zero
-
-        origin.y = topLabelPadding.top
-
-        switch attributes.topLabelAlignment {
-        case .cellLeading:
-            origin.x = topLabelPadding.left
-        case .cellCenter:
-            origin.x = (attributes.frame.width/2) + topLabelPadding.left - topLabelPadding.right
-        case .cellTrailing:
-            origin.x = attributes.frame.width - topLabelSize.width - topLabelPadding.right
-        case .messageLeading: // Needs messageContainerView frame to be set
-            origin.x = messageContainerView.frame.minX + topLabelPadding.left
-        case .messageTrailing: // Needs messageContainerView frame to be set
-            origin.x = messageContainerView.frame.maxX - topLabelSize.width - topLabelPadding.right
-        }
-
-        cellTopLabel.frame = CGRect(origin: origin, size: topLabelSize)
+        cellTopLabel.frame = CGRect(origin: .zero, size: attributes.topLabelSize)
     }
 
     /// Positions the cell's bottom label.
@@ -233,27 +215,13 @@ open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusab
     open func layoutBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
         guard attributes.bottomLabelSize != .zero else { return }
 
-        let bottomLabelAlignment = attributes.bottomLabelAlignment
-        let bottomLabelPadding = bottomLabelAlignment.insets
-        let bottomLabelSize = attributes.bottomLabelSize
+        cellBottomLabel.textAlignment = attributes.bottomLabelAlignment.textAlignment
+        cellBottomLabel.textInsets = attributes.bottomLabelAlignment.textInsets
 
-        var origin: CGPoint = .zero
+        let y = messageContainerView.frame.maxY + attributes.messageContainerPadding.bottom
+        let origin = CGPoint(x: 0, y: y)
 
-        origin.y = messageContainerView.frame.maxY + attributes.messageContainerPadding.bottom + bottomLabelPadding.top
 
-        switch bottomLabelAlignment {
-        case .cellLeading:
-            origin.x = bottomLabelPadding.left
-        case .cellCenter:
-            origin.x = (attributes.frame.width/2) + bottomLabelPadding.left - bottomLabelPadding.right
-        case .cellTrailing:
-            origin.x = attributes.frame.width - bottomLabelSize.width - bottomLabelPadding.right
-        case .messageLeading:
-            origin.x = messageContainerView.frame.minX + bottomLabelPadding.left
-        case .messageTrailing:
-            origin.x = messageContainerView.frame.maxX - bottomLabelSize.width - bottomLabelPadding.right
-        }
-
-        cellBottomLabel.frame = CGRect(origin: origin, size: bottomLabelSize)
+        cellBottomLabel.frame = CGRect(origin: origin, size: attributes.bottomLabelSize)
     }
 }
