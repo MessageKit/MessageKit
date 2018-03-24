@@ -8,36 +8,22 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
-- **Breaking Change** Adds new `DetectorType` called `.transitInformation`  to message label.
+- **Breaking Change** Added new protocol `MediaItem` as the associated value for the
+`MessageData.video` and `MessageData.photo` cases.
+[#587](https://github.com/MessageKit/MessageKit/pull/587) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Added new protocol `LocationItem` as the associated value for
+the `MessageData.location` case.
+[#587](https://github.com/MessageKit/MessageKit/pull/587) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Added new `DetectorType` called `.transitInformation`  to message label.
 [#520](https://github.com/MessageKit/MessageKit/pull/520) by [@nosarj](https://github.com/nosarj).
 
-- **Breaking Change** Adds `.custom(Any?)` case to `MessageData`.
+- **Breaking Change** Added `.custom(Any?)` case to `MessageData`.
 [#498](https://github.com/MessageKit/MessageKit/pull/498) by [@SD10](https://github.com/SD10).
 
-- Adds the following methods to `MessagesCollectionViewFlowLayout`:
-  - `messageLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets`
-  - `messageContainerPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets`
-  - `messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
-  - `messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
-  - `cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment`
-  - `cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
-  - `cellTopLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
-  - `cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment`
-  - `cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
-  - `cellBottomLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
-  - `avatarPosition(for message: MessageType, at indexPath: IndexPath) -> AvatarPosition`
-  - `avatarSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
-  - `cellContentHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
-[#491](https://github.com/MessageKit/MessageKit/pull/491) by [@SD10](https://github.com/SD10).
-
-- Adds the following methods to `MessageCollectionViewCell`:
-  - `layoutAvatarView(with attributes: MessagesCollectionViewLayoutAttributes)`
-  - `layoutMessageContainerView(with attributes: MessagesCollectionViewLayoutAttributes)`
-  - `layoutTopLabel(with attributes: MessagesCollectionViewLayoutAttributes)`
-  - `layoutBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes)`
-[#491](https://github.com/MessageKit/MessageKit/pull/491) by [@SD10](https://github.com/SD10).
-
-- Added `shouldManageSendButtonEnabledState` to `MessageInputBar` to disable automatically managing `MessageInputBar.sendButton`'s `isEnabled` state when text changes. (Default value is `true`).
+- Added `shouldManageSendButtonEnabledState` to `MessageInputBar` to disable automatically managing `MessageInputBar.sendButton`'s
+ `isEnabled` state when text changes. (Default value is `true`).
 [#530](https://github.com/MessageKit/MessageKit/pull/530) by [@clayellis](https://github.com/clayellis).
 
 ## [[Prerelease] 0.13.1](https://github.com/MessageKit/MessageKit/releases/tag/0.13.1)
