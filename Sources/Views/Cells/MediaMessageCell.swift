@@ -55,11 +55,11 @@ open class MediaMessageCell: MessageCollectionViewCell {
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         switch message.data {
-        case .photo(let image):
-            imageView.image = image
+        case .photo(let mediaItem):
+            imageView.image = mediaItem.image ?? mediaItem.placeholderImage
             playButtonView.isHidden = true
-        case .video(_, let image):
-            imageView.image = image
+        case .video(let mediaItem):
+            imageView.image = mediaItem.image ?? mediaItem.placeholderImage
             playButtonView.isHidden = false
         default:
             break

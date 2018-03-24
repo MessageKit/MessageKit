@@ -374,13 +374,19 @@ open class MediaMessageSizeCalculator: MessageSizeCalculator {
 
     open override func messageContainerSize(for message: MessageType) -> CGSize {
         let maxWidth = messageContainerMaxWidth(for: message)
+        let sizeForMediaItem = { (maxWidth: CGFloat, item: MediaItem) -> CGSize in
+            if maxWidth < item.size.width {
+                // Maintain the ratio if width is too great
+                let height = maxWidth * item.size.height / item.size.width
+                return CGSize(width: maxWidth, height: height)
+            }
+            return item.size
+        }
         switch message.data {
         case .photo(let item):
-            let width = min(item.size.width, maxWidth)
-            return CGSize(width: width, height: item.size.height)
+            return sizeForMediaItem(maxWidth, item)
         case .video(let item):
-            let width = min(item.size.width, maxWidth)
-            return CGSize(width: width, height: item.size.height)
+            return sizeForMediaItem(maxWidth, item)
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.data)")
         }
@@ -389,18 +395,19 @@ open class MediaMessageSizeCalculator: MessageSizeCalculator {
 
 open class LocationMessageSizeCalculator: MessageSizeCalculator {
 
-    // TODO: - Figure out how we are going to size these
-    public var incomingLocationSize: CGSize = .zero
-    public var outgoingLocationSize: CGSize = .zero
-
     open override func messageContainerSize(for message: MessageType) -> CGSize {
-        let maxWidth = messageContainerMaxWidth(for: message)
         switch message.data {
-        case .location(_):
-            // TODO: - Implement actual sizing
-            return CGSize(width: maxWidth, height: 240)
+        case .location(let item):
+            let maxWidth = messageContainerMaxWidth(for: message)
+            if maxWidth < item.size.width {
+                // Maintain the ratio if width is too great
+                let height = maxWidth * item.size.height / item.size.width
+                return CGSize(width: maxWidth, height: height)
+            }
+            return item.size
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.data)")
         }
     }
 }
+

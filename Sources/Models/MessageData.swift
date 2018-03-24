@@ -47,7 +47,7 @@ public enum MessageData {
     case video(MediaItem)
 
     /// A location message.
-    case location(CLLocation)
+    case location(LocationItem)
 
     /// An emoji message.
     case emoji(String)
