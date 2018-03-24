@@ -24,6 +24,19 @@
 
 import UIKit
 
+open class InsetLabel: UILabel {
+
+    open var textInsets: UIEdgeInsets = .zero {
+        didSet { setNeedsDisplay() }
+    }
+
+    open override func drawText(in rect: CGRect) {
+        let insetRect = UIEdgeInsetsInsetRect(rect, textInsets)
+        super.drawText(in: insetRect)
+    }
+
+}
+
 open class MessageLabel: UILabel {
 
     // MARK: - Private Properties

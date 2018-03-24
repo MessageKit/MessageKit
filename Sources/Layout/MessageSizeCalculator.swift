@@ -41,11 +41,11 @@ open class MessageSizeCalculator: CellSizeCalculator {
     public var incomingMessagePadding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
     public var outgoingMessagePadding = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
 
-    public var incomingCellTopLabelAlignment = LabelAlignment.messageLeading(.zero)
-    public var outgoingCellTopLabelAlignment = LabelAlignment.messageTrailing(.zero)
+    public var incomingCellTopLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: .zero)
+    public var outgoingCellTopLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: .zero)
 
-    public var incomingCellBottomLabelAlignment = LabelAlignment.messageTrailing(.zero)
-    public var outgoingCellBottomLabelAlignment = LabelAlignment.messageLeading(.zero)
+    public var incomingCellBottomLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: .zero)
+    public var outgoingCellBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: .zero)
 
     open func configure(attributes: UICollectionViewLayoutAttributes) {
         guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
@@ -130,11 +130,10 @@ open class MessageSizeCalculator: CellSizeCalculator {
     // MARK: - Top Label
 
     internal func cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
-        let dataSource = messagesLayout.messagesDataSource
-        let text = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
-        guard let topLabelText = text else { return .zero }
-        let maxWidth = cellTopLabelMaxWidth(for: message)
-        return labelSize(for: topLabelText, considering: maxWidth)
+        let layoutDelegate = messagesLayout.messagesLayoutDelegate
+        let collectionView = messagesLayout.messagesCollectionView
+        let height = layoutDelegate.cellTopLabelHeight(for: message, at: indexPath, in: collectionView)
+        return CGSize(width: messagesLayout.itemWidth, height: height)
     }
 
     internal func cellTopLabelAlignment(for message: MessageType) -> LabelAlignment {
@@ -143,103 +142,19 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return isFromCurrentSender ? outgoingCellTopLabelAlignment : incomingCellTopLabelAlignment
     }
 
-    internal func cellTopLabelMaxWidth(for message: MessageType) -> CGFloat {
-        let alignment = cellTopLabelAlignment(for: message)
-        let position = avatarPosition(for: message)
-        let avatarWidth = avatarSize(for: message).width
-        let containerSize = messageContainerSize(for: message)
-        let messagePadding = messageContainerPadding(for: message)
-
-        let avatarHorizontal = position.horizontal
-        let avatarVertical = position.vertical
-
-        let itemWidth = messagesLayout.itemWidth
-
-        switch (alignment, avatarHorizontal) {
-
-        case (.cellLeading, _), (.cellTrailing, _):
-            let width = itemWidth - alignment.insets.horizontal
-            return avatarVertical != .cellTop ? width : width - avatarWidth
-
-        case (.cellCenter, _):
-            let width = itemWidth - alignment.insets.horizontal
-            return avatarVertical != .cellTop ? width : width - (avatarWidth * 2)
-
-        case (.messageTrailing, .cellLeading):
-            let width = containerSize.width + messagePadding.left - alignment.insets.horizontal
-            return avatarVertical == .cellTop ? width : width + avatarWidth
-
-        case (.messageLeading, .cellTrailing):
-            let width = containerSize.width + messagePadding.right - alignment.insets.horizontal
-            return avatarVertical == .cellTop ? width : width + avatarWidth
-
-        case (.messageLeading, .cellLeading):
-            return itemWidth - avatarWidth - messagePadding.left - alignment.insets.horizontal
-
-        case (.messageTrailing, .cellTrailing):
-            return itemWidth - avatarWidth - messagePadding.right - alignment.insets.horizontal
-
-        case (_, .natural):
-            fatalError(MessageKitError.avatarPositionUnresolved)
-        }
-    }
-
     // MARK: - Bottom Label
 
     open func cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
-        let dataSource = messagesLayout.messagesDataSource
-        let text = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
-        guard let bottomLabelText = text else { return .zero }
-        let maxWidth = cellBottomLabelMaxWidth(for: message)
-        return labelSize(for: bottomLabelText, considering: maxWidth)
+        let layoutDelegate = messagesLayout.messagesLayoutDelegate
+        let collectionView = messagesLayout.messagesCollectionView
+        let height = layoutDelegate.cellBottomLabelHeight(for: message, at: indexPath, in: collectionView)
+        return CGSize(width: messagesLayout.itemWidth, height: height)
     }
 
     internal func cellBottomLabelAlignment(for message: MessageType) -> LabelAlignment {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingCellBottomLabelAlignment : incomingCellBottomLabelAlignment
-    }
-
-    internal func cellBottomLabelMaxWidth(for message: MessageType) -> CGFloat {
-
-        let alignment = cellBottomLabelAlignment(for: message)
-        let avatarWidth = avatarSize(for: message).width
-        let containerSize = messageContainerSize(for: message)
-        let messagePadding = messageContainerPadding(for: message)
-        let position = avatarPosition(for: message)
-
-        let avatarHorizontal = position.horizontal
-        let avatarVertical = position.vertical
-
-        let itemWidth = messagesLayout.itemWidth
-
-        switch (alignment, avatarHorizontal) {
-
-        case (.cellLeading, _), (.cellTrailing, _):
-            let width = itemWidth - alignment.insets.horizontal
-            return avatarVertical != .cellBottom ? width : width - avatarWidth
-
-        case (.cellCenter, _):
-            let width = itemWidth - alignment.insets.horizontal
-            return avatarVertical != .cellBottom ? width : width - (avatarWidth * 2)
-
-        case (.messageTrailing, .cellLeading):
-            let width = containerSize.width + messagePadding.left - alignment.insets.horizontal
-            return avatarVertical == .cellBottom ? width : width + avatarWidth
-
-        case (.messageLeading, .cellTrailing):
-            let width = containerSize.width + messagePadding.right - alignment.insets.horizontal
-            return avatarVertical == .cellBottom ? width : width + avatarWidth
-
-        case (.messageLeading, .cellLeading):
-            return itemWidth - avatarWidth - messagePadding.left - alignment.insets.horizontal
-
-        case (.messageTrailing, .cellTrailing):
-            return itemWidth - avatarWidth - messagePadding.right - alignment.insets.horizontal
-
-        case (_, .natural):
-            fatalError(MessageKitError.avatarPositionUnresolved)
-        }
     }
 
     // MARK: - MessageContainer
@@ -274,8 +189,8 @@ open class MessageSizeCalculator: CellSizeCalculator {
         let estimatedHeight = attributedText.height(considering: maxWidth)
         let estimatedWidth = attributedText.width(considering: estimatedHeight)
 
-        let finalHeight = estimatedHeight.rounded(.up)
-        let finalWidth = estimatedWidth > maxWidth ? maxWidth : estimatedWidth.rounded(.up)
+        let finalHeight = ceil(estimatedHeight)
+        let finalWidth = estimatedWidth > maxWidth ? maxWidth : ceil(estimatedWidth)
 
         return CGSize(width: finalWidth, height: finalHeight)
     }

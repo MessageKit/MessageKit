@@ -157,4 +157,11 @@ extension MessagesCollectionViewFlowLayout {
         }
         return messagesDataSource
     }
+
+    internal var messagesLayoutDelegate: MessagesLayoutDelegate {
+        guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
+            fatalError(MessageKitError.nilMessagesLayoutDelegate)
+        }
+        return messagesLayoutDelegate
+    }
 }
