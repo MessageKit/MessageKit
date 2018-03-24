@@ -298,8 +298,8 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             pasteBoard.string = text
         case .attributedText(let attributedText):
             pasteBoard.string = attributedText.string
-        case .photo(let image):
-            pasteBoard.image = image
+        case .photo(let mediaItem):
+            pasteBoard.image = mediaItem.image ?? mediaItem.placeholderImage
         default:
             break
         }

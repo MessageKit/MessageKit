@@ -88,12 +88,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     // MARK: - Layout Invalidation
 
     open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        if collectionView?.bounds.width != newBounds.width {
-            removeAllCachedAttributes()
-            return true
-        } else {
-            return false
-        }
+        return collectionView?.bounds.width != newBounds.width
     }
 
     open override func invalidationContext(forBoundsChange newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
@@ -103,14 +98,8 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return flowLayoutContext
     }
 
-    // TODO: Invalidate attributes
-    public func removeAllCachedAttributes() {
-
-    }
-
     @objc
     private func handleOrientationChange(_ notification: Notification) {
-        removeAllCachedAttributes()
         invalidateLayout()
     }
 
@@ -156,13 +145,5 @@ extension MessagesCollectionViewFlowLayout {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
         return messagesDataSource
-    }
-
-    // TODO: - This will become unused
-    internal var messagesLayoutDelegate: MessagesLayoutDelegate {
-        guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
-            fatalError(MessageKitError.nilMessagesLayoutDelegate)
-        }
-        return messagesLayoutDelegate
     }
 }
