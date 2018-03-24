@@ -41,11 +41,11 @@ open class MessageSizeCalculator: CellSizeCalculator {
     public var incomingMessagePadding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
     public var outgoingMessagePadding = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
 
-    public var incomingCellTopLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: .zero)
-    public var outgoingCellTopLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: .zero)
+    public var incomingCellTopLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: 42))
+    public var outgoingCellTopLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: 42))
 
-    public var incomingCellBottomLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: .zero)
-    public var outgoingCellBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: .zero)
+    public var incomingCellBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: 42))
+    public var outgoingCellBottomLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: 42))
 
     open func configure(attributes: UICollectionViewLayoutAttributes) {
         guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
@@ -193,5 +193,11 @@ open class MessageSizeCalculator: CellSizeCalculator {
         let finalWidth = estimatedWidth > maxWidth ? maxWidth : ceil(estimatedWidth)
 
         return CGSize(width: finalWidth, height: finalHeight)
+    }
+}
+
+fileprivate extension UIEdgeInsets {
+    init(top: CGFloat = 0, bottom: CGFloat = 0, left: CGFloat = 0, right: CGFloat = 0) {
+        self.init(top: top, left: left, bottom: bottom, right: right)
     }
 }
