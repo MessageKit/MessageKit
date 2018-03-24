@@ -358,16 +358,8 @@ extension ConversationViewController: MessagesDisplayDelegate {
 extension ConversationViewController: MessagesLayoutDelegate {
 
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-
         return CGSize(width: messagesCollectionView.bounds.width, height: 10)
     }
-
-    // MARK: - Location Messages
-
-    func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return 200
-    }
-
 }
 
 // MARK: - MessageCellDelegate

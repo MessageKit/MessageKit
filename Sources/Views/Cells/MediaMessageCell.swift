@@ -35,7 +35,11 @@ open class MediaMessageCell: MessageCollectionViewCell {
         return playButtonView
     }()
 
-    open var imageView = UIImageView()
+    open var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
 
     // MARK: - Methods
 
