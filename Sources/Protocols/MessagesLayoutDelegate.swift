@@ -49,58 +49,41 @@ public protocol MessagesLayoutDelegate: AnyObject {
     /// The default value returned by this method is a size of `GGSize.zero`.
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
-    // MARK: - Media Messages
+    @available(*, deprecated: 1.0, message: "avatarSize(for:at:in) has been removed in MessageKit 1.0")
+    func shouldCacheLayoutAttributes(for message: MessageType) -> Bool
 
-    /// Specifies the width for a `MessageContainerView`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` that will be displayed by this cell.
-    ///   - indexPath: The `IndexPath` of the cell.
-    ///   - maxWidth: The max available width for the `MessageContainerView` respecting the cell's other content.
-    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-    ///
-    /// The default value returned by this method is the `maxWidth`.
+    @available(*, deprecated: 1.0, message: "avatarSize(for:at:in) has been removed in MessageKit 1.0")
+    func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
+
+    @available(*, deprecated: 1.0, message: "avatarPosition(for:at:in) has been removed in MessageKit 1.0")
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition
+
+    @available(*, deprecated: 1.0, message: "messageLabelInset(for:at:in) has been removed in MessageKit 1.0.")
+    func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
+
+    @available(*, deprecated: 1.0, message: "messagePadding(for:at:in) has been removed in MessageKit 1.0.")
+    func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
+
+    @available(*, deprecated: 1.0, message: "cellTopLabelAlignment(for:at:in) has been removed in MessageKit 1.0.")
+    func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
+
+    @available(*, deprecated: 1.0, message: "cellBottomLabelAlignment(for:at:in) has been removed in MessageKit 1.0.")
+    func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
+
+    @available(*, deprecated: 1.0, message: "widthForMedia(message:at:with:in) has been removed in MessageKit 1.0.")
     func widthForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
 
-    /// Specifies the height for a `MessageContainerView`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` that will be displayed by this cell.
-    ///   - indexPath: The `IndexPath` of the cell.
-    ///   - maxWidth: The max available width for the `MessageContainerView` respecting the cell's other content.
-    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-    ///
-    /// The default value returned by this method uses `AVMakeRect(aspectRatio:insideRect:)` with a bounding
-    /// rect using the `maxWidth` and `.greatestFiniteMagnitude` for the height.
+    @available(*, deprecated: 1.0, message: "heightForMedia(message:at:with:in) has been removed in MessageKit 1.0.")
     func heightForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
 
-    // MARK: - Location Messages
-
-    /// Specifies the width for a `MessageContainerView`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` that will be displayed by this cell.
-    ///   - indexPath: The `IndexPath` of the cell.
-    ///   - maxWidth: The max available width for the `MessageContainerView` respecting the cell's other content.
-    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-    ///
-    /// The default value returned by this method is the `maxWidth`.
+    @available(*, deprecated: 1.0, message: "widthForLocation(message:at:with:in) has been removed in MessageKit 1.0.")
     func widthForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
 
-    /// Specifies the height for a `MessageContainerView`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` that will be displayed by this cell.
-    ///   - indexPath: The `IndexPath` of the cell.
-    ///   - maxWidth: The max available width for the `MessageContainerView` respecting the cell's other content.
-    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    @available(*, deprecated: 1.0, message: "heightForLocation(message:at:with:in) has been removed in MessageKit 1.0.")
     func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
-
 }
 
 public extension MessagesLayoutDelegate {
-
-    // MARK: - All Messages Defaults
 
     func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
@@ -112,27 +95,5 @@ public extension MessagesLayoutDelegate {
 
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return .zero
-    }
-
-    // MARK: - Media Messages Defaults
-
-    func widthForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return maxWidth
-    }
-
-    func heightForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        switch message.data {
-        case .photo(let image), .video(_, let image):
-            let boundingRect = CGRect(origin: .zero, size: CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
-            return AVMakeRect(aspectRatio: image.size, insideRect: boundingRect).height
-        default:
-            return 0
-        }
-    }
-
-    // MARK: - Location Messages Defaults
-
-    func widthForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        return maxWidth
     }
 }

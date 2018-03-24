@@ -1,18 +1,18 @@
 /*
  MIT License
- 
+
  Copyright (c) 2017-2018 MessageKit
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,20 +24,25 @@
 
 import Foundation
 
-/// A standard protocol representing a message. Use this protocol to create
-/// your own message object to be used by MessageKit.
-public protocol MessageType {
+open class MediaMessageSizeCalculator: MessageSizeCalculator {
 
-    /// The sender of the message.
-    var sender: Sender { get }
-
-    /// The unique identifier for the message.
-    var messageId: String { get }
-
-    /// The date the message was sent.
-    var sentDate: Date { get }
-
-    /// The kind of message and its underlying data.
-    var data: MessageData { get }
-
+    open override func messageContainerSize(for message: MessageType) -> CGSize {
+        let maxWidth = messageContainerMaxWidth(for: message)
+        let sizeForMediaItem = { (maxWidth: CGFloat, item: MediaItem) -> CGSize in
+            if maxWidth < item.size.width {
+                // Maintain the ratio if width is too great
+                let height = maxWidth * item.size.height / item.size.width
+                return CGSize(width: maxWidth, height: height)
+            }
+            return item.size
+        }
+        switch message.data {
+        case .photo(let item):
+            return sizeForMediaItem(maxWidth, item)
+        case .video(let item):
+            return sizeForMediaItem(maxWidth, item)
+        default:
+            fatalError("messageContainerSize received unhandled MessageDataType: \(message.data)")
+        }
+    }
 }

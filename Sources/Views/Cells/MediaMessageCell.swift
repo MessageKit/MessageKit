@@ -35,7 +35,11 @@ open class MediaMessageCell: MessageCollectionViewCell {
         return playButtonView
     }()
 
-    open var imageView = UIImageView()
+    open var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
 
     // MARK: - Methods
 
@@ -55,11 +59,11 @@ open class MediaMessageCell: MessageCollectionViewCell {
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         switch message.data {
-        case .photo(let image):
-            imageView.image = image
+        case .photo(let mediaItem):
+            imageView.image = mediaItem.image ?? mediaItem.placeholderImage
             playButtonView.isHidden = true
-        case .video(_, let image):
-            imageView.image = image
+        case .video(let mediaItem):
+            imageView.image = mediaItem.image ?? mediaItem.placeholderImage
             playButtonView.isHidden = false
         default:
             break

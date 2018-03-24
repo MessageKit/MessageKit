@@ -24,6 +24,34 @@
 
 import Foundation
 import CoreLocation
+@testable import MessageKit
+
+struct MockLocationItem: LocationItem {
+
+    var location: CLLocation
+    var size: CGSize
+
+    init(location: CLLocation) {
+        self.location = location
+        self.size = CGSize(width: 240, height: 240)
+    }
+
+}
+
+struct MockMediaItem: MediaItem {
+
+    var url: URL?
+    var image: UIImage?
+    var placeholderImage: UIImage
+    var size: CGSize
+
+    init(image: UIImage) {
+        self.image = image
+        self.size = CGSize(width: 240, height: 240)
+        self.placeholderImage = UIImage()
+    }
+
+}
 
 struct MockMessage: MessageType {
 
@@ -48,16 +76,18 @@ struct MockMessage: MessageType {
     }
 
     init(image: UIImage, sender: Sender, messageId: String) {
-        self.init(data: .photo(image), sender: sender, messageId: messageId)
+        let mediaItem = MockMediaItem(image: image)
+        self.init(data: .photo(mediaItem), sender: sender, messageId: messageId)
     }
 
     init(thumbnail: UIImage, sender: Sender, messageId: String) {
-        let url = URL(fileURLWithPath: "")
-        self.init(data: .video(file: url, thumbnail: thumbnail), sender: sender, messageId: messageId)
+        let mediaItem = MockMediaItem(image: thumbnail)
+        self.init(data: .video(mediaItem), sender: sender, messageId: messageId)
     }
 
     init(location: CLLocation, sender: Sender, messageId: String) {
-        self.init(data: .location(location), sender: sender, messageId: messageId)
+        let locationItem = MockLocationItem(location: location)
+        self.init(data: .location(locationItem), sender: sender, messageId: messageId)
     }
 
     init(emoji: String, sender: Sender, messageId: String) {
