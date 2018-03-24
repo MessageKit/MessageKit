@@ -22,9 +22,31 @@ the `MessageData.location` case.
 - **Breaking Change** Added `.custom(Any?)` case to `MessageData`.
 [#498](https://github.com/MessageKit/MessageKit/pull/498) by [@SD10](https://github.com/SD10).
 
+- Added `CellSizeCalculator` protocol that is responsible for sizing and configuring attributes of a  `MessageCollectionViewCell`.
+[#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/SD10).
+
+- Added `MessageSizeCalculator`, `MediaMessageSizeCalculator`, `TextMessageSizeCalculator`, and `LocationMessageSizeCalculator`
+ classes that are responsible for sizing the `MessagesCollectionViewCell` types provided by MessageKit.
+[#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/sd10).
+
 - Added `shouldManageSendButtonEnabledState` to `MessageInputBar` to disable automatically managing `MessageInputBar.sendButton`'s
  `isEnabled` state when text changes. (Default value is `true`).
 [#530](https://github.com/MessageKit/MessageKit/pull/530) by [@clayellis](https://github.com/clayellis).
+
+### Changed
+
+- The `MessageData.emoji` case no longer uses a default font of 2x the `messageLabelFont` size.
+You must now set this font explicitly through the `emojiMessageSizeCalculator` on `MessagesCollectionViewFlowLayout`.
+[#530](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/sd10).
+
+- Changed the `contentMode` of the `UIImageView` for `MediaMessageCell` to be `.scaleAspectFill`.
+[#587](https://github.com/MessageKit/MessageKit/pull/587) by [@SD10](https://github.com/sd10).
+
+### Removed
+
+- **Breaking Change** Removed the `messageLabelFont` property from `MessagesCollectionViewFlowLayout`.
+You can now set this property through `textMessageSizeCalculator` property.
+[#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/sd10).
 
 ## [[Prerelease] 0.13.1](https://github.com/MessageKit/MessageKit/releases/tag/0.13.1)
 
