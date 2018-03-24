@@ -23,7 +23,6 @@
  */
 
 import Foundation
-import AVFoundation
 
 /// A protocol used by the `MessagesCollectionViewFlowLayout` object to determine
 /// the size and layout of a `MessageCollectionViewCell` and its contents.
@@ -48,6 +47,26 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///
     /// The default value returned by this method is a size of `GGSize.zero`.
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
+
+    /// Specifies the height for the `MessageCollectionViewCell`'s top label.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed for this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is zero.
+    func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
+
+    /// Specifies the height for the `MessageCollectionViewCell`'s bottom label.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed for this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is zero.
+    func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
 
     @available(*, deprecated: 1.0, message: "avatarSize(for:at:in) has been removed in MessageKit 1.0")
     func shouldCacheLayoutAttributes(for message: MessageType) -> Bool
@@ -82,25 +101,9 @@ public protocol MessagesLayoutDelegate: AnyObject {
     @available(*, deprecated: 1.0, message: "heightForLocation(message:at:with:in) has been removed in MessageKit 1.0.")
     func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
 
-    func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
-
-    func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
-
 }
 
 public extension MessagesLayoutDelegate {
-
-    // MARK: - All Messages Defaults
-
-    func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        // TODO: - More sensible default, this is just for testing
-        return 10
-    }
-
-    func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
-        // TODO: - More sensible default, this is just for testing
-        return 10
-    }
 
     func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
@@ -112,5 +115,13 @@ public extension MessagesLayoutDelegate {
 
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return .zero
+    }
+
+    func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 0
+    }
+
+    func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 0
     }
 }

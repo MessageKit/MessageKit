@@ -37,7 +37,7 @@ class ConversationViewController: MessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        let messagesToFetch = 10000 //UserDefaults.standard.mockMessagesCount()
+        let messagesToFetch = UserDefaults.standard.mockMessagesCount()
         
         DispatchQueue.global(qos: .userInitiated).async {
             SampleData.shared.getMessages(count: messagesToFetch) { messages in
@@ -356,6 +356,14 @@ extension ConversationViewController: MessagesDisplayDelegate {
 // MARK: - MessagesLayoutDelegate
 
 extension ConversationViewController: MessagesLayoutDelegate {
+
+    func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 16
+    }
+
+    func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 16
+    }
 
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return CGSize(width: messagesCollectionView.bounds.width, height: 10)
