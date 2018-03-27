@@ -30,3 +30,13 @@ public struct LabelAlignment {
     public var textInsets: UIEdgeInsets
 
 }
+
+// MARK: - Equatable Conformance
+
+extension LabelAlignment: Equatable {
+
+    public static func == (lhs: LabelAlignment, rhs: LabelAlignment) -> Bool {
+        return lhs.textAlignment == rhs.textAlignment && lhs.textInsets == rhs.textInsets
+    }
+
+}

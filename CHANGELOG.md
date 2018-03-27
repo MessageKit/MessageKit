@@ -78,6 +78,9 @@ You can now set this property through `textMessageSizeCalculator` property.
 - Fixed message bubble tail orientation invalidation in `iOS9`.
 [#469](https://github.com/MessageKit/MessageKit/pull/469) by [@zhongwuzw](https://github.com/zhongwuzw).
 
+- Fixed equality checking on `MessagesCollectionViewLayoutAttributes`.
+[#593](https://github.com/MessageKit/MessageKit/pull/593) by [@zhongwuzw](https://github.com/zhongwuzw), [@SD10](https://github.com/sd10)
+
 ## [[Prerelease] 0.13.0](https://github.com/MessageKit/MessageKit/releases/tag/0.13.0)
 
 ### Fixed
