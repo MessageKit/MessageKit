@@ -39,6 +39,10 @@ the `MessageData.location` case.
 - Added new class `InsetLabel`.
 [#580](https://github.com/MessageKit/MessageKit/pull/580) by [@SD10](https://github.com/sd10).
 
+- Added new method `configureMediaMessageImageView(_:for:at:in)` to configure the `UIImageView` of a
+`MediaMessageCell` asynchronously.
+[#592](https://github.com/MessageKit/MessageKit/pull/592) by [@zhongwuzw](https://github.com/zhongwuzw), [@SD10](https://github.com/sd10)
+
 ### Changed
 
 - **Breaking Change** Changed `LabelAlignment` to be a `struct` with properties of 
