@@ -15,6 +15,8 @@
 		1F066E231FDA3F0200E11013 /* DetectorTypeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E221FDA3F0200E11013 /* DetectorTypeSpec.swift */; };
 		1F087D451FD274FD00E95A45 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1F7FC8C71FD26F49006CC979 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1F087D461FD274FD00E95A45 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1F7FC8C51FD26F33006CC979 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1F6C040C206A2891007BDE44 /* MessageContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6C040B206A2891007BDE44 /* MessageContentCell.swift */; };
+		1F6C040E206A2AF4007BDE44 /* MessageReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6C040D206A2AF4007BDE44 /* MessageReusableView.swift */; };
 		1F7FC8C61FD26F33006CC979 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F7FC8C51FD26F33006CC979 /* Quick.framework */; };
 		1F7FC8C81FD26F49006CC979 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F7FC8C71FD26F49006CC979 /* Nimble.framework */; };
 		1F82D1431FB1B75B00B81A88 /* AvatarPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F82D1421FB1B75B00B81A88 /* AvatarPosition.swift */; };
@@ -120,6 +122,8 @@
 		1F066E1C1FDA3C1700E11013 /* SenderSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderSpec.swift; sourceTree = "<group>"; };
 		1F066E201FDA3DEA00E11013 /* AvatarSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarSpec.swift; sourceTree = "<group>"; };
 		1F066E221FDA3F0200E11013 /* DetectorTypeSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectorTypeSpec.swift; sourceTree = "<group>"; };
+		1F6C040B206A2891007BDE44 /* MessageContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageContentCell.swift; sourceTree = "<group>"; };
+		1F6C040D206A2AF4007BDE44 /* MessageReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageReusableView.swift; sourceTree = "<group>"; };
 		1F7FC8C31FD26F22006CC979 /* Carthage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Carthage; sourceTree = "<group>"; };
 		1F7FC8C51FD26F33006CC979 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		1F7FC8C71FD26F49006CC979 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -237,6 +241,7 @@
 				B7A03F381F866946006AEF79 /* LocationMessageCell.swift */,
 				B7A03F391F866946006AEF79 /* MediaMessageCell.swift */,
 				B7A03F7A1F866B85006AEF79 /* MessageCollectionViewCell.swift */,
+				1F6C040B206A2891007BDE44 /* MessageContentCell.swift */,
 				B7A03F361F866946006AEF79 /* TextMessageCell.swift */,
 			);
 			path = Cells;
@@ -248,6 +253,7 @@
 				B7A03F301F866940006AEF79 /* MessageDateHeaderView.swift */,
 				B7A03F311F866940006AEF79 /* MessageFooterView.swift */,
 				B7A03F321F866940006AEF79 /* MessageHeaderView.swift */,
+				1F6C040D206A2AF4007BDE44 /* MessageReusableView.swift */,
 			);
 			path = "Headers & Footers";
 			sourceTree = "<group>";
@@ -611,6 +617,7 @@
 				B7A03F5C1F8669CA006AEF79 /* MessageCellDelegate.swift in Sources */,
 				1FF377A420087C82004FD648 /* MessageKitError.swift in Sources */,
 				B7A03F4A1F86694F006AEF79 /* MessageInputBar.swift in Sources */,
+				1F6C040E206A2AF4007BDE44 /* MessageReusableView.swift in Sources */,
 				B7A03F4B1F86694F006AEF79 /* MessageContainerView.swift in Sources */,
 				B7A03F281F866895006AEF79 /* LocationMessageSnapshotOptions.swift in Sources */,
 				B7A03F481F86694F006AEF79 /* InputTextView.swift in Sources */,
@@ -652,6 +659,7 @@
 				1FE783A6206629C2007FA024 /* LocationMessageSizeCalculator.swift in Sources */,
 				B7A03F2D1F866895006AEF79 /* LabelAlignment.swift in Sources */,
 				38C57C791F9AE3E50043CC03 /* SeparatorLine.swift in Sources */,
+				1F6C040C206A2891007BDE44 /* MessageContentCell.swift in Sources */,
 				B7A03F2C1F866895006AEF79 /* DetectorType.swift in Sources */,
 				B7A03F271F866895006AEF79 /* Avatar.swift in Sources */,
 				1F82D1431FB1B75B00B81A88 /* AvatarPosition.swift in Sources */,

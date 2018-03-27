@@ -64,7 +64,6 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
 
     open override func isEqual(_ object: Any?) -> Bool {
         // MARK: - LEAVE this as is
-        // swiftlint:disable unused_optional_binding
         if let attributes = object as? MessagesCollectionViewLayoutAttributes {
             return super.isEqual(object) && attributes.avatarSize == avatarSize
             && attributes.avatarPosition == attributes.avatarPosition
@@ -79,8 +78,5 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
         } else {
             return false
         }
-        // swiftlint:enable unused_optional_binding
     }
 }
-
-
