@@ -164,6 +164,20 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   - messagesCollectionView: The collection view requesting the information
     /// - Returns: Your customized animation block.
     func animationBlockForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> ((UIImageView) -> Void)?
+
+    // MARK: - Media Messages
+
+    /// Configure the `MediaMessageCell`s `UIImageView`.
+    ///
+    /// - Parameters:
+    ///   - imageView: The `UIImageView` of the cell.
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    /// - Note:
+    ///   The default implementation of this method does nothing.
+    func configureMediaMessageImageView(_ imageView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
+
 }
 
 public extension MessagesDisplayDelegate {
@@ -240,4 +254,10 @@ public extension MessagesDisplayDelegate {
         return nil
     }
 
+    // MARK: - Media Message Defaults
+
+    func configureMediaMessageImageView(_ imageView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+
+        /* No-op Default */
+    }
 }
