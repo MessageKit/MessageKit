@@ -63,14 +63,24 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
     }
 
     open override func isEqual(_ object: Any?) -> Bool {
-
         // MARK: - LEAVE this as is
         // swiftlint:disable unused_optional_binding
-        if let _ = object as? MessagesCollectionViewLayoutAttributes {
-            return super.isEqual(object)
+        if let attributes = object as? MessagesCollectionViewLayoutAttributes {
+            return super.isEqual(object) && attributes.avatarSize == avatarSize
+            && attributes.avatarPosition == attributes.avatarPosition
+            && attributes.messageContainerSize == messageContainerSize
+            && attributes.messageContainerPadding == messageContainerPadding
+            && attributes.messageLabelFont == messageLabelFont
+            && attributes.messageLabelInsets == messageLabelInsets
+            && attributes.topLabelAlignment == topLabelAlignment
+            && attributes.topLabelSize == topLabelSize
+            && attributes.bottomLabelAlignment == bottomLabelAlignment
+            && attributes.bottomLabelSize == bottomLabelSize
         } else {
             return false
         }
         // swiftlint:enable unused_optional_binding
     }
 }
+
+
