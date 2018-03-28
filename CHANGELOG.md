@@ -43,7 +43,17 @@ the `MessageData.location` case.
 `MediaMessageCell` asynchronously.
 [#592](https://github.com/MessageKit/MessageKit/pull/592) by [@zhongwuzw](https://github.com/zhongwuzw), [@SD10](https://github.com/sd10)
 
+- Added new `MessageContentCell` class and `MessageReusableView` class.
+[#596](https://github.com/MessageKit/MessageKit/pull/596) by [@SD10](https://github.com/sd10).
+
 ### Changed
+
+- **Breaking Change** `MessageHeaderView` and `MessageFooterView` now subclass `MessageReusableView` class.
+[#596](https://github.com/MessageKit/MessageKit/pull/596) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Renamed `MessageCollectionViewCell` to `MessageContentCell`. 
+The `MessageCollectionViewCell` class is now a bare bones subclass. 
+[#596](https://github.com/MessageKit/MessageKit/pull/596) by [@SD10](https://github.com/sd10).
 
 - **Breaking Change** Changed `LabelAlignment` to be a `struct` with properties of 
 `textAlignment: NSTextAlignment` and `textInsets: UIEdgeInsets` to position the text in the `cellTopLabel` and `cellBottomLabel`.
