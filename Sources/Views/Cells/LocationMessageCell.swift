@@ -25,9 +25,11 @@
 import UIKit
 import MapKit
 
-open class LocationMessageCell: MessageCollectionViewCell {
+open class LocationMessageCell: MessageContentCell {
 
-    open override class func reuseIdentifier() -> String { return "messagekit.cell.location" }
+    open override class func reuseIdentifier() -> String {
+        return "messagekit.cell.location"
+    }
 
     // MARK: - Properties
 

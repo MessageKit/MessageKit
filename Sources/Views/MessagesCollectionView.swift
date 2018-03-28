@@ -77,7 +77,7 @@ open class MessagesCollectionView: UICollectionView {
         let touchLocation = gesture.location(in: self)
         guard let indexPath = indexPathForItem(at: touchLocation) else { return }
         
-        let cell = cellForItem(at: indexPath) as? MessageCollectionViewCell
+        let cell = cellForItem(at: indexPath) as? MessageContentCell
         cell?.handleTapGesture(gesture)
     }
 

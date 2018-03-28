@@ -24,9 +24,11 @@
 
 import UIKit
 
-open class TextMessageCell: MessageCollectionViewCell {
+open class TextMessageCell: MessageContentCell {
 
-    open override class func reuseIdentifier() -> String { return "messagekit.cell.text" }
+    open override class func reuseIdentifier() -> String {
+        return "messagekit.cell.text"
+    }
 
     // MARK: - Properties
 
