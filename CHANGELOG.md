@@ -8,6 +8,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
+- **Breaking Change** Added new `MessagesDataSource` delegate methods, `numberOfSections(in)` and `numberOfItems(inSection:in)`.
+[#601](https://github.com/MessageKit/MessageKit/pull/601) by [@SD10](https://github.com/sd10), [@zhongwuzw](https://github.com/zhongwuzw).
+
 - **Breaking Change** Added new protocol `MediaItem` as the associated value for the
 `MessageData.video` and `MessageData.photo` cases.
 [#587](https://github.com/MessageKit/MessageKit/pull/587) by [@SD10](https://github.com/sd10).
@@ -70,6 +73,9 @@ You must now set this font explicitly through the `emojiMessageSizeCalculator` o
 [#587](https://github.com/MessageKit/MessageKit/pull/587) by [@SD10](https://github.com/sd10).
 
 ### Removed
+
+- **Breaking Change** Removed `numberOfMessages(in)` method of `MessagesDataSource`, instead please use `numberOfSections(in)` and `numberOfItems(inSection:in)`.
+[#601](https://github.com/MessageKit/MessageKit/pull/601) by [@SD10](https://github.com/sd10), [@zhongwuzw](https://github.com/zhongwuzw).
 
 - **Breaking Change** Removed the `messageLabelFont` property from `MessagesCollectionViewFlowLayout`.
 You can now set this property through `textMessageSizeCalculator` property.

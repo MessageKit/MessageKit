@@ -260,8 +260,8 @@ extension ConversationViewController: MessagesDataSource {
     func currentSender() -> Sender {
         return SampleData.shared.currentSender
     }
-
-    func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int {
+    
+    func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
         return messageList.count
     }
 

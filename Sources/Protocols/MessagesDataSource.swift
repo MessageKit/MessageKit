@@ -49,15 +49,7 @@ public protocol MessagesDataSource: AnyObject {
     ///
     /// - Parameters:
     ///   - messagesCollectionView: The `MessagesCollectionView` in which the messages will be displayed.
-    /// - Note:
-    ///   The default implementation of this method calls `numberOfMessages(section:)`
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int
-
-    /// The number of messages to be displayed in the `MessagesCollectionView`.
-    ///
-    /// - Parameters:
-    ///   - messagesCollectionView: The `MessagesCollectionView` in which the messages will be displayed.
-    func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int
 
     /// The number of cells to be displayed in the `MessagesCollectionView`.
     ///
@@ -66,7 +58,7 @@ public protocol MessagesDataSource: AnyObject {
     ///   - messagesCollectionView: The `MessagesCollectionView` in which the messages will be displayed.
     /// - Note:
     ///   The default implementation of this method returns 1. Putting each message in its own section.
-    func numberOfItems(in section: Int, in messagesCollectionView: MessagesCollectionView) -> Int
+    func numberOfItems(inSection section: Int, in messagesCollectionView: MessagesCollectionView) -> Int
 
     /// The attributed text to be used for cell's top label.
     ///
@@ -96,11 +88,7 @@ public extension MessagesDataSource {
         return message.sender == currentSender()
     }
 
-    func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
-        return numberOfMessages(in: messagesCollectionView)
-    }
-
-    func numberOfItems(in section: Int, in messagesCollectionView: MessagesCollectionView) -> Int {
+    func numberOfItems(inSection section: Int, in messagesCollectionView: MessagesCollectionView) -> Int {
         return 1
     }
 

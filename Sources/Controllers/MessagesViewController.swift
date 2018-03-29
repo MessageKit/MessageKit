@@ -167,7 +167,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         guard let collectionView = collectionView as? MessagesCollectionView else {
             fatalError(MessageKitError.notMessagesCollectionView)
         }
-        return collectionView.messagesDataSource?.numberOfItems(in: section, in: collectionView) ?? 0
+        return collectionView.messagesDataSource?.numberOfItems(inSection: section, in: collectionView) ?? 0
     }
 
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
