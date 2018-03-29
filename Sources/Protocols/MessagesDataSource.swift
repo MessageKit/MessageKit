@@ -45,11 +45,20 @@ public protocol MessagesDataSource: AnyObject {
     ///   - messagesCollectionView: The `MessagesCollectionView` in which the message will be displayed.
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType
 
-    /// The number of messages to be displayed in the `MessagesCollectionView`.
+    /// The number of sections to be displayed in the `MessagesCollectionView`.
     ///
     /// - Parameters:
     ///   - messagesCollectionView: The `MessagesCollectionView` in which the messages will be displayed.
-    func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int
+    func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int
+
+    /// The number of cells to be displayed in the `MessagesCollectionView`.
+    ///
+    /// - Parameters:
+    ///   - section: The number of the section in which the cells will be displayed.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which the messages will be displayed.
+    /// - Note:
+    ///   The default implementation of this method returns 1. Putting each message in its own section.
+    func numberOfItems(inSection section: Int, in messagesCollectionView: MessagesCollectionView) -> Int
 
     /// The attributed text to be used for cell's top label.
     ///
@@ -77,6 +86,10 @@ public extension MessagesDataSource {
 
     func isFromCurrentSender(message: MessageType) -> Bool {
         return message.sender == currentSender()
+    }
+
+    func numberOfItems(inSection section: Int, in messagesCollectionView: MessagesCollectionView) -> Int {
+        return 1
     }
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {

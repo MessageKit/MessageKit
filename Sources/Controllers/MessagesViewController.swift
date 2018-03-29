@@ -160,17 +160,14 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         guard let collectionView = collectionView as? MessagesCollectionView else {
             fatalError(MessageKitError.notMessagesCollectionView)
         }
-        // Each message is its own section
-        return collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
+        return collectionView.messagesDataSource?.numberOfSections(in: collectionView) ?? 0
     }
 
     open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let collectionView = collectionView as? MessagesCollectionView else {
             fatalError(MessageKitError.notMessagesCollectionView)
         }
-        let messageCount = collectionView.messagesDataSource?.numberOfMessages(in: collectionView) ?? 0
-        // There will only ever be 1 message per section
-        return messageCount > 0 ? 1 : 0
+        return collectionView.messagesDataSource?.numberOfItems(inSection: section, in: collectionView) ?? 0
     }
 
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
