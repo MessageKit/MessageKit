@@ -23,7 +23,6 @@
  */
 
 import Foundation
-import class CoreLocation.CLLocation
 
 /// An enum representing the kind of message and its underlying data.
 public enum MessageData {
@@ -55,7 +54,7 @@ public enum MessageData {
     /// A custom message.
     /// - Note: Using this case requires that you override the following methods and handle this case:
     ///   - `collectionView(_:cellForItemAt indexPath: IndexPath) -> UICollectionViewCell`
-    ///   - `messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
+    ///   - `cellSizeCalculatorForItem(at indexPath: IndexPath) -> MessageSizeCalculator`
     case custom(Any?)
 
     // MARK: - Not supported yet

@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-import CoreLocation
+import class CoreLocation.CLLocation
 
 public protocol LocationItem {
 
