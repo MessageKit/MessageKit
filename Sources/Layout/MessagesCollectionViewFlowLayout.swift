@@ -107,12 +107,12 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - Cell Sizing
 
-    var textMessageSizeCalculator = TextMessageSizeCalculator()
-    var attributedTextMessageSizeCalculator = TextMessageSizeCalculator()
-    var emojiMessageSizeCalculator = TextMessageSizeCalculator()
-    var photoMessageSizeCalculator = MediaMessageSizeCalculator()
-    var videoMessageSizeCalculator = MediaMessageSizeCalculator()
-    var locationMessageSizeCalculator = LocationMessageSizeCalculator()
+    open var textMessageSizeCalculator = TextMessageSizeCalculator()
+    open var attributedTextMessageSizeCalculator = TextMessageSizeCalculator()
+    open var emojiMessageSizeCalculator = TextMessageSizeCalculator()
+    open var photoMessageSizeCalculator = MediaMessageSizeCalculator()
+    open var videoMessageSizeCalculator = MediaMessageSizeCalculator()
+    open var locationMessageSizeCalculator = LocationMessageSizeCalculator()
 
     open func cellSizeCalculatorForItem(at indexPath: IndexPath) -> MessageSizeCalculator {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
