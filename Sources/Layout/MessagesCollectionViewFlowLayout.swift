@@ -114,7 +114,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     open var videoMessageSizeCalculator = MediaMessageSizeCalculator()
     open var locationMessageSizeCalculator = LocationMessageSizeCalculator()
 
-    open func cellSizeCalculatorForItem(at indexPath: IndexPath) -> MessageSizeCalculator {
+    open func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         switch message.data {
         case .text:
