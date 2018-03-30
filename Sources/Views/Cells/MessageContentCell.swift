@@ -24,14 +24,17 @@
 
 import UIKit
 
+/// A subclass of `MessageCollectionViewCell` used to display text, media, and location messages.
 open class MessageContentCell: MessageCollectionViewCell {
 
     open override class func reuseIdentifier() -> String {
         return "messagekit.cell.contentcell"
     }
 
+    /// The image view displaying the avatar.
     open var avatarView = AvatarView()
 
+    /// The container used for styling and holding the message's content view.
     open var messageContainerView: MessageContainerView = {
         let containerView = MessageContainerView()
         containerView.clipsToBounds = true
@@ -39,18 +42,21 @@ open class MessageContentCell: MessageCollectionViewCell {
         return containerView
     }()
 
+    /// The top label of the cell.
     open var cellTopLabel: InsetLabel = {
         let label = InsetLabel()
         label.numberOfLines = 0
         return label
     }()
 
+    /// The bottom label of the cell.
     open var cellBottomLabel: InsetLabel = {
         let label = InsetLabel()
         label.numberOfLines = 0
         return label
     }()
 
+    /// The `MessageCellDelegate` for the cell.
     open weak var delegate: MessageCellDelegate?
 
     public override init(frame: CGRect) {
@@ -90,6 +96,12 @@ open class MessageContentCell: MessageCollectionViewCell {
         layoutTopLabel(with: attributes)
     }
 
+    /// Used to configure the cell.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` this cell displays.
+    ///   - indexPath: The `IndexPath` for this cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell is contained.
     open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         guard let dataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)

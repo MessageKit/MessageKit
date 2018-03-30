@@ -25,16 +25,17 @@
 import UIKit
 import MapKit
 
+/// A subclass of `MessageContentCell` used to display location messages.
 open class LocationMessageCell: MessageContentCell {
 
     open override class func reuseIdentifier() -> String {
         return "messagekit.cell.location"
     }
 
-    // MARK: - Properties
-
+    /// The activity indicator to be displayed while the map image is loading.
     open var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
+    /// The image view holding the map image.
     open var imageView = UIImageView()
     
     private weak var snapShotter: MKMapSnapshotter?
@@ -47,6 +48,7 @@ open class LocationMessageCell: MessageContentCell {
         setupConstraints()
     }
 
+    /// Responsible for setting up the constraints of the cell's subviews.
     open func setupConstraints() {
         imageView.fillSuperview()
         activityIndicator.centerInSuperview()

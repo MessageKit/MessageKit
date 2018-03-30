@@ -24,19 +24,20 @@
 
 import UIKit
 
+/// A subclass of `MessageContentCell` used to display video and audio messages.
 open class MediaMessageCell: MessageContentCell {
 
     open override class func reuseIdentifier() -> String {
         return "messagekit.cell.mediamessage"
     }
 
-    // MARK: - Properties
-
+    /// The play button view to display on video messages.
     open lazy var playButtonView: PlayButtonView = {
         let playButtonView = PlayButtonView()
         return playButtonView
     }()
 
+    /// The image view display the media content.
     open var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -45,6 +46,7 @@ open class MediaMessageCell: MessageContentCell {
 
     // MARK: - Methods
 
+    /// Responsible for setting up the constraints of the cell's subviews.
     open func setupConstraints() {
         imageView.fillSuperview()
         playButtonView.centerInSuperview()

@@ -24,6 +24,7 @@
 
 import UIKit
 
+/// A subclass of `MessageContentCell` used to display text messages.
 open class TextMessageCell: MessageContentCell {
 
     open override class func reuseIdentifier() -> String {
@@ -32,12 +33,14 @@ open class TextMessageCell: MessageContentCell {
 
     // MARK: - Properties
 
+    /// The `MessageCellDelegate` for the cell.
     open override weak var delegate: MessageCellDelegate? {
         didSet {
             messageLabel.delegate = delegate
         }
     }
 
+    /// The label used to display the message's text.
     open var messageLabel = MessageLabel()
 
     // MARK: - Methods
@@ -91,8 +94,10 @@ open class TextMessageCell: MessageContentCell {
         }
     }
     
-    /// Handle `ContentView`'s tap gesture, return false when `ContentView` don't needs to handle gesture
+    /// Used to handle the cell's contentView's tap gesture.
+    /// Return false when the contentView does not need to handle the gesture.
     open override func cellContentView(canHandle touchPoint: CGPoint) -> Bool {
         return messageLabel.handleGesture(touchPoint)
     }
+
 }

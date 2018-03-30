@@ -24,8 +24,10 @@
 
 import UIKit
 
+/// A subclass of `UICollectionViewCell` to be used inside of a `MessagesCollectionView`.
 open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusable {
 
+    /// The reuse identifier of the cell.
     open class func reuseIdentifier() -> String {
         return "messagekit.cell.base-cell"
     }
