@@ -24,14 +24,19 @@
 
 import Foundation
 
+/// A protocol used to represent the data for a media message.
 public protocol MediaItem {
 
+    /// The url where the media is located.
     var url: URL? { get set }
 
+    /// The image.
     var image: UIImage? { get set }
 
+    /// A placeholder image for when the image is obtained asychronously.
     var placeholderImage: UIImage { get set }
 
+    /// The size of the media item.
     var size: CGSize { get set }
 
 }

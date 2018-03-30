@@ -24,10 +24,10 @@
 
 import UIKit
 
+/// A subclass of `UIViewController` with a `MessagesCollectionView` object
+/// that is used to display conversation interfaces.
 open class MessagesViewController: UIViewController,
 UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    
-    // MARK: - Properties [Public]
 
     /// The `MessagesCollectionView` managed by the messages view controller object.
     open var messagesCollectionView = MessagesCollectionView()
@@ -59,10 +59,8 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         return false
     }
 
-    /// A Boolean value used to determine if `viewDidLayoutSubviews()` has been called.
     private var isFirstLayout: Bool = true
-    
-    /// Indicated selected indexPath when handle menu action
+
     internal var selectedIndexPathForMenu: IndexPath?
 
     internal var messageCollectionViewBottomInset: CGFloat = 0 {
@@ -106,7 +104,6 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     // MARK: - Methods [Private]
 
-    /// Sets the default values for the MessagesViewController
     private func setupDefaults() {
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = false
@@ -115,18 +112,15 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         messagesCollectionView.alwaysBounceVertical = true
     }
 
-    /// Sets the delegate and dataSource of the messagesCollectionView property.
     private func setupDelegates() {
         messagesCollectionView.delegate = self
         messagesCollectionView.dataSource = self
     }
 
-    /// Adds the messagesCollectionView to the controllers root view.
     private func setupSubviews() {
         view.addSubview(messagesCollectionView)
     }
 
-    /// Registers all cells and supplementary views of the messagesCollectionView property.
     private func registerReusableViews() {
         messagesCollectionView.register(TextMessageCell.self)
         messagesCollectionView.register(MediaMessageCell.self)
@@ -137,7 +131,6 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         messagesCollectionView.register(MessageDateHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
     }
 
-    /// Sets the constraints of the `MessagesCollectionView`.
     private func setupConstraints() {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -301,6 +294,8 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             break
         }
     }
+
+    // MARK: - Helpers
     
     private func addObservers() {
         NotificationCenter.default.addObserver(

@@ -35,7 +35,9 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///   - indexPath: The `IndexPath` of the header.
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this header will be displayed.
     ///
-    /// The default value returned by this method is the width of the `MessagesCollectionView` and a height of 12.
+    /// - Note:
+    ///   The default value returned by this method is the width of the `MessagesCollectionView`
+    ///   and a height of 12.
     func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
     /// Specifies the size to use for a `MessageFooterView`.
@@ -45,61 +47,31 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///   - indexPath: The `IndexPath` of the footer.
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this footer will be displayed.
     ///
-    /// The default value returned by this method is a size of `GGSize.zero`.
+    /// - Note:
+    ///   The default value returned by this method is a size of `GGSize.zero`.
     func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
-    /// Specifies the height for the `MessageCollectionViewCell`'s top label.
+    /// Specifies the height for the `MessageContentCell`'s top label.
     ///
     /// - Parameters:
     ///   - message: The `MessageType` that will be displayed for this cell.
     ///   - indexPath: The `IndexPath` of the cell.
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     ///
-    /// The default value returned by this method is zero.
+    /// - Note:
+    ///   The default value returned by this method is zero.
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
 
-    /// Specifies the height for the `MessageCollectionViewCell`'s bottom label.
+    /// Specifies the height for the `MessageContentCell`'s bottom label.
     ///
     /// - Parameters:
     ///   - message: The `MessageType` that will be displayed for this cell.
     ///   - indexPath: The `IndexPath` of the cell.
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     ///
-    /// The default value returned by this method is zero.
+    /// - Note:
+    ///   The default value returned by this method is zero.
     func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
-
-    @available(*, deprecated: 1.0, message: "avatarSize(for:at:in) has been removed in MessageKit 1.0")
-    func shouldCacheLayoutAttributes(for message: MessageType) -> Bool
-
-    @available(*, deprecated: 1.0, message: "avatarSize(for:at:in) has been removed in MessageKit 1.0")
-    func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
-
-    @available(*, deprecated: 1.0, message: "avatarPosition(for:at:in) has been removed in MessageKit 1.0")
-    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition
-
-    @available(*, deprecated: 1.0, message: "messageLabelInset(for:at:in) has been removed in MessageKit 1.0.")
-    func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
-
-    @available(*, deprecated: 1.0, message: "messagePadding(for:at:in) has been removed in MessageKit 1.0.")
-    func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
-
-    @available(*, deprecated: 1.0, message: "cellTopLabelAlignment(for:at:in) has been removed in MessageKit 1.0.")
-    func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
-
-    @available(*, deprecated: 1.0, message: "cellBottomLabelAlignment(for:at:in) has been removed in MessageKit 1.0.")
-    func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment
-
-    @available(*, deprecated: 1.0, message: "widthForMedia(message:at:with:in) has been removed in MessageKit 1.0.")
-    func widthForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
-
-    @available(*, deprecated: 1.0, message: "heightForMedia(message:at:with:in) has been removed in MessageKit 1.0.")
-    func heightForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
-
-    @available(*, deprecated: 1.0, message: "widthForLocation(message:at:with:in) has been removed in MessageKit 1.0.")
-    func widthForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
-
-    @available(*, deprecated: 1.0, message: "heightForLocation(message:at:with:in) has been removed in MessageKit 1.0.")
-    func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
 
 }
 

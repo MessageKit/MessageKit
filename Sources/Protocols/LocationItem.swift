@@ -24,10 +24,13 @@
 
 import class CoreLocation.CLLocation
 
+/// A protocol used to represent the data for a location message.
 public protocol LocationItem {
 
+    /// The location.
     var location: CLLocation { get set }
 
+    /// The size of the location item.
     var size: CGSize { get set }
 
 }

@@ -24,8 +24,8 @@
 
 import Foundation
 
-/// A standard protocol representing a message. Use this protocol to create
-/// your own message object to be used by MessageKit.
+/// A standard protocol representing a message.
+/// Use this protocol to create your own message object to be used by MessageKit.
 public protocol MessageType {
 
     /// The sender of the message.

@@ -24,18 +24,21 @@
 
 import UIKit
 
+/// An object that adopts the `MessagesDataSource` protocol is responsible for providing
+/// the data required by a `MessagesCollectionView`.
 public protocol MessagesDataSource: AnyObject {
 
     /// The `Sender` of new messages in the `MessagesCollectionView`.
     func currentSender() -> Sender
 
-    /// A helper method to determine if a given message is from the current sender.
+    /// A helper method to determine if a given message is from the current `Sender`.
     ///
     /// - Parameters:
-    ///   - message: The message to check if it was sent by the current Sender.
+    ///   - message: The message to check if it was sent by the current `Sender`.
     ///
-    /// The default implementation of this method checks for equality between the message's `Sender`
-    /// and the current Sender.
+    /// - Note:
+    ///   The default implementation of this method checks for equality between
+    ///   the message's `Sender` and the current `Sender`.
     func isFromCurrentSender(message: MessageType) -> Bool
 
     /// The message to be used for a `MessageCollectionViewCell` at the given `IndexPath`.

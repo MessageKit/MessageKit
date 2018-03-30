@@ -28,12 +28,10 @@ extension MessagesViewController {
 
     // MARK: - Register / Unregister Observers
 
-    /// Add observer for `UIMenuControllerWillShowMenu` notification
     internal func addMenuControllerObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(_:)), name: .UIMenuControllerWillShowMenu, object: nil)
     }
 
-    /// Remove observer for `UIMenuControllerWillShowMenu` notification
     internal func removeMenuControllerObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIMenuControllerWillShowMenu, object: nil)
     }
