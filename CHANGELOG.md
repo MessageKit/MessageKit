@@ -51,6 +51,9 @@ the `MessageData.location` case.
 
 ### Changed
 
+- **Breaking Change** Change `NSLayoutConstraintSet` class from `public` to `internal`.
+[#607](https://github.com/MessageKit/MessageKit/pull/607) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 - **Breaking Change** `MessageHeaderView` and `MessageFooterView` now subclass `MessageReusableView` class.
 [#596](https://github.com/MessageKit/MessageKit/pull/596) by [@SD10](https://github.com/sd10).
 

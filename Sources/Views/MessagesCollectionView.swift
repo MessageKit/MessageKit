@@ -64,7 +64,7 @@ open class MessagesCollectionView: UICollectionView {
 
     // MARK: - Methods
     
-    func setupGestureRecognizers() {
+    private func setupGestureRecognizers() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         tapGesture.delaysTouchesBegan = true
         addGestureRecognizer(tapGesture)

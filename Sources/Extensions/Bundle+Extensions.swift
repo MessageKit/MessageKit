@@ -26,7 +26,7 @@ import Foundation
 
 extension Bundle {
 
-    static func messageKitAssetBundle() -> Bundle {
+    internal static func messageKitAssetBundle() -> Bundle {
         let podBundle = Bundle(for: MessagesViewController.self)
         
         guard let resourceBundleUrl = podBundle.url(forResource: "MessageKitAssets", withExtension: "bundle") else {

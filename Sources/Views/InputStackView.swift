@@ -46,7 +46,7 @@ open class InputStackView: UIStackView {
     
     // MARK: Initialization
     
-    convenience init(axis: UILayoutConstraintAxis, spacing: CGFloat) {
+    public convenience init(axis: UILayoutConstraintAxis, spacing: CGFloat) {
         self.init(frame: .zero)
         self.axis = axis
         self.spacing = spacing

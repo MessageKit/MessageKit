@@ -24,18 +24,18 @@
 
 import UIKit
 
-public class NSLayoutConstraintSet {
+internal class NSLayoutConstraintSet {
     
-    public var top: NSLayoutConstraint?
-    public var bottom: NSLayoutConstraint?
-    public var left: NSLayoutConstraint?
-    public var right: NSLayoutConstraint?
-    public var centerX: NSLayoutConstraint?
-    public var centerY: NSLayoutConstraint?
-    public var width: NSLayoutConstraint?
-    public var height: NSLayoutConstraint?
+    internal var top: NSLayoutConstraint?
+    internal var bottom: NSLayoutConstraint?
+    internal var left: NSLayoutConstraint?
+    internal var right: NSLayoutConstraint?
+    internal var centerX: NSLayoutConstraint?
+    internal var centerY: NSLayoutConstraint?
+    internal var width: NSLayoutConstraint?
+    internal var height: NSLayoutConstraint?
     
-    public init(top: NSLayoutConstraint? = nil, bottom: NSLayoutConstraint? = nil,
+    internal init(top: NSLayoutConstraint? = nil, bottom: NSLayoutConstraint? = nil,
                 left: NSLayoutConstraint? = nil, right: NSLayoutConstraint? = nil,
                 centerX: NSLayoutConstraint? = nil, centerY: NSLayoutConstraint? = nil,
                 width: NSLayoutConstraint? = nil, height: NSLayoutConstraint? = nil) {
@@ -59,7 +59,7 @@ public class NSLayoutConstraintSet {
     ///
     /// - Returns: Self
     @discardableResult
-    func activate() -> Self {
+    internal func activate() -> Self {
         NSLayoutConstraint.activate(availableConstraints)
         return self
     }
@@ -68,7 +68,7 @@ public class NSLayoutConstraintSet {
     ///
     /// - Returns: Self
     @discardableResult
-    func deactivate() -> Self {
+    internal func deactivate() -> Self {
         NSLayoutConstraint.deactivate(availableConstraints)
         return self
     }
