@@ -72,7 +72,7 @@ extension MessagesViewController {
     }
 
     @objc
-    func adjustScrollViewInset() {
+    internal func adjustScrollViewInset() {
         if #available(iOS 11.0, *) {
             // No need to add to the top contentInset
         } else {

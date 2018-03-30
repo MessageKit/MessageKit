@@ -26,7 +26,7 @@ import Foundation
 
 extension NSAttributedString {
 
-    public func height(considering width: CGFloat) -> CGFloat {
+    internal func height(considering width: CGFloat) -> CGFloat {
 
         let constraintBox = CGSize(width: width, height: .greatestFiniteMagnitude)
         let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, context: nil)
@@ -34,7 +34,7 @@ extension NSAttributedString {
 
     }
 
-    public func width(considering height: CGFloat) -> CGFloat {
+    internal func width(considering height: CGFloat) -> CGFloat {
 
         let constraintBox = CGSize(width: .greatestFiniteMagnitude, height: height)
         let rect = self.boundingRect(with: constraintBox, options: .usesLineFragmentOrigin, context: nil)

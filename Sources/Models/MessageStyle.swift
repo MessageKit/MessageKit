@@ -35,7 +35,7 @@ public enum MessageStyle {
         case topRight
         case bottomRight
 
-        var imageOrientation: UIImageOrientation {
+        internal var imageOrientation: UIImageOrientation {
             switch self {
             case .bottomRight: return .up
             case .bottomLeft: return .upMirrored
@@ -52,7 +52,7 @@ public enum MessageStyle {
         case curved
         case pointedEdge
 
-        var imageNameSuffix: String {
+        internal var imageNameSuffix: String {
             switch self {
             case .curved:
                 return "_tail_v2"
