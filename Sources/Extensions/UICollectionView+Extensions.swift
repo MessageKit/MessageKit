@@ -29,21 +29,21 @@ public protocol CollectionViewReusable: AnyObject {
     static func reuseIdentifier() -> String
 }
 
-public extension MessagesCollectionView {
+extension MessagesCollectionView {
     /// Registers a particular cell using its reuse-identifier
-    func register<CellType: UICollectionViewCell & CollectionViewReusable>(_ cellClass: CellType.Type) {
+    public func register<CellType: UICollectionViewCell & CollectionViewReusable>(_ cellClass: CellType.Type) {
 	    register(cellClass, forCellWithReuseIdentifier: CellType.reuseIdentifier())
     }
 
     /// Registers a reusable view for a specific SectionKind
-    func register<ViewType: UICollectionReusableView & CollectionViewReusable>(_ headerFooterClass: ViewType.Type, forSupplementaryViewOfKind kind: String) {
+    public func register<ViewType: UICollectionReusableView & CollectionViewReusable>(_ headerFooterClass: ViewType.Type, forSupplementaryViewOfKind kind: String) {
 	    register(headerFooterClass,
 	             forSupplementaryViewOfKind: kind,
 	             withReuseIdentifier: ViewType.reuseIdentifier())
     }
 
     /// Generically dequeues a cell of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
-    func dequeueReusableCell<CellType: UICollectionViewCell & CollectionViewReusable>(_ cellClass: CellType.Type, for indexPath: IndexPath) -> CellType {
+    public func dequeueReusableCell<CellType: UICollectionViewCell & CollectionViewReusable>(_ cellClass: CellType.Type, for indexPath: IndexPath) -> CellType {
 	    guard let cell = dequeueReusableCell(withReuseIdentifier: cellClass.reuseIdentifier(), for: indexPath) as? CellType else {
     	    fatalError("Unable to dequeue \(String(describing: cellClass)) with reuseId of \(cellClass.reuseIdentifier())")
 	    }
@@ -51,7 +51,7 @@ public extension MessagesCollectionView {
     }
 
     /// Generically dequeues a header of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
-    func dequeueReusableHeaderView<ViewType: UICollectionReusableView & CollectionViewReusable>(_ viewClass: ViewType.Type, for indexPath: IndexPath) -> ViewType {
+    public func dequeueReusableHeaderView<ViewType: UICollectionReusableView & CollectionViewReusable>(_ viewClass: ViewType.Type, for indexPath: IndexPath) -> ViewType {
         let view = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: viewClass.reuseIdentifier(), for: indexPath)
         guard let viewType = view as? ViewType else {
             fatalError("Unable to dequeue \(String(describing: viewClass)) with reuseId of \(viewClass.reuseIdentifier())")
@@ -60,7 +60,7 @@ public extension MessagesCollectionView {
     }
 
     /// Generically dequeues a footer of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
-    func dequeueReusableFooterView<ViewType: UICollectionReusableView & CollectionViewReusable>(_ viewClass: ViewType.Type, for indexPath: IndexPath) -> ViewType {
+    public func dequeueReusableFooterView<ViewType: UICollectionReusableView & CollectionViewReusable>(_ viewClass: ViewType.Type, for indexPath: IndexPath) -> ViewType {
         let view = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: viewClass.reuseIdentifier(), for: indexPath)
         guard let viewType = view as? ViewType else {
             fatalError("Unable to dequeue \(String(describing: viewClass)) with reuseId of \(viewClass.reuseIdentifier())")

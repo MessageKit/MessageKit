@@ -38,7 +38,7 @@ public enum DetectorType {
     //case hashtag
     //case custom
 
-    var textCheckingType: NSTextCheckingResult.CheckingType {
+    public var textCheckingType: NSTextCheckingResult.CheckingType {
         switch self {
         case .address: return .address
         case .date: return .date

@@ -63,9 +63,9 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     private var isFirstLayout: Bool = true
     
     /// Indicated selected indexPath when handle menu action
-    var selectedIndexPathForMenu: IndexPath?
+    internal var selectedIndexPathForMenu: IndexPath?
 
-    var messageCollectionViewBottomInset: CGFloat = 0 {
+    internal var messageCollectionViewBottomInset: CGFloat = 0 {
         didSet {
             messagesCollectionView.contentInset.bottom = messageCollectionViewBottomInset
             messagesCollectionView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset

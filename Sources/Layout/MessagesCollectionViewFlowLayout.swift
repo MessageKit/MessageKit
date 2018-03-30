@@ -43,13 +43,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     public override init() {
         super.init()
 
-        textMessageSizeCalculator.layout = self
-        attributedTextMessageSizeCalculator.layout = self
-        emojiMessageSizeCalculator.layout = self
-        photoMessageSizeCalculator.layout = self
-        videoMessageSizeCalculator.layout = self
-        locationMessageSizeCalculator.layout = self
-
         sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
 
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesCollectionViewFlowLayout.handleOrientationChange(_:)), name: .UIDeviceOrientationDidChange, object: nil)
@@ -107,12 +100,12 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - Cell Sizing
 
-    open var textMessageSizeCalculator = TextMessageSizeCalculator()
-    open var attributedTextMessageSizeCalculator = TextMessageSizeCalculator()
-    open var emojiMessageSizeCalculator = TextMessageSizeCalculator()
-    open var photoMessageSizeCalculator = MediaMessageSizeCalculator()
-    open var videoMessageSizeCalculator = MediaMessageSizeCalculator()
-    open var locationMessageSizeCalculator = LocationMessageSizeCalculator()
+    lazy open var textMessageSizeCalculator = TextMessageSizeCalculator(layout: self)
+    lazy open var attributedTextMessageSizeCalculator = TextMessageSizeCalculator(layout: self)
+    lazy open var emojiMessageSizeCalculator = TextMessageSizeCalculator(layout: self)
+    lazy open var photoMessageSizeCalculator = MediaMessageSizeCalculator(layout: self)
+    lazy open var videoMessageSizeCalculator = MediaMessageSizeCalculator(layout: self)
+    lazy open var locationMessageSizeCalculator = LocationMessageSizeCalculator(layout: self)
 
     open func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)

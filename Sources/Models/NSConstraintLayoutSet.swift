@@ -59,7 +59,7 @@ public class NSLayoutConstraintSet {
     ///
     /// - Returns: Self
     @discardableResult
-    func activate() -> Self {
+    public func activate() -> Self {
         NSLayoutConstraint.activate(availableConstraints)
         return self
     }
@@ -68,7 +68,7 @@ public class NSLayoutConstraintSet {
     ///
     /// - Returns: Self
     @discardableResult
-    func deactivate() -> Self {
+    public func deactivate() -> Self {
         NSLayoutConstraint.deactivate(availableConstraints)
         return self
     }
