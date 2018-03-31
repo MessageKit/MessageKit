@@ -24,23 +24,25 @@
 
 import UIKit
 
-/// An object that adopts the `CellSizeCalculator` protocol is responsible for
+/// An object is responsible for
 /// sizing and configuring cells for given `IndexPath`s.
-public protocol CellSizeCalculator {
+open class CellSizeCalculator {
 
     /// The layout object for which the cell size calculator is used.
-    weak var layout: UICollectionViewFlowLayout? { get set }
+    public weak var layout: UICollectionViewFlowLayout?
 
     /// Used to configure the layout attributes for a given cell.
     ///
     /// - Parameters:
-    ///   - attributes: The attributes of the cell.
-    func configure(attributes: UICollectionViewLayoutAttributes)
+    /// - attributes: The attributes of the cell.
+    /// The default does nothing
+    open func configure(attributes: UICollectionViewLayoutAttributes) {}
 
     /// Used to size an item at a given `IndexPath`.
     ///
     /// - Parameters:
-    ///   - indexPath: The `IndexPath` of the item to be displayed.
-    func sizeForItem(at indexPath: IndexPath) -> CGSize
+    /// - indexPath: The `IndexPath` of the item to be displayed.
+    /// The default return .zero
+    open func sizeForItem(at indexPath: IndexPath) -> CGSize { return .zero }
 
 }

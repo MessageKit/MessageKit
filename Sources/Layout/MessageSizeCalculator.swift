@@ -26,9 +26,9 @@ import Foundation
 
 open class MessageSizeCalculator: CellSizeCalculator {
 
-    public var layout: UICollectionViewFlowLayout?
-
     public init(layout: MessagesCollectionViewFlowLayout? = nil) {
+        super.init()
+        
         self.layout = layout
     }
 
@@ -47,7 +47,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
     public var incomingCellBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: 42))
     public var outgoingCellBottomLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: 42))
 
-    open func configure(attributes: UICollectionViewLayoutAttributes) {
+    open override func configure(attributes: UICollectionViewLayoutAttributes) {
         guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
 
         let dataSource = messagesLayout.messagesDataSource
@@ -66,7 +66,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
         attributes.bottomLabelSize = cellBottomLabelSize(for: message, at: indexPath)
     }
 
-    open func sizeForItem(at indexPath: IndexPath) -> CGSize {
+    open override func sizeForItem(at indexPath: IndexPath) -> CGSize {
         let dataSource = messagesLayout.messagesDataSource
         let message = dataSource.messageForItem(at: indexPath, in: messagesLayout.messagesCollectionView)
         let itemHeight = cellContentHeight(for: message, at: indexPath)
