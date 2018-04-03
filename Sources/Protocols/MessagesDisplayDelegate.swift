@@ -228,6 +228,5 @@ public extension MessagesDisplayDelegate {
     // MARK: - Media Message Defaults
 
     func configureMediaMessageImageView(_ imageView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
-
     }
 }
