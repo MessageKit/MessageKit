@@ -27,10 +27,6 @@ import UIKit
 /// A subclass of `MessageContentCell` used to display text messages.
 open class TextMessageCell: MessageContentCell {
 
-    open override class func reuseIdentifier() -> String {
-        return "messagekit.cell.text"
-    }
-
     // MARK: - Properties
 
     /// The `MessageCellDelegate` for the cell.

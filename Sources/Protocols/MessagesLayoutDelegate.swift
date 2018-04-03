@@ -28,7 +28,7 @@ import Foundation
 /// the size and layout of a `MessageCollectionViewCell` and its contents.
 public protocol MessagesLayoutDelegate: AnyObject {
 
-    /// Specifies the size to use for a `MessageHeaderView`.
+    /// Specifies the size to use for a header view.
     ///
     /// - Parameters:
     ///   - message: The `MessageType` that will be displayed for this header.
@@ -40,7 +40,7 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///   and a height of 12.
     func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
-    /// Specifies the size to use for a `MessageFooterView`.
+    /// Specifies the size to use for a footer view.
     ///
     /// - Parameters:
     ///   - message: The `MessageType` that will be displayed for this footer.

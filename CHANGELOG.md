@@ -51,6 +51,10 @@ the `MessageData.location` case.
 
 ### Changed
 
+- **Breaking Change** The reuse identifiers of all `MessageReusableView`s and `MessageCollectionViewCell`s have been 
+changed to match their class name exactly.
+[#](https://github.com/MessageKit/MessageKit/MessageKit/pull/) by [@SD10](https://github.com/sd10).
+
 - **Breaking Change** Changed the superclass of `MessageDateHeaderView` from `MessageHeaderView` to `MessageReusableView`.
 [#](https://github.com/MessageKit/MessageKit/pull/) by [@SD10](https://github.com/sd10).
 
@@ -79,6 +83,13 @@ You must now set this font explicitly through the `emojiMessageSizeCalculator` o
 [#587](https://github.com/MessageKit/MessageKit/pull/587) by [@SD10](https://github.com/sd10).
 
 ### Removed
+
+- **Breaking Change** Removed the `reuseIdentifer` method from `MessageCollectionViewCell`, `TextMessageCell`,
+`LocationMessageCell`, `MediaMessageCell`, and `MessageContentCell`.
+[#](https://github.com/MessageKit/MessageKit/pull/) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Removed the `CollectionViewReusable` protocol.
+[#](https://github.com/MessageKit/MessageKit/pull/) by [@SD10](https://github.com/sd10).)
 
 - **Breaking Change** Removed `MessageHeaderView` and `MessageFooterView` in favor of `MessageReusableView`.
 [#](https://github.com/MessageKit/MessageKit/pull/) by [@SD10](https://github.com/sd10).
