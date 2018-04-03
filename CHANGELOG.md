@@ -51,6 +51,9 @@ the `MessageData.location` case.
 
 ### Changed
 
+- **Breaking Change** Changed the superclass of `MessageDateHeaderView` from `MessageHeaderView` to `MessageReusableView`.
+[#](https://github.com/MessageKit/MessageKit/pull/) by [@SD10](https://github.com/sd10).
+
 - **Breaking Change** Change `NSLayoutConstraintSet` class from `public` to `internal`.
 [#607](https://github.com/MessageKit/MessageKit/pull/607) by [@zhongwuzw](https://github.com/zhongwuzw).
 
@@ -76,6 +79,9 @@ You must now set this font explicitly through the `emojiMessageSizeCalculator` o
 [#587](https://github.com/MessageKit/MessageKit/pull/587) by [@SD10](https://github.com/sd10).
 
 ### Removed
+
+- **Breaking Change** Removed `MessageHeaderView` and `MessageFooterView` in favor of `MessageReusableView`.
+[#](https://github.com/MessageKit/MessageKit/pull/) by [@SD10](https://github.com/sd10).
 
 - **Breaking Change** Removed `numberOfMessages(in)` method of `MessagesDataSource`, instead please use `numberOfSections(in)` and `numberOfItems(inSection:in)`.
 [#601](https://github.com/MessageKit/MessageKit/pull/601) by [@SD10](https://github.com/sd10), [@zhongwuzw](https://github.com/zhongwuzw).
