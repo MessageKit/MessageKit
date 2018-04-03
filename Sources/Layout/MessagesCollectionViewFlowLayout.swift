@@ -137,21 +137,21 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
 extension MessagesCollectionViewFlowLayout {
 
-    internal var messagesCollectionView: MessagesCollectionView {
+    public var messagesCollectionView: MessagesCollectionView {
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
             fatalError(MessageKitError.layoutUsedOnForeignType)
         }
         return messagesCollectionView
     }
 
-    internal var messagesDataSource: MessagesDataSource {
+    public var messagesDataSource: MessagesDataSource {
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
         return messagesDataSource
     }
 
-    internal var messagesLayoutDelegate: MessagesLayoutDelegate {
+    public var messagesLayoutDelegate: MessagesLayoutDelegate {
         guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
             fatalError(MessageKitError.nilMessagesLayoutDelegate)
         }
