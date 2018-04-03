@@ -32,6 +32,30 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     open override class var layoutAttributesClass: AnyClass {
         return MessagesCollectionViewLayoutAttributes.self
     }
+    
+    /** The `MessagesCollectionView` that owns this layout object. */
+    public var messagesCollectionView: MessagesCollectionView {
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.layoutUsedOnForeignType)
+        }
+        return messagesCollectionView
+    }
+    
+    /** The `MessagesDataSource` for the layout's collection view. */
+    public var messagesDataSource: MessagesDataSource {
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+        return messagesDataSource
+    }
+    
+    /** The `MessagesLayoutDelegate` for the layout's collection view. */
+    public var messagesLayoutDelegate: MessagesLayoutDelegate {
+        guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
+            fatalError(MessageKitError.nilMessagesLayoutDelegate)
+        }
+        return messagesLayoutDelegate
+    }
 
     internal var itemWidth: CGFloat {
         guard let collectionView = collectionView else { return 0 }
@@ -130,31 +154,5 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     open func sizeForItem(at indexPath: IndexPath) -> CGSize {
         let calculator = cellSizeCalculatorForItem(at: indexPath)
         return calculator.sizeForItem(at: indexPath)
-    }
-}
-
-// MARK: - Helpers
-
-extension MessagesCollectionViewFlowLayout {
-
-    public var messagesCollectionView: MessagesCollectionView {
-        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
-            fatalError(MessageKitError.layoutUsedOnForeignType)
-        }
-        return messagesCollectionView
-    }
-
-    public var messagesDataSource: MessagesDataSource {
-        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
-            fatalError(MessageKitError.nilMessagesDataSource)
-        }
-        return messagesDataSource
-    }
-
-    public var messagesLayoutDelegate: MessagesLayoutDelegate {
-        guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
-            fatalError(MessageKitError.nilMessagesLayoutDelegate)
-        }
-        return messagesLayoutDelegate
     }
 }
