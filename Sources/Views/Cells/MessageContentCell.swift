@@ -27,10 +27,6 @@ import UIKit
 /// A subclass of `MessageCollectionViewCell` used to display text, media, and location messages.
 open class MessageContentCell: MessageCollectionViewCell {
 
-    open override class func reuseIdentifier() -> String {
-        return "messagekit.cell.contentcell"
-    }
-
     /// The image view displaying the avatar.
     open var avatarView = AvatarView()
 

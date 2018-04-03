@@ -24,11 +24,7 @@
 
 import UIKit
 
-open class MessageDateHeaderView: MessageHeaderView {
-
-    open override class func reuseIdentifier() -> String {
-        return "messagekit.header.date"
-    }
+open class MessageDateHeaderView: MessageReusableView {
 
     // MARK: - Properties
 

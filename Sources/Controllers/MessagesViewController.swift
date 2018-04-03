@@ -126,8 +126,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         messagesCollectionView.register(MediaMessageCell.self)
         messagesCollectionView.register(LocationMessageCell.self)
 
-        messagesCollectionView.register(MessageFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter)
-        messagesCollectionView.register(MessageHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
+        messagesCollectionView.register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
         messagesCollectionView.register(MessageDateHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
     }
 
@@ -199,21 +198,15 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             fatalError(MessageKitError.notMessagesCollectionView)
         }
 
-        guard let dataSource = messagesCollectionView.messagesDataSource else {
-            fatalError(MessageKitError.nilMessagesDataSource)
-        }
-
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
             fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
 
-        let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-
         switch kind {
         case UICollectionElementKindSectionHeader:
-            return displayDelegate.messageHeaderView(for: message, at: indexPath, in: messagesCollectionView)
+            return displayDelegate.messageHeaderView(for: indexPath, in: messagesCollectionView)
         case UICollectionElementKindSectionFooter:
-            return displayDelegate.messageFooterView(for: message, at: indexPath, in: messagesCollectionView)
+            return displayDelegate.messageFooterView(for: indexPath, in: messagesCollectionView)
         default:
             fatalError(MessageKitError.unrecognizedSectionKind)
         }
@@ -231,32 +224,20 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
             fatalError(MessageKitError.notMessagesCollectionView)
         }
-        guard let dataSource = messagesCollectionView.messagesDataSource else {
-            fatalError(MessageKitError.nilMessagesDataSource)
-        }
         guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
             fatalError(MessageKitError.nilMessagesLayoutDelegate)
         }
-        // Could pose a problem if subclass behaviors allows more than one item per section
-        let indexPath = IndexPath(item: 0, section: section)
-        let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        return layoutDelegate.headerViewSize(for: message, at: indexPath, in: messagesCollectionView)
+        return layoutDelegate.headerViewSize(for: section, in: messagesCollectionView)
     }
 
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
             fatalError(MessageKitError.notMessagesCollectionView)
         }
-        guard let dataSource = messagesCollectionView.messagesDataSource else {
-            fatalError(MessageKitError.nilMessagesDataSource)
-        }
         guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
             fatalError(MessageKitError.nilMessagesLayoutDelegate)
         }
-        // Could pose a problem if subclass behaviors allows more than one item per section
-        let indexPath = IndexPath(item: 0, section: section)
-        let message = dataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        return layoutDelegate.footerViewSize(for: message, at: indexPath, in: messagesCollectionView)
+        return layoutDelegate.footerViewSize(for: section, in: messagesCollectionView)
     }
 
     open func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {

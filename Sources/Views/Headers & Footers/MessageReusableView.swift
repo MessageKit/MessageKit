@@ -24,11 +24,7 @@
 
 import Foundation
 
-open class MessageReusableView: UICollectionReusableView, CollectionViewReusable {
-
-    open class func reuseIdentifier() -> String {
-        return "messagekit.reusable.base"
-    }
+open class MessageReusableView: UICollectionReusableView {
 
     // MARK: - Initializers
 

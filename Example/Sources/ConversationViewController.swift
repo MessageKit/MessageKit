@@ -365,7 +365,7 @@ extension ConversationViewController: MessagesLayoutDelegate {
         return 16
     }
 
-    func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+    func footerViewSize(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return CGSize(width: messagesCollectionView.bounds.width, height: 10)
     }
 }

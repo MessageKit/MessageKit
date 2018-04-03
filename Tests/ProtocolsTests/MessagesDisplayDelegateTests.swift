@@ -111,67 +111,10 @@ class MessagesDisplayDelegateTests: XCTestCase {
         XCTAssertTrue(result)
     }
 
-    func testShouldDisplayHeaderWithoutDataSource_returnsFalseForDefault() {
-        sut.messagesCollectionView.messagesDataSource = nil
-
-        XCTAssertFalse(sut.shouldDisplayHeader(for: sut.dataProvider.messages[0],
-                                               at: IndexPath(item: 0, section: 0),
-                                               in: sut.messagesCollectionView))
-    }
-
-    func testShouldDisplayHeaderForFirstMessage_returnsFalseForDefault() {
-        XCTAssertFalse(sut.shouldDisplayHeader(for: sut.dataProvider.messages[0],
-                                               at: IndexPath(item: 0, section: 0),
-                                               in: sut.messagesCollectionView))
-    }
-
-    func testShouldDisplayHeaderForMessageWithTimeIntervalSinceLastMessageGreatherThanScheduled_returnsTrue() {
-        var message = MockMessage(text: "Test", sender: sut.dataProvider.currentSender(), messageId: "003")
-        let scheduledInterval = sut.messagesCollectionView.showsDateHeaderAfterTimeInterval
-        message.sentDate = Date(timeIntervalSinceNow: scheduledInterval + 300)
-        sut.dataProvider.messages.append(message)
-
-        XCTAssertTrue(sut.shouldDisplayHeader(for: sut.dataProvider.messages[2],
-                                              at: IndexPath(item: 0, section: 1),
-                                              in: sut.messagesCollectionView))
-    }
-
-    func testShouldDisplayHeaderForMessageWithTimeIntervalSinceLastMessageEqualThanScheduled_returnsTrue() {
-        var message = MockMessage(text: "Test", sender: sut.dataProvider.currentSender(), messageId: "003")
-        let scheduledInterval = sut.messagesCollectionView.showsDateHeaderAfterTimeInterval
-        message.sentDate = Date(timeIntervalSinceNow: scheduledInterval)
-        sut.dataProvider.messages.append(message)
-
-        XCTAssertTrue(sut.shouldDisplayHeader(for: sut.dataProvider.messages[2],
-                                              at: IndexPath(item: 0, section: 1),
-                                              in: sut.messagesCollectionView))
-    }
-
-    func testShouldDisplayHeaderForMessageWithTimeIntervalSinceLastMessageLessThanScheduled_returnsFalse() {
-        var message = MockMessage(text: "Test", sender: sut.dataProvider.currentSender(), messageId: "003")
-        let scheduledInterval = sut.messagesCollectionView.showsDateHeaderAfterTimeInterval
-        message.sentDate = Date(timeIntervalSinceNow: scheduledInterval - 300)
-        sut.dataProvider.messages.append(message)
-
-        XCTAssertFalse(sut.shouldDisplayHeader(for: sut.dataProvider.messages[2],
-                                               at: IndexPath(item: 0, section: 1),
-                                               in: sut.messagesCollectionView))
-    }
-
     func testMessageHeaderView_isNotNil() {
-        let headerView = sut.messageHeaderView(for: sut.dataProvider.messages[1],
-                                               at: IndexPath(item: 0, section: 1),
-                                               in: sut.messagesCollectionView)
-
+        let indexPath = IndexPath(item: 0, section: 1)
+        let headerView = sut.messageHeaderView(for: indexPath, in: sut.messagesCollectionView)
         XCTAssertNotNil(headerView)
-    }
-
-    func testMessageFooterView_isNotNil() {
-        let footerView = sut.messageFooterView(for: sut.dataProvider.messages[1],
-                                               at: IndexPath(item: 0, section: 1),
-                                               in: sut.messagesCollectionView)
-
-        XCTAssertNotNil(footerView)
     }
 
 }

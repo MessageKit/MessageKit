@@ -28,10 +28,6 @@ import MapKit
 /// A subclass of `MessageContentCell` used to display location messages.
 open class LocationMessageCell: MessageContentCell {
 
-    open override class func reuseIdentifier() -> String {
-        return "messagekit.cell.location"
-    }
-
     /// The activity indicator to be displayed while the map image is loading.
     open var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
