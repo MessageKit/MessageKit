@@ -186,16 +186,6 @@ public extension MessagesDisplayDelegate {
         return messagesCollectionView.dequeueReusableHeaderView(MessageReusableView.self, for: indexPath)
     }
 
-    func shouldDisplayHeader(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Bool {
-        guard let dataSource = messagesCollectionView.messagesDataSource else { return false }
-        if indexPath.section == 0 { return false }
-        let previousSection = indexPath.section - 1
-        let previousIndexPath = IndexPath(item: 0, section: previousSection)
-        let previousMessage = dataSource.messageForItem(at: previousIndexPath, in: messagesCollectionView)
-        let timeIntervalSinceLastMessage = message.sentDate.timeIntervalSince(previousMessage.sentDate)
-        return timeIntervalSinceLastMessage >= messagesCollectionView.showsDateHeaderAfterTimeInterval
-    }
-
     func messageFooterView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
         return messagesCollectionView.dequeueReusableFooterView(MessageReusableView.self, for: indexPath)
     }
