@@ -31,25 +31,22 @@ public protocol MessagesLayoutDelegate: AnyObject {
     /// Specifies the size to use for a header view.
     ///
     /// - Parameters:
-    ///   - message: The `MessageType` that will be displayed for this header.
-    ///   - indexPath: The `IndexPath` of the header.
+    ///   - section: The section number of the header.
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this header will be displayed.
     ///
     /// - Note:
-    ///   The default value returned by this method is the width of the `MessagesCollectionView`
-    ///   and a height of 12.
-    func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
+    ///   The default value returned by this method is a size of `GGSize.zero`.
+    func headerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
     /// Specifies the size to use for a footer view.
     ///
     /// - Parameters:
-    ///   - message: The `MessageType` that will be displayed for this footer.
-    ///   - indexPath: The `IndexPath` of the footer.
+    ///   - section: The section number of the footer.
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this footer will be displayed.
     ///
     /// - Note:
     ///   The default value returned by this method is a size of `GGSize.zero`.
-    func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize
+    func footerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
     /// Specifies the height for the `MessageContentCell`'s top label.
     ///
@@ -77,15 +74,11 @@ public protocol MessagesLayoutDelegate: AnyObject {
 
 public extension MessagesLayoutDelegate {
 
-    func headerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError(MessageKitError.nilMessagesDisplayDelegate)
-        }
-        let shouldDisplay = displayDelegate.shouldDisplayHeader(for: message, at: indexPath, in: messagesCollectionView)
-        return shouldDisplay ? CGSize(width: messagesCollectionView.bounds.width, height: 12) : .zero
+    func headerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return .zero
     }
 
-    func footerViewSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+    func footerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return .zero
     }
 

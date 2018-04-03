@@ -80,7 +80,6 @@
 		B7A03F601F8669CA006AEF79 /* MessagesDisplayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F561F8669C9006AEF79 /* MessagesDisplayDelegate.swift */; };
 		B7A03F611F8669CA006AEF79 /* MessagesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F571F8669CA006AEF79 /* MessagesDataSource.swift */; };
 		B7A03F621F8669CA006AEF79 /* MessageInputBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F581F8669CA006AEF79 /* MessageInputBarDelegate.swift */; };
-		B7A03F6A1F8669EB006AEF79 /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F641F8669EB006AEF79 /* UICollectionView+Extensions.swift */; };
 		B7A03F6B1F8669EB006AEF79 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F651F8669EB006AEF79 /* UIColor+Extensions.swift */; };
 		B7A03F6C1F8669EB006AEF79 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F661F8669EB006AEF79 /* UIView+Extensions.swift */; };
 		B7A03F6D1F8669EB006AEF79 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F671F8669EB006AEF79 /* Bundle+Extensions.swift */; };
@@ -189,7 +188,6 @@
 		B7A03F561F8669C9006AEF79 /* MessagesDisplayDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDisplayDelegate.swift; sourceTree = "<group>"; };
 		B7A03F571F8669CA006AEF79 /* MessagesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesDataSource.swift; sourceTree = "<group>"; };
 		B7A03F581F8669CA006AEF79 /* MessageInputBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageInputBarDelegate.swift; sourceTree = "<group>"; };
-		B7A03F641F8669EB006AEF79 /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
 		B7A03F651F8669EB006AEF79 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		B7A03F661F8669EB006AEF79 /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		B7A03F671F8669EB006AEF79 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
@@ -376,7 +374,6 @@
 				0EE91E651FDEC887005420A2 /* CGRect+Extensions.swift */,
 				B7A03F671F8669EB006AEF79 /* Bundle+Extensions.swift */,
 				B7A03F681F8669EB006AEF79 /* NSAttributedString+Extensions.swift */,
-				B7A03F641F8669EB006AEF79 /* UICollectionView+Extensions.swift */,
 				B7A03F651F8669EB006AEF79 /* UIColor+Extensions.swift */,
 				B7A03F661F8669EB006AEF79 /* UIView+Extensions.swift */,
 				1FCA6D2F201C1CC900BC3480 /* UIEdgeInsets+Extensions.swift */,
@@ -628,7 +625,6 @@
 				B7A03F5E1F8669CA006AEF79 /* MessagesLayoutDelegate.swift in Sources */,
 				B7A03F261F866895006AEF79 /* MessageKitDateFormatter.swift in Sources */,
 				B7A03F6D1F8669EB006AEF79 /* Bundle+Extensions.swift in Sources */,
-				B7A03F6A1F8669EB006AEF79 /* UICollectionView+Extensions.swift in Sources */,
 				1FD589602064E08A004B5081 /* MediaItem.swift in Sources */,
 				B7A03F611F8669CA006AEF79 /* MessagesDataSource.swift in Sources */,
 				B7A03F6E1F8669EB006AEF79 /* NSAttributedString+Extensions.swift in Sources */,
