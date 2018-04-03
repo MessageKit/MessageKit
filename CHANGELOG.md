@@ -51,12 +51,20 @@ the `MessageData.location` case.
 
 ### Changed
 
+- **Breaking Change** Changed the `messageFooterView(for:in)` and `messageHeaderView(for:in)` methods of
+`MessagesDisplayDelegate` by removing the `message` parameter.
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Changed the `footerViewSize(for:in)` and `headerViewSize(for:in)` methods of `MessagesLayoutDelegate`
+by removing the `MessageType` and `IndexPath` parameters and replacing them with a new `section: Int` parameter.
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
+
 - **Breaking Change** The reuse identifiers of all `MessageReusableView`s and `MessageCollectionViewCell`s have been 
 changed to match their class name exactly.
-[#](https://github.com/MessageKit/MessageKit/MessageKit/pull/) by [@SD10](https://github.com/sd10).
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
 
 - **Breaking Change** Changed the superclass of `MessageDateHeaderView` from `MessageHeaderView` to `MessageReusableView`.
-[#](https://github.com/MessageKit/MessageKit/pull/) by [@SD10](https://github.com/sd10).
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
 
 - **Breaking Change** Change `NSLayoutConstraintSet` class from `public` to `internal`.
 [#607](https://github.com/MessageKit/MessageKit/pull/607) by [@zhongwuzw](https://github.com/zhongwuzw).
@@ -84,15 +92,18 @@ You must now set this font explicitly through the `emojiMessageSizeCalculator` o
 
 ### Removed
 
+- **Breaking Change** Removed the `showsDateHeaderAfterTimeInterval` property of `MessagesCollectionView`.
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
+
 - **Breaking Change** Removed the `reuseIdentifer` method from `MessageCollectionViewCell`, `TextMessageCell`,
 `LocationMessageCell`, `MediaMessageCell`, and `MessageContentCell`.
-[#](https://github.com/MessageKit/MessageKit/pull/) by [@SD10](https://github.com/sd10).
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
 
 - **Breaking Change** Removed the `CollectionViewReusable` protocol.
-[#](https://github.com/MessageKit/MessageKit/pull/) by [@SD10](https://github.com/sd10).)
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
 
 - **Breaking Change** Removed `MessageHeaderView` and `MessageFooterView` in favor of `MessageReusableView`.
-[#](https://github.com/MessageKit/MessageKit/pull/) by [@SD10](https://github.com/sd10).
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
 
 - **Breaking Change** Removed `numberOfMessages(in)` method of `MessagesDataSource`, instead please use `numberOfSections(in)` and `numberOfItems(inSection:in)`.
 [#601](https://github.com/MessageKit/MessageKit/pull/601) by [@SD10](https://github.com/sd10), [@zhongwuzw](https://github.com/zhongwuzw).
