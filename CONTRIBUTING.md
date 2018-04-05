@@ -41,20 +41,15 @@ The more information you can provide, the easier it will be for us to resolve yo
 
 ### Submitting a Pull Request
 
-- Please read the MessageKit [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) document to understand the project goals, scope, and other technical considerations.
-- We strongly encourage you to open an issue discussing any potential new features before an implementation is provided. 
-    - This ensures the feature is in scope and no ones time is wasted.
+We maintain two permanent, protected branches: `master` and `development`.
 
-- **Please DO NOT submit pull requests to the `master` branch**
-    - This branch is always stable and represents a release.
+`master` is for working on the current release, so any bug fixes or documentation spelling fixes should be merged into this branch.
 
-- **Please DO submit your pull request to the branch representing the next release version**
+`development` is where we stage work for the *next* release, i.e. breaking API changes and related documentation updates. Contributors should gently encourage new pull-requests to point to the appropriate branch, and to rebase onto that branch if necessary.
 
-1. Link to any issues the pull request resolves. If none exist, create one.
-2. Write unit tests for new functionality or fix any broken by your changes. 
-3. If your changes affect documentation, please update them accordingly.
-4. Avoid pull requests with a large number of commits.
-5. Write clean code and follow the MessageKit [style guidelines](#style-guidelines).
+When a new version is ready to be released, please create a pull request to merge `development` into `master`, named something like "Release 10.0". Then we can have some final discussion before we merge it into `master` and push the release out to the public.
+
+Since `development` is a *shared* branch, it is important not to ever rebase this branch onto `master`. If a bug fix is applied to `master` it can be merged into `development` using good old simple `git checkout development && git merge master`. Yes this will clutter the history a little bit, but it also provides important context to know how/when a patch was applied. Merge commits can be considered necessary historical data, not warts on an idealized history graph.
 
 **You should submit one pull request per feature, the smaller the pull request the better chances it will be merged.**
 Enormous pull requests take a significant time to review and understand their implications on the existing codebase.
@@ -73,3 +68,9 @@ If any of the sections above are unclear and require further explanation, *do no
 MessageKit strives to build an inclusive open source community and to make contributing as easy as possible for members of all experience levels.
 
 **You can get in touch with the MessageKit core team directly by joining our open Slack community channel: [here](https://join.slack.com/t/messagekit/shared_invite/MjI0NDkxNjgwMzA3LTE1MDIzMTU0MjUtMzJhZDZlNTkxMA).**
+
+----
+
+## [No Brown M&M's](http://en.wikipedia.org/wiki/Van_Halen#Contract_riders)
+
+If you made it all the way to the end, bravo dear user, we love you. You can include this emoji in the top of your ticket to signal to us that you did in fact read this file and are trying to conform to it as best as possible: :ghost:
