@@ -91,6 +91,7 @@ You must now set this font explicitly through the `emojiMessageSizeCalculator` o
 [#587](https://github.com/MessageKit/MessageKit/pull/587) by [@SD10](https://github.com/sd10).
 
 - The result of the `MessagesDisplayDelegate` method `textColor(for message:...)` no longer applies to `.attributedText` case of `MessageData`.
+[#625](https://github.com/MessageKit/MessageKit/pull/625) by [@cwalo](https://github.com/cwalo).
 
 ### Removed
 
