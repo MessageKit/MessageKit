@@ -133,7 +133,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     open func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        switch message.data {
+        switch message.kind {
         case .text:
             return textMessageSizeCalculator
         case .attributedText:
@@ -147,7 +147,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         case .location:
             return locationMessageSizeCalculator
         case .custom:
-            fatalError("Must return a CellSizeCalculator for MessageData.custom(Any?)")
+            fatalError("Must return a CellSizeCalculator for MessageKind.custom(Any?)")
         }
     }
 

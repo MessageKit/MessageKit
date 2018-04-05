@@ -36,13 +36,13 @@ open class MediaMessageSizeCalculator: MessageSizeCalculator {
             }
             return item.size
         }
-        switch message.data {
+        switch message.kind {
         case .photo(let item):
             return sizeForMediaItem(maxWidth, item)
         case .video(let item):
             return sizeForMediaItem(maxWidth, item)
         default:
-            fatalError("messageContainerSize received unhandled MessageDataType: \(message.data)")
+            fatalError("messageContainerSize received unhandled MessageKind: \(message.kind)")
         }
     }
 }
