@@ -112,6 +112,8 @@ open class MessageLabel: UILabel {
             if !isConfiguring { setNeedsDisplay() }
         }
     }
+    
+    internal var messageLabelFont: UIFont?
 
     private var attributesNeedUpdate = false
 
@@ -189,6 +191,11 @@ open class MessageLabel: UILabel {
     }
 
     // MARK: - Private Methods
+    
+    internal func applyMessageLableFont() {
+        guard let font = messageLabelFont else { return }
+        self.font = font
+    }
 
     private func setTextStorage(_ newText: NSAttributedString?, shouldParse: Bool) {
 
