@@ -89,7 +89,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     /// Specifies the color of the text for a `TextMessageCell`.
     ///
     /// - Parameters:
-    ///   - message: A `MessageType` with a `MessageData` case of `.text` or `.attributedText` to which the color will apply.
+    ///   - message: A `MessageType` with a `MessageData` case of `.text` to which the color will apply.
     ///   - indexPath: The `IndexPath` of the cell.
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     ///

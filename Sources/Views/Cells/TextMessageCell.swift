@@ -80,13 +80,12 @@ open class TextMessageCell: MessageContentCell {
             switch message.data {
             case .text(let text), .emoji(let text):
                 messageLabel.text = text
+                messageLabel.textColor = textColor
             case .attributedText(let text):
                 messageLabel.attributedText = text
             default:
                 break
             }
-            // Needs to be set after the attributedText because it takes precedence
-            messageLabel.textColor = textColor
         }
     }
     
