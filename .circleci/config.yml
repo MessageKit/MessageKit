@@ -12,22 +12,37 @@ jobs:
 
     # Specify the Xcode version to use.
     macos:
-      xcode: "9.2.0"
+      xcode: "9.3.0"
 
     # Define the steps required to build the project.
     steps:
 
       # Get the code from the VCS provider.
       - checkout
+      - restore_cache:
+          keys:
+            - v1-dep-{{ .Branch }}-
+            - v1-dep-master-
+            - v1-dep-
+      - run:
+          name: Set Ruby Version
+          command: echo "ruby-2.4" > ~/.ruby-version
       - run:
           name: Update Homebrew
           command: brew update
       - run:
-          name: Update carthage
-          command: brew upgrade carthage
+          name: Test Carthage Build before installing SwiftLint
+          command: carthage build --no-skip-current --cache-builds
+      - run:
+          name: Install Swiftlint
+          command: brew install swiftlint
       - run:
           name: Bootstrap Carthage
-          command: carthage bootstrap --platform ios
+          command: scripts/bootstrap-if-needed.sh
+      - save_cache:
+          key: v1-dep-{{ .Branch }}-{{ epoch }}
+          paths:
+            - Carthage
       - run:
           name: Biuld framework
           command: xcodebuild build -project MessageKit.xcodeproj -scheme MessageKit -destination "$DESTINATION" CODE_SIGNING_REQUIRED=NO | xcpretty -c
