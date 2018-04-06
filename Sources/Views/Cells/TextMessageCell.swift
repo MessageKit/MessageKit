@@ -79,7 +79,9 @@ open class TextMessageCell: MessageCollectionViewCell {
             switch message.data {
             case .text(let text), .emoji(let text):
                 messageLabel.text = text
-                messageLabel.applyMessageLableFont()
+                if let font = messageLabel.messageLabelFont {
+                    messageLabel.font = font
+                }
             case .attributedText(let text):
                 messageLabel.attributedText = text
             default:

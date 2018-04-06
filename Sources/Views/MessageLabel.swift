@@ -191,11 +191,6 @@ open class MessageLabel: UILabel {
     }
 
     // MARK: - Private Methods
-    
-    internal func applyMessageLableFont() {
-        guard let font = messageLabelFont else { return }
-        self.font = font
-    }
 
     private func setTextStorage(_ newText: NSAttributedString?, shouldParse: Bool) {
 
