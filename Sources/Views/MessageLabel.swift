@@ -112,6 +112,8 @@ open class MessageLabel: UILabel {
             if !isConfiguring { setNeedsDisplay() }
         }
     }
+    
+    internal var messageLabelFont: UIFont?
 
     private var attributesNeedUpdate = false
 
