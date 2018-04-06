@@ -107,7 +107,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - Avatar
 
-    internal func avatarPosition(for message: MessageType) -> AvatarPosition {
+    open func avatarPosition(for message: MessageType) -> AvatarPosition {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         var position = isFromCurrentSender ? outgoingAvatarPosition : incomingAvatarPosition
@@ -121,7 +121,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return position
     }
 
-    internal func avatarSize(for message: MessageType) -> CGSize {
+    open func avatarSize(for message: MessageType) -> CGSize {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingAvatarSize : incomingAvatarSize
@@ -136,7 +136,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return CGSize(width: messagesLayout.itemWidth, height: height)
     }
 
-    internal func cellTopLabelAlignment(for message: MessageType) -> LabelAlignment {
+    open func cellTopLabelAlignment(for message: MessageType) -> LabelAlignment {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingCellTopLabelAlignment : incomingCellTopLabelAlignment
@@ -151,7 +151,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return CGSize(width: messagesLayout.itemWidth, height: height)
     }
 
-    internal func cellBottomLabelAlignment(for message: MessageType) -> LabelAlignment {
+    open func cellBottomLabelAlignment(for message: MessageType) -> LabelAlignment {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingCellBottomLabelAlignment : incomingCellBottomLabelAlignment
@@ -159,7 +159,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - MessageContainer
 
-    internal func messageContainerPadding(for message: MessageType) -> UIEdgeInsets {
+    open func messageContainerPadding(for message: MessageType) -> UIEdgeInsets {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingMessagePadding : incomingMessagePadding
@@ -178,14 +178,14 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - Helpers
 
-    internal var messagesLayout: MessagesCollectionViewFlowLayout {
+    public var messagesLayout: MessagesCollectionViewFlowLayout {
         guard let layout = layout as? MessagesCollectionViewFlowLayout else {
             fatalError("Layout object is missing or is not a MessagesCollectionViewFlowLayout")
         }
         return layout
     }
 
-    internal func labelSize(for attributedText: NSAttributedString, considering maxWidth: CGFloat) -> CGSize {
+    public func labelSize(for attributedText: NSAttributedString, considering maxWidth: CGFloat) -> CGSize {
         let estimatedHeight = attributedText.height(considering: maxWidth)
         let estimatedWidth = attributedText.width(considering: estimatedHeight)
 

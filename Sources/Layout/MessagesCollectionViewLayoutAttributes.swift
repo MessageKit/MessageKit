@@ -29,19 +29,19 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
 
     // MARK: - Properties
 
-    internal var avatarSize: CGSize = .zero
-    internal var avatarPosition = AvatarPosition(vertical: .cellBottom)
+    public var avatarSize: CGSize = .zero
+    public var avatarPosition = AvatarPosition(vertical: .cellBottom)
 
-    internal var messageContainerSize: CGSize = .zero
-    internal var messageContainerPadding: UIEdgeInsets = .zero
-    internal var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
-    internal var messageLabelInsets: UIEdgeInsets = .zero
+    public var messageContainerSize: CGSize = .zero
+    public var messageContainerPadding: UIEdgeInsets = .zero
+    public var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
+    public var messageLabelInsets: UIEdgeInsets = .zero
 
-    internal var topLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
-    internal var topLabelSize: CGSize = .zero
+    public var topLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
+    public var topLabelSize: CGSize = .zero
 
-    internal var bottomLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
-    internal var bottomLabelSize: CGSize = .zero
+    public var bottomLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
+    public var bottomLabelSize: CGSize = .zero
 
     // MARK: - Methods
 
