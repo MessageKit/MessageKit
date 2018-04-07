@@ -107,7 +107,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - Avatar
 
-    internal func avatarPosition(for message: MessageType) -> AvatarPosition {
+    public func avatarPosition(for message: MessageType) -> AvatarPosition {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         var position = isFromCurrentSender ? outgoingAvatarPosition : incomingAvatarPosition
@@ -121,7 +121,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return position
     }
 
-    internal func avatarSize(for message: MessageType) -> CGSize {
+    public func avatarSize(for message: MessageType) -> CGSize {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingAvatarSize : incomingAvatarSize
@@ -129,14 +129,14 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - Top Label
 
-    open func cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    public func cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let layoutDelegate = messagesLayout.messagesLayoutDelegate
         let collectionView = messagesLayout.messagesCollectionView
         let height = layoutDelegate.cellTopLabelHeight(for: message, at: indexPath, in: collectionView)
         return CGSize(width: messagesLayout.itemWidth, height: height)
     }
 
-    internal func cellTopLabelAlignment(for message: MessageType) -> LabelAlignment {
+    public func cellTopLabelAlignment(for message: MessageType) -> LabelAlignment {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingCellTopLabelAlignment : incomingCellTopLabelAlignment
@@ -144,14 +144,14 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - Bottom Label
 
-    open func cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    public func cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let layoutDelegate = messagesLayout.messagesLayoutDelegate
         let collectionView = messagesLayout.messagesCollectionView
         let height = layoutDelegate.cellBottomLabelHeight(for: message, at: indexPath, in: collectionView)
         return CGSize(width: messagesLayout.itemWidth, height: height)
     }
 
-    internal func cellBottomLabelAlignment(for message: MessageType) -> LabelAlignment {
+    public func cellBottomLabelAlignment(for message: MessageType) -> LabelAlignment {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingCellBottomLabelAlignment : incomingCellBottomLabelAlignment
@@ -159,7 +159,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - MessageContainer
 
-    internal func messageContainerPadding(for message: MessageType) -> UIEdgeInsets {
+    public func messageContainerPadding(for message: MessageType) -> UIEdgeInsets {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingMessagePadding : incomingMessagePadding
@@ -178,7 +178,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - Helpers
 
-    internal var messagesLayout: MessagesCollectionViewFlowLayout {
+    public var messagesLayout: MessagesCollectionViewFlowLayout {
         guard let layout = layout as? MessagesCollectionViewFlowLayout else {
             fatalError("Layout object is missing or is not a MessagesCollectionViewFlowLayout")
         }

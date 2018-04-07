@@ -57,7 +57,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return messagesLayoutDelegate
     }
 
-    internal var itemWidth: CGFloat {
+    public var itemWidth: CGFloat {
         guard let collectionView = collectionView else { return 0 }
         return collectionView.frame.width - sectionInset.left - sectionInset.right
     }
