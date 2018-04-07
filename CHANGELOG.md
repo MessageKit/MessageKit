@@ -51,6 +51,10 @@ the `MessageData.location` case.
 
 ### Changed
 
+- **Breaking Change** Renamed `MessageData` enum to `MessageKind` and changed `MessageType`'s 
+`data` property name to `kind`.
+[#627](https://github.com/MessageKit/MessageKit/627) by [@SD10](https://github.com/sd10).
+
 - **Breaking Change** Changed the `messageFooterView(for:in)` and `messageHeaderView(for:in)` methods of
 `MessagesDisplayDelegate` by removing the `message` parameter.
 [#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).

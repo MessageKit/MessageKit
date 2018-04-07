@@ -50,7 +50,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///
     /// - Note:
     ///   The default value is `UIColor.clear` for emoji messages.
-    ///   For all other `MessageData` cases, the color depends on the `Sender`.
+    ///   For all other `MessageKind` cases, the color depends on the `Sender`.
     ///
     ///   Current sender: Green
     ///
@@ -89,7 +89,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     /// Specifies the color of the text for a `TextMessageCell`.
     ///
     /// - Parameters:
-    ///   - message: A `MessageType` with a `MessageData` case of `.text` to which the color will apply.
+    ///   - message: A `MessageType` with a `MessageKind` case of `.text` to which the color will apply.
     ///   - indexPath: The `IndexPath` of the cell.
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     ///
@@ -104,7 +104,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     /// Specifies the `DetectorType`s to check for the `MessageType`'s text against.
     ///
     /// - Parameters:
-    ///   - message: A `MessageType` with a `MessageData` case of `.text` or `.attributedText` to which the detectors will apply.
+    ///   - message: A `MessageType` with a `MessageKind` case of `.text` or `.attributedText` to which the detectors will apply.
     ///   - indexPath: The `IndexPath` of the cell.
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     ///
@@ -116,7 +116,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///
     /// - Parameters:
     ///   - detector: The `DetectorType` for the applied attributes.
-    ///   - message: A `MessageType` with a `MessageData` case of `.text` or `.attributedText` to which the detectors will apply.
+    ///   - message: A `MessageType` with a `MessageKind` case of `.text` or `.attributedText` to which the detectors will apply.
     ///   - indexPath: The `IndexPath` of the cell.
     func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedStringKey: Any]
 
@@ -125,7 +125,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     /// Used to configure a `LocationMessageSnapshotOptions` instance to customize the map image on the given location message.
     ///
     /// - Parameters:
-    ///   - message: A `MessageType` with a `MessageData` case of `.location`.
+    ///   - message: A `MessageType` with a `MessageKind` case of `.location`.
     ///   - indexPath: The `IndexPath` of the cell.
     ///   - messagesCollectionView: The `MessagesCollectionView` requesting the information.
     /// - Returns: The LocationMessageSnapshotOptions instance with the options to customize map style.
@@ -134,7 +134,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     /// Used to configure the annoation view of the map image on the given location message.
     ///
     /// - Parameters:
-    ///   - message: A `MessageType` with a `MessageData` case of `.location`.
+    ///   - message: A `MessageType` with a `MessageKind` case of `.location`.
     ///   - indexPath: The `IndexPath` of the cell.
     ///   - messagesCollectionView: The `MessagesCollectionView` requesting the information.
     /// - Returns: The `MKAnnotationView` to use as the annotation view.
@@ -144,7 +144,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     /// The animation block is called with the `UIImageView` to be animated.
     ///
     /// - Parameters:
-    ///   - message: A `MessageType` with a `MessageData` case of `.location`.
+    ///   - message: A `MessageType` with a `MessageKind` case of `.location`.
     ///   - indexPath: The `IndexPath` of the cell.
     ///   - messagesCollectionView: The `MessagesCollectionView` requesting the information.
     /// - Returns: The animation block to use to apply the location image.
@@ -173,7 +173,7 @@ public extension MessagesDisplayDelegate {
 
     func backgroundColor(for message: MessageType, at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
 
-        switch message.data {
+        switch message.kind {
         case .emoji:
             return .clear
         default:

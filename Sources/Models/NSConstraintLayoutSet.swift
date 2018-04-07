@@ -52,7 +52,7 @@ internal class NSLayoutConstraintSet {
     /// All of the currently configured constraints
     private var availableConstraints: [NSLayoutConstraint] {
 	    return [top, bottom, left, right, centerX, centerY, width, height]
-    	    .flatMap {$0}
+            .compactMap {$0}
     }
     
     /// Activates all of the non-nil constraints
