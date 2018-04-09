@@ -24,7 +24,7 @@
 
 import UIKit
 
-class TextFieldTableViewCell: UITableViewCell {
+internal class TextFieldTableViewCell: UITableViewCell {
 
     static let identifier = "TextFieldTableViewCellIdentifier"
     

@@ -26,7 +26,7 @@ import Foundation
 import CoreLocation
 import MessageKit
 
-struct MockLocationItem: LocationItem {
+private struct MockLocationItem: LocationItem {
 
     var location: CLLocation
     var size: CGSize
@@ -38,7 +38,7 @@ struct MockLocationItem: LocationItem {
 
 }
 
-struct MockMediaItem: MediaItem {
+private struct MockMediaItem: MediaItem {
 
     var url: URL?
     var image: UIImage?
@@ -53,7 +53,7 @@ struct MockMediaItem: MediaItem {
 
 }
 
-struct MockMessage: MessageType {
+internal struct MockMessage: MessageType {
 
     var messageId: String
     var sender: Sender
@@ -95,4 +95,3 @@ struct MockMessage: MessageType {
     }
 
 }
-
