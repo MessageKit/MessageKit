@@ -207,6 +207,7 @@
 				882B5EA41CF7D8D100B6E160 /* Embed Frameworks */,
 				3C8DFCD3063DA0DF099EC7B6 /* [CP] Embed Pods Frameworks */,
 				CD3F8EE3AFF2313DF2D62568 /* [CP] Copy Pods Resources */,
+				7E0AFF9D207BB460004DFD4C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -463,6 +464,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ChatExampleUITests/Pods-ChatExampleUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		7E0AFF9D207BB460004DFD4C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		CD3F8EE3AFF2313DF2D62568 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

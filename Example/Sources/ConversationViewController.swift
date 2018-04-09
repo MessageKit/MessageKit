@@ -26,7 +26,7 @@ import UIKit
 import MessageKit
 import MapKit
 
-class ConversationViewController: MessagesViewController {
+internal class ConversationViewController: MessagesViewController {
 
     let refreshControl = UIRefreshControl()
     
@@ -91,8 +91,6 @@ class ConversationViewController: MessagesViewController {
             label.text = "nathan.tannar is typing..."
             label.font = UIFont.boldSystemFont(ofSize: 16)
             messageInputBar.topStackView.addArrangedSubview(label)
-            
-            
             messageInputBar.topStackViewPadding.top = 6
             messageInputBar.topStackViewPadding.left = 12
             
@@ -156,11 +154,9 @@ class ConversationViewController: MessagesViewController {
             },
             makeButton(named: "ic_at").onSelected {
                 $0.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
-                print("@ Selected")
             },
             makeButton(named: "ic_hashtag").onSelected {
                 $0.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
-                print("# Selected")
             },
             .flexibleSpace,
             makeButton(named: "ic_library").onTextViewDidChange { button, textView in
@@ -275,15 +271,13 @@ extension ConversationViewController: MessagesDataSource {
     }
 
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        
-        struct ConversationDateFormatter {
-            static let formatter: DateFormatter = {
-                let formatter = DateFormatter()
-                formatter.dateStyle = .medium
-                return formatter
-            }()
-        }
-        let formatter = ConversationDateFormatter.formatter
+
+        let formatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            return formatter
+        }()
+
         let dateString = formatter.string(from: message.sentDate)
         return NSAttributedString(string: dateString, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
@@ -300,7 +294,7 @@ extension ConversationViewController: MessagesDisplayDelegate {
         return isFromCurrentSender(message: message) ? .white : .darkText
     }
 
-    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedStringKey : Any] {
+    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedStringKey: Any] {
         return MessageLabel.defaultAttributes
     }
 
@@ -365,7 +359,7 @@ extension ConversationViewController: MessagesLayoutDelegate {
         return 16
     }
 
-    func footerViewSize(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+    private func footerViewSize(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return CGSize(width: messagesCollectionView.bounds.width, height: 10)
     }
 }
@@ -396,7 +390,7 @@ extension ConversationViewController: MessageCellDelegate {
 
 extension ConversationViewController: MessageLabelDelegate {
 
-    func didSelectAddress(_ addressComponents: [String : String]) {
+    func didSelectAddress(_ addressComponents: [String: String]) {
         print("Address Selected: \(addressComponents)")
     }
 
@@ -412,7 +406,7 @@ extension ConversationViewController: MessageLabelDelegate {
         print("URL Selected: \(url)")
     }
     
-    func didSelectTransitInformation(_ transitInformation: [String : String]) {
+    func didSelectTransitInformation(_ transitInformation: [String: String]) {
         print("TransitInformation Selected: \(transitInformation)")
     }
 
