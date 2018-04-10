@@ -131,6 +131,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         messagesCollectionView.register(TextMessageCell.self)
         messagesCollectionView.register(MediaMessageCell.self)
         messagesCollectionView.register(LocationMessageCell.self)
+        messagesCollectionView.register(CustomViewMessageCell.self)
 
         messagesCollectionView.register(MessageFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter)
         messagesCollectionView.register(MessageHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
@@ -196,6 +197,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             return cell
         case .location:
             let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .customView:
+            let cell = messagesCollectionView.dequeueReusableCell(CustomViewMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         case .custom:

@@ -6,6 +6,20 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Fixed
+
+- Fixed `bubbleTailOutline` invalidation of message bubble.
+[#633](https://github.com/MessageKit/MessageKit/pull/633) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+## [[Prerelease] 0.13.3](https://github.com/MessageKit/MessageKit/releases/tag/0.13.3)
+
+### Fixed
+
+- Fixed font invalidation of `attributedString` in `MessageLabel`.
+[#623](https://github.com/MessageKit/MessageKit/pull/623) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+## [[Prerelease] 0.13.2](https://github.com/MessageKit/MessageKit/releases/tag/0.13.2)
+
 ### Added
 
 - **Breaking Change** Adds new `DetectorType` called `.transitInformation`  to message label.
@@ -39,6 +53,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - Added `shouldManageSendButtonEnabledState` to `MessageInputBar` to disable automatically managing `MessageInputBar.sendButton`'s `isEnabled` state when text changes. (Default value is `true`).
 [#530](https://github.com/MessageKit/MessageKit/pull/530) by [@clayellis](https://github.com/clayellis).
+
+### Fixed
+
+- Fixed wrong separated components in messageInputBar.
+[#577](https://github.com/MessageKit/MessageKit/pull/577) by [@zhongwuzw](https://github.com/zhongwuzw).
 
 ## [[Prerelease] 0.13.1](https://github.com/MessageKit/MessageKit/releases/tag/0.13.1)
 

@@ -51,6 +51,9 @@ public enum MessageData {
 
     /// An emoji message.
     case emoji(String)
+    
+    // A custom view message
+    case customView(UIView)
 
     /// A custom message.
     /// - Note: Using this case requires that you override the following methods and handle this case:
