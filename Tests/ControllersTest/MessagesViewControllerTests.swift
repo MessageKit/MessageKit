@@ -206,6 +206,10 @@ private class MockLayoutDelegate: MessagesLayoutDelegate, MessagesDisplayDelegat
         return 10.0
     }
     
+    func heightForCustomView(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 0.0
+    }
+    
     func snapshotOptionsForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LocationMessageSnapshotOptions {
         return LocationMessageSnapshotOptions()
     }

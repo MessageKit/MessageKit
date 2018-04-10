@@ -237,6 +237,10 @@ private class MockMessagesViewController: MessagesViewController, MessagesDispla
     func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return 200
     }
+    
+    func heightForCustomView(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 200
+    }
 
     var dataProvider: MockMessagesDataSource!
 
