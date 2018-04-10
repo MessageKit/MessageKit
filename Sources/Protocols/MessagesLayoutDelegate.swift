@@ -176,6 +176,26 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///   - maxWidth: The max available width for the `MessageContainerView` respecting the cell's other content.
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
+    
+    /// Specifies the width for a `MessageContainerView`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - maxWidth: The max available width for the `MessageContainerView` respecting the cell's other content.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is the `maxWidth`.
+    func widthForCustomView(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
+    
+    /// Specifies the height for a `MessageContainerView`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - maxWidth: The max available width for the `MessageContainerView` respecting the cell's other content.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    func heightForCustomView(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat
 
     /// Specifies whether the layout attributes for a given `MessageType`
     /// should be cached by the `MessagesCollectionViewFlowLayout`.
@@ -272,6 +292,12 @@ public extension MessagesLayoutDelegate {
     // MARK: - Location Messages Defaults
 
     func widthForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return maxWidth
+    }
+    
+    // MARK: - Custom View Messages Defaults
+    
+    func widthForCustomView(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return maxWidth
     }
 }
