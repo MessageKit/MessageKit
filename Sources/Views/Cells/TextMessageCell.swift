@@ -68,7 +68,6 @@ open class TextMessageCell: MessageContentCell {
             fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
 
-        let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
         let enabledDetectors = displayDelegate.enabledDetectors(for: message, at: indexPath, in: messagesCollectionView)
 
         messageLabel.configure {
@@ -79,6 +78,7 @@ open class TextMessageCell: MessageContentCell {
             }
             switch message.data {
             case .text(let text), .emoji(let text):
+                let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
                 messageLabel.text = text
                 messageLabel.textColor = textColor
                 if let font = messageLabel.messageLabelFont {

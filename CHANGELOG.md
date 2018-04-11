@@ -29,12 +29,8 @@ the `MessageData.location` case.
 [#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/SD10).
 
 - Added `MessageSizeCalculator`, `MediaMessageSizeCalculator`, `TextMessageSizeCalculator`, and `LocationMessageSizeCalculator`
- classes that are responsible for sizing the `MessagesCollectionViewCell` types provided by MessageKit.
+classes that are responsible for sizing the `MessagesCollectionViewCell` types provided by MessageKit.
 [#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/sd10).
-
-- Added `shouldManageSendButtonEnabledState` to `MessageInputBar` to disable automatically managing `MessageInputBar.sendButton`'s
- `isEnabled` state when text changes. (Default value is `true`).
-[#530](https://github.com/MessageKit/MessageKit/pull/530) by [@clayellis](https://github.com/clayellis).
 
 - Added two new methods `cellTopLabelHeight(for:at:in)` and `cellBottomLabelHeight(for:at:in)` to `MessagesLayoutDelegate`
 [#580](https://github.com/MessageKit/MessageKit/pull/580) by [@SD10](https://github.com/sd10).
@@ -115,6 +111,41 @@ You must now set this font explicitly through the `emojiMessageSizeCalculator` o
 You can now set this property through `textMessageSizeCalculator` property.
 [#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/sd10).
 
+### Fixed
+
+- Fixed equality checking on `MessagesCollectionViewLayoutAttributes`.
+[#593](https://github.com/MessageKit/MessageKit/pull/593) by [@zhongwuzw](https://github.com/zhongwuzw), [@SD10](https://github.com/sd10)
+
+## [[Prerelease] 0.13.4](https://github.com/MessageKit/MessageKit/releases/tag/0.13.4)
+
+### Fixed
+
+- Fixed `bubbleTailOutline` invalidation of message bubble.
+[#633](https://github.com/MessageKit/MessageKit/pull/633) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- Fixed `boundingRect(with:options:attributes:context)` wrong size calculation when use some font, e.g. custom font.
+[#645](https://github.com/MessageKit/MessageKit/pull/645) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+## [[Prerelease] 0.13.3](https://github.com/MessageKit/MessageKit/releases/tag/0.13.3)
+
+### Fixed
+
+- Fixed font invalidation of `attributedString` in `MessageLabel`.
+[#623](https://github.com/MessageKit/MessageKit/pull/623) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+## [[Prerelease] 0.13.2](https://github.com/MessageKit/MessageKit/releases/tag/0.13.2)
+
+### Added
+
+- Added `shouldManageSendButtonEnabledState` to `MessageInputBar` to disable automatically managing `MessageInputBar.sendButton`'s
+ `isEnabled` state when text changes. (Default value is `true`).
+[#530](https://github.com/MessageKit/MessageKit/pull/530) by [@clayellis](https://github.com/clayellis).
+
+### Fixed
+
+- Fixed wrong separated components in messageInputBar.
+[#577](https://github.com/MessageKit/MessageKit/pull/577) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 ## [[Prerelease] 0.13.1](https://github.com/MessageKit/MessageKit/releases/tag/0.13.1)
 
 ### Fixed
@@ -127,9 +158,6 @@ You can now set this property through `textMessageSizeCalculator` property.
 
 - Fixed message bubble tail orientation invalidation in `iOS9`.
 [#469](https://github.com/MessageKit/MessageKit/pull/469) by [@zhongwuzw](https://github.com/zhongwuzw).
-
-- Fixed equality checking on `MessagesCollectionViewLayoutAttributes`.
-[#593](https://github.com/MessageKit/MessageKit/pull/593) by [@zhongwuzw](https://github.com/zhongwuzw), [@SD10](https://github.com/sd10)
 
 ## [[Prerelease] 0.13.0](https://github.com/MessageKit/MessageKit/releases/tag/0.13.0)
 
