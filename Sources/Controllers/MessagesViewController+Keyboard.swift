@@ -28,13 +28,13 @@ extension MessagesViewController {
 
     // MARK: - Register / Unregister Observers
 
-    func addKeyboardObservers() {
+    internal func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleKeyboardDidChangeState(_:)), name: .UIKeyboardWillChangeFrame, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleTextViewDidBeginEditing(_:)), name: .UITextViewTextDidBeginEditing, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.adjustScrollViewInset), name: .UIDeviceOrientationDidChange, object: nil)
     }
 
-    func removeKeyboardObservers() {
+    internal func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UITextViewTextDidBeginEditing, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIDeviceOrientationDidChange, object: nil)
@@ -72,7 +72,7 @@ extension MessagesViewController {
     }
 
     @objc
-    func adjustScrollViewInset() {
+    internal func adjustScrollViewInset() {
         if #available(iOS 11.0, *) {
             // No need to add to the top contentInset
         } else {
@@ -86,7 +86,7 @@ extension MessagesViewController {
 
     // MARK: - Helpers
 
-    var keyboardOffsetFrame: CGRect {
+    internal var keyboardOffsetFrame: CGRect {
         guard let inputFrame = inputAccessoryView?.frame else { return .zero }
         return CGRect(origin: inputFrame.origin, size: CGSize(width: inputFrame.width, height: inputFrame.height - iPhoneXBottomInset))
     }

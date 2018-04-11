@@ -8,37 +8,112 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
-- **Breaking Change** Adds new `DetectorType` called `.transitInformation`  to message label.
+- **Breaking Change** Added new `MessagesDataSource` delegate methods, `numberOfSections(in)` and `numberOfItems(inSection:in)`.
+[#601](https://github.com/MessageKit/MessageKit/pull/601) by [@SD10](https://github.com/sd10), [@zhongwuzw](https://github.com/zhongwuzw).
+
+- **Breaking Change** Added new protocol `MediaItem` as the associated value for the
+`MessageData.video` and `MessageData.photo` cases.
+[#587](https://github.com/MessageKit/MessageKit/pull/587) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Added new protocol `LocationItem` as the associated value for
+the `MessageData.location` case.
+[#587](https://github.com/MessageKit/MessageKit/pull/587) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Added new `DetectorType` called `.transitInformation`  to message label.
 [#520](https://github.com/MessageKit/MessageKit/pull/520) by [@nosarj](https://github.com/nosarj).
 
-- **Breaking Change** Adds `.custom(Any?)` case to `MessageData`.
+- **Breaking Change** Added `.custom(Any?)` case to `MessageData`.
 [#498](https://github.com/MessageKit/MessageKit/pull/498) by [@SD10](https://github.com/SD10).
 
-- Adds the following methods to `MessagesCollectionViewFlowLayout`:
-  - `messageLabelInsets(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets`
-  - `messageContainerPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets`
-  - `messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
-  - `messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
-  - `cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment`
-  - `cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
-  - `cellTopLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
-  - `cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment`
-  - `cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
-  - `cellBottomLabelMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
-  - `avatarPosition(for message: MessageType, at indexPath: IndexPath) -> AvatarPosition`
-  - `avatarSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
-  - `cellContentHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
-[#491](https://github.com/MessageKit/MessageKit/pull/491) by [@SD10](https://github.com/SD10).
+- Added `CellSizeCalculator` protocol that is responsible for sizing and configuring attributes of a  `MessageCollectionViewCell`.
+[#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/SD10).
 
-- Adds the following methods to `MessageCollectionViewCell`:
-  - `layoutAvatarView(with attributes: MessagesCollectionViewLayoutAttributes)`
-  - `layoutMessageContainerView(with attributes: MessagesCollectionViewLayoutAttributes)`
-  - `layoutTopLabel(with attributes: MessagesCollectionViewLayoutAttributes)`
-  - `layoutBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes)`
-[#491](https://github.com/MessageKit/MessageKit/pull/491) by [@SD10](https://github.com/SD10).
+- Added `MessageSizeCalculator`, `MediaMessageSizeCalculator`, `TextMessageSizeCalculator`, and `LocationMessageSizeCalculator`
+ classes that are responsible for sizing the `MessagesCollectionViewCell` types provided by MessageKit.
+[#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/sd10).
 
-- Added `shouldManageSendButtonEnabledState` to `MessageInputBar` to disable automatically managing `MessageInputBar.sendButton`'s `isEnabled` state when text changes. (Default value is `true`).
+- Added `shouldManageSendButtonEnabledState` to `MessageInputBar` to disable automatically managing `MessageInputBar.sendButton`'s
+ `isEnabled` state when text changes. (Default value is `true`).
 [#530](https://github.com/MessageKit/MessageKit/pull/530) by [@clayellis](https://github.com/clayellis).
+
+- Added two new methods `cellTopLabelHeight(for:at:in)` and `cellBottomLabelHeight(for:at:in)` to `MessagesLayoutDelegate`
+[#580](https://github.com/MessageKit/MessageKit/pull/580) by [@SD10](https://github.com/sd10).
+
+- Added new class `InsetLabel`.
+[#580](https://github.com/MessageKit/MessageKit/pull/580) by [@SD10](https://github.com/sd10).
+
+- Added new method `configureMediaMessageImageView(_:for:at:in)` to configure the `UIImageView` of a
+`MediaMessageCell` asynchronously.
+[#592](https://github.com/MessageKit/MessageKit/pull/592) by [@zhongwuzw](https://github.com/zhongwuzw), [@SD10](https://github.com/sd10)
+
+- Added new `MessageContentCell` class and `MessageReusableView` class.
+[#596](https://github.com/MessageKit/MessageKit/pull/596) by [@SD10](https://github.com/sd10).
+
+### Changed
+
+- **Breaking Change** Changed the `messageFooterView(for:in)` and `messageHeaderView(for:in)` methods of
+`MessagesDisplayDelegate` by removing the `message` parameter.
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Changed the `footerViewSize(for:in)` and `headerViewSize(for:in)` methods of `MessagesLayoutDelegate`
+by removing the `MessageType` and `IndexPath` parameters and replacing them with a new `section: Int` parameter.
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** The reuse identifiers of all `MessageReusableView`s and `MessageCollectionViewCell`s have been 
+changed to match their class name exactly.
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Changed the superclass of `MessageDateHeaderView` from `MessageHeaderView` to `MessageReusableView`.
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Change `NSLayoutConstraintSet` class from `public` to `internal`.
+[#607](https://github.com/MessageKit/MessageKit/pull/607) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- **Breaking Change** `MessageHeaderView` and `MessageFooterView` now subclass `MessageReusableView` class.
+[#596](https://github.com/MessageKit/MessageKit/pull/596) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Renamed `MessageCollectionViewCell` to `MessageContentCell`. 
+The `MessageCollectionViewCell` class is now a bare bones subclass. 
+[#596](https://github.com/MessageKit/MessageKit/pull/596) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Changed `LabelAlignment` to be a `struct` with properties of 
+`textAlignment: NSTextAlignment` and `textInsets: UIEdgeInsets` to position the text in the `cellTopLabel` and `cellBottomLabel`.
+[#580](https://github.com/MessageKit/MessageKit/pull/580) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** The type of `cellTopLabel` and `cellBottomLabel` has been changed to `InsetLabel`.
+[#580](https://github.com/MessageKit/MessageKit/pull/580) by [@SD10](https://github.com/sd10).
+
+- The `MessageData.emoji` case no longer uses a default font of 2x the `messageLabelFont` size.
+You must now set this font explicitly through the `emojiMessageSizeCalculator` on `MessagesCollectionViewFlowLayout`.
+[#530](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/sd10).
+
+- Changed the `contentMode` of the `UIImageView` for `MediaMessageCell` to be `.scaleAspectFill`.
+[#587](https://github.com/MessageKit/MessageKit/pull/587) by [@SD10](https://github.com/sd10).
+
+- The result of the `MessagesDisplayDelegate` method `textColor(for message:...)` no longer applies to `.attributedText` case of `MessageData`.
+[#625](https://github.com/MessageKit/MessageKit/pull/625) by [@cwalo](https://github.com/cwalo).
+
+### Removed
+
+- **Breaking Change** Removed the `showsDateHeaderAfterTimeInterval` property of `MessagesCollectionView`.
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Removed the `reuseIdentifer` method from `MessageCollectionViewCell`, `TextMessageCell`,
+`LocationMessageCell`, `MediaMessageCell`, and `MessageContentCell`.
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Removed the `CollectionViewReusable` protocol.
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Removed `MessageHeaderView` and `MessageFooterView` in favor of `MessageReusableView`.
+[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Removed `numberOfMessages(in)` method of `MessagesDataSource`, instead please use `numberOfSections(in)` and `numberOfItems(inSection:in)`.
+[#601](https://github.com/MessageKit/MessageKit/pull/601) by [@SD10](https://github.com/sd10), [@zhongwuzw](https://github.com/zhongwuzw).
+
+- **Breaking Change** Removed the `messageLabelFont` property from `MessagesCollectionViewFlowLayout`.
+You can now set this property through `textMessageSizeCalculator` property.
+[#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/sd10).
 
 ## [[Prerelease] 0.13.1](https://github.com/MessageKit/MessageKit/releases/tag/0.13.1)
 
@@ -52,6 +127,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - Fixed message bubble tail orientation invalidation in `iOS9`.
 [#469](https://github.com/MessageKit/MessageKit/pull/469) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- Fixed equality checking on `MessagesCollectionViewLayoutAttributes`.
+[#593](https://github.com/MessageKit/MessageKit/pull/593) by [@zhongwuzw](https://github.com/zhongwuzw), [@SD10](https://github.com/sd10)
 
 ## [[Prerelease] 0.13.0](https://github.com/MessageKit/MessageKit/releases/tag/0.13.0)
 

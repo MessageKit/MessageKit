@@ -29,19 +29,19 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
 
     // MARK: - Properties
 
-    var avatarSize: CGSize = .zero
-    var avatarPosition = AvatarPosition(vertical: .cellBottom)
+    public var avatarSize: CGSize = .zero
+    public var avatarPosition = AvatarPosition(vertical: .cellBottom)
 
-    var messageContainerSize: CGSize = .zero
-    var messageContainerPadding: UIEdgeInsets = .zero
-    var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
-    var messageLabelInsets: UIEdgeInsets = .zero
+    public var messageContainerSize: CGSize = .zero
+    public var messageContainerPadding: UIEdgeInsets = .zero
+    public var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
+    public var messageLabelInsets: UIEdgeInsets = .zero
 
-    var topLabelAlignment = LabelAlignment.cellCenter(.zero)
-    var topLabelSize: CGSize = .zero
+    public var topLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
+    public var topLabelSize: CGSize = .zero
 
-    var bottomLabelAlignment = LabelAlignment.cellCenter(.zero)
-    var bottomLabelSize: CGSize = .zero
+    public var bottomLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
+    public var bottomLabelSize: CGSize = .zero
 
     // MARK: - Methods
 
@@ -63,14 +63,20 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
     }
 
     open override func isEqual(_ object: Any?) -> Bool {
-
         // MARK: - LEAVE this as is
-        // swiftlint:disable unused_optional_binding
-        if let _ = object as? MessagesCollectionViewLayoutAttributes {
-            return super.isEqual(object)
+        if let attributes = object as? MessagesCollectionViewLayoutAttributes {
+            return super.isEqual(object) && attributes.avatarSize == avatarSize
+            && attributes.avatarPosition == attributes.avatarPosition
+            && attributes.messageContainerSize == messageContainerSize
+            && attributes.messageContainerPadding == messageContainerPadding
+            && attributes.messageLabelFont == messageLabelFont
+            && attributes.messageLabelInsets == messageLabelInsets
+            && attributes.topLabelAlignment == topLabelAlignment
+            && attributes.topLabelSize == topLabelSize
+            && attributes.bottomLabelAlignment == bottomLabelAlignment
+            && attributes.bottomLabelSize == bottomLabelSize
         } else {
             return false
         }
-        // swiftlint:enable unused_optional_binding
     }
 }

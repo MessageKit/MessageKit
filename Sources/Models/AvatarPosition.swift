@@ -82,3 +82,13 @@ public struct AvatarPosition {
     }
     
 }
+
+// MARK: - Equatable Conformance
+
+extension AvatarPosition: Equatable {
+
+    public static func == (lhs: AvatarPosition, rhs: AvatarPosition) -> Bool {
+        return lhs.vertical == rhs.vertical && lhs.horizontal == rhs.horizontal
+    }
+
+}

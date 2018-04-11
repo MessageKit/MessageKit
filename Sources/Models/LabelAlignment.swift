@@ -24,38 +24,19 @@
 
 import UIKit
 
-/// An enum represnting the horizontal alignment of a `MessageCollectionViewCell`'s top and bottom labels.
-public enum LabelAlignment {
+public struct LabelAlignment {
 
-    /// Aligns the label's trailing edge to the cell's trailing edge.
-    /// The `UIEdgeInsets` associated value represents the offset from this position.
-    case cellTrailing(UIEdgeInsets)
-    
-    /// Aligns the label's leading edge to the cell's leading edge.
-    /// The `UIEdgeInsets` associated value represents the offset from this position.
-    case cellLeading(UIEdgeInsets)
-    
-    /// Aligns the label's center to the cell's center.
-    /// The `UIEdgeInsets` associated value represents the offset from this position.
-    case cellCenter(UIEdgeInsets)
-    
-    /// Aligns the label's trailing edge to the `MessageContainerView`'s trailing edge.
-    /// The `UIEdgeInsets` associated value represents the offset from this position.
-    case messageTrailing(UIEdgeInsets)
-    
-    /// Aligns the label's leading edge to the `MessageContainerView`'s leading edge.
-    /// The `UIEdgeInsets` associated value represents the offset from this position.
-    case messageLeading(UIEdgeInsets)
+    public var textAlignment: NSTextAlignment
+    public var textInsets: UIEdgeInsets
 
-    /// Returns the `UIEdgeInsets` associated value for the `LabelAlignment` case.
-    public var insets: UIEdgeInsets {
-        switch self {
-        case .cellTrailing(let insets): return insets
-        case .cellLeading(let insets): return insets
-        case .cellCenter(let insets): return insets
-        case .messageTrailing(let insets): return insets
-        case .messageLeading(let insets): return insets
-        }
+}
+
+// MARK: - Equatable Conformance
+
+extension LabelAlignment: Equatable {
+
+    public static func == (lhs: LabelAlignment, rhs: LabelAlignment) -> Bool {
+        return lhs.textAlignment == rhs.textAlignment && lhs.textInsets == rhs.textInsets
     }
 
 }

@@ -24,25 +24,19 @@
 
 import Foundation
 
-/// An internal type used to store the attributes used to calculate
-/// the size of a `MessageCollectionViewCell`.
-final class MessageCellLayoutContext {
+/// A protocol used to represent the data for a media message.
+public protocol MediaItem {
 
-    var itemHeight: CGFloat?
+    /// The url where the media is located.
+    var url: URL? { get set }
 
-    var avatarSize: CGSize?
-    var avatarPosition: AvatarPosition?
+    /// The image.
+    var image: UIImage? { get set }
 
-    var messageContainerSize: CGSize?
-    var messageContainerMaxWidth: CGFloat?
-    var messageContainerPadding: UIEdgeInsets?
-    var messageLabelInsets: UIEdgeInsets?
+    /// A placeholder image for when the image is obtained asychronously.
+    var placeholderImage: UIImage { get set }
 
-    var bottomLabelAlignment: LabelAlignment?
-    var bottomLabelSize: CGSize?
-    var bottomLabelMaxWidth: CGFloat?
+    /// The size of the media item.
+    var size: CGSize { get set }
 
-    var topLabelAlignment: LabelAlignment?
-    var topLabelSize: CGSize?
-    var topLabelMaxWidth: CGFloat?
 }

@@ -25,14 +25,14 @@
 import XCTest
 @testable import MessageKit
 
-class MessageCollectionViewCellTests: XCTestCase {
+final class MessageContentCellTests: XCTestCase {
 
-    var cell: MessageCollectionViewCell!
+    var cell: MessageContentCell!
     let frame = CGRect(x: 0, y: 0, width: 100, height: 100)
 
     override func setUp() {
         super.setUp()
-        cell = MessageCollectionViewCell(frame: frame)
+        cell = MessageContentCell(frame: frame)
     }
 
     override func tearDown() {
@@ -74,7 +74,7 @@ class MessageCollectionViewCellTests: XCTestCase {
 
 }
 
-extension MessageCollectionViewCellTests {
+extension MessageContentCellTests {
 
     fileprivate class MockMessagesDisplayDelegate: MessagesDisplayDelegate {
         

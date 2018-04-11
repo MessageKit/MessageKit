@@ -25,7 +25,7 @@
 import UIKit
 import MessageKit
 
-final class SettingsViewController: UITableViewController {
+final internal class SettingsViewController: UITableViewController {
 
     // MARK: - Properties
     
@@ -100,16 +100,18 @@ final class SettingsViewController: UITableViewController {
     // MARK: - Helper
     
     private func configureTextFieldTableViewCell(at indexPath: IndexPath) -> TextFieldTableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldTableViewCell.identifier, for: indexPath) as! TextFieldTableViewCell
-        cell.mainLabel.text = "Mock messages count:"
-        
-        let messagesCount = UserDefaults.standard.mockMessagesCount()
-        cell.textField.text = "\(messagesCount)"
-        
-        cell.textField.inputView = messagesPicker
-        cell.textField.inputAccessoryView = messagesToolbar
-        
-        return cell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldTableViewCell.identifier, for: indexPath) as? TextFieldTableViewCell {
+            cell.mainLabel.text = "Mock messages count:"
+
+            let messagesCount = UserDefaults.standard.mockMessagesCount()
+            cell.textField.text = "\(messagesCount)"
+
+            cell.textField.inputView = messagesPicker
+            cell.textField.inputAccessoryView = messagesToolbar
+
+            return cell
+        }
+        return TextFieldTableViewCell()
     }
 }
 

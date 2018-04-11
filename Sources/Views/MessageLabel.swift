@@ -112,6 +112,8 @@ open class MessageLabel: UILabel {
             if !isConfiguring { setNeedsDisplay() }
         }
     }
+    
+    internal var messageLabelFont: UIFont?
 
     private var attributesNeedUpdate = false
 
@@ -371,7 +373,7 @@ open class MessageLabel: UILabel {
 
     }
 
-  func handleGesture(_ touchLocation: CGPoint) -> Bool {
+  internal func handleGesture(_ touchLocation: CGPoint) -> Bool {
 
         guard let index = stringIndex(at: touchLocation) else { return false }
 

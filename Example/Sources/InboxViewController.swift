@@ -26,7 +26,7 @@ import UIKit
 import MessageKit
 import SafariServices
 
-final class InboxViewController: UITableViewController {
+final internal class InboxViewController: UITableViewController {
 
     let cells = ["Example", "Settings", "Source Code", "Contributors"]
     
@@ -37,7 +37,7 @@ final class InboxViewController: UITableViewController {
         title = "MessageKit"
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.barTintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font : UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.bold) ]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.bold) ]
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.tableFooterView = UIView()
     }

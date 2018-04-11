@@ -24,20 +24,25 @@
 
 import Foundation
 
-extension Bundle {
+open class MediaMessageSizeCalculator: MessageSizeCalculator {
 
-    internal static func messageKitAssetBundle() -> Bundle {
-        let podBundle = Bundle(for: MessagesViewController.self)
-        
-        guard let resourceBundleUrl = podBundle.url(forResource: "MessageKitAssets", withExtension: "bundle") else {
-            fatalError(MessageKitError.couldNotCreateAssetsPath)
+    open override func messageContainerSize(for message: MessageType) -> CGSize {
+        let maxWidth = messageContainerMaxWidth(for: message)
+        let sizeForMediaItem = { (maxWidth: CGFloat, item: MediaItem) -> CGSize in
+            if maxWidth < item.size.width {
+                // Maintain the ratio if width is too great
+                let height = maxWidth * item.size.height / item.size.width
+                return CGSize(width: maxWidth, height: height)
+            }
+            return item.size
         }
-        
-        guard let resourceBundle = Bundle(url: resourceBundleUrl) else {
-            fatalError(MessageKitError.couldNotLoadAssetsBundle)
+        switch message.data {
+        case .photo(let item):
+            return sizeForMediaItem(maxWidth, item)
+        case .video(let item):
+            return sizeForMediaItem(maxWidth, item)
+        default:
+            fatalError("messageContainerSize received unhandled MessageDataType: \(message.data)")
         }
-        
-        return resourceBundle
     }
-
 }

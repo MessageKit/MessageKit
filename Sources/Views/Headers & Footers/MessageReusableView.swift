@@ -24,20 +24,16 @@
 
 import Foundation
 
-extension Bundle {
+open class MessageReusableView: UICollectionReusableView {
 
-    internal static func messageKitAssetBundle() -> Bundle {
-        let podBundle = Bundle(for: MessagesViewController.self)
-        
-        guard let resourceBundleUrl = podBundle.url(forResource: "MessageKitAssets", withExtension: "bundle") else {
-            fatalError(MessageKitError.couldNotCreateAssetsPath)
-        }
-        
-        guard let resourceBundle = Bundle(url: resourceBundleUrl) else {
-            fatalError(MessageKitError.couldNotLoadAssetsBundle)
-        }
-        
-        return resourceBundle
+    // MARK: - Initializers
+
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
 }

@@ -32,52 +32,39 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     open override class var layoutAttributesClass: AnyClass {
         return MessagesCollectionViewLayoutAttributes.self
     }
+    
+    /** The `MessagesCollectionView` that owns this layout object. */
+    public var messagesCollectionView: MessagesCollectionView {
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.layoutUsedOnForeignType)
+        }
+        return messagesCollectionView
+    }
+    
+    /** The `MessagesDataSource` for the layout's collection view. */
+    public var messagesDataSource: MessagesDataSource {
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+        return messagesDataSource
+    }
+    
+    /** The `MessagesLayoutDelegate` for the layout's collection view. */
+    public var messagesLayoutDelegate: MessagesLayoutDelegate {
+        guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
+            fatalError(MessageKitError.nilMessagesLayoutDelegate)
+        }
+        return messagesLayoutDelegate
+    }
 
-    /// The width of an item in the `MessagesCollectionView`.
-    internal var itemWidth: CGFloat {
+    public var itemWidth: CGFloat {
         guard let collectionView = collectionView else { return 0 }
         return collectionView.frame.width - sectionInset.left - sectionInset.right
     }
 
-    /// The font to be used by `TextMessageCell` for `MessageData.text(String)` case.
-    ///
-    /// Note: The default value of this property is `UIFont.preferredFont(forTextStyle: .body)`
-    open var messageLabelFont: UIFont {
-        didSet {
-            emojiLabelFont = messageLabelFont.withSize(2 * messageLabelFont.pointSize)
-        }
-    }
-
-    /// The font to be used by `TextMessageCell` for `MessageData.emoji(String)` case.
-    ///
-    /// Note: The default value of this property is 2x the `messageLabelFont`.
-    internal var emojiLabelFont: UIFont
-
-    /// Determines the maximum number of `MessageCollectionViewCell` attributes to cache.
-    ///
-    /// Note: The default value of this property is 500.
-    open var attributesCacheMaxSize: Int = 500 {
-        didSet {
-            layoutContextCache.countLimit = attributesCacheMaxSize
-        }
-    }
-
-    typealias MessageID = NSString
-    
-    /// The cache for `MessageCellLayoutContext`.
-    /// The key is the `messageId` of the `MessageType`.
-    fileprivate var layoutContextCache = NSCache<MessageID, MessageCellLayoutContext>()
-
-    /// The `MessageCellLayoutContext` for the current cell.
-    internal var currentLayoutContext: MessageCellLayoutContext!
-
     // MARK: - Initializers
 
     public override init() {
-
-        messageLabelFont = UIFont.preferredFont(forTextStyle: .body)
-        emojiLabelFont = messageLabelFont.withSize(2 * messageLabelFont.pointSize)
-
         super.init()
 
         sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
@@ -92,40 +79,35 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-}
 
-// MARK: - Cache Invalidation
+    // MARK: - Attributes
 
-extension MessagesCollectionViewFlowLayout {
-
-    /// Removes the cached layout information for a given `MessageType`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` whose cached layout information is to be removed.
-    public func removeCachedAttributes(for message: MessageType) {
-        removeCachedAttributes(for: message.messageId)
+    open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        guard let attributesArray = super.layoutAttributesForElements(in: rect) as? [MessagesCollectionViewLayoutAttributes] else {
+            return nil
+        }
+        for attributes in attributesArray where attributes.representedElementCategory == .cell {
+            let cellSizeCalculator = cellSizeCalculatorForItem(at: attributes.indexPath)
+            cellSizeCalculator.configure(attributes: attributes)
+        }
+        return attributesArray
     }
 
-    /// Removes the cached layout information for a `MessageType` with a given `messageId`.
-    ///
-    /// - Parameters:
-    ///   - messageId: The id for the `MessageType` whose cached layout information is to be removed.
-    public func removeCachedAttributes(for messageId: String) {
-        layoutContextCache.removeObject(forKey: messageId as NSString)
+    open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        guard let attributes = super.layoutAttributesForItem(at: indexPath) as? MessagesCollectionViewLayoutAttributes else {
+            return nil
+        }
+        if attributes.representedElementCategory == .cell {
+            let cellSizeCalculator = cellSizeCalculatorForItem(at: attributes.indexPath)
+            cellSizeCalculator.configure(attributes: attributes)
+        }
+        return attributes
     }
 
-    /// Removes the cached layout information for all `MessageType`s.
-    public func removeAllCachedAttributes() {
-        layoutContextCache.removeAllObjects()
-    }
+    // MARK: - Layout Invalidation
 
     open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        if collectionView?.bounds.width != newBounds.width {
-            removeAllCachedAttributes()
-            return true
-        } else {
-            return false
-        }
+        return collectionView?.bounds.width != newBounds.width
     }
 
     open override func invalidationContext(forBoundsChange newBounds: CGRect) -> UICollectionViewLayoutInvalidationContext {
@@ -135,137 +117,42 @@ extension MessagesCollectionViewFlowLayout {
         return flowLayoutContext
     }
 
-    /// Invalidates the layout and removes all cached attributes on device orientation change
     @objc
     private func handleOrientationChange(_ notification: Notification) {
-        removeAllCachedAttributes()
         invalidateLayout()
     }
-}
 
-// MARK: - MessagesCollectionViewLayoutAttributes
+    // MARK: - Cell Sizing
 
-extension MessagesCollectionViewFlowLayout {
+    lazy open var textMessageSizeCalculator = TextMessageSizeCalculator(layout: self)
+    lazy open var attributedTextMessageSizeCalculator = TextMessageSizeCalculator(layout: self)
+    lazy open var emojiMessageSizeCalculator = TextMessageSizeCalculator(layout: self)
+    lazy open var photoMessageSizeCalculator = MediaMessageSizeCalculator(layout: self)
+    lazy open var videoMessageSizeCalculator = MediaMessageSizeCalculator(layout: self)
+    lazy open var locationMessageSizeCalculator = LocationMessageSizeCalculator(layout: self)
 
-    open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-
-        guard let attributesArray = super.layoutAttributesForElements(in: rect) as? [MessagesCollectionViewLayoutAttributes] else { return nil }
-
-        attributesArray.forEach { attributes in
-            if attributes.representedElementCategory == UICollectionElementCategory.cell {
-                configure(attributes: attributes)
-            }
-        }
-
-        return attributesArray
-    }
-
-    open override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-
-        guard let attributes = super.layoutAttributesForItem(at: indexPath) as? MessagesCollectionViewLayoutAttributes else { return nil }
-
-        if attributes.representedElementCategory == UICollectionElementCategory.cell {
-            configure(attributes: attributes)
-        }
-
-        return attributes
-
-    }
-
-    private func configure(attributes: MessagesCollectionViewLayoutAttributes) {
-
-        let indexPath = attributes.indexPath
+    open func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
-        let context = cellLayoutContext(for: message, at: indexPath)
-
-        attributes.avatarSize = context.avatarSize!
-        attributes.avatarPosition = context.avatarPosition!
-
-        attributes.messageContainerPadding = context.messageContainerPadding!
-        attributes.messageContainerSize = context.messageContainerSize!
-        attributes.messageLabelInsets = context.messageLabelInsets!
-
-        attributes.topLabelAlignment = context.topLabelAlignment!
-        attributes.topLabelSize = context.topLabelSize!
-
-        attributes.bottomLabelAlignment = context.bottomLabelAlignment!
-        attributes.bottomLabelSize = context.bottomLabelSize!
-
         switch message.data {
-        case .emoji:
-            attributes.messageLabelFont = emojiLabelFont
         case .text:
-            attributes.messageLabelFont = messageLabelFont
-        case .attributedText(let text):
-            guard !text.string.isEmpty else { return }
-            guard let font = text.attribute(.font, at: 0, effectiveRange: nil) as? UIFont else { return }
-            attributes.messageLabelFont = font
-        default:
-            break
+            return textMessageSizeCalculator
+        case .attributedText:
+            return attributedTextMessageSizeCalculator
+        case .emoji:
+            return emojiMessageSizeCalculator
+        case .photo:
+            return photoMessageSizeCalculator
+        case .video:
+            return videoMessageSizeCalculator
+        case .location:
+            return locationMessageSizeCalculator
+        case .custom:
+            fatalError("Must return a CellSizeCalculator for MessageData.custom(Any?)")
         }
     }
-}
 
-// MARK: - MessageCellLayoutContext
-
-extension MessagesCollectionViewFlowLayout {
-
-    internal func cellLayoutContext(for message: MessageType, at indexPath: IndexPath) -> MessageCellLayoutContext {
-        guard let cachedContext = layoutContextCache.object(forKey: message.messageId as NSString) else {
-            let newContext = newCellLayoutContext(for: message, at: indexPath)
-
-            if messagesLayoutDelegate.shouldCacheLayoutAttributes(for: message) {
-                layoutContextCache.setObject(newContext, forKey: message.messageId as NSString)
-            }
-            return newContext
-        }
-        return cachedContext
-    }
-
-    internal func newCellLayoutContext(for message: MessageType, at indexPath: IndexPath) -> MessageCellLayoutContext {
-        currentLayoutContext = MessageCellLayoutContext()
-        currentLayoutContext.avatarPosition = _avatarPosition(for: message, at: indexPath)
-        currentLayoutContext.avatarSize = _avatarSize(for: message, at: indexPath)
-        currentLayoutContext.messageContainerPadding = _messageContainerPadding(for: message, at: indexPath)
-        currentLayoutContext.messageLabelInsets = _messageLabelInsets(for: message, at: indexPath)
-        currentLayoutContext.messageContainerMaxWidth = _messageContainerMaxWidth(for: message, at: indexPath)
-        currentLayoutContext.messageContainerSize = _messageContainerSize(for: message, at: indexPath)
-        currentLayoutContext.topLabelAlignment = _cellTopLabelAlignment(for: message, at: indexPath)
-        currentLayoutContext.topLabelMaxWidth = _cellTopLabelMaxWidth(for: message, at: indexPath)
-        currentLayoutContext.topLabelSize = _cellTopLabelSize(for: message, at: indexPath)
-        currentLayoutContext.bottomLabelAlignment = _cellBottomLabelAlignment(for: message, at: indexPath)
-        currentLayoutContext.bottomLabelMaxWidth = _cellBottomLabelMaxWidth(for: message, at: indexPath)
-        currentLayoutContext.bottomLabelSize = _cellBottomLabelSize(for: message, at: indexPath)
-        currentLayoutContext.itemHeight = _cellContentHeight(for: message, at: indexPath)
-        return currentLayoutContext
-    }
-}
-
-// MARK: - Helpers
-
-extension MessagesCollectionViewFlowLayout {
-
-    /// Convenience property for accessing the layout object's `MessagesCollectionView`.
-    internal var messagesCollectionView: MessagesCollectionView {
-        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
-            fatalError(MessageKitError.layoutUsedOnForeignType)
-        }
-        return messagesCollectionView
-    }
-
-    /// Convenience property for unwrapping the `MessagesCollectionView`'s `MessagesDataSource`.
-    internal var messagesDataSource: MessagesDataSource {
-        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
-            fatalError(MessageKitError.nilMessagesDataSource)
-        }
-        return messagesDataSource
-    }
-
-    /// Convenience property for unwrapping the `MessagesCollectionView`'s `MessagesLayoutDelegate`.
-    internal var messagesLayoutDelegate: MessagesLayoutDelegate {
-        guard let messagesLayoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
-            fatalError(MessageKitError.nilMessagesLayoutDelegate)
-        }
-        return messagesLayoutDelegate
+    open func sizeForItem(at indexPath: IndexPath) -> CGSize {
+        let calculator = cellSizeCalculatorForItem(at: indexPath)
+        return calculator.sizeForItem(at: indexPath)
     }
 }
