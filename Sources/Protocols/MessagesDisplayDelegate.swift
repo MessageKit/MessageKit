@@ -189,6 +189,8 @@ public extension MessagesDisplayDelegate {
     func messageFooterView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
         return messagesCollectionView.dequeueReusableFooterView(MessageReusableView.self, for: indexPath)
     }
+    
+    func configureAvatarView(_ avatarView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {}
 
     // MARK: - Text Messages Defaults
 
