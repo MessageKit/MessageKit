@@ -35,5 +35,7 @@ extension UIColor {
     internal static let playButtonLightGray = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1.0)
 
     internal static let sendButtonBlue = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+    
+    internal static let avatarHighlightedColor = UIColor(white: 0.1, alpha: 0.3)
 
 }

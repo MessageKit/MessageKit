@@ -315,9 +315,11 @@ extension ConversationViewController: MessagesDisplayDelegate {
 //        return .custom(configurationClosure)
     }
     
-    func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+    func configureAvatarView(_ avatarView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
-        avatarView.set(avatar: avatar)
+        
+        avatarView.image = avatar.image ?? avatar.placeholderImage
+        avatarView.highlightedImage = avatar.highlightedImage
     }
 
     // MARK: - Location Messages

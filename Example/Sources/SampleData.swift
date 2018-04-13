@@ -29,7 +29,9 @@ final internal class SampleData {
 
     static let shared = SampleData()
 
-    private init() {}
+    private init() {
+        createAvatars()
+    }
 
     let messageTextValues = [
         "Ok",
@@ -91,7 +93,10 @@ final internal class SampleData {
         "🎈",
         "🇧🇷"
     ]
-
+    
+    let avatarFactory = MessagesAvatarImageFactory(diameter: 30)
+    var avatars: [Sender: Avatar] = [:]
+    
     func attributedString(with text: String) -> NSAttributedString {
         let nsString = NSString(string: text)
         var mutableAttributedString = NSMutableAttributedString(string: text)
@@ -181,20 +186,17 @@ final internal class SampleData {
         }
         completion(messages)
     }
+    
+    func createAvatars() {
+        avatars[dan] = avatarFactory.avatarImage(withImage: #imageLiteral(resourceName: "Dan-Leonard"))
+        avatars[steven] = avatarFactory.avatarImage(withInitials: "SD", backgroundColor: UIColor(white: 0.85, alpha: 1.0), textColor: UIColor(white: 0.6, alpha: 1.0), font: UIFont.systemFont(ofSize: 14))
+        avatars[jobs] = avatarFactory.avatarImage(withImage: #imageLiteral(resourceName: "Steve-Jobs"))
+        avatars[cook] = avatarFactory.avatarImage(withPlaceholder: #imageLiteral(resourceName: "Tim-Cook"))
+    }
 
     func getAvatarFor(sender: Sender) -> Avatar {
-        switch sender {
-        case dan:
-            return Avatar(image: #imageLiteral(resourceName: "Dan-Leonard"), initials: "DL")
-        case steven:
-            return Avatar(initials: "S")
-        case jobs:
-            return Avatar(image: #imageLiteral(resourceName: "Steve-Jobs"), initials: "SJ")
-        case cook:
-            return Avatar(image: #imageLiteral(resourceName: "Tim-Cook"))
-        default:
-            return Avatar()
-        }
+        let avatar = avatars[sender] ?? Avatar()
+        return avatar
     }
 
 }
