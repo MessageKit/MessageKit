@@ -37,15 +37,15 @@ open class MessagesAvatarImageFactory {
     
     // MARK: - Public
     
-    public func avatarImage(withPlaceholder placeholderImage: UIImage) -> Avatar {
-        let circlePlaceholderImage = circularImage(placeholderImage, highlightedColor: nil)
+    public func avatarImage(withPlaceholder placeholderImage: UIImage, outerCircleColor: UIColor = .white) -> Avatar {
+        let circlePlaceholderImage = circularImage(placeholderImage, highlightedColor: nil, outerCircleColor: outerCircleColor)
         
         return Avatar.avatar(withPlaceholder: circlePlaceholderImage)
     }
     
-    public func avatarImage(withImage image: UIImage) -> Avatar {
-        let avatar = circularAvatarImage(image)
-        let highlightedAvatar = circularAvatarHighlightedImage(image)
+    public func avatarImage(withImage image: UIImage, outerCircleColor: UIColor = .white) -> Avatar {
+        let avatar = circularAvatarImage(image, outerCircleColor: outerCircleColor)
+        let highlightedAvatar = circularAvatarHighlightedImage(image, outerCircleColor: outerCircleColor)
         
         return Avatar(image: avatar, highlightedImage: highlightedAvatar, placeholderImage: avatar)
     }
@@ -53,19 +53,20 @@ open class MessagesAvatarImageFactory {
     public func avatarImage(withInitials initials: String = "?",
                             backgroundColor: UIColor,
                             textColor: UIColor,
-                            font: UIFont) -> Avatar {
-        let avatarImage = image(withInitials: initials, backgroundColor: backgroundColor, textColor: textColor, font: font)
-        let avatarHighlightedImage = circularImage(avatarImage, highlightedColor: UIColor.avatarHighlightedColor)
+                            font: UIFont,
+                            outerCircleColor: UIColor = .white) -> Avatar {
+        let avatarImage = image(withInitials: initials, backgroundColor: backgroundColor, textColor: textColor, font: font, outerCircleColor: outerCircleColor)
+        let avatarHighlightedImage = circularImage(avatarImage, highlightedColor: UIColor.avatarHighlightedColor, outerCircleColor: outerCircleColor)
         
         return Avatar(image: avatarImage, highlightedImage: avatarHighlightedImage, placeholderImage: avatarImage)
     }
     
-    public func circularAvatarImage(_ image: UIImage) -> UIImage {
-        return circularImage(image, highlightedColor: nil)
+    public func circularAvatarImage(_ image: UIImage, outerCircleColor: UIColor = .white) -> UIImage {
+        return circularImage(image, highlightedColor: nil, outerCircleColor: outerCircleColor)
     }
     
-    public func circularAvatarHighlightedImage(_ image: UIImage) -> UIImage {
-        return circularImage(image, highlightedColor: UIColor.avatarHighlightedColor)
+    public func circularAvatarHighlightedImage(_ image: UIImage, outerCircleColor: UIColor = .white) -> UIImage {
+        return circularImage(image, highlightedColor: UIColor.avatarHighlightedColor, outerCircleColor: outerCircleColor)
     }
     
     // MARK: - Private
@@ -73,7 +74,8 @@ open class MessagesAvatarImageFactory {
     private func image(withInitials initials: String,
                        backgroundColor: UIColor,
                        textColor: UIColor,
-                       font: UIFont) -> UIImage {
+                       font: UIFont,
+                       outerCircleColor: UIColor) -> UIImage {
         let frame = CGRect(0, 0, self.diameter, self.diameter)
         let attributes: [NSAttributedStringKey: Any] = [.font: font,
                                                         .foregroundColor: textColor]
@@ -97,17 +99,24 @@ open class MessagesAvatarImageFactory {
         
         let image = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
         
-        return circularImage(image, highlightedColor: nil)
+        return circularImage(image, highlightedColor: nil, outerCircleColor: outerCircleColor)
     }
     
-    private func circularImage(_ image: UIImage, highlightedColor: UIColor?) -> UIImage {
+    private func circularImage(_ image: UIImage, highlightedColor: UIColor?, outerCircleColor: UIColor) -> UIImage {
         let frame = CGRect(0, 0, self.diameter, self.diameter)
         
-        UIGraphicsBeginImageContextWithOptions(frame.size, false, UIScreen.main.scale)
+        let opaque = (outerCircleColor != .clear)
+        
+        UIGraphicsBeginImageContextWithOptions(frame.size, opaque, UIScreen.main.scale)
         defer {
             UIGraphicsEndImageContext()
         }
         let context = UIGraphicsGetCurrentContext()
+        
+        if opaque {
+            context?.setFillColor(outerCircleColor.cgColor)
+            context?.fill(frame)
+        }
         
         let imgPath = UIBezierPath(ovalIn: frame)
         imgPath.addClip()
