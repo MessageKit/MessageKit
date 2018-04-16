@@ -46,12 +46,6 @@ public struct AvatarPosition {
     /// An enum representing the verical alignment for an `AvatarView`.
     public enum Vertical {
         
-        /// Aligns the `AvatarView`'s top edge to the cell's top edge.
-        case cellTop
-        
-        /// Aligns the `AvatarView`'s bottom edge to the cell's bottom edge.
-        case cellBottom
-        
         /// Aligns the `AvatarView`'s top edge to the `MessageContainerView`'s top edge.
         case messageTop
         

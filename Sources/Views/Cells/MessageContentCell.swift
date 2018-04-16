@@ -44,6 +44,13 @@ open class MessageContentCell: MessageCollectionViewCell {
         label.numberOfLines = 0
         return label
     }()
+    
+    /// The top label of the messageBubble.
+    open var messageTopLabel: InsetLabel = {
+        let label = InsetLabel()
+        label.numberOfLines = 0
+        return label
+    }()
 
     /// The bottom label of the cell.
     open var cellBottomLabel: InsetLabel = {
@@ -69,15 +76,15 @@ open class MessageContentCell: MessageCollectionViewCell {
         contentView.addSubview(messageContainerView)
         contentView.addSubview(avatarView)
         contentView.addSubview(cellTopLabel)
+        contentView.addSubview(messageTopLabel)
         contentView.addSubview(cellBottomLabel)
     }
 
     open override func prepareForReuse() {
         super.prepareForReuse()
         cellTopLabel.text = nil
-        cellTopLabel.attributedText = nil
+        messageTopLabel.text = nil
         cellBottomLabel.text = nil
-        cellBottomLabel.attributedText = nil
     }
 
     // MARK: - Configuration
@@ -89,7 +96,8 @@ open class MessageContentCell: MessageCollectionViewCell {
         layoutMessageContainerView(with: attributes)
         layoutAvatarView(with: attributes)
         layoutBottomLabel(with: attributes)
-        layoutTopLabel(with: attributes)
+        layoutCellTopLabel(with: attributes)
+        layoutMessageTopLabel(with: attributes)
     }
 
     /// Used to configure the cell.
@@ -116,10 +124,12 @@ open class MessageContentCell: MessageCollectionViewCell {
         messageContainerView.backgroundColor = messageColor
         messageContainerView.style = messageStyle
 
-        let topText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
+        let topCellLabelText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
+        let topMessageLabelText = dataSource.messageTopLabelAttributedText(for: message, at: indexPath)
         let bottomText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
 
-        cellTopLabel.attributedText = topText
+        cellTopLabel.attributedText = topCellLabelText
+        messageTopLabel.attributedText = topMessageLabelText
         cellBottomLabel.attributedText = bottomText
     }
 
@@ -133,7 +143,9 @@ open class MessageContentCell: MessageCollectionViewCell {
         case avatarView.frame.contains(touchLocation):
             delegate?.didTapAvatar(in: self)
         case cellTopLabel.frame.contains(touchLocation):
-            delegate?.didTapTopLabel(in: self)
+            delegate?.didTapCellTopLabel(in: self)
+        case messageTopLabel.frame.contains(touchLocation):
+            delegate?.didTapMessageTopLabel(in: self)
         case cellBottomLabel.frame.contains(touchLocation):
             delegate?.didTapBottomLabel(in: self)
         default:
@@ -172,10 +184,6 @@ open class MessageContentCell: MessageCollectionViewCell {
         }
 
         switch attributes.avatarPosition.vertical {
-        case .cellTop:
-            break
-        case .cellBottom:
-            origin.y = attributes.frame.height - attributes.avatarSize.height
         case .messageTop: // Needs messageContainerView frame to be set
             origin.y = messageContainerView.frame.minY
         case .messageBottom: // Needs messageContainerView frame to be set
@@ -193,7 +201,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         guard attributes.messageContainerSize != .zero else { return }
 
         var origin: CGPoint = .zero
-        origin.y = attributes.topLabelSize.height + attributes.messageContainerPadding.top
+        origin.y = attributes.cellTopLabelSize.height + attributes.messageTopLabelSize.height + attributes.messageContainerPadding.top
 
         switch attributes.avatarPosition.horizontal {
         case .cellLeading:
@@ -209,13 +217,27 @@ open class MessageContentCell: MessageCollectionViewCell {
 
     /// Positions the cell's top label.
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
-    open func layoutTopLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
-        guard attributes.topLabelSize != .zero else { return }
+    open func layoutCellTopLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
+        guard attributes.cellTopLabelSize != .zero else { return }
 
-        cellTopLabel.textAlignment = attributes.topLabelAlignment.textAlignment
-        cellTopLabel.textInsets = attributes.topLabelAlignment.textInsets
+        cellTopLabel.textAlignment = attributes.cellTopLabelAlignment.textAlignment
+        cellTopLabel.textInsets = attributes.cellTopLabelAlignment.textInsets
 
-        cellTopLabel.frame = CGRect(origin: .zero, size: attributes.topLabelSize)
+        cellTopLabel.frame = CGRect(origin: .zero, size: attributes.cellTopLabelSize)
+    }
+    
+    /// Positions the message bubble's top label.
+    /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
+    open func layoutMessageTopLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
+        guard attributes.messageTopLabelSize != .zero else { return }
+        
+        messageTopLabel.textAlignment = attributes.messageTopLabelAlignment.textAlignment
+        messageTopLabel.textInsets = attributes.messageTopLabelAlignment.textInsets
+        
+        var origin: CGPoint = .zero
+        origin.y += attributes.cellTopLabelSize.height
+        
+        messageTopLabel.frame = CGRect(origin: origin, size: attributes.messageTopLabelSize)
     }
 
     /// Positions the cell's bottom label.

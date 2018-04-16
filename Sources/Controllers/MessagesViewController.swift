@@ -77,7 +77,6 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         setupDefaults()
         setupSubviews()
         setupConstraints()
-        registerReusableViews()
         setupDelegates()
         addMenuControllerObservers()
         addObservers()
@@ -119,15 +118,6 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     private func setupSubviews() {
         view.addSubview(messagesCollectionView)
-    }
-
-    private func registerReusableViews() {
-        messagesCollectionView.register(TextMessageCell.self)
-        messagesCollectionView.register(MediaMessageCell.self)
-        messagesCollectionView.register(LocationMessageCell.self)
-
-        messagesCollectionView.register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
-        messagesCollectionView.register(MessageDateHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
     }
 
     private func setupConstraints() {

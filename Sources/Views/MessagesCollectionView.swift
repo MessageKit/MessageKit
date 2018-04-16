@@ -47,6 +47,7 @@ open class MessagesCollectionView: UICollectionView {
     public override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         backgroundColor = .white
+        registerReusableViews()
         setupGestureRecognizers()
     }
     
@@ -59,6 +60,14 @@ open class MessagesCollectionView: UICollectionView {
     }
 
     // MARK: - Methods
+    
+    private func registerReusableViews() {
+        register(TextMessageCell.self)
+        register(MediaMessageCell.self)
+        register(LocationMessageCell.self)
+        register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
+        register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter)
+    }
     
     private func setupGestureRecognizers() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
