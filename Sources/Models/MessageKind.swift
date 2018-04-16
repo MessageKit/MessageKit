@@ -24,15 +24,15 @@
 
 import Foundation
 
-/// An enum representing the kind of message and its underlying data.
-public enum MessageData {
+/// An enum representing the kind of message and its underlying kind.
+public enum MessageKind {
 
     /// A standard text message.
     ///
     /// - Note: The font used for this message will be the value of the
     /// `messageLabelFont` property in the `MessagesCollectionViewFlowLayout` object.
     ///
-    /// Using `MessageData.attributedText(NSAttributedString)` doesn't require you
+    /// Using `MessageKind.attributedText(NSAttributedString)` doesn't require you
     /// to set this property and results in higher performance.
     case text(String)
     

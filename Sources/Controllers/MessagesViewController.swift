@@ -174,7 +174,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
-        switch message.data {
+        switch message.kind {
         case .text, .attributedText, .emoji:
             let cell = messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
@@ -244,7 +244,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return false }
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
-        switch message.data {
+        switch message.kind {
         case .text, .attributedText, .emoji, .photo:
             selectedIndexPathForMenu = indexPath
             return true
@@ -264,7 +264,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         let pasteBoard = UIPasteboard.general
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
 
-        switch message.data {
+        switch message.kind {
         case .text(let text), .emoji(let text):
             pasteBoard.string = text
         case .attributedText(let attributedText):

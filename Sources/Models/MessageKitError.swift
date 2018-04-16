@@ -33,6 +33,6 @@ internal enum MessageKitError {
     internal static let unrecognizedCheckingResult = "Received an unrecognized NSTextCheckingResult.CheckingType"
     internal static let couldNotLoadAssetsBundle = "MessageKit: Could not load the assets bundle"
     internal static let couldNotCreateAssetsPath = "MessageKit: Could not create path to the assets bundle."
-    internal static let customDataUnresolvedCell = "Did not return a cell for MessageData.custom(Any)."
-    internal static let customDataUnresolvedSize = "Did not return a size for MessageData.custom(Any)."
+    internal static let customDataUnresolvedCell = "Did not return a cell for MessageKind.custom(Any)."
+    internal static let customDataUnresolvedSize = "Did not return a size for MessageKind.custom(Any)."
 }
