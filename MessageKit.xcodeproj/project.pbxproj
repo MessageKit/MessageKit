@@ -59,7 +59,7 @@
 		B7A03F2A1F866895006AEF79 /* MessageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F1F1F866895006AEF79 /* MessageStyle.swift */; };
 		B7A03F2C1F866895006AEF79 /* DetectorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F211F866895006AEF79 /* DetectorType.swift */; };
 		B7A03F2D1F866895006AEF79 /* LabelAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F221F866895006AEF79 /* LabelAlignment.swift */; };
-		B7A03F2E1F866895006AEF79 /* MessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F231F866895006AEF79 /* MessageData.swift */; };
+		B7A03F2E1F866895006AEF79 /* MessageKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F231F866895006AEF79 /* MessageKind.swift */; };
 		B7A03F331F866940006AEF79 /* MessageDateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F301F866940006AEF79 /* MessageDateHeaderView.swift */; };
 		B7A03F3A1F866946006AEF79 /* TextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F361F866946006AEF79 /* TextMessageCell.swift */; };
 		B7A03F3C1F866946006AEF79 /* LocationMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F381F866946006AEF79 /* LocationMessageCell.swift */; };
@@ -167,7 +167,7 @@
 		B7A03F1F1F866895006AEF79 /* MessageStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageStyle.swift; sourceTree = "<group>"; };
 		B7A03F211F866895006AEF79 /* DetectorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectorType.swift; sourceTree = "<group>"; };
 		B7A03F221F866895006AEF79 /* LabelAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelAlignment.swift; sourceTree = "<group>"; };
-		B7A03F231F866895006AEF79 /* MessageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageData.swift; sourceTree = "<group>"; };
+		B7A03F231F866895006AEF79 /* MessageKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageKind.swift; sourceTree = "<group>"; };
 		B7A03F301F866940006AEF79 /* MessageDateHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDateHeaderView.swift; sourceTree = "<group>"; };
 		B7A03F361F866946006AEF79 /* TextMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageCell.swift; sourceTree = "<group>"; };
 		B7A03F381F866946006AEF79 /* LocationMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMessageCell.swift; sourceTree = "<group>"; };
@@ -389,7 +389,7 @@
 				B7A03F211F866895006AEF79 /* DetectorType.swift */,
 				B7A03F221F866895006AEF79 /* LabelAlignment.swift */,
 				B7A03F1D1F866895006AEF79 /* LocationMessageSnapshotOptions.swift */,
-				B7A03F231F866895006AEF79 /* MessageData.swift */,
+				B7A03F231F866895006AEF79 /* MessageKind.swift */,
 				1FF377A320087C82004FD648 /* MessageKitError.swift */,
 				B7A03F1B1F866895006AEF79 /* MessageKitDateFormatter.swift */,
 				B7A03F1F1F866895006AEF79 /* MessageStyle.swift */,
@@ -619,7 +619,7 @@
 				B7A03F3D1F866946006AEF79 /* MediaMessageCell.swift in Sources */,
 				1FE783A220662905007FA024 /* TextMessageSizeCalculator.swift in Sources */,
 				B7A03F331F866940006AEF79 /* MessageDateHeaderView.swift in Sources */,
-				B7A03F2E1F866895006AEF79 /* MessageData.swift in Sources */,
+				B7A03F2E1F866895006AEF79 /* MessageKind.swift in Sources */,
 				B7A03F7B1F866B85006AEF79 /* MessageCollectionViewCell.swift in Sources */,
 				B7A03F6B1F8669EB006AEF79 /* UIColor+Extensions.swift in Sources */,
 				B7A03F5E1F8669CA006AEF79 /* MessagesLayoutDelegate.swift in Sources */,
@@ -641,7 +641,6 @@
 				B7A03F2A1F866895006AEF79 /* MessageStyle.swift in Sources */,
 				B7A03F4D1F86694F006AEF79 /* MessagesCollectionView.swift in Sources */,
 				0EF0888C206F7E83007F2F58 /* CellSizeCalculator.swift in Sources */,
-				B7A03F351F866940006AEF79 /* MessageHeaderView.swift in Sources */,
 				1FE783A4206629A5007FA024 /* MediaMessageSizeCalculator.swift in Sources */,
 				B7A03F731F866A06006AEF79 /* MessageKit+Availability.swift in Sources */,
 				1FE7839E20662835007FA024 /* MessageSizeCalculator.swift in Sources */,

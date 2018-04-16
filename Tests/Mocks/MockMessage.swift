@@ -58,40 +58,40 @@ struct MockMessage: MessageType {
     var messageId: String
     var sender: Sender
     var sentDate: Date
-    var data: MessageData
+    var kind: MessageKind
 
-    private init(data: MessageData, sender: Sender, messageId: String) {
-        self.data = data
+    private init(kind: MessageKind, sender: Sender, messageId: String) {
+        self.kind = kind
         self.sender = sender
         self.messageId = messageId
         self.sentDate = Date()
     }
 
     init(text: String, sender: Sender, messageId: String) {
-        self.init(data: .text(text), sender: sender, messageId: messageId)
+        self.init(kind: .text(text), sender: sender, messageId: messageId)
     }
 
     init(attributedText: NSAttributedString, sender: Sender, messageId: String) {
-        self.init(data: .attributedText(attributedText), sender: sender, messageId: messageId)
+        self.init(kind: .attributedText(attributedText), sender: sender, messageId: messageId)
     }
 
     init(image: UIImage, sender: Sender, messageId: String) {
         let mediaItem = MockMediaItem(image: image)
-        self.init(data: .photo(mediaItem), sender: sender, messageId: messageId)
+        self.init(kind: .photo(mediaItem), sender: sender, messageId: messageId)
     }
 
     init(thumbnail: UIImage, sender: Sender, messageId: String) {
         let mediaItem = MockMediaItem(image: thumbnail)
-        self.init(data: .video(mediaItem), sender: sender, messageId: messageId)
+        self.init(kind: .video(mediaItem), sender: sender, messageId: messageId)
     }
 
     init(location: CLLocation, sender: Sender, messageId: String) {
         let locationItem = MockLocationItem(location: location)
-        self.init(data: .location(locationItem), sender: sender, messageId: messageId)
+        self.init(kind: .location(locationItem), sender: sender, messageId: messageId)
     }
 
     init(emoji: String, sender: Sender, messageId: String) {
-        self.init(data: .emoji(emoji), sender: sender, messageId: messageId)
+        self.init(kind: .emoji(emoji), sender: sender, messageId: messageId)
     }
 
 }
