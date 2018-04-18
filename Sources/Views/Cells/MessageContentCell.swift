@@ -42,6 +42,7 @@ open class MessageContentCell: MessageCollectionViewCell {
     open var cellTopLabel: InsetLabel = {
         let label = InsetLabel()
         label.numberOfLines = 0
+        label.textAlignment = .center
         return label
     }()
     
@@ -94,10 +95,10 @@ open class MessageContentCell: MessageCollectionViewCell {
         guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else { return }
         // Call this before other laying out other subviews
         layoutMessageContainerView(with: attributes)
-        layoutAvatarView(with: attributes)
         layoutBottomLabel(with: attributes)
         layoutCellTopLabel(with: attributes)
         layoutMessageTopLabel(with: attributes)
+        layoutAvatarView(with: attributes)
     }
 
     /// Used to configure the cell.
@@ -184,12 +185,18 @@ open class MessageContentCell: MessageCollectionViewCell {
         }
 
         switch attributes.avatarPosition.vertical {
+        case .messageLabelTop:
+            origin.y = messageTopLabel.frame.minY
         case .messageTop: // Needs messageContainerView frame to be set
             origin.y = messageContainerView.frame.minY
         case .messageBottom: // Needs messageContainerView frame to be set
             origin.y = messageContainerView.frame.maxY - attributes.avatarSize.height
         case .messageCenter: // Needs messageContainerView frame to be set
             origin.y = messageContainerView.frame.midY - (attributes.avatarSize.height/2)
+        case .cellBottom:
+            origin.y = attributes.frame.height - attributes.avatarSize.height
+        default:
+            break
         }
 
         avatarView.frame = CGRect(origin: origin, size: attributes.avatarSize)
@@ -219,9 +226,6 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutCellTopLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
         guard attributes.cellTopLabelSize != .zero else { return }
-
-        cellTopLabel.textAlignment = attributes.cellTopLabelAlignment.textAlignment
-        cellTopLabel.textInsets = attributes.cellTopLabelAlignment.textInsets
 
         cellTopLabel.frame = CGRect(origin: .zero, size: attributes.cellTopLabelSize)
     }

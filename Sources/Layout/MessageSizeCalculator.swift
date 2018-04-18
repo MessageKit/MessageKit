@@ -76,20 +76,14 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     open func cellContentHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
-        let avatarHeight = avatarSize(for: message).height
         let messageContainerHeight = messageContainerSize(for: message).height
         let bottomLabelHeight = cellBottomLabelSize(for: message, at: indexPath).height
         let cellTopLabelHeight = cellTopLabelSize(for: message, at: indexPath).height
         let messageTopLabelHeight = messageTopLabelSize(for: message, at: indexPath).height
         let messageVerticalPadding = messageContainerPadding(for: message).vertical
 
-        var cellHeight: CGFloat = 0
-
-        cellHeight += max(avatarHeight, messageContainerHeight)
-        cellHeight += messageVerticalPadding
-        cellHeight += cellTopLabelHeight
-        cellHeight += messageTopLabelHeight
-        cellHeight += bottomLabelHeight
+        let cellHeight: CGFloat = cellTopLabelHeight + messageTopLabelHeight
+            + messageContainerHeight + messageVerticalPadding + bottomLabelHeight
 
         return cellHeight
     }
