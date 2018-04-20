@@ -41,6 +41,9 @@ open class MessageSizeCalculator: CellSizeCalculator {
     public var incomingMessagePadding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
     public var outgoingMessagePadding = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
 
+    public var incomingCellTopLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
+    public var outgoingCellTopLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
+
     public var incomingMessageTopLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: 42))
     public var outgoingMessageTopLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: 42))
 
@@ -77,15 +80,42 @@ open class MessageSizeCalculator: CellSizeCalculator {
     open func cellContentHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         let messageContainerHeight = messageContainerSize(for: message).height
-        let bottomLabelHeight = cellBottomLabelSize(for: message, at: indexPath).height
+        let cellBottomLabelHeight = cellBottomLabelSize(for: message, at: indexPath).height
         let cellTopLabelHeight = cellTopLabelSize(for: message, at: indexPath).height
         let messageTopLabelHeight = messageTopLabelSize(for: message, at: indexPath).height
         let messageVerticalPadding = messageContainerPadding(for: message).vertical
+        let avatarHeight = avatarSize(for: message).height
+        let avatarVerticalPosition = avatarPosition(for: message).vertical
 
-        let cellHeight: CGFloat = cellTopLabelHeight + messageTopLabelHeight
-            + messageContainerHeight + messageVerticalPadding + bottomLabelHeight
-
-        return cellHeight
+        switch avatarVerticalPosition {
+        case .messageCenter:
+            let totalLabelHeight: CGFloat = cellTopLabelHeight + messageTopLabelHeight
+                + messageContainerHeight + messageVerticalPadding + cellBottomLabelHeight
+            return max(avatarHeight, totalLabelHeight)
+        case .messageBottom:
+            var cellHeight: CGFloat = 0
+            cellHeight += cellBottomLabelHeight
+            let labelsHeight = messageContainerHeight + messageVerticalPadding + cellTopLabelHeight + messageTopLabelHeight
+            cellHeight += max(labelsHeight, avatarHeight)
+            return cellHeight
+        case .messageTop:
+            var cellHeight: CGFloat = 0
+            cellHeight += cellTopLabelHeight
+            cellHeight += messageTopLabelHeight
+            let labelsHeight = messageContainerHeight + messageVerticalPadding + cellBottomLabelHeight
+            cellHeight += max(labelsHeight, avatarHeight)
+            return cellHeight
+        case .messageLabelTop:
+            var cellHeight: CGFloat = 0
+            cellHeight += cellTopLabelHeight
+            let messageLabelsHeight = messageContainerHeight + cellBottomLabelHeight + messageVerticalPadding + messageTopLabelHeight
+            cellHeight += max(messageLabelsHeight, avatarHeight)
+            return cellHeight
+        case .cellTop, .cellBottom:
+            let totalLabelHeight: CGFloat = cellTopLabelHeight + messageTopLabelHeight
+                + messageContainerHeight + messageVerticalPadding + cellBottomLabelHeight
+            return max(avatarHeight, totalLabelHeight)
+        }
     }
 
     // MARK: - Avatar
@@ -117,6 +147,12 @@ open class MessageSizeCalculator: CellSizeCalculator {
         let collectionView = messagesLayout.messagesCollectionView
         let height = layoutDelegate.cellTopLabelHeight(for: message, at: indexPath, in: collectionView)
         return CGSize(width: messagesLayout.itemWidth, height: height)
+    }
+
+    public func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment {
+        let dataSource = messagesLayout.messagesDataSource
+        let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
+        return isFromCurrentSender ? outgoingCellTopLabelAlignment : incomingCellTopLabelAlignment
     }
     
     // MARK: - Top message Label

@@ -74,11 +74,11 @@ open class MessageContentCell: MessageCollectionViewCell {
     }
 
     open func setupSubviews() {
-        contentView.addSubview(messageContainerView)
-        contentView.addSubview(avatarView)
         contentView.addSubview(cellTopLabel)
         contentView.addSubview(messageTopLabel)
         contentView.addSubview(cellBottomLabel)
+        contentView.addSubview(messageContainerView)
+        contentView.addSubview(avatarView)
     }
 
     open override func prepareForReuse() {
@@ -208,7 +208,20 @@ open class MessageContentCell: MessageCollectionViewCell {
         guard attributes.messageContainerSize != .zero else { return }
 
         var origin: CGPoint = .zero
-        origin.y = attributes.cellTopLabelSize.height + attributes.messageTopLabelSize.height + attributes.messageContainerPadding.top
+
+        switch attributes.avatarPosition.vertical {
+        case .messageBottom:
+            origin.y = attributes.size.height - attributes.messageContainerPadding.bottom - attributes.bottomLabelSize.height - attributes.messageContainerSize.height - attributes.messageContainerPadding.top
+        case .messageCenter:
+            if attributes.avatarSize.height > attributes.messageContainerSize.height {
+                let messageHeight = attributes.messageContainerSize.height + attributes.messageContainerPadding.vertical
+                origin.y = (attributes.size.height / 2) - (messageHeight / 2)
+            } else {
+                fallthrough
+            }
+        default:
+            origin.y = attributes.cellTopLabelSize.height + attributes.messageTopLabelSize.height + attributes.messageContainerPadding.top
+        }
 
         switch attributes.avatarPosition.horizontal {
         case .cellLeading:
@@ -237,9 +250,9 @@ open class MessageContentCell: MessageCollectionViewCell {
         
         messageTopLabel.textAlignment = attributes.messageTopLabelAlignment.textAlignment
         messageTopLabel.textInsets = attributes.messageTopLabelAlignment.textInsets
-        
-        var origin: CGPoint = .zero
-        origin.y += attributes.cellTopLabelSize.height
+
+        let y = messageContainerView.frame.minY - attributes.messageContainerPadding.top - attributes.messageTopLabelSize.height
+        let origin = CGPoint(x: 0, y: y)
         
         messageTopLabel.frame = CGRect(origin: origin, size: attributes.messageTopLabelSize)
     }
