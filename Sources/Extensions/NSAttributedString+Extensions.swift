@@ -41,4 +41,19 @@ extension NSAttributedString {
         return rect.width
         
     }
+    
+    /// Returns the size required fit a NSAttributedString considering a constrained max width.
+    ///
+    /// - Parameters:
+    ///   - attributedText: The `NSAttributedString` used to calculate a size that fits.
+    ///   - maxWidth: The max width available for the label.
+    func labelSize(considering maxWidth: CGFloat) -> CGSize {
+        let estimatedHeight = self.height(considering: maxWidth)
+        let estimatedWidth = self.width(considering: estimatedHeight)
+        
+        let finalHeight = estimatedHeight.rounded(.up)
+        let finalWidth = estimatedWidth > maxWidth ? maxWidth : estimatedWidth.rounded(.up)
+        
+        return CGSize(width: finalWidth, height: finalHeight)
+    }
 }

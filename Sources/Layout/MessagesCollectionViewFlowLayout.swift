@@ -328,44 +328,6 @@ fileprivate extension MessagesCollectionViewFlowLayout {
     
 }
 
-// MARK: - General Label Size Calculations
-
-private extension MessagesCollectionViewFlowLayout {
-    
-    /// Returns the size required fit a NSAttributedString considering a constrained max width.
-    ///
-    /// - Parameters:
-    ///   - attributedText: The `NSAttributedString` used to calculate a size that fits.
-    ///   - maxWidth: The max width available for the label.
-    func labelSize(for attributedText: NSAttributedString, considering maxWidth: CGFloat) -> CGSize {
-        
-        let estimatedHeight = attributedText.height(considering: maxWidth)
-        let estimatedWidth = attributedText.width(considering: estimatedHeight)
-        
-        let finalHeight = estimatedHeight.rounded(.up)
-        let finalWidth = estimatedWidth > maxWidth ? maxWidth : estimatedWidth.rounded(.up)
-        
-        return CGSize(width: finalWidth, height: finalHeight)
-    }
-    
-    /// Returns the size required to fit a String considering a constrained max width.
-    ///
-    /// - Parameters:
-    ///   - text: The `String` used to calculate a size that fits.
-    ///   - maxWidth: The max width available for the label.
-    func labelSize(for text: String, considering maxWidth: CGFloat, and font: UIFont) -> CGSize {
-        
-        let estimatedHeight = text.height(considering: maxWidth, and: font)
-        let estimatedWidth = text.width(considering: estimatedHeight, and: font)
-        
-        let finalHeight = estimatedHeight.rounded(.up)
-        let finalWidth = estimatedWidth > maxWidth ? maxWidth : estimatedWidth.rounded(.up)
-        
-        return CGSize(width: finalWidth, height: finalHeight)
-    }
-    
-}
-
 // MARK: - MessageContainerView Calculations [ D - G ]
 
 private extension MessagesCollectionViewFlowLayout {
@@ -424,15 +386,15 @@ private extension MessagesCollectionViewFlowLayout {
         
         switch attributes.message.data {
         case .text(let text):
-            messageContainerSize = labelSize(for: text, considering: maxWidth, and: messageLabelFont)
+            messageContainerSize = text.labelSize(considering: maxWidth, and: messageLabelFont)
             messageContainerSize.width += attributes.messageLabelHorizontalInsets
             messageContainerSize.height += attributes.messageLabelVerticalInsets
         case .attributedText(let text):
-            messageContainerSize = labelSize(for: text, considering: maxWidth)
+            messageContainerSize = text.labelSize(considering: maxWidth)
             messageContainerSize.width += attributes.messageLabelHorizontalInsets
             messageContainerSize.height += attributes.messageLabelVerticalInsets
         case .emoji(let text):
-            messageContainerSize = labelSize(for: text, considering: maxWidth, and: emojiLabelFont)
+            messageContainerSize =  text.labelSize(considering: maxWidth, and: emojiLabelFont)
             messageContainerSize.width += attributes.messageLabelHorizontalInsets
             messageContainerSize.height += attributes.messageLabelVerticalInsets
         case .photo, .video:
@@ -519,7 +481,7 @@ private extension MessagesCollectionViewFlowLayout {
         let text = messagesDataSource.cellBottomLabelAttributedText(for: attributes.message, at: attributes.indexPath)
         
         guard let bottomLabelText = text else { return .zero }
-        return labelSize(for: bottomLabelText, considering: attributes.bottomLabelMaxWidth)
+        return bottomLabelText.labelSize(considering: attributes.bottomLabelMaxWidth)
     }
 
 }
@@ -593,7 +555,7 @@ private extension MessagesCollectionViewFlowLayout {
         
         guard let topLabelText = text else { return .zero }
 
-        return labelSize(for: topLabelText, considering: attributes.topLabelMaxWidth)
+        return topLabelText.labelSize(considering: attributes.topLabelMaxWidth)
 
     }
     

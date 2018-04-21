@@ -41,4 +41,20 @@ extension String {
         return rect.width
 
     }
+    
+    /// Returns the size required to fit a String considering a constrained max width.
+    ///
+    /// - Parameters:
+    ///   - text: The `String` used to calculate a size that fits.
+    ///   - maxWidth: The max width available for the label.
+    func labelSize(considering maxWidth: CGFloat, and font: UIFont) -> CGSize {
+        
+        let estimatedHeight = self.height(considering: maxWidth, and: font)
+        let estimatedWidth = self.width(considering: estimatedHeight, and: font)
+        
+        let finalHeight = estimatedHeight.rounded(.up)
+        let finalWidth = estimatedWidth > maxWidth ? maxWidth : estimatedWidth.rounded(.up)
+        
+        return CGSize(width: finalWidth, height: finalHeight)
+    }
 }
