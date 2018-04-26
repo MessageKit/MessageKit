@@ -43,8 +43,8 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
     public var messageTopLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
     public var messageTopLabelSize: CGSize = .zero
 
-    public var bottomLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
-    public var bottomLabelSize: CGSize = .zero
+    public var messageBottomLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
+    public var messageBottomLabelSize: CGSize = .zero
 
     // MARK: - Methods
 
@@ -61,8 +61,8 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
         copy.cellTopLabelSize = cellTopLabelSize
         copy.messageTopLabelAlignment = messageTopLabelAlignment
         copy.messageTopLabelSize = messageTopLabelSize
-        copy.bottomLabelAlignment = bottomLabelAlignment
-        copy.bottomLabelSize = bottomLabelSize
+        copy.messageBottomLabelAlignment = messageBottomLabelAlignment
+        copy.messageBottomLabelSize = messageBottomLabelSize
         return copy
         // swiftlint:enable force_cast
     }
@@ -80,8 +80,8 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
                 && attributes.cellTopLabelSize == cellTopLabelSize
                 && attributes.messageTopLabelAlignment == messageTopLabelAlignment
                 && attributes.messageTopLabelSize == messageTopLabelSize
-                && attributes.bottomLabelAlignment == bottomLabelAlignment
-                && attributes.bottomLabelSize == bottomLabelSize
+                && attributes.messageBottomLabelAlignment == messageBottomLabelAlignment
+                && attributes.messageBottomLabelSize == messageBottomLabelSize
         } else {
             return false
         }

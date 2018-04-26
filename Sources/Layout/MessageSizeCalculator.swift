@@ -47,8 +47,8 @@ open class MessageSizeCalculator: CellSizeCalculator {
     public var incomingMessageTopLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: 42))
     public var outgoingMessageTopLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: 42))
 
-    public var incomingCellBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: 42))
-    public var outgoingCellBottomLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: 42))
+    public var incomingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: 42))
+    public var outgoingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: 42))
 
     open override func configure(attributes: UICollectionViewLayoutAttributes) {
         guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
@@ -66,8 +66,8 @@ open class MessageSizeCalculator: CellSizeCalculator {
         attributes.messageTopLabelSize = messageTopLabelSize(for: message, at: indexPath)
         attributes.messageTopLabelAlignment = messageTopLabelAlignment(for: message)
 
-        attributes.bottomLabelAlignment = cellBottomLabelAlignment(for: message)
-        attributes.bottomLabelSize = cellBottomLabelSize(for: message, at: indexPath)
+        attributes.messageBottomLabelAlignment = messageBottomLabelAlignment(for: message)
+        attributes.messageBottomLabelSize = messageBottomLabelSize(for: message, at: indexPath)
     }
 
     open override func sizeForItem(at indexPath: IndexPath) -> CGSize {
@@ -80,7 +80,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
     open func cellContentHeight(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
 
         let messageContainerHeight = messageContainerSize(for: message).height
-        let cellBottomLabelHeight = cellBottomLabelSize(for: message, at: indexPath).height
+        let messageBottomLabelHeight = messageBottomLabelSize(for: message, at: indexPath).height
         let cellTopLabelHeight = cellTopLabelSize(for: message, at: indexPath).height
         let messageTopLabelHeight = messageTopLabelSize(for: message, at: indexPath).height
         let messageVerticalPadding = messageContainerPadding(for: message).vertical
@@ -90,11 +90,11 @@ open class MessageSizeCalculator: CellSizeCalculator {
         switch avatarVerticalPosition {
         case .messageCenter:
             let totalLabelHeight: CGFloat = cellTopLabelHeight + messageTopLabelHeight
-                + messageContainerHeight + messageVerticalPadding + cellBottomLabelHeight
+                + messageContainerHeight + messageVerticalPadding + messageBottomLabelHeight
             return max(avatarHeight, totalLabelHeight)
         case .messageBottom:
             var cellHeight: CGFloat = 0
-            cellHeight += cellBottomLabelHeight
+            cellHeight += messageBottomLabelHeight
             let labelsHeight = messageContainerHeight + messageVerticalPadding + cellTopLabelHeight + messageTopLabelHeight
             cellHeight += max(labelsHeight, avatarHeight)
             return cellHeight
@@ -102,18 +102,18 @@ open class MessageSizeCalculator: CellSizeCalculator {
             var cellHeight: CGFloat = 0
             cellHeight += cellTopLabelHeight
             cellHeight += messageTopLabelHeight
-            let labelsHeight = messageContainerHeight + messageVerticalPadding + cellBottomLabelHeight
+            let labelsHeight = messageContainerHeight + messageVerticalPadding + messageBottomLabelHeight
             cellHeight += max(labelsHeight, avatarHeight)
             return cellHeight
         case .messageLabelTop:
             var cellHeight: CGFloat = 0
             cellHeight += cellTopLabelHeight
-            let messageLabelsHeight = messageContainerHeight + cellBottomLabelHeight + messageVerticalPadding + messageTopLabelHeight
+            let messageLabelsHeight = messageContainerHeight + messageBottomLabelHeight + messageVerticalPadding + messageTopLabelHeight
             cellHeight += max(messageLabelsHeight, avatarHeight)
             return cellHeight
         case .cellTop, .cellBottom:
             let totalLabelHeight: CGFloat = cellTopLabelHeight + messageTopLabelHeight
-                + messageContainerHeight + messageVerticalPadding + cellBottomLabelHeight
+                + messageContainerHeight + messageVerticalPadding + messageBottomLabelHeight
             return max(avatarHeight, totalLabelHeight)
         }
     }
@@ -172,17 +172,17 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - Bottom Label
 
-    public func cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    public func messageBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let layoutDelegate = messagesLayout.messagesLayoutDelegate
         let collectionView = messagesLayout.messagesCollectionView
-        let height = layoutDelegate.cellBottomLabelHeight(for: message, at: indexPath, in: collectionView)
+        let height = layoutDelegate.messageBottomLabelHeight(for: message, at: indexPath, in: collectionView)
         return CGSize(width: messagesLayout.itemWidth, height: height)
     }
 
-    public func cellBottomLabelAlignment(for message: MessageType) -> LabelAlignment {
+    public func messageBottomLabelAlignment(for message: MessageType) -> LabelAlignment {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
-        return isFromCurrentSender ? outgoingCellBottomLabelAlignment : incomingCellBottomLabelAlignment
+        return isFromCurrentSender ? outgoingMessageBottomLabelAlignment : incomingMessageBottomLabelAlignment
     }
 
     // MARK: - MessageContainer

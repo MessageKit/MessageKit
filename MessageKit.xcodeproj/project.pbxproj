@@ -43,7 +43,6 @@
 		8962AC8D1F87AB7D0030B058 /* MessageCollectionViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC861F87AB230030B058 /* MessageCollectionViewCellTests.swift */; };
 		8962AC8E1F87AB7D0030B058 /* InputTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC871F87AB230030B058 /* InputTextViewTests.swift */; };
 		8962AC8F1F87AB7D0030B058 /* MessageInputBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC881F87AB230030B058 /* MessageInputBarTests.swift */; };
-		8962AC901F87AB7D0030B058 /* MessageDateHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC891F87AB230030B058 /* MessageDateHeaderViewTests.swift */; };
 		8962AC911F87AB860030B058 /* MessagesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC7D1F87AB230030B058 /* MessagesViewControllerTests.swift */; };
 		8962AC941F87AB860030B058 /* MessageKitDateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */; };
 		8962AC951F87AB860030B058 /* MessageStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC751F87AB230030B058 /* MessageStyleTests.swift */; };
@@ -154,7 +153,6 @@
 		8962AC861F87AB230030B058 /* MessageCollectionViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewCellTests.swift; sourceTree = "<group>"; };
 		8962AC871F87AB230030B058 /* InputTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextViewTests.swift; sourceTree = "<group>"; };
 		8962AC881F87AB230030B058 /* MessageInputBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBarTests.swift; sourceTree = "<group>"; };
-		8962AC891F87AB230030B058 /* MessageDateHeaderViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDateHeaderViewTests.swift; sourceTree = "<group>"; };
 		B0C8D99A1F73076B000A86E4 /* MessageKitAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MessageKitAssets.bundle; sourceTree = "<group>"; };
 		B7A03F161F86682C006AEF79 /* MessagesCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		B7A03F171F86682C006AEF79 /* MessagesCollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
@@ -351,7 +349,6 @@
 				8962AC861F87AB230030B058 /* MessageCollectionViewCellTests.swift */,
 				8962AC871F87AB230030B058 /* InputTextViewTests.swift */,
 				8962AC881F87AB230030B058 /* MessageInputBarTests.swift */,
-				8962AC891F87AB230030B058 /* MessageDateHeaderViewTests.swift */,
 			);
 			path = ViewsTests;
 			sourceTree = "<group>";
@@ -662,7 +659,6 @@
 				8962AC911F87AB860030B058 /* MessagesViewControllerTests.swift in Sources */,
 				1F066E231FDA3F0200E11013 /* DetectorTypeSpec.swift in Sources */,
 				1F066E211FDA3DEA00E11013 /* AvatarSpec.swift in Sources */,
-				8962AC901F87AB7D0030B058 /* MessageDateHeaderViewTests.swift in Sources */,
 				1FD589612064E1B5004B5081 /* MockMessagesDataSource.swift in Sources */,
 				8962AC8F1F87AB7D0030B058 /* MessageInputBarTests.swift in Sources */,
 				1F066E131FD90BB600E11013 /* MessagesViewControllerSpec.swift in Sources */,

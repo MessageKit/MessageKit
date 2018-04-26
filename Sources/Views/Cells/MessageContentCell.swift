@@ -53,8 +53,8 @@ open class MessageContentCell: MessageCollectionViewCell {
         return label
     }()
 
-    /// The bottom label of the cell.
-    open var cellBottomLabel: InsetLabel = {
+    /// The bottom label of the messageBubble.
+    open var messageBottomLabel: InsetLabel = {
         let label = InsetLabel()
         label.numberOfLines = 0
         return label
@@ -76,7 +76,7 @@ open class MessageContentCell: MessageCollectionViewCell {
     open func setupSubviews() {
         contentView.addSubview(cellTopLabel)
         contentView.addSubview(messageTopLabel)
-        contentView.addSubview(cellBottomLabel)
+        contentView.addSubview(messageBottomLabel)
         contentView.addSubview(messageContainerView)
         contentView.addSubview(avatarView)
     }
@@ -85,7 +85,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         super.prepareForReuse()
         cellTopLabel.text = nil
         messageTopLabel.text = nil
-        cellBottomLabel.text = nil
+        messageBottomLabel.text = nil
     }
 
     // MARK: - Configuration
@@ -127,14 +127,14 @@ open class MessageContentCell: MessageCollectionViewCell {
 
         let topCellLabelText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
         let topMessageLabelText = dataSource.messageTopLabelAttributedText(for: message, at: indexPath)
-        let bottomText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
+        let bottomText = dataSource.messageBottomLabelAttributedText(for: message, at: indexPath)
 
         cellTopLabel.attributedText = topCellLabelText
         messageTopLabel.attributedText = topMessageLabelText
-        cellBottomLabel.attributedText = bottomText
+        messageBottomLabel.attributedText = bottomText
     }
 
-    /// Handle tap gesture on contentView and its subviews like messageContainerView, cellTopLabel, cellBottomLabel, avatarView ....
+    /// Handle tap gesture on contentView and its subviews.
     open func handleTapGesture(_ gesture: UIGestureRecognizer) {
         let touchLocation = gesture.location(in: self)
 
@@ -147,7 +147,7 @@ open class MessageContentCell: MessageCollectionViewCell {
             delegate?.didTapCellTopLabel(in: self)
         case messageTopLabel.frame.contains(touchLocation):
             delegate?.didTapMessageTopLabel(in: self)
-        case cellBottomLabel.frame.contains(touchLocation):
+        case messageBottomLabel.frame.contains(touchLocation):
             delegate?.didTapBottomLabel(in: self)
         default:
             break
@@ -211,7 +211,7 @@ open class MessageContentCell: MessageCollectionViewCell {
 
         switch attributes.avatarPosition.vertical {
         case .messageBottom:
-            origin.y = attributes.size.height - attributes.messageContainerPadding.bottom - attributes.bottomLabelSize.height - attributes.messageContainerSize.height - attributes.messageContainerPadding.top
+            origin.y = attributes.size.height - attributes.messageContainerPadding.bottom - attributes.messageBottomLabelSize.height - attributes.messageContainerSize.height - attributes.messageContainerPadding.top
         case .messageCenter:
             if attributes.avatarSize.height > attributes.messageContainerSize.height {
                 let messageHeight = attributes.messageContainerSize.height + attributes.messageContainerPadding.vertical
@@ -260,15 +260,15 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// Positions the cell's bottom label.
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
-        guard attributes.bottomLabelSize != .zero else { return }
+        guard attributes.messageBottomLabelSize != .zero else { return }
 
-        cellBottomLabel.textAlignment = attributes.bottomLabelAlignment.textAlignment
-        cellBottomLabel.textInsets = attributes.bottomLabelAlignment.textInsets
+        messageBottomLabel.textAlignment = attributes.messageBottomLabelAlignment.textAlignment
+        messageBottomLabel.textInsets = attributes.messageBottomLabelAlignment.textInsets
 
         let y = messageContainerView.frame.maxY + attributes.messageContainerPadding.bottom
         let origin = CGPoint(x: 0, y: y)
 
-        cellBottomLabel.frame = CGRect(origin: origin, size: attributes.bottomLabelSize)
+        messageBottomLabel.frame = CGRect(origin: origin, size: attributes.messageBottomLabelSize)
     }
     
 }

@@ -48,7 +48,7 @@ public protocol MessageCellDelegate: MessageLabelDelegate {
     /// method `messageForItem(at:indexPath:messagesCollectionView)`.
     func didTapAvatar(in cell: MessageCollectionViewCell)
 
-    /// Triggered when a tap occurs in the cellBottomLabel.
+    /// Triggered when a tap occurs in the messageBottomLabel.
     ///
     /// - Parameters:
     ///   - cell: The cell where the tap occurred.
