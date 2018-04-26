@@ -35,8 +35,8 @@ open class MessageSizeCalculator: CellSizeCalculator {
     public var incomingAvatarSize = CGSize(width: 30, height: 30)
     public var outgoingAvatarSize = CGSize(width: 30, height: 30)
 
-    public var incomingAvatarPosition = AvatarPosition(vertical: .messageBottom)
-    public var outgoingAvatarPosition = AvatarPosition(vertical: .messageBottom)
+    public var incomingAvatarPosition = AvatarPosition(vertical: .cellBottom)
+    public var outgoingAvatarPosition = AvatarPosition(vertical: .cellBottom)
 
     public var incomingMessagePadding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
     public var outgoingMessagePadding = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
@@ -149,7 +149,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return CGSize(width: messagesLayout.itemWidth, height: height)
     }
 
-    public func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment {
+    public func cellTopLabelAlignment(for message: MessageType) -> LabelAlignment {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingCellTopLabelAlignment : incomingCellTopLabelAlignment
