@@ -6,6 +6,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Fixed
+
+- Fixed `MessageLabel` touch location offset calculation.
+[#664](https://github.com/MessageKit/MessageKit/pull/664) by [@austinwright](https://github.com/austinwright).
+
 ## [[Prerelease] 0.13.4](https://github.com/MessageKit/MessageKit/releases/tag/0.13.4)
 
 ### Fixed
