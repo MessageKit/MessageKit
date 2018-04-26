@@ -148,7 +148,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         case messageTopLabel.frame.contains(touchLocation):
             delegate?.didTapMessageTopLabel(in: self)
         case messageBottomLabel.frame.contains(touchLocation):
-            delegate?.didTapBottomLabel(in: self)
+            delegate?.didTapMessageBottomLabel(in: self)
         default:
             break
         }
