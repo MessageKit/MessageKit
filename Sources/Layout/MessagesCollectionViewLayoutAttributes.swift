@@ -37,11 +37,14 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
     public var messageLabelFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
     public var messageLabelInsets: UIEdgeInsets = .zero
 
-    public var topLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
-    public var topLabelSize: CGSize = .zero
+    public var cellTopLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
+    public var cellTopLabelSize: CGSize = .zero
+    
+    public var messageTopLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
+    public var messageTopLabelSize: CGSize = .zero
 
-    public var bottomLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
-    public var bottomLabelSize: CGSize = .zero
+    public var messageBottomLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
+    public var messageBottomLabelSize: CGSize = .zero
 
     // MARK: - Methods
 
@@ -54,10 +57,12 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
         copy.messageContainerPadding = messageContainerPadding
         copy.messageLabelFont = messageLabelFont
         copy.messageLabelInsets = messageLabelInsets
-        copy.topLabelAlignment = topLabelAlignment
-        copy.topLabelSize = topLabelSize
-        copy.bottomLabelAlignment = bottomLabelAlignment
-        copy.bottomLabelSize = bottomLabelSize
+        copy.cellTopLabelAlignment = cellTopLabelAlignment
+        copy.cellTopLabelSize = cellTopLabelSize
+        copy.messageTopLabelAlignment = messageTopLabelAlignment
+        copy.messageTopLabelSize = messageTopLabelSize
+        copy.messageBottomLabelAlignment = messageBottomLabelAlignment
+        copy.messageBottomLabelSize = messageBottomLabelSize
         return copy
         // swiftlint:enable force_cast
     }
@@ -66,15 +71,17 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
         // MARK: - LEAVE this as is
         if let attributes = object as? MessagesCollectionViewLayoutAttributes {
             return super.isEqual(object) && attributes.avatarSize == avatarSize
-            && attributes.avatarPosition == attributes.avatarPosition
-            && attributes.messageContainerSize == messageContainerSize
-            && attributes.messageContainerPadding == messageContainerPadding
-            && attributes.messageLabelFont == messageLabelFont
-            && attributes.messageLabelInsets == messageLabelInsets
-            && attributes.topLabelAlignment == topLabelAlignment
-            && attributes.topLabelSize == topLabelSize
-            && attributes.bottomLabelAlignment == bottomLabelAlignment
-            && attributes.bottomLabelSize == bottomLabelSize
+                && attributes.avatarPosition == attributes.avatarPosition
+                && attributes.messageContainerSize == messageContainerSize
+                && attributes.messageContainerPadding == messageContainerPadding
+                && attributes.messageLabelFont == messageLabelFont
+                && attributes.messageLabelInsets == messageLabelInsets
+                && attributes.cellTopLabelAlignment == cellTopLabelAlignment
+                && attributes.cellTopLabelSize == cellTopLabelSize
+                && attributes.messageTopLabelAlignment == messageTopLabelAlignment
+                && attributes.messageTopLabelSize == messageTopLabelSize
+                && attributes.messageBottomLabelAlignment == messageBottomLabelAlignment
+                && attributes.messageBottomLabelSize == messageBottomLabelSize
         } else {
             return false
         }

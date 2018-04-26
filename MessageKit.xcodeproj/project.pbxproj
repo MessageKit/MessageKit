@@ -43,7 +43,6 @@
 		8962AC8D1F87AB7D0030B058 /* MessageCollectionViewCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC861F87AB230030B058 /* MessageCollectionViewCellTests.swift */; };
 		8962AC8E1F87AB7D0030B058 /* InputTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC871F87AB230030B058 /* InputTextViewTests.swift */; };
 		8962AC8F1F87AB7D0030B058 /* MessageInputBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC881F87AB230030B058 /* MessageInputBarTests.swift */; };
-		8962AC901F87AB7D0030B058 /* MessageDateHeaderViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC891F87AB230030B058 /* MessageDateHeaderViewTests.swift */; };
 		8962AC911F87AB860030B058 /* MessagesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC7D1F87AB230030B058 /* MessagesViewControllerTests.swift */; };
 		8962AC941F87AB860030B058 /* MessageKitDateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */; };
 		8962AC951F87AB860030B058 /* MessageStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC751F87AB230030B058 /* MessageStyleTests.swift */; };
@@ -60,7 +59,6 @@
 		B7A03F2C1F866895006AEF79 /* DetectorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F211F866895006AEF79 /* DetectorType.swift */; };
 		B7A03F2D1F866895006AEF79 /* LabelAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F221F866895006AEF79 /* LabelAlignment.swift */; };
 		B7A03F2E1F866895006AEF79 /* MessageKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F231F866895006AEF79 /* MessageKind.swift */; };
-		B7A03F331F866940006AEF79 /* MessageDateHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F301F866940006AEF79 /* MessageDateHeaderView.swift */; };
 		B7A03F3A1F866946006AEF79 /* TextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F361F866946006AEF79 /* TextMessageCell.swift */; };
 		B7A03F3C1F866946006AEF79 /* LocationMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F381F866946006AEF79 /* LocationMessageCell.swift */; };
 		B7A03F3D1F866946006AEF79 /* MediaMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7A03F391F866946006AEF79 /* MediaMessageCell.swift */; };
@@ -155,7 +153,6 @@
 		8962AC861F87AB230030B058 /* MessageCollectionViewCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewCellTests.swift; sourceTree = "<group>"; };
 		8962AC871F87AB230030B058 /* InputTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextViewTests.swift; sourceTree = "<group>"; };
 		8962AC881F87AB230030B058 /* MessageInputBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBarTests.swift; sourceTree = "<group>"; };
-		8962AC891F87AB230030B058 /* MessageDateHeaderViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDateHeaderViewTests.swift; sourceTree = "<group>"; };
 		B0C8D99A1F73076B000A86E4 /* MessageKitAssets.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MessageKitAssets.bundle; sourceTree = "<group>"; };
 		B7A03F161F86682C006AEF79 /* MessagesCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		B7A03F171F86682C006AEF79 /* MessagesCollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
@@ -168,7 +165,6 @@
 		B7A03F211F866895006AEF79 /* DetectorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetectorType.swift; sourceTree = "<group>"; };
 		B7A03F221F866895006AEF79 /* LabelAlignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelAlignment.swift; sourceTree = "<group>"; };
 		B7A03F231F866895006AEF79 /* MessageKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageKind.swift; sourceTree = "<group>"; };
-		B7A03F301F866940006AEF79 /* MessageDateHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDateHeaderView.swift; sourceTree = "<group>"; };
 		B7A03F361F866946006AEF79 /* TextMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageCell.swift; sourceTree = "<group>"; };
 		B7A03F381F866946006AEF79 /* LocationMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMessageCell.swift; sourceTree = "<group>"; };
 		B7A03F391F866946006AEF79 /* MediaMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaMessageCell.swift; sourceTree = "<group>"; };
@@ -244,7 +240,6 @@
 		2EB618F11F846899007FBA0E /* Headers & Footers */ = {
 			isa = PBXGroup;
 			children = (
-				B7A03F301F866940006AEF79 /* MessageDateHeaderView.swift */,
 				1F6C040D206A2AF4007BDE44 /* MessageReusableView.swift */,
 			);
 			path = "Headers & Footers";
@@ -354,7 +349,6 @@
 				8962AC861F87AB230030B058 /* MessageCollectionViewCellTests.swift */,
 				8962AC871F87AB230030B058 /* InputTextViewTests.swift */,
 				8962AC881F87AB230030B058 /* MessageInputBarTests.swift */,
-				8962AC891F87AB230030B058 /* MessageDateHeaderViewTests.swift */,
 			);
 			path = ViewsTests;
 			sourceTree = "<group>";
@@ -618,7 +612,6 @@
 				1FCA6D30201C1CC900BC3480 /* UIEdgeInsets+Extensions.swift in Sources */,
 				B7A03F3D1F866946006AEF79 /* MediaMessageCell.swift in Sources */,
 				1FE783A220662905007FA024 /* TextMessageSizeCalculator.swift in Sources */,
-				B7A03F331F866940006AEF79 /* MessageDateHeaderView.swift in Sources */,
 				B7A03F2E1F866895006AEF79 /* MessageKind.swift in Sources */,
 				B7A03F7B1F866B85006AEF79 /* MessageCollectionViewCell.swift in Sources */,
 				B7A03F6B1F8669EB006AEF79 /* UIColor+Extensions.swift in Sources */,
@@ -666,7 +659,6 @@
 				8962AC911F87AB860030B058 /* MessagesViewControllerTests.swift in Sources */,
 				1F066E231FDA3F0200E11013 /* DetectorTypeSpec.swift in Sources */,
 				1F066E211FDA3DEA00E11013 /* AvatarSpec.swift in Sources */,
-				8962AC901F87AB7D0030B058 /* MessageDateHeaderViewTests.swift in Sources */,
 				1FD589612064E1B5004B5081 /* MockMessagesDataSource.swift in Sources */,
 				8962AC8F1F87AB7D0030B058 /* MessageInputBarTests.swift in Sources */,
 				1F066E131FD90BB600E11013 /* MessagesViewControllerSpec.swift in Sources */,

@@ -25,6 +25,9 @@ the `MessageData.location` case.
 - **Breaking Change** Added `.custom(Any?)` case to `MessageData`.
 [#498](https://github.com/MessageKit/MessageKit/pull/498) by [@SD10](https://github.com/SD10).
 
+- **Breaking Change** Added `.messageLabelTop` case to `AvatarPosition.Vertical` enum.
+[#596](https://github.com/MessageKit/MessageKit/pull/596) by [@zhongwuzw](https://github.com/zhongwuzw)
+
 - Added `CellSizeCalculator` protocol that is responsible for sizing and configuring attributes of a  `MessageCollectionViewCell`.
 [#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/SD10).
 
@@ -32,7 +35,7 @@ the `MessageData.location` case.
 classes that are responsible for sizing the `MessagesCollectionViewCell` types provided by MessageKit.
 [#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/sd10).
 
-- Added two new methods `cellTopLabelHeight(for:at:in)` and `cellBottomLabelHeight(for:at:in)` to `MessagesLayoutDelegate`
+- Added three new methods `cellTopLabelHeight(for:at:in)`, `messageTopLabelHeight(for:at:in)`, and `messageBottomLabelHeight(for:at:in)` to `MessagesLayoutDelegate`.
 [#580](https://github.com/MessageKit/MessageKit/pull/580) by [@SD10](https://github.com/sd10).
 
 - Added new class `InsetLabel`.
@@ -62,12 +65,6 @@ by removing the `MessageType` and `IndexPath` parameters and replacing them with
 changed to match their class name exactly.
 [#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
 
-- **Breaking Change** Changed the superclass of `MessageDateHeaderView` from `MessageHeaderView` to `MessageReusableView`.
-[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
-
-- **Breaking Change** Change `NSLayoutConstraintSet` class from `public` to `internal`.
-[#607](https://github.com/MessageKit/MessageKit/pull/607) by [@zhongwuzw](https://github.com/zhongwuzw).
-
 - **Breaking Change** `MessageHeaderView` and `MessageFooterView` now subclass `MessageReusableView` class.
 [#596](https://github.com/MessageKit/MessageKit/pull/596) by [@SD10](https://github.com/sd10).
 
@@ -82,6 +79,15 @@ The `MessageCollectionViewCell` class is now a bare bones subclass.
 - **Breaking Change** The type of `cellTopLabel` and `cellBottomLabel` has been changed to `InsetLabel`.
 [#580](https://github.com/MessageKit/MessageKit/pull/580) by [@SD10](https://github.com/sd10).
 
+- **Breaking Change** Renamed `cellTopLabel` to `messageTopLabel` and renamed `cellBottomLabel` to `messageBottomLabel`.
+[#659](https://github.com/MessageKit/MessageKit/pull/659) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Renamed the `didTapTopLabel` and `didTapBottomLabel` methods of `MessageCellDelegate` to `didTapMessageTopLabel` and `didTapMessageBottomLabel`.
+[#659](https://github.com/MessageKit/MessageKit/pull/659) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Renamed `cellBottomLabelAttributedText` method of `MessagesDataSource` to `messageBottomLabelAttributedText`.
+[#659](https://github.com/MessageKit/MessageKit/pull/659) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 - The `MessageData.emoji` case no longer uses a default font of 2x the `messageLabelFont` size.
 You must now set this font explicitly through the `emojiMessageSizeCalculator` on `MessagesCollectionViewFlowLayout`.
 [#530](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/sd10).
@@ -93,6 +99,9 @@ You must now set this font explicitly through the `emojiMessageSizeCalculator` o
 [#625](https://github.com/MessageKit/MessageKit/pull/625) by [@cwalo](https://github.com/cwalo).
 
 ### Removed
+
+- **Breaking Change** Removed `NSLayoutConstraintSet` by changing access control from `public` to `internal`.
+[#607](https://github.com/MessageKit/MessageKit/pull/607) by [@zhongwuzw](https://github.com/zhongwuzw).
 
 - **Breaking Change** Removed the `showsDateHeaderAfterTimeInterval` property of `MessagesCollectionView`.
 [#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
@@ -113,6 +122,9 @@ You must now set this font explicitly through the `emojiMessageSizeCalculator` o
 - **Breaking Change** Removed the `messageLabelFont` property from `MessagesCollectionViewFlowLayout`.
 You can now set this property through `textMessageSizeCalculator` property.
 [#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Removed `MessageDateHeaderView` class in favor of using `cellTopLabel`.
+[#659](https://github.com/MessageKit/MessageKit/pull/659) by [@zhongwuzw](https://github.com/zhongwuzw).
 
 ### Fixed
 
