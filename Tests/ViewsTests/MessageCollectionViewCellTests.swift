@@ -43,7 +43,7 @@ final class MessageContentCellTests: XCTestCase {
     func testInit() {
         XCTAssertEqual(cell.contentView.autoresizingMask, [.flexibleWidth, .flexibleHeight])
         XCTAssert(cell.contentView.subviews.contains(cell.cellTopLabel))
-        XCTAssert(cell.contentView.subviews.contains(cell.cellBottomLabel))
+        XCTAssert(cell.contentView.subviews.contains(cell.messageBottomLabel))
         XCTAssert(cell.contentView.subviews.contains(cell.avatarView))
         XCTAssert(cell.contentView.subviews.contains(cell.messageContainerView))
 
@@ -58,8 +58,8 @@ final class MessageContentCellTests: XCTestCase {
         cell.prepareForReuse()
         XCTAssertNil(cell.cellTopLabel.text)
         XCTAssertNil(cell.cellTopLabel.attributedText)
-        XCTAssertNil(cell.cellBottomLabel.text)
-        XCTAssertNil(cell.cellBottomLabel.attributedText)
+        XCTAssertNil(cell.messageBottomLabel.text)
+        XCTAssertNil(cell.messageBottomLabel.attributedText)
     }
 
     func testApplyLayoutAttributes() {
@@ -68,8 +68,8 @@ final class MessageContentCellTests: XCTestCase {
 
         XCTAssertEqual(cell.avatarView.frame, layoutAttributes.frame)
         XCTAssertEqual(cell.messageContainerView.frame.size, layoutAttributes.messageContainerSize)
-        XCTAssertEqual(cell.cellTopLabel.frame.size, layoutAttributes.topLabelSize)
-        XCTAssertEqual(cell.cellBottomLabel.frame.size, layoutAttributes.bottomLabelSize)
+        XCTAssertEqual(cell.cellTopLabel.frame.size, layoutAttributes.cellTopLabelSize)
+        XCTAssertEqual(cell.messageBottomLabel.frame.size, layoutAttributes.messageBottomLabelSize)
     }
 
 }

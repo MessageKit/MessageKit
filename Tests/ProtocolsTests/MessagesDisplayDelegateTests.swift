@@ -90,8 +90,8 @@ class MessagesDisplayDelegateTests: XCTestCase {
                                                                  at: IndexPath(item: 0, section: 0)))
     }
 
-    func testCellBottomLabelDefaultState() {
-        XCTAssertNil(sut.dataProvider.cellBottomLabelAttributedText(for: sut.dataProvider.messages[0],
+    func testMessageBottomLabelDefaultState() {
+        XCTAssertNil(sut.dataProvider.messageBottomLabelAttributedText(for: sut.dataProvider.messages[0],
                                                                     at: IndexPath(item: 0, section: 0)))
     }
 
