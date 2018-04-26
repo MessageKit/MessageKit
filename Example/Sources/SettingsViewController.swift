@@ -30,6 +30,8 @@ final class SettingsViewController: UITableViewController {
     // MARK: - Properties
     
     var selectedMockMessagesCount: Int = 20
+
+    let cells = ["Mock messages count:", "Hide text messages", "Hide attributedText messages", "Hide photo messages", "Hide video messages"]
     
     // MARK: - Picker
     
@@ -69,24 +71,36 @@ final class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(TextFieldTableViewCell.self, forCellReuseIdentifier: TextFieldTableViewCell.identifier)
-        
+        tableView.register(LabelSwitchTableViewCell.self, forCellReuseIdentifier: LabelSwitchTableViewCell.identifier)
+
         configurePickerView()
         configureToolbar()
+
+        title = "Settings"
     }
     
     // MARK: - TableViewDelegate & TableViewDataSource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return cells.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        return indexPath.row == 0 ? configureTextFieldTableViewCell(at: indexPath) : UITableViewCell()
+
+        switch indexPath.row {
+            case 0:
+                return configureTextFieldTableViewCell(at: indexPath)
+
+            case 1...4:
+                return configureLabelSwitchTableViewCell(at: indexPath)
+
+            default:
+                return UITableViewCell()
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: false)
         
         let cell = tableView.cellForRow(at: indexPath)
         
@@ -101,7 +115,7 @@ final class SettingsViewController: UITableViewController {
     
     private func configureTextFieldTableViewCell(at indexPath: IndexPath) -> TextFieldTableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldTableViewCell.identifier, for: indexPath) as! TextFieldTableViewCell
-        cell.mainLabel.text = "Mock messages count:"
+        cell.mainLabel.text = cells[indexPath.row]
         
         let messagesCount = UserDefaults.standard.mockMessagesCount()
         cell.textField.text = "\(messagesCount)"
@@ -109,6 +123,28 @@ final class SettingsViewController: UITableViewController {
         cell.textField.inputView = messagesPicker
         cell.textField.inputAccessoryView = messagesToolbar
         
+        return cell
+    }
+
+    private func configureLabelSwitchTableViewCell(at indexPath: IndexPath) -> LabelSwitchTableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: LabelSwitchTableViewCell.identifier, for: indexPath) as! LabelSwitchTableViewCell
+        cell.mainLabel.text = cells[indexPath.row]
+        cell.delegate = self
+
+        var isOn = false
+        switch indexPath.row {
+        case 1:
+            isOn = UserDefaults.standard.shouldHideTextMessages()
+        case 2:
+            isOn = UserDefaults.standard.shouldHideAttributedTextMessages()
+        case 3:
+            isOn = UserDefaults.standard.shouldHidePhotoMessages()
+        case 4:
+            isOn = UserDefaults.standard.shouldHideVideoMessages()
+        default: break
+        }
+
+        cell.cellSwitch.setOn(isOn, animated: true)
         return cell
     }
 }
@@ -130,5 +166,27 @@ extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedMockMessagesCount = row
+    }
+}
+
+// MARK: - LabelSwitchTableViewDelegate
+
+extension SettingsViewController: LabelSwitchTableViewDelegate {
+
+    func labelSwitchTableViewCell(_ cell: LabelSwitchTableViewCell, onSwitchValueChanged isOn: Bool) {
+        if let indexPath = tableView.indexPath(for: cell) {
+            switch indexPath.row {
+            case 1:
+                UserDefaults.standard.setShouldHideTextMessages(value: isOn)
+            case 2:
+                UserDefaults.standard.setShouldHideAttributedTextMessages(value: isOn)
+            case 3:
+                UserDefaults.standard.setShouldHidePhotoMessages(value: isOn)
+            case 4:
+                UserDefaults.standard.setShouldHideVideoMessages(value: isOn)
+            default: break
+            }
+            SampleData.shared.updateMessageTypes()
+        }
     }
 }

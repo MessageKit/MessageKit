@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C85B1F57387B7352E93BFDE /* SampleDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C85BC5D71440D97D0B56820 /* SampleDataTests.swift */; };
 		37D3EAC41F390E5F00DD6A55 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D3EAC31F390E5F00DD6A55 /* SampleData.swift */; };
 		882B5E811CF7D53600B6E160 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E781CF7D53600B6E160 /* AppDelegate.swift */; };
 		882B5E821CF7D53600B6E160 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 882B5E791CF7D53600B6E160 /* Assets.xcassets */; };
@@ -57,6 +58,7 @@
 /* Begin PBXFileReference section */
 		0364943D08CDBE656E6F6DF8 /* Pods-ChatExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatExampleTests/Pods-ChatExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2AC6E3F5C11E39F57598DBE6 /* Pods_ChatExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C85BC5D71440D97D0B56820 /* SampleDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleDataTests.swift; sourceTree = "<group>"; };
 		37D3EAC31F390E5F00DD6A55 /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		3B316705C4717C3B4C916D62 /* Pods_ChatExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F0AC85B38034EC92CCBC7D /* Pods_ChatExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -179,6 +181,7 @@
 			children = (
 				882B5E931CF7D56E00B6E160 /* ChatExampleTests.swift */,
 				882B5E941CF7D56E00B6E160 /* Info.plist */,
+				2C85BC5D71440D97D0B56820 /* SampleDataTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				882B5E951CF7D56E00B6E160 /* ChatExampleTests.swift in Sources */,
+				2C85B1F57387B7352E93BFDE /* SampleDataTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

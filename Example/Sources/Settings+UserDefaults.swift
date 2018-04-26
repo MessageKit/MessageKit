@@ -24,21 +24,69 @@
 
 import Foundation
 
+let messagesKey = "mockMessages"
+let hideTextMessagesKey = "hideTextMessages"
+let hideAttributedTextMessagesKey = "hideAttributedTextMessages"
+let hidePhotoMessagesKey = "hidePhotoMessages"
+let hideVideoMessagesKey = "hideVideoMessages"
+
 extension UserDefaults {
-    
-    static let messagesKey = "mockMessages"
     
     // MARK: - Mock Messages
     
     func setMockMessages(count: Int) {
-        set(count, forKey: "mockMessages")
+        set(count, forKey: messagesKey)
         synchronize()
     }
     
     func mockMessagesCount() -> Int {
-        if let value = object(forKey: "mockMessages") as? Int {
+        if let value = object(forKey: messagesKey) as? Int {
             return value
         }
         return 20
+    }
+
+    // MARK: - Text Messages
+
+    func setShouldHideTextMessages(value: Bool) {
+        set(value, forKey: hideTextMessagesKey)
+        synchronize()
+    }
+
+    func shouldHideTextMessages() -> Bool {
+        return bool(forKey: hideTextMessagesKey)
+    }
+
+    // MARK: - AttributedText Messages
+
+    func setShouldHideAttributedTextMessages(value: Bool) {
+        set(value, forKey: hideAttributedTextMessagesKey)
+        synchronize()
+    }
+
+    func shouldHideAttributedTextMessages() -> Bool {
+        return bool(forKey: hideAttributedTextMessagesKey)
+    }
+
+    // MARK: - Photo messages
+
+    func setShouldHidePhotoMessages(value: Bool) {
+        set(value, forKey: hidePhotoMessagesKey)
+        synchronize()
+    }
+
+    func shouldHidePhotoMessages() -> Bool {
+        return bool(forKey: hidePhotoMessagesKey)
+    }
+
+    // MARK: - Video messages
+
+    func setShouldHideVideoMessages(value: Bool) {
+        set(value, forKey: hideVideoMessagesKey)
+        synchronize()
+    }
+
+    func shouldHideVideoMessages() -> Bool {
+        return bool(forKey: hideVideoMessagesKey)
     }
 }
