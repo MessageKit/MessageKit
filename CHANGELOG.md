@@ -25,6 +25,9 @@ the `MessageData.location` case.
 - **Breaking Change** Added `.custom(Any?)` case to `MessageData`.
 [#498](https://github.com/MessageKit/MessageKit/pull/498) by [@SD10](https://github.com/SD10).
 
+- **Breaking Change** Added `.messageLabelTop` case to `AvatarPosition.Vertical` enum.
+[#596](https://github.com/MessageKit/MessageKit/pull/596) by [@zhongwuzw](https://github.com/zhongwuzw)
+
 - Added `CellSizeCalculator` protocol that is responsible for sizing and configuring attributes of a  `MessageCollectionViewCell`.
 [#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/SD10).
 
