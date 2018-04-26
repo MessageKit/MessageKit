@@ -340,10 +340,9 @@ open class MessageLabel: UILabel {
         guard textStorage.length > 0 else { return nil }
 
         var location = location
-        let textOffset = CGPoint(x: textInsets.left, y: textInsets.right)
 
-        location.x -= textOffset.x
-        location.y -= textOffset.y
+        location.x -= textInsets.left
+        location.y -= textInsets.top
 
         let index = layoutManager.glyphIndex(for: location, in: textContainer)
 
