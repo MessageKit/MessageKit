@@ -131,6 +131,13 @@ You can now set this property through `textMessageSizeCalculator` property.
 - Fixed equality checking on `MessagesCollectionViewLayoutAttributes`.
 [#593](https://github.com/MessageKit/MessageKit/pull/593) by [@zhongwuzw](https://github.com/zhongwuzw), [@SD10](https://github.com/sd10)
 
+## [[Prerelease] 0.13.5](https://github.com/MessageKit/MessageKit/releases/tag/0.13.5)
+
+### Fixed
+
+- Fixed `MessageLabel` touch location offset calculation.
+[#664](https://github.com/MessageKit/MessageKit/pull/664) by [@austinwright](https://github.com/austinwright).
+
 ## [[Prerelease] 0.13.4](https://github.com/MessageKit/MessageKit/releases/tag/0.13.4)
 
 ### Fixed
