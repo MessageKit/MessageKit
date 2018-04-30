@@ -98,6 +98,9 @@ You must now set this font explicitly through the `emojiMessageSizeCalculator` o
 - The result of the `MessagesDisplayDelegate` method `textColor(for message:...)` no longer applies to `.attributedText` case of `MessageData`.
 [#625](https://github.com/MessageKit/MessageKit/pull/625) by [@cwalo](https://github.com/cwalo).
 
+- Removed the explicit height constraint from the `separatorLine` in `MessageInputBar`.
+[#667](https://github.com/MessageKit/MessageKit/pull/667) by [@zhongwuzw](https://github.com/zhongwuzw)
+
 ### Removed
 
 - **Breaking Change** Removed `NSLayoutConstraintSet` by changing access control from `public` to `internal`.
