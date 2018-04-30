@@ -131,6 +131,9 @@ You can now set this property through `textMessageSizeCalculator` property.
 - Fixed equality checking on `MessagesCollectionViewLayoutAttributes`.
 [#593](https://github.com/MessageKit/MessageKit/pull/593) by [@zhongwuzw](https://github.com/zhongwuzw), [@SD10](https://github.com/sd10)
 
+- Fixed `MessageInputBar` separator setting line height.
+[#667](https://github.com/MessageKit/MessageKit/pull/667) by [@zhongwuzw](https://github.com/zhongwuzw)
+
 ## [[Prerelease] 0.13.5](https://github.com/MessageKit/MessageKit/releases/tag/0.13.5)
 
 ### Fixed
