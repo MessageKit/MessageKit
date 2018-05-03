@@ -23,6 +23,7 @@
  */
 
 import Foundation
+@testable import MessageKit
 
 class MockMessagesDataSource: MessagesDataSource {
 
@@ -34,7 +35,7 @@ class MockMessagesDataSource: MessagesDataSource {
         return senders[0]
     }
 
-    func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int {
+    func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
         return messages.count
     }
 

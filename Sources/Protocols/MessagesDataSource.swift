@@ -24,18 +24,21 @@
 
 import UIKit
 
+/// An object that adopts the `MessagesDataSource` protocol is responsible for providing
+/// the data required by a `MessagesCollectionView`.
 public protocol MessagesDataSource: AnyObject {
 
     /// The `Sender` of new messages in the `MessagesCollectionView`.
     func currentSender() -> Sender
 
-    /// A helper method to determine if a given message is from the current sender.
+    /// A helper method to determine if a given message is from the current `Sender`.
     ///
     /// - Parameters:
-    ///   - message: The message to check if it was sent by the current Sender.
+    ///   - message: The message to check if it was sent by the current `Sender`.
     ///
-    /// The default implementation of this method checks for equality between the message's `Sender`
-    /// and the current Sender.
+    /// - Note:
+    ///   The default implementation of this method checks for equality between
+    ///   the message's `Sender` and the current `Sender`.
     func isFromCurrentSender(message: MessageType) -> Bool
 
     /// The message to be used for a `MessageCollectionViewCell` at the given `IndexPath`.
@@ -45,11 +48,20 @@ public protocol MessagesDataSource: AnyObject {
     ///   - messagesCollectionView: The `MessagesCollectionView` in which the message will be displayed.
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType
 
-    /// The number of messages to be displayed in the `MessagesCollectionView`.
+    /// The number of sections to be displayed in the `MessagesCollectionView`.
     ///
     /// - Parameters:
     ///   - messagesCollectionView: The `MessagesCollectionView` in which the messages will be displayed.
-    func numberOfMessages(in messagesCollectionView: MessagesCollectionView) -> Int
+    func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int
+
+    /// The number of cells to be displayed in the `MessagesCollectionView`.
+    ///
+    /// - Parameters:
+    ///   - section: The number of the section in which the cells will be displayed.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which the messages will be displayed.
+    /// - Note:
+    ///   The default implementation of this method returns 1. Putting each message in its own section.
+    func numberOfItems(inSection section: Int, in messagesCollectionView: MessagesCollectionView) -> Int
 
     /// The attributed text to be used for cell's top label.
     ///
@@ -60,6 +72,16 @@ public protocol MessagesDataSource: AnyObject {
     ///
     /// The default value returned by this method is `nil`.
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
+    
+    /// The attributed text to be used for message bubble's top label.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is `nil`.
+    func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
 
     /// The attributed text to be used for cell's bottom label.
     ///
@@ -69,7 +91,7 @@ public protocol MessagesDataSource: AnyObject {
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     ///
     /// The default value returned by this method is `nil`.
-    func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
+    func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
 
 }
 
@@ -79,11 +101,19 @@ public extension MessagesDataSource {
         return message.sender == currentSender()
     }
 
+    func numberOfItems(inSection section: Int, in messagesCollectionView: MessagesCollectionView) -> Int {
+        return 1
+    }
+
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         return nil
     }
+    
+    func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        return nil
+    }
 
-    func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+    func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         return nil
     }
 

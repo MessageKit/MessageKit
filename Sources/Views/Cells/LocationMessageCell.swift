@@ -25,14 +25,13 @@
 import UIKit
 import MapKit
 
-open class LocationMessageCell: MessageCollectionViewCell {
+/// A subclass of `MessageContentCell` used to display location messages.
+open class LocationMessageCell: MessageContentCell {
 
-    open override class func reuseIdentifier() -> String { return "messagekit.cell.location" }
-
-    // MARK: - Properties
-
+    /// The activity indicator to be displayed while the map image is loading.
     open var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
+    /// The image view holding the map image.
     open var imageView = UIImageView()
     
     private weak var snapShotter: MKMapSnapshotter?
@@ -45,6 +44,7 @@ open class LocationMessageCell: MessageCollectionViewCell {
         setupConstraints()
     }
 
+    /// Responsible for setting up the constraints of the cell's subviews.
     open func setupConstraints() {
         imageView.fillSuperview()
         activityIndicator.centerInSuperview()
@@ -64,12 +64,12 @@ open class LocationMessageCell: MessageCollectionViewCell {
         let annotationView = displayDelegate.annotationViewForLocation(message: message, at: indexPath, in: messagesCollectionView)
         let animationBlock = displayDelegate.animationBlockForLocation(message: message, at: indexPath, in: messagesCollectionView)
 
-        guard case let .location(location) = message.data else { fatalError("") }
+        guard case let .location(locationItem) = message.kind else { fatalError("") }
 
         activityIndicator.startAnimating()
 
         let snapshotOptions = MKMapSnapshotOptions()
-        snapshotOptions.region = MKCoordinateRegion(center: location.coordinate, span: options.span)
+        snapshotOptions.region = MKCoordinateRegion(center: locationItem.location.coordinate, span: options.span)
         snapshotOptions.showsBuildings = options.showsBuildings
         snapshotOptions.showsPointsOfInterest = options.showsPointsOfInterest
 
@@ -93,7 +93,7 @@ open class LocationMessageCell: MessageCollectionViewCell {
 
             snapshot.image.draw(at: .zero)
 
-            var point = snapshot.point(for: location.coordinate)
+            var point = snapshot.point(for: locationItem.location.coordinate)
             //Move point to reflect annotation anchor
             point.x -= annotationView.bounds.size.width / 2
             point.y -= annotationView.bounds.size.height / 2

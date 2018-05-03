@@ -1,18 +1,18 @@
 /*
  MIT License
- 
+
  Copyright (c) 2017-2018 MessageKit
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,44 +22,27 @@
  SOFTWARE.
  */
 
-import Foundation
-import class CoreLocation.CLLocation
+import UIKit
 
-/// An enum representing the kind of message and its underlying data.
-public enum MessageData {
+/// An object is responsible for
+/// sizing and configuring cells for given `IndexPath`s.
+open class CellSizeCalculator {
 
-    /// A standard text message.
+    /// The layout object for which the cell size calculator is used.
+    public weak var layout: UICollectionViewFlowLayout?
+
+    /// Used to configure the layout attributes for a given cell.
     ///
-    /// NOTE: The font used for this message will be the value of the
-    /// `messageLabelFont` property in the `MessagesCollectionViewFlowLayout` object.
+    /// - Parameters:
+    /// - attributes: The attributes of the cell.
+    /// The default does nothing
+    open func configure(attributes: UICollectionViewLayoutAttributes) {}
+
+    /// Used to size an item at a given `IndexPath`.
     ///
-    /// Tip: Using `MessageData.attributedText(NSAttributedString)` doesn't require you
-    /// to set this property and results in higher performance.
-    case text(String)
-    
-    /// A message with attributed text.
-    case attributedText(NSAttributedString)
-
-    /// A photo message.
-    case photo(UIImage)
-
-    /// A video message.
-    case video(file: URL, thumbnail: UIImage)
-
-    /// A location message.
-    case location(CLLocation)
-
-    /// An emoji message.
-    case emoji(String)
-
-    // MARK: - Not supported yet
-
-//    case audio(Data)
-//
-//    case system(String)
-//    
-//    case custom(Any)
-//    
-//    case placeholder
+    /// - Parameters:
+    /// - indexPath: The `IndexPath` of the item to be displayed.
+    /// The default return .zero
+    open func sizeForItem(at indexPath: IndexPath) -> CGSize { return .zero }
 
 }

@@ -24,23 +24,20 @@
 
 import Foundation
 
-/// A standard protocol representing a message. Use this protocol to create
-/// your own message object to be used by MessageKit.
+/// A standard protocol representing a message.
+/// Use this protocol to create your own message object to be used by MessageKit.
 public protocol MessageType {
 
     /// The sender of the message.
     var sender: Sender { get }
 
     /// The unique identifier for the message.
-    ///
-    /// NOTE: This value must be unique for all messages as it is
-    /// used to cache layout information.
     var messageId: String { get }
 
     /// The date the message was sent.
     var sentDate: Date { get }
 
-    /// The kind of message and its underlying data.
-    var data: MessageData { get }
+    /// The kind of message and its underlying kind.
+    var kind: MessageKind { get }
 
 }

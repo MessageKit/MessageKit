@@ -28,13 +28,11 @@ extension MessagesViewController {
 
     // MARK: - Register / Unregister Observers
 
-    /// Add observer for `UIMenuControllerWillShowMenu` notification
-    func addMenuControllerObservers() {
+    internal func addMenuControllerObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(_:)), name: .UIMenuControllerWillShowMenu, object: nil)
     }
 
-    /// Remove observer for `UIMenuControllerWillShowMenu` notification
-    func removeMenuControllerObservers() {
+    internal func removeMenuControllerObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIMenuControllerWillShowMenu, object: nil)
     }
 
@@ -57,7 +55,7 @@ extension MessagesViewController {
 
         currentMenuController.setMenuVisible(false, animated: false)
 
-        guard let selectedCell = messagesCollectionView.cellForItem(at: selectedIndexPath) as? MessageCollectionViewCell else { return }
+        guard let selectedCell = messagesCollectionView.cellForItem(at: selectedIndexPath) as? MessageContentCell else { return }
         let selectedCellMessageBubbleFrame = selectedCell.convert(selectedCell.messageContainerView.frame, to: view)
 
         var messageInputBarFrame: CGRect = .zero

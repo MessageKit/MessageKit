@@ -24,124 +24,17 @@
 
 import UIKit
 
-open class MessageCollectionViewCell: UICollectionViewCell, CollectionViewReusable {
+/// A subclass of `UICollectionViewCell` to be used inside of a `MessagesCollectionView`.
+open class MessageCollectionViewCell: UICollectionViewCell {
 
-    open class func reuseIdentifier() -> String {
-        return "messagekit.cell.base-cell"
-    }
-
-    open var avatarView = AvatarView()
-
-    open var messageContainerView: MessageContainerView = {
-        let containerView = MessageContainerView()
-        containerView.clipsToBounds = true
-        containerView.layer.masksToBounds = true
-        return containerView
-    }()
-
-    open var cellTopLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        return label
-    }()
-
-    open var cellBottomLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        return label
-    }()
-
-    open weak var delegate: MessageCellDelegate?
+    // MARK: - Initializers
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        setupSubviews()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open func setupSubviews() {
-        contentView.addSubview(messageContainerView)
-        contentView.addSubview(avatarView)
-        contentView.addSubview(cellTopLabel)
-        contentView.addSubview(cellBottomLabel)
-    }
-
-    open override func prepareForReuse() {
-        super.prepareForReuse()
-        cellTopLabel.text = nil
-        cellTopLabel.attributedText = nil
-        cellBottomLabel.text = nil
-        cellBottomLabel.attributedText = nil
-    }
-
-    // MARK: - Configuration
-
-    open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
-        super.apply(layoutAttributes)
-        if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
-            avatarView.frame = attributes.avatarFrame
-            cellTopLabel.frame = attributes.topLabelFrame
-            cellBottomLabel.frame = attributes.bottomLabelFrame
-            messageContainerView.frame = attributes.messageContainerFrame
-        }
-    }
-
-    open func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
-        guard let dataSource = messagesCollectionView.messagesDataSource else {
-            fatalError(MessageKitError.nilMessagesDataSource)
-        }
-        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError(MessageKitError.nilMessagesDisplayDelegate)
-        }
-
-        delegate = messagesCollectionView.messageCellDelegate
-
-        let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
-        let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
-        
-        displayDelegate.configureAvatarView(avatarView, for: message, at: indexPath, in: messagesCollectionView)
-
-        messageContainerView.backgroundColor = messageColor
-        messageContainerView.style = messageStyle
-
-        let topText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
-        let bottomText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
-
-        cellTopLabel.attributedText = topText
-        cellBottomLabel.attributedText = bottomText
-    }
-
-    /// Handle tap gesture on contentView and its subviews like messageContainerView, cellTopLabel, cellBottomLabel, avatarView ....
-    open func handleTapGesture(_ gesture: UIGestureRecognizer) {
-        let touchLocation = gesture.location(in: self)
-
-        switch true {
-        case messageContainerView.frame.contains(touchLocation) && !cellContentView(canHandle: convert(touchLocation, to: messageContainerView)):
-            delegate?.didTapMessage(in: self)
-        case avatarView.frame.contains(touchLocation):
-            delegate?.didTapAvatar(in: self)
-        case cellTopLabel.frame.contains(touchLocation):
-            delegate?.didTapTopLabel(in: self)
-        case cellBottomLabel.frame.contains(touchLocation):
-            delegate?.didTapBottomLabel(in: self)
-        default:
-            break
-        }
-    }
-    
-    /// Handle long press gesture, return true when gestureRecognizer's touch point in `messageContainerView`'s frame
-    open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        let touchPoint = gestureRecognizer.location(in: self)
-        guard gestureRecognizer.isKind(of: UILongPressGestureRecognizer.self) else { return false }
-        return messageContainerView.frame.contains(touchPoint)
-    }
-
-    /// Handle `ContentView`'s tap gesture, return false when `ContentView` doesn't needs to handle gesture
-    open func cellContentView(canHandle touchPoint: CGPoint) -> Bool {
-        return false
-    }
 }

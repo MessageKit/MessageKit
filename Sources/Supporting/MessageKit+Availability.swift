@@ -24,98 +24,49 @@
 
 import Foundation
 
-// MARK: - Deprecated Protocols
+public extension MessagesLayoutDelegate {
 
-@available(*, deprecated: 0.11.0, message: "LocationMessageDisplayDelegate has been deprecated in favor of MessagesDisplayDelegate")
-typealias LocationMessageDisplayDelegate = MessagesDisplayDelegate
-
-@available(*, deprecated: 0.11.0, message: "TextMessageDisplayDelegate has been deprecated in favor of MessagesDisplayDelegate")
-typealias TextMessageDisplayDelegate = MessagesDisplayDelegate
-
-@available(*, deprecated: 0.11.0, message: "LocationMessageLayoutDelegate has been deprecated in favor of MessagesDisplayDelegate")
-typealias LocationMessageLayoutDelegate = MessagesLayoutDelegate
-
-@available(*, deprecated: 0.11.0, message: "MediaMessageLayoutDelegate has been deprecated in favor of MessagesDisplayDelegate")
-typealias MediaMessageLayoutDelegate = MessagesLayoutDelegate
-
-// MARK: - AvatarAlignment
-
-@available(*, deprecated: 0.11.0, message: "Removed in MessageKit 0.11.0. Please use AvatarPosition instead.")
-public enum AvatarAlignment {}
-
-// MARK: - MessagesLayoutDelegate
-
-extension MessagesLayoutDelegate {
-    
-    /// Specifies the vertical alignment for the `AvatarView` in a `MessageCollectionViewCell`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` that will be displayed by this cell.
-    ///   - indexPath: The `IndexPath` of the cell.
-    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-    ///
-    /// The default value returned by this method is `AvatarAlignment.cellBottom`.
-    @available(*, deprecated: 0.11.0, message: "Removed in MessageKit 0.11.0. Please use avatarPosition(for:at:in:) instead.")
-    public func avatarAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarAlignment {
-        fatalError("Please use avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition instead.")
+    func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        fatalError("avatarSize(for:at:in) has been removed in MessageKit 1.0.")
     }
-    
-}
 
-// MARK: - MessagesCollectionViewFlowLayout
-
-extension MessagesCollectionViewFlowLayout {
-    
-    /// A Boolean value that determines if the `AvatarView` is always on the leading
-    /// side of a MessageCollectionViewCell.
-    ///
-    /// Setting this property to `true` causes `avatarAlwaysTrailing` to be set to `false`.
-    ///
-    /// The default value of this property is `false`.
-    @available(*, deprecated: 0.11.0, message: "Removed in MessageKit 0.11.0. Please use the avatarPosition(for:at:in) delegate method.")
-    public var avatarAlwaysLeading: Bool {
-        fatalError("Fatal Error: avatarAlwaysLeading is no longer supported")
+    func avatarPosition(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> AvatarPosition {
+        fatalError("avatarPosition(for:at:in) has been removed in MessageKit 1.0.")
     }
-    
-    /// A Boolean value that determines if the `AvatarView` is always on the trailing
-    /// side of a `MessageCollectionViewCell`.
-    ///
-    /// Setting this property to `true` causes `avatarAlwaysLeading` to be set to `false`.
-    ///
-    /// The default value of this property is `false`.
-    @available(*, deprecated: 0.11.0, message: "Removed in MessageKit 0.11.0. Please use the avatarPosition(for:at:in) delegate method instead.")
-    public var avatarAlwaysTrailing: Bool {
-        fatalError("Fatal Error: avatarAlwaysTrailing is no longer supported")
+
+    func messageLabelInset(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
+        fatalError("messageLabelInset(for:at:in) has been removed in MessageKit 1.0")
     }
-    
-}
 
-// MARK: - MessagesDataSource
-
-extension MessagesDataSource {
-    /// The `Avatar` information to be used by the `AvatarView`.
-    ///
-    /// - Parameters:
-    ///   - message: The `MessageType` that will be displayed by this cell.
-    ///   - indexPath: The `IndexPath` of the cell.
-    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-    ///
-    /// The default value returned by this method is `Avatar()`.
-    @available(*, deprecated: 0.12.1, message: "Removed in MessageKit 0.12.1.")
-    func avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> Avatar {
-        fatalError("Fatal Error: avatar(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) is no longer supported")
+    func messagePadding(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
+        fatalError("messagePadding(for:at:in) has been removed in MessageKit 1.0.")
     }
-}
 
-// MARK: - MessagesViewController
+    func cellTopLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+        fatalError("cellTopLabelAlignment(for:at:in) has been removed in MessageKit 1.0.")
+    }
 
-extension MessagesViewController {
-    /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
-    /// bottom on the view's first layout.
-    ///
-    /// The default value of this property is `false`.
-    @available(*, deprecated: 0.11.1, message: "Removed in MessageKit 0.11.1.")
-    open var scrollsToBottomOnFirstLayout: Bool {
-        fatalError("Fatal Error: scrollsToBottomOnFirstLayout is no longer supported")
+    func cellBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment {
+        fatalError("cellBottomLabelAlignment(for:at:in) has been removed in MessageKit 1.0.")
+    }
+
+    func widthForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        fatalError("widthForMedia(message:at:with:in) has been removed in MessageKit 1.0.")
+    }
+
+    func heightForMedia(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        fatalError("heightForMedia(message:at:with:in) has been removed in MessageKit 1.0.")
+    }
+
+    func widthForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        fatalError("widthForLocation(message:at:with:in) has been removed in MessageKit 1.0.")
+    }
+
+   func heightForLocation(message: MessageType, at indexPath: IndexPath, with maxWidth: CGFloat, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        fatalError("heightForLocation(message:at:with:in) has been removed in MessageKit 1.0.")
+    }
+
+    func shouldCacheLayoutAttributes(for message: MessageType) -> Bool {
+        fatalError("shouldCacheLayoutAttributes(for:) has been removed in MessageKit 1.0.")
     }
 }

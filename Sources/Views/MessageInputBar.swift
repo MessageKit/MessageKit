@@ -335,11 +335,12 @@ open class MessageInputBar: UIView {
         setStackViewItems([sendButton], forStack: .right, animated: false)
     }
     
+    // swiftlint:disable function_body_length colon
     /// Sets up the initial constraints of each subview
     private func setupConstraints() {
         
         // The constraints within the MessageInputBar
-        separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 1)
+        separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor)
         backgroundViewBottomAnchor = backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor)
         backgroundViewBottomAnchor?.isActive = true
         backgroundView.addConstraints(topStackView.bottomAnchor, left: leftAnchor, right: rightAnchor)
@@ -400,6 +401,7 @@ open class MessageInputBar: UIView {
         )
         activateConstraints()
     }
+    // swiftlint:enable function_body_length colon
     
     /// Respect iPhone X safeAreaInsets
     /// Adds a constraint to anchor the bottomAnchor of the contentView to the window's safeAreaLayoutGuide.bottomAnchor
@@ -565,6 +567,7 @@ open class MessageInputBar: UIView {
     
     // MARK: - UIStackView InputBarItem Methods
     
+    // swiftlint:disable function_body_length
     /// Removes all of the arranged subviews from the UIStackView and adds the given items. Sets the messageInputBar property of the InputBarButtonItem
     ///
     /// - Parameters:
@@ -623,6 +626,7 @@ open class MessageInputBar: UIView {
             setNewItems()
         }
     }
+    // swiftlint:enable function_body_length
     
     /// Sets the leftStackViewWidthConstant
     ///

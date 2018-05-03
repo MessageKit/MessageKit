@@ -25,7 +25,7 @@
 import MessageKit
 import CoreLocation
 
-final class SampleData {
+final internal class SampleData {
 
     static let shared = SampleData()
 

@@ -22,28 +22,21 @@
  SOFTWARE.
  */
 
-import UIKit
+import Foundation
 
-open class MessageDateHeaderView: MessageHeaderView {
-    open override class func reuseIdentifier() -> String { return "messagekit.header.date" }
+/// A protocol used to represent the data for a media message.
+public protocol MediaItem {
 
-    // MARK: - Properties
+    /// The url where the media is located.
+    var url: URL? { get set }
 
-    open let dateLabel = UILabel()
+    /// The image.
+    var image: UIImage? { get set }
 
-    // MARK: - Initializers
+    /// A placeholder image for when the image is obtained asychronously.
+    var placeholderImage: UIImage { get set }
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        addSubview(dateLabel)
-        dateLabel.fillSuperview()
-        dateLabel.textAlignment = .center
-        dateLabel.font = .boldSystemFont(ofSize: 10)
-        dateLabel.textColor = .darkGray
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    /// The size of the media item.
+    var size: CGSize { get set }
 
 }

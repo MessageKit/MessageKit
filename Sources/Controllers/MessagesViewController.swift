@@ -24,9 +24,10 @@
 
 import UIKit
 
-open class MessagesViewController: UIViewController {
-    
-    // MARK: - Properties [Public]
+/// A subclass of `UIViewController` with a `MessagesCollectionView` object
+/// that is used to display conversation interfaces.
+open class MessagesViewController: UIViewController,
+UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     /// The `MessagesCollectionView` managed by the messages view controller object.
     open var messagesCollectionView = MessagesCollectionView()
@@ -58,13 +59,11 @@ open class MessagesViewController: UIViewController {
         return false
     }
 
-    /// A Boolean value used to determine if `viewDidLayoutSubviews()` has been called.
     private var isFirstLayout: Bool = true
-    
-    /// Indicated selected indexPath when handle menu action
-    var selectedIndexPathForMenu: IndexPath?
 
-    var messageCollectionViewBottomInset: CGFloat = 0 {
+    internal var selectedIndexPathForMenu: IndexPath?
+
+    internal var messageCollectionViewBottomInset: CGFloat = 0 {
         didSet {
             messagesCollectionView.contentInset.bottom = messageCollectionViewBottomInset
             messagesCollectionView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset
@@ -78,7 +77,6 @@ open class MessagesViewController: UIViewController {
         setupDefaults()
         setupSubviews()
         setupConstraints()
-        registerReusableViews()
         setupDelegates()
         addMenuControllerObservers()
         addObservers()
@@ -105,7 +103,6 @@ open class MessagesViewController: UIViewController {
 
     // MARK: - Methods [Private]
 
-    /// Sets the default values for the MessagesViewController
     private func setupDefaults() {
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = false
@@ -114,29 +111,15 @@ open class MessagesViewController: UIViewController {
         messagesCollectionView.alwaysBounceVertical = true
     }
 
-    /// Sets the delegate and dataSource of the messagesCollectionView property.
     private func setupDelegates() {
         messagesCollectionView.delegate = self
         messagesCollectionView.dataSource = self
     }
 
-    /// Adds the messagesCollectionView to the controllers root view.
     private func setupSubviews() {
         view.addSubview(messagesCollectionView)
     }
 
-    /// Registers all cells and supplementary views of the messagesCollectionView property.
-    private func registerReusableViews() {
-        messagesCollectionView.register(TextMessageCell.self)
-        messagesCollectionView.register(MediaMessageCell.self)
-        messagesCollectionView.register(LocationMessageCell.self)
-
-        messagesCollectionView.register(MessageFooterView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter)
-        messagesCollectionView.register(MessageHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
-        messagesCollectionView.register(MessageDateHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
-    }
-
-    /// Sets the constraints of the `MessagesCollectionView`.
     private func setupConstraints() {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -152,6 +135,138 @@ open class MessagesViewController: UIViewController {
             NSLayoutConstraint.activate([top, bottom, trailing, leading])
         }
     }
+
+    // MARK: - UICollectionViewDataSource
+
+    open func numberOfSections(in collectionView: UICollectionView) -> Int {
+        guard let collectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
+        return collectionView.messagesDataSource?.numberOfSections(in: collectionView) ?? 0
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let collectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
+        return collectionView.messagesDataSource?.numberOfItems(inSection: section, in: collectionView) ?? 0
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
+
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+
+        switch message.kind {
+        case .text, .attributedText, .emoji:
+            let cell = messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .photo, .video:
+            let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .location:
+            let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .custom:
+            fatalError(MessageKitError.customDataUnresolvedCell)
+        }
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
+
+        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
+            fatalError(MessageKitError.nilMessagesDisplayDelegate)
+        }
+
+        switch kind {
+        case UICollectionElementKindSectionHeader:
+            return displayDelegate.messageHeaderView(for: indexPath, in: messagesCollectionView)
+        case UICollectionElementKindSectionFooter:
+            return displayDelegate.messageFooterView(for: indexPath, in: messagesCollectionView)
+        default:
+            fatalError(MessageKitError.unrecognizedSectionKind)
+        }
+    }
+
+    // MARK: - UICollectionViewDelegateFlowLayout
+
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let messagesFlowLayout = collectionViewLayout as? MessagesCollectionViewFlowLayout else { return .zero }
+        return messagesFlowLayout.sizeForItem(at: indexPath)
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
+        guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
+            fatalError(MessageKitError.nilMessagesLayoutDelegate)
+        }
+        return layoutDelegate.headerViewSize(for: section, in: messagesCollectionView)
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
+            fatalError(MessageKitError.notMessagesCollectionView)
+        }
+        guard let layoutDelegate = messagesCollectionView.messagesLayoutDelegate else {
+            fatalError(MessageKitError.nilMessagesLayoutDelegate)
+        }
+        return layoutDelegate.footerViewSize(for: section, in: messagesCollectionView)
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else { return false }
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+
+        switch message.kind {
+        case .text, .attributedText, .emoji, .photo:
+            selectedIndexPathForMenu = indexPath
+            return true
+        default:
+            return false
+        }
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        return (action == NSSelectorFromString("copy:"))
+    }
+
+    open func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+        guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+        let pasteBoard = UIPasteboard.general
+        let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
+
+        switch message.kind {
+        case .text(let text), .emoji(let text):
+            pasteBoard.string = text
+        case .attributedText(let attributedText):
+            pasteBoard.string = attributedText.string
+        case .photo(let mediaItem):
+            pasteBoard.image = mediaItem.image ?? mediaItem.placeholderImage
+        default:
+            break
+        }
+    }
+
+    // MARK: - Helpers
     
     private func addObservers() {
         NotificationCenter.default.addObserver(

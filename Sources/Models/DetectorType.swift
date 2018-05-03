@@ -30,6 +30,7 @@ public enum DetectorType {
     case date
     case phoneNumber
     case url
+    case transitInformation
 
     // MARK: - Not supported yet
 
@@ -37,12 +38,13 @@ public enum DetectorType {
     //case hashtag
     //case custom
 
-    var textCheckingType: NSTextCheckingResult.CheckingType {
+    internal var textCheckingType: NSTextCheckingResult.CheckingType {
         switch self {
         case .address: return .address
         case .date: return .date
         case .phoneNumber: return .phoneNumber
         case .url: return .link
+        case .transitInformation: return .transitInformation
         }
     }
 

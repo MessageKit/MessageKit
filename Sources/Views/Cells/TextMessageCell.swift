@@ -24,18 +24,19 @@
 
 import UIKit
 
-open class TextMessageCell: MessageCollectionViewCell {
-
-    open override class func reuseIdentifier() -> String { return "messagekit.cell.text" }
+/// A subclass of `MessageContentCell` used to display text messages.
+open class TextMessageCell: MessageContentCell {
 
     // MARK: - Properties
 
+    /// The `MessageCellDelegate` for the cell.
     open override weak var delegate: MessageCellDelegate? {
         didSet {
             messageLabel.delegate = delegate
         }
     }
 
+    /// The label used to display the message's text.
     open var messageLabel = MessageLabel()
 
     // MARK: - Methods
@@ -67,7 +68,6 @@ open class TextMessageCell: MessageCollectionViewCell {
             fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
 
-        let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
         let enabledDetectors = displayDelegate.enabledDetectors(for: message, at: indexPath, in: messagesCollectionView)
 
         messageLabel.configure {
@@ -76,9 +76,11 @@ open class TextMessageCell: MessageCollectionViewCell {
                 let attributes = displayDelegate.detectorAttributes(for: detector, and: message, at: indexPath)
                 messageLabel.setAttributes(attributes, detector: detector)
             }
-            switch message.data {
+            switch message.kind {
             case .text(let text), .emoji(let text):
+                let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
                 messageLabel.text = text
+                messageLabel.textColor = textColor
                 if let font = messageLabel.messageLabelFont {
                     messageLabel.font = font
                 }
@@ -87,13 +89,13 @@ open class TextMessageCell: MessageCollectionViewCell {
             default:
                 break
             }
-            // Needs to be set after the attributedText because it takes precedence
-            messageLabel.textColor = textColor
         }
     }
     
-    /// Handle `ContentView`'s tap gesture, return false when `ContentView` don't needs to handle gesture
+    /// Used to handle the cell's contentView's tap gesture.
+    /// Return false when the contentView does not need to handle the gesture.
     open override func cellContentView(canHandle touchPoint: CGPoint) -> Bool {
         return messageLabel.handleGesture(touchPoint)
     }
+
 }
