@@ -31,13 +31,13 @@ func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at 
 }
 ```
 
-If you return `CGSize.zero` from the `MessagesLayoutDelegate` method
-`avatarSize(for:MessageType,at:IndexPath,in:MessagesCollectionView)`, the `AvatarView`
-will not be visible for that cell.
+If you also like to remove the space the `AvatarView` occupies you have to change the properties
+`outgoingAvatarSize` or `incomingAvatarSize` of the `CellSizeCalculator` object for the respective message to `CGSize.zero`.
 
 ```Swift
-func avatarSize(for: MessageType, at: IndexPath, in: MessagesCollectionView) -> CGSize {
-    return .zero
+if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
+  layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
+  layout.textMessageSizeCalculator.incomingAvatarSize = .zero
 }
 ```
 
