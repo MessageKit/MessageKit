@@ -8,11 +8,11 @@
 - Cultivate an inclusive open source community through respectful discussion.
 
 ### Scope
-MessageKit will only concern itself with the **MessagesViewController**. 
+#### Things we will not support:
+- Views that live outside of the MessagesViewController such as photo pickers and media players.
+- Anything that favors specific networking / caching strategies or specific libraries.
 
-We will **not** support other views such as:  **Photo Pickers** and **Video/Music Players**.
-
-Instead, MessageKit will provide you with hooks to easily handle your different message types and present a view of your choice. We believe this is more flexible, maintainable, and reasonable.
+Instead, MessageKit will provide you with hooks to easily handle these situations as you wish. We believe this is more flexible, maintainable, and reasonable.
 
 ### Technical Considerations
 - **iOS version**: 
