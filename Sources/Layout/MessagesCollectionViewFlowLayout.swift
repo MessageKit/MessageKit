@@ -155,4 +155,70 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         let calculator = cellSizeCalculatorForItem(at: indexPath)
         return calculator.sizeForItem(at: indexPath)
     }
+    
+    /** Set `incomingAvatarSize` of all `MessageSizeCalculator`s */
+    open func setMessageIncomingAvatarSize(_ newSize: CGSize) {
+        messageSizeCalculators().forEach { $0.incomingAvatarSize = newSize }
+    }
+    
+    /** Set `outgoingAvatarSize` of all `MessageSizeCalculator`s */
+    open func setMessageOutgoingAvatarSize(_ newSize: CGSize) {
+        messageSizeCalculators().forEach { $0.outgoingAvatarSize = newSize }
+    }
+    
+    /** Set `incomingAvatarPosition` of all `MessageSizeCalculator`s */
+    open func setMessageIncomingAvatarPosition(_ newPosition: AvatarPosition) {
+        messageSizeCalculators().forEach { $0.incomingAvatarPosition = newPosition }
+    }
+    
+    /** Set `outgoingAvatarPosition` of all `MessageSizeCalculator`s */
+    open func setMessageOutgoingAvatarPosition(_ newPosition: AvatarPosition) {
+        messageSizeCalculators().forEach { $0.outgoingAvatarPosition = newPosition }
+    }
+    
+    /** Set `incomingMessagePadding` of all `MessageSizeCalculator`s */
+    open func setMessageIncomingMessagePadding(_ newPadding: UIEdgeInsets) {
+        messageSizeCalculators().forEach { $0.incomingMessagePadding = newPadding }
+    }
+    
+    /** Set `outgoingMessagePadding` of all `MessageSizeCalculator`s */
+    open func setMessageOutgoingMessagePadding(_ newPadding: UIEdgeInsets) {
+        messageSizeCalculators().forEach { $0.outgoingMessagePadding = newPadding }
+    }
+    
+    /** Set `incomingCellTopLabelAlignment` of all `MessageSizeCalculator`s */
+    open func setMessageIncomingCellTopLabelAlignment(_ newAlignment: LabelAlignment) {
+        messageSizeCalculators().forEach { $0.incomingCellTopLabelAlignment = newAlignment }
+    }
+    
+    /** Set `outgoingCellTopLabelAlignment` of all `MessageSizeCalculator`s */
+    open func setMessageOutgoingCellTopLabelAlignment(_ newAlignment: LabelAlignment) {
+        messageSizeCalculators().forEach { $0.outgoingCellTopLabelAlignment = newAlignment }
+    }
+    
+    /** Set `incomingMessageTopLabelAlignment` of all `MessageSizeCalculator`s */
+    open func setMessageIncomingMessageTopLabelAlignment(_ newAlignment: LabelAlignment) {
+        messageSizeCalculators().forEach { $0.incomingMessageTopLabelAlignment = newAlignment }
+    }
+    
+    /** Set `outgoingMessageTopLabelAlignment` of all `MessageSizeCalculator`s */
+    open func setMessageOutgoingMessageTopLabelAlignment(_ newAlignment: LabelAlignment) {
+        messageSizeCalculators().forEach { $0.outgoingMessageTopLabelAlignment = newAlignment }
+    }
+    
+    /** Set `incomingMessageBottomLabelAlignment` of all `MessageSizeCalculator`s */
+    open func setMessageIncomingMessageBottomLabelAlignment(_ newAlignment: LabelAlignment) {
+        messageSizeCalculators().forEach { $0.incomingMessageBottomLabelAlignment = newAlignment }
+    }
+    
+    /** Set `outgoingMessageBottomLabelAlignment` of all `MessageSizeCalculator`s */
+    open func setMessageOutgoingMessageBottomLabelAlignment(_ newAlignment: LabelAlignment) {
+        messageSizeCalculators().forEach { $0.outgoingMessageBottomLabelAlignment = newAlignment }
+    }
+    
+    /** Get all `MessageSizeCalculator`s */
+    open func messageSizeCalculators() -> [MessageSizeCalculator] {
+        return [textMessageSizeCalculator, attributedTextMessageSizeCalculator, emojiMessageSizeCalculator, photoMessageSizeCalculator, videoMessageSizeCalculator, locationMessageSizeCalculator]
+    }
+    
 }
