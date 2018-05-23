@@ -6,6 +6,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Added
+
+- Added convenience method to set properties for all `MessageSizeCalculator`s.
+[#697](https://github.com/MessageKit/MessageKit/pull/697) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 ## [[Prerelease] 1.0.0-beta.1](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0-beta.1)
 
 ### Added
