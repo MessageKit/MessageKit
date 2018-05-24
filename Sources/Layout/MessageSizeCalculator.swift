@@ -44,11 +44,21 @@ open class MessageSizeCalculator: CellSizeCalculator {
     public var incomingCellTopLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
     public var outgoingCellTopLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
 
-    public var incomingMessageTopLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: 42))
-    public var outgoingMessageTopLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: 42))
+    public var incomingMessageTopLabelAlignment: LabelAlignment {
+        return LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: incomingMessageLeftMargin()))
+    }
 
-    public var incomingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: 42))
-    public var outgoingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: 42))
+    public var outgoingMessageTopLabelAlignment: LabelAlignment {
+        return LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: outgoingMessageRightMargin()))
+    }
+
+    public var incomingMessageBottomLabelAlignment: LabelAlignment {
+        return LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: incomingMessageLeftMargin()))
+    }
+
+    public var outgoingMessageBottomLabelAlignment: LabelAlignment {
+        return LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: outgoingMessageRightMargin()))
+    }
 
     open override func configure(attributes: UICollectionViewLayoutAttributes) {
         guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
@@ -65,9 +75,8 @@ open class MessageSizeCalculator: CellSizeCalculator {
         attributes.cellTopLabelSize = cellTopLabelSize(for: message, at: indexPath)
         attributes.messageTopLabelSize = messageTopLabelSize(for: message, at: indexPath)
         attributes.messageTopLabelAlignment = messageTopLabelAlignment(for: message)
-
-        attributes.messageBottomLabelAlignment = messageBottomLabelAlignment(for: message)
         attributes.messageBottomLabelSize = messageBottomLabelSize(for: message, at: indexPath)
+        attributes.messageBottomLabelAlignment = messageBottomLabelAlignment(for: message)
     }
 
     open override func sizeForItem(at indexPath: IndexPath) -> CGSize {
@@ -218,6 +227,16 @@ open class MessageSizeCalculator: CellSizeCalculator {
         let rect = attributedText.boundingRect(with: constraintBox, options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil).integral
 
         return rect.size
+    }
+
+    /// - Returns: margin between the Leading edge of the Collection View and the Leading edge of the incoming message bubble.
+    public func incomingMessageLeftMargin() -> CGFloat {
+        return incomingAvatarSize.width + incomingMessagePadding.left + messagesLayout.sectionInset.left
+    }
+
+    /// - Returns: margin between the Trailing edge of the Collection View and the Trailing edge of the outgoing message bubble.
+    public func outgoingMessageRightMargin() -> CGFloat {
+        return outgoingAvatarSize.width + outgoingMessagePadding.right + messagesLayout.sectionInset.right
     }
 }
 
