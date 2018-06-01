@@ -28,6 +28,11 @@ public struct LabelAlignment {
 
     public var textAlignment: NSTextAlignment
     public var textInsets: UIEdgeInsets
+    
+    public init(textAlignment: NSTextAlignment, textInsets: UIEdgeInsets) {
+        self.textAlignment = textAlignment
+        self.textInsets = textInsets
+    }
 
 }
 

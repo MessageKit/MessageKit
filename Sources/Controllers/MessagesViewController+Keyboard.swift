@@ -53,22 +53,19 @@ extension MessagesViewController {
     @objc
     private func handleKeyboardDidChangeState(_ notification: Notification) {
         guard let keyboardEndFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
-
-        if (keyboardEndFrame.origin.y + keyboardEndFrame.size.height) > UIScreen.main.bounds.height {
-            // Hardware keyboard is found
-            messageCollectionViewBottomInset = view.frame.size.height - keyboardEndFrame.origin.y - iPhoneXBottomInset
-        } else {
-            //Software keyboard is found
-            let afterBottomInset = keyboardEndFrame.height > keyboardOffsetFrame.height ? (keyboardEndFrame.height - iPhoneXBottomInset) : keyboardOffsetFrame.height
-            let differenceOfBottomInset = afterBottomInset - messageCollectionViewBottomInset
-
-            if maintainPositionOnKeyboardFrameChanged && differenceOfBottomInset != 0 {
-                let contentOffset = CGPoint(x: messagesCollectionView.contentOffset.x, y: messagesCollectionView.contentOffset.y + differenceOfBottomInset)
-                messagesCollectionView.setContentOffset(contentOffset, animated: false)
-            }
-
-            messageCollectionViewBottomInset = afterBottomInset
+        
+        guard !isMessagesControllerBeingDismissed else { return }
+        
+        let newBottomInset = view.frame.height - keyboardEndFrame.minY - iPhoneXBottomInset
+        
+        let differenceOfBottomInset = newBottomInset - messageCollectionViewBottomInset
+        
+        if maintainPositionOnKeyboardFrameChanged && differenceOfBottomInset != 0 {
+            let contentOffset = CGPoint(x: messagesCollectionView.contentOffset.x, y: messagesCollectionView.contentOffset.y + differenceOfBottomInset)
+            messagesCollectionView.setContentOffset(contentOffset, animated: false)
         }
+        
+        messageCollectionViewBottomInset = newBottomInset
     }
 
     @objc

@@ -6,6 +6,14 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Fixed
+
+- Fixed `MessagesCollectionView`'s bottom inset when hardware keyboard is connected. Do not adjust `MessagesCollection`'s inset when being popped.
+[#707](https://github.com/MessageKit/MessageKit/pull/707) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- Fixed `LabelAlignment` initializer which has default internal access control.
+[#705](https://github.com/MessageKit/MessageKit/pull/705) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 ### Added
 
 - Added convenience method to set properties for all `MessageSizeCalculator`s.

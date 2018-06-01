@@ -60,6 +60,8 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     }
 
     private var isFirstLayout: Bool = true
+    
+    internal var isMessagesControllerBeingDismissed: Bool = false
 
     internal var selectedIndexPathForMenu: IndexPath?
 
@@ -80,6 +82,16 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         setupDelegates()
         addMenuControllerObservers()
         addObservers()
+    }
+    
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        isMessagesControllerBeingDismissed = false
+    }
+    
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        isMessagesControllerBeingDismissed = true
     }
     
     open override func viewDidLayoutSubviews() {
