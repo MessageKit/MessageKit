@@ -125,5 +125,5 @@ public extension MessagesDataSource {
         return nil
     }
 
-    func configCell(_ cell: MessageCollectionViewCell, for message: MessageType, at indexPath: IndexPath) {}
+    func configCell(_ cell: MessageContentCell, for message: MessageType, at indexPath: IndexPath) {}
 }
