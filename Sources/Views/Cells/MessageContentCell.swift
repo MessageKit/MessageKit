@@ -171,7 +171,10 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// Positions the cell's `AvatarView`.
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutAvatarView(with attributes: MessagesCollectionViewLayoutAttributes) {
-        guard attributes.avatarSize != .zero else { return }
+        guard attributes.avatarSize != .zero else {
+            avatarView.frame = .zero
+            return
+        }
 
         var origin: CGPoint = .zero
 

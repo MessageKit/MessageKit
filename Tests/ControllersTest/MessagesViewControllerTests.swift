@@ -185,6 +185,176 @@ class MessagesViewControllerTests: XCTestCase {
         XCTAssertTrue(cell is LocationMessageCell)
     }
 
+    func testAvatarViewFrameDefaultState() {
+        // Given a text message cell.
+        let messagesDataSource = MockMessagesDataSource()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(text: "Test",
+                                                       sender: messagesDataSource.senders[0],
+                                                       messageId: "test_id"))
+
+        sut.messagesCollectionView.reloadData()
+
+        let indexPath = IndexPath(item: 0, section: 0)
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
+                                                                         cellForItemAt: indexPath) as? TextMessageCell
+
+        // Assert that the avatarView frame isn't `.zero` by default.
+        XCTAssertNotNil(cell)
+        XCTAssertNotEqual(cell?.avatarView.frame, .zero)
+    }
+
+    func testAvatarViewFrame_isZero() {
+        // Given a text message cell.
+        let messagesDataSource = MockMessagesDataSource()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(text: "Test",
+                                                       sender: messagesDataSource.senders[0],
+                                                       messageId: "test_id"))
+
+        sut.messagesCollectionView.reloadData()
+
+        let indexPath = IndexPath(item: 0, section: 0)
+        var cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
+                                                                         cellForItemAt: indexPath) as? TextMessageCell
+
+        // Assert that the avatarView frame isn't already `.zero`
+        XCTAssertNotNil(cell)
+        XCTAssertNotEqual(cell?.avatarView.frame, .zero)
+
+        let flowLayout = sut.messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout
+
+        // Setting the avatars sizes to zero for this kind of Message.
+        flowLayout?.textMessageSizeCalculator.incomingAvatarSize = .zero
+        flowLayout?.textMessageSizeCalculator.outgoingAvatarSize = .zero
+
+        sut.messagesCollectionView.reloadData()
+
+        cell = sut.collectionView(sut.messagesCollectionView, cellForItemAt: indexPath) as? TextMessageCell
+
+        // Should update the avatarView frame to zero.
+        XCTAssertEqual(cell?.avatarView.frame, .zero)
+    }
+
+    func testOutgoingMessageTopBottomLabelsInsets_withAvatarView() {
+        // Given a text message cell.
+        let messagesDataSource = MockMessagesDataSource()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(text: "Test",
+                                                       sender: messagesDataSource.currentSender(),
+                                                       messageId: "test_id"))
+
+        // Given those layout values.
+        let outgoingAvatarWidth: CGFloat = 20.0
+        let outgoingMessageRightPadding: CGFloat = 5.0
+        let rightSectionInset: CGFloat = 5.0
+
+        let flowLayout = sut.messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout
+        flowLayout?.textMessageSizeCalculator.outgoingAvatarSize = CGSize(width: outgoingAvatarWidth, height: 20.0)
+        flowLayout?.textMessageSizeCalculator.outgoingMessagePadding = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: outgoingMessageRightPadding)
+        flowLayout?.sectionInset = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: rightSectionInset)
+
+        sut.messagesCollectionView.reloadData()
+
+        let indexPath = IndexPath(item: 0, section: 0)
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
+                                                                         cellForItemAt: indexPath) as? TextMessageCell
+
+
+        // Should properly compute the messageBottom/TopLabel text insets to be aligned with the right edge of the message bubble.
+        XCTAssertEqual(cell?.messageBottomLabel.textInsets, UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: outgoingAvatarWidth + outgoingMessageRightPadding + rightSectionInset))
+        XCTAssertEqual(cell?.messageTopLabel.textInsets, UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: outgoingAvatarWidth + outgoingMessageRightPadding + rightSectionInset))
+    }
+
+    func testOutgoingMessageTopBottomLabelsInsets_withoutAvatarView() {
+        // Given a text message cell.
+        let messagesDataSource = MockMessagesDataSource()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(text: "Test",
+                                                       sender: messagesDataSource.currentSender(),
+                                                       messageId: "test_id"))
+
+        // Given those layout values.
+        let outgoingAvatarWidth: CGFloat = 0.0
+        let outgoingMessageRightPadding: CGFloat = 5.0
+        let rightSectionInset: CGFloat = 5.0
+
+        let flowLayout = sut.messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout
+        flowLayout?.textMessageSizeCalculator.outgoingAvatarSize = CGSize(width: outgoingAvatarWidth, height: 0.0)
+        flowLayout?.textMessageSizeCalculator.outgoingMessagePadding = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: outgoingMessageRightPadding)
+        flowLayout?.sectionInset = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: rightSectionInset)
+
+        sut.messagesCollectionView.reloadData()
+
+        let indexPath = IndexPath(item: 0, section: 0)
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
+                                                                         cellForItemAt: indexPath) as? TextMessageCell
+
+
+        // Should properly compute the messageBottom/TopLabel text insets to be aligned with the right edge of the message bubble.
+        XCTAssertEqual(cell?.messageBottomLabel.textInsets, UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: outgoingMessageRightPadding + rightSectionInset))
+        XCTAssertEqual(cell?.messageTopLabel.textInsets, UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: outgoingMessageRightPadding + rightSectionInset))
+    }
+
+    func testIncomingMessageTopBottomLabelsInsets_withAvatarView() {
+        // Given a text message cell.
+        let messagesDataSource = MockMessagesDataSource()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(text: "Test",
+                                                       sender: messagesDataSource.otherSender(),
+                                                       messageId: "test_id"))
+
+        // Given those layout values.
+        let incomingAvatarWidth: CGFloat = 20.0
+        let incomingMessageLeftPadding: CGFloat = 5.0
+        let leftSectionInset: CGFloat = 5.0
+
+        let flowLayout = sut.messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout
+        flowLayout?.textMessageSizeCalculator.incomingAvatarSize = CGSize(width: incomingAvatarWidth, height: 20.0)
+        flowLayout?.textMessageSizeCalculator.incomingMessagePadding = UIEdgeInsets(top: 0.0, left: incomingMessageLeftPadding, bottom: 0.0, right: 10.0)
+        flowLayout?.sectionInset = UIEdgeInsets(top: 0.0, left: leftSectionInset, bottom: 0.0, right: 10.0)
+
+
+        sut.messagesCollectionView.reloadData()
+
+        let indexPath = IndexPath(item: 0, section: 0)
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
+                                                                         cellForItemAt: indexPath) as? TextMessageCell
+
+        // Should properly compute the messageBottom/TopLabel text insets to be aligned with the right edge of the message bubble.
+        XCTAssertEqual(cell?.messageBottomLabel.textInsets, UIEdgeInsets(top: 0.0, left: incomingAvatarWidth + incomingMessageLeftPadding + leftSectionInset, bottom: 0.0, right: 0.0))
+        XCTAssertEqual(cell?.messageTopLabel.textInsets, UIEdgeInsets(top: 0.0, left: incomingAvatarWidth + incomingMessageLeftPadding + leftSectionInset, bottom: 0.0, right: 0.0))
+    }
+
+    func testIncomingMessageTopBottomLabelsInsets_withoutAvatarView() {
+        // Given a text message cell.
+        let messagesDataSource = MockMessagesDataSource()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(text: "Test",
+                                                       sender: messagesDataSource.otherSender(),
+                                                       messageId: "test_id"))
+
+        // Given those layout values.
+        let incomingAvatarWidth: CGFloat = 0.0
+        let incomingMessageLeftPadding: CGFloat = 5.0
+        let leftSectionInset: CGFloat = 5.0
+
+        let flowLayout = sut.messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout
+        flowLayout?.textMessageSizeCalculator.incomingAvatarSize = CGSize(width: incomingAvatarWidth, height: 0.0)
+        flowLayout?.textMessageSizeCalculator.incomingMessagePadding = UIEdgeInsets(top: 0.0, left: incomingMessageLeftPadding, bottom: 0.0, right: 10.0)
+        flowLayout?.sectionInset = UIEdgeInsets(top: 0.0, left: leftSectionInset, bottom: 0.0, right: 10.0)
+
+        sut.messagesCollectionView.reloadData()
+
+        let indexPath = IndexPath(item: 0, section: 0)
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
+                                                                         cellForItemAt: indexPath) as? TextMessageCell
+
+        // Should properly compute the messageBottom/TopLabel text insets to be aligned with the right edge of the message bubble.
+        XCTAssertEqual(cell?.messageBottomLabel.textInsets, UIEdgeInsets(top: 0.0, left: incomingMessageLeftPadding + leftSectionInset, bottom: 0.0, right: 0.0))
+        XCTAssertEqual(cell?.messageTopLabel.textInsets, UIEdgeInsets(top: 0.0, left: incomingMessageLeftPadding + leftSectionInset, bottom: 0.0, right: 0.0))
+    }
+
     // MARK: - Assistants
 
     private func makeMessages(for senders: [Sender]) -> [MessageType] {

@@ -35,6 +35,10 @@ class MockMessagesDataSource: MessagesDataSource {
         return senders[0]
     }
 
+    func otherSender() -> Sender {
+        return senders.filter { $0 != currentSender() }[0]
+    }
+
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
         return messages.count
     }

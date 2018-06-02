@@ -64,7 +64,13 @@ internal class ConversationViewController: MessagesViewController {
         messageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
         scrollsToBottomOnKeybordBeginsEditing = true // default false
         maintainPositionOnKeyboardFrameChanged = true // default false
-        
+
+        // Uncomment to disable avatar view on outgoing `attributedText` messages.
+        // Set this property on other SizeCalculator (videoMessageSizeCalculator, mediaMessageSizeCalculator...)
+        // if you want to disable the avatar on other kind of messages.
+//        let messagesLayout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout
+//        messagesLayout?.attributedTextMessageSizeCalculator.outgoingAvatarSize = .zero
+
         messagesCollectionView.addSubview(refreshControl)
         refreshControl.addTarget(self, action: #selector(ConversationViewController.loadMoreMessages), for: .valueChanged)
         
