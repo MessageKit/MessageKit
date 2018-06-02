@@ -284,7 +284,9 @@ open class MessageContentCell: MessageCollectionViewCell {
     open func layoutAccessoryView(with attributes: MessagesCollectionViewLayoutAttributes) {
         guard attributes.accessoryViewSize != .zero else { return }
 
-        let y = (bounds.height - attributes.accessoryViewSize.height) / 2
+        var y = (bounds.height - attributes.accessoryViewSize.height) / 2
+        y = y - attributes.accessoryViewPadding.vertical + attributes.accessoryViewPadding.top
+
         var origin = CGPoint(x: 0, y: y)
 
         // Accessory view is always on the opposite side of avatar
