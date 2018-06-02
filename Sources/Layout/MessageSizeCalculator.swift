@@ -68,6 +68,9 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
         attributes.messageBottomLabelAlignment = messageBottomLabelAlignment(for: message)
         attributes.messageBottomLabelSize = messageBottomLabelSize(for: message, at: indexPath)
+
+        attributes.accessoryViewSize = accessoryViewSize(for: message)
+        attributes.accessoryViewPadding = accessoryViewPadding(for: message)
     }
 
     open override func sizeForItem(at indexPath: IndexPath) -> CGSize {
@@ -185,6 +188,20 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return isFromCurrentSender ? outgoingMessageBottomLabelAlignment : incomingMessageBottomLabelAlignment
     }
 
+    // MARK: - Accessory View
+
+    public func accessoryViewSize(for message: MessageType) -> CGSize {
+        let layoutDelegate = messagesLayout.messagesLayoutDelegate
+        let collectionView = messagesLayout.messagesCollectionView
+        return layoutDelegate.accessoryViewSize(for: message, in: collectionView)
+    }
+
+    public func accessoryViewPadding(for message: MessageType) -> UIEdgeInsets {
+        let layoutDelegate = messagesLayout.messagesLayoutDelegate
+        let collectionView = messagesLayout.messagesCollectionView
+        return layoutDelegate.accessoryViewPadding(for: message, in: collectionView)
+    }
+
     // MARK: - MessageContainer
 
     public func messageContainerPadding(for message: MessageType) -> UIEdgeInsets {
@@ -201,7 +218,9 @@ open class MessageSizeCalculator: CellSizeCalculator {
     open func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
         let avatarWidth = avatarSize(for: message).width
         let messagePadding = messageContainerPadding(for: message)
-        return messagesLayout.itemWidth - avatarWidth - messagePadding.horizontal
+        let accessoryWidth = accessoryViewSize(for: message).width
+        let accessoryPadding = accessoryViewPadding(for: message)
+        return messagesLayout.itemWidth - avatarWidth - messagePadding.horizontal - accessoryWidth - accessoryPadding.horizontal
     }
 
     // MARK: - Helpers

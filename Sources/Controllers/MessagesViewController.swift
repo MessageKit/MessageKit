@@ -180,14 +180,17 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         case .text, .attributedText, .emoji:
             let cell = messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            messagesDataSource.configCell(cell, for: message, at: indexPath)
             return cell
         case .photo, .video:
             let cell = messagesCollectionView.dequeueReusableCell(MediaMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            messagesDataSource.configCell(cell, for: message, at: indexPath)
             return cell
         case .location:
             let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            messagesDataSource.configCell(cell, for: message, at: indexPath)
             return cell
         case .custom:
             fatalError(MessageKitError.customDataUnresolvedCell)
