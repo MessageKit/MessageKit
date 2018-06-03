@@ -90,9 +90,6 @@ open class MessageContentCell: MessageCollectionViewCell {
         cellTopLabel.text = nil
         messageTopLabel.text = nil
         messageBottomLabel.text = nil
-        for view in accessoryView.subviews {
-            view.removeFromSuperview()
-        }
     }
 
     // MARK: - Configuration
@@ -129,6 +126,8 @@ open class MessageContentCell: MessageCollectionViewCell {
         let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
 
         displayDelegate.configureAvatarView(avatarView, for: message, at: indexPath, in: messagesCollectionView)
+
+        displayDelegate.configureAccessoryView(accessoryView, for: message, at: indexPath, in: messagesCollectionView)
 
         messageContainerView.backgroundColor = messageColor
         messageContainerView.style = messageStyle

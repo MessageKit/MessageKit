@@ -50,6 +50,12 @@ open class MessageSizeCalculator: CellSizeCalculator {
     public var incomingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: 42))
     public var outgoingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: 42))
 
+    public var incomingAccessoryViewSize = CGSize.zero
+    public var outgoingAccessoryViewSize = CGSize.zero
+
+    public var incomingAccessoryViewPadding = UIEdgeInsets.zero
+    public var outgoingAccessoryViewPadding = UIEdgeInsets.zero
+
     open override func configure(attributes: UICollectionViewLayoutAttributes) {
         guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
 
@@ -191,15 +197,15 @@ open class MessageSizeCalculator: CellSizeCalculator {
     // MARK: - Accessory View
 
     public func accessoryViewSize(for message: MessageType) -> CGSize {
-        let layoutDelegate = messagesLayout.messagesLayoutDelegate
-        let collectionView = messagesLayout.messagesCollectionView
-        return layoutDelegate.accessoryViewSize(for: message, in: collectionView)
+        let dataSource = messagesLayout.messagesDataSource
+        let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
+        return isFromCurrentSender ? outgoingAccessoryViewSize : incomingAccessoryViewSize
     }
 
     public func accessoryViewPadding(for message: MessageType) -> UIEdgeInsets {
-        let layoutDelegate = messagesLayout.messagesLayoutDelegate
-        let collectionView = messagesLayout.messagesCollectionView
-        return layoutDelegate.accessoryViewPadding(for: message, in: collectionView)
+        let dataSource = messagesLayout.messagesDataSource
+        let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
+        return isFromCurrentSender ? outgoingAccessoryViewPadding : incomingAccessoryViewPadding
     }
 
     // MARK: - MessageContainer

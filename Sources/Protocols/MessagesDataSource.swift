@@ -92,15 +92,6 @@ public protocol MessagesDataSource: AnyObject {
     ///
     /// The default value returned by this method is `nil`.
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
-
-    /// Provide a chance to config a cell before it's presented. e.g. to customize the accessoryView.
-    ///
-    /// - Parameters:
-    ///   - cell: The `MessageContentCell` that can be configured.
-    ///   - message: The `MessageType` that will be displayed by this cell.
-    ///   - indexPath: The `IndexPath` of the cell.
-    ///
-    func configCell(_ cell: MessageContentCell, for message: MessageType, at indexPath: IndexPath)
 }
 
 public extension MessagesDataSource {
@@ -124,6 +115,4 @@ public extension MessagesDataSource {
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         return nil
     }
-
-    func configCell(_ cell: MessageContentCell, for message: MessageType, at indexPath: IndexPath) {}
 }
