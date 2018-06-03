@@ -95,35 +95,40 @@ open class MessageSizeCalculator: CellSizeCalculator {
         let messageVerticalPadding = messageContainerPadding(for: message).vertical
         let avatarHeight = avatarSize(for: message).height
         let avatarVerticalPosition = avatarPosition(for: message).vertical
+        let accessoryViewHeight = accessoryViewSize(for: message).height
+        let accessoryViewVerticalPadding = accessoryViewPadding(for: message).vertical
+        let accessoryViewTotalHeight = accessoryViewHeight + accessoryViewVerticalPadding
 
         switch avatarVerticalPosition {
         case .messageCenter:
             let totalLabelHeight: CGFloat = cellTopLabelHeight + messageTopLabelHeight
                 + messageContainerHeight + messageVerticalPadding + messageBottomLabelHeight
-            return max(avatarHeight, totalLabelHeight)
+            let cellHeight = max(avatarHeight, totalLabelHeight)
+            return max(accessoryViewTotalHeight, cellHeight)
         case .messageBottom:
             var cellHeight: CGFloat = 0
             cellHeight += messageBottomLabelHeight
             let labelsHeight = messageContainerHeight + messageVerticalPadding + cellTopLabelHeight + messageTopLabelHeight
             cellHeight += max(labelsHeight, avatarHeight)
-            return cellHeight
+            return max(accessoryViewTotalHeight, cellHeight)
         case .messageTop:
             var cellHeight: CGFloat = 0
             cellHeight += cellTopLabelHeight
             cellHeight += messageTopLabelHeight
             let labelsHeight = messageContainerHeight + messageVerticalPadding + messageBottomLabelHeight
             cellHeight += max(labelsHeight, avatarHeight)
-            return cellHeight
+            return max(accessoryViewTotalHeight, cellHeight)
         case .messageLabelTop:
             var cellHeight: CGFloat = 0
             cellHeight += cellTopLabelHeight
             let messageLabelsHeight = messageContainerHeight + messageBottomLabelHeight + messageVerticalPadding + messageTopLabelHeight
             cellHeight += max(messageLabelsHeight, avatarHeight)
-            return cellHeight
+            return max(accessoryViewTotalHeight, cellHeight)
         case .cellTop, .cellBottom:
             let totalLabelHeight: CGFloat = cellTopLabelHeight + messageTopLabelHeight
                 + messageContainerHeight + messageVerticalPadding + messageBottomLabelHeight
-            return max(avatarHeight, totalLabelHeight)
+            let cellHeight = max(avatarHeight, totalLabelHeight)
+            return max(accessoryViewTotalHeight, cellHeight)
         }
     }
 
