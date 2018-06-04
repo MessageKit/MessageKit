@@ -272,7 +272,7 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutAccessoryView(with attributes: MessagesCollectionViewLayoutAttributes) {
         var y = (bounds.height - attributes.accessoryViewSize.height) / 2
-        y = y - attributes.accessoryViewPadding.vertical + attributes.accessoryViewPadding.top
+        y -= attributes.accessoryViewPadding.vertical + attributes.accessoryViewPadding.top
 
         var origin = CGPoint(x: 0, y: y)
 
