@@ -59,8 +59,6 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         return false
     }
 
-    private var isFirstLayout: Bool = true
-    
     internal var isMessagesControllerBeingDismissed: Bool = false
 
     internal var selectedIndexPathForMenu: IndexPath?
@@ -69,6 +67,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         didSet {
             messagesCollectionView.contentInset.bottom = messageCollectionViewBottomInset
             messagesCollectionView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset
+            messagesCollectionView.layoutIfNeeded()
         }
     }
 
@@ -82,25 +81,24 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         setupDelegates()
         addMenuControllerObservers()
         addObservers()
+        addKeyboardObservers()
     }
-    
+
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         isMessagesControllerBeingDismissed = false
+        messageCollectionViewBottomInset = keyboardOffsetFrame.height - safeAreaBottomInset
+        messagesCollectionView.scrollToBottom(animated: true)
     }
-    
+
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         isMessagesControllerBeingDismissed = true
+        messageCollectionViewBottomInset = keyboardOffsetFrame.height - safeAreaBottomInset
+        messagesCollectionView.scrollToBottom(animated: true)
     }
-    
+
     open override func viewDidLayoutSubviews() {
-        // Hack to prevent animation of the contentInset after viewDidAppear
-        if isFirstLayout {
-            defer { isFirstLayout = false }
-            addKeyboardObservers()
-            messageCollectionViewBottomInset = keyboardOffsetFrame.height
-        }
         adjustScrollViewInset()
     }
 

@@ -30,12 +30,14 @@ extension MessagesViewController {
 
     internal func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleKeyboardDidChangeState(_:)), name: .UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleKeyboardDidChangeState(_:)), name: .UIKeyboardDidChangeFrame, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleTextViewDidBeginEditing(_:)), name: .UITextViewTextDidBeginEditing, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.adjustScrollViewInset), name: .UIDeviceOrientationDidChange, object: nil)
     }
 
     internal func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardDidChangeFrame, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UITextViewTextDidBeginEditing, object: nil)
         NotificationCenter.default.removeObserver(self, name: .UIDeviceOrientationDidChange, object: nil)
     }
@@ -53,18 +55,19 @@ extension MessagesViewController {
     @objc
     private func handleKeyboardDidChangeState(_ notification: Notification) {
         guard let keyboardEndFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
-        
+
         guard !isMessagesControllerBeingDismissed else { return }
-        
-        let newBottomInset = view.frame.height - keyboardEndFrame.minY - iPhoneXBottomInset
-        
+
+        let newBottomInset = keyboardEndFrame.height - safeAreaBottomInset
+
         let differenceOfBottomInset = newBottomInset - messageCollectionViewBottomInset
-        
+
         if maintainPositionOnKeyboardFrameChanged && differenceOfBottomInset != 0 {
-            let contentOffset = CGPoint(x: messagesCollectionView.contentOffset.x, y: messagesCollectionView.contentOffset.y + differenceOfBottomInset)
+            let contentOffset = CGPoint(x: messagesCollectionView.contentOffset.x,
+                                        y: messagesCollectionView.contentOffset.y + differenceOfBottomInset)
             messagesCollectionView.setContentOffset(contentOffset, animated: false)
         }
-        
+
         messageCollectionViewBottomInset = newBottomInset
     }
 
@@ -85,17 +88,17 @@ extension MessagesViewController {
 
     internal var keyboardOffsetFrame: CGRect {
         guard let inputFrame = inputAccessoryView?.frame else { return .zero }
-        return CGRect(origin: inputFrame.origin, size: CGSize(width: inputFrame.width, height: inputFrame.height - iPhoneXBottomInset))
+        return CGRect(origin: inputFrame.origin,
+                      size: CGSize(width: inputFrame.width, height: inputFrame.height))
     }
 
-    /// On the iPhone X the inputAccessoryView is anchored to the layoutMarginesGuide.bottom anchor
+    /// On the iPhone with safe areas (e.g. X) the inputAccessoryView is anchored to the layoutMarginesGuide.bottom anchor
     /// so the frame of the inputAccessoryView is larger than the required offset
     /// for the MessagesCollectionView.
     ///
-    /// - Returns: The safeAreaInsets.bottom if its an iPhoneX, else 0
-    private var iPhoneXBottomInset: CGFloat {
+    /// - Returns: The safeAreaInsets.bottom if its an iPhone with safe areas (e.g. X), else 0
+    internal var safeAreaBottomInset: CGFloat {
         if #available(iOS 11.0, *) {
-            guard UIScreen.main.nativeBounds.height == 2436 else { return 0 }
             return view.safeAreaInsets.bottom
         }
         return 0
