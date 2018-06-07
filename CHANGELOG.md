@@ -8,6 +8,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
+- Fixed `MessageContentCell`'s subviews `frame` when size equal to `.zero`.
+[#716](https://github.com/MessageKit/MessageKit/pull/716) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 - Fixed `MessagesCollectionView`'s bottom inset when hardware keyboard is connected. Do not adjust `MessagesCollection`'s inset when being popped.
 [#707](https://github.com/MessageKit/MessageKit/pull/707) by [@zhongwuzw](https://github.com/zhongwuzw).
 
