@@ -64,6 +64,7 @@ final class MessageContentCellTests: XCTestCase {
 
     func testApplyLayoutAttributes() {
         let layoutAttributes = MessagesCollectionViewLayoutAttributes()
+        layoutAttributes.avatarPosition = AvatarPosition(horizontal: .cellLeading, vertical: .cellBottom)
         cell.apply(layoutAttributes)
 
         XCTAssertEqual(cell.avatarView.frame, layoutAttributes.frame)
