@@ -35,9 +35,6 @@ final class AvatarSpec: QuickSpec {
                 it("should set image to nil") {
                     expect(avatar.image).to(beNil())
                 }
-                it("should set initials to ?") {
-                    expect(avatar.initials).to(equal("?"))
-                }
             }
         }
     }

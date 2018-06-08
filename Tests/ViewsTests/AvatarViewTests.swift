@@ -27,11 +27,11 @@ import XCTest
 
 class AvatarViewTests: XCTestCase {
 
-    var avatarView: AvatarView!
+    var avatarView: UIImageView!
 
     override func setUp() {
         super.setUp()
-        avatarView = AvatarView()
+        avatarView = UIImageView()
         avatarView.frame.size = CGSize(width: 30, height: 30)
     }
 
@@ -40,46 +40,16 @@ class AvatarViewTests: XCTestCase {
         avatarView = nil
     }
 
-    func testNoParams() {
-        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
-        XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
-    }
-
-    func testWithImage() {
-        let avatar = Avatar(image: UIImage())
-        avatarView.set(avatar: avatar)
-        XCTAssertEqual(avatar.initials, "?")
-        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
-        XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
-    }
-
-    func testInitialsOnly() {
-        let avatar = Avatar(initials: "DL")
-        avatarView.set(avatar: avatar)
-        XCTAssertEqual(avatarView.initials, avatar.initials)
-        XCTAssertEqual(avatar.initials, "DL")
-        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
-        XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
-    }
-
     func testSetBackground() {
-        XCTAssertEqual(avatarView.backgroundColor, UIColor.gray)
         avatarView.backgroundColor = UIColor.red
         XCTAssertEqual(avatarView.backgroundColor, UIColor.red)
     }
 
     func testGetImage() {
         let image = UIImage()
-        let avatar = Avatar(image: image)
-        avatarView.set(avatar: avatar)
+        let avatar = Avatar.avatar(withImage: image)
+        avatarView.image = avatar.image
         XCTAssertEqual(avatarView.image, image)
     }
-
-    func testRoundedCorners() {
-        let avatar = Avatar(image: UIImage())
-        avatarView.set(avatar: avatar)
-        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
-        avatarView.setCorner(radius: 2)
-        XCTAssertEqual(avatarView.layer.cornerRadius, 2.0)
-    }
+    
 }

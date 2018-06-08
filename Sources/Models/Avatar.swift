@@ -25,23 +25,31 @@
 import Foundation
 
 /// An object used to group the information to be used by an `AvatarView`.
-public struct Avatar {
-    
+public struct Avatar: MessageAvatarImageDataSource {
+
     // MARK: - Properties
     
     /// The image to be used for an `AvatarView`.
-    public let image: UIImage?
+    public var image: UIImage?
     
-    /// The placeholder initials to be used in the case where no image is provided.
-    ///
-    /// The default value of this property is "?".
-    public var initials: String = "?"
+    public var highlightedImage: UIImage?
+    
+    public var placeholderImage: UIImage?
     
     // MARK: - Initializer
     
-    public init(image: UIImage? = nil, initials: String = "?") {
+    public init(image: UIImage? = nil, highlightedImage: UIImage? = nil, placeholderImage: UIImage? = nil) {
         self.image = image
-        self.initials = initials
+        self.highlightedImage = highlightedImage
+        self.placeholderImage = placeholderImage
+    }
+    
+    public static func avatar(withImage image: UIImage) -> Avatar {
+        return Avatar(image: image, highlightedImage: image, placeholderImage: image)
+    }
+    
+    public static func avatar(withPlaceholder placeholderImage: UIImage) -> Avatar {
+        return Avatar(placeholderImage: placeholderImage)
     }
     
 }

@@ -14,7 +14,7 @@
  copies or substantial portions of the Software.
  
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ IMPLIED, INCLUDING BUT NO T LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
@@ -24,38 +24,15 @@
 
 import Foundation
 
-/// An object that groups the metadata of a messages sender.
-public struct Sender {
-
-    /// MARK: - Properties
-
-    /// The unique String identifier for the sender.
-    ///
-    /// Note: This value must be unique across all senders.
-    public let id: String
-
-    /// The display name of a sender.
-    public let displayName: String
-
-    // MARK: - Intializers
-
-    public init(id: String, displayName: String) {
-        self.id = id
-        self.displayName = displayName
-    }
-}
-
-// MARK: - Equatable Conformance
-
-extension Sender: Hashable {
+public protocol MessageAvatarImageDataSource {
     
-    public var hashValue: Int {
-        return id.hashValue
-    }
+    // MARK: - Properties
 
-    /// Two senders are considered equal if they have the same id.
-    public static func == (left: Sender, right: Sender) -> Bool {
-        return left.id == right.id
-    }
-
+    /// The image to be used for an `AvatarView`.
+    var image: UIImage? { get set}
+    
+    var highlightedImage: UIImage? { get set }
+    
+    var placeholderImage: UIImage? { get set }
+    
 }

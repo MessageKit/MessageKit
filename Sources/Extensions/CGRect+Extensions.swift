@@ -29,5 +29,9 @@ extension CGRect {
     internal init(_ x: CGFloat, _ y: CGFloat, _ w: CGFloat, _ h: CGFloat) {
         self.init(x: x, y: y, width: w, height: h)
     }
+    
+    internal init(_ x: Int, _ y: Int, _ w: Int, _ h: Int) {
+        self.init(x: x, y: y, width: w, height: h)
+    }
 
 }
