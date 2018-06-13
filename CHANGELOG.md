@@ -6,6 +6,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Changed
+
+- Relaxed the settable requirement for the `LocationItem` and `MediaItem` protocols.
+[#727](https://github.com/MessageKit/MessageKit/pull/716) by [@SD10](https://github.com/sd10).
+
 ### Fixed
 
 - Fixed `MessageContentCell`'s subviews `frame` when size equal to `.zero`.
