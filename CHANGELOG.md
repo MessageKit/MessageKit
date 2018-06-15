@@ -6,10 +6,28 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+## [[Prerelease] 1.0.0-beta.2](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0-beta.2)
+
+### Changed
+
+- Relaxed the settable requirement for the `LocationItem` and `MediaItem` protocols.
+[#727](https://github.com/MessageKit/MessageKit/pull/716) by [@SD10](https://github.com/sd10).
+
 ### Fixed
+
+- Fixed `MessageContentCell`'s subviews `frame` when size equal to `.zero`.
+[#716](https://github.com/MessageKit/MessageKit/pull/716) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- Fixed `MessagesCollectionView`'s bottom inset when hardware keyboard is connected. Do not adjust `MessagesCollection`'s inset when being popped.
+[#707](https://github.com/MessageKit/MessageKit/pull/707) by [@zhongwuzw](https://github.com/zhongwuzw).
 
 - Fixed `LabelAlignment` initializer which has default internal access control.
 [#705](https://github.com/MessageKit/MessageKit/pull/705) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+### Added
+
+- Added convenience method to set properties for all `MessageSizeCalculator`s.
+[#697](https://github.com/MessageKit/MessageKit/pull/697) by [@zhongwuzw](https://github.com/zhongwuzw).
 
 ## [[Prerelease] 1.0.0-beta.1](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0-beta.1)
 

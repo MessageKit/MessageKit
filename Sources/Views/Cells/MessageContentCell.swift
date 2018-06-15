@@ -171,8 +171,6 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// Positions the cell's `AvatarView`.
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutAvatarView(with attributes: MessagesCollectionViewLayoutAttributes) {
-        guard attributes.avatarSize != .zero else { return }
-
         var origin: CGPoint = .zero
 
         switch attributes.avatarPosition.horizontal {
@@ -205,8 +203,6 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// Positions the cell's `MessageContainerView`.
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutMessageContainerView(with attributes: MessagesCollectionViewLayoutAttributes) {
-        guard attributes.messageContainerSize != .zero else { return }
-
         var origin: CGPoint = .zero
 
         switch attributes.avatarPosition.vertical {
@@ -238,16 +234,12 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// Positions the cell's top label.
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutCellTopLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
-        guard attributes.cellTopLabelSize != .zero else { return }
-
         cellTopLabel.frame = CGRect(origin: .zero, size: attributes.cellTopLabelSize)
     }
     
     /// Positions the message bubble's top label.
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutMessageTopLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
-        guard attributes.messageTopLabelSize != .zero else { return }
-        
         messageTopLabel.textAlignment = attributes.messageTopLabelAlignment.textAlignment
         messageTopLabel.textInsets = attributes.messageTopLabelAlignment.textInsets
 
@@ -260,8 +252,6 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// Positions the cell's bottom label.
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
-        guard attributes.messageBottomLabelSize != .zero else { return }
-
         messageBottomLabel.textAlignment = attributes.messageBottomLabelAlignment.textAlignment
         messageBottomLabel.textInsets = attributes.messageBottomLabelAlignment.textInsets
 
