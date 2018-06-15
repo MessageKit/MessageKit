@@ -23,6 +23,11 @@
  */
 
 import UIKit
+#if canImport(MessageInputBar)
+import MessageInputBar
+#else
+public typealias MessageInputBar = UIView
+#endif
 
 /// A subclass of `UIViewController` with a `MessagesCollectionView` object
 /// that is used to display conversation interfaces.
