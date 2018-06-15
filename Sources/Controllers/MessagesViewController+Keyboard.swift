@@ -23,14 +23,7 @@
  */
 
 import Foundation
-#if canImport(MessageInputBar)
 import MessageInputBar
-#else
-public typealias InputTextView = UITextView
-public extension MessageInputBar {
-    var inputTextView: InputTextView? { return nil }
-}
-#endif
 
 extension MessagesViewController {
 
