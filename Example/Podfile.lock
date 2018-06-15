@@ -1,16 +1,24 @@
 PODS:
-  - MessageKit (1.0.0)
+  - MessageInputBar (0.1.0):
+    - MessageInputBar/Core (= 0.1.0)
+  - MessageInputBar/Core (0.1.0)
+  - MessageKit (1.0.0-beta.2):
+    - MessageInputBar/Core
 
 DEPENDENCIES:
+  - MessageInputBar (from `../../MessageInputBar`)
   - MessageKit (from `../`)
 
 EXTERNAL SOURCES:
+  MessageInputBar:
+    :path: "../../MessageInputBar"
   MessageKit:
     :path: "../"
 
 SPEC CHECKSUMS:
-  MessageKit: 999e5a5d065b24061c921f6404bde3b795c17722
+  MessageInputBar: 465587f754cb68237a14b551ea099ab8b1e1e644
+  MessageKit: e257a8c7b44b1d91e4d22f10a642ca3446b9862c
 
-PODFILE CHECKSUM: cecdb7bc8129cf99f66de9f68eea3256fec30c3d
+PODFILE CHECKSUM: f782229dd40abc7f4785cbc60bee44c1c026d00b
 
 COCOAPODS: 1.5.3
