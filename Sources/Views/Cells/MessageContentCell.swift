@@ -60,6 +60,9 @@ open class MessageContentCell: MessageCollectionViewCell {
         return label
     }()
 
+    // Should only add customized subviews - don't change accessoryView itself.
+    open var accessoryView: UIView = UIView()
+
     /// The `MessageCellDelegate` for the cell.
     open weak var delegate: MessageCellDelegate?
 
@@ -74,6 +77,7 @@ open class MessageContentCell: MessageCollectionViewCell {
     }
 
     open func setupSubviews() {
+        contentView.addSubview(accessoryView)
         contentView.addSubview(cellTopLabel)
         contentView.addSubview(messageTopLabel)
         contentView.addSubview(messageBottomLabel)
@@ -99,6 +103,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         layoutCellTopLabel(with: attributes)
         layoutMessageTopLabel(with: attributes)
         layoutAvatarView(with: attributes)
+        layoutAccessoryView(with: attributes)
     }
 
     /// Used to configure the cell.
@@ -121,6 +126,8 @@ open class MessageContentCell: MessageCollectionViewCell {
         let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
 
         displayDelegate.configureAvatarView(avatarView, for: message, at: indexPath, in: messagesCollectionView)
+
+        displayDelegate.configureAccessoryView(accessoryView, for: message, at: indexPath, in: messagesCollectionView)
 
         messageContainerView.backgroundColor = messageColor
         messageContainerView.style = messageStyle
@@ -260,5 +267,25 @@ open class MessageContentCell: MessageCollectionViewCell {
 
         messageBottomLabel.frame = CGRect(origin: origin, size: attributes.messageBottomLabelSize)
     }
-    
+
+    /// Positions the cell's accessory view.
+    /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
+    open func layoutAccessoryView(with attributes: MessagesCollectionViewLayoutAttributes) {
+        var y = (bounds.height - attributes.accessoryViewSize.height) / 2
+        y -= attributes.accessoryViewPadding.vertical + attributes.accessoryViewPadding.top
+
+        var origin = CGPoint(x: 0, y: y)
+
+        // Accessory view is always on the opposite side of avatar
+        switch attributes.avatarPosition.horizontal {
+        case .cellLeading:
+            origin.x = messageContainerView.frame.maxX + attributes.accessoryViewPadding.left
+        case .cellTrailing:
+            origin.x = messageContainerView.frame.minX - attributes.accessoryViewPadding.right - attributes.accessoryViewSize.width
+        case .natural:
+            fatalError(MessageKitError.avatarPositionUnresolved)
+        }
+
+        accessoryView.frame = CGRect(origin: origin, size: attributes.accessoryViewSize)
+    }
 }
