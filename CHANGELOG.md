@@ -6,6 +6,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+## [1.0.0](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0)
+
+- First major release.
+
 ## [[Prerelease] 1.0.0-beta.2](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0-beta.2)
 
 ### Changed
