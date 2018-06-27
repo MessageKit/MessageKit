@@ -28,9 +28,9 @@ import class CoreLocation.CLLocation
 public protocol LocationItem {
 
     /// The location.
-    var location: CLLocation { get set }
+    var location: CLLocation { get }
 
     /// The size of the location item.
-    var size: CGSize { get set }
+    var size: CGSize { get }
 
 }

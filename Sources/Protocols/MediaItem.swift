@@ -28,15 +28,15 @@ import Foundation
 public protocol MediaItem {
 
     /// The url where the media is located.
-    var url: URL? { get set }
+    var url: URL? { get }
 
     /// The image.
-    var image: UIImage? { get set }
+    var image: UIImage? { get }
 
     /// A placeholder image for when the image is obtained asychronously.
-    var placeholderImage: UIImage { get set }
+    var placeholderImage: UIImage { get }
 
     /// The size of the media item.
-    var size: CGSize { get set }
+    var size: CGSize { get }
 
 }
