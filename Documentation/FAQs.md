@@ -41,6 +41,16 @@ if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollecti
 }
 ```
 
+If you would like to remove the space the `AvatarView` occupies from all `CellSizeCalculator`s there are
+convenience methods so that you do not have to specify it for each `CellSizeCalculator` on `MessagesCollectionViewFlowLayout`.
+
+```Swift
+if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
+  layout.setMessageIncomingAvatarSize(.zero)
+  layout.setMessageOutgoingAvatarSize(.zero)
+}
+```
+
 **How can I dismiss the keyboard?**
 
 The `MessagesViewController` needs to resign the first responder.
