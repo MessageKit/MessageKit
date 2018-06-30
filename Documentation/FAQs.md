@@ -31,13 +31,24 @@ func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at 
 }
 ```
 
-If you also like to remove the space the `AvatarView` occupies you have to change the properties
-`outgoingAvatarSize` or `incomingAvatarSize` of the `CellSizeCalculator` object for the respective message to `CGSize.zero`.
+If you would also like to remove the space the `AvatarView` occupies, you have to change the properties
+`outgoingAvatarSize` or `incomingAvatarSize` of the `CellSizeCalculator` object for the respective message to `CGSize.zero` in
+`viewDidLoad`.
 
 ```Swift
 if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
   layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
   layout.textMessageSizeCalculator.incomingAvatarSize = .zero
+}
+```
+
+If you would like to remove the space the `AvatarView` occupies from all `CellSizeCalculator`s there are
+convenience methods so that you do not have to specify it for each `CellSizeCalculator` on `MessagesCollectionViewFlowLayout`.
+
+```Swift
+if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
+  layout.setMessageIncomingAvatarSize(.zero)
+  layout.setMessageOutgoingAvatarSize(.zero)
 }
 ```
 
