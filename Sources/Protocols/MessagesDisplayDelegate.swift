@@ -84,6 +84,18 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   The default image configured by this method is `?`.
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
 
+    /// Used to configure the `AccessoryView` in a `MessageContentCell` class.
+    ///
+    /// - Parameters:
+    ///   - accessoryView: The `AccessoryView` of the cell.
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// - Note:
+    ///   The default image configured by this method is `?`.
+    func configureAccessoryView(_ accessoryView: UIView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
+
     // MARK: - Text Messages
 
     /// Specifies the color of the text for a `TextMessageCell`.
@@ -193,6 +205,8 @@ public extension MessagesDisplayDelegate {
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         avatarView.initials = "?"
     }
+
+    func configureAccessoryView(_ accessoryView: UIView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {}
 
     // MARK: - Text Messages Defaults
 

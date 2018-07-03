@@ -6,6 +6,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Added
+
+- Added customizable `accessoryView`, with a new `MessagesDisplayDelegate` function `configureAccessoryView`, and corresponding size & padding properties in `MessageSizeCalculator`. [#710](https://github.com/MessageKit/MessageKit/pull/710) by [@hyouuu](https://github.com/hyouuu)
+
 ## [1.0.0](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0)
 
 - First major release.
