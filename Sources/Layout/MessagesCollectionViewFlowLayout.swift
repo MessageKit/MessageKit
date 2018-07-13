@@ -61,6 +61,8 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         guard let collectionView = collectionView else { return 0 }
         return collectionView.frame.width - sectionInset.left - sectionInset.right
     }
+    
+    internal var isTypingBubbleHidden: Bool = true
 
     // MARK: - Initializers
 
@@ -133,6 +135,16 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     private func handleOrientationChange(_ notification: Notification) {
         invalidateLayout()
     }
+    
+    // MARK: - Typing Indicator Helpers
+    
+    /// Determines if the section is reserved for the typing indicator bubble
+    ///
+    /// - Parameter section: The section to compare against
+    /// - Returns: A Boolean value indicating if the section is reserved for the `TypingBubbleCell`
+    private func isSectionReservedForTypingBubble(_ section: Int) -> Bool {
+        return !isTypingBubbleHidden && section == self.messagesCollectionView.numberOfSections - 1
+    }
 
     // MARK: - Cell Sizing
 
@@ -146,8 +158,12 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     lazy open var photoMessageSizeCalculator = MediaMessageSizeCalculator(layout: self)
     lazy open var videoMessageSizeCalculator = MediaMessageSizeCalculator(layout: self)
     lazy open var locationMessageSizeCalculator = LocationMessageSizeCalculator(layout: self)
+    lazy open var typingMessageSizeCalculator = TypingMessageSizeCalculator(layout: self)
 
     open func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
+        if isSectionReservedForTypingBubble(indexPath.section) {
+            return typingMessageSizeCalculator
+        }
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         switch message.kind {
         case .text:
