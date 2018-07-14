@@ -142,7 +142,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     ///
     /// - Parameter section: The section to compare against
     /// - Returns: A Boolean value indicating if the section is reserved for the `TypingBubbleCell`
-    private func isSectionReservedForTypingBubble(_ section: Int) -> Bool {
+    public func isSectionReservedForTypingBubble(_ section: Int) -> Bool {
         return !isTypingBubbleHidden && section == self.messagesCollectionView.numberOfSections - 1
     }
 
