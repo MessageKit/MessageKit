@@ -182,8 +182,11 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     /// - Parameters:
     ///   - isHidden: A Boolean value that is to be the new state of the typing indicator
     ///   - animated: A Boolean value determining if the insertion is to be animated
+    ///   - updates: A block of code that will be executed during `performBatchUpdates`
+    ///              when `animated` is `TRUE` or before the `completion` block executes
+    ///              when `animated` is `FALSE`
     ///   - completion: A completion block to execute after the insertion/deletion
-    open func setTypingBubbleHidden(_ isHidden: Bool, animated: Bool, completion: ((Bool)->Void)?=nil) {
+    open func setTypingBubbleHidden(_ isHidden: Bool, animated: Bool, whilePerforming updates: (()->Void)? = nil, completion: ((Bool)->Void)?=nil) {
         
         guard isTypingBubbleHidden != isHidden else { return }
         
@@ -197,9 +200,11 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         if animated {
             messagesCollectionView.performBatchUpdates({ [weak self] in
                 self?.performUpdatesForTypingBubbleVisability(at: section)
+                updates?()
             }, completion: completion)
         } else {
             performUpdatesForTypingBubbleVisability(at: section)
+            updates?()
             completion?(true)
         }
     }

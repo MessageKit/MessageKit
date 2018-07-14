@@ -41,6 +41,7 @@
 		386FE92520F92080001B2238 /* TypingBubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FE92420F92080001B2238 /* TypingBubbleCell.swift */; };
 		386FE92920F9AE65001B2238 /* TypingMessageSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FE92820F9AE65001B2238 /* TypingMessageSizeCalculator.swift */; };
 		386FE92B20F9B008001B2238 /* TypingBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FE92A20F9B008001B2238 /* TypingBubble.swift */; };
+		386FE92D20FA79FE001B2238 /* BubbleCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FE92C20FA79FE001B2238 /* BubbleCircle.swift */; };
 		88916B2D1CF0DF2F00469F91 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88916B221CF0DF2F00469F91 /* MessageKit.framework */; };
 		8962AC8A1F87AB7D0030B058 /* MessagesCollectionViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC831F87AB230030B058 /* MessagesCollectionViewTests.swift */; };
 		8962AC8C1F87AB7D0030B058 /* AvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC851F87AB230030B058 /* AvatarViewTests.swift */; };
@@ -141,6 +142,7 @@
 		386FE92420F92080001B2238 /* TypingBubbleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingBubbleCell.swift; sourceTree = "<group>"; };
 		386FE92820F9AE65001B2238 /* TypingMessageSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingMessageSizeCalculator.swift; sourceTree = "<group>"; };
 		386FE92A20F9B008001B2238 /* TypingBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingBubble.swift; sourceTree = "<group>"; };
+		386FE92C20FA79FE001B2238 /* BubbleCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleCircle.swift; sourceTree = "<group>"; };
 		88916B221CF0DF2F00469F91 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88916B2C1CF0DF2F00469F91 /* MessageKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessageKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitDateFormatterTests.swift; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 				2EB618F11F846899007FBA0E /* Headers & Footers */,
 				B7A03F3E1F86694F006AEF79 /* AvatarView.swift */,
 				386FE92020F9205E001B2238 /* Circle.swift */,
+				386FE92C20FA79FE001B2238 /* BubbleCircle.swift */,
 				1FE783A7206633C0007FA024 /* InsetLabel.swift */,
 				B7A03F431F86694F006AEF79 /* MessageContainerView.swift */,
 				B7A03F3F1F86694F006AEF79 /* MessageLabel.swift */,
@@ -618,6 +621,7 @@
 				B7A03F6E1F8669EB006AEF79 /* NSAttributedString+Extensions.swift in Sources */,
 				B7A03F471F86694F006AEF79 /* MessageLabel.swift in Sources */,
 				B7A03F5F1F8669CA006AEF79 /* MessageLabelDelegate.swift in Sources */,
+				386FE92D20FA79FE001B2238 /* BubbleCircle.swift in Sources */,
 				B7A03F4C1F86694F006AEF79 /* PlayButtonView.swift in Sources */,
 				1FD5896420660C1C004B5081 /* LocationItem.swift in Sources */,
 				B7A03F291F866895006AEF79 /* Sender.swift in Sources */,
@@ -635,7 +639,6 @@
 				B7A03F2D1F866895006AEF79 /* LabelAlignment.swift in Sources */,
 				386FE92520F92080001B2238 /* TypingBubbleCell.swift in Sources */,
 				1F6C040C206A2891007BDE44 /* MessageContentCell.swift in Sources */,
-				386FE92120F9205F001B2238 /* Circle.swift in Sources */,
 				B7A03F2C1F866895006AEF79 /* DetectorType.swift in Sources */,
 				B7A03F271F866895006AEF79 /* Avatar.swift in Sources */,
 				1F82D1431FB1B75B00B81A88 /* AvatarPosition.swift in Sources */,
