@@ -27,43 +27,16 @@ import UIKit
 /// A subclass of `MessageCollectionViewCell` used to display the typing indicator.
 open class TypingBubbleCell: MessageCollectionViewCell {
     
-    // MARK: - Properties
+    // MARK: - Subviews
     
-    /// The container used for styling and holding the message's content view.
-    open var messageContainerView: MessageContainerView = {
-        let containerView = MessageContainerView()
-        containerView.clipsToBounds = true
-        containerView.layer.masksToBounds = true
-        return containerView
-    }()
-    
-    open var isPulseEnabled: Bool = true
-    
-    public private(set) var isAnimating: Bool = false
-    
-    private struct AnimationKeys {
-        static let pulse = "typingBubble.pulse"
-    }
-    
-    /// The indicator used to display the typing animation.
-    open let typingIndicator = TypingIndicator()
-    
-    open let cornerBubble: Circle = {
-        let view = Circle()
-        return view
-    }()
-    
-    open let tinyBubble: Circle = {
-        let view = Circle()
-        return view
-    }()
+    open var typingBubble = TypingBubble()
     
     // MARK: - Initialization
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        setupSubviews()
+        contentView.addSubview(typingBubble)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -72,19 +45,10 @@ open class TypingBubbleCell: MessageCollectionViewCell {
     
     open override func prepareForReuse() {
         super.prepareForReuse()
-        if isAnimating {
-            stopAnimating()
-            startAnimating()
+        if typingBubble.isAnimating {
+            typingBubble.stopAnimating()
+            typingBubble.startAnimating()
         }
-    }
-    
-    open func setupSubviews() {
-        contentView.addSubview(tinyBubble)
-        contentView.addSubview(cornerBubble)
-        contentView.addSubview(messageContainerView)
-        messageContainerView.addSubview(typingIndicator)
-        contentView.addSubview(messageContainerView)
-        messageContainerView.addSubview(typingIndicator)
     }
     
     // MARK: - Configuration
@@ -98,11 +62,7 @@ open class TypingBubbleCell: MessageCollectionViewCell {
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
             fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
-        
-        let messageColor = displayDelegate.backgroundColorForTypingBubble(at: indexPath, in: messagesCollectionView)
-        messageContainerView.backgroundColor = messageColor
-        tinyBubble.backgroundColor = messageColor
-        cornerBubble.backgroundColor = messageColor
+        typingBubble.backgroundColor = displayDelegate.backgroundColorForTypingBubble(at: indexPath, in: messagesCollectionView)
     }
     
     /// Handle `ContentView`'s tap gesture, return false when `ContentView` doesn't needs to handle gesture
@@ -114,70 +74,7 @@ open class TypingBubbleCell: MessageCollectionViewCell {
     
     open override func layoutSubviews() {
         super.layoutSubviews()
-        
-        // To maintain the iMessage like bubble the width:height ratio of the frame
-        // must be close to 1.65
-        let ratio = bounds.width / bounds.height
-        let extraRightInset = bounds.width - 1.65/ratio*bounds.width
-        
-        let tinyBubbleRadius: CGFloat = bounds.height / 6
-        tinyBubble.frame = CGRect(x: 0,
-                                  y: bounds.height - tinyBubbleRadius,
-                                  width: tinyBubbleRadius,
-                                  height: tinyBubbleRadius)
-        
-        let cornerBubbleRadius = tinyBubbleRadius * 2
-        let offset: CGFloat = tinyBubbleRadius / 6
-        cornerBubble.frame = CGRect(x: tinyBubbleRadius - offset,
-                                    y: bounds.height - (1.5 * cornerBubbleRadius) + offset,
-                                    width: cornerBubbleRadius,
-                                    height: cornerBubbleRadius)
-        
-        let msgFrame = CGRect(x: tinyBubbleRadius + offset,
-                              y: 0,
-                              width: bounds.width - (tinyBubbleRadius + offset) - extraRightInset,
-                              height: bounds.height - (tinyBubbleRadius + offset))
-        let msgFrameCornerRadius = msgFrame.height / 2
-        
-        messageContainerView.frame = msgFrame
-        messageContainerView.layer.cornerRadius = msgFrameCornerRadius
-        
-        
-        let insets = UIEdgeInsets(top: offset, left: msgFrameCornerRadius / 1.5, bottom: offset, right: msgFrameCornerRadius / 1.5)
-        typingIndicator.frame = CGRect(x: insets.left,
-                                       y: insets.top,
-                                       width: msgFrame.width - insets.left - insets.right,
-                                       height: msgFrame.height - insets.top - insets.bottom)
-    }
-    
-    // MARK: - Animation Layers
-    
-    open func pulseAnimationLayer() -> CABasicAnimation {
-        let animation = CABasicAnimation(keyPath: "transform.scale")
-        animation.fromValue = 1
-        animation.toValue = 1.05
-        animation.duration = 1
-        animation.repeatCount = .infinity
-        animation.autoreverses = true
-        return animation
-    }
-    
-    // MARK: - Animation API
-    
-    open func startAnimating() {
-        defer { isAnimating = true }
-        guard !isAnimating else { return }
-        typingIndicator.startAnimating()
-        if isPulseEnabled {
-            layer.add(pulseAnimationLayer(), forKey: AnimationKeys.pulse)
-        }
-    }
-    
-    open func stopAnimating() {
-        defer { isAnimating = false }
-        guard isAnimating else { return }
-        typingIndicator.stopAnimating()
-        layer.removeAnimation(forKey: AnimationKeys.pulse)
+        typingBubble.frame = bounds
     }
     
 }

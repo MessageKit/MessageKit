@@ -26,11 +26,7 @@ import Foundation
 
 open class TypingMessageSizeCalculator: CellSizeCalculator {
     
-    open var height: CGFloat = 44 {
-        didSet {
-            layout?.invalidateLayout()
-        }
-    }
+    open var height: CGFloat = 44
     
     public init(layout: MessagesCollectionViewFlowLayout? = nil) {
         super.init()
@@ -39,7 +35,11 @@ open class TypingMessageSizeCalculator: CellSizeCalculator {
     }
     
     open override func sizeForItem(at indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: height)
+        guard let layout = layout else { return .zero }
+        let collectionViewWidth = layout.collectionView?.bounds.width ?? 0
+        let contentInset = layout.collectionView?.contentInset ?? .zero
+        let inset = layout.sectionInset.horizontal + contentInset.horizontal
+        return CGSize(width: collectionViewWidth - inset, height: height)
     }
 
 }

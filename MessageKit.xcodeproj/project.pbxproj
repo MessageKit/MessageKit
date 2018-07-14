@@ -39,6 +39,8 @@
 		386FE92120F9205F001B2238 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FE92020F9205E001B2238 /* Circle.swift */; };
 		386FE92320F92078001B2238 /* TypingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FE92220F92078001B2238 /* TypingIndicator.swift */; };
 		386FE92520F92080001B2238 /* TypingBubbleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FE92420F92080001B2238 /* TypingBubbleCell.swift */; };
+		386FE92920F9AE65001B2238 /* TypingMessageSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FE92820F9AE65001B2238 /* TypingMessageSizeCalculator.swift */; };
+		386FE92B20F9B008001B2238 /* TypingBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386FE92A20F9B008001B2238 /* TypingBubble.swift */; };
 		88916B2D1CF0DF2F00469F91 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88916B221CF0DF2F00469F91 /* MessageKit.framework */; };
 		8962AC8A1F87AB7D0030B058 /* MessagesCollectionViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC831F87AB230030B058 /* MessagesCollectionViewTests.swift */; };
 		8962AC8C1F87AB7D0030B058 /* AvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC851F87AB230030B058 /* AvatarViewTests.swift */; };
@@ -137,6 +139,8 @@
 		386FE92020F9205E001B2238 /* Circle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
 		386FE92220F92078001B2238 /* TypingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingIndicator.swift; sourceTree = "<group>"; };
 		386FE92420F92080001B2238 /* TypingBubbleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingBubbleCell.swift; sourceTree = "<group>"; };
+		386FE92820F9AE65001B2238 /* TypingMessageSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingMessageSizeCalculator.swift; sourceTree = "<group>"; };
+		386FE92A20F9B008001B2238 /* TypingBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingBubble.swift; sourceTree = "<group>"; };
 		88916B221CF0DF2F00469F91 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88916B2C1CF0DF2F00469F91 /* MessageKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessageKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitDateFormatterTests.swift; sourceTree = "<group>"; };
@@ -399,6 +403,7 @@
 				B7A03F451F86694F006AEF79 /* MessagesCollectionView.swift */,
 				B7A03F441F86694F006AEF79 /* PlayButtonView.swift */,
 				386FE92220F92078001B2238 /* TypingIndicator.swift */,
+				386FE92A20F9B008001B2238 /* TypingBubble.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -437,6 +442,7 @@
 				1FE783A120662905007FA024 /* TextMessageSizeCalculator.swift */,
 				1FE783A3206629A5007FA024 /* MediaMessageSizeCalculator.swift */,
 				1FE783A5206629C2007FA024 /* LocationMessageSizeCalculator.swift */,
+				386FE92820F9AE65001B2238 /* TypingMessageSizeCalculator.swift */,
 				0EF0888B206F7E83007F2F58 /* CellSizeCalculator.swift */,
 			);
 			path = Layout;
@@ -586,9 +592,11 @@
 				B7A03F5B1F8669CA006AEF79 /* MessageType.swift in Sources */,
 				B7A03F601F8669CA006AEF79 /* MessagesDisplayDelegate.swift in Sources */,
 				1FE783A8206633C0007FA024 /* InsetLabel.swift in Sources */,
+				386FE92B20F9B008001B2238 /* TypingBubble.swift in Sources */,
 				B7A03F5C1F8669CA006AEF79 /* MessageCellDelegate.swift in Sources */,
 				1FF377A420087C82004FD648 /* MessageKitError.swift in Sources */,
 				1F6C040E206A2AF4007BDE44 /* MessageReusableView.swift in Sources */,
+				386FE92920F9AE65001B2238 /* TypingMessageSizeCalculator.swift in Sources */,
 				B7A03F4B1F86694F006AEF79 /* MessageContainerView.swift in Sources */,
 				B7A03F281F866895006AEF79 /* LocationMessageSnapshotOptions.swift in Sources */,
 				B7A03F6C1F8669EB006AEF79 /* UIView+Extensions.swift in Sources */,

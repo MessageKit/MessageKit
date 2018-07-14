@@ -51,6 +51,12 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     /// A Boolean value indicating if the `TypingBubbleCell` has been inserted at the last
     /// `IndexPath` of the `MessagesCollectionViewCell`
     public private(set) var isTypingBubbleHidden: Bool = true
+    
+    /// A CGFloat value that determines the spacing between the message and
+    /// the `TypingBubbleCell`
+    ///
+    /// The default value of this property is `10`
+    open var typingBubbleTopInset: CGFloat = 10
 
     open override var canBecomeFirstResponder: Bool {
         return true
@@ -248,7 +254,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         guard !isSectionReservedForTypingBubble(indexPath.section) else {
             let cell = messagesCollectionView.dequeueReusableCell(TypingBubbleCell.self, for: indexPath)
             cell.configure(at: indexPath, and: messagesCollectionView)
-            cell.startAnimating()
+            cell.typingBubble.startAnimating()
             return cell
         }
 
@@ -312,7 +318,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             fatalError(MessageKitError.nilMessagesLayoutDelegate)
         }
         guard !isSectionReservedForTypingBubble(section) else {
-            return .zero
+            return CGSize(width: collectionView.bounds.width, height: typingBubbleTopInset)
         }
         return layoutDelegate.headerViewSize(for: section, in: messagesCollectionView)
     }

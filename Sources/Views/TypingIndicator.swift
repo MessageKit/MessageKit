@@ -54,6 +54,27 @@ open class TypingIndicator: UIView {
         static let opacity = "typingIndicator.opacity"
     }
     
+    /// The `CABasicAnimation` applied when `isBounceEnabled` is TRUE
+    open var bounceAnimationLayer: CABasicAnimation {
+        let animation = CABasicAnimation(keyPath: "position.y")
+        animation.byValue = -bounceOffset
+        animation.duration = 0.5
+        animation.repeatCount = .infinity
+        animation.autoreverses = true
+        return animation
+    }
+    
+    /// The `CABasicAnimation` applied when `isFadeEnabled` is TRUE
+    open var opacityAnimationLayer: CABasicAnimation {
+        let animation = CABasicAnimation(keyPath: "opacity")
+        animation.fromValue = 1
+        animation.toValue = 0.5
+        animation.duration = 0.5
+        animation.repeatCount = .infinity
+        animation.autoreverses = true
+        return animation
+    }
+    
     // MARK: - Subviews
     
     public let stackView = UIStackView()
@@ -95,33 +116,6 @@ open class TypingIndicator: UIView {
         stackView.spacing = bounds.width > 0 ? 5 : 0
     }
     
-    // MARK: - Animation Layers
-    
-    /// The `CABasicAnimation` applied when `isBounceEnabled` is TRUE
-    ///
-    /// - Returns: `CABasicAnimation`
-    open func bounceAnimationLayer() -> CABasicAnimation {
-        let animation = CABasicAnimation(keyPath: "position.y")
-        animation.byValue = -bounceOffset
-        animation.duration = 0.5
-        animation.repeatCount = .infinity
-        animation.autoreverses = true
-        return animation
-    }
-    
-    /// The `CABasicAnimation` applied when `isFadeEnabled` is TRUE
-    ///
-    /// - Returns: `CABasicAnimation`
-    open func opacityAnimationLayer() -> CABasicAnimation {
-        let animation = CABasicAnimation(keyPath: "opacity")
-        animation.fromValue = 1
-        animation.toValue = 0.5
-        animation.duration = 0.5
-        animation.repeatCount = .infinity
-        animation.autoreverses = true
-        return animation
-    }
-    
     // MARK: - Animation API
     
     /// Sets the state of the `TypingIndicator` to animating and applies animation layers
@@ -131,12 +125,12 @@ open class TypingIndicator: UIView {
         var delay: TimeInterval = 0
         for dot in dots {
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
-                guard let this = self else { return }
-                if this.isBounceEnabled {
-                    dot.layer.add(this.bounceAnimationLayer(), forKey: AnimationKeys.bounce)
+                guard let `self` = self else { return }
+                if self.isBounceEnabled {
+                    dot.layer.add(self.bounceAnimationLayer, forKey: AnimationKeys.bounce)
                 }
-                if this.isFadeEnabled {
-                    dot.layer.add(this.opacityAnimationLayer(), forKey: AnimationKeys.opacity)
+                if self.isFadeEnabled {
+                    dot.layer.add(self.opacityAnimationLayer, forKey: AnimationKeys.opacity)
                 }
             }
             delay += 0.33
