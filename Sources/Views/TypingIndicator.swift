@@ -79,8 +79,8 @@ open class TypingIndicator: UIView {
     
     public let stackView = UIStackView()
     
-    public let dots: [Circle] = {
-        return [Circle(), Circle(), Circle()]
+    public let dots: [BubbleCircle] = {
+        return [BubbleCircle(), BubbleCircle(), BubbleCircle()]
     }()
     
     // MARK: - Initialization
