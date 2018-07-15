@@ -24,6 +24,7 @@
 
 import UIKit
 
+/// A subclass of `UIView` that mimics the iMessage typing bubble
 open class TypingBubble: UIView {
     
     // MARK: - Properties
@@ -131,7 +132,7 @@ open class TypingBubble: UIView {
         guard !isAnimating else { return }
         typingIndicator.startAnimating()
         if isPulseEnabled {
-            contentBubble.layer.add(pulseAnimationLayer, forKey: AnimationKeys.pulse)
+            [contentBubble, cornerBubble, tinyBubble].forEach { $0.layer.add(pulseAnimationLayer, forKey: AnimationKeys.pulse) }
         }
     }
     
@@ -139,7 +140,7 @@ open class TypingBubble: UIView {
         defer { isAnimating = false }
         guard isAnimating else { return }
         typingIndicator.stopAnimating()
-        contentBubble.layer.removeAnimation(forKey: AnimationKeys.pulse)
+        [contentBubble, cornerBubble, tinyBubble].forEach { $0.layer.removeAnimation(forKey: AnimationKeys.pulse) }
     }
     
 }

@@ -318,10 +318,6 @@ extension ConversationViewController: MessagesDisplayDelegate {
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return isFromCurrentSender(message: message) ? UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1) : UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
     }
-    
-    func backgroundColorForTypingBubble(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
-    }
 
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         let corner: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft

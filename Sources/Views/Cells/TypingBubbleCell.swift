@@ -35,12 +35,17 @@ open class TypingBubbleCell: MessageCollectionViewCell {
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        contentView.addSubview(typingBubble)
+        setupSubviews()
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        setupSubviews()
+    }
+    
+    open func setupSubviews() {
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        contentView.addSubview(typingBubble)
     }
     
     open override func prepareForReuse() {
@@ -49,25 +54,6 @@ open class TypingBubbleCell: MessageCollectionViewCell {
             typingBubble.stopAnimating()
             typingBubble.startAnimating()
         }
-    }
-    
-    // MARK: - Configuration
-    
-    /// Used to configure the cell.
-    ///
-    /// - Parameters:
-    ///   - indexPath: The `IndexPath` for this cell.
-    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell is contained.
-    open func configure(at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
-        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError(MessageKitError.nilMessagesDisplayDelegate)
-        }
-        typingBubble.backgroundColor = displayDelegate.backgroundColorForTypingBubble(at: indexPath, in: messagesCollectionView)
-    }
-    
-    /// Handle `ContentView`'s tap gesture, return false when `ContentView` doesn't needs to handle gesture
-    open func cellContentView(canHandle touchPoint: CGPoint) -> Bool {
-        return false
     }
     
     // MARK: - Layout
