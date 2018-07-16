@@ -10,6 +10,12 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - First major release.
 
+### Fixed
+
+- Fixed the way `MessagesViewController` calculates the bottom content inset when the keyboard is shown.
+[#761](https://github.com/MessageKit/MessageKit/issues/761) by [@davidvpe](https://github.com/davidvpe).
+
+
 ## [[Prerelease] 1.0.0-beta.2](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0-beta.2)
 
 ### Changed
