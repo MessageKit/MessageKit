@@ -24,7 +24,7 @@
 
 import Foundation
 
-open class TypingMessageSizeCalculator: CellSizeCalculator {
+open class TypingCellSizeCalculator: CellSizeCalculator {
     
     open var height: CGFloat = 44
     

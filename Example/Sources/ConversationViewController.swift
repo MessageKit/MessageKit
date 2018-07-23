@@ -83,7 +83,7 @@ internal class ConversationViewController: MessagesViewController {
     @objc func handleTyping() {
         
         isTyping = !isTyping
-        setTypingBubbleHidden(!isTyping, animated: true, completion: { _ in
+        setTypingIndicatorHidden(!isTyping, animated: true, completion: { _ in
             self.messagesCollectionView.scrollToBottom(animated: true)
         })
 //        defer {

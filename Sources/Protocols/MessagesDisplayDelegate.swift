@@ -194,10 +194,6 @@ public extension MessagesDisplayDelegate {
         }
     }
     
-    func backgroundColorForTypingIndicator(at  indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return .incomingGray
-    }
-    
     func messageHeaderView(for indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageReusableView {
         return messagesCollectionView.dequeueReusableHeaderView(MessageReusableView.self, for: indexPath)
     }
