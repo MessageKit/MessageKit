@@ -56,7 +56,10 @@ extension MessagesViewController {
         
         guard !isMessagesControllerBeingDismissed else { return }
         
-        let newBottomInset = view.frame.height - keyboardEndFrame.minY - iPhoneXBottomInset
+        let convertedKeyboardEndFrame = messagesCollectionView.convert(keyboardEndFrame, from: nil)
+        let intersect = convertedKeyboardEndFrame.intersection(messagesCollectionView.bounds)
+        
+        let newBottomInset = intersect.size.height
         
         let differenceOfBottomInset = newBottomInset - messageCollectionViewBottomInset
         

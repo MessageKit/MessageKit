@@ -6,9 +6,15 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Fixed
+
+- Fixed the calculation the bottom content inset for `MessagesCollectionView`.
+[#761](https://github.com/MessageKit/MessageKit/issues/761) by [@davidvpe](https://github.com/davidvpe).
+
 ## [1.0.0](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0)
 
 - First major release.
+
 
 ## [[Prerelease] 1.0.0-beta.2](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0-beta.2)
 
