@@ -31,7 +31,7 @@
 * [**Goal**](#goals)📈
 * [**Contributing**](#contributing)
 * [**Requirements**](#requirements)
-* [**Code of Conduct**](https://github.com/MessageKit/MessageKit/blob/master/Code_of_Conduct.md)
+* [**Code of Conduct**](https://github.com/MessageKit/MessageKit/blob/master/CODE_OF_CONDUCT.md)
 * [**What's Next**](#whats-next)
 * [**Contact**](#contact)
 * [**Apps using this library**](#apps-using-this-library)
