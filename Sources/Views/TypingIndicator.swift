@@ -30,7 +30,7 @@ open class TypingIndicator: UIView {
     // MARK: - Properties
     
     /// The offset that each dot will transform by during the bounce animation
-    open var bounceOffset: CGFloat = 7.5
+    open var bounceOffset: CGFloat = 2.5
     
     /// A convenience accessor for the `backgroundColor` of each dot
     open var dotColor: UIColor = UIColor.lightGray {
@@ -50,14 +50,26 @@ open class TypingIndicator: UIView {
     
     /// Keys for each animation layer
     private struct AnimationKeys {
+        static let offset = "typingIndicator.offset"
         static let bounce = "typingIndicator.bounce"
         static let opacity = "typingIndicator.opacity"
     }
     
+    /// The `CABasicAnimation` applied when `isBounceEnabled` is TRUE to move the dot to the correct
+    /// initial offset
+    open var initialOffsetAnimationLayer: CABasicAnimation {
+        let animation = CABasicAnimation(keyPath: "transform.translation.y")
+        animation.byValue = -bounceOffset
+        animation.duration = 0.5
+        animation.isRemovedOnCompletion = true
+        return animation
+    }
+    
     /// The `CABasicAnimation` applied when `isBounceEnabled` is TRUE
     open var bounceAnimationLayer: CABasicAnimation {
-        let animation = CABasicAnimation(keyPath: "position.y")
-        animation.byValue = -bounceOffset
+        let animation = CABasicAnimation(keyPath: "transform.translation.y")
+        animation.toValue = -bounceOffset
+        animation.fromValue = bounceOffset
         animation.duration = 0.5
         animation.repeatCount = .infinity
         animation.autoreverses = true
@@ -127,7 +139,10 @@ open class TypingIndicator: UIView {
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
                 guard let `self` = self else { return }
                 if self.isBounceEnabled {
-                    dot.layer.add(self.bounceAnimationLayer, forKey: AnimationKeys.bounce)
+                    dot.layer.add(self.initialOffsetAnimationLayer, forKey: AnimationKeys.offset)
+                    let bounceLayer = self.bounceAnimationLayer
+                    bounceLayer.timeOffset = delay + 0.33
+                    dot.layer.add(bounceLayer, forKey: AnimationKeys.bounce)
                 }
                 if self.isFadeEnabled {
                     dot.layer.add(self.opacityAnimationLayer, forKey: AnimationKeys.opacity)

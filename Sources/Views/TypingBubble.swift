@@ -59,11 +59,21 @@ open class TypingBubble: UIView {
     
     // MARK: - Animation Layers
     
-    open var pulseAnimationLayer: CABasicAnimation {
+    open var contentPulseAnimationLayer: CABasicAnimation {
         let animation = CABasicAnimation(keyPath: "transform.scale")
         animation.fromValue = 1
-        animation.toValue = 1.05
+        animation.toValue = 1.04
         animation.duration = 1
+        animation.repeatCount = .infinity
+        animation.autoreverses = true
+        return animation
+    }
+    
+    open var circlePulseAnimationLayer: CABasicAnimation {
+        let animation = CABasicAnimation(keyPath: "transform.scale")
+        animation.fromValue = 1
+        animation.toValue = 1.1
+        animation.duration = 0.5
         animation.repeatCount = .infinity
         animation.autoreverses = true
         return animation
@@ -119,11 +129,8 @@ open class TypingBubble: UIView {
         contentBubble.frame = contentBubbleFrame
         contentBubble.layer.cornerRadius = contentBubbleFrameCornerRadius
             
-        let insets = UIEdgeInsets(top: offset, left: contentBubbleFrameCornerRadius / 1.5, bottom: offset, right: contentBubbleFrameCornerRadius / 1.5)
-        typingIndicator.frame = CGRect(x: insets.left,
-                                       y: insets.top,
-                                       width: contentBubbleFrame.width - insets.left - insets.right,
-                                       height: contentBubbleFrame.height - insets.top - insets.bottom)
+        let insets = UIEdgeInsets(top: offset, left: contentBubbleFrameCornerRadius / 1.25, bottom: offset, right: contentBubbleFrameCornerRadius / 1.25)
+        typingIndicator.frame = UIEdgeInsetsInsetRect(contentBubble.bounds, insets)
     }
     
     // MARK: - Animation API
@@ -133,7 +140,8 @@ open class TypingBubble: UIView {
         guard !isAnimating else { return }
         typingIndicator.startAnimating()
         if isPulseEnabled {
-            [contentBubble, cornerBubble, tinyBubble].forEach { $0.layer.add(pulseAnimationLayer, forKey: AnimationKeys.pulse) }
+            contentBubble.layer.add(contentPulseAnimationLayer, forKey: AnimationKeys.pulse)
+            [cornerBubble, tinyBubble].forEach { $0.layer.add(circlePulseAnimationLayer, forKey: AnimationKeys.pulse) }
         }
     }
     
