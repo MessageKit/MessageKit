@@ -115,15 +115,15 @@ extension MessagesViewController {
         if intersection.isNull || intersection.maxY < messagesCollectionView.frame.maxY - coordinatePrecision /* never compare floats without a tolerance */ {
             // The keyboard is hidden, is a hardware one, or is undocked and does not cover the bottom of the collection view.
             // Note: intersection.maxY may be less than messagesCollectionView.frame.maxY when dealing with undocked keyboards.
-            return 0
+            return max(0, extraBottomInset - automaticallyAddedBottomInset)
         } else {
-            return max(0, intersection.height - automaticallyAddedBottomInset)
+            return max(0, intersection.height + extraBottomInset - automaticallyAddedBottomInset)
         }
     }
 
     internal func requiredInitialScrollViewBottomInset() -> CGFloat {
         guard let inputAccessoryView = inputAccessoryView else { return 0 }
-        return max(0, inputAccessoryView.frame.height - automaticallyAddedBottomInset)
+        return max(0, inputAccessoryView.frame.height + extraBottomInset - automaticallyAddedBottomInset)
     }
 
     /// iOS 11's UIScrollView can automatically add safe area insets to its contentInset,
