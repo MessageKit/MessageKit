@@ -53,7 +53,7 @@ open class InputTextView: UITextView {
     
     /// The images that are currently stored as NSTextAttachment's
     open var images: [UIImage] {
-        return parseForComponents().compactMap { $0 as? UIImage }
+        return parseForAttachedImages()
     }
     
     /// The images an strings sequentially entered into the `InputTextView`
@@ -275,6 +275,28 @@ open class InputTextView: UITextView {
         let textAttachment = NSTextAttachment()
         textAttachment.image = UIImage(cgImage: cgImage, scale: scale, orientation: .up)
         return textAttachment
+    }
+    
+    /// Returns all images that exist as NSTextAttachment's
+    ///
+    /// - Returns: An array of type UIImage
+    private func parseForAttachedImages() -> [UIImage] {
+        
+        var images = [UIImage]()
+        let range = NSRange(location: 0, length: attributedText.length)
+        attributedText.enumerateAttribute(.attachment, in: range, options: []) { (value, range, _) in
+            
+            if let attachment = value as? NSTextAttachment {
+                if let image = attachment.image {
+                    images.append(image)
+                } else if let image = attachment.image(forBounds: attachment.bounds,
+                                                       textContainer: nil,
+                                                       characterIndex: range.location) {
+                    images.append(image)
+                }
+            }
+        }
+        return images
     }
     
     /// Returns an array of components (either a String or UIImage) that makes up the textContainer in
