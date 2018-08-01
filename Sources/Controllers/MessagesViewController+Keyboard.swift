@@ -93,7 +93,8 @@ extension MessagesViewController {
     }
 
     private func computeScrollViewBottomInset(forKeyboardFrame keyboardFrame: CGRect) -> CGFloat {
-        // we only need to adjust for the part of the keyboard that covers (i.e. intersects) our collection view
+        // we only need to adjust for the part of the keyboard that covers (i.e. intersects) our collection view;
+        // see https://developer.apple.com/videos/play/wwdc2017/242/ for more details
         let intersection = messagesCollectionView.frame.intersection(keyboardFrame)
         
         if intersection.isNull || intersection.maxY < messagesCollectionView.frame.maxY - 1e-6 /* never compare floats without a tolerance */ {
