@@ -112,7 +112,7 @@ extension MessagesViewController {
         // see https://developer.apple.com/videos/play/wwdc2017/242/ for more details
         let intersection = messagesCollectionView.frame.intersection(keyboardFrame)
         
-        if intersection.isNull || intersection.maxY < messagesCollectionView.frame.maxY - 1e-6 /* never compare floats without a tolerance */ {
+        if intersection.isNull || intersection.maxY < messagesCollectionView.frame.maxY - coordinatePrecision /* never compare floats without a tolerance */ {
             // The keyboard is hidden, is a hardware one, or is undocked and does not cover the bottom of the collection view.
             // Note: intersection.maxY may be less than messagesCollectionView.frame.maxY when dealing with undocked keyboards.
             return 0
