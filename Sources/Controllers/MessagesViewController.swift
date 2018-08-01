@@ -99,7 +99,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         if isFirstLayout {
             defer { isFirstLayout = false }
             addKeyboardObservers()
-            messageCollectionViewBottomInset = computeInitialScrollViewBottomInset()
+            messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
         }
         adjustScrollViewTopInset()
     }

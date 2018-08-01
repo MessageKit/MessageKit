@@ -80,7 +80,7 @@ extension MessagesViewController {
         guard let keyboardEndFrameInScreenCoords = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
         let keyboardEndFrame = view.convert(keyboardEndFrameInScreenCoords, from: view.window)
         
-        let newBottomInset = computeScrollViewBottomInset(forKeyboardFrame: keyboardEndFrame)
+        let newBottomInset = requiredScrollViewBottomInset(forKeyboardFrame: keyboardEndFrame)
         let differenceOfBottomInset = newBottomInset - messageCollectionViewBottomInset
         
         if maintainPositionOnKeyboardFrameChanged && differenceOfBottomInset != 0 {
@@ -107,7 +107,7 @@ extension MessagesViewController {
         }
     }
 
-    private func computeScrollViewBottomInset(forKeyboardFrame keyboardFrame: CGRect) -> CGFloat {
+    private func requiredScrollViewBottomInset(forKeyboardFrame keyboardFrame: CGRect) -> CGFloat {
         // we only need to adjust for the part of the keyboard that covers (i.e. intersects) our collection view;
         // see https://developer.apple.com/videos/play/wwdc2017/242/ for more details
         let intersection = messagesCollectionView.frame.intersection(keyboardFrame)
@@ -121,7 +121,7 @@ extension MessagesViewController {
         }
     }
 
-    internal func computeInitialScrollViewBottomInset() -> CGFloat {
+    internal func requiredInitialScrollViewBottomInset() -> CGFloat {
         guard let inputAccessoryView = inputAccessoryView else { return 0 }
         return max(0, inputAccessoryView.frame.height - automaticallyAddedBottomInset)
     }
