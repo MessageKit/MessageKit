@@ -6,6 +6,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Changed
+
+- Fixed the way that the Strings and UIImages are parsed in the `InputTextView` to prevent crashes in `parseForComponents()` [#791](https://github.com/MessageKit/MessageKit/pull/791) by [@nathantannar4](https://github.com/nathantannar4)
+
 ### Added
 
 - Added customizable `accessoryView`, with a new `MessagesDisplayDelegate` function `configureAccessoryView`, and corresponding size & padding properties in `MessageSizeCalculator`. [#710](https://github.com/MessageKit/MessageKit/pull/710) by [@hyouuu](https://github.com/hyouuu)
