@@ -62,6 +62,21 @@ extension MessagesViewController {
             return
         }
         
+        // Note that the check above does not exclude all notifications from an undocked keyboard, only the weird ones.
+        //
+        // We've tried following Apple's recommended approach of tracking UIKeyboardWillShow / UIKeyboardDidHide and ignoring frame
+        // change notifications while the keyboard is hidden or undocked (undocked keyboard is considered hidden by those events).
+        // Unfortunately, we do care about the difference between hidden and undocked, because we have an input bar which is at the
+        // bottom when the keyboard is hidden, and is tied to the keyboard when it's undocked.
+        //
+        // If we follow what Apple recommends and ignore notifications while the keyboard is hidden/undocked, we get an extra inset
+        // at the bottom when the undocked keyboard is visible (the inset that tries to compensate for the missing input bar).
+        // (Alternatives like setting newBottomInset to 0 or to the height of the input bar don't work either.)
+        //
+        // We could make it work by adding extra checks for the state of the keyboard and compensating accordingly, but it seems easier
+        // to simply check whether the current keyboard frame, whatever it is (even when undocked), covers the bottom of the collection
+        // view.
+        
         guard let keyboardEndFrameInScreenCoords = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect else { return }
         let keyboardEndFrame = view.convert(keyboardEndFrameInScreenCoords, from: view.window)
         
@@ -98,7 +113,9 @@ extension MessagesViewController {
         let intersection = messagesCollectionView.frame.intersection(keyboardFrame)
         
         if intersection.isNull || intersection.maxY < messagesCollectionView.frame.maxY - 1e-6 /* never compare floats without a tolerance */ {
-            return 0  // keyboard is undocked/hardware, or just does not cover the bottom of the collection view
+            // The keyboard is hidden, is a hardware one, or is undocked and does not cover the bottom of the collection view.
+            // Note: intersection.maxY may be less than messagesCollectionView.frame.maxY when dealing with undocked keyboards.
+            return 0
         } else {
             return max(0, intersection.height - automaticallyAddedBottomInset)
         }
