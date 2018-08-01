@@ -53,9 +53,10 @@ open class InputTextView: UITextView {
     
     /// The images that are currently stored as NSTextAttachment's
     open var images: [UIImage] {
-        return parseForAttachedImages()
+        return parseForComponents().compactMap { $0 as? UIImage }
     }
     
+    /// The images an strings sequentially entered into the `InputTextView`
     open var components: [Any] {
         return parseForComponents()
     }
@@ -276,28 +277,6 @@ open class InputTextView: UITextView {
         return textAttachment
     }
     
-    /// Returns all images that exist as NSTextAttachment's
-    ///
-    /// - Returns: An array of type UIImage
-    private func parseForAttachedImages() -> [UIImage] {
-        
-        var images = [UIImage]()
-        let range = NSRange(location: 0, length: attributedText.length)
-        attributedText.enumerateAttribute(.attachment, in: range, options: [], using: { value, range, _ -> Void in
-            
-            if let attachment = value as? NSTextAttachment {
-                if let image = attachment.image {
-                    images.append(image)
-                } else if let image = attachment.image(forBounds: attachment.bounds,
-                                                       textContainer: nil,
-                                                       characterIndex: range.location) {
-                    images.append(image)
-                }
-            }
-        })
-        return images
-    }
-    
     /// Returns an array of components (either a String or UIImage) that makes up the textContainer in
     /// the order that they were typed
     ///
@@ -305,50 +284,32 @@ open class InputTextView: UITextView {
     private func parseForComponents() -> [Any] {
         
         var components = [Any]()
-        var attachments = [(NSRange, UIImage)]()
-        let length = attributedText.length
-        let range = NSRange(location: 0, length: length)
-        attributedText.enumerateAttribute(.attachment, in: range) { (object, range, _) in
-            if let attachment = object as? NSTextAttachment {
-                if let image = attachment.image {
-                    attachments.append((range, image))
-                } else if let image = attachment.image(forBounds: attachment.bounds,
-                                                       textContainer: nil,
-                                                       characterIndex: range.location) {
-                    attachments.append((range, image))
-                }
-            }
-        }
-        
-        var curLocation = 0
-        if attachments.count == 0 {
-            let text = attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines)
-            if !text.isEmpty {
-                components.append(text)
-            }
-        }
-        else {
-            attachments.forEach { (attachment) in
-                let (range, image) = attachment
-                if curLocation < range.location {
-                    let textRange = NSMakeRange(curLocation, range.location)
-                    let text = attributedText.attributedSubstring(from: textRange).string.trimmingCharacters(in: .whitespacesAndNewlines)
-                    if !text.isEmpty {
-                        components.append(text)
+        let range = NSRange(location: 0, length: attributedText.length)
+        var lastComponentWasString = false
+        attributedText.enumerateAttributes(in: range, options: []) { (object, range, _) in
+            
+            if object.keys.contains(.attachment) {
+                if let attachment = object[.attachment] as? NSTextAttachment {
+                    if let image = attachment.image {
+                        components.append(image)
+                    } else if let image = attachment.image(forBounds: attachment.bounds,
+                                                           textContainer: nil,
+                                                           characterIndex: range.location) {
+                        components.append(image)
                     }
+                    lastComponentWasString = false
                 }
-                
-                curLocation = range.location + range.length
-                components.append(image)
-            }
-            if curLocation < length - 1 {
-                let text = attributedText.attributedSubstring(from: NSMakeRange(curLocation, length - curLocation)).string.trimmingCharacters(in: .whitespacesAndNewlines)
-                if !text.isEmpty {
-                    components.append(text)
+            } else {
+                let stringValue = attributedText.attributedSubstring(from: range).string.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !stringValue.isEmpty && !lastComponentWasString {
+                    components.append(stringValue)
+                    lastComponentWasString = true
+                } else if var lastStringValue = components[components.count - 1] as? String {
+                    lastStringValue.append(stringValue)
+                    components[components.count - 1] = lastStringValue
                 }
             }
         }
-
         return components
     }
     
