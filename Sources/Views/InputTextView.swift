@@ -315,7 +315,7 @@ open class InputTextView: UITextView {
                 } else if let image = attachment.image(forBounds: attachment.bounds,
                                                        textContainer: nil,
                                                        characterIndex: range.location) {
-                    attachments.append((range,image))
+                    attachments.append((range, image))
                 }
             }
         }
@@ -341,7 +341,7 @@ open class InputTextView: UITextView {
                 curLocation = range.location + range.length
                 components.append(image)
             }
-            if curLocation < length - 1  {
+            if curLocation < length - 1 {
                 let text = attributedText.attributedSubstring(from: NSMakeRange(curLocation, length - curLocation)).string.trimmingCharacters(in: .whitespacesAndNewlines)
                 if !text.isEmpty {
                     components.append(text)

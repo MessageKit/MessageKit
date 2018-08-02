@@ -215,7 +215,27 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     public func setMessageOutgoingMessageBottomLabelAlignment(_ newAlignment: LabelAlignment) {
         messageSizeCalculators().forEach { $0.outgoingMessageBottomLabelAlignment = newAlignment }
     }
-    
+
+    /// Set `incomingAccessoryViewSize` of all `MessageSizeCalculator`s
+    public func setMessageIncomingAccessoryViewSize(_ newSize: CGSize) {
+        messageSizeCalculators().forEach { $0.incomingAccessoryViewSize = newSize }
+    }
+
+    /// Set `outgoingAvatarSize` of all `MessageSizeCalculator`s
+    public func setMessageOutgoingAccessoryViewSize(_ newSize: CGSize) {
+        messageSizeCalculators().forEach { $0.outgoingAccessoryViewSize = newSize }
+    }
+
+    /// Set `incomingAccessoryViewSize` of all `MessageSizeCalculator`s
+    public func setMessageIncomingAccessoryViewPadding(_ newPadding: UIEdgeInsets) {
+        messageSizeCalculators().forEach { $0.incomingAccessoryViewPadding = newPadding }
+    }
+
+    /// Set `outgoingAvatarSize` of all `MessageSizeCalculator`s
+    public func setMessageOutgoingAccessoryViewPadding(_ newPadding: UIEdgeInsets) {
+        messageSizeCalculators().forEach { $0.outgoingAccessoryViewPadding = newPadding }
+    }
+
     /// Get all `MessageSizeCalculator`s
     open func messageSizeCalculators() -> [MessageSizeCalculator] {
         return [textMessageSizeCalculator, attributedTextMessageSizeCalculator, emojiMessageSizeCalculator, photoMessageSizeCalculator, videoMessageSizeCalculator, locationMessageSizeCalculator]
