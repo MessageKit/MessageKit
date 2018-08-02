@@ -6,6 +6,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Changed
+
+- The `MessageData.emoji` case once again uses a default font of 2x the `messageLabelFont` size.
+[#795](https://github.com/MessageKit/MessageKit/pull/795) by [@Vortec4800](https://github.com/vortec4800).
+
 ## [1.0.0](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0)
 
 - First major release.
