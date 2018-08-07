@@ -59,6 +59,17 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         return false
     }
 
+    /// A CGFloat value that adds to (or, if negative, subtracts from) the automatically
+    /// computed value of `messagesCollectionView.contentInset.bottom`. Meant to be used
+    /// as a measure of last resort when the built-in algorithm does not produce the right
+    /// value for your app. Please let us know when you end up having to use this property.
+    open var additionalBottomInset: CGFloat = 0 {
+        didSet {
+            let delta = additionalBottomInset - oldValue
+            messageCollectionViewBottomInset += delta
+        }
+    }
+
     private var isFirstLayout: Bool = true
     
     internal var isMessagesControllerBeingDismissed: Bool = false
@@ -94,14 +105,19 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         isMessagesControllerBeingDismissed = true
     }
     
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        isMessagesControllerBeingDismissed = false
+    }
+    
     open override func viewDidLayoutSubviews() {
         // Hack to prevent animation of the contentInset after viewDidAppear
         if isFirstLayout {
             defer { isFirstLayout = false }
             addKeyboardObservers()
-            messageCollectionViewBottomInset = keyboardOffsetFrame.height
+            messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
         }
-        adjustScrollViewInset()
+        adjustScrollViewTopInset()
     }
 
     // MARK: - Initializers
