@@ -24,8 +24,6 @@
 
 import UIKit
 
-internal let coordinatePrecision: CGFloat = 1e-6
-
 /// A subclass of `UIViewController` with a `MessagesCollectionView` object
 /// that is used to display conversation interfaces.
 open class MessagesViewController: UIViewController,
@@ -65,10 +63,9 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     /// computed value of `messagesCollectionView.contentInset.bottom`. Meant to be used
     /// as a measure of last resort when the built-in algorithm does not produce the right
     /// value for your app. Please let us know when you end up having to use this property.
-    open var extraBottomInset: CGFloat = 0 {
+    open var additionalBottomInset: CGFloat = 0 {
         didSet {
-            let delta = extraBottomInset - oldValue
-            guard abs(delta) > coordinatePrecision else { return }
+            let delta = additionalBottomInset - oldValue
             messageCollectionViewBottomInset += delta
         }
     }
@@ -106,6 +103,11 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         isMessagesControllerBeingDismissed = true
+    }
+    
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        isMessagesControllerBeingDismissed = false
     }
     
     open override func viewDidLayoutSubviews() {

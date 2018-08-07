@@ -10,7 +10,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - Added customizable `accessoryView`, with a new `MessagesDisplayDelegate` function `configureAccessoryView`, and corresponding size & padding properties in `MessageSizeCalculator`. [#710](https://github.com/MessageKit/MessageKit/pull/710) by [@hyouuu](https://github.com/hyouuu)
 
-- Added `extraBottomInset` property that allows to adjust the bottom content inset automatically set on the messages collection view by the view controller. [#787](https://github.com/MessageKit/MessageKit/pull/787) by [@andreyvit](https://github.com/andreyvit)
+- Added `additionalBottomInset` property that allows to adjust the bottom content inset automatically set on the messages collection view by the view controller. [#787](https://github.com/MessageKit/MessageKit/pull/787) by [@andreyvit](https://github.com/andreyvit)
 
 ### Fixed
 
