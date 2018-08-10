@@ -196,16 +196,19 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     ///              when `animated` is `TRUE` or before the `completion` block executes
     ///              when `animated` is `FALSE`
     ///   - completion: A completion block to execute after the insertion/deletion
-    open func setTypingIndicatorHidden(_ isHidden: Bool, animated: Bool, whilePerforming updates: (() -> Void)? = nil, completion: ((Bool) -> Void)?=nil) {
+    open func setTypingIndicatorHidden(_ isHidden: Bool, animated: Bool, whilePerforming updates: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
         
         guard isTypingIndicatorHidden != isHidden else { return }
         
         let section = messagesCollectionView.numberOfSections
         
         isTypingIndicatorHidden = isHidden
-        if let messagesFlowLayout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
-            messagesFlowLayout.isTypingIndicatorHidden = isHidden
+        guard let messagesFlowLayout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout else {
+            return
         }
+        
+        // Required so the layout knows to preserve the last section for the typing indicator
+        messagesFlowLayout.isTypingIndicatorHidden = isHidden
         
         if animated {
             messagesCollectionView.performBatchUpdates({ [weak self] in
@@ -239,6 +242,18 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     public func isSectionReservedForTypingIndicator(_ section: Int) -> Bool {
         return !isTypingIndicatorHidden && section == self.numberOfSections(in: messagesCollectionView) - 1
     }
+    
+    /// Returns a dequeued `UICollectionViewCell` that is inserted when the typing indicator is shown
+    ///
+    /// - Parameter indexPath: The `IndexPath` the cell will appear at
+    /// - Returns: A `UICollectionViewCell` designed to indicate another user is typing
+    open func dequeuedTypingCell(for indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = messagesCollectionView.dequeueReusableCell(TypingBubbleCell.self, for: indexPath)
+        cell.typingBubble.backgroundColor = typingBubbleBackgroundColor
+        cell.typingBubble.typingIndicator.dotColor = typingBubbleDotColor
+        cell.typingBubble.startAnimating()
+        return cell
+    }
 
     // MARK: - UICollectionViewDataSource
 
@@ -267,11 +282,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         }
         
         guard !isSectionReservedForTypingIndicator(indexPath.section) else {
-            let cell = messagesCollectionView.dequeueReusableCell(TypingBubbleCell.self, for: indexPath)
-            cell.typingBubble.backgroundColor = typingBubbleBackgroundColor
-            cell.typingBubble.typingIndicator.dotColor = typingBubbleDotColor
-            cell.typingBubble.startAnimating()
-            return cell
+            return dequeuedTypingCell(for: indexPath)
         }
 
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
