@@ -16,7 +16,6 @@
 		385C2931211FF3630010B4BA /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C292F211FF3630010B4BA /* UIColor+Extensions.swift */; };
 		385C2932211FF3630010B4BA /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C2930211FF3630010B4BA /* UIViewController+Extensions.swift */; };
 		385C2937211FF37B0010B4BA /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C2934211FF37A0010B4BA /* SampleData.swift */; };
-		385C2938211FF37B0010B4BA /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C2935211FF37B0010B4BA /* Random.swift */; };
 		385C2939211FF37B0010B4BA /* Lorem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C2936211FF37B0010B4BA /* Lorem.swift */; };
 		385C2942211FF38F0010B4BA /* AdvancedExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C293B211FF38E0010B4BA /* AdvancedExampleViewController.swift */; };
 		385C2943211FF38F0010B4BA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C293C211FF38E0010B4BA /* SettingsViewController.swift */; };
@@ -77,7 +76,6 @@
 		385C292F211FF3630010B4BA /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		385C2930211FF3630010B4BA /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		385C2934211FF37A0010B4BA /* SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
-		385C2935211FF37B0010B4BA /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		385C2936211FF37B0010B4BA /* Lorem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lorem.swift; sourceTree = "<group>"; };
 		385C293B211FF38E0010B4BA /* AdvancedExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedExampleViewController.swift; sourceTree = "<group>"; };
 		385C293C211FF38E0010B4BA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -173,7 +171,6 @@
 			isa = PBXGroup;
 			children = (
 				385C2936211FF37B0010B4BA /* Lorem.swift */,
-				385C2935211FF37B0010B4BA /* Random.swift */,
 				385C2934211FF37A0010B4BA /* SampleData.swift */,
 			);
 			path = "Data Generation";
@@ -518,7 +515,6 @@
 				385C2947211FF38F0010B4BA /* BasicExampleViewController.swift in Sources */,
 				882B5E811CF7D53600B6E160 /* AppDelegate.swift in Sources */,
 				385C292D211FF3520010B4BA /* CustomMessageFlowLayout.swift in Sources */,
-				385C2938211FF37B0010B4BA /* Random.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -133,7 +133,10 @@ final class AdvancedExampleViewController: ChatViewController {
                 $0.setSize(CGSize(width: 50, height: 25), animated: false)
             }.onTextViewDidChange { (item, textView) in
                 item.title = "\(textView.text.count)/140"
-                let color = textView.text.count > 140 ? .red : UIColor(white: 0.6, alpha: 1)
+                let isOverLimit = textView.text.count > 140
+                item.messageInputBar?.shouldManageSendButtonEnabledState = !isOverLimit // Disable automated management when over limit
+                item.messageInputBar?.sendButton.isEnabled = !isOverLimit
+                let color = isOverLimit ? .red : UIColor(white: 0.6, alpha: 1)
                 item.setTitleColor(color, for: .normal)
         }
         let bottomItems = [makeButton(named: "ic_at"), makeButton(named: "ic_hashtag"), makeButton(named: "ic_library"), .flexibleSpace, charCountButton]

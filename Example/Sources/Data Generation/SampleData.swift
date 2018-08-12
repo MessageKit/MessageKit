@@ -46,7 +46,7 @@ final internal class SampleData {
     
     let messageImages: [UIImage] = [#imageLiteral(resourceName: "img1"), #imageLiteral(resourceName: "img2")]
 
-    let messageTypes = ["Text", "Text", "Text", "Text", "Text", "AttributedText", "Location", "Photo", "Emoji", "Video", "Custom"]
+    let messageTypes = ["Text", "Text", "Text", "AttributedText", "Location", "Photo", "Emoji", "Video", "URL", "Phone", "Custom"]
 
     let emojis = [
         "👍",
@@ -146,8 +146,12 @@ final internal class SampleData {
             return MockMessage(emoji: emojis[randomNumberEmoji], sender: sender, messageId: uniqueID, date: date)
         case "Location":
             return MockMessage(location: locations[randomNumberLocation], sender: sender, messageId: uniqueID, date: date)
+        case "URL":
+            return MockMessage(text: "https://github.com/MessageKit", sender: sender, messageId: uniqueID, date: date)
+        case "Phone":
+            return MockMessage(text: "123-456-7890", sender: sender, messageId: uniqueID, date: date)
         case "Custom":
-            return MockMessage(custom: Randoms.randomFakeName() + " left the conversation", sender: system, messageId: uniqueID, date: date)
+            return MockMessage(custom: "Someone left the conversation", sender: system, messageId: uniqueID, date: date)
         default:
             fatalError("Unrecognized mock message type")
         }

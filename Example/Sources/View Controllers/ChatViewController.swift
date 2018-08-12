@@ -57,7 +57,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         MockSocket.shared.connect(with: [SampleData.shared.steven, SampleData.shared.wu])
             .onNewMessage { [weak self] message in
                 self?.insertMessage(message)
-                self?.messagesCollectionView.scrollToBottom(animated: true)
         }
     }
     
@@ -115,9 +114,11 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     func insertMessage(_ message: MockMessage) {
         messageList.append(message)
         // Reload last section and insert a new one
-        messagesCollectionView.performBatchUpdates({
-            self.messagesCollectionView.insertSections([messageList.count - 1])
-            self.messagesCollectionView.reloadSections([messageList.count - 2])
+        messagesCollectionView.performBatchUpdates({ [weak self] in
+            self?.messagesCollectionView.insertSections([messageList.count - 1])
+            self?.messagesCollectionView.reloadSections([messageList.count - 2])
+        }, completion: { [weak self] _ in
+            self?.messagesCollectionView.scrollToBottom(animated: true)
         })
     }
 

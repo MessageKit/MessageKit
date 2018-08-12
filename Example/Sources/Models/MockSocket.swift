@@ -60,7 +60,7 @@ final class MockSocket {
             onNewMessageCode?(message)
             queuedMessage = nil
         } else {
-            let sender = Bool.random() ? connectedUsers.first! : connectedUsers.last!
+            let sender = arc4random_uniform(1) % 2 == 0 ? connectedUsers.first! : connectedUsers.last!
             queuedMessage = MockMessage(text: Lorem.sentence(), sender: sender, messageId: UUID().uuidString, date: Date())
             onTypingStatusCode?()
         }
