@@ -26,18 +26,20 @@ import UIKit
 import MessageKit
 import SafariServices
 
-final internal class InboxViewController: UITableViewController {
+final internal class LaunchViewController: UITableViewController {
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
-    let cells = ["Example", "Settings", "Source Code", "Contributors"]
+    let cells = ["Basic Example", "Advanced Example", "Embedded Example", "Settings", "Source Code", "Contributors"]
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "MessageKit"
-        navigationController?.navigationBar.tintColor = .white
-        navigationController?.navigationBar.barTintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.bold) ]
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.tableFooterView = UIView()
     }
@@ -46,7 +48,6 @@ final internal class InboxViewController: UITableViewController {
         super.viewWillAppear(animated)
         if #available(iOS 11.0, *) {
             navigationController?.navigationBar.prefersLargeTitles = true
-            navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         }
     }
     
@@ -75,21 +76,31 @@ final internal class InboxViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = cells[indexPath.row]
         switch cell {
-        case "Example":
-            navigationController?.pushViewController(ConversationViewController(), animated: true)
+        case "Basic Example":
+            navigationController?.pushViewController(BasicExampleViewController(), animated: true)
+        case "Advanced Example":
+            navigationController?.pushViewController(AdvancedExampleViewController(), animated: true)
+        case "Embedded Example":
+            navigationController?.pushViewController(MessageContainerController(), animated: true)
         case "Settings":
             navigationController?.pushViewController(SettingsViewController(), animated: true)
         case "Source Code":
             guard let url = URL(string: "https://github.com/MessageKit/MessageKit") else { return }
-            let webViewController = SFSafariViewController(url: url)
-            present(webViewController, animated: true, completion: nil)
+            openURL(url)
         case "Contributors":
             guard let url = URL(string: "https://github.com/orgs/MessageKit/teams/contributors/members") else { return }
-            let webViewController = SFSafariViewController(url: url)
-            present(webViewController, animated: true, completion: nil)
+            openURL(url)
         default:
             assertionFailure("You need to impliment the action for this cell: \(cell)")
             return
         }
+    }
+    
+    func openURL(_ url: URL) {
+        let webViewController = SFSafariViewController(url: url)
+        if #available(iOS 10.0, *) {
+            webViewController.preferredControlTintColor = .primaryColor
+        }
+        present(webViewController, animated: true, completion: nil)
     }
 }

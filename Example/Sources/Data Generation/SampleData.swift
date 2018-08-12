@@ -31,49 +31,34 @@ final internal class SampleData {
 
     private init() {}
 
-    let messageTextValues = [
-        "Ok",
-        "k",
-        "lol",
-        "1-800-555-0000",
-        "One Infinite Loop Cupertino, CA 95014 This is some extra text that should not be detected.",
-        "This is an example of the date detector 11/11/2017. April 1st is April Fools Day. Next Friday is not Friday the 13th.",
-        "https://github.com/SD10",
-        "Check out this awesome UI library for Chat",
-        "My favorite things in life don’t cost any money. It’s really clear that the most precious resource we all have is time.",
-        """
-            You know, this iPhone, as a matter of fact, the engine in here is made in America.
-            And not only are the engines in here made in America, but engines are made in America and are exported.
-            The glass on this phone is made in Kentucky. And so we've been working for years on doing more and more in the United States.
-            """,
-        """
-            Remembering that I'll be dead soon is the most important tool I've ever encountered to help me make the big choices in life.
-            Because almost everything - all external expectations, all pride, all fear of embarrassment or failure -
-            these things just fall away in the face of death, leaving only what is truly important.
-            """,
-        "I think if you do something and it turns out pretty good, then you should go do something else wonderful, not dwell on it for too long. Just figure out what’s next.",
-        "Price is rarely the most important thing. A cheap product might sell some units. Somebody gets it home and they feel great when they pay the money, but then they get it home and use it and the joy is gone."
-    ]
+    let system = Sender(id: "000000", displayName: "System")
+    let nathan = Sender(id: "000001", displayName: "Nathan Tannar")
+    let steven = Sender(id: "000002", displayName: "Steven Deutsch")
+    let wu = Sender(id: "000003", displayName: "Wu Zhong")
 
-    let dan = Sender(id: "123456", displayName: "Dan Leonard")
-    let steven = Sender(id: "654321", displayName: "Steven")
-    let jobs = Sender(id: "000001", displayName: "Steve Jobs")
-    let cook = Sender(id: "656361", displayName: "Tim Cook")
-
-    lazy var senders = [dan, steven, jobs, cook]
+    lazy var senders = [nathan, steven, wu]
 
     var currentSender: Sender {
-        return steven
+        return nathan
     }
 
-    let messageImages: [UIImage] = [#imageLiteral(resourceName: "Dan-Leonard"), #imageLiteral(resourceName: "Tim-Cook"), #imageLiteral(resourceName: "Steve-Jobs")]
-
     var now = Date()
+    
+    let messageImages: [UIImage] = [#imageLiteral(resourceName: "img1"), #imageLiteral(resourceName: "img2")]
 
-    let messageTypes = ["Text", "Text", "Text", "AttributedText", "Photo", "Video", "Location", "Emoji"]
+    let messageTypes = ["Text", "Text", "Text", "Text", "Text", "AttributedText", "Location", "Photo", "Emoji", "Video", "Custom"]
 
+    let emojis = [
+        "👍",
+        "😂😂😂",
+        "👋👋👋",
+        "😱😱😱",
+        "😃😃😃",
+        "❤️"
+    ]
+    
     let attributes = ["Font1", "Font2", "Font3", "Font4", "Color", "Combo"]
-
+    
     let locations: [CLLocation] = [
         CLLocation(latitude: 37.3118, longitude: -122.0312),
         CLLocation(latitude: 33.6318, longitude: -100.0386),
@@ -82,22 +67,13 @@ final internal class SampleData {
         CLLocation(latitude: 35.3218, longitude: -127.4314),
         CLLocation(latitude: 39.3218, longitude: -113.3317)
     ]
-
-    let emojis = [
-        "👍",
-        "👋",
-        "👋👋👋",
-        "😱😱",
-        "🎈",
-        "🇧🇷"
-    ]
-
+    
     func attributedString(with text: String) -> NSAttributedString {
         let nsString = NSString(string: text)
         var mutableAttributedString = NSMutableAttributedString(string: text)
         let randomAttribute = Int(arc4random_uniform(UInt32(attributes.count)))
         let range = NSRange(location: 0, length: nsString.length)
-
+        
         switch attributes[randomAttribute] {
         case "Font1":
             mutableAttributedString.addAttribute(NSAttributedStringKey.font, value: UIFont.preferredFont(forTextStyle: .body), range: range)
@@ -113,7 +89,7 @@ final internal class SampleData {
             let msg9String = "Use .attributedText() to add bold, italic, colored text and more..."
             let msg9Text = NSString(string: msg9String)
             let msg9AttributedText = NSMutableAttributedString(string: String(msg9Text))
-
+            
             msg9AttributedText.addAttribute(NSAttributedStringKey.font, value: UIFont.preferredFont(forTextStyle: .body), range: NSRange(location: 0, length: msg9Text.length))
             msg9AttributedText.addAttributes([NSAttributedStringKey.font: UIFont.monospacedDigitSystemFont(ofSize: UIFont.systemFontSize, weight: UIFont.Weight.bold)], range: msg9Text.range(of: ".attributedText()"))
             msg9AttributedText.addAttributes([NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)], range: msg9Text.range(of: "bold"))
@@ -123,7 +99,7 @@ final internal class SampleData {
         default:
             fatalError("Unrecognized attribute for mock message")
         }
-
+        
         return NSAttributedString(attributedString: mutableAttributedString)
     }
 
@@ -141,23 +117,24 @@ final internal class SampleData {
         }
     }
 
-    func randomMessage() -> MockMessage {
+    func randomMessage(isCustomEnabled: Bool, allowedSenders: [Sender]) -> MockMessage {
 
-        let randomNumberSender = Int(arc4random_uniform(UInt32(senders.count)))
-        let randomNumberText = Int(arc4random_uniform(UInt32(messageTextValues.count)))
+        let randomNumberSender = Int(arc4random_uniform(UInt32(allowedSenders.count)))
         let randomNumberImage = Int(arc4random_uniform(UInt32(messageImages.count)))
-        let randomMessageType = Int(arc4random_uniform(UInt32(messageTypes.count)))
+        let randomMessageType = Int(arc4random_uniform(UInt32(messageTypes.count - (isCustomEnabled ? 0 : 1))))
         let randomNumberLocation = Int(arc4random_uniform(UInt32(locations.count)))
         let randomNumberEmoji = Int(arc4random_uniform(UInt32(emojis.count)))
+        
+        let randomSentance = Lorem.sentence()
         let uniqueID = NSUUID().uuidString
-        let sender = senders[randomNumberSender]
+        let sender = allowedSenders[randomNumberSender]
         let date = dateAddingRandomTime()
 
         switch messageTypes[randomMessageType] {
         case "Text":
-            return MockMessage(text: messageTextValues[randomNumberText], sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(text: randomSentance, sender: sender, messageId: uniqueID, date: date)
         case "AttributedText":
-            let attributedText = attributedString(with: messageTextValues[randomNumberText])
+            let attributedText = attributedString(with: randomSentance)
             return MockMessage(attributedText: attributedText, sender: senders[randomNumberSender], messageId: uniqueID, date: date)
         case "Photo":
             let image = messageImages[randomNumberImage]
@@ -165,10 +142,12 @@ final internal class SampleData {
         case "Video":
             let image = messageImages[randomNumberImage]
             return MockMessage(thumbnail: image, sender: sender, messageId: uniqueID, date: date)
-        case "Location":
-            return MockMessage(location: locations[randomNumberLocation], sender: sender, messageId: uniqueID, date: date)
         case "Emoji":
             return MockMessage(emoji: emojis[randomNumberEmoji], sender: sender, messageId: uniqueID, date: date)
+        case "Location":
+            return MockMessage(location: locations[randomNumberLocation], sender: sender, messageId: uniqueID, date: date)
+        case "Custom":
+            return MockMessage(custom: Randoms.randomFakeName() + " left the conversation", sender: system, messageId: uniqueID, date: date)
         default:
             fatalError("Unrecognized mock message type")
         }
@@ -177,23 +156,45 @@ final internal class SampleData {
     func getMessages(count: Int, completion: ([MockMessage]) -> Void) {
         var messages: [MockMessage] = []
         for _ in 0..<count {
-            messages.append(randomMessage())
+            let message = randomMessage(isCustomEnabled: false, allowedSenders: senders)
+            messages.append(message)
+        }
+        completion(messages)
+    }
+    
+    func getAdvancedMessages(count: Int, completion: ([MockMessage]) -> Void) {
+        var messages: [MockMessage] = []
+        for _ in 0..<count {
+            let message = randomMessage(isCustomEnabled: true, allowedSenders: senders)
+            messages.append(message)
+        }
+        completion(messages)
+    }
+    
+    func getMessages(count: Int, allowedSenders: [Sender], completion: ([MockMessage]) -> Void) {
+        var messages: [MockMessage] = []
+        for _ in 0..<count {
+            let message = randomMessage(isCustomEnabled: false, allowedSenders: allowedSenders)
+            messages.append(message)
         }
         completion(messages)
     }
 
     func getAvatarFor(sender: Sender) -> Avatar {
+        let firstName = sender.displayName.components(separatedBy: " ").first
+        let lastName = sender.displayName.components(separatedBy: " ").first
+        let initials = "\(firstName?.first ?? "A")\(lastName?.first ?? "A")"
         switch sender {
-        case dan:
-            return Avatar(image: #imageLiteral(resourceName: "Dan-Leonard"), initials: "DL")
+        case nathan:
+            return Avatar(image: #imageLiteral(resourceName: "Nathan-Tannar"), initials: initials)
         case steven:
-            return Avatar(initials: "S")
-        case jobs:
-            return Avatar(image: #imageLiteral(resourceName: "Steve-Jobs"), initials: "SJ")
-        case cook:
-            return Avatar(image: #imageLiteral(resourceName: "Tim-Cook"))
+            return Avatar(image: #imageLiteral(resourceName: "Steven-Deutsch"), initials: initials)
+        case wu:
+            return Avatar(image: #imageLiteral(resourceName: "Wu-Zhong"), initials: initials)
+        case system:
+            return Avatar(image: nil, initials: "SS")
         default:
-            return Avatar()
+            return Avatar(image: nil, initials: initials)
         }
     }
 
