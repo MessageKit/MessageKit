@@ -44,5 +44,7 @@ open class CellSizeCalculator {
     /// - indexPath: The `IndexPath` of the item to be displayed.
     /// The default return .zero
     open func sizeForItem(at indexPath: IndexPath) -> CGSize { return .zero }
+    
+    public init() {}
 
 }

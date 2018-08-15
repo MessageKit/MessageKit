@@ -126,7 +126,11 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     lazy open var textMessageSizeCalculator = TextMessageSizeCalculator(layout: self)
     lazy open var attributedTextMessageSizeCalculator = TextMessageSizeCalculator(layout: self)
-    lazy open var emojiMessageSizeCalculator = TextMessageSizeCalculator(layout: self)
+    lazy open var emojiMessageSizeCalculator: TextMessageSizeCalculator = {
+        let sizeCalculator = TextMessageSizeCalculator(layout: self)
+        sizeCalculator.messageLabelFont = UIFont.systemFont(ofSize: sizeCalculator.messageLabelFont.pointSize * 2)
+        return sizeCalculator
+    }()
     lazy open var photoMessageSizeCalculator = MediaMessageSizeCalculator(layout: self)
     lazy open var videoMessageSizeCalculator = MediaMessageSizeCalculator(layout: self)
     lazy open var locationMessageSizeCalculator = LocationMessageSizeCalculator(layout: self)
