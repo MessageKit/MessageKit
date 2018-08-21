@@ -113,14 +113,39 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     
     func insertMessage(_ message: MockMessage) {
         messageList.append(message)
-        // Reload last section and insert a new one
-        messagesCollectionView.performBatchUpdates({ [weak self] in
-            self?.messagesCollectionView.insertSections([messageList.count - 1])
-            self?.messagesCollectionView.reloadSections([messageList.count - 2])
+        // Reload last section to update header/footer labels and insert a new one
+        messagesCollectionView.performBatchUpdates({
+            messagesCollectionView.insertSections([messageList.count - 1])
+            if messageList.count >= 2 {
+                messagesCollectionView.reloadSections([messageList.count - 2])
+            }
         }, completion: { [weak self] _ in
-            self?.messagesCollectionView.scrollToBottom(animated: true)
+            if self?.isLastSectionVisible() == true {
+                self?.messagesCollectionView.scrollToBottom(animated: true)
+            }
         })
     }
+    
+    func isLastSectionVisible() -> Bool {
+        
+        guard !messageList.isEmpty else { return false }
+        
+        let lastIndexPath = IndexPath(item: 0, section: messageList.count - 1)
+        
+        let frame = messagesCollectionView.layoutAttributesForItem(at: lastIndexPath)?.frame ?? .zero
+        var rect = messagesCollectionView.convert(frame, to: view)
+        
+        // substract 100 to make the "visible" area of a cell bigger
+        rect.origin.y -= 100
+        
+        var visibleRect = CGRect(x: messagesCollectionView.bounds.origin.x, y: messagesCollectionView.bounds.origin.y, width:
+            messagesCollectionView.bounds.size.width, height:
+            messagesCollectionView.bounds.size.height - messagesCollectionView.contentInset.bottom)
+        
+        visibleRect = messagesCollectionView.convert(visibleRect, to: view)
+        return visibleRect.contains(rect)
+    }
+    
 
     // MARK: - MessagesDataSource
     
