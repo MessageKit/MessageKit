@@ -31,6 +31,10 @@ final internal class SettingsViewController: UITableViewController {
     
     var selectedMockMessagesCount: Int = 20
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     // MARK: - Picker
     
     var messagesPicker = UIPickerView()
@@ -69,7 +73,7 @@ final internal class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(TextFieldTableViewCell.self, forCellReuseIdentifier: TextFieldTableViewCell.identifier)
-        
+        tableView.tableFooterView = UIView()
         configurePickerView()
         configureToolbar()
     }

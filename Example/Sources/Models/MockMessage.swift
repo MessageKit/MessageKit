@@ -26,7 +26,7 @@ import Foundation
 import CoreLocation
 import MessageKit
 
-private struct MockLocationItem: LocationItem {
+private struct CoordinateItem: LocationItem {
 
     var location: CLLocation
     var size: CGSize
@@ -38,7 +38,7 @@ private struct MockLocationItem: LocationItem {
 
 }
 
-private struct MockMediaItem: MediaItem {
+private struct ImageMediaItem: MediaItem {
 
     var url: URL?
     var image: UIImage?
@@ -66,6 +66,10 @@ internal struct MockMessage: MessageType {
         self.messageId = messageId
         self.sentDate = date
     }
+    
+    init(custom: Any?, sender: Sender, messageId: String, date: Date) {
+        self.init(kind: .custom(custom), sender: sender, messageId: messageId, date: date)
+    }
 
     init(text: String, sender: Sender, messageId: String, date: Date) {
         self.init(kind: .text(text), sender: sender, messageId: messageId, date: date)
@@ -76,17 +80,17 @@ internal struct MockMessage: MessageType {
     }
 
     init(image: UIImage, sender: Sender, messageId: String, date: Date) {
-        let mediaItem = MockMediaItem(image: image)
+        let mediaItem = ImageMediaItem(image: image)
         self.init(kind: .photo(mediaItem), sender: sender, messageId: messageId, date: date)
     }
 
     init(thumbnail: UIImage, sender: Sender, messageId: String, date: Date) {
-        let mediaItem = MockMediaItem(image: thumbnail)
+        let mediaItem = ImageMediaItem(image: thumbnail)
         self.init(kind: .video(mediaItem), sender: sender, messageId: messageId, date: date)
     }
 
     init(location: CLLocation, sender: Sender, messageId: String, date: Date) {
-        let locationItem = MockLocationItem(location: location)
+        let locationItem = CoordinateItem(location: location)
         self.init(kind: .location(locationItem), sender: sender, messageId: messageId, date: date)
     }
 
