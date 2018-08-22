@@ -24,6 +24,8 @@
 
 import Foundation
 
+private let additionalWidthForBoundingRectCalculation: CGFloat = 5.0
+
 open class MessageSizeCalculator: CellSizeCalculator {
 
     public init(layout: MessagesCollectionViewFlowLayout? = nil) {
@@ -216,8 +218,9 @@ open class MessageSizeCalculator: CellSizeCalculator {
     internal func labelSize(for attributedText: NSAttributedString, considering maxWidth: CGFloat) -> CGSize {
         let constraintBox = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
         let rect = attributedText.boundingRect(with: constraintBox, options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil).integral
-
-        return rect.size
+        
+        // `boundingRect` method maybe not calculate correctly, like `Ꮚ˘̴͈́ꈊ˘̴͈̀Ꮚ⋆✩`, so we add 5 points to fix them temporary.
+        return CGSize(width: rect.width + additionalWidthForBoundingRectCalculation, height: rect.height)
     }
 }
 

@@ -6,6 +6,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Upcoming release
 
+### Fixed
+
+- Fixed `boundingRect(with:options:)` miscalculation of `MessageLabel` , like text `Ꮚ˘̴͈́ꈊ˘̴͈̀Ꮚ⋆✩`、`Tomorrow is the day`.
+[#824](https://github.com/MessageKit/MessageKit/pull/824) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 ### Changed
 
 - The `MessageData.emoji` case once again uses a default font of 2x the `messageLabelFont` size.
