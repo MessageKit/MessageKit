@@ -15,16 +15,8 @@ internal class IMessageViewController: MessagesViewController {
         iMessage()
     }
 
-    func defaultStyle() {
-        let newMessageInputBar = MessageInputBar()
-        newMessageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
-        //newMessageInputBar.delegate = self
-        messageInputBar = newMessageInputBar
-        reloadInputViews()
-    }
-
     func iMessage() {
-        defaultStyle()
+        messageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
         messageInputBar.isTranslucent = false
         messageInputBar.backgroundView.backgroundColor = .red
         messageInputBar.separatorLine.isHidden = true
