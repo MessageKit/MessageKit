@@ -145,7 +145,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         visibleRect = messagesCollectionView.convert(visibleRect, to: view)
         return visibleRect.contains(rect)
     }
-    
 
     // MARK: - MessagesDataSource
     
@@ -203,6 +202,10 @@ extension ChatViewController: MessageCellDelegate {
     
     func didTapMessageBottomLabel(in cell: MessageCollectionViewCell) {
         print("Bottom label tapped")
+    }
+    
+    func didTapAccessoryView(in cell: MessageCollectionViewCell) {
+        print("Accessory view tapped")
     }
     
 }

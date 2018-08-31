@@ -156,6 +156,8 @@ open class MessageContentCell: MessageCollectionViewCell {
             delegate?.didTapMessageTopLabel(in: self)
         case messageBottomLabel.frame.contains(touchLocation):
             delegate?.didTapMessageBottomLabel(in: self)
+        case accessoryView.frame.contains(touchLocation):
+            delegate?.didTapAccessoryView(in: self)
         default:
             break
         }
@@ -271,7 +273,10 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// Positions the cell's accessory view.
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutAccessoryView(with attributes: MessagesCollectionViewLayoutAttributes) {
-        var y = (bounds.height - attributes.accessoryViewSize.height) / 2
+        
+        // Accessory view aligned to the middle of the messageContainerView
+        var y = (messageContainerView.bounds.height - attributes.accessoryViewSize.height) / 2
+        y += messageContainerView.frame.origin.y
         y -= attributes.accessoryViewPadding.vertical + attributes.accessoryViewPadding.top
 
         var origin = CGPoint(x: 0, y: y)

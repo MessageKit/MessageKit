@@ -97,6 +97,11 @@ final class AdvancedExampleViewController: ChatViewController {
         layout?.setMessageIncomingAvatarSize(CGSize(width: 30, height: 30))
         layout?.setMessageIncomingMessagePadding(UIEdgeInsets(top: -outgoingAvatarOverlap, left: -18, bottom: outgoingAvatarOverlap, right: 18))
         
+        layout?.setMessageIncomingAccessoryViewSize(CGSize(width: 30, height: 30))
+        layout?.setMessageIncomingAccessoryViewPadding(UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0))
+        layout?.setMessageOutgoingAccessoryViewSize(CGSize(width: 30, height: 30))
+        layout?.setMessageOutgoingAccessoryViewPadding(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8))
+        
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
     }
@@ -309,6 +314,14 @@ extension AdvancedExampleViewController: MessagesDisplayDelegate {
         avatarView.isHidden = isNextMessageSameSender(at: indexPath)
         avatarView.layer.borderWidth = 2
         avatarView.layer.borderColor = UIColor.primaryColor.cgColor
+    }
+    
+    func configureAccessoryView(_ accessoryView: UIView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        let button = UIButton(type: .infoLight)
+        button.tintColor = .primaryColor
+        accessoryView.addSubview(button)
+        button.frame = accessoryView.bounds
+        button.isUserInteractionEnabled = false // respond to accessoryView tap through `MessageCellDelegate`
     }
     
     // MARK: - Location Messages
