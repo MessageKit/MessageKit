@@ -24,8 +24,6 @@
 
 import Foundation
 
-private let additionalWidthForBoundingRectCalculation: CGFloat = 5.0
-
 open class MessageSizeCalculator: CellSizeCalculator {
 
     public init(layout: MessagesCollectionViewFlowLayout? = nil) {
@@ -51,6 +49,23 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     public var incomingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(left: 42))
     public var outgoingMessageBottomLabelAlignment = LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(right: 42))
+    
+    private lazy var textContainer: NSTextContainer = {
+        let textContainer = NSTextContainer()
+        textContainer.maximumNumberOfLines = 0
+        textContainer.lineFragmentPadding = 0
+        return textContainer
+    }()
+    private lazy var layoutManager: NSLayoutManager = {
+        let layoutManager = NSLayoutManager()
+        layoutManager.addTextContainer(textContainer)
+        return layoutManager
+    }()
+    private lazy var textStorage: NSTextStorage = {
+        let textStorage = NSTextStorage()
+        textStorage.addLayoutManager(layoutManager)
+        return textStorage
+    }()
 
     open override func configure(attributes: UICollectionViewLayoutAttributes) {
         guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
@@ -217,10 +232,14 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     internal func labelSize(for attributedText: NSAttributedString, considering maxWidth: CGFloat) -> CGSize {
         let constraintBox = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
-        let rect = attributedText.boundingRect(with: constraintBox, options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil).integral
         
-        // `boundingRect` method maybe not calculate correctly, like `Ꮚ˘̴͈́ꈊ˘̴͈̀Ꮚ⋆✩`, so we add 5 points to fix them temporary.
-        return CGSize(width: rect.width + additionalWidthForBoundingRectCalculation, height: rect.height)
+        textContainer.size = constraintBox
+        textStorage.replaceCharacters(in: NSRange(location: 0, length: textStorage.length), with: attributedText)
+        layoutManager.ensureLayout(for: textContainer)
+        
+        let size = layoutManager.usedRect(for: textContainer).size
+        
+        return CGSize(width: size.width.rounded(.up), height: size.height.rounded(.up))
     }
 }
 

@@ -172,7 +172,7 @@ open class MessageLabel: UILabel {
     open override func drawText(in rect: CGRect) {
 
         let insetRect = UIEdgeInsetsInsetRect(rect, textInsets)
-        textContainer.size = CGSize(width: insetRect.width, height: rect.height)
+        textContainer.size = CGSize(width: insetRect.width, height: insetRect.height)
 
         let origin = insetRect.origin
         let range = layoutManager.glyphRange(for: textContainer)
