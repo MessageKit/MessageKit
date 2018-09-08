@@ -206,7 +206,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         case .custom:
-            fatalError(MessageKitError.customDataUnresolvedCell)
+            return messagesDataSource.customCell(for: message, at: indexPath, in: messagesCollectionView)
         }
     }
 
