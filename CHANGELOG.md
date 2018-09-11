@@ -30,6 +30,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Fixed the `MessageData.emoji` case to use 2x the `messageLabelFont` size by default.
 [#795](https://github.com/MessageKit/MessageKit/pull/795) by [@Vortec4800](https://github.com/vortec4800).
 
+- **Breaking Change** Renamed `scrollsToBottomOnKeybordBeginsEditing` to `scrollsToBottomOnKeyboardBeginsEditing`.
+
 ## [1.0.0](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0)
 
 - First major release.
