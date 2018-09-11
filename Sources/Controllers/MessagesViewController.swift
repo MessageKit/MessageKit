@@ -39,7 +39,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     /// bottom whenever the `InputTextView` begins editing.
     ///
     /// The default value of this property is `false`.
-    open var scrollsToBottomOnKeybordBeginsEditing: Bool = false
+    open var scrollsToBottomOnKeyboardBeginsEditing: Bool = false
     
     /// A Boolean value that determines whether the `MessagesCollectionView`
     /// maintains it's current position when the height of the `MessageInputBar` changes.
