@@ -62,7 +62,7 @@ internal class ConversationViewController: MessagesViewController {
         messageInputBar.delegate = self
 
         messageInputBar.sendButton.tintColor = UIColor(red: 69/255, green: 193/255, blue: 89/255, alpha: 1)
-        scrollsToBottomOnKeybordBeginsEditing = true // default false
+        scrollsToBottomOnKeyboardBeginsEditing = true // default false
         maintainPositionOnKeyboardFrameChanged = true // default false
         
         messagesCollectionView.addSubview(refreshControl)
