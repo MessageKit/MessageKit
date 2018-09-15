@@ -124,7 +124,7 @@ open class MessagesCollectionView: UICollectionView {
     }
     
     /// Registers a nib with reusable view for a specific SectionKind
-    public func registerNib<T: UICollectionReusableView>(_ nib: UINib? = UINib(nibName: String(describing: T.self), bundle: nil), with headerFooterClass: T.Type, forSupplementaryViewOfKind kind: String) {
+    public func register<T: UICollectionReusableView>(_ nib: UINib? = UINib(nibName: String(describing: T.self), bundle: nil), headerFooterClassOfNib headerFooterClass: T.Type, forSupplementaryViewOfKind kind: String) {
         register(nib,
                  forSupplementaryViewOfKind: kind,
                  withReuseIdentifier: String(describing: T.self))        
