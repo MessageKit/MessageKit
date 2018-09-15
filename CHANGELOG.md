@@ -30,6 +30,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Fixed the `MessageData.emoji` case to use 2x the `messageLabelFont` size by default.
 [#795](https://github.com/MessageKit/MessageKit/pull/795) by [@Vortec4800](https://github.com/vortec4800).
 
+### Fixed
+
+- Fixed `MessagesCollectionView` to allow to use nibs with `MessageReusableView`.
+[#832](https://github.com/MessageKit/MessageKit/pull/832) by [@maxxx777](https://github.com/maxxx777).
+
 ## [1.0.0](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0)
 
 - First major release.
