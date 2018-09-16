@@ -96,7 +96,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messageCellDelegate = self
         
-        scrollsToBottomOnKeybordBeginsEditing = true // default false
+        scrollsToBottomOnKeyboardBeginsEditing = true // default false
         maintainPositionOnKeyboardFrameChanged = true // default false
         
         messagesCollectionView.addSubview(refreshControl)

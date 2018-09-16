@@ -24,6 +24,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
+- **Breaking Change** Fixed typo of `scrollsToBottomOnKeybordBeginsEditing` to `scrollsToBottomOnKeyboardBeginsEditing`.
+[#856](https://github.com/MessageKit/MessageKit/pull/856) by [@p-petrenko](https://github.com/p-petrenko)
+
 - Fixed bottom content inset adjustment when using an undocked keyboard on iPad, or when `edgesForExtendedLayout` does not include `.top`, or when a parent container view controller adds extra views at the top of the screen. 
 [#787](https://github.com/MessageKit/MessageKit/pull/787) by [@andreyvit](https://github.com/andreyvit)
 
