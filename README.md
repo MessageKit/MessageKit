@@ -116,6 +116,7 @@ Interested in contributing to MessageKit? Click here to join our [Slack](https:/
 Add your app to the list of apps using this library and make a pull request.
 
 - [MediQuo](https://www.mediquo.com)
+- [RappresentaMe](https://itunes.apple.com/it/app/rappresentame/id1330914443)
 
 *Please provide attribution, it is greatly appreciated.*
 
