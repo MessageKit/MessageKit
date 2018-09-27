@@ -63,7 +63,7 @@ open class InputTextView: UITextView {
     open var isImagePasteEnabled: Bool = true
     
     /// A UILabel that holds the InputTextView's placeholder text
-    open let placeholderLabel: UILabel = {
+    public let placeholderLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .lightGray
@@ -190,7 +190,7 @@ open class InputTextView: UITextView {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(InputTextView.redrawTextAttachments),
-                                               name: .UIDeviceOrientationDidChange, object: nil)
+                                               name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     /// Updates the placeholderLabels constraint constants to match the placeholderLabelInsets
@@ -205,7 +205,7 @@ open class InputTextView: UITextView {
     // MARK: - Notification
     
     private func postTextViewDidChangeNotification() {
-        NotificationCenter.default.post(name: .UITextViewTextDidChange, object: self)
+        NotificationCenter.default.post(name: UITextView.textDidChangeNotification, object: self)
     }
     
     // MARK: - Image Paste Support
@@ -244,9 +244,9 @@ open class InputTextView: UITextView {
         newAttributedStingComponent.append(NSAttributedString(string: "\n"))
         
         // The attributes that should be applied to the new NSAttributedString to match the current attributes
-        let attributes: [NSAttributedStringKey: Any] = [
-            NSAttributedStringKey.font: font ?? UIFont.preferredFont(forTextStyle: .body),
-            NSAttributedStringKey.foregroundColor: textColor ?? .black
+        let attributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font: font ?? UIFont.preferredFont(forTextStyle: .body),
+            NSAttributedString.Key.foregroundColor: textColor ?? .black
             ]
         newAttributedStingComponent.addAttributes(attributes, range: NSRange(location: 0, length: newAttributedStingComponent.length))
         
@@ -260,7 +260,7 @@ open class InputTextView: UITextView {
         selectedRange = NSRange(location: location, length: 0)
     
         // Broadcast a notification to recievers such as the MessageInputBar which will handle resizing
-        NotificationCenter.default.post(name: .UITextViewTextDidChange, object: self)
+        NotificationCenter.default.post(name: UITextView.textDidChangeNotification, object: self)
     }
     
     /// Returns an NSTextAttachment the provided image that will fit inside the NSTextContainer
@@ -315,7 +315,7 @@ open class InputTextView: UITextView {
                 } else if let image = attachment.image(forBounds: attachment.bounds,
                                                        textContainer: nil,
                                                        characterIndex: range.location) {
-                    attachments.append((range,image))
+                    attachments.append((range, image))
                 }
             }
         }
@@ -326,12 +326,11 @@ open class InputTextView: UITextView {
             if !text.isEmpty {
                 components.append(text)
             }
-        }
-        else {
+        } else {
             attachments.forEach { (attachment) in
                 let (range, image) = attachment
                 if curLocation < range.location {
-                    let textRange = NSMakeRange(curLocation, range.location)
+                    let textRange = NSRange.init(location: curLocation, length: range.location)
                     let text = attributedText.attributedSubstring(from: textRange).string.trimmingCharacters(in: .whitespacesAndNewlines)
                     if !text.isEmpty {
                         components.append(text)
@@ -341,8 +340,8 @@ open class InputTextView: UITextView {
                 curLocation = range.location + range.length
                 components.append(image)
             }
-            if curLocation < length - 1  {
-                let text = attributedText.attributedSubstring(from: NSMakeRange(curLocation, length - curLocation)).string.trimmingCharacters(in: .whitespacesAndNewlines)
+            if curLocation < length - 1 {
+                let text = attributedText.attributedSubstring(from: NSRange.init(location: curLocation, length: length - curLocation)).string.trimmingCharacters(in: .whitespacesAndNewlines)
                 if !text.isEmpty {
                     components.append(text)
                 }

@@ -56,7 +56,7 @@ class InputBarItemTests: XCTestCase {
     func testImagePropertyGettersAndSetters() {
         button.image = UIImage()
         XCTAssertNotNil(button.image)
-        XCTAssertEqual(UIImagePNGRepresentation(button.image!), UIImagePNGRepresentation(UIImage()))
+        XCTAssertEqual(button.image!.pngData(), UIImage().pngData())
     }
 
     func testIsHighlightedProperty() {
