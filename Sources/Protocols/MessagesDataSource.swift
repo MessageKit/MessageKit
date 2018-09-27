@@ -93,7 +93,6 @@ public protocol MessagesDataSource: AnyObject {
     /// The default value returned by this method is `nil`.
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
     
-    
     /// Custom collectionView cell for message with `custom` message type.
     ///
     /// - Parameters:

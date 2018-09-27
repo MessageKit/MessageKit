@@ -81,7 +81,6 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///   The default value returned by this method is zero.
     func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
     
-    
     /// Cell size calculator for messages with MessageType.custom.
     ///
     /// - Parameters:
