@@ -63,7 +63,7 @@ open class InputTextView: UITextView {
     open var isImagePasteEnabled: Bool = true
     
     /// A UILabel that holds the InputTextView's placeholder text
-    open let placeholderLabel: UILabel = {
+    public let placeholderLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .lightGray
@@ -190,7 +190,7 @@ open class InputTextView: UITextView {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(InputTextView.redrawTextAttachments),
-                                               name: .UIDeviceOrientationDidChange, object: nil)
+                                               name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     /// Updates the placeholderLabels constraint constants to match the placeholderLabelInsets
@@ -205,7 +205,7 @@ open class InputTextView: UITextView {
     // MARK: - Notification
     
     private func postTextViewDidChangeNotification() {
-        NotificationCenter.default.post(name: .UITextViewTextDidChange, object: self)
+        NotificationCenter.default.post(name: UITextView.textDidChangeNotification, object: self)
     }
     
     // MARK: - Image Paste Support
@@ -244,9 +244,9 @@ open class InputTextView: UITextView {
         newAttributedStingComponent.append(NSAttributedString(string: "\n"))
         
         // The attributes that should be applied to the new NSAttributedString to match the current attributes
-        let attributes: [NSAttributedStringKey: Any] = [
-            NSAttributedStringKey.font: font ?? UIFont.preferredFont(forTextStyle: .body),
-            NSAttributedStringKey.foregroundColor: textColor ?? .black
+        let attributes: [NSAttributedString.Key: Any] = [
+            NSAttributedString.Key.font: font ?? UIFont.preferredFont(forTextStyle: .body),
+            NSAttributedString.Key.foregroundColor: textColor ?? .black
             ]
         newAttributedStingComponent.addAttributes(attributes, range: NSRange(location: 0, length: newAttributedStingComponent.length))
         
@@ -260,7 +260,7 @@ open class InputTextView: UITextView {
         selectedRange = NSRange(location: location, length: 0)
     
         // Broadcast a notification to recievers such as the MessageInputBar which will handle resizing
-        NotificationCenter.default.post(name: .UITextViewTextDidChange, object: self)
+        NotificationCenter.default.post(name: UITextView.textDidChangeNotification, object: self)
     }
     
     /// Returns an NSTextAttachment the provided image that will fit inside the NSTextContainer

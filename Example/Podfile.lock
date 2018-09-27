@@ -1,16 +1,16 @@
 PODS:
-  - MessageKit (0.13.4)
+  - MessageKit (1.0.0)
 
 DEPENDENCIES:
   - MessageKit (from `../`)
 
 EXTERNAL SOURCES:
   MessageKit:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
-  MessageKit: f51122543e9ba8b521e5eab58b0385bd7ce47a10
+  MessageKit: 16160036b16476b04bd0e9f2c7ce67e662e503e4
 
 PODFILE CHECKSUM: cecdb7bc8129cf99f66de9f68eea3256fec30c3d
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.3.1

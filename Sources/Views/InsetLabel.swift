@@ -31,7 +31,7 @@ open class InsetLabel: UILabel {
     }
 
     open override func drawText(in rect: CGRect) {
-        let insetRect = UIEdgeInsetsInsetRect(rect, textInsets)
+        let insetRect = rect.inset(by: textInsets)
         super.drawText(in: insetRect)
     }
 

@@ -207,6 +207,7 @@
 				882B5EA41CF7D8D100B6E160 /* Embed Frameworks */,
 				3C8DFCD3063DA0DF099EC7B6 /* [CP] Embed Pods Frameworks */,
 				7E0AFF9D207BB460004DFD4C /* ShellScript */,
+				D3842CF2903C387A6195948C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -225,6 +226,8 @@
 				882B5E451CF7D4B900B6E160 /* Sources */,
 				882B5E461CF7D4B900B6E160 /* Frameworks */,
 				882B5E471CF7D4B900B6E160 /* Resources */,
+				5314CAAB5B8C7B68CDD63DB7 /* [CP] Embed Pods Frameworks */,
+				BA0099422D3885742A9E22A9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -244,6 +247,8 @@
 				882B5E501CF7D4B900B6E160 /* Sources */,
 				882B5E511CF7D4B900B6E160 /* Frameworks */,
 				882B5E521CF7D4B900B6E160 /* Resources */,
+				F5B0C03A7EF21FD9635C42F0 /* [CP] Embed Pods Frameworks */,
+				7BD0BE78E13B8C00AF61141D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -267,12 +272,12 @@
 				TargetAttributes = {
 					882B5E321CF7D4B900B6E160 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = T26M4385KK;
-						LastSwiftMigration = 0800;
+						DevelopmentTeam = 5HU545WEHV;
+						LastSwiftMigration = 1000;
 					};
 					882B5E481CF7D4B900B6E160 = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1000;
 						TestTargetID = 882B5E321CF7D4B900B6E160;
 					};
 					882B5E531CF7D4B900B6E160 = {
@@ -400,6 +405,36 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		5314CAAB5B8C7B68CDD63DB7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ChatExampleTests/Pods-ChatExampleTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7BD0BE78E13B8C00AF61141D /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ChatExampleUITests/Pods-ChatExampleUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7E0AFF9D207BB460004DFD4C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -412,6 +447,51 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		BA0099422D3885742A9E22A9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ChatExampleTests/Pods-ChatExampleTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D3842CF2903C387A6195948C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ChatExample/Pods-ChatExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F5B0C03A7EF21FD9635C42F0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ChatExampleUITests/Pods-ChatExampleUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -587,12 +667,12 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = T26M4385KK;
+				DEVELOPMENT_TEAM = 5HU545WEHV;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.messagekit.ChatExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -602,13 +682,13 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = T26M4385KK;
+				DEVELOPMENT_TEAM = 5HU545WEHV;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.messagekit.ChatExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -621,7 +701,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hexedbits.ChatExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChatExample.app/ChatExample";
 			};
 			name = Debug;
@@ -636,7 +716,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hexedbits.ChatExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ChatExample.app/ChatExample";
 			};
 			name = Release;
