@@ -29,6 +29,7 @@ import AVFoundation
 /// framework provided `MessageCollectionViewCell` subclasses.
 open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
+    //layoutAttributesClass
     open override class var layoutAttributesClass: AnyClass {
         return MessagesCollectionViewLayoutAttributes.self
     }
