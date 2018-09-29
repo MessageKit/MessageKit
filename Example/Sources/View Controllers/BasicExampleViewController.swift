@@ -48,7 +48,7 @@ extension BasicExampleViewController: MessagesDisplayDelegate {
         return isFromCurrentSender(message: message) ? .white : .darkText
     }
     
-    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedStringKey: Any] {
+    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key: Any] {
         return MessageLabel.defaultAttributes
     }
     
