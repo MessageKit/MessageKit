@@ -11,6 +11,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Fixed the way that the Strings and UIImages are parsed in the `InputTextView` to prevent crashes in `parseForComponents()`. 
 [#791](https://github.com/MessageKit/MessageKit/pull/791) by [@nathantannar4](https://github.com/nathantannar4)
 
+- **Breaking Change** Updated codebase to Swift 4.2 [#883](https://github.com/MessageKit/MessageKit/pull/883) by [@nathantannar4](https://github.com/nathantannar4)
+
 ### Added
 
 - Added support for detection and handling of `NSLink`s inside of messages.

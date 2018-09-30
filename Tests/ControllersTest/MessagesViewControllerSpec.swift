@@ -72,7 +72,7 @@ final class MessagesViewControllerSpec: QuickSpec {
                 }
                 it("sets keyboardDismissMode to .interactive") {
                     let dismissMode = controller.messagesCollectionView.keyboardDismissMode
-                    expect(dismissMode).to(equal(UIScrollViewKeyboardDismissMode.interactive))
+                    expect(dismissMode).to(equal(UIScrollView.KeyboardDismissMode.interactive))
                 }
                 it("sets alwaysBounceVertical to true") {
                     expect(controller.messagesCollectionView.alwaysBounceVertical).to(beTrue())
