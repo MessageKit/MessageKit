@@ -24,6 +24,7 @@
 
 import Quick
 import Nimble
+import MessageInputBar
 @testable import MessageKit
 
 //swiftlint:disable function_body_length
@@ -40,7 +41,7 @@ final class MessagesViewControllerSpec: QuickSpec {
         describe("default property values") {
             context("after initialization") {
                 it("sets scrollsToBottomOnKeyboardBeginsEditing to false") {
-                    expect(controller.scrollsToBottomOnKeybordBeginsEditing).to(beFalse())
+                    expect(controller.scrollsToBottomOnKeyboardBeginsEditing).to(beFalse())
                 }
                 it("sets canBecomeFirstResponder to true") {
                     expect(controller.canBecomeFirstResponder).to(beTrue())
@@ -124,12 +125,12 @@ final class MessagesViewControllerSpec: QuickSpec {
         }
 
         describe("scrolling behavior when keyboard begins editing") {
-            context("scrollsToBottomOnKeybordBeginsEditing is true") {
+            context("scrollsToBottomOnKeyboardBeginsEditing is true") {
                 it("should scroll to bottom") {
 
                 }
             }
-            context("scrollsToBottomOnKeybordBeginsEditing is false") {
+            context("scrollsToBottomOnKeyboardBeginsEditing is false") {
                 it("should not scroll to bottom") {
 
                 }
