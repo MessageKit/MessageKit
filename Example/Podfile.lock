@@ -14,7 +14,7 @@ EXTERNAL SOURCES:
     :branch: master
     :git: https://github.com/MessageKit/MessageInputBar.git
   MessageKit:
-    :path: "../"
+    :path: ../
 
 CHECKOUT OPTIONS:
   MessageInputBar:
@@ -23,8 +23,8 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   MessageInputBar: d46ecc5b355d13433b8367dcd200e05a6564f0ed
-  MessageKit: 2bbd13dd6a7c06f42f2d13ed8871d1fe5383b477
+  MessageKit: 0aaaa6115a9b4497a65fcdfed5dad270fbc8f2b2
 
 PODFILE CHECKSUM: 04c1a805e1997e83bacab1a34787e71e9fe4432b
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.3.1
