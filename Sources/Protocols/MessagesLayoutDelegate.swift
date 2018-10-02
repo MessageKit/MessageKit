@@ -81,7 +81,7 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///   The default value returned by this method is zero.
     func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
     
-    /// Cell size calculator for messages with MessageType.custom.
+    /// Custom cell size calculator for messages with MessageType.custom.
     ///
     /// - Parameters:
     ///   - message: The custom message
@@ -90,7 +90,7 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///
     /// - Note:
     ///   The default implementation will throw fatalError(). You must override this method if you are using messages with MessageType.custom.
-    func cellSizeCalculator(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator
+    func customCellSizeCalculator(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator
 }
 
 public extension MessagesLayoutDelegate {
@@ -115,7 +115,7 @@ public extension MessagesLayoutDelegate {
         return 0
     }
     
-    func cellSizeCalculator(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator {
+    func customCellSizeCalculator(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator {
         fatalError("Must return a CellSizeCalculator for MessageKind.custom(Any?)")
     }
 }
