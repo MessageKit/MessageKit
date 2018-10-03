@@ -104,31 +104,6 @@ extension BasicExampleViewController: MessagesDisplayDelegate {
         return self.isFromCurrentSender(message: message) ? .white : UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
     }
 
-//    func configureAudioCell(_ audioCell: AudioMessageCell, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
-//        // if audio player is in pause or currently playing configure the cell accordingly
-//        guard let player = audioPlayer else {
-//            return
-//        }
-//        switch message.kind {
-//        case .audio(let item):
-//            if item.url.absoluteString == player.url?.absoluteString { // make sure you configure the right cell
-//                let totalDuration = self.audioPlayer?.duration ?? 0.0
-//                let currentTime = self.audioPlayer?.currentTime ?? 0.0
-//                let percent = (totalDuration != 0) ? (Float(currentTime/totalDuration)) : 0.0
-//                audioCell.updateProgress(percent: percent, duration: currentTime)
-//                // restart audio timer since the cell was reconfigured
-//                if self.audioTimer?.isValid == true {
-//                    self.audioTimer?.invalidate()
-//                    print("Restart timer with new cell: \(audioCell)")
-//                    self.audioTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ChatViewController.didFireAudioTimer(_:)), userInfo: audioCell, repeats: true)
-//                } else {
-//                    audioCell.pasue()  // if the audio timer is invalidate it means the cell is in pause
-//                }
-//            }
-//        default: break
-//        }
-//    }
-
 }
 
 // MARK: - MessagesLayoutDelegate

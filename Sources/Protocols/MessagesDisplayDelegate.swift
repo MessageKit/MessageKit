@@ -184,15 +184,6 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     func configureMediaMessageImageView(_ imageView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
 
-    /// Used to configure the `AudioMessageCell.
-    ///
-    /// - Parameters:
-    ///   - audioCell: The `AudioMessageCell` that needs to be configured.
-    ///   - message: The `MessageType` that will be displayed by this cell.
-    ///   - indexPath: The `IndexPath` of the cell.
-    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
-    func configureAudioCell(_ audioCell: AudioMessageCell, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
-
 }
 
 public extension MessagesDisplayDelegate {
@@ -266,12 +257,6 @@ public extension MessagesDisplayDelegate {
     // MARK: - Media Message Defaults
 
     func configureMediaMessageImageView(_ imageView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
-    }
-
-    // MARK: - Audio Message Defaults
-
-    func configureAudioCell(_ audioCell: AudioMessageCell, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
-
     }
 
 }

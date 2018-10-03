@@ -28,8 +28,8 @@ import AVFoundation
 /// A subclass of `MessageContentCell` used to display video and audio messages.
 open class AudioMessageCell: MessageContentCell {
 
-    private var audioURL: URL?
-    private var audioPlayer: AVAudioPlayer?
+    /// The `AudioCellDelegate` delegate
+    internal weak var audioCellDelegate: AudioCellDelegate?
 
     /// The play button view to display on audio messages.
     open lazy var playButton: UIButton = {
@@ -59,51 +59,23 @@ open class AudioMessageCell: MessageContentCell {
         return progressView
     }()
 
-
-
-
-
-
-
-
-
-
-
-    /// Toggle play button from play state to pause state and inverse
-    open func play() {
-        self.playButton.isSelected = true
-    }
-
-    open func stop(with messageKind: MessageKind) {
-        playButton.isSelected = false
-        progressView.progress = 0.0
-        // set total audio file duration
-        switch messageKind {
-        case .audio(let item):
-            let audioAsset = AVURLAsset.init(url: item.url)
-            let duration = CMTimeGetSeconds(audioAsset.duration)
-            durationLabel.text = AudioMessageCell.durationString(from: duration)
-        default: break
+    // MARK: - Internal Methods
+    internal class func durationString(from duration: Float) -> String {
+        var retunValue = "0:00"
+        // print the time as 0:ss if duration is up to 59 seconds
+        // print the time as m:ss if duration is up to 59:59 seconds
+        // print the time as h:mm:ss for anything longer
+        if duration < 60 {
+            retunValue = String(format: "0:%.02d", Int(duration.rounded(.up)))
+        } else if duration < 3600 {
+            retunValue = String(format: "%.02d:%.02d", Int(duration/60), Int(duration) % 60)
+        } else {
+            let hours = Int(duration/3600)
+            let remainingMinutsInSeconds = Int(duration) - hours*3600
+            retunValue = String(format: "%.02d:%.02d:%.02d", hours, Int(remainingMinutsInSeconds/60), Int(remainingMinutsInSeconds) % 60)
         }
+        return retunValue
     }
-
-    open func pasue() {
-        self.playButton.isSelected = false
-    }
-
-    open func isPlaying() -> Bool {
-        return playButton.isSelected
-    }
-
-    open func updateProgress(percent: Float, duration: TimeInterval) {
-        progressView.progress = percent
-        durationLabel.text = AudioMessageCell.durationString(from: Float64(duration))
-    }
-
-
-
-
-
 
     // MARK: - Methods
 
@@ -127,17 +99,18 @@ open class AudioMessageCell: MessageContentCell {
         super.prepareForReuse()
         progressView.progress = 0
         playButton.isSelected = false
+        self.durationLabel.text = "0:00"
     }
 
     /// Handle tap gesture on contentView and its subviews.
-    override open func handleTapGesture(_ gesture: UIGestureRecognizer) {
+    open override func handleTapGesture(_ gesture: UIGestureRecognizer) {
         let touchLocation = gesture.location(in: self)
         // compute play button touch area, currently play button size is (25, 25) which is hardly touchable
         // add 10 px around current button frame and test the touch against this new frame
         let playButtonTouchArea = CGRect.init(playButton.frame.origin.x - 10.0, playButton.frame.origin.y - 10, playButton.frame.size.width + 20, playButton.frame.size.height + 20)
         let translateTouchLocation = convert(touchLocation, to: messageContainerView)
         if playButtonTouchArea.contains(translateTouchLocation) {
-            delegate?.didTapPlayButton(in: self)
+            audioCellDelegate?.didPressPlayInCell(self)
         } else {
             // touch is not inside play button touch area, call super to hangle gesture
             super.handleTapGesture(gesture)
@@ -154,19 +127,12 @@ open class AudioMessageCell: MessageContentCell {
         switch message.kind {
         case .audio(let mediaItem):
             // default configuration
-            let audioAsset = AVURLAsset.init(url: mediaItem.url)
-            let duration = CMTimeGetSeconds(audioAsset.duration)
-            durationLabel.text = AudioMessageCell.durationString(from: duration)
+            durationLabel.text = AudioMessageCell.durationString(from: mediaItem.duration)
             progressView.progress = 0.0
+            playButton.isSelected = false
         default:
             break
         }
-        // call delegate for more configurations, especialy when an audio file is already playing
-        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError(MessageKitError.nilMessagesDisplayDelegate)
-        }
-        displayDelegate.configureAudioCell(self, for: message, at: indexPath, in: messagesCollectionView)
-
     }
 
     private func configureCellApperance(with message: MessageType, indexPath: IndexPath, messagesCollectionView: MessagesCollectionView) {
@@ -200,23 +166,6 @@ open class AudioMessageCell: MessageContentCell {
         let image = UIImage(contentsOfFile: imagePath ?? "")
 
         return image
-    }
-
-    private class func durationString(from duration: Float64) -> String {
-        var retunValue = "0:00"
-        // print the time as 0:ss if duration is up to 59 seconds
-        // print the time as m:ss if duration is up to 59:59 seconds
-        // print the time as h:mm:ss for anything longer
-        if duration < 60 {
-            retunValue = String(format: "0:%.02d", Int(duration.rounded(.up)))
-        } else if duration < 3600 {
-            retunValue = String(format: "%.02d:%.02d", Int(duration/60), Int(duration) % 60)
-        } else {
-            let hours = Int(duration/3600)
-            let remainingMinutsInSeconds = Int(duration) - hours*3600
-            retunValue = String(format: "%.02d:%.02d:%.02d", hours, Int(remainingMinutsInSeconds/60), Int(remainingMinutsInSeconds) % 60)
-        }
-        return retunValue
     }
 
 }

@@ -58,10 +58,14 @@ private struct MockAudiotem: AudioItem {
 
     var url: URL
     var size: CGSize
+    var duration: Float
 
     init(url: URL) {
         self.url = url
         self.size = CGSize(width: 160, height: 35)
+        // compute duration
+        let audioAsset = AVURLAsset.init(url: url)
+        self.duration = Float(CMTimeGetSeconds(audioAsset.duration))
     }
 
 }

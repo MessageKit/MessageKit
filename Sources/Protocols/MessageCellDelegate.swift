@@ -78,15 +78,35 @@ public protocol MessageCellDelegate: MessageLabelDelegate {
     /// method `messageForItem(at:indexPath:messagesCollectionView)`.
     func didTapMessageBottomLabel(in cell: MessageCollectionViewCell)
 
-    /// Triggered when a tap occurs in the `AudioMessageCell` on play button.
+    /// Triggered when audio player start playing audio.
     ///
     /// - Parameters:
-    ///   - cell: The cell where the tap occurred.
+    ///   - cell: The cell where the audio sound is playing.
     ///
     /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
     /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
     /// method `messageForItem(at:indexPath:messagesCollectionView)`.
-    func didTapPlayButton(in cell: AudioMessageCell)
+    func didStartAudio(in cell: AudioMessageCell)
+
+    /// Triggered when audio player pause audio.
+    ///
+    /// - Parameters:
+    ///   - cell: The cell where the audio sound is paused.
+    ///
+    /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
+    /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
+    /// method `messageForItem(at:indexPath:messagesCollectionView)`.
+    func didPauseAudio(in cell: AudioMessageCell)
+
+    /// Triggered when audio player stoped audio.
+    ///
+    /// - Parameters:
+    ///   - cell: The cell where the audio sound is stoped.
+    ///
+    /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
+    /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
+    /// method `messageForItem(at:indexPath:messagesCollectionView)`.
+    func didStopAudio(in cell: AudioMessageCell)
 
 }
 
@@ -100,5 +120,10 @@ public extension MessageCellDelegate {
 
     func didTapMessageTopLabel(in cell: MessageCollectionViewCell) {}
 
-    func didTapMessageBottomLabel(in cell: MessageCollectionViewCell) {}
+    func didStartAudio(in cell: AudioMessageCell) {}
+
+    func didPauseAudio(in cell: AudioMessageCell) {}
+
+    func didStopAudio(in cell: AudioMessageCell) {}
+
 }

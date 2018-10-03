@@ -22,18 +22,21 @@
  SOFTWARE.
  */
 
-import class AVFoundation.AVAudioPlayer
+import Foundation
 
-/// A protocol used to represent the data for an audio message.
-public protocol AudioItem {
+/// A protocol used by `AudioMessageCell` to notify about taps on the play/pause button.
+internal protocol AudioCellDelegate: AnyObject {
 
-    /// The url where the audio file is located.
-    var url: URL { get }
+    /// Notify delegate that play button was pressed
+    ///
+    /// - Parameters:
+    ///   - cell: The `AudioMessageCell` that receive the tap.
+    func didPressPlayInCell(_ cell: AudioMessageCell)
 
-    /// The audio file duration in seconds.
-    var duration: Float { get }
+}
 
-    /// The size of the audio item.
-    var size: CGSize { get }
+internal extension AudioCellDelegate {
+
+    internal func didPressPlayInCell(_ cell: AudioMessageCell) {}
 
 }

@@ -22,18 +22,23 @@
  SOFTWARE.
  */
 
-import class AVFoundation.AVAudioPlayer
+import Foundation
 
-/// A protocol used to represent the data for an audio message.
-public protocol AudioItem {
+extension MessagesViewController: AudioCellDelegate {
 
-    /// The url where the audio file is located.
-    var url: URL { get }
-
-    /// The audio file duration in seconds.
-    var duration: Float { get }
-
-    /// The size of the audio item.
-    var size: CGSize { get }
+    // MARK: - AudioCellDelegate
+    internal func didPressPlayInCell(_ cell: AudioMessageCell) {
+        guard let indexPath = messagesCollectionView.indexPath(for: cell),
+              let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) else {
+                print("Failed to identify message when audio cell receive tap gesture")
+                return
+        }
+        // check if should play sound or pause
+        if cell.playButton.isSelected == true { // sound is playing - prepare to pause sound
+            audioController.pauseSound(for: message, in: cell)
+        } else { // sound is in pause or stoped - prepare to play sound
+            audioController.playSound(for: message, in: cell)
+        }
+    }
 
 }

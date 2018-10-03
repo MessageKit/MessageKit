@@ -34,10 +34,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         return .lightContent
     }
 
-    var audioPlayer: AVAudioPlayer?
-
-    var audioTimer: Timer?
-
     var messageList: [MockMessage] = []
     
     let refreshControl = UIRefreshControl()
@@ -69,7 +65,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         MockSocket.shared.disconnect()
-        self.stopCurrentAudioPlayer()
+        self.stopAnyPlayingSound()
     }
     
     func loadFirstMessages() {
@@ -211,63 +207,18 @@ extension ChatViewController: MessageCellDelegate {
         print("Bottom label tapped")
     }
 
-    func didTapPlayButton(in cell: AudioMessageCell) {
-        print("Did tap on play button")
-//        guard let indexPath = messagesCollectionView.indexPath(for: cell),
-//              let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) else {
-//                return
-//        }
-//        switch message.kind {
-//        case .audio(let item):
-//            self.stopPreviousAudioIfNeeded(item)
-//            if cell.isPlaying() == true {
-//                audioPlayer?.pause()
-//                self.audioTimer?.invalidate()
-//                cell.pasue()
-//            } else {
-//                if audioPlayer == nil {
-//                    audioPlayer = try? AVAudioPlayer.init(contentsOf: item.url)
-//                    audioPlayer?.delegate = self
-//                }
-//                cell.play()
-//                audioPlayer?.play()
-//                // start timer to update audio pregress
-//                self.audioTimer?.invalidate()
-//                self.audioTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ChatViewController.didFireAudioTimer(_:)), userInfo: cell, repeats: true)
-//            }
-//        default: break
-//        }
+    func didStartAudio(in cell: AudioMessageCell) {
+        print("Did start playing audio sound")
     }
 
-    // MARK: - Audio Helpers
-    @objc internal func didFireAudioTimer(_ timer: Timer) {
-        guard let audioCell = timer.userInfo as? AudioMessageCell else {
-            return
-        }
-        let totalDuration = self.audioPlayer?.duration ?? 0.0
-        let currentTime = self.audioPlayer?.currentTime ?? 0.0
-        let percent = (totalDuration != 0) ? (Float(currentTime/totalDuration)) : 0.0
-        audioCell.updateProgress(percent: percent, duration: currentTime)
+    func didPauseAudio(in cell: AudioMessageCell) {
+        print("Did pause audio sound")
     }
 
-    private func stopPreviousAudioIfNeeded(_ currentAudioItem: AudioItem) {
-        // stop a previous audio if current received item url is diffrent than audio player url
-        guard let playingAudioURL = self.audioPlayer?.url else {
-            return  // there is no audio player playing at this moment
-        }
-        if playingAudioURL.absoluteString != currentAudioItem.url.absoluteString {
-            self.stopCurrentAudioPlayer()
-        }
+    func didStopAudio(in cell: AudioMessageCell) {
+        print("Did stop audio sound")
     }
 
-    fileprivate func stopCurrentAudioPlayer() {
-        guard let player = audioPlayer else {
-            return // there is no audio player to stop
-        }
-        player.stop()  // by calling stop will not audioPlayerDidFinishPlaying(player:flag:) delegate method - it should be called manualy
-        self.audioPlayerDidFinishPlaying(player, successfully: true)
-    }
-    
 }
 
 // MARK: - MessageLabelDelegate
@@ -315,43 +266,6 @@ extension ChatViewController: MessageInputBarDelegate {
         }
         inputBar.inputTextView.text = String()
         messagesCollectionView.scrollToBottom(animated: true)
-    }
-    
-}
-
-// MARK: - AVAudioPlayerDelegate
-
-extension ChatViewController: AVAudioPlayerDelegate {
-
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        guard let playingURL = player.url, let currentPlayingMessage = self.getMessageWithAudioURL(playingURL) else {
-            return
-        }
-        // update cell that is current playing
-        if let sectionIndex = messageList.index(where: { $0.messageId == currentPlayingMessage.messageId }) {
-            let indexPath = IndexPath.init(row: 0, section: sectionIndex)
-            if let audioCell = messagesCollectionView.cellForItem(at: indexPath) as? AudioMessageCell {
-                audioCell.stop(with: currentPlayingMessage.kind)
-            }
-        }
-        self.audioTimer?.invalidate()
-        self.audioTimer = nil
-        audioPlayer = nil
-    }
-
-    private func getMessageWithAudioURL(_ url: URL) -> MockMessage? {
-        let message = messageList.filter { (message) -> Bool in
-            switch message.kind {
-            case .audio(let audioItem):
-                if audioItem.url.absoluteString == url.absoluteString {
-                    return true
-                }
-            default: break
-            }
-            return false
-        }.first
-
-        return message
     }
 
 }
