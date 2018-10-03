@@ -25,6 +25,7 @@
 import Foundation
 import CoreLocation
 import MessageKit
+import AVFoundation
 
 private struct CoordinateItem: LocationItem {
 
@@ -49,6 +50,18 @@ private struct ImageMediaItem: MediaItem {
         self.image = image
         self.size = CGSize(width: 240, height: 240)
         self.placeholderImage = UIImage()
+    }
+
+}
+
+private struct MockAudiotem: AudioItem {
+
+    var url: URL
+    var size: CGSize
+
+    init(url: URL) {
+        self.url = url
+        self.size = CGSize(width: 160, height: 35)
     }
 
 }
@@ -96,6 +109,11 @@ internal struct MockMessage: MessageType {
 
     init(emoji: String, sender: Sender, messageId: String, date: Date) {
         self.init(kind: .emoji(emoji), sender: sender, messageId: messageId, date: date)
+    }
+
+    init(audioURL: URL, sender: Sender, messageId: String, date: Date) {
+        let audioItem = MockAudiotem(url: audioURL)
+        self.init(kind: .audio(audioItem), sender: sender, messageId: messageId, date: date)
     }
 
 }

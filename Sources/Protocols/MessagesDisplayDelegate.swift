@@ -113,6 +113,17 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   All other senders: UIColor.darkText
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
 
+    /// Specifies the tint color of elment for a `AudioMessageCell`.
+    ///
+    /// - Parameters:
+    ///   - message: A `MessageType` with a `MessageKind` case of `.audio` to which the color will apply.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// - Note:
+    ///   The default value returned by this method is UIColor.sendButtonBlue
+    func audioTintColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor
+
     /// Specifies the `DetectorType`s to check for the `MessageType`'s text against.
     ///
     /// - Parameters:
@@ -173,6 +184,15 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     func configureMediaMessageImageView(_ imageView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
 
+    /// Used to configure the `AudioMessageCell.
+    ///
+    /// - Parameters:
+    ///   - audioCell: The `AudioMessageCell` that needs to be configured.
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    func configureAudioCell(_ audioCell: AudioMessageCell, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
+
 }
 
 public extension MessagesDisplayDelegate {
@@ -217,6 +237,10 @@ public extension MessagesDisplayDelegate {
         return dataSource.isFromCurrentSender(message: message) ? .white : .darkText
     }
 
+    func audioTintColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return UIColor.sendButtonBlue
+    }
+
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
         return []
     }
@@ -243,4 +267,11 @@ public extension MessagesDisplayDelegate {
 
     func configureMediaMessageImageView(_ imageView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
     }
+
+    // MARK: - Audio Message Defaults
+
+    func configureAudioCell(_ audioCell: AudioMessageCell, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+
+    }
+
 }

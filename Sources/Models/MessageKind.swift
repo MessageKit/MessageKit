@@ -51,6 +51,9 @@ public enum MessageKind {
     /// An emoji message.
     case emoji(String)
 
+    /// An audio message.
+    case audio(AudioItem)
+
     /// A custom message.
     /// - Note: Using this case requires that you override the following methods and handle this case:
     ///   - `collectionView(_:cellForItemAt indexPath: IndexPath) -> UICollectionViewCell`
@@ -59,8 +62,6 @@ public enum MessageKind {
 
     // MARK: - Not supported yet
 
-//    case audio(Data)
-//
 //    case system(String)
 //    
 //    case placeholder

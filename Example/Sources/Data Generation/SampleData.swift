@@ -24,6 +24,7 @@
 
 import MessageKit
 import CoreLocation
+import AVFoundation
 
 final internal class SampleData {
 
@@ -46,7 +47,7 @@ final internal class SampleData {
     
     let messageImages: [UIImage] = [#imageLiteral(resourceName: "img1"), #imageLiteral(resourceName: "img2")]
 
-    let messageTypes = ["Text", "Text", "Text", "AttributedText", "Location", "Photo", "Emoji", "Video", "URL", "Phone", "Custom"]
+    let messageTypes = ["Text", "Text", "Text", "AttributedText", "Location", "Photo", "Audio", "Emoji", "Video", "URL", "Phone", "Custom"]
 
     let emojis = [
         "👍",
@@ -67,7 +68,11 @@ final internal class SampleData {
         CLLocation(latitude: 35.3218, longitude: -127.4314),
         CLLocation(latitude: 39.3218, longitude: -113.3317)
     ]
-    
+
+    let sounds: [URL] = [Bundle.main.url(forResource: "sound1", withExtension: "m4a")!,
+                         Bundle.main.url(forResource: "sound2", withExtension: "m4a")!
+    ]
+
     func attributedString(with text: String) -> NSAttributedString {
         let nsString = NSString(string: text)
         var mutableAttributedString = NSMutableAttributedString(string: text)
@@ -124,6 +129,7 @@ final internal class SampleData {
         let randomMessageType = Int(arc4random_uniform(UInt32(messageTypes.count - (isCustomEnabled ? 0 : 1))))
         let randomNumberLocation = Int(arc4random_uniform(UInt32(locations.count)))
         let randomNumberEmoji = Int(arc4random_uniform(UInt32(emojis.count)))
+        let randomNumberSound = Int(arc4random_uniform(UInt32(sounds.count)))
         
         let randomSentance = Lorem.sentence()
         let uniqueID = NSUUID().uuidString
@@ -142,6 +148,9 @@ final internal class SampleData {
         case "Video":
             let image = messageImages[randomNumberImage]
             return MockMessage(thumbnail: image, sender: sender, messageId: uniqueID, date: date)
+        case "Audio":
+            let soundURL = sounds[randomNumberSound]
+            return MockMessage(audioURL: soundURL, sender: sender, messageId: uniqueID, date: date)
         case "Emoji":
             return MockMessage(emoji: emojis[randomNumberEmoji], sender: sender, messageId: uniqueID, date: date)
         case "Location":
@@ -170,15 +179,6 @@ final internal class SampleData {
         var messages: [MockMessage] = []
         for _ in 0..<count {
             let message = randomMessage(isCustomEnabled: true, allowedSenders: senders)
-            messages.append(message)
-        }
-        completion(messages)
-    }
-    
-    func getMessages(count: Int, allowedSenders: [Sender], completion: ([MockMessage]) -> Void) {
-        var messages: [MockMessage] = []
-        for _ in 0..<count {
-            let message = randomMessage(isCustomEnabled: false, allowedSenders: allowedSenders)
             messages.append(message)
         }
         completion(messages)
