@@ -185,6 +185,22 @@ class MessagesViewControllerTests: XCTestCase {
         XCTAssertTrue(cell is LocationMessageCell)
     }
 
+    func testCellForItemWithAudioData_returnsAudioMessageCell() {
+        let messagesDataSource = MockMessagesDataSource()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(audioURL: URL.init(fileURLWithPath: ""),
+                                                       sender: messagesDataSource.senders[0],
+                                                       messageId: "test_id"))
+
+        sut.messagesCollectionView.reloadData()
+
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
+                                                                         cellForItemAt: IndexPath(item: 0, section: 0))
+
+        XCTAssertNotNil(cell)
+        XCTAssertTrue(cell is AudioMessageCell)
+    }
+
     // MARK: - Assistants
 
     private func makeMessages(for senders: [Sender]) -> [MessageType] {
