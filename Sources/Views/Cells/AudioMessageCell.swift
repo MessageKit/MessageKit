@@ -28,6 +28,9 @@ import AVFoundation
 /// A subclass of `MessageContentCell` used to display video and audio messages.
 open class AudioMessageCell: MessageContentCell {
 
+    /// The `AudioCellDelegate` delegate
+    internal weak var audioCellDelegate: AudioCellDelegate?
+
     /// The play button view to display on audio messages.
     open lazy var playButton: UIButton = {
         let playButton = UIButton.init(type: .custom)
@@ -107,12 +110,7 @@ open class AudioMessageCell: MessageContentCell {
         let playButtonTouchArea = CGRect.init(playButton.frame.origin.x - 10.0, playButton.frame.origin.y - 10, playButton.frame.size.width + 20, playButton.frame.size.height + 20)
         let translateTouchLocation = convert(touchLocation, to: messageContainerView)
         if playButtonTouchArea.contains(translateTouchLocation) {
-            // treat play audio sound
-            if playButton.isSelected == true { // sound is playing - prepare to pause sound
-                AudioController.shared.pauseSound(for: self)
-            } else { // sound is in pause or stoped - prepare to play sound
-                AudioController.shared.playSound(for: self)
-            }
+            audioCellDelegate?.didPressPlayInCell(self)
         } else {
             // touch is not inside play button touch area, call super to hangle gesture
             super.handleTapGesture(gesture)
@@ -132,8 +130,6 @@ open class AudioMessageCell: MessageContentCell {
             durationLabel.text = AudioMessageCell.durationString(from: mediaItem.duration)
             progressView.progress = 0.0
             playButton.isSelected = false
-            // ifsound is playing for current cell config it using content data from Audio controller
-            AudioController.shared.configureCell(self, message: message)
         default:
             break
         }

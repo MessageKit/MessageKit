@@ -49,8 +49,6 @@ open class MessagesCollectionView: UICollectionView {
         backgroundColor = .white
         registerReusableViews()
         setupGestureRecognizers()
-        // setup audio controller message collection view reference
-        AudioController.shared.messageCollectionView = self
     }
     
     required public init?(coder aDecoder: NSCoder) {
