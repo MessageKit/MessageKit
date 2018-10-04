@@ -245,7 +245,14 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     /// Get all `MessageSizeCalculator`s
     open func messageSizeCalculators() -> [MessageSizeCalculator] {
-        return [textMessageSizeCalculator, attributedTextMessageSizeCalculator, emojiMessageSizeCalculator, photoMessageSizeCalculator, videoMessageSizeCalculator, locationMessageSizeCalculator]
+        return [textMessageSizeCalculator,
+                attributedTextMessageSizeCalculator,
+                emojiMessageSizeCalculator,
+                photoMessageSizeCalculator,
+                videoMessageSizeCalculator,
+                locationMessageSizeCalculator,
+                audioMessageSizeCalculator
+        ]
     }
     
 }
