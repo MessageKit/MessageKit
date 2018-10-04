@@ -27,6 +27,11 @@ import AVFoundation
 
 internal class AudioController: NSObject {
 
+    /// The `AudioController` shared instance
+    internal static let shared = AudioController()
+
+    internal weak var messageCollectionView: MessagesCollectionView?
+
     /// The `AVAudioPlayer` that is playing the sound
     fileprivate var audioPlayer: AVAudioPlayer?
 
@@ -39,11 +44,8 @@ internal class AudioController: NSObject {
     /// The `MessageType` that is currently playing sound
     fileprivate var playingMessage: MessageType?
 
-    fileprivate weak var messageCollectionView: MessagesCollectionView?
-
     // MARK: - Init Methods
-    internal init(messageCollectionView: MessagesCollectionView) {
-        self.messageCollectionView = messageCollectionView
+    private override init() {
         super.init()
     }
 
@@ -59,7 +61,11 @@ internal class AudioController: NSObject {
         }
     }
 
-    internal func playSound(for message: MessageType, in audioCell: AudioMessageCell) {
+    internal func playSound(for audioCell: AudioMessageCell) {
+        guard let message = self.getAssignMessageToCell(audioCell) else {
+            print("No message found when traing to play the sound. This is probably a bug")
+            return
+        }
         if playingMessage?.messageId == message.messageId { // resume curently pause audio
             self.resumeSound()
         } else {
@@ -85,7 +91,7 @@ internal class AudioController: NSObject {
         }
     }
 
-    internal func pauseSound(for message: MessageType, in audioCell: AudioMessageCell) {
+    internal func pauseSound(for audioCell: AudioMessageCell) {
         audioPlayer?.pause()
         audioCell.playButton.isSelected = false // show play button on audio cell since the sound is on pause
         progressTimer?.invalidate()
@@ -107,20 +113,16 @@ internal class AudioController: NSObject {
 
     // MARK: - Fire Methods
     @objc private func didFireProgressTimer(_ timer: Timer) {
-        guard let player = audioPlayer, let collectionView = messageCollectionView, let cell = playingCell else {
+        guard let player = audioPlayer, let cell = playingCell, let currentMessage = self.getAssignMessageToCell(cell) else {
             return
         }
-        // check if can update playing cell
-        if let playingCellIndexPath = collectionView.indexPath(for: cell) {
-            // 1. get the current message that decorates the playing cell
-            // 2. check if current message is the same with playing message, if so then update the cell content
-            // Note: Those messages differ in the case of cell reuse
-            let currentMessage = collectionView.messagesDataSource?.messageForItem(at: playingCellIndexPath, in: collectionView)
-            if currentMessage != nil && currentMessage?.messageId == playingMessage?.messageId {
-                // messages are the same updte cell content
-                cell.progressView.progress = (player.duration == 0) ? 0 : Float(player.currentTime/player.duration)
-                cell.durationLabel.text = AudioMessageCell.durationString(from: Float(player.currentTime))
-            }
+        // 1. get the current message that decorates the playing cell
+        // 2. check if current message is the same with playing message, if so then update the cell content
+        // Note: Those messages differ in the case of cell reuse
+        if currentMessage.messageId == playingMessage?.messageId {
+            // messages are the same update cell content
+            cell.progressView.progress = (player.duration == 0) ? 0 : Float(player.currentTime/player.duration)
+            cell.durationLabel.text = AudioMessageCell.durationString(from: Float(player.currentTime))
         }
     }
 
@@ -141,6 +143,14 @@ internal class AudioController: NSObject {
         if let cell = playingCell {
             cell.delegate?.didStartAudio(in: cell)
         }
+    }
+
+    private func getAssignMessageToCell(_ cell: AudioMessageCell) -> MessageType? {
+        var returnMessage: MessageType? = nil
+        if let indexPath = self.messageCollectionView?.indexPath(for: cell), let collectionView = self.messageCollectionView {
+            returnMessage = collectionView.messagesDataSource?.messageForItem(at: indexPath, in: collectionView)
+        }
+        return returnMessage
     }
 
 }
