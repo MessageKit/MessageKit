@@ -95,9 +95,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
         let messageVerticalPadding = messageContainerPadding(for: message).vertical
         let avatarHeight = avatarSize(for: message).height
         let avatarVerticalPosition = avatarPosition(for: message).vertical
-        let accessoryViewHeight = accessoryViewSize(for: message).height
-        let accessoryViewVerticalPadding = accessoryViewPadding(for: message).vertical
-        let accessoryViewTotalHeight = accessoryViewHeight + accessoryViewVerticalPadding
+        let accessoryViewTotalHeight = accessoryViewSize(for: message).height
 
         switch avatarVerticalPosition {
         case .messageCenter:
