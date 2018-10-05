@@ -78,6 +78,16 @@ public protocol MessageCellDelegate: MessageLabelDelegate {
     /// method `messageForItem(at:indexPath:messagesCollectionView)`.
     func didTapMessageBottomLabel(in cell: MessageCollectionViewCell)
 
+    /// Triggered when a tap occurs on the play button from audio cell.
+    ///
+    /// - Parameters:
+    ///   - cell: The audio cell where the touch occurred.
+    ///
+    /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
+    /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
+    /// method `messageForItem(at:indexPath:messagesCollectionView)`.
+    func didTapPlayButton(in cell: AudioMessageCell)
+
     /// Triggered when audio player start playing audio.
     ///
     /// - Parameters:
@@ -119,6 +129,8 @@ public extension MessageCellDelegate {
     func didTapCellTopLabel(in cell: MessageCollectionViewCell) {}
 
     func didTapMessageTopLabel(in cell: MessageCollectionViewCell) {}
+
+    func didTapPlayButton(in cell: AudioMessageCell) {}
 
     func didStartAudio(in cell: AudioMessageCell) {}
 

@@ -336,6 +336,12 @@ extension AdvancedExampleViewController: MessagesDisplayDelegate {
         return LocationMessageSnapshotOptions(showsBuildings: true, showsPointsOfInterest: true, span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
     }
 
+    // MARK: - Audio Messages
+
+    func audioTintColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return self.isFromCurrentSender(message: message) ? .white : UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+    }
+
 }
 
 // MARK: - MessagesLayoutDelegate

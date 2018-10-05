@@ -25,55 +25,79 @@
 import UIKit
 import AVFoundation
 
-internal class AudioController: NSObject {
+/// The `BasicAudioController` update UI for current audio cell that is playing a sound
+/// and also creates and manage an `AVAudioPlayer` states, play, pause and stop.
+open class BasicAudioController: NSObject, AudioControllerDelegate {
 
     /// The `AVAudioPlayer` that is playing the sound
-    fileprivate var audioPlayer: AVAudioPlayer?
-
-    /// The `Timer` that update playing progress
-    fileprivate var progressTimer: Timer?
+    open var audioPlayer: AVAudioPlayer?
 
     /// The `AudioMessageCell` that is currently playing sound
-    fileprivate var playingCell: AudioMessageCell?
+    open var playingCell: AudioMessageCell?
 
     /// The `MessageType` that is currently playing sound
-    fileprivate var playingMessage: MessageType?
+    open var playingMessage: MessageType?
 
-    fileprivate weak var messageCollectionView: MessagesCollectionView?
+    // The `MessagesCollectionView` where the playing cell exist
+    public let messageCollectionView: MessagesCollectionView
+
+    /// The `Timer` that update playing progress
+    internal var progressTimer: Timer?
 
     // MARK: - Init Methods
-    internal init(messageCollectionView: MessagesCollectionView) {
+
+    public init(messageCollectionView: MessagesCollectionView) {
         self.messageCollectionView = messageCollectionView
         super.init()
     }
 
     // MARK: - Methods
-    internal func configureCell(_ cell: AudioMessageCell, message: MessageType) {
+
+    /// Used to configure the audio cell UI:
+    ///     1. play button selected state;
+    ///     2. progresssView progress;
+    ///     3. durationLabel text;
+    ///
+    /// - Parameters:
+    ///   - cell: The `AudioMessageCell` that needs to be configure.
+    ///   - message: The `MessageType` that configures the cell.
+    ///
+    /// - Note:
+    ///   This protocol method is called by MessageKit every time an audio cell needs to be configure
+    open func configureCell(_ cell: AudioMessageCell, message: MessageType) {
         if playingMessage?.messageId == message.messageId, let player = audioPlayer {
             // cell needs to be configure since the current audio player is playing sound for receive message
             // This situation can happen when playing cell is reconfigured
             playingCell = cell
             cell.progressView.progress = (player.duration == 0) ? 0 : Float(player.currentTime/player.duration)
-            cell.durationLabel.text = AudioMessageCell.durationString(from: Float(player.currentTime))
             cell.playButton.isSelected = (player.isPlaying == true) ? true : false
+            guard let displayDelegate = messageCollectionView.messagesDisplayDelegate else {
+                fatalError(MessageKitError.nilMessagesDisplayDelegate)
+            }
+            cell.durationLabel.text = displayDelegate.formatDuration(Float(player.duration), for: cell, in: messageCollectionView)
         }
     }
 
-    internal func playSound(for message: MessageType, in audioCell: AudioMessageCell) {
+    /// Used to start or resume the audio sound
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that contain the audio item to be played.
+    ///   - audioCell: The `AudioMessageCell` that needs to be updated while audio is playing.
+    open func playSound(for message: MessageType, in audioCell: AudioMessageCell) {
         if playingMessage?.messageId == message.messageId { // resume curently pause audio
             self.resumeSound()
         } else {
             if playingCell != nil { // there is a sound on other cell that is already playing or in pause - prepare to stop playing sound and play the sound for receive message
-                stopAudioInCurrentPlayingCell()
+                stopAnyOngoingPLaying()
             }
             // play sound
             switch message.kind {
             case .audio(let item):
                 playingCell = audioCell
                 playingMessage = message
-                audioPlayer = try? AVAudioPlayer.init(contentsOf: item.url)
-                audioPlayer?.delegate = self
+                audioPlayer = self.createAudioPlayer(url: item.url)
                 audioPlayer?.prepareToPlay()
+                audioPlayer?.delegate = self
                 audioPlayer?.play()
                 audioCell.playButton.isSelected = true  // show pause button on audio cell since the sound is currently playing
                 startProgressTimer()
@@ -85,7 +109,12 @@ internal class AudioController: NSObject {
         }
     }
 
-    internal func pauseSound(for message: MessageType, in audioCell: AudioMessageCell) {
+    /// Used to pause the audio sound
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that contain the audio item to be pause.
+    ///   - audioCell: The `AudioMessageCell` that needs to be updated by the pause action.
+    open func pauseSound(for message: MessageType, in audioCell: AudioMessageCell) {
         audioPlayer?.pause()
         audioCell.playButton.isSelected = false // show play button on audio cell since the sound is on pause
         progressTimer?.invalidate()
@@ -95,31 +124,46 @@ internal class AudioController: NSObject {
         }
     }
 
-    internal func stopAudioInCurrentPlayingCell() {
-        // call stop audio delegate
+    /// Stops any ongoing audio playing if exists
+    open func stopAnyOngoingPLaying() {
+        guard let player = audioPlayer else { return } // If the audio player is nil then we don't need to go through the stopping logic
+        player.stop()
+        // update cell UI
         if let cell = playingCell {
+            cell.progressView.progress = 0.0
+            cell.playButton.isSelected = false
+            guard let displayDelegate = messageCollectionView.messagesDisplayDelegate else {
+                fatalError(MessageKitError.nilMessagesDisplayDelegate)
+            }
+            cell.durationLabel.text = displayDelegate.formatDuration(Float(player.duration), for: cell, in: messageCollectionView)
             cell.delegate?.didStopAudio(in: cell)
         }
-        // stop audio
-        audioPlayer?.stop()  // stop method did not call audioPlayerDidFinishPlaying(player:,flag:)
-        audioPlayerDidFinishPlaying(audioPlayer ?? AVAudioPlayer(), successfully: true)
+        // reset properties since audio finished
+        progressTimer?.invalidate()
+        progressTimer = nil
+        audioPlayer = nil
+        playingMessage = nil
+        playingCell = nil
     }
 
     // MARK: - Fire Methods
     @objc private func didFireProgressTimer(_ timer: Timer) {
-        guard let player = audioPlayer, let collectionView = messageCollectionView, let cell = playingCell else {
+        guard let player = audioPlayer, let cell = playingCell else {
             return
         }
         // check if can update playing cell
-        if let playingCellIndexPath = collectionView.indexPath(for: cell) {
+        if let playingCellIndexPath = messageCollectionView.indexPath(for: cell) {
             // 1. get the current message that decorates the playing cell
             // 2. check if current message is the same with playing message, if so then update the cell content
             // Note: Those messages differ in the case of cell reuse
-            let currentMessage = collectionView.messagesDataSource?.messageForItem(at: playingCellIndexPath, in: collectionView)
+            let currentMessage = messageCollectionView.messagesDataSource?.messageForItem(at: playingCellIndexPath, in: messageCollectionView)
             if currentMessage != nil && currentMessage?.messageId == playingMessage?.messageId {
-                // messages are the same updte cell content
+                // messages are the same update cell content
                 cell.progressView.progress = (player.duration == 0) ? 0 : Float(player.currentTime/player.duration)
-                cell.durationLabel.text = AudioMessageCell.durationString(from: Float(player.currentTime))
+                guard let displayDelegate = messageCollectionView.messagesDisplayDelegate else {
+                    fatalError(MessageKitError.nilMessagesDisplayDelegate)
+                }
+                cell.durationLabel.text = displayDelegate.formatDuration(Float(player.duration), for: cell, in: messageCollectionView)
             }
         }
     }
@@ -130,7 +174,7 @@ internal class AudioController: NSObject {
         progressTimer?.invalidate()
         progressTimer = nil
         // start timer
-        progressTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(AudioController.didFireProgressTimer(_:)), userInfo: nil, repeats: true)
+        progressTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(BasicAudioController.didFireProgressTimer(_:)), userInfo: nil, repeats: true)
     }
 
     private func resumeSound() {
@@ -143,30 +187,23 @@ internal class AudioController: NSObject {
         }
     }
 
+    private func createAudioPlayer(url: URL) -> AVAudioPlayer? {
+        var audioPlayer: AVAudioPlayer?
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+        } catch let error as NSError {
+            print("Failed to create AVAudioPLayer for url: \(url),\n with error: \(error.localizedDescription)")
+        }
+        return audioPlayer
+    }
+
 }
 
 // MARK: - AVAudioPlayerDelegate
-extension AudioController: AVAudioPlayerDelegate {
+extension BasicAudioController: AVAudioPlayerDelegate {
 
-    internal func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        // get audio item from message
-        var audioItem: AudioItem? = nil
-        switch playingMessage?.kind {
-        case .audio(let item)?: audioItem = item
-        default: break
-        }
-        // update cell UI
-        playingCell?.progressView.progress = 0.0
-        playingCell?.playButton.isSelected = false
-        if let item = audioItem {
-            playingCell?.durationLabel.text = AudioMessageCell.durationString(from: item.duration)
-        }
-        // reset properties since audio finished
-        progressTimer?.invalidate()
-        progressTimer = nil
-        audioPlayer = nil
-        playingMessage = nil
-        playingCell = nil
+    open func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        self.stopAnyOngoingPLaying()
     }
 
 }

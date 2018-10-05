@@ -28,17 +28,13 @@ import AVFoundation
 /// A subclass of `MessageContentCell` used to display video and audio messages.
 open class AudioMessageCell: MessageContentCell {
 
-    /// The `AudioCellDelegate` delegate
-    internal weak var audioCellDelegate: AudioCellDelegate?
-
     /// The play button view to display on audio messages.
     open lazy var playButton: UIButton = {
         let playButton = UIButton.init(type: .custom)
-        let playImage = AudioMessageCell.getImageWithName("play")
-        let pauseImage = AudioMessageCell.getImageWithName("pause")
+        let playImage = AudioMessageCell.getImageWithName(.play)
+        let pauseImage = AudioMessageCell.getImageWithName(.pause)
         playButton.setImage(playImage?.withRenderingMode(.alwaysTemplate), for: .normal)
         playButton.setImage(pauseImage?.withRenderingMode(.alwaysTemplate), for: .selected)
-
         return playButton
     }()
 
@@ -48,34 +44,14 @@ open class AudioMessageCell: MessageContentCell {
         durationLabel.textAlignment = .right
         durationLabel.font = UIFont.systemFont(ofSize: 14)
         durationLabel.text = "0:00"
-
         return durationLabel
     }()
 
     open lazy var progressView: UIProgressView = {
         let progressView = UIProgressView.init(progressViewStyle: .default)
         progressView.progress = 0.0
-
         return progressView
     }()
-
-    // MARK: - Internal Methods
-    internal class func durationString(from duration: Float) -> String {
-        var retunValue = "0:00"
-        // print the time as 0:ss if duration is up to 59 seconds
-        // print the time as m:ss if duration is up to 59:59 seconds
-        // print the time as h:mm:ss for anything longer
-        if duration < 60 {
-            retunValue = String(format: "0:%.02d", Int(duration.rounded(.up)))
-        } else if duration < 3600 {
-            retunValue = String(format: "%.02d:%.02d", Int(duration/60), Int(duration) % 60)
-        } else {
-            let hours = Int(duration/3600)
-            let remainingMinutsInSeconds = Int(duration) - hours*3600
-            retunValue = String(format: "%.02d:%.02d:%.02d", hours, Int(remainingMinutsInSeconds/60), Int(remainingMinutsInSeconds) % 60)
-        }
-        return retunValue
-    }
 
     // MARK: - Methods
 
@@ -110,7 +86,8 @@ open class AudioMessageCell: MessageContentCell {
         let playButtonTouchArea = CGRect.init(playButton.frame.origin.x - 10.0, playButton.frame.origin.y - 10, playButton.frame.size.width + 20, playButton.frame.size.height + 20)
         let translateTouchLocation = convert(touchLocation, to: messageContainerView)
         if playButtonTouchArea.contains(translateTouchLocation) {
-            audioCellDelegate?.didPressPlayInCell(self)
+            delegate?.didTapPlayButton(in: self)
+            //audioCellDelegate?.didPressPlayInCell(self)
         } else {
             // touch is not inside play button touch area, call super to hangle gesture
             super.handleTapGesture(gesture)
@@ -121,13 +98,14 @@ open class AudioMessageCell: MessageContentCell {
 
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
-
         configureCellApperance(with: message, indexPath: indexPath, messagesCollectionView: messagesCollectionView)
-        // default configuration of
+        // update cell content
         switch message.kind {
         case .audio(let mediaItem):
-            // default configuration
-            durationLabel.text = AudioMessageCell.durationString(from: mediaItem.duration)
+            guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
+                fatalError(MessageKitError.nilMessagesDisplayDelegate)
+            }
+            durationLabel.text = displayDelegate.formatDuration(mediaItem.duration, for: self, in: messagesCollectionView)
             progressView.progress = 0.0
             playButton.isSelected = false
         default:
@@ -160,12 +138,16 @@ open class AudioMessageCell: MessageContentCell {
 
     // MARK: - Helpers
 
-    private class func getImageWithName(_ imageName: String) -> UIImage? {
+    private class func getImageWithName(_ imageName: ImageName) -> UIImage? {
         let assetBundle = Bundle.messageKitAssetBundle()
-        let imagePath = assetBundle.path(forResource: imageName, ofType: "png", inDirectory: "Images")
+        let imagePath = assetBundle.path(forResource: imageName.rawValue, ofType: "png", inDirectory: "Images")
         let image = UIImage(contentsOfFile: imagePath ?? "")
-
         return image
+    }
+
+    private enum ImageName: String {
+        case play
+        case pause
     }
 
 }

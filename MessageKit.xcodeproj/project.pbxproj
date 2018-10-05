@@ -35,12 +35,11 @@
 		1FF377AA20087D78004FD648 /* MessagesViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377A920087D78004FD648 /* MessagesViewController+Menu.swift */; };
 		1FF377AC20087DA2004FD648 /* MessagesViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */; };
 		38C2AE7C20D4878D00F8079E /* MessageInputBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38C2AE7B20D4878D00F8079E /* MessageInputBar.framework */; };
-		5067043B2164F7BB00778871 /* AudioCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5067043A2164F7BB00778871 /* AudioCellDelegate.swift */; };
-		5067043D2164F7D400778871 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5067043C2164F7D400778871 /* AudioController.swift */; };
-		5067043F2164F7DC00778871 /* MessageViewController+AudioCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5067043E2164F7DC00778871 /* MessageViewController+AudioCellDelegate.swift */; };
 		5074EF272163495800D82952 /* AudioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5074EF262163495800D82952 /* AudioItem.swift */; };
 		5074EF292163497200D82952 /* AudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5074EF282163497200D82952 /* AudioMessageCell.swift */; };
 		5074EF2B2163498B00D82952 /* AudioMessageSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5074EF2A2163498B00D82952 /* AudioMessageSizeCalculator.swift */; };
+		50DA334821676BCF000ADEF2 /* BasicAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DA334721676BCF000ADEF2 /* BasicAudioController.swift */; };
+		50DA334A21676BDF000ADEF2 /* AudioControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DA334921676BDF000ADEF2 /* AudioControllerDelegate.swift */; };
 		88916B2D1CF0DF2F00469F91 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88916B221CF0DF2F00469F91 /* MessageKit.framework */; };
 		8962AC8A1F87AB7D0030B058 /* MessagesCollectionViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC831F87AB230030B058 /* MessagesCollectionViewTests.swift */; };
 		8962AC8C1F87AB7D0030B058 /* AvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC851F87AB230030B058 /* AvatarViewTests.swift */; };
@@ -135,12 +134,11 @@
 		1FF377A920087D78004FD648 /* MessagesViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Menu.swift"; sourceTree = "<group>"; };
 		1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Keyboard.swift"; sourceTree = "<group>"; };
 		38C2AE7B20D4878D00F8079E /* MessageInputBar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageInputBar.framework; path = Carthage/Build/iOS/MessageInputBar.framework; sourceTree = "<group>"; };
-		5067043A2164F7BB00778871 /* AudioCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioCellDelegate.swift; sourceTree = "<group>"; };
-		5067043C2164F7D400778871 /* AudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
-		5067043E2164F7DC00778871 /* MessageViewController+AudioCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageViewController+AudioCellDelegate.swift"; sourceTree = "<group>"; };
 		5074EF262163495800D82952 /* AudioItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioItem.swift; sourceTree = "<group>"; };
 		5074EF282163497200D82952 /* AudioMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioMessageCell.swift; sourceTree = "<group>"; };
 		5074EF2A2163498B00D82952 /* AudioMessageSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioMessageSizeCalculator.swift; sourceTree = "<group>"; };
+		50DA334721676BCF000ADEF2 /* BasicAudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAudioController.swift; sourceTree = "<group>"; };
+		50DA334921676BDF000ADEF2 /* AudioControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioControllerDelegate.swift; sourceTree = "<group>"; };
 		88916B221CF0DF2F00469F91 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88916B2C1CF0DF2F00469F91 /* MessageKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessageKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitDateFormatterTests.swift; sourceTree = "<group>"; };
@@ -416,7 +414,7 @@
 				1FD5895F2064E08A004B5081 /* MediaItem.swift */,
 				1FD5896320660C1C004B5081 /* LocationItem.swift */,
 				5074EF262163495800D82952 /* AudioItem.swift */,
-				5067043A2164F7BB00778871 /* AudioCellDelegate.swift */,
+				50DA334921676BDF000ADEF2 /* AudioControllerDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -427,8 +425,7 @@
 				B7A03F4E1F86697C006AEF79 /* MessagesViewController.swift */,
 				1FF377A920087D78004FD648 /* MessagesViewController+Menu.swift */,
 				1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */,
-				5067043E2164F7DC00778871 /* MessageViewController+AudioCellDelegate.swift */,
-				5067043C2164F7D400778871 /* AudioController.swift */,
+				50DA334721676BCF000ADEF2 /* BasicAudioController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -590,9 +587,9 @@
 				B7A03F3C1F866946006AEF79 /* LocationMessageCell.swift in Sources */,
 				1FF377AA20087D78004FD648 /* MessagesViewController+Menu.swift in Sources */,
 				B7A03F5B1F8669CA006AEF79 /* MessageType.swift in Sources */,
-				5067043D2164F7D400778871 /* AudioController.swift in Sources */,
 				B7A03F601F8669CA006AEF79 /* MessagesDisplayDelegate.swift in Sources */,
 				1FE783A8206633C0007FA024 /* InsetLabel.swift in Sources */,
+				50DA334821676BCF000ADEF2 /* BasicAudioController.swift in Sources */,
 				B7A03F5C1F8669CA006AEF79 /* MessageCellDelegate.swift in Sources */,
 				1FF377A420087C82004FD648 /* MessageKitError.swift in Sources */,
 				1F6C040E206A2AF4007BDE44 /* MessageReusableView.swift in Sources */,
@@ -606,7 +603,6 @@
 				1FCA6D30201C1CC900BC3480 /* UIEdgeInsets+Extensions.swift in Sources */,
 				B7A03F3D1F866946006AEF79 /* MediaMessageCell.swift in Sources */,
 				1FE783A220662905007FA024 /* TextMessageSizeCalculator.swift in Sources */,
-				5067043B2164F7BB00778871 /* AudioCellDelegate.swift in Sources */,
 				B7A03F2E1F866895006AEF79 /* MessageKind.swift in Sources */,
 				B7A03F7B1F866B85006AEF79 /* MessageCollectionViewCell.swift in Sources */,
 				B7A03F6B1F8669EB006AEF79 /* UIColor+Extensions.swift in Sources */,
@@ -622,7 +618,6 @@
 				1FD5896420660C1C004B5081 /* LocationItem.swift in Sources */,
 				B7A03F291F866895006AEF79 /* Sender.swift in Sources */,
 				B7A03F4F1F86697C006AEF79 /* MessagesViewController.swift in Sources */,
-				5067043F2164F7DC00778871 /* MessageViewController+AudioCellDelegate.swift in Sources */,
 				5074EF272163495800D82952 /* AudioItem.swift in Sources */,
 				B7A03F251F866895006AEF79 /* NSConstraintLayoutSet.swift in Sources */,
 				0EE91E661FDEC888005420A2 /* CGRect+Extensions.swift in Sources */,
@@ -637,6 +632,7 @@
 				B7A03F2D1F866895006AEF79 /* LabelAlignment.swift in Sources */,
 				1F6C040C206A2891007BDE44 /* MessageContentCell.swift in Sources */,
 				B7A03F2C1F866895006AEF79 /* DetectorType.swift in Sources */,
+				50DA334A21676BDF000ADEF2 /* AudioControllerDelegate.swift in Sources */,
 				B7A03F271F866895006AEF79 /* Avatar.swift in Sources */,
 				1F82D1431FB1B75B00B81A88 /* AvatarPosition.swift in Sources */,
 				1FF377AC20087DA2004FD648 /* MessagesViewController+Keyboard.swift in Sources */,

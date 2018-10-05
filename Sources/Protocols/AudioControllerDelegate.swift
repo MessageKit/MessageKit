@@ -24,19 +24,22 @@
 
 import Foundation
 
-/// A protocol used by `AudioMessageCell` to notify about taps on the play/pause button.
-internal protocol AudioCellDelegate: AnyObject {
+/// A standard protocol representing an audio controller.
+/// Use this protocol to create your own audio controller object to be used by MessageKit.
+/// MessageKit provide a default implmentation for AudioControllerDelegate in BasicAudioController
+public protocol AudioControllerDelegate: AnyObject {
 
-    /// Notify delegate that play button was pressed
+    /// Used to configure the audio cell UI:
+    ///     1. play button selected state;
+    ///     2. progresssView progress;
+    ///     3. durationLabel text;
     ///
     /// - Parameters:
-    ///   - cell: The `AudioMessageCell` that receive the tap.
-    func didPressPlayInCell(_ cell: AudioMessageCell)
-
-}
-
-internal extension AudioCellDelegate {
-
-    internal func didPressPlayInCell(_ cell: AudioMessageCell) {}
+    ///   - cell: The `AudioMessageCell` that needs to be configure.
+    ///   - message: The `MessageType` that configures the cell.
+    ///
+    /// - Note:
+    ///   This protocol method is called by MessageKit every time an audio cell needs to be configure
+    func configureCell(_ cell: AudioMessageCell, message: MessageType)
 
 }

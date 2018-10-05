@@ -25,7 +25,6 @@ SOFTWARE.
 import UIKit
 import MessageKit
 import MessageInputBar
-import AVFoundation
 
 /// A base class for the example controllers
 class ChatViewController: MessagesViewController, MessagesDataSource {
@@ -65,7 +64,8 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         MockSocket.shared.disconnect()
-        self.stopAnyPlayingSound()
+
+        audioController.stopAnyOngoingPLaying()
     }
     
     func loadFirstMessages() {
@@ -205,6 +205,20 @@ extension ChatViewController: MessageCellDelegate {
     
     func didTapMessageBottomLabel(in cell: MessageCollectionViewCell) {
         print("Bottom label tapped")
+    }
+
+    func didTapPlayButton(in cell: AudioMessageCell) {
+        guard let indexPath = messagesCollectionView.indexPath(for: cell),
+            let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) else {
+                print("Failed to identify message when audio cell receive tap gesture")
+                return
+        }
+        // check if should play sound or pause
+        if cell.playButton.isSelected == true { // sound is playing - prepare to pause sound
+            self.audioController.pauseSound(for: message, in: cell)
+        } else { // sound is in pause or stoped - prepare to play sound
+            self.audioController.playSound(for: message, in: cell)
+        }
     }
 
     func didStartAudio(in cell: AudioMessageCell) {

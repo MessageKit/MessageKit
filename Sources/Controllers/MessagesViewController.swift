@@ -60,6 +60,9 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         return false
     }
 
+    /// The `BasicAudioController` controll the AVAudioPlayer state (play, pause, stop) and udpate audio cell UI accordingly.
+    open var audioController: BasicAudioController!
+
     /// A CGFloat value that adds to (or, if negative, subtracts from) the automatically
     /// computed value of `messagesCollectionView.contentInset.bottom`. Meant to be used
     /// as a measure of last resort when the built-in algorithm does not produce the right
@@ -71,18 +74,11 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         }
     }
 
-    /// Stops any playing sound if exist
-    open func stopAnyPlayingSound() {
-        audioController.stopAudioInCurrentPlayingCell()
-    }
-
     private var isFirstLayout: Bool = true
     
     internal var isMessagesControllerBeingDismissed: Bool = false
 
     internal var selectedIndexPathForMenu: IndexPath?
-
-    internal var audioController: AudioController!
 
     internal var messageCollectionViewBottomInset: CGFloat = 0 {
         didSet {
@@ -101,7 +97,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         setupDelegates()
         addMenuControllerObservers()
         addObservers()
-        audioController = AudioController(messageCollectionView: messagesCollectionView)
+        audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
     }
     
     open override func viewDidAppear(_ animated: Bool) {
@@ -216,7 +212,6 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             return cell
         case .audio:
             let cell = messagesCollectionView.dequeueReusableCell(AudioMessageCell.self, for: indexPath)
-            cell.audioCellDelegate = self
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             audioController.configureCell(cell, message: message) // this is needed especily when the cell is reconfigure while is playing sound
             return cell
