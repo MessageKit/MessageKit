@@ -112,6 +112,13 @@ open class MessageLabel: UILabel {
             if !isConfiguring { setNeedsDisplay() }
         }
     }
+
+    open override var intrinsicContentSize: CGSize {
+        var size = super.intrinsicContentSize
+        size.width += textInsets.horizontal
+        size.height += textInsets.vertical
+        return size
+    }
     
     internal var messageLabelFont: UIFont?
 
