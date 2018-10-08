@@ -114,7 +114,9 @@ open class MessageLabel: UILabel {
     }
 
     open override var intrinsicContentSize: CGSize {
-        var size = super.intrinsicContentSize
+        let maxWidth = preferredMaxLayoutWidth - textInsets.horizontal
+        let constraintBox = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
+        var size = textStorage.boundingRect(with: constraintBox, options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil).integral.size
         size.width += textInsets.horizontal
         size.height += textInsets.vertical
         return size
