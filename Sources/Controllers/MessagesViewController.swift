@@ -61,7 +61,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     }
 
     /// The `BasicAudioController` controll the AVAudioPlayer state (play, pause, stop) and udpate audio cell UI accordingly.
-    open var audioController: BasicAudioController!
+    open lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
 
     /// A CGFloat value that adds to (or, if negative, subtracts from) the automatically
     /// computed value of `messagesCollectionView.contentInset.bottom`. Meant to be used
@@ -97,7 +97,6 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         setupDelegates()
         addMenuControllerObservers()
         addObservers()
-        audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
     }
     
     open override func viewDidAppear(_ animated: Bool) {

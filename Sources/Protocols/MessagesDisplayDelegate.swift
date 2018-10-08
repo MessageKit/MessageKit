@@ -198,7 +198,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///     1. return the time as 0:ss if duration is up to 59 seconds                         (e.g. 0:03     means 0 minutes and 3 seconds)
     ///     2. return the time as m:ss if duration is greater than 59 and lower than 3600      (e.g. 12:23    means 12 mintues and 23 seconds)
     ///     3. return the time as h:mm:ss for anything longer that 3600 seconds                (e.g. 1:19:08  means 1 hour 19 minutes and 8 seconds)
-    func formatDuration(_ duration: Float, for audioCell: AudioMessageCell, in messageCollectionView: MessagesCollectionView) -> String
+    func audioProgressTextFormat(_ duration: Float, for audioCell: AudioMessageCell, in messageCollectionView: MessagesCollectionView) -> String
 
 }
 
@@ -277,7 +277,7 @@ public extension MessagesDisplayDelegate {
         return UIColor.sendButtonBlue
     }
 
-    func formatDuration(_ duration: Float, for audioCell: AudioMessageCell, in messageCollectionView: MessagesCollectionView) -> String {
+    func audioProgressTextFormat(_ duration: Float, for audioCell: AudioMessageCell, in messageCollectionView: MessagesCollectionView) -> String {
         var retunValue = "0:00"
         // print the time as 0:ss if duration is up to 59 seconds
         // print the time as m:ss if duration is up to 59:59 seconds

@@ -28,6 +28,12 @@ import AVFoundation
 /// A subclass of `MessageContentCell` used to display video and audio messages.
 open class AudioMessageCell: MessageContentCell {
 
+    /// The `ImageName` enum holds the names od default iamges used to decorate play button
+    public enum ImageName: String {
+        case play
+        case pause
+    }
+
     /// The play button view to display on audio messages.
     open lazy var playButton: UIButton = {
         let playButton = UIButton.init(type: .custom)
@@ -78,6 +84,13 @@ open class AudioMessageCell: MessageContentCell {
         self.durationLabel.text = "0:00"
     }
 
+    open class func getImageWithName(_ imageName: ImageName) -> UIImage? {
+        let assetBundle = Bundle.messageKitAssetBundle()
+        let imagePath = assetBundle.path(forResource: imageName.rawValue, ofType: "png", inDirectory: "Images")
+        let image = UIImage(contentsOfFile: imagePath ?? "")
+        return image
+    }
+
     /// Handle tap gesture on contentView and its subviews.
     open override func handleTapGesture(_ gesture: UIGestureRecognizer) {
         let touchLocation = gesture.location(in: self)
@@ -105,7 +118,7 @@ open class AudioMessageCell: MessageContentCell {
             guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
                 fatalError(MessageKitError.nilMessagesDisplayDelegate)
             }
-            durationLabel.text = displayDelegate.formatDuration(mediaItem.duration, for: self, in: messagesCollectionView)
+            durationLabel.text = displayDelegate.audioProgressTextFormat(mediaItem.duration, for: self, in: messagesCollectionView)
             progressView.progress = 0.0
             playButton.isSelected = false
         default:
@@ -134,20 +147,6 @@ open class AudioMessageCell: MessageContentCell {
         playButton.imageView?.tintColor = tintColor
         durationLabel.textColor = tintColor
         progressView.tintColor = tintColor
-    }
-
-    // MARK: - Helpers
-
-    private class func getImageWithName(_ imageName: ImageName) -> UIImage? {
-        let assetBundle = Bundle.messageKitAssetBundle()
-        let imagePath = assetBundle.path(forResource: imageName.rawValue, ofType: "png", inDirectory: "Images")
-        let image = UIImage(contentsOfFile: imagePath ?? "")
-        return image
-    }
-
-    private enum ImageName: String {
-        case play
-        case pause
     }
 
 }

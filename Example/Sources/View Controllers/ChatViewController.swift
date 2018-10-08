@@ -65,7 +65,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         super.viewDidDisappear(animated)
         MockSocket.shared.disconnect()
 
-        audioController.stopAnyOngoingPLaying()
+        audioController.stopAnyOngoingPlaying()
     }
     
     func loadFirstMessages() {
@@ -213,11 +213,22 @@ extension ChatViewController: MessageCellDelegate {
                 print("Failed to identify message when audio cell receive tap gesture")
                 return
         }
-        // check if should play sound or pause
-        if cell.playButton.isSelected == true { // sound is playing - prepare to pause sound
-            self.audioController.pauseSound(for: message, in: cell)
-        } else { // sound is in pause or stoped - prepare to play sound
-            self.audioController.playSound(for: message, in: cell)
+        guard audioController.state != .none else {
+            // There is no audio sound playing - prepare to start playing for given audio message
+            audioController.playSound(for: message, in: cell)
+            return
+        }
+        if audioController.playingMessage?.messageId == message.messageId {
+            // tap occur in the current cell that is playing audio sound
+            if audioController.state == .playing {
+                audioController.pauseSound(for: message, in: cell)
+            } else {
+                audioController.resumeSound()
+            }
+        } else {
+            // tap occur in a difference cell that the one is currently playing sound. First stop currently playing and start the sound for given message
+            audioController.stopAnyOngoingPlaying()
+            audioController.playSound(for: message, in: cell)
         }
     }
 
