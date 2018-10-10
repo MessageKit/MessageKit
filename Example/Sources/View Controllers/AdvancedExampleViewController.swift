@@ -180,7 +180,7 @@ final class AdvancedExampleViewController: ChatViewController {
 //                self?.messagesCollectionView.scrollToBottom(animated: true)
 //            }
 //        }
-        messagesCollectionView.scrollToBottom(animated: true)
+//        messagesCollectionView.scrollToBottom(animated: true)
     }
     
     private func makeButton(named: String) -> InputBarButtonItem {
