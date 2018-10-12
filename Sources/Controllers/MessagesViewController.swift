@@ -23,6 +23,7 @@
  */
 
 import UIKit
+import MessageInputBar
 
 /// A subclass of `UIViewController` with a `MessagesCollectionView` object
 /// that is used to display conversation interfaces.
@@ -39,7 +40,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     /// bottom whenever the `InputTextView` begins editing.
     ///
     /// The default value of this property is `false`.
-    open var scrollsToBottomOnKeybordBeginsEditing: Bool = false
+    open var scrollsToBottomOnKeyboardBeginsEditing: Bool = false
     
     /// A Boolean value that determines whether the `MessagesCollectionView`
     /// maintains it's current position when the height of the `MessageInputBar` changes.
@@ -221,9 +222,9 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         }
 
         switch kind {
-        case UICollectionElementKindSectionHeader:
+        case UICollectionView.elementKindSectionHeader:
             return displayDelegate.messageHeaderView(for: indexPath, in: messagesCollectionView)
-        case UICollectionElementKindSectionFooter:
+        case UICollectionView.elementKindSectionFooter:
             return displayDelegate.messageFooterView(for: indexPath, in: messagesCollectionView)
         default:
             fatalError(MessageKitError.unrecognizedSectionKind)
@@ -298,11 +299,11 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     private func addObservers() {
         NotificationCenter.default.addObserver(
-            self, selector: #selector(clearMemoryCache), name: .UIApplicationDidReceiveMemoryWarning, object: nil)
+            self, selector: #selector(clearMemoryCache), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
     }
     
     private func removeObservers() {
-        NotificationCenter.default.removeObserver(self, name: .UIApplicationDidReceiveMemoryWarning, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
     }
     
     @objc private func clearMemoryCache() {

@@ -24,6 +24,7 @@
 
 import UIKit
 import MessageKit
+import MessageInputBar
 
 final internal class SettingsViewController: UITableViewController {
 

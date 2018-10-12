@@ -24,6 +24,7 @@ SOFTWARE.
 
 import UIKit
 import MessageKit
+import MessageInputBar
 
 /// A base class for the example controllers
 class ChatViewController: MessagesViewController, MessagesDataSource {
@@ -96,7 +97,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messageCellDelegate = self
         
-        scrollsToBottomOnKeybordBeginsEditing = true // default false
+        scrollsToBottomOnKeyboardBeginsEditing = true // default false
         maintainPositionOnKeyboardFrameChanged = true // default false
         
         messagesCollectionView.addSubview(refreshControl)
@@ -132,20 +133,9 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         
         let lastIndexPath = IndexPath(item: 0, section: messageList.count - 1)
         
-        let frame = messagesCollectionView.layoutAttributesForItem(at: lastIndexPath)?.frame ?? .zero
-        var rect = messagesCollectionView.convert(frame, to: view)
-        
-        // substract 100 to make the "visible" area of a cell bigger
-        rect.origin.y -= 100
-        
-        var visibleRect = CGRect(x: messagesCollectionView.bounds.origin.x, y: messagesCollectionView.bounds.origin.y, width:
-            messagesCollectionView.bounds.size.width, height:
-            messagesCollectionView.bounds.size.height - messagesCollectionView.contentInset.bottom)
-        
-        visibleRect = messagesCollectionView.convert(visibleRect, to: view)
-        return visibleRect.contains(rect)
+        return messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)
     }
-
+    
     // MARK: - MessagesDataSource
     
     func currentSender() -> Sender {
@@ -162,20 +152,20 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if indexPath.section % 3 == 0 {
-            return NSAttributedString(string: MessageKitDateFormatter.shared.string(from: message.sentDate), attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedStringKey.foregroundColor: UIColor.darkGray])
+            return NSAttributedString(string: MessageKitDateFormatter.shared.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         }
         return nil
     }
     
     func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let name = message.sender.displayName
-        return NSAttributedString(string: name, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption1)])
+        return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
     }
     
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         
         let dateString = formatter.string(from: message.sentDate)
-        return NSAttributedString(string: dateString, attributes: [NSAttributedStringKey.font: UIFont.preferredFont(forTextStyle: .caption2)])
+        return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
     
 }

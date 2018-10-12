@@ -8,11 +8,11 @@ jobs:
   build-and-test:
 
     environment:
-      - DESTINATION: "platform=iOS Simulator,name=iPhone 8"
+      - DESTINATION: "platform=iOS Simulator,name=iPhone XR"
 
     # Specify the Xcode version to use.
     macos:
-      xcode: "9.4.1"
+      xcode: "10.0.0"
 
     # Define the steps required to build the project.
     steps:
@@ -22,9 +22,6 @@ jobs:
       - run:
           name: Update Homebrew
           command: brew update
-      - run:
-          name: Update carthage
-          command: brew upgrade carthage
       - run:
           name: Bootstrap Carthage
           command: carthage bootstrap --platform ios

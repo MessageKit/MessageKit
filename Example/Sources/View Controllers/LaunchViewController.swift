@@ -24,6 +24,7 @@
 
 import UIKit
 import MessageKit
+import MessageInputBar
 import SafariServices
 
 final internal class LaunchViewController: UITableViewController {
