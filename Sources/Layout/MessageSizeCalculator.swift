@@ -53,8 +53,8 @@ open class MessageSizeCalculator: CellSizeCalculator {
     public var incomingAccessoryViewSize = CGSize.zero
     public var outgoingAccessoryViewSize = CGSize.zero
 
-    public var incomingAccessoryViewPadding = UIEdgeInsets.zero
-    public var outgoingAccessoryViewPadding = UIEdgeInsets.zero
+    public var incomingAccessoryViewPadding = HorizontalEdgeInsets.zero
+    public var outgoingAccessoryViewPadding = HorizontalEdgeInsets.zero
 
     open override func configure(attributes: UICollectionViewLayoutAttributes) {
         guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
@@ -95,38 +95,37 @@ open class MessageSizeCalculator: CellSizeCalculator {
         let messageVerticalPadding = messageContainerPadding(for: message).vertical
         let avatarHeight = avatarSize(for: message).height
         let avatarVerticalPosition = avatarPosition(for: message).vertical
-        let accessoryViewTotalHeight = accessoryViewSize(for: message).height
 
         switch avatarVerticalPosition {
         case .messageCenter:
             let totalLabelHeight: CGFloat = cellTopLabelHeight + messageTopLabelHeight
                 + messageContainerHeight + messageVerticalPadding + messageBottomLabelHeight
             let cellHeight = max(avatarHeight, totalLabelHeight)
-            return max(accessoryViewTotalHeight, cellHeight)
+            return cellHeight
         case .messageBottom:
             var cellHeight: CGFloat = 0
             cellHeight += messageBottomLabelHeight
             let labelsHeight = messageContainerHeight + messageVerticalPadding + cellTopLabelHeight + messageTopLabelHeight
             cellHeight += max(labelsHeight, avatarHeight)
-            return max(accessoryViewTotalHeight, cellHeight)
+            return cellHeight
         case .messageTop:
             var cellHeight: CGFloat = 0
             cellHeight += cellTopLabelHeight
             cellHeight += messageTopLabelHeight
             let labelsHeight = messageContainerHeight + messageVerticalPadding + messageBottomLabelHeight
             cellHeight += max(labelsHeight, avatarHeight)
-            return max(accessoryViewTotalHeight, cellHeight)
+            return cellHeight
         case .messageLabelTop:
             var cellHeight: CGFloat = 0
             cellHeight += cellTopLabelHeight
             let messageLabelsHeight = messageContainerHeight + messageBottomLabelHeight + messageVerticalPadding + messageTopLabelHeight
             cellHeight += max(messageLabelsHeight, avatarHeight)
-            return max(accessoryViewTotalHeight, cellHeight)
+            return cellHeight
         case .cellTop, .cellBottom:
             let totalLabelHeight: CGFloat = cellTopLabelHeight + messageTopLabelHeight
                 + messageContainerHeight + messageVerticalPadding + messageBottomLabelHeight
             let cellHeight = max(avatarHeight, totalLabelHeight)
-            return max(accessoryViewTotalHeight, cellHeight)
+            return cellHeight
         }
     }
 
@@ -205,7 +204,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return isFromCurrentSender ? outgoingAccessoryViewSize : incomingAccessoryViewSize
     }
 
-    public func accessoryViewPadding(for message: MessageType) -> UIEdgeInsets {
+    public func accessoryViewPadding(for message: MessageType) -> HorizontalEdgeInsets {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingAccessoryViewPadding : incomingAccessoryViewPadding
@@ -229,7 +228,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
         let messagePadding = messageContainerPadding(for: message)
         let accessoryWidth = accessoryViewSize(for: message).width
         let accessoryPadding = accessoryViewPadding(for: message)
-        return messagesLayout.itemWidth - avatarWidth - messagePadding.horizontal - accessoryWidth - accessoryPadding.horizontal
+        return messagesLayout.itemWidth - avatarWidth - messagePadding.horizontal + accessoryWidth + accessoryPadding.horizontal
     }
 
     // MARK: - Helpers

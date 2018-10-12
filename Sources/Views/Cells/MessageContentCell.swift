@@ -280,7 +280,7 @@ open class MessageContentCell: MessageCollectionViewCell {
     open func layoutAccessoryView(with attributes: MessagesCollectionViewLayoutAttributes) {
         
         // Accessory view aligned to the middle of the messageContainerView
-        var y = messageContainerView.frame.midY - (attributes.accessoryViewSize.height/2)
+        let y = messageContainerView.frame.midY - (attributes.accessoryViewSize.height / 2)
 
         var origin = CGPoint(x: 0, y: y)
 
