@@ -50,7 +50,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///
     /// - Note:
     ///   The default value is `UIColor.clear` for emoji messages.
-    ///   For all other `MessageKind` cases, the color depends on the `Sender`.
+    ///   For all other `MessageKind` cases, the color depends on the `SenderType`.
     ///
     ///   Current sender: Green
     ///
@@ -106,7 +106,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     ///
     /// - Note:
-    ///   The default value returned by this method is determined by the messages `Sender`.
+    ///   The default value returned by this method is determined by the messages `SenderType`.
     ///
     ///   Current sender: UIColor.white
     ///

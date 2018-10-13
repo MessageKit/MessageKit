@@ -1,18 +1,18 @@
 /*
  MIT License
- 
+
  Copyright (c) 2017-2018 MessageKit
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,24 +24,24 @@
 
 import Foundation
 
-/// An object that groups the metadata of a messages sender.
-@available(*, deprecated: 2.0, message: "`Sender` has been replaced with the `SenderType` protocol in 2.0")
-public struct Sender: SenderType {
-
-    /// MARK: - Properties
+/// A standard protocol representing a sender.
+/// Use this protocol to adhere a object as the sender of a MessageType
+public protocol SenderType {
 
     /// The unique String identifier for the sender.
     ///
     /// Note: This value must be unique across all senders.
-    public let id: String
+    var id: String { get }
 
     /// The display name of a sender.
-    public let displayName: String
+    var displayName: String { get }
 
-    // MARK: - Intializers
+    /// Equatable conformance
+    func isEqualTo(_ sender: SenderType) -> Bool
+}
 
-    public init(id: String, displayName: String) {
-        self.id = id
-        self.displayName = displayName
+public extension SenderType {
+    func isEqualTo(_ sender: SenderType) -> Bool {
+        return self.id == sender.id
     }
 }

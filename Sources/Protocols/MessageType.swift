@@ -29,7 +29,7 @@ import Foundation
 public protocol MessageType {
 
     /// The sender of the message.
-    var sender: Sender { get }
+    var sender: SenderType { get }
 
     /// The unique identifier for the message.
     var messageId: String { get }

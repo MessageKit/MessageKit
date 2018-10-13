@@ -37,12 +37,12 @@ final class MockSocket {
     
     private var onTypingStatusCode: (() -> Void)?
     
-    private var connectedUsers: [Sender] = []
+    private var connectedUsers: [MockUser] = []
     
     private init() {}
     
     @discardableResult
-    func connect(with senders: [Sender]) -> Self {
+    func connect(with senders: [MockUser]) -> Self {
         disconnect()
         connectedUsers = senders
         timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(handleTimer), userInfo: nil, repeats: true)
