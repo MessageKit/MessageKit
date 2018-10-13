@@ -29,6 +29,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
+-  Fixed a bug that prevented `MessageLabel` from laying out properly when contained by superviews using autolayout.
+[#889](https://github.com/MessageKit/MessageKit/pull/889) by [@marius-serban](https://github.com/marius-serban).
+
+
 - **Breaking Change** Fixed typo of `scrollsToBottomOnKeybordBeginsEditing` to `scrollsToBottomOnKeyboardBeginsEditing`.
 [#856](https://github.com/MessageKit/MessageKit/pull/856) by [@p-petrenko](https://github.com/p-petrenko)
 

@@ -1,4 +1,0 @@
-### Fixed
-
--  Fixed a bug that prevented `MessageLabel` from laying out properly when contained by superviews using autolayout.
-[#889](https://github.com/MessageKit/MessageKit/pull/889) by [@marius-serban](https://github.com/marius-serban).
