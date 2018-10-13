@@ -194,6 +194,10 @@ extension ChatViewController: MessageCellDelegate {
         print("Bottom label tapped")
     }
     
+    func didTapAccessoryView(in cell: MessageCollectionViewCell) {
+        print("Accessory view tapped")
+    }
+    
 }
 
 // MARK: - MessageLabelDelegate

@@ -156,6 +156,8 @@ open class MessageContentCell: MessageCollectionViewCell {
             delegate?.didTapMessageTopLabel(in: self)
         case messageBottomLabel.frame.contains(touchLocation):
             delegate?.didTapMessageBottomLabel(in: self)
+        case accessoryView.frame.contains(touchLocation):
+            delegate?.didTapAccessoryView(in: self)
         default:
             break
         }
@@ -223,7 +225,12 @@ open class MessageContentCell: MessageCollectionViewCell {
                 fallthrough
             }
         default:
-            origin.y = attributes.cellTopLabelSize.height + attributes.messageTopLabelSize.height + attributes.messageContainerPadding.top
+            if attributes.accessoryViewSize.height > attributes.messageContainerSize.height {
+                let messageHeight = attributes.messageContainerSize.height + attributes.messageContainerPadding.vertical
+                origin.y = (attributes.size.height / 2) - (messageHeight / 2)
+            } else {
+                origin.y = attributes.cellTopLabelSize.height + attributes.messageTopLabelSize.height + attributes.messageContainerPadding.top
+            }
         }
 
         switch attributes.avatarPosition.horizontal {
@@ -271,8 +278,9 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// Positions the cell's accessory view.
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutAccessoryView(with attributes: MessagesCollectionViewLayoutAttributes) {
-        var y = (bounds.height - attributes.accessoryViewSize.height) / 2
-        y -= attributes.accessoryViewPadding.vertical + attributes.accessoryViewPadding.top
+        
+        // Accessory view aligned to the middle of the messageContainerView
+        let y = messageContainerView.frame.midY - (attributes.accessoryViewSize.height / 2)
 
         var origin = CGPoint(x: 0, y: y)
 

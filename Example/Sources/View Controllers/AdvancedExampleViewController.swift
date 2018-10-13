@@ -98,6 +98,11 @@ final class AdvancedExampleViewController: ChatViewController {
         layout?.setMessageIncomingAvatarSize(CGSize(width: 30, height: 30))
         layout?.setMessageIncomingMessagePadding(UIEdgeInsets(top: -outgoingAvatarOverlap, left: -18, bottom: outgoingAvatarOverlap, right: 18))
         
+        layout?.setMessageIncomingAccessoryViewSize(CGSize(width: 200, height: 200))
+        layout?.setMessageIncomingAccessoryViewPadding(HorizontalEdgeInsets(left: 8, right: 0))
+        layout?.setMessageOutgoingAccessoryViewSize(CGSize(width: 30, height: 30))
+        layout?.setMessageOutgoingAccessoryViewPadding(HorizontalEdgeInsets(left: 0, right: 8))
+        
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
     }
@@ -117,6 +122,10 @@ final class AdvancedExampleViewController: ChatViewController {
         messageInputBar.inputTextView.layer.cornerRadius = 16.0
         messageInputBar.inputTextView.layer.masksToBounds = true
         messageInputBar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        configureInputBarItems()
+    }
+
+    private func configureInputBarItems() {
         messageInputBar.setRightStackViewWidthConstant(to: 36, animated: false)
         messageInputBar.sendButton.imageView?.backgroundColor = UIColor(white: 0.85, alpha: 1)
         messageInputBar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
@@ -136,14 +145,16 @@ final class AdvancedExampleViewController: ChatViewController {
                 item.title = "\(textView.text.count)/140"
                 let isOverLimit = textView.text.count > 140
                 item.messageInputBar?.shouldManageSendButtonEnabledState = !isOverLimit // Disable automated management when over limit
-                item.messageInputBar?.sendButton.isEnabled = !isOverLimit
+                if isOverLimit {
+                    item.messageInputBar?.sendButton.isEnabled = false
+                }
                 let color = isOverLimit ? .red : UIColor(white: 0.6, alpha: 1)
                 item.setTitleColor(color, for: .normal)
         }
         let bottomItems = [makeButton(named: "ic_at"), makeButton(named: "ic_hashtag"), makeButton(named: "ic_library"), .flexibleSpace, charCountButton]
         messageInputBar.textViewPadding.bottom = 8
         messageInputBar.setStackViewItems(bottomItems, forStack: .bottom, animated: false)
-        
+
         // This just adds some more flare
         messageInputBar.sendButton
             .onEnabled { item in
@@ -310,6 +321,19 @@ extension AdvancedExampleViewController: MessagesDisplayDelegate {
         avatarView.isHidden = isNextMessageSameSender(at: indexPath)
         avatarView.layer.borderWidth = 2
         avatarView.layer.borderColor = UIColor.primaryColor.cgColor
+    }
+    
+    func configureAccessoryView(_ accessoryView: UIView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        // Cells are reused, so only add a button here once. For real use you would need to
+        // ensure any subviews are removed if not needed
+        guard accessoryView.subviews.isEmpty else { return }
+        let button = UIButton(type: .infoLight)
+        button.tintColor = .primaryColor
+        accessoryView.addSubview(button)
+        button.frame = accessoryView.bounds
+        button.isUserInteractionEnabled = false // respond to accessoryView tap through `MessageCellDelegate`
+        accessoryView.layer.cornerRadius = accessoryView.frame.height / 2
+        accessoryView.backgroundColor = UIColor.primaryColor.withAlphaComponent(0.3)
     }
     
     // MARK: - Location Messages

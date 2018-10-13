@@ -1,7 +1,7 @@
 PODS:
-  - MessageInputBar (0.4.0):
-    - MessageInputBar/Core (= 0.4.0)
-  - MessageInputBar/Core (0.4.0)
+  - MessageInputBar (0.4.1):
+    - MessageInputBar/Core (= 0.4.1)
+  - MessageInputBar/Core (0.4.1)
   - MessageKit (1.0.0):
     - MessageInputBar/Core
 
@@ -18,11 +18,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   MessageInputBar:
-    :commit: 0d2ea1b85a708f37d6b720a3b316e63a39ace4b8
+    :commit: faebe27f2dd8f39ea145e75b7296ef48133c099a
     :git: https://github.com/MessageKit/MessageInputBar.git
 
 SPEC CHECKSUMS:
-  MessageInputBar: d46ecc5b355d13433b8367dcd200e05a6564f0ed
+  MessageInputBar: e81c7535347f1f7b923de7080409a535a004b6e4
   MessageKit: 2bbd13dd6a7c06f42f2d13ed8871d1fe5383b477
 
 PODFILE CHECKSUM: 04c1a805e1997e83bacab1a34787e71e9fe4432b

@@ -231,12 +231,12 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
 
     /// Set `incomingAccessoryViewSize` of all `MessageSizeCalculator`s
-    public func setMessageIncomingAccessoryViewPadding(_ newPadding: UIEdgeInsets) {
+    public func setMessageIncomingAccessoryViewPadding(_ newPadding: HorizontalEdgeInsets) {
         messageSizeCalculators().forEach { $0.incomingAccessoryViewPadding = newPadding }
     }
 
     /// Set `outgoingAvatarSize` of all `MessageSizeCalculator`s
-    public func setMessageOutgoingAccessoryViewPadding(_ newPadding: UIEdgeInsets) {
+    public func setMessageOutgoingAccessoryViewPadding(_ newPadding: HorizontalEdgeInsets) {
         messageSizeCalculators().forEach { $0.outgoingAccessoryViewPadding = newPadding }
     }
 
