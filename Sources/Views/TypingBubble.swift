@@ -49,13 +49,13 @@ open class TypingBubble: UIView {
     // MARK: - Subviews
     
     /// The indicator used to display the typing animation.
-    open let typingIndicator = TypingIndicator()
+    public let typingIndicator = TypingIndicator()
     
-    open let contentBubble = UIView()
+    public let contentBubble = UIView()
     
-    open let cornerBubble = BubbleCircle()
+    public let cornerBubble = BubbleCircle()
     
-    open let tinyBubble = BubbleCircle()
+    public let tinyBubble = BubbleCircle()
     
     // MARK: - Animation Layers
     
@@ -130,7 +130,7 @@ open class TypingBubble: UIView {
         contentBubble.layer.cornerRadius = contentBubbleFrameCornerRadius
             
         let insets = UIEdgeInsets(top: offset, left: contentBubbleFrameCornerRadius / 1.25, bottom: offset, right: contentBubbleFrameCornerRadius / 1.25)
-        typingIndicator.frame = UIEdgeInsetsInsetRect(contentBubble.bounds, insets)
+        typingIndicator.frame = contentBubble.bounds.inset(by: insets)
     }
     
     // MARK: - Animation API

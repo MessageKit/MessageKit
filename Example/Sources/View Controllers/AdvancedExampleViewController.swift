@@ -39,8 +39,8 @@ final class AdvancedExampleViewController: ChatViewController {
         updateTitleView(title: "MessageKit", subtitle: "2 Online")
         
         // Customize the typing bubble! These are the default values
-//        typingBubbleBackgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
-//        typingBubbleDotColor = .lightGray
+        typingBubbleBackgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+        typingBubbleDotColor = .lightGray
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -51,9 +51,8 @@ final class AdvancedExampleViewController: ChatViewController {
                 self?.setTypingIndicatorHidden(false)
             }.onNewMessage { [weak self] message in
                 self?.setTypingIndicatorHidden(true, performUpdates: {
-//                    self?.insertMessage(message)
+                    self?.insertMessage(message)
                 })
-                self?.insertMessage(message)
         }
     }
     
@@ -186,12 +185,11 @@ final class AdvancedExampleViewController: ChatViewController {
     
     func setTypingIndicatorHidden(_ isHidden: Bool, performUpdates updates: (() -> Void)? = nil) {
         updateTitleView(title: "MessageKit", subtitle: isHidden ? "2 Online" : "Typing...")
-//        setTypingBubbleHidden(isHidden, animated: true, whilePerforming: updates) { [weak self] (_) in
-//            if self?.isLastSectionVisible() == true {
-//                self?.messagesCollectionView.scrollToBottom(animated: true)
-//            }
-//        }
-//        messagesCollectionView.scrollToBottom(animated: true)
+        setTypingIndicatorHidden(isHidden, animated: true, whilePerforming: updates) { [weak self] _ in
+            if self?.isLastSectionVisible() == true {
+                self?.messagesCollectionView.scrollToBottom(animated: true)
+            }
+        }
     }
     
     private func makeButton(named: String) -> InputBarButtonItem {
@@ -218,10 +216,10 @@ final class AdvancedExampleViewController: ChatViewController {
             fatalError("Ouch. nil data source for messages")
         }
         
-//        guard !isSectionReservedForTypingBubble(indexPath.section) else {
-//            return super.collectionView(collectionView, cellForItemAt: indexPath)
-//        }
-        
+        guard !isSectionReservedForTypingIndicator(indexPath.section) else {
+            return super.collectionView(collectionView, cellForItemAt: indexPath)
+        }
+
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         if case .custom = message.kind {
             let cell = messagesCollectionView.dequeueReusableCell(CustomCell.self, for: indexPath)
