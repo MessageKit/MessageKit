@@ -73,7 +73,9 @@ open class MessageContentCell: MessageCollectionViewCell {
     }
 
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        setupSubviews()
     }
 
     open func setupSubviews() {
