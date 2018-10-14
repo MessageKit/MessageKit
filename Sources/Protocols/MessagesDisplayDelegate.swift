@@ -84,6 +84,18 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   The default image configured by this method is `?`.
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
 
+    /// Used to configure the `AccessoryView` in a `MessageContentCell` class.
+    ///
+    /// - Parameters:
+    ///   - accessoryView: The `AccessoryView` of the cell.
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// - Note:
+    ///   The default image configured by this method is `?`.
+    func configureAccessoryView(_ accessoryView: UIView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
+
     // MARK: - Text Messages
 
     /// Specifies the color of the text for a `TextMessageCell`.
@@ -118,7 +130,7 @@ public protocol MessagesDisplayDelegate: AnyObject {
     ///   - detector: The `DetectorType` for the applied attributes.
     ///   - message: A `MessageType` with a `MessageKind` case of `.text` or `.attributedText` to which the detectors will apply.
     ///   - indexPath: The `IndexPath` of the cell.
-    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedStringKey: Any]
+    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key: Any]
 
     // MARK: - Location Messages
 
@@ -194,6 +206,8 @@ public extension MessagesDisplayDelegate {
         avatarView.initials = "?"
     }
 
+    func configureAccessoryView(_ accessoryView: UIView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {}
+
     // MARK: - Text Messages Defaults
 
     func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
@@ -207,7 +221,7 @@ public extension MessagesDisplayDelegate {
         return []
     }
 
-    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedStringKey: Any] {
+    func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key: Any] {
         return MessageLabel.defaultAttributes
     }
 

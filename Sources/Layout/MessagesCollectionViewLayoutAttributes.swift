@@ -46,6 +46,9 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
     public var messageBottomLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
     public var messageBottomLabelSize: CGSize = .zero
 
+    public var accessoryViewSize: CGSize = .zero
+    public var accessoryViewPadding: HorizontalEdgeInsets = .zero
+
     // MARK: - Methods
 
     open override func copy(with zone: NSZone? = nil) -> Any {
@@ -63,6 +66,8 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
         copy.messageTopLabelSize = messageTopLabelSize
         copy.messageBottomLabelAlignment = messageBottomLabelAlignment
         copy.messageBottomLabelSize = messageBottomLabelSize
+        copy.accessoryViewSize = accessoryViewSize
+        copy.accessoryViewPadding = accessoryViewPadding
         return copy
         // swiftlint:enable force_cast
     }
@@ -82,6 +87,8 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
                 && attributes.messageTopLabelSize == messageTopLabelSize
                 && attributes.messageBottomLabelAlignment == messageBottomLabelAlignment
                 && attributes.messageBottomLabelSize == messageBottomLabelSize
+                && attributes.accessoryViewSize == accessoryViewSize
+                && attributes.accessoryViewPadding == accessoryViewPadding
         } else {
             return false
         }

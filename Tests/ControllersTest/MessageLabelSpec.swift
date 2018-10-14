@@ -243,7 +243,7 @@ final class MessageLabelSpec: QuickSpec {
 
 fileprivate extension MessageLabel {
 
-    var textAttributes: [NSAttributedStringKey: Any] {
+    var textAttributes: [NSAttributedString.Key: Any] {
         let length = attributedText!.length
         var range = NSRange(location: 0, length: length)
         return attributedText!.attributes(at: 0, effectiveRange: &range)

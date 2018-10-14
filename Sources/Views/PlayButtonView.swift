@@ -28,7 +28,7 @@ open class PlayButtonView: UIView {
 
     // MARK: - Properties
 
-    open let triangleView = UIView()
+    public let triangleView = UIView()
 
     private var triangleCenterXConstraint: NSLayoutConstraint?
     private var cacheFrame: CGRect = .zero
@@ -40,14 +40,15 @@ open class PlayButtonView: UIView {
 
         setupSubviews()
         setupConstraints()
-
-        triangleView.clipsToBounds = true
-        triangleView.backgroundColor = .black
-        backgroundColor = .playButtonLightGray
+        setupView()
     }
 
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        
+        setupSubviews()
+        setupConstraints()
+        setupView()
     }
 
     // MARK: - Methods
@@ -65,6 +66,13 @@ open class PlayButtonView: UIView {
 
     private func setupSubviews() {
         addSubview(triangleView)
+    }
+    
+    private func setupView() {
+        triangleView.clipsToBounds = true
+        triangleView.backgroundColor = .black
+        
+        backgroundColor = .playButtonLightGray
     }
 
     private func setupConstraints() {
