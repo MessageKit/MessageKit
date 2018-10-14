@@ -28,7 +28,7 @@ import XCTest
 class MessageKitDateFormatterTests: XCTestCase {
 
     var formatter: DateFormatter!
-    let attributes = [NSAttributedStringKey.backgroundColor: "red"]
+    let attributes = [NSAttributedString.Key.backgroundColor: "red"]
     override func setUp() {
         super.setUp()
 

@@ -52,7 +52,7 @@ open class MessagesCollectionView: UICollectionView {
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(frame: .zero, collectionViewLayout: MessagesCollectionViewFlowLayout())
     }
 
     public convenience init() {
@@ -65,8 +65,8 @@ open class MessagesCollectionView: UICollectionView {
         register(TextMessageCell.self)
         register(MediaMessageCell.self)
         register(LocationMessageCell.self)
-        register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader)
-        register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionFooter)
+        register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
+        register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter)
     }
     
     private func setupGestureRecognizers() {
@@ -122,6 +122,13 @@ open class MessagesCollectionView: UICollectionView {
                  forSupplementaryViewOfKind: kind,
                  withReuseIdentifier: String(describing: T.self))
     }
+    
+    /// Registers a nib with reusable view for a specific SectionKind
+    public func register<T: UICollectionReusableView>(_ nib: UINib? = UINib(nibName: String(describing: T.self), bundle: nil), headerFooterClassOfNib headerFooterClass: T.Type, forSupplementaryViewOfKind kind: String) {
+        register(nib,
+                 forSupplementaryViewOfKind: kind,
+                 withReuseIdentifier: String(describing: T.self))        
+    }
 
     /// Generically dequeues a cell of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
     public func dequeueReusableCell<T: UICollectionViewCell>(_ cellClass: T.Type, for indexPath: IndexPath) -> T {
@@ -133,7 +140,7 @@ open class MessagesCollectionView: UICollectionView {
 
     /// Generically dequeues a header of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
     public func dequeueReusableHeaderView<T: UICollectionReusableView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T {
-        let view = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: String(describing: T.self), for: indexPath)
+        let view = dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: T.self), for: indexPath)
         guard let viewType = view as? T else {
             fatalError("Unable to dequeue \(String(describing: viewClass)) with reuseId of \(String(describing: T.self))")
         }
@@ -142,7 +149,7 @@ open class MessagesCollectionView: UICollectionView {
 
     /// Generically dequeues a footer of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
     public func dequeueReusableFooterView<T: UICollectionReusableView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T {
-        let view = dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionFooter, withReuseIdentifier: String(describing: T.self), for: indexPath)
+        let view = dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: String(describing: T.self), for: indexPath)
         guard let viewType = view as? T else {
             fatalError("Unable to dequeue \(String(describing: viewClass)) with reuseId of \(String(describing: T.self))")
         }

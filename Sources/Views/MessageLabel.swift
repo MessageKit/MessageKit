@@ -112,30 +112,37 @@ open class MessageLabel: UILabel {
             if !isConfiguring { setNeedsDisplay() }
         }
     }
+
+    open override var intrinsicContentSize: CGSize {
+        var size = super.intrinsicContentSize
+        size.width += textInsets.horizontal
+        size.height += textInsets.vertical
+        return size
+    }
     
     internal var messageLabelFont: UIFont?
 
     private var attributesNeedUpdate = false
 
-    public static var defaultAttributes: [NSAttributedStringKey: Any] = {
+    public static var defaultAttributes: [NSAttributedString.Key: Any] = {
         return [
-            NSAttributedStringKey.foregroundColor: UIColor.darkText,
-            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
-            NSAttributedStringKey.underlineColor: UIColor.darkText
+            NSAttributedString.Key.foregroundColor: UIColor.darkText,
+            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
+            NSAttributedString.Key.underlineColor: UIColor.darkText
         ]
     }()
 
-    open internal(set) var addressAttributes: [NSAttributedStringKey: Any] = defaultAttributes
+    open internal(set) var addressAttributes: [NSAttributedString.Key: Any] = defaultAttributes
 
-    open internal(set) var dateAttributes: [NSAttributedStringKey: Any] = defaultAttributes
+    open internal(set) var dateAttributes: [NSAttributedString.Key: Any] = defaultAttributes
 
-    open internal(set) var phoneNumberAttributes: [NSAttributedStringKey: Any] = defaultAttributes
+    open internal(set) var phoneNumberAttributes: [NSAttributedString.Key: Any] = defaultAttributes
 
-    open internal(set) var urlAttributes: [NSAttributedStringKey: Any] = defaultAttributes
+    open internal(set) var urlAttributes: [NSAttributedString.Key: Any] = defaultAttributes
     
-    open internal(set) var transitInformationAttributes: [NSAttributedStringKey: Any] = defaultAttributes
+    open internal(set) var transitInformationAttributes: [NSAttributedString.Key: Any] = defaultAttributes
 
-    public func setAttributes(_ attributes: [NSAttributedStringKey: Any], detector: DetectorType) {
+    public func setAttributes(_ attributes: [NSAttributedString.Key: Any], detector: DetectorType) {
         switch detector {
         case .phoneNumber:
             phoneNumberAttributes = attributes
@@ -159,19 +166,19 @@ open class MessageLabel: UILabel {
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.numberOfLines = 0
-        self.lineBreakMode = .byWordWrapping
+        setupView()
     }
 
     public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        setupView()
     }
 
     // MARK: - Open Methods
 
     open override func drawText(in rect: CGRect) {
 
-        let insetRect = UIEdgeInsetsInsetRect(rect, textInsets)
+        let insetRect = rect.inset(by: textInsets)
         textContainer.size = CGSize(width: insetRect.width, height: rect.height)
 
         let origin = insetRect.origin
@@ -263,7 +270,7 @@ open class MessageLabel: UILabel {
         }
     }
 
-    private func detectorAttributes(for detectorType: DetectorType) -> [NSAttributedStringKey: Any] {
+    private func detectorAttributes(for detectorType: DetectorType) -> [NSAttributedString.Key: Any] {
 
         switch detectorType {
         case .address:
@@ -280,7 +287,7 @@ open class MessageLabel: UILabel {
 
     }
 
-    private func detectorAttributes(for checkingResultType: NSTextCheckingResult.CheckingType) -> [NSAttributedStringKey: Any] {
+    private func detectorAttributes(for checkingResultType: NSTextCheckingResult.CheckingType) -> [NSAttributedString.Key: Any] {
         switch checkingResultType {
         case .address:
             return addressAttributes
@@ -295,6 +302,11 @@ open class MessageLabel: UILabel {
         default:
             fatalError(MessageKitError.unrecognizedCheckingResult)
         }
+    }
+    
+    private func setupView() {
+        numberOfLines = 0
+        lineBreakMode = .byWordWrapping
     }
 
     // MARK: - Parsing Text
@@ -313,7 +325,7 @@ open class MessageLabel: UILabel {
         // Enumerate NSAttributedString NSLinks and append ranges
         var results: [NSTextCheckingResult] = matches
 
-        text.enumerateAttribute(NSAttributedStringKey.link, in: range, options: []) { value, range, _ in
+        text.enumerateAttribute(NSAttributedString.Key.link, in: range, options: []) { value, range, _ in
             guard let url = value as? URL else { return }
             let result = NSTextCheckingResult.linkCheckingResult(range: range, url: url)
             results.append(result)

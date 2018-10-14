@@ -43,7 +43,7 @@ open class MessageKitDateFormatter {
         return formatter.string(from: date)
     }
 
-    public func attributedString(from date: Date, with attributes: [NSAttributedStringKey: Any]) -> NSAttributedString {
+    public func attributedString(from date: Date, with attributes: [NSAttributedString.Key: Any]) -> NSAttributedString {
         let dateString = string(from: date)
         return NSAttributedString(string: dateString, attributes: attributes)
     }

@@ -74,9 +74,15 @@ open class AvatarView: UIImageView {
         super.init(frame: frame)
         prepareView()
     }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        prepareView()
+    }
 
     convenience public init() {
         self.init(frame: .zero)
+        prepareView()
     }
     
     private func setImageFrom(initials: String?) {
@@ -105,7 +111,7 @@ open class AvatarView: UIImageView {
 
         let textStyle = NSMutableParagraphStyle()
         textStyle.alignment = .center
-        let textFontAttributes: [NSAttributedStringKey: Any] = [NSAttributedStringKey.font: font, NSAttributedStringKey.foregroundColor: placeholderTextColor, NSAttributedStringKey.paragraphStyle: textStyle]
+        let textFontAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: font, NSAttributedString.Key.foregroundColor: placeholderTextColor, NSAttributedString.Key.paragraphStyle: textStyle]
 
         let textTextHeight: CGFloat = initials.boundingRect(with: CGSize(width: textRect.width, height: CGFloat.infinity), options: .usesLineFragmentOrigin, attributes: textFontAttributes, context: nil).height
         context.saveGState()
@@ -150,10 +156,6 @@ open class AvatarView: UIImageView {
         let startY = (outerViewHeight - h)/2
         // In case the font exactly fits to the region, put 2 pixel both left and right
         return CGRect(startX+2, startY, w-4, h)
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Internal methods

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
    s.name = 'MessageKit'
-   s.version = '1.0.0'
+   s.version = '2.0.0-beta.1'
    s.license = { :type => "MIT", :file => "LICENSE.md" }
 
    s.summary = 'An elegant messages UI library for iOS.'
@@ -19,4 +19,7 @@ Pod::Spec.new do |s|
    s.ios.resource_bundle = { 'MessageKitAssets' => 'Assets/MessageKitAssets.bundle/Images' }
 
    s.requires_arc = true
+
+   s.dependency 'MessageInputBar/Core'
+
 end
