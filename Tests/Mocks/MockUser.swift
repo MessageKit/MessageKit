@@ -25,26 +25,7 @@
 import Foundation
 @testable import MessageKit
 
-class MockMessagesDataSource: MessagesDataSource {
-
-    var messages: [MessageType] = []
-    let senders: [MockUser] = [MockUser(id: "sender_1", displayName: "Sender 1"),
-                             MockUser(id: "sender_2", displayName: "Sender 2")]
-
-    var currentUser: MockUser {
-        return senders[0]
-    }
-
-    func currentSender() -> SenderType {
-        return currentUser
-    }
-
-    func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
-        return messages.count
-    }
-
-    func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
-        return messages[indexPath.section]
-    }
-
+struct MockUser: SenderType {
+    var id: String
+    var displayName: String
 }

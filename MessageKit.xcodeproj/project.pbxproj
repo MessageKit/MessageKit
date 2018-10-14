@@ -37,6 +37,7 @@
 		382C794221705D2000F4FAF5 /* HorizontalEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382C794121705D2000F4FAF5 /* HorizontalEdgeInsets.swift */; };
 		383B9EB121728BAD008AB91A /* SenderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B9EB021728BAD008AB91A /* SenderType.swift */; };
 		38C2AE7C20D4878D00F8079E /* MessageInputBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38C2AE7B20D4878D00F8079E /* MessageInputBar.framework */; };
+		38F8062F2173CD8F00CDB9DB /* MockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F8062D2173CD4300CDB9DB /* MockUser.swift */; };
 		88916B2D1CF0DF2F00469F91 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88916B221CF0DF2F00469F91 /* MessageKit.framework */; };
 		8962AC8A1F87AB7D0030B058 /* MessagesCollectionViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC831F87AB230030B058 /* MessagesCollectionViewTests.swift */; };
 		8962AC8C1F87AB7D0030B058 /* AvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC851F87AB230030B058 /* AvatarViewTests.swift */; };
@@ -133,6 +134,7 @@
 		382C794121705D2000F4FAF5 /* HorizontalEdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalEdgeInsets.swift; sourceTree = "<group>"; };
 		383B9EB021728BAD008AB91A /* SenderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderType.swift; sourceTree = "<group>"; };
 		38C2AE7B20D4878D00F8079E /* MessageInputBar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageInputBar.framework; path = Carthage/Build/iOS/MessageInputBar.framework; sourceTree = "<group>"; };
+		38F8062D2173CD4300CDB9DB /* MockUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUser.swift; sourceTree = "<group>"; };
 		88916B221CF0DF2F00469F91 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88916B2C1CF0DF2F00469F91 /* MessageKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessageKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitDateFormatterTests.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 			children = (
 				8962AC7B1F87AB230030B058 /* MockMessage.swift */,
 				8962AC7A1F87AB230030B058 /* MockMessagesDataSource.swift */,
+				38F8062D2173CD4300CDB9DB /* MockUser.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -641,6 +644,7 @@
 				1F066E131FD90BB600E11013 /* MessagesViewControllerSpec.swift in Sources */,
 				1F066E1D1FDA3C1700E11013 /* SenderSpec.swift in Sources */,
 				8962AC8A1F87AB7D0030B058 /* MessagesCollectionViewTests.swift in Sources */,
+				38F8062F2173CD8F00CDB9DB /* MockUser.swift in Sources */,
 				8962AC8D1F87AB7D0030B058 /* MessageCollectionViewCellTests.swift in Sources */,
 				8962AC991F87AB860030B058 /* MessagesDisplayDelegateTests.swift in Sources */,
 				1FD589622064E1B9004B5081 /* MockMessage.swift in Sources */,

@@ -32,16 +32,16 @@ final class SenderSpec: QuickSpec {
         describe("equality between two Senders") {
             context("they have the same id ") {
                 it("should be equal") {
-                    let sender1 = Sender(id: "1", displayName: "Steven")
-                    let sender2 = Sender(id: "1", displayName: "Nathan")
-                    expect(sender1).to(equal(sender2))
+                    let sender1 = MockUser(id: "1", displayName: "Steven")
+                    let sender2 = MockUser(id: "1", displayName: "Nathan")
+                    expect(sender1.isEqualTo(sender2)).to(equal(true))
                 }
             }
             context("they have a different id") {
                 it("should not be equal") {
-                    let sender1 = Sender(id: "1", displayName: "Steven")
-                    let sender2 = Sender(id: "2", displayName: "Nathan")
-                    expect(sender1).toNot(equal(sender2))
+                    let sender1 = MockUser(id: "1", displayName: "Steven")
+                    let sender2 = MockUser(id: "2", displayName: "Nathan")
+                    expect(sender1.isEqualTo(sender2)).to(equal(false))
                 }
             }
         }
