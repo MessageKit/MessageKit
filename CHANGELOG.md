@@ -4,7 +4,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 --------------------------------------
 
-## Upcoming release
+## [2.0.0](https://github.com/MessageKit/MessageKit/releases/tag/2.0.0-beta.1)
 
 ### Changed
 
