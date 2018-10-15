@@ -62,18 +62,18 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return collectionView.frame.width - sectionInset.left - sectionInset.right
     }
 
+    public private(set) var isTypingIndicatorViewHidden: Bool = true
+
     // MARK: - Initializers
 
     public override init() {
         super.init()
-        
         setupView()
         setupObserver()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
         setupView()
         setupObserver()
     }
@@ -92,13 +92,59 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesCollectionViewFlowLayout.handleOrientationChange(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
 
+    // MARK: - Typing Indicator API
+
+    /// Sets the typing indicator sate by inserting/deleting the `TypingIndicatorView`
+    ///
+    /// - Parameters:
+    ///   - isHidden: A Boolean value that is to be the new state of the typing indicator
+    ///   - animated: A Boolean value determining if the insertion is to be animated
+    ///   - updates: A block of code that will be executed during `performBatchUpdates`
+    ///              when `animated` is `TRUE` or before the `completion` block executes
+    ///              when `animated` is `FALSE`
+    ///   - completion: A completion block to execute after the insertion/deletion
+    open func setTypingIndicatorViewHidden(_ isHidden: Bool, animated: Bool, whilePerforming updates: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
+
+        guard isTypingIndicatorViewHidden != isHidden else { return }
+        isTypingIndicatorViewHidden = isHidden
+
+        if animated {
+            messagesCollectionView.performBatchUpdates({ [weak self] in
+                self?.invalidateLayout()
+                updates?()
+                }, completion: { [weak self] success in
+                    if success {
+                        self?.adjustBottomInsetForTypingIndicatorView()
+                    }
+                    completion?(success)
+            })
+        } else {
+            updates?()
+            invalidateLayout()
+            adjustBottomInsetForTypingIndicatorView()
+            completion?(true)
+        }
+    }
+
+    private func adjustBottomInsetForTypingIndicatorView() {
+        guard let delegate = messagesCollectionView.messagesLayoutDelegate else { return }
+        let height = delegate.typingIndicatorViewSize(in: messagesCollectionView).height
+        let inset = delegate.typingIndicatorViewTopInset(in: messagesCollectionView)
+        let totalHeight = height + inset
+        let delta = isTypingIndicatorViewHidden ? -totalHeight : totalHeight
+        messagesCollectionView.contentInset.bottom += delta
+    }
+
     // MARK: - Attributes
 
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        guard let attributesArray = super.layoutAttributesForElements(in: rect) as? [MessagesCollectionViewLayoutAttributes] else {
+        guard var attributesArray = super.layoutAttributesForElements(in: rect) as? [MessagesCollectionViewLayoutAttributes] else {
             return nil
         }
         for attributes in attributesArray where attributes.representedElementCategory == .cell {
+            if let supplementaryAttributes = layoutAttributesForSupplementaryView(ofKind: MessagesCollectionView.elementKindTypingIndicator, at: attributes.indexPath) as? MessagesCollectionViewLayoutAttributes {
+                attributesArray.append(supplementaryAttributes)
+            }
             let cellSizeCalculator = cellSizeCalculatorForItem(at: attributes.indexPath)
             cellSizeCalculator.configure(attributes: attributes)
         }
@@ -114,6 +160,35 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             cellSizeCalculator.configure(attributes: attributes)
         }
         return attributes
+    }
+
+    open override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        switch elementKind {
+        case MessagesCollectionView.elementKindTypingIndicator:
+
+            guard shouldDisplayTypingIndicatorView(at: indexPath) else { return nil }
+            guard let delegate = messagesCollectionView.messagesLayoutDelegate else { return nil }
+            let size = delegate.typingIndicatorViewSize(in: messagesCollectionView)
+            guard size != .zero else { return nil }
+            let inset = delegate.typingIndicatorViewTopInset(in: messagesCollectionView)
+            let attributes = MessagesCollectionViewLayoutAttributes(forSupplementaryViewOfKind: elementKind, with: indexPath)
+
+            if let itemAttributes = layoutAttributesForItem(at: indexPath) {
+                attributes.frame = CGRect(x: itemAttributes.frame.origin.x,
+                                          y: itemAttributes.frame.maxY + inset,
+                                          width:  size.width,
+                                          height: size.height)
+                attributes.zIndex = 1
+            }
+            return attributes
+        default:
+            return super.layoutAttributesForSupplementaryView(ofKind: elementKind, at: indexPath)
+        }
+    }
+
+    public func shouldDisplayTypingIndicatorView(at indexPath: IndexPath) -> Bool {
+        let isLastIndexPath = indexPath.section == messagesCollectionView.numberOfSections - 1
+        return isLastIndexPath && !isTypingIndicatorViewHidden
     }
 
     // MARK: - Layout Invalidation

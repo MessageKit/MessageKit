@@ -37,10 +37,6 @@ final class AdvancedExampleViewController: ChatViewController {
         super.viewDidLoad()
         
         updateTitleView(title: "MessageKit", subtitle: "2 Online")
-        
-        // Customize the typing bubble! These are the default values
-//        typingBubbleBackgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
-//        typingBubbleDotColor = .lightGray
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -48,12 +44,11 @@ final class AdvancedExampleViewController: ChatViewController {
         
         MockSocket.shared.connect(with: [SampleData.shared.steven, SampleData.shared.wu])
             .onTypingStatus { [weak self] in
-                self?.setTypingIndicatorHidden(false)
+                self?.setTypingIndicatorViewHidden(false)
             }.onNewMessage { [weak self] message in
-                self?.setTypingIndicatorHidden(true, performUpdates: {
+                self?.setTypingIndicatorViewHidden(true, performUpdates: {
 //                    self?.insertMessage(message)
                 })
-                self?.insertMessage(message)
         }
     }
     
@@ -186,14 +181,13 @@ final class AdvancedExampleViewController: ChatViewController {
         return messageList[indexPath.section].user == messageList[indexPath.section + 1].user
     }
     
-    func setTypingIndicatorHidden(_ isHidden: Bool, performUpdates updates: (() -> Void)? = nil) {
+    func setTypingIndicatorViewHidden(_ isHidden: Bool, performUpdates updates: (() -> Void)? = nil) {
         updateTitleView(title: "MessageKit", subtitle: isHidden ? "2 Online" : "Typing...")
-//        setTypingBubbleHidden(isHidden, animated: true, whilePerforming: updates) { [weak self] (_) in
-//            if self?.isLastSectionVisible() == true {
-//                self?.messagesCollectionView.scrollToBottom(animated: true)
-//            }
-//        }
-//        messagesCollectionView.scrollToBottom(animated: true)
+        setTypingIndicatorViewHidden(isHidden, animated: true, whilePerforming: updates) { [weak self] (_) in
+            if self?.isLastSectionVisible() == true {
+                self?.messagesCollectionView.scrollToBottom(animated: true)
+            }
+        }
     }
     
     private func makeButton(named: String) -> InputBarButtonItem {

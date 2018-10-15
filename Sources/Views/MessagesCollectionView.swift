@@ -28,6 +28,8 @@ open class MessagesCollectionView: UICollectionView {
 
     // MARK: - Properties
 
+    public static var elementKindTypingIndicator = "TypingIndicatorElementKind"
+
     open weak var messagesDataSource: MessagesDataSource?
 
     open weak var messagesDisplayDelegate: MessagesDisplayDelegate?
@@ -40,6 +42,13 @@ open class MessagesCollectionView: UICollectionView {
         let lastSection = numberOfSections - 1
         guard lastSection >= 0, numberOfItems(inSection: lastSection) > 0 else { return nil }
         return IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
+    }
+
+    open var messagesCollectionViewFlowLayout: MessagesCollectionViewFlowLayout {
+        guard let layout = collectionViewLayout as? MessagesCollectionViewFlowLayout else {
+            fatalError(MessageKitError.layoutUsedOnForeignType)
+        }
+        return layout
     }
 
     // MARK: - Initializers
@@ -68,6 +77,7 @@ open class MessagesCollectionView: UICollectionView {
         register(AudioMessageCell.self)
         register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
         register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter)
+        register(TypingIndicatorView.self, forSupplementaryViewOfKind: MessagesCollectionView.elementKindTypingIndicator)
     }
     
     private func setupGestureRecognizers() {
@@ -112,14 +122,31 @@ open class MessagesCollectionView: UICollectionView {
         setContentOffset(newOffset, animated: false)
     }
 
+    // MARK: - Typing Indicator API
+
+    /// Sets the typing indicator sate by inserting/deleting the `TypingIndicatorView`
+    ///
+    /// - Parameters:
+    ///   - isHidden: A Boolean value that is to be the new state of the typing indicator
+    ///   - animated: A Boolean value determining if the insertion is to be animated
+    ///   - updates: A block of code that will be executed during `performBatchUpdates`
+    ///              when `animated` is `TRUE` or before the `completion` block executes
+    ///              when `animated` is `FALSE`
+    ///   - completion: A completion block to execute after the insertion/deletion
+    open func setTypingIndicatorViewHidden(_ isHidden: Bool, animated: Bool, whilePerforming updates: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
+        messagesCollectionViewFlowLayout.setTypingIndicatorViewHidden(isHidden, animated: animated, whilePerforming: updates, completion: completion)
+    }
+
+    // MARK: View Register/Dequeue
+
     /// Registers a particular cell using its reuse-identifier
     public func register<T: UICollectionViewCell>(_ cellClass: T.Type) {
         register(cellClass, forCellWithReuseIdentifier: String(describing: T.self))
     }
 
     /// Registers a reusable view for a specific SectionKind
-    public func register<T: UICollectionReusableView>(_ headerFooterClass: T.Type, forSupplementaryViewOfKind kind: String) {
-        register(headerFooterClass,
+    public func register<T: UICollectionReusableView>(_ reusableViewClass: T.Type, forSupplementaryViewOfKind kind: String) {
+        register(reusableViewClass,
                  forSupplementaryViewOfKind: kind,
                  withReuseIdentifier: String(describing: T.self))
     }
@@ -151,6 +178,15 @@ open class MessagesCollectionView: UICollectionView {
     /// Generically dequeues a footer of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
     public func dequeueReusableFooterView<T: UICollectionReusableView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T {
         let view = dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: String(describing: T.self), for: indexPath)
+        guard let viewType = view as? T else {
+            fatalError("Unable to dequeue \(String(describing: viewClass)) with reuseId of \(String(describing: T.self))")
+        }
+        return viewType
+    }
+
+    /// Generically dequeues a typing indicator of the correct type allowing you to avoid scattering your code with guard-let-else-fatal
+    public func dequeueReusableTypingIndicatorView<T: UICollectionReusableView>(_ viewClass: T.Type, for indexPath: IndexPath) -> T {
+        let view = dequeueReusableSupplementaryView(ofKind: MessagesCollectionView.elementKindTypingIndicator, withReuseIdentifier: String(describing: T.self), for: indexPath)
         guard let viewType = view as? T else {
             fatalError("Unable to dequeue \(String(describing: viewClass)) with reuseId of \(String(describing: T.self))")
         }

@@ -171,6 +171,21 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         }
     }
 
+    // MARK: - Typing Indicator API
+
+    /// Sets the typing indicator sate by inserting/deleting the `TypingBubbleCell`
+    ///
+    /// - Parameters:
+    ///   - isHidden: A Boolean value that is to be the new state of the typing indicator
+    ///   - animated: A Boolean value determining if the insertion is to be animated
+    ///   - updates: A block of code that will be executed during `performBatchUpdates`
+    ///              when `animated` is `TRUE` or before the `completion` block executes
+    ///              when `animated` is `FALSE`
+    ///   - completion: A completion block to execute after the insertion/deletion
+    open func setTypingIndicatorViewHidden(_ isHidden: Bool, animated: Bool, whilePerforming updates: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
+        messagesCollectionView.setTypingIndicatorViewHidden(isHidden, animated: animated, whilePerforming: updates, completion: completion)
+    }
+
     // MARK: - UICollectionViewDataSource
 
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -238,6 +253,8 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             return displayDelegate.messageHeaderView(for: indexPath, in: messagesCollectionView)
         case UICollectionView.elementKindSectionFooter:
             return displayDelegate.messageFooterView(for: indexPath, in: messagesCollectionView)
+        case MessagesCollectionView.elementKindTypingIndicator:
+            return displayDelegate.typingIndicatorView(for: indexPath, in: messagesCollectionView)
         default:
             fatalError(MessageKitError.unrecognizedSectionKind)
         }
