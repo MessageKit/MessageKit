@@ -120,7 +120,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - Avatar
 
-    public func avatarPosition(for message: MessageType) -> AvatarPosition {
+    open func avatarPosition(for message: MessageType) -> AvatarPosition {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         var position = isFromCurrentSender ? outgoingAvatarPosition : incomingAvatarPosition
@@ -142,14 +142,14 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - Top cell Label
 
-    public func cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    open func cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let layoutDelegate = messagesLayout.messagesLayoutDelegate
         let collectionView = messagesLayout.messagesCollectionView
         let height = layoutDelegate.cellTopLabelHeight(for: message, at: indexPath, in: collectionView)
         return CGSize(width: messagesLayout.itemWidth, height: height)
     }
 
-    public func cellTopLabelAlignment(for message: MessageType) -> LabelAlignment {
+    open func cellTopLabelAlignment(for message: MessageType) -> LabelAlignment {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingCellTopLabelAlignment : incomingCellTopLabelAlignment
@@ -157,14 +157,14 @@ open class MessageSizeCalculator: CellSizeCalculator {
     
     // MARK: - Top message Label
     
-    public func messageTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    open func messageTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let layoutDelegate = messagesLayout.messagesLayoutDelegate
         let collectionView = messagesLayout.messagesCollectionView
         let height = layoutDelegate.messageTopLabelHeight(for: message, at: indexPath, in: collectionView)
         return CGSize(width: messagesLayout.itemWidth, height: height)
     }
     
-    public func messageTopLabelAlignment(for message: MessageType) -> LabelAlignment {
+    open func messageTopLabelAlignment(for message: MessageType) -> LabelAlignment {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingMessageTopLabelAlignment : incomingMessageTopLabelAlignment
@@ -172,14 +172,14 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - Bottom Label
 
-    public func messageBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    open func messageBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let layoutDelegate = messagesLayout.messagesLayoutDelegate
         let collectionView = messagesLayout.messagesCollectionView
         let height = layoutDelegate.messageBottomLabelHeight(for: message, at: indexPath, in: collectionView)
         return CGSize(width: messagesLayout.itemWidth, height: height)
     }
 
-    public func messageBottomLabelAlignment(for message: MessageType) -> LabelAlignment {
+    open func messageBottomLabelAlignment(for message: MessageType) -> LabelAlignment {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingMessageBottomLabelAlignment : incomingMessageBottomLabelAlignment
@@ -187,7 +187,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - MessageContainer
 
-    public func messageContainerPadding(for message: MessageType) -> UIEdgeInsets {
+    open func messageContainerPadding(for message: MessageType) -> UIEdgeInsets {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingMessagePadding : incomingMessagePadding
