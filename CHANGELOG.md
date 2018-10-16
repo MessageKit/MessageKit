@@ -15,6 +15,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
+- **Breaking Change** Added  `.hashtag`, .`mention` to detect theses pattern inside the `messageLabel`. We also add  `.custom(pattern: YOUR_PATTERN)` to `DetectorType` to manage and deal with your own regular expression.
+[#913](https://github.com/MessageKit/MessageKit/pull/913) by [@JulienKode](https://github.com/julienkode).
+
 - Added support for detection and handling of `NSLink`s inside of messages.
 [#815](https://github.com/MessageKit/MessageKit/pull/815) by [@jnic](https://github.com/jnic)
 
