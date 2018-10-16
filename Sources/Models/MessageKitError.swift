@@ -35,4 +35,5 @@ internal enum MessageKitError {
     internal static let couldNotCreateAssetsPath = "MessageKit: Could not create path to the assets bundle."
     internal static let customDataUnresolvedCell = "Did not return a cell for MessageKind.custom(Any)."
     internal static let customDataUnresolvedSize = "Did not return a size for MessageKind.custom(Any)."
+    internal static let messageIsNotOfKindAudio = "BasicAudioPlayer failed play sound becasue given message kind is not Audio"
 }

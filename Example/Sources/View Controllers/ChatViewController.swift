@@ -202,7 +202,7 @@ extension ChatViewController: MessageCellDelegate {
                 print("Failed to identify message when audio cell receive tap gesture")
                 return
         }
-        guard audioController.state != .none else {
+        guard audioController.state != .stopped else {
             // There is no audio sound playing - prepare to start playing for given audio message
             audioController.playSound(for: message, in: cell)
             return

@@ -36,7 +36,7 @@ open class AudioMessageCell: MessageContentCell {
 
     /// The play button view to display on audio messages.
     open lazy var playButton: UIButton = {
-        let playButton = UIButton.init(type: .custom)
+        let playButton = UIButton(type: .custom)
         let playImage = AudioMessageCell.getImageWithName(.play)
         let pauseImage = AudioMessageCell.getImageWithName(.pause)
         playButton.setImage(playImage?.withRenderingMode(.alwaysTemplate), for: .normal)
@@ -46,7 +46,7 @@ open class AudioMessageCell: MessageContentCell {
 
     /// The time duration lable to display on audio messages.
     open lazy var durationLabel: UILabel = {
-        let durationLabel = UILabel.init(frame: CGRect.zero)
+        let durationLabel = UILabel(frame: CGRect.zero)
         durationLabel.textAlignment = .right
         durationLabel.font = UIFont.systemFont(ofSize: 14)
         durationLabel.text = "0:00"
@@ -54,7 +54,7 @@ open class AudioMessageCell: MessageContentCell {
     }()
 
     open lazy var progressView: UIProgressView = {
-        let progressView = UIProgressView.init(progressViewStyle: .default)
+        let progressView = UIProgressView(progressViewStyle: .default)
         progressView.progress = 0.0
         return progressView
     }()
@@ -81,7 +81,7 @@ open class AudioMessageCell: MessageContentCell {
         super.prepareForReuse()
         progressView.progress = 0
         playButton.isSelected = false
-        self.durationLabel.text = "0:00"
+        durationLabel.text = "0:00"
     }
 
     open class func getImageWithName(_ imageName: ImageName) -> UIImage? {
@@ -96,13 +96,11 @@ open class AudioMessageCell: MessageContentCell {
         let touchLocation = gesture.location(in: self)
         // compute play button touch area, currently play button size is (25, 25) which is hardly touchable
         // add 10 px around current button frame and test the touch against this new frame
-        let playButtonTouchArea = CGRect.init(playButton.frame.origin.x - 10.0, playButton.frame.origin.y - 10, playButton.frame.size.width + 20, playButton.frame.size.height + 20)
+        let playButtonTouchArea = CGRect(playButton.frame.origin.x - 10.0, playButton.frame.origin.y - 10, playButton.frame.size.width + 20, playButton.frame.size.height + 20)
         let translateTouchLocation = convert(touchLocation, to: messageContainerView)
         if playButtonTouchArea.contains(translateTouchLocation) {
             delegate?.didTapPlayButton(in: self)
-            //audioCellDelegate?.didPressPlayInCell(self)
         } else {
-            // touch is not inside play button touch area, call super to hangle gesture
             super.handleTapGesture(gesture)
         }
     }
@@ -112,7 +110,6 @@ open class AudioMessageCell: MessageContentCell {
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         configureCellApperance(with: message, indexPath: indexPath, messagesCollectionView: messagesCollectionView)
-        // update cell content
         switch message.kind {
         case .audio(let mediaItem):
             guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
