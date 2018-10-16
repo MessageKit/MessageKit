@@ -74,9 +74,15 @@ open class AvatarView: UIImageView {
         super.init(frame: frame)
         prepareView()
     }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        prepareView()
+    }
 
     convenience public init() {
         self.init(frame: .zero)
+        prepareView()
     }
     
     private func setImageFrom(initials: String?) {
@@ -150,10 +156,6 @@ open class AvatarView: UIImageView {
         let startY = (outerViewHeight - h)/2
         // In case the font exactly fits to the region, put 2 pixel both left and right
         return CGRect(startX+2, startY, w-4, h)
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - Internal methods

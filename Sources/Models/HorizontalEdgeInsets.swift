@@ -22,19 +22,34 @@
  SOFTWARE.
  */
 
-import UIKit
+import Foundation
 
-/// A subclass of `UICollectionViewCell` to be used inside of a `MessagesCollectionView`.
-open class MessageCollectionViewCell: UICollectionViewCell {
+/// A varient of `UIEdgeInsets` that only has horizontal inset properties
+public struct HorizontalEdgeInsets {
 
-    // MARK: - Initializers
+    public var left: CGFloat
+    public var right: CGFloat
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
+    public init(left: CGFloat, right: CGFloat) {
+        self.left = left
+        self.right = right
     }
 
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    public static var zero: HorizontalEdgeInsets {
+        return HorizontalEdgeInsets(left: 0, right: 0)
     }
+}
 
+extension HorizontalEdgeInsets: Equatable {
+
+    public static func == (lhs: HorizontalEdgeInsets, rhs: HorizontalEdgeInsets) -> Bool {
+        return lhs.left == rhs.left && lhs.right == rhs.right
+    }
+}
+
+extension HorizontalEdgeInsets {
+
+    internal var horizontal: CGFloat {
+        return left + right
+    }
 }

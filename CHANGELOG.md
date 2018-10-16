@@ -4,7 +4,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 --------------------------------------
 
-## Upcoming release
+## [2.0.0](https://github.com/MessageKit/MessageKit/releases/tag/2.0.0-beta.1)
 
 ### Changed
 
@@ -18,13 +18,20 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Added support for detection and handling of `NSLink`s inside of messages.
 [#815](https://github.com/MessageKit/MessageKit/pull/815) by [@jnic](https://github.com/jnic)
 
-- Added customizable `accessoryView`, with a new `MessagesDisplayDelegate` function `configureAccessoryView`, and corresponding size & padding properties in `MessageSizeCalculator`. 
+- Added customizable `accessoryView`, with a new `MessagesDisplayDelegate` function `configureAccessoryView`, and corresponding size & padding properties in `MessageSizeCalculator`. The `accessoryView` is aligned to the center of the `messageContainerView`.
 [#710](https://github.com/MessageKit/MessageKit/pull/710) by [@hyouuu](https://github.com/hyouuu)
+
+- Added a tap gesture recognition to the `accessoryView` which calls the  `MessageCellDelagate` function `didTapAccessoryView(in:)`. 
+[#834](https://github.com/MessageKit/MessageKit/pull/834) by [@nathantannar4](https://github.com/nathantannar4)
 
 - Added `additionalBottomInset` property that allows to adjust the bottom content inset automatically set on the messages collection view by the view controller. 
 [#787](https://github.com/MessageKit/MessageKit/pull/787) by [@andreyvit](https://github.com/andreyvit)
 
 ### Fixed
+
+-  Fixed a bug that prevented `MessageLabel` from laying out properly when contained by superviews using autolayout.
+[#889](https://github.com/MessageKit/MessageKit/pull/889) by [@marius-serban](https://github.com/marius-serban).
+
 
 - **Breaking Change** Fixed typo of `scrollsToBottomOnKeybordBeginsEditing` to `scrollsToBottomOnKeyboardBeginsEditing`.
 [#856](https://github.com/MessageKit/MessageKit/pull/856) by [@p-petrenko](https://github.com/p-petrenko)
@@ -39,6 +46,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - Fixed `MessagesCollectionView` to allow to use nibs with `MessageReusableView`.
 [#832](https://github.com/MessageKit/MessageKit/pull/832) by [@maxxx777](https://github.com/maxxx777).
+- Fixed multiple crashes at views, when views are being called from another XIB. [#905](https://github.com/MessageKit/MessageKit/pull/905) by [@talanov](https://github.com/talanov).
 
 ## [1.0.0](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0)
 
