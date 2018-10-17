@@ -80,7 +80,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate, AudioControlle
     ///
     /// - Note:
     ///   This protocol method is called by MessageKit every time an audio cell needs to be configure
-    open func configureCell(_ cell: AudioMessageCell, message: MessageType) {
+    open func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {
         if playingMessage?.messageId == message.messageId, let collectionView = messageCollectionView, let player = audioPlayer {
             playingCell = cell
             cell.progressView.progress = (player.duration == 0) ? 0 : Float(player.currentTime/player.duration)

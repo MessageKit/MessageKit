@@ -40,6 +40,6 @@ public protocol AudioControllerDelegate: AnyObject {
     ///
     /// - Note:
     ///   This protocol method is called by MessageKit every time an audio cell needs to be configure
-    func configureCell(_ cell: AudioMessageCell, message: MessageType)
+    func configureAudioCell(_ cell: AudioMessageCell, message: MessageType)
 
 }

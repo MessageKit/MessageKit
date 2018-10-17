@@ -212,7 +212,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         case .audio:
             let cell = messagesCollectionView.dequeueReusableCell(AudioMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-            audioController.configureCell(cell, message: message) // this is needed especily when the cell is reconfigure while is playing sound
+            audioController.configureAudioCell(cell, message: message) // this is needed especily when the cell is reconfigure while is playing sound
             return cell
         case .custom:
             fatalError(MessageKitError.customDataUnresolvedCell)

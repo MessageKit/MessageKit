@@ -108,7 +108,7 @@ class AdioControllerTests: XCTestCase  {
         let audioMessage = getAudioMessage()
         let audioCell = AudioMessageCell(frame: CGRect.zero)
         audioController.playSound(for: audioMessage, in: audioCell)
-        audioController.configureCell(audioCell, message: audioMessage)
+        audioController.configureAudioCell(audioCell, message: audioMessage)
         XCTAssertEqual(audioCell.durationLabel.text, "0:00")
         XCTAssertEqual(audioCell.progressView.progress, 0.0)
         XCTAssertTrue(audioCell.playButton.isSelected)
@@ -120,7 +120,7 @@ class AdioControllerTests: XCTestCase  {
         let messageToConfigure = getAudioMessage("configure_message_Id")
         let cellToConfigure = AudioMessageCell(frame: CGRect.zero)
         audioController.playSound(for: playingMessage, in: playingCell)
-        audioController.configureCell(cellToConfigure, message: messageToConfigure)
+        audioController.configureAudioCell(cellToConfigure, message: messageToConfigure)
         XCTAssertEqual(cellToConfigure.progressView.progress, 0.0)
         XCTAssertFalse(cellToConfigure.playButton.isSelected)
     }
@@ -128,7 +128,7 @@ class AdioControllerTests: XCTestCase  {
     // MARK: - Helpers
     private func getAudioMessage(_ messageId: String = UUID().uuidString ) -> MockMessage {
         let audioURL = Bundle.init(for: AdioControllerTests.self).url(forResource: "sound1", withExtension: "m4a")!
-        let audioMessage = MockMessage(audioURL: audioURL, sender: Sender(id: "sender_1", displayName: "Sender 1"), messageId: messageId)
+        let audioMessage = MockMessage(audioURL: audioURL, duration: 4.0, sender: Sender(id: "sender_1", displayName: "Sender 1"), messageId: messageId)
         return audioMessage
     }
 

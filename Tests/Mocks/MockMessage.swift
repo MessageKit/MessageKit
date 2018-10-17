@@ -60,12 +60,10 @@ private struct MockAudiotem: AudioItem {
     var size: CGSize
     var duration: Float
 
-    init(url: URL) {
+    init(url: URL, duration: Float) {
         self.url = url
         self.size = CGSize(width: 160, height: 35)
-        // compute duration
-        let audioAsset = AVURLAsset.init(url: url)
-        self.duration = Float(CMTimeGetSeconds(audioAsset.duration))
+        self.duration = duration
     }
 
 }
@@ -112,8 +110,8 @@ struct MockMessage: MessageType {
         self.init(kind: .emoji(emoji), sender: sender, messageId: messageId)
     }
 
-    init(audioURL: URL, sender: Sender, messageId: String) {
-        let audioItem = MockAudiotem(url: audioURL)
+    init(audioURL: URL, duration: Float, sender: Sender, messageId: String) {
+        let audioItem = MockAudiotem(url: audioURL, duration: duration)
         self.init(kind: .audio(audioItem), sender: sender, messageId: messageId)
     }
 
