@@ -61,8 +61,8 @@ class AdioControllerTests: XCTestCase  {
         XCTAssertNotNil(audioController.audioPlayer)
         XCTAssertNotNil(audioController.playingCell)
         XCTAssertNotNil(audioController.playingMessage)
-        XCTAssertTrue(audioController.audioPlayer?.isPlaying ?? false)
-        XCTAssertTrue(audioCell.playButton.isSelected)
+        XCTAssertTrue(audioController.audioPlayer?.isPlaying ?? false, "Audio player should be playing")
+        XCTAssertTrue(audioCell.playButton.isSelected, "Audio cell play button should be in selected state")
     }
 
     func testStopSound() {
@@ -100,8 +100,8 @@ class AdioControllerTests: XCTestCase  {
         XCTAssertNotNil(audioController.audioPlayer)
         XCTAssertNotNil(audioController.playingCell)
         XCTAssertNotNil(audioController.playingMessage)
-        XCTAssertTrue(audioController.audioPlayer?.isPlaying ?? false)
-        XCTAssertTrue(audioCell.playButton.isSelected)
+        XCTAssertTrue(audioController.audioPlayer?.isPlaying ?? false, "Audio player should be playing")
+        XCTAssertTrue(audioCell.playButton.isSelected, "Audio cell play button should be in selected state")
     }
 
     func testConfigureAudioCellWhileIsCurrentlyPlaying() {
@@ -111,7 +111,7 @@ class AdioControllerTests: XCTestCase  {
         audioController.configureAudioCell(audioCell, message: audioMessage)
         XCTAssertEqual(audioCell.durationLabel.text, "0:00")
         XCTAssertEqual(audioCell.progressView.progress, 0.0)
-        XCTAssertTrue(audioCell.playButton.isSelected)
+        XCTAssertTrue(audioCell.playButton.isSelected, "Audio cell play button should be in selected state")
     }
 
     func testConfigureAudioCellWhenOtherCellIsPlaying() {
