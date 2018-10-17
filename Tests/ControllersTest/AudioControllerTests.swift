@@ -86,7 +86,6 @@ class AdioControllerTests: XCTestCase  {
         XCTAssertNotNil(audioController.audioPlayer)
         XCTAssertNotNil(audioController.playingCell)
         XCTAssertNotNil(audioController.playingMessage)
-        XCTAssertEqual(audioCell.durationLabel.text, "0:00")
         XCTAssertFalse(audioController.audioPlayer?.isPlaying ?? false)
         XCTAssertFalse(audioCell.playButton.isSelected)
     }
