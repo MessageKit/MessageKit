@@ -80,7 +80,6 @@ public protocol MessagesLayoutDelegate: AnyObject {
     /// - Note:
     ///   The default value returned by this method is zero.
     func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
-
 }
 
 public extension MessagesLayoutDelegate {

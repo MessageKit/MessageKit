@@ -77,6 +77,16 @@ public protocol MessageCellDelegate: MessageLabelDelegate {
     /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
     /// method `messageForItem(at:indexPath:messagesCollectionView)`.
     func didTapMessageBottomLabel(in cell: MessageCollectionViewCell)
+    
+    /// Triggered when a tap occurs in the accessoryView.
+    ///
+    /// - Parameters:
+    ///   - cell: The cell where the tap occurred.
+    ///
+    /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
+    /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
+    /// method `messageForItem(at:indexPath:messagesCollectionView)`.
+    func didTapAccessoryView(in cell: MessageCollectionViewCell)
 
 }
 
@@ -91,4 +101,6 @@ public extension MessageCellDelegate {
     func didTapMessageTopLabel(in cell: MessageCollectionViewCell) {}
 
     func didTapMessageBottomLabel(in cell: MessageCollectionViewCell) {}
+    
+    func didTapAccessoryView(in cell: MessageCollectionViewCell) {}
 }

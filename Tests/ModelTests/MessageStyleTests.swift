@@ -38,10 +38,10 @@ class MessageStyleTests: XCTestCase {
     }
 
     func testTailCornerImageOrientation() {
-        XCTAssertEqual(MessageStyle.TailCorner.bottomRight.imageOrientation, UIImageOrientation.up)
-        XCTAssertEqual(MessageStyle.TailCorner.bottomLeft.imageOrientation, UIImageOrientation.upMirrored)
-        XCTAssertEqual(MessageStyle.TailCorner.topLeft.imageOrientation, UIImageOrientation.down)
-        XCTAssertEqual(MessageStyle.TailCorner.topRight.imageOrientation, UIImageOrientation.downMirrored)
+        XCTAssertEqual(MessageStyle.TailCorner.bottomRight.imageOrientation, UIImage.Orientation.up)
+        XCTAssertEqual(MessageStyle.TailCorner.bottomLeft.imageOrientation, UIImage.Orientation.upMirrored)
+        XCTAssertEqual(MessageStyle.TailCorner.topLeft.imageOrientation, UIImage.Orientation.down)
+        XCTAssertEqual(MessageStyle.TailCorner.topRight.imageOrientation, UIImage.Orientation.downMirrored)
     }
 
     func testTailStyleImageNameSuffix() {
@@ -56,16 +56,16 @@ class MessageStyleTests: XCTestCase {
     func testImageBubble() {
         let assetBundle = Bundle.messageKitAssetBundle()
         let imagePath = assetBundle.path(forResource: "bubble_full", ofType: "png", inDirectory: "Images")
-        let originalData = UIImagePNGRepresentation(MessageStyle.bubble.image ?? UIImage())
-        let testData = UIImagePNGRepresentation(stretch(UIImage(contentsOfFile: imagePath!)!).withRenderingMode(.alwaysTemplate))
+        let originalData = (MessageStyle.bubble.image ?? UIImage()).pngData()
+        let testData = stretch(UIImage(contentsOfFile: imagePath!)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
     }
 
     func testImageBubbleOutline() {
         let assetBundle = Bundle.messageKitAssetBundle()
         let imagePath = assetBundle.path(forResource: "bubble_outlined", ofType: "png", inDirectory: "Images")
-        let originalData = UIImagePNGRepresentation(MessageStyle.bubbleOutline(.black).image ?? UIImage())
-        let testData = UIImagePNGRepresentation(stretch(UIImage(contentsOfFile: imagePath!)!).withRenderingMode(.alwaysTemplate))
+        let originalData = (MessageStyle.bubbleOutline(.black).image ?? UIImage()).pngData()
+        let testData = stretch(UIImage(contentsOfFile: imagePath!)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
     }
 
@@ -73,20 +73,20 @@ class MessageStyleTests: XCTestCase {
         let assetBundle = Bundle.messageKitAssetBundle()
         let imagePath = assetBundle.path(forResource: "bubble_full_tail_v2", ofType: "png", inDirectory: "Images")
 
-        var originalData = UIImagePNGRepresentation(MessageStyle.bubbleTail(.bottomLeft, .curved).image ?? UIImage())
-        var testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate))
+        var originalData = (MessageStyle.bubbleTail(.bottomLeft, .curved).image ?? UIImage()).pngData()
+        var testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
-        originalData = UIImagePNGRepresentation(MessageStyle.bubbleTail(.bottomRight, .curved).image ?? UIImage())
-        testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate))
+        originalData = (MessageStyle.bubbleTail(.bottomRight, .curved).image ?? UIImage()).pngData()
+        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
-        originalData = UIImagePNGRepresentation(MessageStyle.bubbleTail(.topLeft, .curved).image ?? UIImage())
-        testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate))
+        originalData = (MessageStyle.bubbleTail(.topLeft, .curved).image ?? UIImage()).pngData()
+        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
-        originalData = UIImagePNGRepresentation(MessageStyle.bubbleTail(.topRight, .curved).image ?? UIImage())
-        testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topRight)!).withRenderingMode(.alwaysTemplate))
+        originalData = (MessageStyle.bubbleTail(.topRight, .curved).image ?? UIImage()).pngData()
+        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
     }
 
@@ -94,20 +94,20 @@ class MessageStyleTests: XCTestCase {
         let assetBundle = Bundle.messageKitAssetBundle()
         let imagePath = assetBundle.path(forResource: "bubble_full_tail_v1", ofType: "png", inDirectory: "Images")
 
-        var originalData = UIImagePNGRepresentation(MessageStyle.bubbleTail(.bottomLeft, .pointedEdge).image ?? UIImage())
-        var testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate))
+        var originalData = (MessageStyle.bubbleTail(.bottomLeft, .pointedEdge).image ?? UIImage()).pngData()
+        var testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
-        originalData = UIImagePNGRepresentation(MessageStyle.bubbleTail(.bottomRight, .pointedEdge).image ?? UIImage())
-        testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate))
+        originalData = (MessageStyle.bubbleTail(.bottomRight, .pointedEdge).image ?? UIImage()).pngData()
+        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
-        originalData = UIImagePNGRepresentation(MessageStyle.bubbleTail(.topLeft, .pointedEdge).image ?? UIImage())
-        testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate))
+        originalData = (MessageStyle.bubbleTail(.topLeft, .pointedEdge).image ?? UIImage()).pngData()
+        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
-        originalData = UIImagePNGRepresentation(MessageStyle.bubbleTail(.topRight, .pointedEdge).image ?? UIImage())
-        testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topRight)!).withRenderingMode(.alwaysTemplate))
+        originalData = (MessageStyle.bubbleTail(.topRight, .pointedEdge).image ?? UIImage()).pngData()
+        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
     }
 
@@ -115,20 +115,20 @@ class MessageStyleTests: XCTestCase {
         let assetBundle = Bundle.messageKitAssetBundle()
         let imagePath = assetBundle.path(forResource: "bubble_outlined_tail_v2", ofType: "png", inDirectory: "Images")
 
-        var originalData = UIImagePNGRepresentation(MessageStyle.bubbleTailOutline(.red, .bottomLeft, .curved).image ?? UIImage())
-        var testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate))
+        var originalData = (MessageStyle.bubbleTailOutline(.red, .bottomLeft, .curved).image ?? UIImage()).pngData()
+        var testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
-        originalData = UIImagePNGRepresentation(MessageStyle.bubbleTailOutline(.red, .bottomRight, .curved).image ?? UIImage())
-        testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate))
+        originalData = (MessageStyle.bubbleTailOutline(.red, .bottomRight, .curved).image ?? UIImage()).pngData()
+        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
-        originalData = UIImagePNGRepresentation(MessageStyle.bubbleTailOutline(.red, .topLeft, .curved).image ?? UIImage())
-        testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate))
+        originalData = (MessageStyle.bubbleTailOutline(.red, .topLeft, .curved).image ?? UIImage()).pngData()
+        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
-        originalData = UIImagePNGRepresentation(MessageStyle.bubbleTailOutline(.red, .topRight, .curved).image ?? UIImage())
-        testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topRight)!).withRenderingMode(.alwaysTemplate))
+        originalData = (MessageStyle.bubbleTailOutline(.red, .topRight, .curved).image ?? UIImage()).pngData()
+        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
     }
 
@@ -136,20 +136,20 @@ class MessageStyleTests: XCTestCase {
         let assetBundle = Bundle.messageKitAssetBundle()
         let imagePath = assetBundle.path(forResource: "bubble_outlined_tail_v1", ofType: "png", inDirectory: "Images")
 
-        var originalData = UIImagePNGRepresentation(MessageStyle.bubbleTailOutline(.red, .bottomLeft, .pointedEdge).image ?? UIImage())
-        var testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate))
+        var originalData = (MessageStyle.bubbleTailOutline(.red, .bottomLeft, .pointedEdge).image ?? UIImage()).pngData()
+        var testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
-        originalData = UIImagePNGRepresentation(MessageStyle.bubbleTailOutline(.red, .bottomRight, .pointedEdge).image ?? UIImage())
-        testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate))
+        originalData = (MessageStyle.bubbleTailOutline(.red, .bottomRight, .pointedEdge).image ?? UIImage()).pngData()
+        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
-        originalData = UIImagePNGRepresentation(MessageStyle.bubbleTailOutline(.red, .topLeft, .pointedEdge).image ?? UIImage())
-        testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate))
+        originalData = (MessageStyle.bubbleTailOutline(.red, .topLeft, .pointedEdge).image ?? UIImage()).pngData()
+        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
-        originalData = UIImagePNGRepresentation(MessageStyle.bubbleTailOutline(.red, .topRight, .pointedEdge).image ?? UIImage())
-        testData =  UIImagePNGRepresentation(stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topRight)!).withRenderingMode(.alwaysTemplate))
+        originalData = (MessageStyle.bubbleTailOutline(.red, .topRight, .pointedEdge).image ?? UIImage()).pngData()
+        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
     }
 

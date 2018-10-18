@@ -8,11 +8,11 @@ jobs:
   build-and-test:
 
     environment:
-      - DESTINATION: "platform=iOS Simulator,name=iPhone 8"
+      - DESTINATION: "platform=iOS Simulator,name=iPhone XR"
 
     # Specify the Xcode version to use.
     macos:
-      xcode: "9.2.0"
+      xcode: "10.0.0"
 
     # Define the steps required to build the project.
     steps:
@@ -23,16 +23,13 @@ jobs:
           name: Update Homebrew
           command: brew update
       - run:
-          name: Update carthage
-          command: brew upgrade carthage
-      - run:
           name: Bootstrap Carthage
           command: carthage bootstrap --platform ios
       - run:
-          name: Biuld framework
+          name: Build framework
           command: xcodebuild build -project MessageKit.xcodeproj -scheme MessageKit -destination "$DESTINATION" CODE_SIGNING_REQUIRED=NO | xcpretty -c
       - run:
-          name: Biuld and run tests
+          name: Build and run tests
           command: xcodebuild test -project MessageKit.xcodeproj -scheme MessageKitTests -destination "$DESTINATION" CODE_SIGNING_REQUIRED=NO | xcpretty -c
       - run: 
           name: Fetch CocoaPods Specs
@@ -41,7 +38,7 @@ jobs:
           name: Update Pods
           command: cd Example && pod install
       - run:
-          name: Biuld and analyze Example
+          name: Build and analyze Example
           command: xcodebuild build analyze -workspace Example/ChatExample.xcworkspace -scheme ChatExample -destination "$DESTINATION" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | xcpretty -c
 
       # Run tests.
