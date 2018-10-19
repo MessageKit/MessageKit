@@ -22,6 +22,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Added `additionalBottomInset` property that allows to adjust the bottom content inset automatically set on the messages collection view by the view controller. 
 [#787](https://github.com/MessageKit/MessageKit/pull/787) by [@andreyvit](https://github.com/andreyvit)
 
+- Added new methods to simplify using of custom messages: `customCellSizeCalculator(for:at:in:)` for `MessagesLayoutDelegate` and `customCell(for:at:in:)` for `MessagesDataSource`.
+[#879](https://github.com/MessageKit/MessageKit/pull/879) by [@realbonus](https://github.com/RealBonus)
+
 ### Fixed
 
 - Fixed bottom content inset adjustment when using an undocked keyboard on iPad, or when `edgesForExtendedLayout` does not include `.top`, or when a parent container view controller adds extra views at the top of the screen. 

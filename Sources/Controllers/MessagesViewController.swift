@@ -180,6 +180,8 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         return collectionView.messagesDataSource?.numberOfItems(inSection: section, in: collectionView) ?? 0
     }
 
+    /// Note:
+    ///   If you override this method, remember to call MessagesDataSource's customCell(for:at:in:) for MessageKind.custom messages, if necessary
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         guard let messagesCollectionView = collectionView as? MessagesCollectionView else {
