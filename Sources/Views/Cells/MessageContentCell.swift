@@ -101,7 +101,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else { return }
         // Call this before other laying out other subviews
         layoutMessageContainerView(with: attributes)
-        layoutBottomLabel(with: attributes)
+        layoutMessageBottomLabel(with: attributes)
         layoutCellTopLabel(with: attributes)
         layoutMessageTopLabel(with: attributes)
         layoutAvatarView(with: attributes)
@@ -136,11 +136,11 @@ open class MessageContentCell: MessageCollectionViewCell {
 
         let topCellLabelText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
         let topMessageLabelText = dataSource.messageTopLabelAttributedText(for: message, at: indexPath)
-        let bottomText = dataSource.messageBottomLabelAttributedText(for: message, at: indexPath)
+        let bottomMessageLabelText = dataSource.messageBottomLabelAttributedText(for: message, at: indexPath)
 
         cellTopLabel.attributedText = topCellLabelText
         messageTopLabel.attributedText = topMessageLabelText
-        messageBottomLabel.attributedText = bottomText
+        messageBottomLabel.attributedText = bottomMessageLabelText
     }
 
     /// Handle tap gesture on contentView and its subviews.
@@ -265,9 +265,9 @@ open class MessageContentCell: MessageCollectionViewCell {
         messageTopLabel.frame = CGRect(origin: origin, size: attributes.messageTopLabelSize)
     }
 
-    /// Positions the cell's bottom label.
+    /// Positions the message bubble's bottom label.
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
-    open func layoutBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
+    open func layoutMessageBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
         messageBottomLabel.textAlignment = attributes.messageBottomLabelAlignment.textAlignment
         messageBottomLabel.textInsets = attributes.messageBottomLabelAlignment.textInsets
 
