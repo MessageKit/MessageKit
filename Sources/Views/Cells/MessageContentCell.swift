@@ -233,7 +233,7 @@ open class MessageContentCell: MessageCollectionViewCell {
 
         switch attributes.avatarPosition.vertical {
         case .messageBottom:
-            origin.y = attributes.size.height - attributes.messageContainerPadding.bottom - attributes.messageBottomLabelSize.height - attributes.messageContainerSize.height - attributes.messageContainerPadding.top
+            origin.y = attributes.size.height - attributes.messageContainerPadding.bottom - attributes.cellBottomLabelSize.height - attributes.messageBottomLabelSize.height - attributes.messageContainerSize.height - attributes.messageContainerPadding.top
         case .messageCenter:
             if attributes.avatarSize.height > attributes.messageContainerSize.height {
                 let messageHeight = attributes.messageContainerSize.height + attributes.messageContainerPadding.vertical
