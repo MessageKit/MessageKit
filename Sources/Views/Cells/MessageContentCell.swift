@@ -46,6 +46,14 @@ open class MessageContentCell: MessageCollectionViewCell {
         return label
     }()
     
+    /// The bottom label of the cell.
+    open var cellBottomLabel: InsetLabel = {
+        let label = InsetLabel()
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
+    }()
+    
     /// The top label of the messageBubble.
     open var messageTopLabel: InsetLabel = {
         let label = InsetLabel()
@@ -81,6 +89,7 @@ open class MessageContentCell: MessageCollectionViewCell {
     open func setupSubviews() {
         contentView.addSubview(accessoryView)
         contentView.addSubview(cellTopLabel)
+        contentView.addSubview(cellBottomLabel)
         contentView.addSubview(messageTopLabel)
         contentView.addSubview(messageBottomLabel)
         contentView.addSubview(messageContainerView)
@@ -90,6 +99,7 @@ open class MessageContentCell: MessageCollectionViewCell {
     open override func prepareForReuse() {
         super.prepareForReuse()
         cellTopLabel.text = nil
+        cellBottomLabel.text = nil
         messageTopLabel.text = nil
         messageBottomLabel.text = nil
     }
@@ -101,6 +111,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else { return }
         // Call this before other laying out other subviews
         layoutMessageContainerView(with: attributes)
+        layoutCellBottomLabel(with: attributes)
         layoutMessageBottomLabel(with: attributes)
         layoutCellTopLabel(with: attributes)
         layoutMessageTopLabel(with: attributes)
@@ -135,10 +146,12 @@ open class MessageContentCell: MessageCollectionViewCell {
         messageContainerView.style = messageStyle
 
         let topCellLabelText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
+        let bottomCellLabelText = dataSource.cellBottomLabelAttributedText(for: message, at: indexPath)
         let topMessageLabelText = dataSource.messageTopLabelAttributedText(for: message, at: indexPath)
         let bottomMessageLabelText = dataSource.messageBottomLabelAttributedText(for: message, at: indexPath)
 
         cellTopLabel.attributedText = topCellLabelText
+        cellBottomLabel.attributedText = bottomCellLabelText
         messageTopLabel.attributedText = topMessageLabelText
         messageBottomLabel.attributedText = bottomMessageLabelText
     }
@@ -154,6 +167,8 @@ open class MessageContentCell: MessageCollectionViewCell {
             delegate?.didTapAvatar(in: self)
         case cellTopLabel.frame.contains(touchLocation):
             delegate?.didTapCellTopLabel(in: self)
+        case cellBottomLabel.frame.contains(touchLocation):
+            delegate?.didTapCellBottomLabel(in: self)
         case messageTopLabel.frame.contains(touchLocation):
             delegate?.didTapMessageTopLabel(in: self)
         case messageBottomLabel.frame.contains(touchLocation):
@@ -251,6 +266,18 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutCellTopLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
         cellTopLabel.frame = CGRect(origin: .zero, size: attributes.cellTopLabelSize)
+    }
+    
+    /// Positions the cell's bottom label.
+    /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
+    open func layoutCellBottomLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
+        cellBottomLabel.textAlignment = attributes.cellBottomLabelAlignment.textAlignment
+        cellBottomLabel.textInsets = attributes.cellBottomLabelAlignment.textInsets
+        
+        let y = messageContainerView.frame.maxY + attributes.messageContainerPadding.bottom + attributes.messageBottomLabelSize.height
+        let origin = CGPoint(x: 0, y: y)
+        
+        cellBottomLabel.frame = CGRect(origin: origin, size: attributes.cellBottomLabelSize)
     }
     
     /// Positions the message bubble's top label.
