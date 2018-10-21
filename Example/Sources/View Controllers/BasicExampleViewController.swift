@@ -34,6 +34,11 @@ final class BasicExampleViewController: ChatViewController {
         
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
+        
+        let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout
+        
+        layout?.setMessageIncomingAvatarPosition(AvatarPosition(vertical: .messageBottom))
+        layout?.setMessageOutgoingAvatarPosition(AvatarPosition(vertical: .messageBottom))        
     }
 
 }
