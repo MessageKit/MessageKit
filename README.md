@@ -90,7 +90,7 @@ github "MessageKit/MessageKit"
 ## Contributing
 
 Great! Look over these things first.
-- Please read our [Code of Conduct](https://github.com/MessageKit/MessageKit/blob/master/Code_of_Conduct.md)
+- Please read our [Code of Conduct](https://github.com/MessageKit/MessageKit/blob/master/CODE_OF_CONDUCT.md)
 - Check the [Contributing Guide Lines](https://github.com/MessageKit/MessageKit/blob/master/CONTRIBUTING.md).
 - Come join us on [Slack](https://join.slack.com/t/messagekit/shared_invite/MjI4NzIzNzMyMzU0LTE1MDMwODIzMDUtYzllYzIyNTU4MA) and 🗣 don't be a stranger. 
 - Check out the [current issues](https://github.com/MessageKit/MessageKit/issues) and see if you can tackle any of those. 
