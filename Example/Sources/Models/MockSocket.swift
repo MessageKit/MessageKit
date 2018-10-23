@@ -77,7 +77,9 @@ final class MockSocket {
             queuedMessage = nil
         } else {
             let sender = arc4random_uniform(1) % 2 == 0 ? connectedUsers.first! : connectedUsers.last!
-            queuedMessage = MockMessage(text: Lorem.sentence(), sender: sender, messageId: UUID().uuidString, date: Date())
+            SampleData.shared.getMessages(count: 1, allowedSenders: [sender]) { (message) in
+                queuedMessage = message.first
+            }
             onTypingStatusCode?()
         }
     }
