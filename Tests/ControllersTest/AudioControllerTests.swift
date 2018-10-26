@@ -61,8 +61,10 @@ class AdioControllerTests: XCTestCase  {
         XCTAssertNotNil(audioController.audioPlayer)
         XCTAssertNotNil(audioController.playingCell)
         XCTAssertNotNil(audioController.playingMessage)
-        XCTAssertTrue(audioController.audioPlayer!.isPlaying, "Audio player should be playing")
-        XCTAssertTrue(audioCell.playButton.isSelected, "Audio cell play button should be in selected state")
+        XCTAssertEqual(audioController.audioPlayer!.isPlaying, true, "Audio player should be playing")
+        XCTAssertEqual(audioCell.playButton.isSelected, true, "Audio cell play button should be in selected state")
+//        XCTAssertTrue(audioController.audioPlayer?.isPlaying ?? false, "Audio player should be playing")
+//        XCTAssertTrue(audioCell.playButton.isSelected, "Audio cell play button should be in selected state")
     }
 
     func testStopSound() {
