@@ -148,6 +148,8 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     lazy open var locationMessageSizeCalculator = LocationMessageSizeCalculator(layout: self)
     lazy open var audioMessageSizeCalculator = AudioMessageSizeCalculator(layout: self)
 
+    /// - Note:
+    ///   If you override this method, remember to call MessageLayoutDelegate's customCellSizeCalculator(for:at:in:) method for MessageKind.custom messages, if necessary
     open func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         switch message.kind {
@@ -166,7 +168,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         case .audio:
             return audioMessageSizeCalculator
         case .custom:
-            fatalError("Must return a CellSizeCalculator for MessageKind.custom(Any?)")
+            return messagesLayoutDelegate.customCellSizeCalculator(for: message, at: indexPath, in: messagesCollectionView)
         }
     }
 
