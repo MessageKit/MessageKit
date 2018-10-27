@@ -8,7 +8,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Changed
 
-- Change `handleGesture(touchLocation:)` in `MessageLabel` as open now. 
+- Change acl of `handleGesture(touchLocation:)` in `MessageLabel` from internal to open. 
 [#912](https://github.com/MessageKit/MessageKit/pull/912) by [@julienkode](https://github.com/JulienKode)
 
 - Fixed the way that the Strings and UIImages are parsed in the `InputTextView` to prevent crashes in `parseForComponents()`. 
