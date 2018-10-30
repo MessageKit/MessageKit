@@ -204,7 +204,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return isFromCurrentSender ? outgoingCellBottomLabelAlignment : incomingCellBottomLabelAlignment
     }
 
-    // MARK: - Bottom message Label
+    // MARK: - Bottom Message Label
 
     open func messageBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let layoutDelegate = messagesLayout.messagesLayoutDelegate
