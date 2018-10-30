@@ -161,7 +161,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         case accessoryView.frame.contains(touchLocation):
             delegate?.didTapAccessoryView(in: self)
         default:
-            break
+            delegate?.didTapBackground(in: self)
         }
     }
 
