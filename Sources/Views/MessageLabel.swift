@@ -490,7 +490,7 @@ open class MessageLabel: UILabel {
             case .hashtag:
                 handleHashtag(match)
             case .mention:
-                handleHashtag(match)
+                handleMention(match)
             default:
                 handleCustom(pattern, match: match)
             }
