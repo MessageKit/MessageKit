@@ -1,6 +1,13 @@
 # MessageKit Frequently Asked Questions
 
-**Why doesn't the `MessageInputBar` appear in my controller?**
+- [Why doesn't the `MessageInputBar` appear in my controller?](#why-doesnt-the-messageinputbar-appear-in-my-controller)
+- [How can I remove the `AvatarView` from the cell?](#how-can-i-remove-the-avatarview-from-the-cell)
+- [How can I move the `AvatarView` to prevent it from overlapping text in the `MessageBottomLabel` or `CellTopLabel`?](#how-can-i-move-the-avatarview-to-prevent-it-from-overlapping-text-in-the-messagebottomlabel-or-celltoplabel)
+- [How can I dismiss the keyboard?](#how-can-i-dismiss-the-keyboard)
+- [How can I get a reference to the `MessageType` in the `MessageCellDelegate` methods?](#how-can-i-get-a-reference-to-the-messagetype-in-the-messagecelldelegate-methods)
+
+
+## Why doesn't the `MessageInputBar` appear in my controller?
 
 If you're using the `MessagesViewController` as a child view controller then
 you have to call `becomeFirstResponder()` on your view controller. The
@@ -21,7 +28,7 @@ class ParentVC: UIViewController {
 }
 ```
 
-**How can I remove the `AvatarView` from the cell?**
+## How can I remove the `AvatarView` from the cell?
 
 You can set the `AvatarView` to hidden through the `configureAvatarView(_:AvatarView,for:MessageType,at:IndexPath,in:MessagesCollectionView)` method of `MessagesDisplayDelegate`.
 
@@ -52,7 +59,7 @@ if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollecti
 }
 ```
 
-**How can I move the `AvatarView` to prevent it from overlapping text in the `MessageBottomLabel` or `CellTopLabel`?**
+## How can I move the `AvatarView` to prevent it from overlapping text in the `MessageBottomLabel` or `CellTopLabel`?
 
 If you have resized the `AvatarView` to be larger than the default size in MessageKit then you may notice that the
 `AvatarView` overlaps text either in the `MessageBottomLabel` or `CallTopLabel`. MessageKit allows the `AvatarView`
@@ -75,7 +82,7 @@ if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollecti
 
 There are other options provided as well so take a look at the `AvatarPosition` struct to see what they are.
 
-**How can I dismiss the keyboard?**
+## How can I dismiss the keyboard?
 
 The `MessagesViewController` needs to resign the first responder.
 
@@ -84,7 +91,7 @@ let controller = MessagesViewController()
 controller.resignFirstResponder()
 ```
 
-**How can I get a reference to the `MessageType` in the `MessageCellDelegate` methods?**
+## How can I get a reference to the `MessageType` in the `MessageCellDelegate` methods?
 
 You can use `UICollectionView`'s method `indexPath(for: UICollectionViewCell)` to get the
 `IndexPath` for the `MessageCollectionViewCell` argument. Using this `IndexPath`, you can

@@ -92,6 +92,17 @@ public protocol MessagesDataSource: AnyObject {
     ///
     /// The default value returned by this method is `nil`.
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
+    
+    /// Custom collectionView cell for message with `custom` message type.
+    ///
+    /// - Parameters:
+    ///   - message: The `custom` message type
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// - Note:
+    ///   This method will call fatalError() on default. You must override this method if you are using MessageType.custom messages.
+    func customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell
 }
 
 public extension MessagesDataSource {
@@ -114,5 +125,9 @@ public extension MessagesDataSource {
 
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         return nil
+    }
+    
+    func customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell {
+        fatalError(MessageKitError.customDataUnresolvedCell)
     }
 }

@@ -133,18 +133,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         
         let lastIndexPath = IndexPath(item: 0, section: messageList.count - 1)
         
-        let frame = messagesCollectionView.layoutAttributesForItem(at: lastIndexPath)?.frame ?? .zero
-        var rect = messagesCollectionView.convert(frame, to: view)
-        
-        // substract 100 to make the "visible" area of a cell bigger
-        rect.origin.y -= 100
-        
-        var visibleRect = CGRect(x: messagesCollectionView.bounds.origin.x, y: messagesCollectionView.bounds.origin.y, width:
-            messagesCollectionView.bounds.size.width, height:
-            messagesCollectionView.bounds.size.height - messagesCollectionView.contentInset.bottom)
-        
-        visibleRect = messagesCollectionView.convert(visibleRect, to: view)
-        return visibleRect.contains(rect)
+        return messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)
     }
     
     // MARK: - MessagesDataSource
@@ -203,6 +192,10 @@ extension ChatViewController: MessageCellDelegate {
     
     func didTapMessageBottomLabel(in cell: MessageCollectionViewCell) {
         print("Bottom label tapped")
+    }
+    
+    func didTapAccessoryView(in cell: MessageCollectionViewCell) {
+        print("Accessory view tapped")
     }
     
 }

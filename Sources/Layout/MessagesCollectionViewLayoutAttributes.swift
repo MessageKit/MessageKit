@@ -47,7 +47,7 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
     public var messageBottomLabelSize: CGSize = .zero
 
     public var accessoryViewSize: CGSize = .zero
-    public var accessoryViewPadding: UIEdgeInsets = .zero
+    public var accessoryViewPadding: HorizontalEdgeInsets = .zero
 
     // MARK: - Methods
 

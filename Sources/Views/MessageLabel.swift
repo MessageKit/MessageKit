@@ -112,6 +112,13 @@ open class MessageLabel: UILabel {
             if !isConfiguring { setNeedsDisplay() }
         }
     }
+
+    open override var intrinsicContentSize: CGSize {
+        var size = super.intrinsicContentSize
+        size.width += textInsets.horizontal
+        size.height += textInsets.vertical
+        return size
+    }
     
     internal var messageLabelFont: UIFont?
 
@@ -171,12 +178,12 @@ open class MessageLabel: UILabel {
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.numberOfLines = 0
-        self.lineBreakMode = .byWordWrapping
+        setupView()
     }
 
     public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        setupView()
     }
 
     // MARK: - Open Methods
@@ -313,6 +320,11 @@ open class MessageLabel: UILabel {
         default:
             fatalError(MessageKitError.unrecognizedCheckingResult)
         }
+    }
+    
+    private func setupView() {
+        numberOfLines = 0
+        lineBreakMode = .byWordWrapping
     }
 
     // MARK: - Parsing Text

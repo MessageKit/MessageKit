@@ -53,8 +53,8 @@ open class MessageSizeCalculator: CellSizeCalculator {
     public var incomingAccessoryViewSize = CGSize.zero
     public var outgoingAccessoryViewSize = CGSize.zero
 
-    public var incomingAccessoryViewPadding = UIEdgeInsets.zero
-    public var outgoingAccessoryViewPadding = UIEdgeInsets.zero
+    public var incomingAccessoryViewPadding = HorizontalEdgeInsets.zero
+    public var outgoingAccessoryViewPadding = HorizontalEdgeInsets.zero
 
     open override func configure(attributes: UICollectionViewLayoutAttributes) {
         guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
@@ -96,45 +96,43 @@ open class MessageSizeCalculator: CellSizeCalculator {
         let avatarHeight = avatarSize(for: message).height
         let avatarVerticalPosition = avatarPosition(for: message).vertical
         let accessoryViewHeight = accessoryViewSize(for: message).height
-        let accessoryViewVerticalPadding = accessoryViewPadding(for: message).vertical
-        let accessoryViewTotalHeight = accessoryViewHeight + accessoryViewVerticalPadding
 
         switch avatarVerticalPosition {
         case .messageCenter:
             let totalLabelHeight: CGFloat = cellTopLabelHeight + messageTopLabelHeight
                 + messageContainerHeight + messageVerticalPadding + messageBottomLabelHeight
             let cellHeight = max(avatarHeight, totalLabelHeight)
-            return max(accessoryViewTotalHeight, cellHeight)
+            return max(cellHeight, accessoryViewHeight)
         case .messageBottom:
             var cellHeight: CGFloat = 0
             cellHeight += messageBottomLabelHeight
             let labelsHeight = messageContainerHeight + messageVerticalPadding + cellTopLabelHeight + messageTopLabelHeight
             cellHeight += max(labelsHeight, avatarHeight)
-            return max(accessoryViewTotalHeight, cellHeight)
+            return max(cellHeight, accessoryViewHeight)
         case .messageTop:
             var cellHeight: CGFloat = 0
             cellHeight += cellTopLabelHeight
             cellHeight += messageTopLabelHeight
             let labelsHeight = messageContainerHeight + messageVerticalPadding + messageBottomLabelHeight
             cellHeight += max(labelsHeight, avatarHeight)
-            return max(accessoryViewTotalHeight, cellHeight)
+            return max(cellHeight, accessoryViewHeight)
         case .messageLabelTop:
             var cellHeight: CGFloat = 0
             cellHeight += cellTopLabelHeight
             let messageLabelsHeight = messageContainerHeight + messageBottomLabelHeight + messageVerticalPadding + messageTopLabelHeight
             cellHeight += max(messageLabelsHeight, avatarHeight)
-            return max(accessoryViewTotalHeight, cellHeight)
+            return max(cellHeight, accessoryViewHeight)
         case .cellTop, .cellBottom:
             let totalLabelHeight: CGFloat = cellTopLabelHeight + messageTopLabelHeight
                 + messageContainerHeight + messageVerticalPadding + messageBottomLabelHeight
             let cellHeight = max(avatarHeight, totalLabelHeight)
-            return max(accessoryViewTotalHeight, cellHeight)
+            return max(cellHeight, accessoryViewHeight)
         }
     }
 
     // MARK: - Avatar
 
-    public func avatarPosition(for message: MessageType) -> AvatarPosition {
+    open func avatarPosition(for message: MessageType) -> AvatarPosition {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         var position = isFromCurrentSender ? outgoingAvatarPosition : incomingAvatarPosition
@@ -148,7 +146,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return position
     }
 
-    public func avatarSize(for message: MessageType) -> CGSize {
+    open func avatarSize(for message: MessageType) -> CGSize {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingAvatarSize : incomingAvatarSize
@@ -156,14 +154,14 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - Top cell Label
 
-    public func cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    open func cellTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let layoutDelegate = messagesLayout.messagesLayoutDelegate
         let collectionView = messagesLayout.messagesCollectionView
         let height = layoutDelegate.cellTopLabelHeight(for: message, at: indexPath, in: collectionView)
         return CGSize(width: messagesLayout.itemWidth, height: height)
     }
 
-    public func cellTopLabelAlignment(for message: MessageType) -> LabelAlignment {
+    open func cellTopLabelAlignment(for message: MessageType) -> LabelAlignment {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingCellTopLabelAlignment : incomingCellTopLabelAlignment
@@ -171,14 +169,14 @@ open class MessageSizeCalculator: CellSizeCalculator {
     
     // MARK: - Top message Label
     
-    public func messageTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    open func messageTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let layoutDelegate = messagesLayout.messagesLayoutDelegate
         let collectionView = messagesLayout.messagesCollectionView
         let height = layoutDelegate.messageTopLabelHeight(for: message, at: indexPath, in: collectionView)
         return CGSize(width: messagesLayout.itemWidth, height: height)
     }
     
-    public func messageTopLabelAlignment(for message: MessageType) -> LabelAlignment {
+    open func messageTopLabelAlignment(for message: MessageType) -> LabelAlignment {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingMessageTopLabelAlignment : incomingMessageTopLabelAlignment
@@ -186,14 +184,14 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - Bottom Label
 
-    public func messageBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    open func messageBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let layoutDelegate = messagesLayout.messagesLayoutDelegate
         let collectionView = messagesLayout.messagesCollectionView
         let height = layoutDelegate.messageBottomLabelHeight(for: message, at: indexPath, in: collectionView)
         return CGSize(width: messagesLayout.itemWidth, height: height)
     }
 
-    public func messageBottomLabelAlignment(for message: MessageType) -> LabelAlignment {
+    open func messageBottomLabelAlignment(for message: MessageType) -> LabelAlignment {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingMessageBottomLabelAlignment : incomingMessageBottomLabelAlignment
@@ -207,7 +205,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return isFromCurrentSender ? outgoingAccessoryViewSize : incomingAccessoryViewSize
     }
 
-    public func accessoryViewPadding(for message: MessageType) -> UIEdgeInsets {
+    public func accessoryViewPadding(for message: MessageType) -> HorizontalEdgeInsets {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingAccessoryViewPadding : incomingAccessoryViewPadding
@@ -215,7 +213,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     // MARK: - MessageContainer
 
-    public func messageContainerPadding(for message: MessageType) -> UIEdgeInsets {
+    open func messageContainerPadding(for message: MessageType) -> UIEdgeInsets {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingMessagePadding : incomingMessagePadding

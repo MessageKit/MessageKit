@@ -66,18 +66,30 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     public override init() {
         super.init()
-
-        sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(MessagesCollectionViewFlowLayout.handleOrientationChange(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
+        
+        setupView()
+        setupObserver()
     }
 
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        
+        setupView()
+        setupObserver()
     }
 
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - Methods
+    
+    private func setupView() {
+        sectionInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
+    }
+    
+    private func setupObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(MessagesCollectionViewFlowLayout.handleOrientationChange(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
 
     // MARK: - Attributes
@@ -135,6 +147,8 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     lazy open var videoMessageSizeCalculator = MediaMessageSizeCalculator(layout: self)
     lazy open var locationMessageSizeCalculator = LocationMessageSizeCalculator(layout: self)
 
+    /// - Note:
+    ///   If you override this method, remember to call MessageLayoutDelegate's customCellSizeCalculator(for:at:in:) method for MessageKind.custom messages, if necessary
     open func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         switch message.kind {
@@ -151,7 +165,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         case .location:
             return locationMessageSizeCalculator
         case .custom:
-            fatalError("Must return a CellSizeCalculator for MessageKind.custom(Any?)")
+            return messagesLayoutDelegate.customCellSizeCalculator(for: message, at: indexPath, in: messagesCollectionView)
         }
     }
 
@@ -231,12 +245,12 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
 
     /// Set `incomingAccessoryViewSize` of all `MessageSizeCalculator`s
-    public func setMessageIncomingAccessoryViewPadding(_ newPadding: UIEdgeInsets) {
+    public func setMessageIncomingAccessoryViewPadding(_ newPadding: HorizontalEdgeInsets) {
         messageSizeCalculators().forEach { $0.incomingAccessoryViewPadding = newPadding }
     }
 
     /// Set `outgoingAvatarSize` of all `MessageSizeCalculator`s
-    public func setMessageOutgoingAccessoryViewPadding(_ newPadding: UIEdgeInsets) {
+    public func setMessageOutgoingAccessoryViewPadding(_ newPadding: HorizontalEdgeInsets) {
         messageSizeCalculators().forEach { $0.outgoingAccessoryViewPadding = newPadding }
     }
 
