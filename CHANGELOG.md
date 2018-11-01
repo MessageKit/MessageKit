@@ -4,6 +4,13 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 --------------------------------------
 
+## Upcoming Release
+
+### Changed
+
+- Change acl of `handleGesture(touchLocation:)` in `MessageLabel` from internal to open. 
+[#912](https://github.com/MessageKit/MessageKit/pull/912) by [@julienkode](https://github.com/JulienKode)
+
 ## [2.0.0-beta.1](https://github.com/MessageKit/MessageKit/releases/tag/2.0.0-beta.1)
 
 ### Changed
