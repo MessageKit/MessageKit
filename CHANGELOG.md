@@ -4,17 +4,21 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 --------------------------------------
 
-## [2.0.0](https://github.com/MessageKit/MessageKit/releases/tag/2.0.0-beta.1)
+## Upcoming Release
 
 ### Changed
 
 - Change acl of `handleGesture(touchLocation:)` in `MessageLabel` from internal to open. 
 [#912](https://github.com/MessageKit/MessageKit/pull/912) by [@julienkode](https://github.com/JulienKode)
 
-- Fixed the way that the Strings and UIImages are parsed in the `InputTextView` to prevent crashes in `parseForComponents()`. 
-[#791](https://github.com/MessageKit/MessageKit/pull/791) by [@nathantannar4](https://github.com/nathantannar4)
+## [2.0.0-beta.1](https://github.com/MessageKit/MessageKit/releases/tag/2.0.0-beta.1)
+
+### Changed
 
 - **Breaking Change** Updated codebase to Swift 4.2 [#883](https://github.com/MessageKit/MessageKit/pull/883) by [@nathantannar4](https://github.com/nathantannar4)
+
+- Fixed the way that the Strings and UIImages are parsed in the `InputTextView` to prevent crashes in `parseForComponents()`. 
+[#791](https://github.com/MessageKit/MessageKit/pull/791) by [@nathantannar4](https://github.com/nathantannar4)
 
 ### Added
 
@@ -30,14 +34,16 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Added `additionalBottomInset` property that allows to adjust the bottom content inset automatically set on the messages collection view by the view controller. 
 [#787](https://github.com/MessageKit/MessageKit/pull/787) by [@andreyvit](https://github.com/andreyvit)
 
+- Added new methods to simplify using of custom messages: `customCellSizeCalculator(for:at:in:)` for `MessagesLayoutDelegate` and `customCell(for:at:in:)` for `MessagesDataSource`.
+[#879](https://github.com/MessageKit/MessageKit/pull/879) by [@realbonus](https://github.com/RealBonus)
+
 ### Fixed
-
--  Fixed a bug that prevented `MessageLabel` from laying out properly when contained by superviews using autolayout.
-[#889](https://github.com/MessageKit/MessageKit/pull/889) by [@marius-serban](https://github.com/marius-serban).
-
 
 - **Breaking Change** Fixed typo of `scrollsToBottomOnKeybordBeginsEditing` to `scrollsToBottomOnKeyboardBeginsEditing`.
 [#856](https://github.com/MessageKit/MessageKit/pull/856) by [@p-petrenko](https://github.com/p-petrenko)
+
+-  Fixed a bug that prevented `MessageLabel` from laying out properly when contained by superviews using autolayout.
+[#889](https://github.com/MessageKit/MessageKit/pull/889) by [@marius-serban](https://github.com/marius-serban).
 
 - Fixed bottom content inset adjustment when using an undocked keyboard on iPad, or when `edgesForExtendedLayout` does not include `.top`, or when a parent container view controller adds extra views at the top of the screen. 
 [#787](https://github.com/MessageKit/MessageKit/pull/787) by [@andreyvit](https://github.com/andreyvit)
@@ -49,7 +55,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - Fixed `MessagesCollectionView` to allow to use nibs with `MessageReusableView`.
 [#832](https://github.com/MessageKit/MessageKit/pull/832) by [@maxxx777](https://github.com/maxxx777).
-- Fixed multiple crashes at views, when views are being called from another XIB. [#905](https://github.com/MessageKit/MessageKit/pull/905) by [@talanov](https://github.com/talanov).
+
+- Fixed multiple crashes at views, when views are being called from another XIB.
+[#905](https://github.com/MessageKit/MessageKit/pull/905) by [@talanov](https://github.com/talanov).
 
 ## [1.0.0](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0)
 
