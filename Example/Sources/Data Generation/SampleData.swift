@@ -31,26 +31,38 @@ final internal class SampleData {
 
     private init() {}
     
-    enum MessageTypes: UInt32, CaseIterable {
-        case Text = 0
-        case AttributedText = 1
-        case Photo = 2
-        case Video = 3
-        case Emoji = 4
-        case Location = 5
-        case Url = 6
-        case Phone = 7
-        case Hashtag = 8
-        case Mention = 9
-        case Custom = 10
+    enum MessageTypes: String, CaseIterable {
+        case text = "Text"
+        case attributedText = "AttributedText"
+        case photo = "Photo"
+        case video = "Video"
+        case emoji = "Emoji"
+        case location = "Location"
+        case url = "Url"
+        case phone = "Phone"
+        case hashtag = "Hashtag"
+        case mention = "Mention"
+        case custom = "Custom"
+
+        static let all: [MessageTypes] = [
+            .text,
+            .attributedText,
+            .photo,
+            .video,
+            .emoji,
+            .location,
+            .url,
+            .phone,
+            .hashtag,
+            .mention,
+            .custom
+        ]
 
         static func random() -> MessageTypes {
-            // Update as new enumerations are added
-            let maxValue = Custom.rawValue
-            
-            let rand = arc4random_uniform(maxValue+1)
-            return MessageTypes(rawValue: rand)!
+            let randomIndex = Int(arc4random()) % MessageTypes.all.count
+            return all[randomIndex]
         }
+
     }
 
     let system = Sender(id: "000000", displayName: "System")
@@ -140,7 +152,7 @@ final internal class SampleData {
     func randomMessageType() -> MessageTypes {
         let messageType = MessageTypes.random()
 
-        if !UserDefaults.standard.bool(forKey: "\(messageType)" + " Messages") {
+        if !UserDefaults.standard.bool(forKey: "\(messageType.rawValue)" + " Messages") {
             return randomMessageType()
         }
         
@@ -156,36 +168,36 @@ final internal class SampleData {
         let date = dateAddingRandomTime()
 
         switch randomMessageType() {
-        case .Text:
+        case .text:
             let randomSentence = Lorem.sentence()
             return MockMessage(text: randomSentence, sender: sender, messageId: uniqueID, date: date)
-        case .AttributedText:
+        case .attributedText:
             let randomSentence = Lorem.sentence()
             let attributedText = attributedString(with: randomSentence)
             return MockMessage(attributedText: attributedText, sender: senders[randomNumberSender], messageId: uniqueID, date: date)
-        case .Photo:
+        case .photo:
             let randomNumberImage = Int(arc4random_uniform(UInt32(messageImages.count)))
             let image = messageImages[randomNumberImage]
             return MockMessage(image: image, sender: sender, messageId: uniqueID, date: date)
-        case .Video:
+        case .video:
             let randomNumberImage = Int(arc4random_uniform(UInt32(messageImages.count)))
             let image = messageImages[randomNumberImage]
             return MockMessage(thumbnail: image, sender: sender, messageId: uniqueID, date: date)
-        case .Emoji:
+        case .emoji:
             let randomNumberEmoji = Int(arc4random_uniform(UInt32(emojis.count)))
             return MockMessage(emoji: emojis[randomNumberEmoji], sender: sender, messageId: uniqueID, date: date)
-        case .Location:
+        case .location:
             let randomNumberLocation = Int(arc4random_uniform(UInt32(locations.count)))
             return MockMessage(location: locations[randomNumberLocation], sender: sender, messageId: uniqueID, date: date)
-        case .Url:
+        case .url:
             return MockMessage(text: "https://github.com/MessageKit", sender: sender, messageId: uniqueID, date: date)
-        case .Phone:
+        case .phone:
             return MockMessage(text: "123-456-7890", sender: sender, messageId: uniqueID, date: date)
-        case .Mention:
+        case .mention:
             return MockMessage(text: "@messagekit", sender: sender, messageId: uniqueID, date: date)
-        case .Hashtag:
+        case .hashtag:
             return MockMessage(text: "#messagekit", sender: sender, messageId: uniqueID, date: date)
-        case .Custom:
+        case .custom:
             return MockMessage(custom: "Someone left the conversation", sender: system, messageId: uniqueID, date: date)
         }
     }
