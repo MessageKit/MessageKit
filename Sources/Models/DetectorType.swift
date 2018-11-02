@@ -31,11 +31,11 @@ public enum DetectorType: Hashable {
     case phoneNumber
     case url
     case transitInformation
-    case custom(regex: NSRegularExpression)
+    case custom(NSRegularExpression)
 
     // swiftlint:disable force_try
-    public static var hashtag = DetectorType.custom(regex: try! NSRegularExpression(pattern: "#[a-zA-Z0-9]{4,}", options: []))
-    public static var mention = DetectorType.custom(regex: try! NSRegularExpression(pattern: "@[a-zA-Z0-9]{4,}", options: []))
+    public static var hashtag = DetectorType.custom(try! NSRegularExpression(pattern: "#[a-zA-Z0-9]{4,}", options: []))
+    public static var mention = DetectorType.custom(try! NSRegularExpression(pattern: "@[a-zA-Z0-9]{4,}", options: []))
     // swiftlint:enable force_try
 
     internal var textCheckingType: NSTextCheckingResult.CheckingType {

@@ -332,7 +332,7 @@ open class MessageLabel: UILabel {
     private func parse(text: NSAttributedString) -> [NSTextCheckingResult] {
         guard enabledDetectors.isEmpty == false else { return [] }
         let range = NSRange(location: 0, length: text.length)
-        var matches =  [NSTextCheckingResult]()
+        var matches = [NSTextCheckingResult]()
 
         // Get matches of all .custom DetectorType and add it to matches array
         let regexs = enabledDetectors
@@ -366,15 +366,6 @@ open class MessageLabel: UILabel {
         return results
     }
 
-    /**
-     Take a custom detector and apply the matching to the text
-     
-     - Parameters: detector: `DetectorType` that you want to execute
-     - Parameters: text: where we apply the regular expression
-     - Parameters: range: where we apply the regular expression
-     
-     - Returns: an array of `NSTextCheckingResult` that contains all maching for this detector or nil if it fails
-     */
     private func parseForMatches(with detector: DetectorType, in text: NSAttributedString, for range: NSRange) -> [NSTextCheckingResult] {
         switch detector {
         case .custom(let regex):
@@ -418,7 +409,7 @@ open class MessageLabel: UILabel {
                 rangesForDetectors.updateValue(ranges, forKey: .transitInformation)
             case .regularExpression:
                 guard let text = text, let regex = result.regularExpression, let range = Range(result.range, in: text) else { return }
-                let detector = DetectorType.custom(regex: regex)
+                let detector = DetectorType.custom(regex)
                 var ranges = rangesForDetectors[detector] ?? []
                 let tuple: (NSRange, MessageTextCheckingType) = (result.range, .custom(pattern: regex.pattern, match: String(text[range])))
                 ranges.append(tuple)

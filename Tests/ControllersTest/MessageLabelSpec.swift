@@ -101,7 +101,7 @@ final class MessageLabelSpec: QuickSpec {
                 let shouldFailed = ["abcd", "a", "!!!", ";"]
 
                 beforeEach {
-                    detector = DetectorType.custom(regex: try! NSRegularExpression(pattern: "[0-9]+", options: .caseInsensitive))
+                    detector = DetectorType.custom(try! NSRegularExpression(pattern: "[0-9]+", options: .caseInsensitive))
                     key = NSAttributedString.Key(rawValue: "Custom")
                     attributes = [key: "CustomDetected"]
                 }
