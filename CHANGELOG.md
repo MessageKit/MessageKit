@@ -4,7 +4,13 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 --------------------------------------
 
-## Upcoming release
+=======
+## Upcoming Release
+
+### Changed
+
+- Change acl of `handleGesture(touchLocation:)` in `MessageLabel` from internal to open. 
+[#912](https://github.com/MessageKit/MessageKit/pull/912) by [@julienkode](https://github.com/JulienKode)
 
 - **Breaking Change**  Add support for audio messages [#892](https://github.com/MessageKit/MessageKit/pull/892) by [@moldovaniosif](https://github.com/moldovaniosif).  Added new protocols `AudioControllerDelegate`, `AudioItem` a new cell  `AudioMessageCell` and a new controller `BasicAudioController`. 
 
