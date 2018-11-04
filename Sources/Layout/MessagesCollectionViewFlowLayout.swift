@@ -160,6 +160,8 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     lazy open var locationMessageSizeCalculator = LocationMessageSizeCalculator(layout: self)
     lazy open var typingCellSizeCalculator = TypingCellSizeCalculator(layout: self)
 
+    /// - Note:
+    ///   If you override this method, remember to call MessageLayoutDelegate's customCellSizeCalculator(for:at:in:) method for MessageKind.custom messages, if necessary
     open func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
         if isSectionReservedForTypingIndicator(indexPath.section) {
             return typingCellSizeCalculator
@@ -179,7 +181,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         case .location:
             return locationMessageSizeCalculator
         case .custom:
-            fatalError("Must return a CellSizeCalculator for MessageKind.custom(Any?)")
+            return messagesLayoutDelegate.customCellSizeCalculator(for: message, at: indexPath, in: messagesCollectionView)
         }
     }
 

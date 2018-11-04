@@ -90,7 +90,7 @@ github "MessageKit/MessageKit"
 ## Contributing
 
 Great! Look over these things first.
-- Please read our [Code of Conduct](https://github.com/MessageKit/MessageKit/blob/master/Code_of_Conduct.md)
+- Please read our [Code of Conduct](https://github.com/MessageKit/MessageKit/blob/master/CODE_OF_CONDUCT.md)
 - Check the [Contributing Guide Lines](https://github.com/MessageKit/MessageKit/blob/master/CONTRIBUTING.md).
 - Come join us on [Slack](https://join.slack.com/t/messagekit/shared_invite/MjI4NzIzNzMyMzU0LTE1MDMwODIzMDUtYzllYzIyNTU4MA) and 🗣 don't be a stranger. 
 - Check out the [current issues](https://github.com/MessageKit/MessageKit/issues) and see if you can tackle any of those. 
@@ -116,6 +116,8 @@ Interested in contributing to MessageKit? Click here to join our [Slack](https:/
 Add your app to the list of apps using this library and make a pull request.
 
 - [MediQuo](https://www.mediquo.com)
+- [RappresentaMe](https://itunes.apple.com/it/app/rappresentame/id1330914443)
+- [WiseEyes](https://itunes.apple.com/us/app/wiseeyes/id1391408511?mt=8)
 
 *Please provide attribution, it is greatly appreciated.*
 
