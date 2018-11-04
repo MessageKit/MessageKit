@@ -56,6 +56,9 @@ final class MessagesViewControllerSpec: QuickSpec {
                 it("has a MessagesCollectionView") {
                     expect(controller.messagesCollectionView).toNot(beNil())
                 }
+                it("sets the CollectionView's layout to be an instance of MessagesCollectionViewFlowLayout") {
+                    expect(controller.messagesCollectionView.collectionViewLayout).to(beAnInstanceOf(MessagesCollectionViewFlowLayout.self))
+                }
             }
             context("after viewDidLoad") {
                 beforeEach {
