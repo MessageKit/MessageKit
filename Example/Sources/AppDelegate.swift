@@ -35,6 +35,11 @@ final internal class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = NavigationController(rootViewController: LaunchViewController())
         window?.makeKeyAndVisible()
         
+        if UserDefaults.isFirstLaunch() {
+            // Enable Text Messages
+            UserDefaults.standard.set(true, forKey: "Text Messages")
+        }
+        
         return true
     }
 

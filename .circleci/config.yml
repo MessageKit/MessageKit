@@ -8,7 +8,7 @@ jobs:
   build-and-test:
 
     environment:
-      - DESTINATION: "platform=iOS Simulator,name=iPhone XR"
+      - DESTINATION: "platform=iOS Simulator,name=iPhone XS"
 
     # Specify the Xcode version to use.
     macos:

@@ -2,7 +2,7 @@
 
 ### Code of Conduct
 
-Please read our [Code of Conduct](https://github.com/MessageKit/MessageKit/blob/master/Code_of_Conduct.md). 
+Please read our [Code of Conduct](https://github.com/MessageKit/MessageKit/blob/master/CODE_OF_CONDUCT.md). 
 The MessageKit maintainers take this Code of Conduct very seriously. Intolerance, disrespect, harassment, and any form of negativity will not be tolerated.
 
 ### Ways to Contribute
