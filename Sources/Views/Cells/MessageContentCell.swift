@@ -89,9 +89,9 @@ open class MessageContentCell: MessageCollectionViewCell {
     open func setupSubviews() {
         contentView.addSubview(accessoryView)
         contentView.addSubview(cellTopLabel)
-        contentView.addSubview(cellBottomLabel)
         contentView.addSubview(messageTopLabel)
         contentView.addSubview(messageBottomLabel)
+        contentView.addSubview(cellBottomLabel)
         contentView.addSubview(messageContainerView)
         contentView.addSubview(avatarView)
     }
