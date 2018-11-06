@@ -55,11 +55,6 @@ class MessagesViewControllerTests: XCTestCase {
 
     // MARK: - Test
 
-    func testViewDidLoad_shouldSetDelegateAndDataSourceToTheSameObject() {
-        XCTAssertEqual(sut.messagesCollectionView.delegate as? MessagesViewController,
-                       sut.messagesCollectionView.dataSource as? MessagesViewController)
-    }
-
     func testNumberOfSectionWithoutData_isZero() {
         let messagesDataSource = MockMessagesDataSource()
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
