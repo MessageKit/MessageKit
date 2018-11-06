@@ -274,7 +274,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         cellBottomLabel.textAlignment = attributes.cellBottomLabelAlignment.textAlignment
         cellBottomLabel.textInsets = attributes.cellBottomLabelAlignment.textInsets
         
-        let y = messageContainerView.frame.maxY + attributes.messageContainerPadding.bottom + attributes.messageBottomLabelSize.height
+        let y = messageBottomLabel.frame.maxY
         let origin = CGPoint(x: 0, y: y)
         
         cellBottomLabel.frame = CGRect(origin: origin, size: attributes.cellBottomLabelSize)
