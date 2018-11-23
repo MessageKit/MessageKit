@@ -13,6 +13,15 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
+- **Breaking Change** Added `didTapCellBottomLabel(in:)` function to `MessageCellDelegate` protocol.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+    
+- **Breaking Change** Added `cellBottomLabelAttributedText(for:, at:)` function to `MessagesDataSource` protocol.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+    
+- **Breaking Change** Added `cellBottomLabelHeight(for:, at:, in messagesCollectionView:)` function to `MessagesLayoutDelegate` protocol.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
 - Added `cellBottomLabel` to `MessageContentCell`.
 [#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
 
@@ -20,15 +29,6 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 [#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
 
 - Added `setMessageIncomingCellBottomLabelAlignment(_:)` and `setMessageOutgoingCellBottomLabelAlignment(_:)` functions to `MessagesCollectionViewFlowLayout` class.
-[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
-
-- Added `didTapCellBottomLabel(in:)` function to `MessageCellDelegate` protocol.
-[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
-    
-- Added `cellBottomLabelAttributedText(for:, at:)` function to `MessagesDataSource` protocol.
-[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
-    
-- Added `cellBottomLabelHeight(for:, at:, in messagesCollectionView:)` function to `MessagesLayoutDelegate` protocol.
 [#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
 
 - Added `cellBottomLabelAlignment` and `cellBottomLabelSize` variables to `MessagesCollectionViewLayoutAttributes` class.
