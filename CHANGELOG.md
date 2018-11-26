@@ -2,6 +2,12 @@
 
 The changelog for `MessageKit`. Also see the [releases](https://github.com/MessageKit/MessageKit/releases) on GitHub.
 
+## Upcoming Release
+
+### Changed
+
+- **Breaking Change** Deprecated the Sender struct in favor of the `SenderType` protocol.
+
 --------------------------------------
 
 ## [2.0.0](https://github.com/MessageKit/MessageKit/releases/tag/2.0.0)

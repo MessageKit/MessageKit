@@ -35,13 +35,4 @@ public protocol SenderType {
 
     /// The display name of a sender.
     var displayName: String { get }
-
-    /// Equatable conformance
-    func isEqualTo(_ sender: SenderType) -> Bool
-}
-
-public extension SenderType {
-    func isEqualTo(_ sender: SenderType) -> Bool {
-        return self.id == sender.id
-    }
 }

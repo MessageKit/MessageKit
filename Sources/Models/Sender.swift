@@ -25,7 +25,7 @@
 import Foundation
 
 /// An object that groups the metadata of a messages sender.
-@available(*, deprecated: 2.0, message: "`Sender` has been replaced with the `SenderType` protocol in 2.0")
+@available(*, deprecated: 3.0.0, message: "`Sender` has been replaced with the `SenderType` protocol in 3.0.0")
 public struct Sender: SenderType {
 
     /// MARK: - Properties
