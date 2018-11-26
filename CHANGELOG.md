@@ -8,7 +8,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Changed
 
-- **Breaking Change**Move `handleTapGesture` logic to `MessageCollectionViewCell` [#950](https://github.com/MessageKit/MessageKit/pull/950) by [@nathantannar4](https://github.com/nathantannar4)
+- **Breaking Change** Moved `handleTapGesture` method to `MessageCollectionViewCell` [#950](https://github.com/MessageKit/MessageKit/pull/950) by [@nathantannar4](https://github.com/nathantannar4)
 
 - **Breaking Change** Renamed function `layoutBottomLabel(with:)` to `layoutMessageBottomLabel(with:)` in `MessageContentCell` class.
 [#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
