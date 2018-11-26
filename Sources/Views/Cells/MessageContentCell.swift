@@ -183,12 +183,13 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutAvatarView(with attributes: MessagesCollectionViewLayoutAttributes) {
         var origin: CGPoint = .zero
+        let padding = attributes.avatarPosition.padding
 
         switch attributes.avatarPosition.horizontal {
         case .cellLeading:
-            break
+            origin.x = padding.left
         case .cellTrailing:
-            origin.x = attributes.frame.width - attributes.avatarSize.width
+            origin.x = attributes.frame.width - attributes.avatarSize.width - padding.right
         case .natural:
             fatalError(MessageKitError.avatarPositionUnresolved)
         }
@@ -235,11 +236,12 @@ open class MessageContentCell: MessageCollectionViewCell {
             }
         }
 
+        let avatarPadding = attributes.avatarPosition.padding
         switch attributes.avatarPosition.horizontal {
         case .cellLeading:
-            origin.x = attributes.avatarSize.width + attributes.messageContainerPadding.left
+            origin.x = attributes.avatarSize.width + attributes.messageContainerPadding.left + avatarPadding.horizontal
         case .cellTrailing:
-            origin.x = attributes.frame.width - attributes.avatarSize.width - attributes.messageContainerSize.width - attributes.messageContainerPadding.right
+            origin.x = attributes.frame.width - attributes.avatarSize.width - attributes.messageContainerSize.width - attributes.messageContainerPadding.right - avatarPadding.horizontal
         case .natural:
             fatalError(MessageKitError.avatarPositionUnresolved)
         }

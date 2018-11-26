@@ -38,6 +38,8 @@ open class MessageSizeCalculator: CellSizeCalculator {
     public var incomingAvatarPosition = AvatarPosition(vertical: .cellBottom)
     public var outgoingAvatarPosition = AvatarPosition(vertical: .cellBottom)
 
+    public var avatarLeadingTrailingPadding: CGFloat = 0
+
     public var incomingMessagePadding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
     public var outgoingMessagePadding = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
 
@@ -226,10 +228,11 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     open func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
         let avatarWidth = avatarSize(for: message).width
+//        let avatarPadding = avatarLeadingTrailingPadding(for: message)
         let messagePadding = messageContainerPadding(for: message)
         let accessoryWidth = accessoryViewSize(for: message).width
         let accessoryPadding = accessoryViewPadding(for: message)
-        return messagesLayout.itemWidth - avatarWidth - messagePadding.horizontal - accessoryWidth - accessoryPadding.horizontal
+        return messagesLayout.itemWidth - avatarWidth - messagePadding.horizontal - accessoryWidth - accessoryPadding.horizontal// - avatarPadding
     }
 
     // MARK: - Helpers
