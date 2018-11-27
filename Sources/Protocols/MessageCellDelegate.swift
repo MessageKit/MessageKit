@@ -58,6 +58,16 @@ public protocol MessageCellDelegate: MessageLabelDelegate {
     /// method `messageForItem(at:indexPath:messagesCollectionView)`.
     func didTapCellTopLabel(in cell: MessageCollectionViewCell)
     
+    /// Triggered when a tap occurs in the cellBottomLabel.
+    ///
+    /// - Parameters:
+    ///   - cell: The cell tap the touch occurred.
+    ///
+    /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
+    /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
+    /// method `messageForItem(at:indexPath:messagesCollectionView)`.
+    func didTapCellBottomLabel(in cell: MessageCollectionViewCell)
+    
     /// Triggered when a tap occurs in the messageTopLabel.
     ///
     /// - Parameters:
@@ -137,6 +147,8 @@ public extension MessageCellDelegate {
     func didTapAvatar(in cell: MessageCollectionViewCell) {}
 
     func didTapCellTopLabel(in cell: MessageCollectionViewCell) {}
+    
+    func didTapCellBottomLabel(in cell: MessageCollectionViewCell) {}
 
     func didTapMessageTopLabel(in cell: MessageCollectionViewCell) {}
 
