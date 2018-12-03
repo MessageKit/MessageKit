@@ -15,6 +15,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
+- **Breaking Change** Added `didTapBackground(in:)` function to `MessageCellDelegate` protocol.
+[#922](https://github.com/MessageKit/MessageKit/pull/922) by [@kpennacchia](https://github.com/kpennacchia)
+
 - **Breaking Change** Added `didTapCellBottomLabel(in:)` function to `MessageCellDelegate` protocol.
 [#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
     
