@@ -34,9 +34,6 @@ final class BasicExampleViewController: ChatViewController {
         
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
-
-        let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout
-        layout?.setAvatarLeadingTrailingPadding(20)
     }
 
 }
