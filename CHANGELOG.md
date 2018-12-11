@@ -4,6 +4,47 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 --------------------------------------
 
+## Upcoming Release
+
+### Changed
+
+- **Breaking Change** Moved `handleTapGesture` method to `MessageCollectionViewCell` [#950](https://github.com/MessageKit/MessageKit/pull/950) by [@nathantannar4](https://github.com/nathantannar4)
+
+- **Breaking Change** Renamed function `layoutBottomLabel(with:)` to `layoutMessageBottomLabel(with:)` in `MessageContentCell` class.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
+### Added
+
+- **Breaking Change** Added `didTapBackground(in:)` function to `MessageCellDelegate` protocol.
+[#922](https://github.com/MessageKit/MessageKit/pull/922) by [@kpennacchia](https://github.com/kpennacchia)
+
+- **Breaking Change** Added `didTapCellBottomLabel(in:)` function to `MessageCellDelegate` protocol.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+    
+- **Breaking Change** Added `cellBottomLabelAttributedText(for:, at:)` function to `MessagesDataSource` protocol.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+    
+- **Breaking Change** Added `cellBottomLabelHeight(for:, at:, in messagesCollectionView:)` function to `MessagesLayoutDelegate` protocol.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
+- Added `cellBottomLabel` to `MessageContentCell`.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
+- Added `layoutCellBottomLabel(with:)` function to `MessageContentCell` class. 
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
+- Added `setMessageIncomingCellBottomLabelAlignment(_:)` and `setMessageOutgoingCellBottomLabelAlignment(_:)` functions to `MessagesCollectionViewFlowLayout` class.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
+- Added `cellBottomLabelAlignment` and `cellBottomLabelSize` variables to `MessagesCollectionViewLayoutAttributes` class.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
+- Added `incomingCellBottomLabelAlignment` and `outgoingCellBottomLabelAlignment` variables to `MessageSizeCalculator` class.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
+- Added `cellBottomLabelSize(for:, at:)` and `cellBottomLabelAlignment(for:)` functions to `MessageSizeCalculator` class.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
 ## [2.0.0](https://github.com/MessageKit/MessageKit/releases/tag/2.0.0)
 
 ### Changed
