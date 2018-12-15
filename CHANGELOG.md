@@ -11,10 +11,15 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - **Breaking Change**  Add support for audio messages [#892](https://github.com/MessageKit/MessageKit/pull/892) by [@moldovaniosif](https://github.com/moldovaniosif).  Added new protocols `AudioControllerDelegate`, `AudioItem` a new cell  `AudioMessageCell` and a new controller `BasicAudioController`. 
 
+- **Breaking Change** Moved `handleTapGesture` method to `MessageCollectionViewCell` [#950](https://github.com/MessageKit/MessageKit/pull/950) by [@nathantannar4](https://github.com/nathantannar4)
+
 - **Breaking Change** Renamed function `layoutBottomLabel(with:)` to `layoutMessageBottomLabel(with:)` in `MessageContentCell` class.
 [#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
 
 ### Added
+
+- **Breaking Change** Added `didTapBackground(in:)` function to `MessageCellDelegate` protocol.
+[#922](https://github.com/MessageKit/MessageKit/pull/922) by [@kpennacchia](https://github.com/kpennacchia)
 
 - **Breaking Change** Added `didTapCellBottomLabel(in:)` function to `MessageCellDelegate` protocol.
 [#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)

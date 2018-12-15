@@ -157,7 +157,7 @@ open class MessageContentCell: MessageCollectionViewCell {
     }
 
     /// Handle tap gesture on contentView and its subviews.
-    open func handleTapGesture(_ gesture: UIGestureRecognizer) {
+    open override func handleTapGesture(_ gesture: UIGestureRecognizer) {
         let touchLocation = gesture.location(in: self)
 
         switch true {
@@ -176,7 +176,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         case accessoryView.frame.contains(touchLocation):
             delegate?.didTapAccessoryView(in: self)
         default:
-            break
+            delegate?.didTapBackground(in: self)
         }
     }
 
