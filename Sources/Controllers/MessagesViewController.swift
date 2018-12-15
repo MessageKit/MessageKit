@@ -60,9 +60,6 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         return false
     }
 
-    /// The `BasicAudioController` controll the AVAudioPlayer state (play, pause, stop) and udpate audio cell UI accordingly.
-    open lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
-
     /// A CGFloat value that adds to (or, if negative, subtracts from) the automatically
     /// computed value of `messagesCollectionView.contentInset.bottom`. Meant to be used
     /// as a measure of last resort when the built-in algorithm does not produce the right
@@ -214,7 +211,6 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         case .audio:
             let cell = messagesCollectionView.dequeueReusableCell(AudioMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
-            audioController.configureAudioCell(cell, message: message) // this is needed especily when the cell is reconfigure while is playing sound
             return cell
         case .custom:
             return messagesDataSource.customCell(for: message, at: indexPath, in: messagesCollectionView)

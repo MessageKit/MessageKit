@@ -174,8 +174,21 @@ public protocol MessagesDisplayDelegate: AnyObject {
     func configureMediaMessageImageView(_ imageView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView)
 
     // MARK: - Audio Message
+    
+    /// Used to configure the audio cell UI:
+    ///     1. play button selected state;
+    ///     2. progresssView progress;
+    ///     3. durationLabel text;
+    ///
+    /// - Parameters:
+    ///   - cell: The `AudioMessageCell` that needs to be configure.
+    ///   - message: The `MessageType` that configures the cell.
+    ///
+    /// - Note:
+    ///   This protocol method is called by MessageKit every time an audio cell needs to be configure
+    func configureAudioCell(_ cell: AudioMessageCell, message: MessageType)
 
-    /// Specifies the tint color of elment for a `AudioMessageCell`.
+    /// Specifies the tint color of play button and progress bar for an `AudioMessageCell`.
     ///
     /// - Parameters:
     ///   - message: A `MessageType` with a `MessageKind` case of `.audio` to which the color will apply.
@@ -272,6 +285,10 @@ public extension MessagesDisplayDelegate {
     }
 
     // MARK: - Audio Message Defaults
+    
+    func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {
+        
+    }
 
     func audioTintColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
         return UIColor.sendButtonBlue

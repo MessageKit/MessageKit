@@ -110,17 +110,17 @@ open class AudioMessageCell: MessageContentCell {
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         configureCellApperance(with: message, indexPath: indexPath, messagesCollectionView: messagesCollectionView)
-        switch message.kind {
-        case .audio(let mediaItem):
-            guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-                fatalError(MessageKitError.nilMessagesDisplayDelegate)
-            }
-            durationLabel.text = displayDelegate.audioProgressTextFormat(mediaItem.duration, for: self, in: messagesCollectionView)
-            progressView.progress = 0.0
-            playButton.isSelected = false
-        default:
-            break
+        
+        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
+            fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
+        // default implementation for decorate cell
+        guard case let .audio(audioItem) = message.kind else { fatalError("Failed decorate audio cell") }
+        durationLabel.text = displayDelegate.audioProgressTextFormat(audioItem.duration, for: self, in: messagesCollectionView)
+        progressView.progress = 0.0
+        playButton.isSelected = false
+        // call configure delegate for fourther config
+        displayDelegate.configureAudioCell(self, message: message)
     }
 
     private func configureCellApperance(with message: MessageType, indexPath: IndexPath, messagesCollectionView: MessagesCollectionView) {

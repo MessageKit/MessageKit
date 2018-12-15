@@ -24,6 +24,7 @@
 
 import UIKit
 import AVFoundation
+import MessageKit
 
 /// The `PlayerState` indicates the current audio controller state
 public enum PlayerState {
@@ -40,7 +41,7 @@ public enum PlayerState {
 
 /// The `BasicAudioController` update UI for current audio cell that is playing a sound
 /// and also creates and manage an `AVAudioPlayer` states, play, pause and stop.
-open class BasicAudioController: NSObject, AVAudioPlayerDelegate, AudioControllerDelegate {
+open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
 
     /// The `AVAudioPlayer` that is playing the sound
     open var audioPlayer: AVAudioPlayer?
@@ -86,7 +87,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate, AudioControlle
             cell.progressView.progress = (player.duration == 0) ? 0 : Float(player.currentTime/player.duration)
             cell.playButton.isSelected = (player.isPlaying == true) ? true : false
             guard let displayDelegate = collectionView.messagesDisplayDelegate else {
-                fatalError(MessageKitError.nilMessagesDisplayDelegate)
+                fatalError("MessagesDisplayDelegate has not been set.")
             }
             cell.durationLabel.text = displayDelegate.audioProgressTextFormat(Float(player.currentTime), for: cell, in: collectionView)
         }
@@ -115,7 +116,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate, AudioControlle
             startProgressTimer()
             audioCell.delegate?.didStartAudio(in: audioCell)
         default:
-            print(MessageKitError.messageIsNotOfKindAudio)
+            print("BasicAudioPlayer failed play sound becasue given message kind is not Audio")
         }
     }
 
@@ -143,7 +144,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate, AudioControlle
             cell.progressView.progress = 0.0
             cell.playButton.isSelected = false
             guard let displayDelegate = collectionView.messagesDisplayDelegate else {
-                fatalError(MessageKitError.nilMessagesDisplayDelegate)
+                fatalError("MessagesDisplayDelegate has not been set.")
             }
             cell.durationLabel.text = displayDelegate.audioProgressTextFormat(Float(player.duration), for: cell, in: collectionView)
             cell.delegate?.didStopAudio(in: cell)
@@ -184,7 +185,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate, AudioControlle
                 // messages are the same update cell content
                 cell.progressView.progress = (player.duration == 0) ? 0 : Float(player.currentTime/player.duration)
                 guard let displayDelegate = collectionView.messagesDisplayDelegate else {
-                    fatalError(MessageKitError.nilMessagesDisplayDelegate)
+                    fatalError("MessagesDisplayDelegate has not been set.")
                 }
                 cell.durationLabel.text = displayDelegate.audioProgressTextFormat(Float(player.currentTime), for: cell, in: collectionView)
             } else {
