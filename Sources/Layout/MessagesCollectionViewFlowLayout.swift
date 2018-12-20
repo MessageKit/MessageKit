@@ -193,6 +193,11 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     public func setMessageOutgoingAvatarPosition(_ newPosition: AvatarPosition) {
         messageSizeCalculators().forEach { $0.outgoingAvatarPosition = newPosition }
     }
+
+    /// Set `avatarLeadingTrailingPadding` of all `MessageSizeCalculator`s
+    public func setAvatarLeadingTrailingPadding(_ newPadding: CGFloat) {
+        messageSizeCalculators().forEach { $0.avatarLeadingTrailingPadding = newPadding }
+    }
     
     /// Set `incomingMessagePadding` of all `MessageSizeCalculator`s
     public func setMessageIncomingMessagePadding(_ newPadding: UIEdgeInsets) {
