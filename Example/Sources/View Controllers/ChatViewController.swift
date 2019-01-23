@@ -67,7 +67,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         MockSocket.shared.disconnect()
-
         audioController.stopAnyOngoingPlaying()
     }
     
