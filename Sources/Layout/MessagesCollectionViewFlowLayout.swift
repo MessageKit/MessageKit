@@ -239,19 +239,29 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         messageSizeCalculators().forEach { $0.incomingAccessoryViewSize = newSize }
     }
 
-    /// Set `outgoingAvatarSize` of all `MessageSizeCalculator`s
+    /// Set `outgoingAccessoryViewSize` of all `MessageSizeCalculator`s
     public func setMessageOutgoingAccessoryViewSize(_ newSize: CGSize) {
         messageSizeCalculators().forEach { $0.outgoingAccessoryViewSize = newSize }
     }
 
-    /// Set `incomingAccessoryViewSize` of all `MessageSizeCalculator`s
+    /// Set `incomingAccessoryViewPadding` of all `MessageSizeCalculator`s
     public func setMessageIncomingAccessoryViewPadding(_ newPadding: HorizontalEdgeInsets) {
         messageSizeCalculators().forEach { $0.incomingAccessoryViewPadding = newPadding }
     }
 
-    /// Set `outgoingAvatarSize` of all `MessageSizeCalculator`s
+    /// Set `outgoingAccessoryViewPadding` of all `MessageSizeCalculator`s
     public func setMessageOutgoingAccessoryViewPadding(_ newPadding: HorizontalEdgeInsets) {
         messageSizeCalculators().forEach { $0.outgoingAccessoryViewPadding = newPadding }
+    }
+    
+    /// Set `incomingAccessoryViewPosition` of all `MessageSizeCalculator`s
+    public func setMessageIncomingAccessoryViewPosition(_ newPosition: AccessoryPosition) {
+        messageSizeCalculators().forEach { $0.incomingAccessoryViewPosition = newPosition }
+    }
+    
+    /// Set `outgoingAccessoryViewPosition` of all `MessageSizeCalculator`s
+    public func setMessageOutgoingAccessoryViewPosition(_ newPosition: AccessoryPosition) {
+        messageSizeCalculators().forEach { $0.outgoingAccessoryViewPosition = newPosition }
     }
 
     /// Get all `MessageSizeCalculator`s

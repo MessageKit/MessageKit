@@ -55,6 +55,9 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     public var incomingAccessoryViewPadding = HorizontalEdgeInsets.zero
     public var outgoingAccessoryViewPadding = HorizontalEdgeInsets.zero
+    
+    public var incomingAccessoryViewPosition: AccessoryPosition = .messageCenter
+    public var outgoingAccessoryViewPosition: AccessoryPosition = .messageCenter
 
     open override func configure(attributes: UICollectionViewLayoutAttributes) {
         guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
@@ -77,6 +80,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
         attributes.accessoryViewSize = accessoryViewSize(for: message)
         attributes.accessoryViewPadding = accessoryViewPadding(for: message)
+        attributes.accessoryViewPosition = accessoryViewPosition(for: message)
     }
 
     open override func sizeForItem(at indexPath: IndexPath) -> CGSize {
@@ -209,6 +213,12 @@ open class MessageSizeCalculator: CellSizeCalculator {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingAccessoryViewPadding : incomingAccessoryViewPadding
+    }
+    
+    public func accessoryViewPosition(for message: MessageType) -> AccessoryPosition {
+        let dataSource = messagesLayout.messagesDataSource
+        let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
+        return isFromCurrentSender ? outgoingAccessoryViewPosition : incomingAccessoryViewPosition
     }
 
     // MARK: - MessageContainer
