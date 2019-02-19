@@ -176,12 +176,12 @@ final class AdvancedExampleViewController: ChatViewController {
     
     func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
         guard indexPath.section - 1 >= 0 else { return false }
-        return messageList[indexPath.section].sender == messageList[indexPath.section - 1].sender
+        return messageList[indexPath.section].user == messageList[indexPath.section - 1].user
     }
     
     func isNextMessageSameSender(at indexPath: IndexPath) -> Bool {
         guard indexPath.section + 1 < messageList.count else { return false }
-        return messageList[indexPath.section].sender == messageList[indexPath.section + 1].sender
+        return messageList[indexPath.section].user == messageList[indexPath.section + 1].user
     }
     
     func setTypingIndicatorHidden(_ isHidden: Bool, performUpdates updates: (() -> Void)? = nil) {

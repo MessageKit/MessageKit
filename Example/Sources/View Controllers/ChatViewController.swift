@@ -142,7 +142,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     
     // MARK: - MessagesDataSource
     
-    func currentSender() -> Sender {
+    func currentSender() -> SenderType {
         return SampleData.shared.currentSender
     }
     
@@ -283,12 +283,13 @@ extension ChatViewController: MessageInputBarDelegate {
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
           
         for component in inputBar.inputTextView.components {
-            
+
+            let user = SampleData.shared.currentSender
             if let str = component as? String {
-                let message = MockMessage(text: str, sender: currentSender(), messageId: UUID().uuidString, date: Date())
+                let message = MockMessage(text: str, user: user, messageId: UUID().uuidString, date: Date())
                 insertMessage(message)
             } else if let img = component as? UIImage {
-                let message = MockMessage(image: img, sender: currentSender(), messageId: UUID().uuidString, date: Date())
+                let message = MockMessage(image: img, user: user, messageId: UUID().uuidString, date: Date())
                 insertMessage(message)
             }
             

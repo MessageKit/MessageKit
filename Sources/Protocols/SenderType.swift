@@ -22,28 +22,17 @@
  SOFTWARE.
  */
 
-import Quick
-import Nimble
-@testable import MessageKit
+import Foundation
 
-final class SenderSpec: QuickSpec {
+/// A standard protocol representing a sender.
+/// Use this protocol to adhere a object as the sender of a MessageType
+public protocol SenderType {
 
-    override func spec() {
-        describe("equality between two Senders") {
-            context("they have the same id ") {
-                it("should be equal") {
-                    let sender1 = MockUser(id: "1", displayName: "Steven")
-                    let sender2 = MockUser(id: "1", displayName: "Nathan")
-                    expect(sender1.id == sender2.id).to(equal(true))
-                }
-            }
-            context("they have a different id") {
-                it("should not be equal") {
-                    let sender1 = MockUser(id: "1", displayName: "Steven")
-                    let sender2 = MockUser(id: "2", displayName: "Nathan")
-                    expect(sender1.id == sender2.id).to(equal(false))
-                }
-            }
-        }
-    }
+    /// The unique String identifier for the sender.
+    ///
+    /// Note: This value must be unique across all senders.
+    var id: String { get }
+
+    /// The display name of a sender.
+    var displayName: String { get }
 }

@@ -53,14 +53,14 @@ final internal class SampleData {
         }
     }
 
-    let system = Sender(id: "000000", displayName: "System")
-    let nathan = Sender(id: "000001", displayName: "Nathan Tannar")
-    let steven = Sender(id: "000002", displayName: "Steven Deutsch")
-    let wu = Sender(id: "000003", displayName: "Wu Zhong")
+    let system = MockUser(id: "000000", displayName: "System")
+    let nathan = MockUser(id: "000001", displayName: "Nathan Tannar")
+    let steven = MockUser(id: "000002", displayName: "Steven Deutsch")
+    let wu = MockUser(id: "000003", displayName: "Wu Zhong")
 
     lazy var senders = [nathan, steven, wu]
 
-    var currentSender: Sender {
+    var currentSender: MockUser {
         return nathan
     }
 
@@ -155,7 +155,7 @@ final internal class SampleData {
         let randomNumberSender = Int(arc4random_uniform(UInt32(allowedSenders.count)))
         
         let uniqueID = NSUUID().uuidString
-        let sender = allowedSenders[randomNumberSender]
+        let user = allowedSenders[randomNumberSender]
         let date = dateAddingRandomTime()
 
         switch randomMessageType() {
@@ -214,8 +214,8 @@ final internal class SampleData {
         }
         completion(messages)
     }
-
-    func getMessages(count: Int, allowedSenders: [Sender], completion: ([MockMessage]) -> Void) {
+    
+    func getMessages(count: Int, allowedSenders: [MockUser], completion: ([MockMessage]) -> Void) {
         var messages: [MockMessage] = []
         // Disable Custom Messages
         UserDefaults.standard.set(false, forKey: "Custom Messages")
@@ -226,18 +226,18 @@ final internal class SampleData {
         completion(messages)
     }
 
-    func getAvatarFor(sender: Sender) -> Avatar {
+    func getAvatarFor(sender: SenderType) -> Avatar {
         let firstName = sender.displayName.components(separatedBy: " ").first
         let lastName = sender.displayName.components(separatedBy: " ").first
         let initials = "\(firstName?.first ?? "A")\(lastName?.first ?? "A")"
-        switch sender {
-        case nathan:
+        switch sender.id {
+        case "000001":
             return Avatar(image: #imageLiteral(resourceName: "Nathan-Tannar"), initials: initials)
-        case steven:
+        case "000002":
             return Avatar(image: #imageLiteral(resourceName: "Steven-Deutsch"), initials: initials)
-        case wu:
+        case "000003":
             return Avatar(image: #imageLiteral(resourceName: "Wu-Zhong"), initials: initials)
-        case system:
+        case "000000":
             return Avatar(image: nil, initials: "SS")
         default:
             return Avatar(image: nil, initials: initials)

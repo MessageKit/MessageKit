@@ -28,11 +28,15 @@ import Foundation
 class MockMessagesDataSource: MessagesDataSource {
 
     var messages: [MessageType] = []
-    let senders: [Sender] = [Sender(id: "sender_1", displayName: "Sender 1"),
-                             Sender(id: "sender_2", displayName: "Sender 2")]
+    let senders: [MockUser] = [MockUser(id: "sender_1", displayName: "Sender 1"),
+                             MockUser(id: "sender_2", displayName: "Sender 2")]
 
-    func currentSender() -> Sender {
+    var currentUser: MockUser {
         return senders[0]
+    }
+
+    func currentSender() -> SenderType {
+        return currentUser
     }
 
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
