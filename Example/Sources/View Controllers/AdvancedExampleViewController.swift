@@ -100,9 +100,9 @@ final class AdvancedExampleViewController: ChatViewController {
         
         layout?.setMessageIncomingAccessoryViewSize(CGSize(width: 30, height: 30))
         layout?.setMessageIncomingAccessoryViewPadding(HorizontalEdgeInsets(left: 8, right: 0))
+        layout?.setMessageIncomingAccessoryViewPosition(.messageBottom)
         layout?.setMessageOutgoingAccessoryViewSize(CGSize(width: 30, height: 30))
         layout?.setMessageOutgoingAccessoryViewPadding(HorizontalEdgeInsets(left: 0, right: 8))
-        layout?.setMessageIncomingAccessoryViewPosition(.messageBottom)
         layout?.setMessageOutgoingAccessoryViewPosition(.messageBottom)
 
         messagesCollectionView.messagesLayoutDelegate = self
