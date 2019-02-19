@@ -22,24 +22,18 @@
  SOFTWARE.
  */
 
-import UIKit
+import class AVFoundation.AVAudioPlayer
 
-/// A subclass of `UICollectionViewCell` to be used inside of a `MessagesCollectionView`.
-open class MessageCollectionViewCell: UICollectionViewCell {
+/// A protocol used to represent the data for an audio message.
+public protocol AudioItem {
 
-    // MARK: - Initializers
+    /// The url where the audio file is located.
+    var url: URL { get }
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
+    /// The audio file duration in seconds.
+    var duration: Float { get }
 
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
-    /// Handle tap gesture on contentView and its subviews.
-    open func handleTapGesture(_ gesture: UIGestureRecognizer) {
-        // Should be overridden
-    }
+    /// The size of the audio item.
+    var size: CGSize { get }
 
 }

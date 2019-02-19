@@ -22,24 +22,22 @@
  SOFTWARE.
  */
 
-import UIKit
+import Foundation
 
-/// A subclass of `UICollectionViewCell` to be used inside of a `MessagesCollectionView`.
-open class MessageCollectionViewCell: UICollectionViewCell {
+open class AudioMessageSizeCalculator: MessageSizeCalculator {
 
-    // MARK: - Initializers
-
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
+    open override func messageContainerSize(for message: MessageType) -> CGSize {
+        switch message.kind {
+        case .audio(let item):
+            let maxWidth = messageContainerMaxWidth(for: message)
+            if maxWidth < item.size.width {
+                // Maintain the ratio if width is too great
+                let height = maxWidth * item.size.height / item.size.width
+                return CGSize(width: maxWidth, height: height)
+            }
+            return item.size
+        default:
+            fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
+        }
     }
-
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
-    /// Handle tap gesture on contentView and its subviews.
-    open func handleTapGesture(_ gesture: UIGestureRecognizer) {
-        // Should be overridden
-    }
-
 }

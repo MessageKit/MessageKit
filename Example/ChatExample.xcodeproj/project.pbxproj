@@ -25,6 +25,9 @@
 		385C2946211FF38F0010B4BA /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C293F211FF38F0010B4BA /* LaunchViewController.swift */; };
 		385C2947211FF38F0010B4BA /* BasicExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C2940211FF38F0010B4BA /* BasicExampleViewController.swift */; };
 		385C2948211FF38F0010B4BA /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C2941211FF38F0010B4BA /* ChatViewController.swift */; };
+		50739F9621C5090A008CA369 /* BasicAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50739F9521C5090A008CA369 /* BasicAudioController.swift */; };
+		5074EF4E2163555900D82952 /* sound2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5074EF4C2163555900D82952 /* sound2.m4a */; };
+		5074EF4F2163555900D82952 /* sound1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5074EF4D2163555900D82952 /* sound1.m4a */; };
 		882B5E811CF7D53600B6E160 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E781CF7D53600B6E160 /* AppDelegate.swift */; };
 		882B5E821CF7D53600B6E160 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 882B5E791CF7D53600B6E160 /* Assets.xcassets */; };
 		882B5E831CF7D53600B6E160 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 882B5E7A1CF7D53600B6E160 /* LaunchScreen.storyboard */; };
@@ -87,6 +90,9 @@
 		385C2940211FF38F0010B4BA /* BasicExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicExampleViewController.swift; sourceTree = "<group>"; };
 		385C2941211FF38F0010B4BA /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		3B316705C4717C3B4C916D62 /* Pods_ChatExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		50739F9521C5090A008CA369 /* BasicAudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAudioController.swift; sourceTree = "<group>"; };
+		5074EF4C2163555900D82952 /* sound2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound2.m4a; sourceTree = "<group>"; };
+		5074EF4D2163555900D82952 /* sound1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound1.m4a; sourceTree = "<group>"; };
 		56F0AC85B38034EC92CCBC7D /* Pods_ChatExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		882B5E331CF7D4B900B6E160 /* ChatExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		882B5E491CF7D4B900B6E160 /* ChatExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +199,23 @@
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
+		50739F9421C5075D008CA369 /* AudioController */ = {
+			isa = PBXGroup;
+			children = (
+				50739F9521C5090A008CA369 /* BasicAudioController.swift */,
+			);
+			path = AudioController;
+			sourceTree = "<group>";
+		};
+		5074EF4B2163554900D82952 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				5074EF4D2163555900D82952 /* sound1.m4a */,
+				5074EF4C2163555900D82952 /* sound2.m4a */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		7523553CCB4B87460CE4DED6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -232,11 +255,13 @@
 			isa = PBXGroup;
 			children = (
 				882B5E781CF7D53600B6E160 /* AppDelegate.swift */,
+				50739F9421C5075D008CA369 /* AudioController */,
 				385C2949211FF3930010B4BA /* View Controllers */,
 				385C293A211FF3800010B4BA /* Data Generation */,
 				385C292E211FF3540010B4BA /* Layout */,
 				385C2929211FF33D0010B4BA /* Models */,
 				385C2924211FF3310010B4BA /* Views */,
+				5074EF4B2163554900D82952 /* Sounds */,
 				882B5E791CF7D53600B6E160 /* Assets.xcassets */,
 				882B5E7F1CF7D53600B6E160 /* Info.plist */,
 				882B5E7A1CF7D53600B6E160 /* LaunchScreen.storyboard */,
@@ -386,7 +411,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5074EF4F2163555900D82952 /* sound1.m4a in Resources */,
 				882B5E821CF7D53600B6E160 /* Assets.xcassets in Resources */,
+				5074EF4E2163555900D82952 /* sound2.m4a in Resources */,
 				882B5E831CF7D53600B6E160 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -508,6 +535,7 @@
 				385C2928211FF33B0010B4BA /* MockMessage.swift in Sources */,
 				385C2923211FF32E0010B4BA /* TableViewCells.swift in Sources */,
 				385C2942211FF38F0010B4BA /* AdvancedExampleViewController.swift in Sources */,
+				50739F9621C5090A008CA369 /* BasicAudioController.swift in Sources */,
 				385C2937211FF37B0010B4BA /* SampleData.swift in Sources */,
 				385C2931211FF3630010B4BA /* UIColor+Extensions.swift in Sources */,
 				385C2932211FF3630010B4BA /* UIViewController+Extensions.swift in Sources */,

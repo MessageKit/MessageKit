@@ -24,6 +24,7 @@
 
 import Foundation
 import CoreLocation
+import AVFoundation
 @testable import MessageKit
 
 struct MockLocationItem: LocationItem {
@@ -52,6 +53,21 @@ struct MockMediaItem: MediaItem {
     }
 
 }
+
+private struct MockAudiotem: AudioItem {
+
+    var url: URL
+    var size: CGSize
+    var duration: Float
+
+    init(url: URL, duration: Float) {
+        self.url = url
+        self.size = CGSize(width: 160, height: 35)
+        self.duration = duration
+    }
+
+}
+
 
 struct MockMessage: MessageType {
 
@@ -95,6 +111,11 @@ struct MockMessage: MessageType {
 
     init(emoji: String, user: MockUser, messageId: String) {
         self.init(kind: .emoji(emoji), user: user, messageId: messageId)
+    }
+
+    init(audioURL: URL, duration: Float, sender: Sender, messageId: String) {
+        let audioItem = MockAudiotem(url: audioURL, duration: duration)
+        self.init(kind: .audio(audioItem), sender: sender, messageId: messageId)
     }
 
 }
