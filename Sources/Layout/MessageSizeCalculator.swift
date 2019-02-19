@@ -215,7 +215,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return isFromCurrentSender ? outgoingAccessoryViewPadding : incomingAccessoryViewPadding
     }
     
-    public func accessoryViewPosition(for message: MessageType) -> AccessoryPosition {
+    open public func accessoryViewPosition(for message: MessageType) -> AccessoryPosition {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingAccessoryViewPosition : incomingAccessoryViewPosition
