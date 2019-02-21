@@ -82,6 +82,13 @@ To integrate MessageKit using Carthage, add the following to your `Cartfile`:
 github "MessageKit/MessageKit"
 ````
 
+## Getting Started
+
+Please have a look at the [Quick Start guide](https://github.com/MessageKit/MessageKit/blob/master/Documentation/QuickStart.md), the [FAQs](https://github.com/MessageKit/MessageKit/blob/master/Documentation/FAQs.md) and the [MessageInputBar docs](https://github.com/MessageKit/MessageKit/blob/master/Documentation/MessageInputBar.md).
+
+If you have any issues have a look at the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project or write a question with the "messagekit" tag on [Stack Overflow](https://stackoverflow.com/questions/tagged/messagekit).
+
+
 ## Requirements
 
 - **iOS9** or later
