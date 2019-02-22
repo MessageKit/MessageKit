@@ -28,14 +28,14 @@ import AVFoundation
 /// A subclass of `MessageContentCell` used to display video and audio messages.
 open class AudioMessageCell: MessageContentCell {
 
-    /// The `ImageName` enum holds the names od default iamges used to decorate play button
+    /// The `ImageName` enum holds the names of default iamges used to decorate play button
     public enum ImageName: String {
         case play
         case pause
     }
 
     /// The play button view to display on audio messages.
-    open lazy var playButton: UIButton = {
+    public lazy var playButton: UIButton = {
         let playButton = UIButton(type: .custom)
         let playImage = AudioMessageCell.getImageWithName(.play)
         let pauseImage = AudioMessageCell.getImageWithName(.pause)
@@ -45,7 +45,7 @@ open class AudioMessageCell: MessageContentCell {
     }()
 
     /// The time duration lable to display on audio messages.
-    open lazy var durationLabel: UILabel = {
+    public lazy var durationLabel: UILabel = {
         let durationLabel = UILabel(frame: CGRect.zero)
         durationLabel.textAlignment = .right
         durationLabel.font = UIFont.systemFont(ofSize: 14)
@@ -53,7 +53,7 @@ open class AudioMessageCell: MessageContentCell {
         return durationLabel
     }()
 
-    open lazy var progressView: UIProgressView = {
+    public lazy var progressView: UIProgressView = {
         let progressView = UIProgressView(progressViewStyle: .default)
         progressView.progress = 0.0
         return progressView
@@ -109,41 +109,35 @@ open class AudioMessageCell: MessageContentCell {
 
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
-        configureCellApperance(with: message, indexPath: indexPath, messagesCollectionView: messagesCollectionView)
-        
-        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError(MessageKitError.nilMessagesDisplayDelegate)
-        }
-        // default implementation for decorate cell
-        guard case let .audio(audioItem) = message.kind else { fatalError("Failed decorate audio cell") }
-        durationLabel.text = displayDelegate.audioProgressTextFormat(audioItem.duration, for: self, in: messagesCollectionView)
-        progressView.progress = 0.0
-        playButton.isSelected = false
-        // call configure delegate for fourther config
-        displayDelegate.configureAudioCell(self, message: message)
-    }
 
-    private func configureCellApperance(with message: MessageType, indexPath: IndexPath, messagesCollectionView: MessagesCollectionView) {
-        // modify elements constrains based on message direction (incoming or outgoing)
         guard let dataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
-        let playButtonLeftConstrain = messageContainerView.constraints.filter({ $0.identifier == "left" }).first
-        let durationLabelRightConstrain = messageContainerView.constraints.filter({ $0.identifier == "right" }).first
-        if dataSource.isFromCurrentSender(message: message) == false { // outgoing message
-            playButtonLeftConstrain?.constant = 12
-            durationLabelRightConstrain?.constant = -8
-        } else { // incoming message
-            playButtonLeftConstrain?.constant = 5
-            durationLabelRightConstrain?.constant = -15
+
+        let playButtonLeftConstraint = messageContainerView.constraints.filter { $0.identifier == "left" }.first
+        let durationLabelRightConstraint = messageContainerView.constraints.filter { $0.identifier == "right" }.first
+
+        if !dataSource.isFromCurrentSender(message: message) {
+            playButtonLeftConstraint?.constant = 12
+            durationLabelRightConstraint?.constant = -8
+        } else {
+            playButtonLeftConstraint?.constant = 5
+            durationLabelRightConstraint?.constant = -15
         }
+
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
             fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
+
         let tintColor = displayDelegate.audioTintColor(for: message, at: indexPath, in: messagesCollectionView)
         playButton.imageView?.tintColor = tintColor
         durationLabel.textColor = tintColor
         progressView.tintColor = tintColor
-    }
 
+        displayDelegate.configureAudioCell(self, message: message)
+
+        if case let .audio(audioItem) = message.kind {
+            durationLabel.text = displayDelegate.audioProgressTextFormat(audioItem.duration, for: self, in: messagesCollectionView)
+        }
+    }
 }
