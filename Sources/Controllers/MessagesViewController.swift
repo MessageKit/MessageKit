@@ -71,11 +71,11 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         }
     }
 
+    public var selectedIndexPathForMenu: IndexPath?
+
     private var isFirstLayout: Bool = true
     
     internal var isMessagesControllerBeingDismissed: Bool = false
-
-    internal var selectedIndexPathForMenu: IndexPath?
 
     internal var messageCollectionViewBottomInset: CGFloat = 0 {
         didSet {
