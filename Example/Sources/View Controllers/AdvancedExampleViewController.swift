@@ -25,7 +25,7 @@
 import UIKit
 import MapKit
 import MessageKit
-import MessageInputBar
+import InputBarAccessoryView
 
 final class AdvancedExampleViewController: ChatViewController {
         
@@ -133,7 +133,7 @@ final class AdvancedExampleViewController: ChatViewController {
         messageInputBar.sendButton.image = #imageLiteral(resourceName: "ic_up")
         messageInputBar.sendButton.title = nil
         messageInputBar.sendButton.imageView?.layer.cornerRadius = 16
-        messageInputBar.textViewPadding.right = -38
+        messageInputBar.middleContentViewPadding.right = -38
         let charCountButton = InputBarButtonItem()
             .configure {
                 $0.title = "0/140"
@@ -144,15 +144,15 @@ final class AdvancedExampleViewController: ChatViewController {
             }.onTextViewDidChange { (item, textView) in
                 item.title = "\(textView.text.count)/140"
                 let isOverLimit = textView.text.count > 140
-                item.messageInputBar?.shouldManageSendButtonEnabledState = !isOverLimit // Disable automated management when over limit
+                item.inputBarAccessoryView?.shouldManageSendButtonEnabledState = !isOverLimit // Disable automated management when over limit
                 if isOverLimit {
-                    item.messageInputBar?.sendButton.isEnabled = false
+                    item.inputBarAccessoryView?.sendButton.isEnabled = false
                 }
                 let color = isOverLimit ? .red : UIColor(white: 0.6, alpha: 1)
                 item.setTitleColor(color, for: .normal)
         }
         let bottomItems = [makeButton(named: "ic_at"), makeButton(named: "ic_hashtag"), makeButton(named: "ic_library"), .flexibleSpace, charCountButton]
-        messageInputBar.textViewPadding.bottom = 8
+        messageInputBar.middleContentViewPadding.bottom = 8
         messageInputBar.setStackViewItems(bottomItems, forStack: .bottom, animated: false)
 
         // This just adds some more flare

@@ -119,9 +119,9 @@ internal struct MockMessage: MessageType {
         self.init(kind: .emoji(emoji), user: user, messageId: messageId, date: date)
     }
 
-    init(audioURL: URL, sender: Sender, messageId: String, date: Date) {
+    init(audioURL: URL, user: MockUser, messageId: String, date: Date) {
         let audioItem = MockAudiotem(url: audioURL)
-        self.init(kind: .audio(audioItem), sender: sender, messageId: messageId, date: date)
+        self.init(kind: .audio(audioItem), user: user, messageId: messageId, date: date)
     }
 
 }

@@ -36,7 +36,8 @@
 		1FF377AC20087DA2004FD648 /* MessagesViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */; };
 		382C794221705D2000F4FAF5 /* HorizontalEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382C794121705D2000F4FAF5 /* HorizontalEdgeInsets.swift */; };
 		383B9EB121728BAD008AB91A /* SenderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B9EB021728BAD008AB91A /* SenderType.swift */; };
-		38C2AE7C20D4878D00F8079E /* MessageInputBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38C2AE7B20D4878D00F8079E /* MessageInputBar.framework */; };
+		38A2230F221FB8A300D14DAF /* MessageInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A2230E221FB8A300D14DAF /* MessageInputBar.swift */; };
+		38A223112223493500D14DAF /* InputBarAccessoryView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38A223102223493400D14DAF /* InputBarAccessoryView.framework */; };
 		38F8062F2173CD8F00CDB9DB /* MockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F8062D2173CD4300CDB9DB /* MockUser.swift */; };
 		5073C1152175BE750040EAD5 /* AudioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5073C1142175BE750040EAD5 /* AudioItem.swift */; };
 		5073C1192175BE960040EAD5 /* AudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5073C1182175BE950040EAD5 /* AudioMessageCell.swift */; };
@@ -137,6 +138,8 @@
 		1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Keyboard.swift"; sourceTree = "<group>"; };
 		382C794121705D2000F4FAF5 /* HorizontalEdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalEdgeInsets.swift; sourceTree = "<group>"; };
 		383B9EB021728BAD008AB91A /* SenderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderType.swift; sourceTree = "<group>"; };
+		38A2230E221FB8A300D14DAF /* MessageInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBar.swift; sourceTree = "<group>"; };
+		38A223102223493400D14DAF /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputBarAccessoryView.framework; path = Carthage/Build/iOS/InputBarAccessoryView.framework; sourceTree = "<group>"; };
 		38C2AE7B20D4878D00F8079E /* MessageInputBar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageInputBar.framework; path = Carthage/Build/iOS/MessageInputBar.framework; sourceTree = "<group>"; };
 		38F8062D2173CD4300CDB9DB /* MockUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUser.swift; sourceTree = "<group>"; };
 		5073C1142175BE750040EAD5 /* AudioItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioItem.swift; sourceTree = "<group>"; };
@@ -197,7 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38C2AE7C20D4878D00F8079E /* MessageInputBar.framework in Frameworks */,
+				38A223112223493500D14DAF /* InputBarAccessoryView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +220,7 @@
 		1F7FC8C21FD26F22006CC979 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				38A223102223493400D14DAF /* InputBarAccessoryView.framework */,
 				38C2AE7B20D4878D00F8079E /* MessageInputBar.framework */,
 				1F7FC8C71FD26F49006CC979 /* Nimble.framework */,
 				1F7FC8C51FD26F33006CC979 /* Quick.framework */,
@@ -465,6 +469,7 @@
 				B7A03F711F866A06006AEF79 /* Info.plist */,
 				B7A03F721F866A06006AEF79 /* MessageKit.h */,
 				B7A03F701F866A06006AEF79 /* MessageKit+Availability.swift */,
+				38A2230E221FB8A300D14DAF /* MessageInputBar.swift */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -614,6 +619,7 @@
 				383B9EB121728BAD008AB91A /* SenderType.swift in Sources */,
 				B7A03F3A1F866946006AEF79 /* TextMessageCell.swift in Sources */,
 				B7A03F191F86682C006AEF79 /* MessagesCollectionViewLayoutAttributes.swift in Sources */,
+				38A2230F221FB8A300D14DAF /* MessageInputBar.swift in Sources */,
 				B7A03F461F86694F006AEF79 /* AvatarView.swift in Sources */,
 				1FCA6D30201C1CC900BC3480 /* UIEdgeInsets+Extensions.swift in Sources */,
 				B7A03F3D1F866946006AEF79 /* MediaMessageCell.swift in Sources */,

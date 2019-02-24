@@ -150,7 +150,7 @@ final internal class SampleData {
         return messageType
     }
 
-    func randomMessage(allowedSenders: [Sender]) -> MockMessage {
+    func randomMessage(allowedSenders: [MockUser]) -> MockMessage {
 
         let randomNumberSender = Int(arc4random_uniform(UInt32(allowedSenders.count)))
         
@@ -161,35 +161,35 @@ final internal class SampleData {
         switch randomMessageType() {
         case .Text:
             let randomSentence = Lorem.sentence()
-            return MockMessage(text: randomSentence, sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date)
         case .AttributedText:
             let randomSentence = Lorem.sentence()
             let attributedText = attributedString(with: randomSentence)
-            return MockMessage(attributedText: attributedText, sender: senders[randomNumberSender], messageId: uniqueID, date: date)
+            return MockMessage(attributedText: attributedText, user: user, messageId: uniqueID, date: date)
         case .Photo:
             let randomNumberImage = Int(arc4random_uniform(UInt32(messageImages.count)))
             let image = messageImages[randomNumberImage]
-            return MockMessage(image: image, sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(image: image, user: user, messageId: uniqueID, date: date)
         case .Video:
             let randomNumberImage = Int(arc4random_uniform(UInt32(messageImages.count)))
             let image = messageImages[randomNumberImage]
-            return MockMessage(thumbnail: image, sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(thumbnail: image, user: user, messageId: uniqueID, date: date)
         case .Audio:
             let randomNumberSound = Int(arc4random_uniform(UInt32(sounds.count)))
             let soundURL = sounds[randomNumberSound]
-            return MockMessage(audioURL: soundURL, sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(audioURL: soundURL, user: user, messageId: uniqueID, date: date)
         case .Emoji:
             let randomNumberEmoji = Int(arc4random_uniform(UInt32(emojis.count)))
-            return MockMessage(emoji: emojis[randomNumberEmoji], sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(emoji: emojis[randomNumberEmoji], user: user, messageId: uniqueID, date: date)
         case .Location:
             let randomNumberLocation = Int(arc4random_uniform(UInt32(locations.count)))
-            return MockMessage(location: locations[randomNumberLocation], sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(location: locations[randomNumberLocation], user: user, messageId: uniqueID, date: date)
         case .Url:
-            return MockMessage(text: "https://github.com/MessageKit", sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(text: "https://github.com/MessageKit", user: user, messageId: uniqueID, date: date)
         case .Phone:
-            return MockMessage(text: "123-456-7890", sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(text: "123-456-7890", user: user, messageId: uniqueID, date: date)
         case .Custom:
-            return MockMessage(custom: "Someone left the conversation", sender: system, messageId: uniqueID, date: date)
+            return MockMessage(custom: "Someone left the conversation", user: system, messageId: uniqueID, date: date)
         }
     }
 

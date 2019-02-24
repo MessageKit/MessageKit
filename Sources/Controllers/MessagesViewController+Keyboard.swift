@@ -23,7 +23,7 @@
  */
 
 import Foundation
-import MessageInputBar
+import InputBarAccessoryView
 
 extension MessagesViewController {
 
