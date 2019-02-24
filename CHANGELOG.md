@@ -4,9 +4,13 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## 3.0.0
 
+### Dependency Changes
+
+- **Breaking Change** The dependency `MessageInputBar` was replaced with `InputBarAccessoryView`. As `MessageInputBar` was previously a fork this means no functionality has been lost but improvements and bug fixes will be present. `InputBarAccessoryView` has more of a following outside of `MessageKit` making its development faster than `MessageInputBar`. Maintaining two versions only increased the workload. You can find the changelog for `InputBarAccessoryView` [here](https://github.com/nathantannar4/InputBarAccessoryView/blob/master/CHANGELOG.md).
+
 ### Changed
 
-- **Breaking Change** Deprecated the Sender struct in favor of the `SenderType` protocol.
+- **Breaking Change** Deprecated the Sender struct in favor of the `SenderType` protocol. [#909](https://github.com/MessageKit/MessageKit/pull/909) by [@nathantannar4](https://github.com/nathantannar4)
 
 - **Breaking Change**  Add support for audio messages [#892](https://github.com/MessageKit/MessageKit/pull/892) by [@moldovaniosif](https://github.com/moldovaniosif).  Added new protocols `AudioControllerDelegate`, `AudioItem` a new cell  `AudioMessageCell` and a new controller `BasicAudioController`. 
 
