@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -146,6 +146,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     lazy open var photoMessageSizeCalculator = MediaMessageSizeCalculator(layout: self)
     lazy open var videoMessageSizeCalculator = MediaMessageSizeCalculator(layout: self)
     lazy open var locationMessageSizeCalculator = LocationMessageSizeCalculator(layout: self)
+    lazy open var audioMessageSizeCalculator = AudioMessageSizeCalculator(layout: self)
 
     /// - Note:
     ///   If you override this method, remember to call MessageLayoutDelegate's customCellSizeCalculator(for:at:in:) method for MessageKind.custom messages, if necessary
@@ -164,6 +165,8 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             return videoMessageSizeCalculator
         case .location:
             return locationMessageSizeCalculator
+        case .audio:
+            return audioMessageSizeCalculator
         case .custom:
             return messagesLayoutDelegate.customCellSizeCalculator(for: message, at: indexPath, in: messagesCollectionView)
         }
@@ -193,6 +196,11 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     public func setMessageOutgoingAvatarPosition(_ newPosition: AvatarPosition) {
         messageSizeCalculators().forEach { $0.outgoingAvatarPosition = newPosition }
     }
+
+    /// Set `avatarLeadingTrailingPadding` of all `MessageSizeCalculator`s
+    public func setAvatarLeadingTrailingPadding(_ newPadding: CGFloat) {
+        messageSizeCalculators().forEach { $0.avatarLeadingTrailingPadding = newPadding }
+    }
     
     /// Set `incomingMessagePadding` of all `MessageSizeCalculator`s
     public func setMessageIncomingMessagePadding(_ newPadding: UIEdgeInsets) {
@@ -212,6 +220,16 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     /// Set `outgoingCellTopLabelAlignment` of all `MessageSizeCalculator`s
     public func setMessageOutgoingCellTopLabelAlignment(_ newAlignment: LabelAlignment) {
         messageSizeCalculators().forEach { $0.outgoingCellTopLabelAlignment = newAlignment }
+    }
+    
+    /// Set `incomingCellBottomLabelAlignment` of all `MessageSizeCalculator`s
+    public func setMessageIncomingCellBottomLabelAlignment(_ newAlignment: LabelAlignment) {
+        messageSizeCalculators().forEach { $0.incomingCellBottomLabelAlignment = newAlignment }
+    }
+    
+    /// Set `outgoingCellBottomLabelAlignment` of all `MessageSizeCalculator`s
+    public func setMessageOutgoingCellBottomLabelAlignment(_ newAlignment: LabelAlignment) {
+        messageSizeCalculators().forEach { $0.outgoingCellBottomLabelAlignment = newAlignment }
     }
     
     /// Set `incomingMessageTopLabelAlignment` of all `MessageSizeCalculator`s
@@ -266,7 +284,14 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     /// Get all `MessageSizeCalculator`s
     open func messageSizeCalculators() -> [MessageSizeCalculator] {
-        return [textMessageSizeCalculator, attributedTextMessageSizeCalculator, emojiMessageSizeCalculator, photoMessageSizeCalculator, videoMessageSizeCalculator, locationMessageSizeCalculator]
+        return [textMessageSizeCalculator,
+                attributedTextMessageSizeCalculator,
+                emojiMessageSizeCalculator,
+                photoMessageSizeCalculator,
+                videoMessageSizeCalculator,
+                locationMessageSizeCalculator,
+                audioMessageSizeCalculator
+        ]
     }
     
 }

@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,6 @@
  */
 
 import UIKit
-import MessageInputBar
 
 /// A subclass of `UIViewController` with a `MessagesCollectionView` object
 /// that is used to display conversation interfaces.
@@ -71,11 +70,11 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         }
     }
 
+    public var selectedIndexPathForMenu: IndexPath?
+
     private var isFirstLayout: Bool = true
     
     internal var isMessagesControllerBeingDismissed: Bool = false
-
-    internal var selectedIndexPathForMenu: IndexPath?
 
     internal var messageCollectionViewBottomInset: CGFloat = 0 {
         didSet {
@@ -119,6 +118,13 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
         }
         adjustScrollViewTopInset()
+    }
+
+    open override func viewSafeAreaInsetsDidChange() {
+        if #available(iOS 11.0, *) {
+            super.viewSafeAreaInsetsDidChange()
+        }
+        messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
     }
 
     // MARK: - Initializers
@@ -206,6 +212,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             return cell
         case .location:
             let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .audio:
+            let cell = messagesCollectionView.dequeueReusableCell(AudioMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         case .custom:

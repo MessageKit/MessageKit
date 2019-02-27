@@ -24,7 +24,6 @@
 
 import UIKit
 import MessageKit
-import MessageInputBar
 
 final internal class SettingsViewController: UITableViewController {
 
@@ -34,7 +33,7 @@ final internal class SettingsViewController: UITableViewController {
         return .lightContent
     }
     
-    let cells = ["Mock messages count", "Text Messages", "AttributedText Messages", "Photo Messages", "Video Messages", "Emoji Messages", "Location Messages", "Url Messages", "Phone Messages"]
+    let cells = ["Mock messages count", "Text Messages", "AttributedText Messages", "Photo Messages", "Video Messages", "Audio Messages", "Emoji Messages", "Location Messages", "Url Messages", "Phone Messages"]
     
     // MARK: - Picker
     

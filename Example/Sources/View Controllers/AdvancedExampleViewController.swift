@@ -25,7 +25,7 @@
 import UIKit
 import MapKit
 import MessageKit
-import MessageInputBar
+import InputBarAccessoryView
 
 final class AdvancedExampleViewController: ChatViewController {
         
@@ -135,7 +135,7 @@ final class AdvancedExampleViewController: ChatViewController {
         messageInputBar.sendButton.image = #imageLiteral(resourceName: "ic_up")
         messageInputBar.sendButton.title = nil
         messageInputBar.sendButton.imageView?.layer.cornerRadius = 16
-        messageInputBar.textViewPadding.right = -38
+        messageInputBar.middleContentViewPadding.right = -38
         let charCountButton = InputBarButtonItem()
             .configure {
                 $0.title = "0/140"
@@ -146,15 +146,15 @@ final class AdvancedExampleViewController: ChatViewController {
             }.onTextViewDidChange { (item, textView) in
                 item.title = "\(textView.text.count)/140"
                 let isOverLimit = textView.text.count > 140
-                item.messageInputBar?.shouldManageSendButtonEnabledState = !isOverLimit // Disable automated management when over limit
+                item.inputBarAccessoryView?.shouldManageSendButtonEnabledState = !isOverLimit // Disable automated management when over limit
                 if isOverLimit {
-                    item.messageInputBar?.sendButton.isEnabled = false
+                    item.inputBarAccessoryView?.sendButton.isEnabled = false
                 }
                 let color = isOverLimit ? .red : UIColor(white: 0.6, alpha: 1)
                 item.setTitleColor(color, for: .normal)
         }
         let bottomItems = [makeButton(named: "ic_at"), makeButton(named: "ic_hashtag"), makeButton(named: "ic_library"), .flexibleSpace, charCountButton]
-        messageInputBar.textViewPadding.bottom = 8
+        messageInputBar.middleContentViewPadding.bottom = 8
         messageInputBar.setStackViewItems(bottomItems, forStack: .bottom, animated: false)
 
         // This just adds some more flare
@@ -178,12 +178,12 @@ final class AdvancedExampleViewController: ChatViewController {
     
     func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
         guard indexPath.section - 1 >= 0 else { return false }
-        return messageList[indexPath.section].sender == messageList[indexPath.section - 1].sender
+        return messageList[indexPath.section].user == messageList[indexPath.section - 1].user
     }
     
     func isNextMessageSameSender(at indexPath: IndexPath) -> Bool {
         guard indexPath.section + 1 < messageList.count else { return false }
-        return messageList[indexPath.section].sender == messageList[indexPath.section + 1].sender
+        return messageList[indexPath.section].user == messageList[indexPath.section + 1].user
     }
     
     func setTypingIndicatorHidden(_ isHidden: Bool, performUpdates updates: (() -> Void)? = nil) {
@@ -366,6 +366,16 @@ extension AdvancedExampleViewController: MessagesDisplayDelegate {
         return LocationMessageSnapshotOptions(showsBuildings: true, showsPointsOfInterest: true, span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
     }
 
+    // MARK: - Audio Messages
+
+    func audioTintColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return self.isFromCurrentSender(message: message) ? .white : UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+    }
+
+    func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {
+        audioController.configureAudioCell(cell, message: message) // this is needed especily when the cell is reconfigure while is playing sound
+    }
+    
 }
 
 // MARK: - MessagesLayoutDelegate

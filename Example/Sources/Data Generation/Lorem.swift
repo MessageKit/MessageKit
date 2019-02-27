@@ -108,7 +108,7 @@ public class Lorem {
             return ""
         }
         
-        let result: String = self.words(nbWords: variable ? nbWords.randomize(variation: 40) : nbWords)
+        let result: String = words(nbWords: variable ? nbWords.randomize(variation: 40) : nbWords)
         
         return result.firstCapitalized + "."
     }
