@@ -142,15 +142,12 @@
 		38A2230E221FB8A300D14DAF /* MessageInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBar.swift; sourceTree = "<group>"; };
 		38A223102223493400D14DAF /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputBarAccessoryView.framework; path = Carthage/Build/iOS/InputBarAccessoryView.framework; sourceTree = "<group>"; };
 		38C2AE7B20D4878D00F8079E /* MessageInputBar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageInputBar.framework; path = Carthage/Build/iOS/MessageInputBar.framework; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		4C508648221C0BBA0043943C /* AccessoryPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryPosition.swift; sourceTree = "<group>"; };
-=======
 		38F8062D2173CD4300CDB9DB /* MockUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUser.swift; sourceTree = "<group>"; };
 		5073C1142175BE750040EAD5 /* AudioItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioItem.swift; sourceTree = "<group>"; };
 		5073C1182175BE950040EAD5 /* AudioMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioMessageCell.swift; sourceTree = "<group>"; };
 		5073C11C2175BEC60040EAD5 /* AudioMessageSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioMessageSizeCalculator.swift; sourceTree = "<group>"; };
 		5073C1222175C1980040EAD5 /* sound1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound1.m4a; sourceTree = "<group>"; };
->>>>>>> upstream/3.0.0-beta
 		88916B221CF0DF2F00469F91 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88916B2C1CF0DF2F00469F91 /* MessageKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessageKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitDateFormatterTests.swift; sourceTree = "<group>"; };
