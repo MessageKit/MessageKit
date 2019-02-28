@@ -51,7 +51,6 @@ final class MessagesViewControllerSpec: QuickSpec {
                 }
                 it("sets inputAccessoryView to the messageInputBar") {
                     expect(controller.inputAccessoryView).toNot(beNil())
-                    expect(controller.inputAccessoryView is MessageInputBar).to(beTrue())
                 }
                 it("has a MessagesCollectionView") {
                     expect(controller.messagesCollectionView).toNot(beNil())

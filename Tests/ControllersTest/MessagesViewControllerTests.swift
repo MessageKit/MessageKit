@@ -173,7 +173,7 @@ class MessagesViewControllerTests: XCTestCase {
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages.append(MockMessage(audioURL: URL.init(fileURLWithPath: ""),
                                                        duration: 4.0,
-                                                       sender: messagesDataSource.senders[0],
+                                                       user: messagesDataSource.senders[0],
                                                        messageId: "test_id"))
 
         sut.messagesCollectionView.reloadData()

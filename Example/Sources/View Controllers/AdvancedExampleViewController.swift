@@ -100,9 +100,11 @@ final class AdvancedExampleViewController: ChatViewController {
         
         layout?.setMessageIncomingAccessoryViewSize(CGSize(width: 30, height: 30))
         layout?.setMessageIncomingAccessoryViewPadding(HorizontalEdgeInsets(left: 8, right: 0))
+        layout?.setMessageIncomingAccessoryViewPosition(.messageBottom)
         layout?.setMessageOutgoingAccessoryViewSize(CGSize(width: 30, height: 30))
         layout?.setMessageOutgoingAccessoryViewPadding(HorizontalEdgeInsets(left: 0, right: 8))
-        
+        layout?.setMessageOutgoingAccessoryViewPosition(.messageBottom)
+
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
     }
@@ -326,7 +328,11 @@ extension AdvancedExampleViewController: MessagesDisplayDelegate {
     func configureAccessoryView(_ accessoryView: UIView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         // Cells are reused, so only add a button here once. For real use you would need to
         // ensure any subviews are removed if not needed
-        guard accessoryView.subviews.isEmpty else { return }
+        
+        // The following code doesn't work properly. Use forEach method instead.
+        // guard accessoryView.subviews.isEmpty else { return } // not working
+        accessoryView.subviews.forEach{$0.removeFromSuperview()} // works
+
         let button = UIButton(type: .infoLight)
         button.tintColor = .primaryColor
         accessoryView.addSubview(button)
