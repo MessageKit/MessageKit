@@ -62,6 +62,18 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return collectionView.frame.width - sectionInset.left - sectionInset.right
     }
 
+    open override var collectionViewContentSize: CGSize {
+        let size = super.collectionViewContentSize
+
+        guard !isTypingIndicatorViewHidden, let delegate = messagesCollectionView.messagesLayoutDelegate else { return size }
+        let typingIndicatorSize = delegate.typingIndicatorViewSize(in: messagesCollectionView)
+        let inset = delegate.typingIndicatorViewTopInset(in: messagesCollectionView) + 5
+        return CGSize(
+            width: size.width,
+            height: size.height + typingIndicatorSize.height + inset
+        )
+    }
+
     public private(set) var isTypingIndicatorViewHidden: Bool = true
 
     // MARK: - Initializers
@@ -109,22 +121,19 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         isTypingIndicatorViewHidden = isHidden
 
         let ctx = UICollectionViewFlowLayoutInvalidationContext()
-        ctx.invalidateSupplementaryElements(ofKind: MessagesCollectionView.elementKindTypingIndicator, at: [indexPathForTypingIndicatorView()])
+        ctx.invalidateSupplementaryElements(
+            ofKind: MessagesCollectionView.elementKindTypingIndicator,
+            at: [indexPathForTypingIndicatorView()]
+        )
 
         if animated {
             messagesCollectionView.performBatchUpdates({ [weak self] in
-                self?.invalidateLayout(with: ctx)
                 updates?()
-                }, completion: { [weak self] success in
-                    if success {
-                        self?.adjustBottomInsetForTypingIndicatorView()
-                    }
-                    completion?(success)
-            })
+                self?.invalidateLayout(with: ctx)
+            }, completion: completion)
         } else {
             updates?()
             invalidateLayout(with: ctx)
-            adjustBottomInsetForTypingIndicatorView()
             completion?(true)
         }
     }
