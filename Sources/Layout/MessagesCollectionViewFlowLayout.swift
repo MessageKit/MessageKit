@@ -188,7 +188,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             if let itemAttributes = layoutAttributesForItem(at: indexPath) {
                 attributes.frame = CGRect(x: itemAttributes.frame.origin.x,
                                           y: itemAttributes.frame.maxY + inset,
-                                          width:  size.width,
+                                          width: size.width,
                                           height: size.height)
             }
             return attributes
