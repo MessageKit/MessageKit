@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2017-2018 MessageKit
+Copyright (c) 2017-2019 MessageKit
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -112,6 +112,10 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         messageInputBar.delegate = self
         messageInputBar.inputTextView.tintColor = .primaryColor
         messageInputBar.sendButton.setTitleColor(.primaryColor, for: .normal)
+        messageInputBar.sendButton.setTitleColor(
+            UIColor.primaryColor.withAlphaComponent(0.3),
+            for: .highlighted
+        )
     }
     
     // MARK: - Helpers

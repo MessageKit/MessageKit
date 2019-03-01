@@ -134,7 +134,7 @@ public extension MessagesLayoutDelegate {
     }
 
     func typingIndicatorViewSize(in messagesCollectionView: MessagesCollectionView) -> CGSize {
-        return CGSize(width: messagesCollectionView.bounds.width, height: 52)
+        return CGSize(width: messagesCollectionView.bounds.width, height: 48)
     }
 
     func typingIndicatorViewTopInset(in messagesCollectionView: MessagesCollectionView) -> CGFloat {

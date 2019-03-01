@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ open class TypingIndicator: UIView {
     // MARK: - Properties
     
     /// The offset that each dot will transform by during the bounce animation
-    open var bounceOffset: CGFloat = 2.5
+    public var bounceOffset: CGFloat = 2.5
     
     /// A convenience accessor for the `backgroundColor` of each dot
     open var dotColor: UIColor = UIColor.lightGray {
@@ -40,10 +40,10 @@ open class TypingIndicator: UIView {
     }
     
     /// A flag that determines if the bounce animation is added in `startAnimating()`
-    open var isBounceEnabled: Bool = false
+    public var isBounceEnabled: Bool = false
     
     /// A flag that determines if the opacity animation is added in `startAnimating()`
-    open var isFadeEnabled: Bool = true
+    public var isFadeEnabled: Bool = true
     
     /// A flag indicating the animation state
     public private(set) var isAnimating: Bool = false

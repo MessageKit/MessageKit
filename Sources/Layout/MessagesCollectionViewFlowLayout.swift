@@ -108,9 +108,12 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         guard isTypingIndicatorViewHidden != isHidden else { return }
         isTypingIndicatorViewHidden = isHidden
 
+        let ctx = UICollectionViewFlowLayoutInvalidationContext()
+        ctx.invalidateSupplementaryElements(ofKind: MessagesCollectionView.elementKindTypingIndicator, at: [indexPathForTypingIndicatorView()])
+
         if animated {
             messagesCollectionView.performBatchUpdates({ [weak self] in
-                self?.invalidateLayout()
+                self?.invalidateLayout(with: ctx)
                 updates?()
                 }, completion: { [weak self] success in
                     if success {
@@ -120,7 +123,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             })
         } else {
             updates?()
-            invalidateLayout()
+            invalidateLayout(with: ctx)
             adjustBottomInsetForTypingIndicatorView()
             completion?(true)
         }
@@ -178,7 +181,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
                                           y: itemAttributes.frame.maxY + inset,
                                           width:  size.width,
                                           height: size.height)
-                attributes.zIndex = 1
             }
             return attributes
         default:
@@ -189,6 +191,11 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     public func shouldDisplayTypingIndicatorView(at indexPath: IndexPath) -> Bool {
         let isLastIndexPath = indexPath.section == messagesCollectionView.numberOfSections - 1
         return isLastIndexPath && !isTypingIndicatorViewHidden
+    }
+
+    private func indexPathForTypingIndicatorView() -> IndexPath {
+        let section = messagesCollectionView.numberOfSections - 2
+        return IndexPath(row: 0, section: max(section, 0))
     }
 
     // MARK: - Layout Invalidation
@@ -207,6 +214,20 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     @objc
     private func handleOrientationChange(_ notification: Notification) {
         invalidateLayout()
+    }
+
+    open override func indexPathsToInsertForSupplementaryView(ofKind elementKind: String) -> [IndexPath] {
+        guard elementKind == MessagesCollectionView.elementKindTypingIndicator else {
+            return super.indexPathsToInsertForSupplementaryView(ofKind: elementKind)
+        }
+        return [indexPathForTypingIndicatorView()]
+    }
+
+    open override func indexPathsToDeleteForSupplementaryView(ofKind elementKind: String) -> [IndexPath] {
+        guard elementKind == MessagesCollectionView.elementKindTypingIndicator else {
+            return super.indexPathsToDeleteForSupplementaryView(ofKind: elementKind)
+        }
+        return [indexPathForTypingIndicatorView()]
     }
 
     // MARK: - Cell Sizing
