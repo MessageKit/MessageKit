@@ -24,6 +24,7 @@ SOFTWARE.
 
 import UIKit
 import MessageKit
+import InputBarAccessoryView
 
 /// A base class for the example controllers
 class ChatViewController: MessagesViewController, MessagesDataSource {
@@ -110,7 +111,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     func configureMessageInputBar() {
         messageInputBar.delegate = self
         messageInputBar.inputTextView.tintColor = .primaryColor
-        messageInputBar.sendButton.tintColor = .primaryColor
+        messageInputBar.sendButton.setTitleColor(.primaryColor, for: .normal)
     }
     
     // MARK: - Helpers
@@ -277,10 +278,10 @@ extension ChatViewController: MessageLabelDelegate {
 
 // MARK: - MessageInputBarDelegate
 
-extension ChatViewController: MessageInputBarDelegate {
-    
-    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-          
+extension ChatViewController: InputBarAccessoryViewDelegate {
+
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+
         for component in inputBar.inputTextView.components {
 
             let user = SampleData.shared.currentSender
@@ -291,10 +292,9 @@ extension ChatViewController: MessageInputBarDelegate {
                 let message = MockMessage(image: img, user: user, messageId: UUID().uuidString, date: Date())
                 insertMessage(message)
             }
-            
+
         }
         inputBar.inputTextView.text = String()
         messagesCollectionView.scrollToBottom(animated: true)
     }
-
 }
