@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -65,7 +65,7 @@ extension UIView {
     }
 
     @discardableResult
-    internal func addConstraints(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightConstant: CGFloat = 0, widthConstant: CGFloat = 0, heightConstant: CGFloat = 0) -> [NSLayoutConstraint] {
+    internal func addConstraints(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, centerY: NSLayoutYAxisAnchor? = nil, centerX: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightConstant: CGFloat = 0, centerYConstant: CGFloat = 0, centerXConstant: CGFloat = 0, widthConstant: CGFloat = 0, heightConstant: CGFloat = 0) -> [NSLayoutConstraint] {
         
         if self.superview == nil {
             return []
@@ -95,6 +95,18 @@ extension UIView {
         if let right = right {
             let constraint = rightAnchor.constraint(equalTo: right, constant: -rightConstant)
             constraint.identifier = "right"
+            constraints.append(constraint)
+        }
+
+        if let centerY = centerY {
+            let constraint = centerYAnchor.constraint(equalTo: centerY, constant: centerYConstant)
+            constraint.identifier = "centerY"
+            constraints.append(constraint)
+        }
+
+        if let centerX = centerX {
+            let constraint = centerXAnchor.constraint(equalTo: centerX, constant: centerXConstant)
+            constraint.identifier = "centerX"
             constraints.append(constraint)
         }
         

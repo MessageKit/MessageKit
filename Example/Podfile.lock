@@ -1,30 +1,23 @@
 PODS:
-  - MessageInputBar (0.4.1):
-    - MessageInputBar/Core (= 0.4.1)
-  - MessageInputBar/Core (0.4.1)
-  - MessageKit (1.0.0):
-    - MessageInputBar/Core
+  - InputBarAccessoryView (4.2.1)
+  - MessageKit (3.0.0):
+    - InputBarAccessoryView
 
 DEPENDENCIES:
-  - MessageInputBar (from `https://github.com/MessageKit/MessageInputBar.git`, branch `master`)
   - MessageKit (from `../`)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - InputBarAccessoryView
+
 EXTERNAL SOURCES:
-  MessageInputBar:
-    :branch: master
-    :git: https://github.com/MessageKit/MessageInputBar.git
   MessageKit:
     :path: "../"
 
-CHECKOUT OPTIONS:
-  MessageInputBar:
-    :commit: faebe27f2dd8f39ea145e75b7296ef48133c099a
-    :git: https://github.com/MessageKit/MessageInputBar.git
-
 SPEC CHECKSUMS:
-  MessageInputBar: e81c7535347f1f7b923de7080409a535a004b6e4
-  MessageKit: 2bbd13dd6a7c06f42f2d13ed8871d1fe5383b477
+  InputBarAccessoryView: 37175becdced159cd9ea335f47ae001b1e112909
+  MessageKit: f291e31fbca3020e90f0e0507a8f087304ecd005
 
-PODFILE CHECKSUM: 04c1a805e1997e83bacab1a34787e71e9fe4432b
+PODFILE CHECKSUM: cecdb7bc8129cf99f66de9f68eea3256fec30c3d
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0

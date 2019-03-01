@@ -57,7 +57,7 @@ final class MessageContainerController: UIViewController {
         
         /// Add the `ConversationViewController` as a child view controller
         conversationViewController.willMove(toParent: self)
-        self.addChild(conversationViewController)
+        addChild(conversationViewController)
         view.addSubview(conversationViewController.view)
         conversationViewController.didMove(toParent: self)
         
