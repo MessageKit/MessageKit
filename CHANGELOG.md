@@ -135,7 +135,7 @@ classes that are responsible for sizing the `MessagesCollectionViewCell` types p
 ### Changed
 
 - **Breaking Change** Renamed `MessageData` enum to `MessageKind` and changed `MessageType`'s `data` property name to `kind`.
- [#658](https://github.com/MessageKit/MessageKit/658) by [@zhongwuzw](https://github.com/zhongwuzw).
+ [#658](https://github.com/MessageKit/MessageKit/pull/658) by [@zhongwuzw](https://github.com/zhongwuzw).
 
 - **Breaking Change** Changed the `messageFooterView(for:in)` and `messageHeaderView(for:in)` methods of
 `MessagesDisplayDelegate` by removing the `message` parameter.
