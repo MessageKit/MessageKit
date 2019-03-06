@@ -219,8 +219,15 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return isFromCurrentSender ? outgoingMessagePadding : incomingMessagePadding
     }
 
+    /// Size of the message container to the right of the avatar. Returns .zero by default.
+    ///
+    /// If you are using a custom cell and wish to keep the avatar, add your subviews
+    /// under `messageContainerView` and override this method. Otherwise, you can add your
+    /// subviews under `contentView` and override `sizeForItem(at:)`
+    ///
+    /// - Parameter message: The message object protocol
+    /// - Returns: Size of the message content container
     open func messageContainerSize(for message: MessageType) -> CGSize {
-        // Returns .zero by default
         return .zero
     }
 
