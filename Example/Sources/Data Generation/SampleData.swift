@@ -43,12 +43,11 @@ final internal class SampleData {
         case Url = 7
         case Phone = 8
         case Custom = 9
+        case ShareContact = 10
         
         static func random() -> MessageTypes {
-            // Update as new enumerations are added
-            let maxValue = Custom.rawValue
-            
-            let rand = arc4random_uniform(maxValue+1)
+            let maxValue = UInt32(MessageTypes.allCases.count)
+            let rand = arc4random_uniform(maxValue)
             return MessageTypes(rawValue: rand)!
         }
     }
@@ -59,6 +58,15 @@ final internal class SampleData {
     let wu = Sender(id: "000003", displayName: "Wu Zhong")
 
     lazy var senders = [nathan, steven, wu]
+    
+    lazy var contactsToShare = [
+        MockContactItem(firstName: "System"),
+        MockContactItem(firstName: "Nathan", lastName: "Tannar", emails: ["test@test.com"]),
+        MockContactItem(firstName: "Steven", lastName: "Deutsch", phoneNumbers: ["+1-202-555-0114", "+1-202-555-0145"]),
+        MockContactItem(firstName: "Wu", lastName: "Zhong", phoneNumbers: ["202-555-0158"]),
+        MockContactItem(phoneNumbers: ["+40 123 123"]),
+        MockContactItem(emails: ["test@test.com"])
+    ]
 
     var currentSender: Sender {
         return nathan
@@ -142,7 +150,7 @@ final internal class SampleData {
     
     func randomMessageType() -> MessageTypes {
         let messageType = MessageTypes.random()
-
+ 
         if !UserDefaults.standard.bool(forKey: "\(messageType)" + " Messages") {
             return randomMessageType()
         }
@@ -150,6 +158,7 @@ final internal class SampleData {
         return messageType
     }
 
+    // swiftlint:disable cyclomatic_complexity
     func randomMessage(allowedSenders: [Sender]) -> MockMessage {
 
         let randomNumberSender = Int(arc4random_uniform(UInt32(allowedSenders.count)))
@@ -190,10 +199,32 @@ final internal class SampleData {
             return MockMessage(text: "123-456-7890", sender: sender, messageId: uniqueID, date: date)
         case .Custom:
             return MockMessage(custom: "Someone left the conversation", sender: system, messageId: uniqueID, date: date)
+        case .ShareContact:
+            let randomContact = Int(arc4random_uniform(UInt32(contactsToShare.count)))
+            return MockMessage(contact: contactsToShare[randomContact], sender: sender, messageId: uniqueID, date: date)
         }
     }
+    // swiftlint:enable cyclomatic_complexity
 
     func getMessages(count: Int, completion: ([MockMessage]) -> Void) {
+//
+//        let firstContact = MockContactItem(firstName: "Quite a long name", lastName: "For testing purpose", phoneNumbers: ["0754324"])
+//        let secondContact = MockContactItem(firstName: "Steven", lastName: "Deutsch", emails: ["test@test.com"])
+//        let thirdContact = MockContactItem(phoneNumbers: ["+40 123 123"])
+//        let fourthContact = MockContactItem(emails: ["test@test.com"])
+//
+//        let contacts = [firstContact, secondContact, thirdContact, fourthContact]
+//        var messages = [MockMessage]()
+//        for contact in contacts {
+//            let randomNumberSender = Int(arc4random_uniform(UInt32(senders.count)))
+//            let sender = senders[randomNumberSender]
+//            let date = dateAddingRandomTime()
+//            let uniqueID = NSUUID().uuidString
+//            let message = MockMessage(contact: contact, sender: sender, messageId: uniqueID, date: date)
+//            messages.append(message)
+//        }
+//        completion(messages)
+        
         var messages: [MockMessage] = []
         // Disable Custom Messages
         UserDefaults.standard.set(false, forKey: "Custom Messages")
