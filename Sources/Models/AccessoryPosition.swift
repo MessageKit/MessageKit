@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2019 MessageKit
+ Copyright (c) 2017-2018 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,25 @@
 
 import Foundation
 
-extension UIColor {
-
-    internal static let incomingGray = UIColor(red: 230/255, green: 230/255, blue: 235/255, alpha: 1.0)
-
-    internal static let outgoingGreen = UIColor(red: 69/255, green: 214/255, blue: 93/255, alpha: 1.0)
-
-    internal static let inputBarGray = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
-
-    internal static let playButtonLightGray = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1.0)
-
-    internal static let sendButtonBlue = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
-
+/// Used to determine the `Horizontal` and `Vertical` position of
+// an `AccessoryView` in a `MessageCollectionViewCell`.
+public enum AccessoryPosition {
+    
+    /// Aligns the `AccessoryView`'s top edge to the cell's top edge.
+    case cellTop
+    
+    /// Aligns the `AccessoryView`'s top edge to the `messageTopLabel`'s top edge.
+    case messageLabelTop
+    
+    /// Aligns the `AccessoryView`'s top edge to the `MessageContainerView`'s top edge.
+    case messageTop
+    
+    /// Aligns the `AccessoryView` center to the `MessageContainerView` center.
+    case messageCenter
+    
+    /// Aligns the `AccessoryView`'s bottom edge to the `MessageContainerView`s bottom edge.
+    case messageBottom
+    
+    /// Aligns the `AccessoryView`'s bottom edge to the cell's bottom edge.
+    case cellBottom
 }

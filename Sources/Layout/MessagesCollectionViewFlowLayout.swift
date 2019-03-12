@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -199,6 +199,11 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     public func setMessageOutgoingAvatarPosition(_ newPosition: AvatarPosition) {
         messageSizeCalculators().forEach { $0.outgoingAvatarPosition = newPosition }
     }
+
+    /// Set `avatarLeadingTrailingPadding` of all `MessageSizeCalculator`s
+    public func setAvatarLeadingTrailingPadding(_ newPadding: CGFloat) {
+        messageSizeCalculators().forEach { $0.avatarLeadingTrailingPadding = newPadding }
+    }
     
     /// Set `incomingMessagePadding` of all `MessageSizeCalculator`s
     public func setMessageIncomingMessagePadding(_ newPadding: UIEdgeInsets) {
@@ -255,19 +260,29 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         messageSizeCalculators().forEach { $0.incomingAccessoryViewSize = newSize }
     }
 
-    /// Set `outgoingAvatarSize` of all `MessageSizeCalculator`s
+    /// Set `outgoingAccessoryViewSize` of all `MessageSizeCalculator`s
     public func setMessageOutgoingAccessoryViewSize(_ newSize: CGSize) {
         messageSizeCalculators().forEach { $0.outgoingAccessoryViewSize = newSize }
     }
 
-    /// Set `incomingAccessoryViewSize` of all `MessageSizeCalculator`s
+    /// Set `incomingAccessoryViewPadding` of all `MessageSizeCalculator`s
     public func setMessageIncomingAccessoryViewPadding(_ newPadding: HorizontalEdgeInsets) {
         messageSizeCalculators().forEach { $0.incomingAccessoryViewPadding = newPadding }
     }
 
-    /// Set `outgoingAvatarSize` of all `MessageSizeCalculator`s
+    /// Set `outgoingAccessoryViewPadding` of all `MessageSizeCalculator`s
     public func setMessageOutgoingAccessoryViewPadding(_ newPadding: HorizontalEdgeInsets) {
         messageSizeCalculators().forEach { $0.outgoingAccessoryViewPadding = newPadding }
+    }
+    
+    /// Set `incomingAccessoryViewPosition` of all `MessageSizeCalculator`s
+    public func setMessageIncomingAccessoryViewPosition(_ newPosition: AccessoryPosition) {
+        messageSizeCalculators().forEach { $0.incomingAccessoryViewPosition = newPosition }
+    }
+    
+    /// Set `outgoingAccessoryViewPosition` of all `MessageSizeCalculator`s
+    public func setMessageOutgoingAccessoryViewPosition(_ newPosition: AccessoryPosition) {
+        messageSizeCalculators().forEach { $0.outgoingAccessoryViewPosition = newPosition }
     }
 
     /// Get all `MessageSizeCalculator`s

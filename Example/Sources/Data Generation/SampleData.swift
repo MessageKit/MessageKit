@@ -52,10 +52,10 @@ final internal class SampleData {
         }
     }
 
-    let system = Sender(id: "000000", displayName: "System")
-    let nathan = Sender(id: "000001", displayName: "Nathan Tannar")
-    let steven = Sender(id: "000002", displayName: "Steven Deutsch")
-    let wu = Sender(id: "000003", displayName: "Wu Zhong")
+    let system = MockUser(id: "000000", displayName: "System")
+    let nathan = MockUser(id: "000001", displayName: "Nathan Tannar")
+    let steven = MockUser(id: "000002", displayName: "Steven Deutsch")
+    let wu = MockUser(id: "000003", displayName: "Wu Zhong")
 
     lazy var senders = [nathan, steven, wu]
     
@@ -68,7 +68,7 @@ final internal class SampleData {
         MockContactItem(emails: ["test@test.com"])
     ]
 
-    var currentSender: Sender {
+    var currentSender: MockUser {
         return nathan
     }
 
@@ -159,72 +159,53 @@ final internal class SampleData {
     }
 
     // swiftlint:disable cyclomatic_complexity
-    func randomMessage(allowedSenders: [Sender]) -> MockMessage {
-
+    func randomMessage(allowedSenders: [MockUser]) -> MockMessage {
         let randomNumberSender = Int(arc4random_uniform(UInt32(allowedSenders.count)))
         
         let uniqueID = NSUUID().uuidString
-        let sender = allowedSenders[randomNumberSender]
+        let user = allowedSenders[randomNumberSender]
         let date = dateAddingRandomTime()
 
         switch randomMessageType() {
         case .Text:
             let randomSentence = Lorem.sentence()
-            return MockMessage(text: randomSentence, sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date)
         case .AttributedText:
             let randomSentence = Lorem.sentence()
             let attributedText = attributedString(with: randomSentence)
-            return MockMessage(attributedText: attributedText, sender: senders[randomNumberSender], messageId: uniqueID, date: date)
+            return MockMessage(attributedText: attributedText, user: user, messageId: uniqueID, date: date)
         case .Photo:
             let randomNumberImage = Int(arc4random_uniform(UInt32(messageImages.count)))
             let image = messageImages[randomNumberImage]
-            return MockMessage(image: image, sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(image: image, user: user, messageId: uniqueID, date: date)
         case .Video:
             let randomNumberImage = Int(arc4random_uniform(UInt32(messageImages.count)))
             let image = messageImages[randomNumberImage]
-            return MockMessage(thumbnail: image, sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(thumbnail: image, user: user, messageId: uniqueID, date: date)
         case .Audio:
             let randomNumberSound = Int(arc4random_uniform(UInt32(sounds.count)))
             let soundURL = sounds[randomNumberSound]
-            return MockMessage(audioURL: soundURL, sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(audioURL: soundURL, user: user, messageId: uniqueID, date: date)
         case .Emoji:
             let randomNumberEmoji = Int(arc4random_uniform(UInt32(emojis.count)))
-            return MockMessage(emoji: emojis[randomNumberEmoji], sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(emoji: emojis[randomNumberEmoji], user: user, messageId: uniqueID, date: date)
         case .Location:
             let randomNumberLocation = Int(arc4random_uniform(UInt32(locations.count)))
-            return MockMessage(location: locations[randomNumberLocation], sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(location: locations[randomNumberLocation], user: user, messageId: uniqueID, date: date)
         case .Url:
-            return MockMessage(text: "https://github.com/MessageKit", sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(text: "https://github.com/MessageKit", user: user, messageId: uniqueID, date: date)
         case .Phone:
-            return MockMessage(text: "123-456-7890", sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(text: "123-456-7890", user: user, messageId: uniqueID, date: date)
         case .Custom:
-            return MockMessage(custom: "Someone left the conversation", sender: system, messageId: uniqueID, date: date)
+            return MockMessage(custom: "Someone left the conversation", user: system, messageId: uniqueID, date: date)
         case .ShareContact:
             let randomContact = Int(arc4random_uniform(UInt32(contactsToShare.count)))
-            return MockMessage(contact: contactsToShare[randomContact], sender: sender, messageId: uniqueID, date: date)
+            return MockMessage(contact: contactsToShare[randomContact], user: user, messageId: uniqueID, date: date)
         }
     }
     // swiftlint:enable cyclomatic_complexity
 
     func getMessages(count: Int, completion: ([MockMessage]) -> Void) {
-//
-//        let firstContact = MockContactItem(firstName: "Quite a long name", lastName: "For testing purpose", phoneNumbers: ["0754324"])
-//        let secondContact = MockContactItem(firstName: "Steven", lastName: "Deutsch", emails: ["test@test.com"])
-//        let thirdContact = MockContactItem(phoneNumbers: ["+40 123 123"])
-//        let fourthContact = MockContactItem(emails: ["test@test.com"])
-//
-//        let contacts = [firstContact, secondContact, thirdContact, fourthContact]
-//        var messages = [MockMessage]()
-//        for contact in contacts {
-//            let randomNumberSender = Int(arc4random_uniform(UInt32(senders.count)))
-//            let sender = senders[randomNumberSender]
-//            let date = dateAddingRandomTime()
-//            let uniqueID = NSUUID().uuidString
-//            let message = MockMessage(contact: contact, sender: sender, messageId: uniqueID, date: date)
-//            messages.append(message)
-//        }
-//        completion(messages)
-        
         var messages: [MockMessage] = []
         // Disable Custom Messages
         UserDefaults.standard.set(false, forKey: "Custom Messages")
@@ -245,8 +226,8 @@ final internal class SampleData {
         }
         completion(messages)
     }
-
-    func getMessages(count: Int, allowedSenders: [Sender], completion: ([MockMessage]) -> Void) {
+    
+    func getMessages(count: Int, allowedSenders: [MockUser], completion: ([MockMessage]) -> Void) {
         var messages: [MockMessage] = []
         // Disable Custom Messages
         UserDefaults.standard.set(false, forKey: "Custom Messages")
@@ -257,18 +238,18 @@ final internal class SampleData {
         completion(messages)
     }
 
-    func getAvatarFor(sender: Sender) -> Avatar {
+    func getAvatarFor(sender: SenderType) -> Avatar {
         let firstName = sender.displayName.components(separatedBy: " ").first
         let lastName = sender.displayName.components(separatedBy: " ").first
         let initials = "\(firstName?.first ?? "A")\(lastName?.first ?? "A")"
-        switch sender {
-        case nathan:
+        switch sender.id {
+        case "000001":
             return Avatar(image: #imageLiteral(resourceName: "Nathan-Tannar"), initials: initials)
-        case steven:
+        case "000002":
             return Avatar(image: #imageLiteral(resourceName: "Steven-Deutsch"), initials: initials)
-        case wu:
+        case "000003":
             return Avatar(image: #imageLiteral(resourceName: "Wu-Zhong"), initials: initials)
-        case system:
+        case "000000":
             return Avatar(image: nil, initials: "SS")
         default:
             return Avatar(image: nil, initials: initials)

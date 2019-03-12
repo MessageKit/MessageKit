@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,8 @@ open class MessageSizeCalculator: CellSizeCalculator {
     public var incomingAvatarPosition = AvatarPosition(vertical: .cellBottom)
     public var outgoingAvatarPosition = AvatarPosition(vertical: .cellBottom)
 
+    public var avatarLeadingTrailingPadding: CGFloat = 0
+
     public var incomingMessagePadding = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 30)
     public var outgoingMessagePadding = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 4)
 
@@ -58,6 +60,9 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
     public var incomingAccessoryViewPadding = HorizontalEdgeInsets.zero
     public var outgoingAccessoryViewPadding = HorizontalEdgeInsets.zero
+    
+    public var incomingAccessoryViewPosition: AccessoryPosition = .messageCenter
+    public var outgoingAccessoryViewPosition: AccessoryPosition = .messageCenter
 
     open override func configure(attributes: UICollectionViewLayoutAttributes) {
         guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
@@ -68,6 +73,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
         attributes.avatarSize = avatarSize(for: message)
         attributes.avatarPosition = avatarPosition(for: message)
+        attributes.avatarLeadingTrailingPadding = avatarLeadingTrailingPadding
 
         attributes.messageContainerPadding = messageContainerPadding(for: message)
         attributes.messageContainerSize = messageContainerSize(for: message)
@@ -82,6 +88,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
 
         attributes.accessoryViewSize = accessoryViewSize(for: message)
         attributes.accessoryViewPadding = accessoryViewPadding(for: message)
+        attributes.accessoryViewPosition = accessoryViewPosition(for: message)
     }
 
     open override func sizeForItem(at indexPath: IndexPath) -> CGSize {
@@ -232,6 +239,12 @@ open class MessageSizeCalculator: CellSizeCalculator {
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingAccessoryViewPadding : incomingAccessoryViewPadding
     }
+    
+    public func accessoryViewPosition(for message: MessageType) -> AccessoryPosition {
+        let dataSource = messagesLayout.messagesDataSource
+        let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
+        return isFromCurrentSender ? outgoingAccessoryViewPosition : incomingAccessoryViewPosition
+    }
 
     // MARK: - MessageContainer
 
@@ -251,7 +264,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
         let messagePadding = messageContainerPadding(for: message)
         let accessoryWidth = accessoryViewSize(for: message).width
         let accessoryPadding = accessoryViewPadding(for: message)
-        return messagesLayout.itemWidth - avatarWidth - messagePadding.horizontal - accessoryWidth - accessoryPadding.horizontal
+        return messagesLayout.itemWidth - avatarWidth - messagePadding.horizontal - accessoryWidth - accessoryPadding.horizontal - avatarLeadingTrailingPadding
     }
 
     // MARK: - Helpers

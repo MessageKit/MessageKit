@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -198,12 +198,13 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutAvatarView(with attributes: MessagesCollectionViewLayoutAttributes) {
         var origin: CGPoint = .zero
+        let padding = attributes.avatarLeadingTrailingPadding
 
         switch attributes.avatarPosition.horizontal {
         case .cellLeading:
-            break
+            origin.x = padding
         case .cellTrailing:
-            origin.x = attributes.frame.width - attributes.avatarSize.width
+            origin.x = attributes.frame.width - attributes.avatarSize.width - padding
         case .natural:
             fatalError(MessageKitError.avatarPositionUnresolved)
         }
@@ -250,11 +251,12 @@ open class MessageContentCell: MessageCollectionViewCell {
             }
         }
 
+        let avatarPadding = attributes.avatarLeadingTrailingPadding
         switch attributes.avatarPosition.horizontal {
         case .cellLeading:
-            origin.x = attributes.avatarSize.width + attributes.messageContainerPadding.left
+            origin.x = attributes.avatarSize.width + attributes.messageContainerPadding.left + avatarPadding
         case .cellTrailing:
-            origin.x = attributes.frame.width - attributes.avatarSize.width - attributes.messageContainerSize.width - attributes.messageContainerPadding.right
+            origin.x = attributes.frame.width - attributes.avatarSize.width - attributes.messageContainerSize.width - attributes.messageContainerPadding.right - avatarPadding
         case .natural:
             fatalError(MessageKitError.avatarPositionUnresolved)
         }
@@ -308,10 +310,23 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutAccessoryView(with attributes: MessagesCollectionViewLayoutAttributes) {
         
-        // Accessory view aligned to the middle of the messageContainerView
-        let y = messageContainerView.frame.midY - (attributes.accessoryViewSize.height / 2)
-
-        var origin = CGPoint(x: 0, y: y)
+        var origin: CGPoint = .zero
+        
+        // Accessory view is set at the side space of the messageContainerView
+        switch attributes.accessoryViewPosition {
+        case .messageLabelTop:
+            origin.y = messageTopLabel.frame.minY
+        case .messageTop:
+            origin.y = messageContainerView.frame.minY
+        case .messageBottom:
+            origin.y = messageContainerView.frame.maxY - attributes.accessoryViewSize.height
+        case .messageCenter:
+            origin.y = messageContainerView.frame.midY - (attributes.accessoryViewSize.height / 2)
+        case .cellBottom:
+            origin.y = attributes.frame.height - attributes.accessoryViewSize.height
+        default:
+            break
+        }
 
         // Accessory view is always on the opposite side of avatar
         switch attributes.avatarPosition.horizontal {

@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -28,17 +28,17 @@ import UIKit
 /// the data required by a `MessagesCollectionView`.
 public protocol MessagesDataSource: AnyObject {
 
-    /// The `Sender` of new messages in the `MessagesCollectionView`.
-    func currentSender() -> Sender
+    /// The `SenderType` of new messages in the `MessagesCollectionView`.
+    func currentSender() -> SenderType
 
-    /// A helper method to determine if a given message is from the current `Sender`.
+    /// A helper method to determine if a given message is from the current `SenderType`.
     ///
     /// - Parameters:
-    ///   - message: The message to check if it was sent by the current `Sender`.
+    ///   - message: The message to check if it was sent by the current `SenderType`.
     ///
     /// - Note:
     ///   The default implementation of this method checks for equality between
-    ///   the message's `Sender` and the current `Sender`.
+    ///   the message's `SenderType` and the current `SenderType`.
     func isFromCurrentSender(message: MessageType) -> Bool
 
     /// The message to be used for a `MessageCollectionViewCell` at the given `IndexPath`.
@@ -118,7 +118,7 @@ public protocol MessagesDataSource: AnyObject {
 public extension MessagesDataSource {
 
     func isFromCurrentSender(message: MessageType) -> Bool {
-        return message.sender == currentSender()
+        return message.sender.id == currentSender().id
     }
 
     func numberOfItems(inSection section: Int, in messagesCollectionView: MessagesCollectionView) -> Int {

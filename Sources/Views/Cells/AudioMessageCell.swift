@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -96,41 +96,35 @@ open class AudioMessageCell: MessageContentCell {
 
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
-        configureCellApperance(with: message, indexPath: indexPath, messagesCollectionView: messagesCollectionView)
-        
-        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            fatalError(MessageKitError.nilMessagesDisplayDelegate)
-        }
-        // default implementation for decorate cell
-        guard case let .audio(audioItem) = message.kind else { fatalError("Failed decorate audio cell") }
-        durationLabel.text = displayDelegate.audioProgressTextFormat(audioItem.duration, for: self, in: messagesCollectionView)
-        progressView.progress = 0.0
-        playButton.isSelected = false
-        // call configure delegate for fourther config
-        displayDelegate.configureAudioCell(self, message: message)
-    }
 
-    private func configureCellApperance(with message: MessageType, indexPath: IndexPath, messagesCollectionView: MessagesCollectionView) {
-        // modify elements constrains based on message direction (incoming or outgoing)
         guard let dataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
-        let playButtonLeftConstrain = messageContainerView.constraints.filter({ $0.identifier == "left" }).first
-        let durationLabelRightConstrain = messageContainerView.constraints.filter({ $0.identifier == "right" }).first
-        if dataSource.isFromCurrentSender(message: message) == false { // outgoing message
-            playButtonLeftConstrain?.constant = 12
-            durationLabelRightConstrain?.constant = -8
-        } else { // incoming message
-            playButtonLeftConstrain?.constant = 5
-            durationLabelRightConstrain?.constant = -15
+
+        let playButtonLeftConstraint = messageContainerView.constraints.filter { $0.identifier == "left" }.first
+        let durationLabelRightConstraint = messageContainerView.constraints.filter { $0.identifier == "right" }.first
+
+        if !dataSource.isFromCurrentSender(message: message) {
+            playButtonLeftConstraint?.constant = 12
+            durationLabelRightConstraint?.constant = -8
+        } else {
+            playButtonLeftConstraint?.constant = 5
+            durationLabelRightConstraint?.constant = -15
         }
+
         guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
             fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
+
         let tintColor = displayDelegate.audioTintColor(for: message, at: indexPath, in: messagesCollectionView)
         playButton.imageView?.tintColor = tintColor
         durationLabel.textColor = tintColor
         progressView.tintColor = tintColor
-    }
 
+        displayDelegate.configureAudioCell(self, message: message)
+
+        if case let .audio(audioItem) = message.kind {
+            durationLabel.text = displayDelegate.audioProgressTextFormat(audioItem.duration, for: self, in: messagesCollectionView)
+        }
+    }
 }

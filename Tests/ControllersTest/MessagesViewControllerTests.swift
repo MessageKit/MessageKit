@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -90,7 +90,7 @@ class MessagesViewControllerTests: XCTestCase {
         let messagesDataSource = MockMessagesDataSource()
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages.append(MockMessage(text: "Test",
-                                                       sender: messagesDataSource.senders[0],
+                                                       user: messagesDataSource.senders[0],
                                                        messageId: "test_id"))
 
         sut.messagesCollectionView.reloadData()
@@ -108,7 +108,7 @@ class MessagesViewControllerTests: XCTestCase {
         let attributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         let attriutedString = NSAttributedString(string: "Test", attributes: attributes)
         messagesDataSource.messages.append(MockMessage(attributedText: attriutedString,
-                                                       sender: messagesDataSource.senders[0],
+                                                       user: messagesDataSource.senders[0],
                                                        messageId: "test_id"))
 
         sut.messagesCollectionView.reloadData()
@@ -124,7 +124,7 @@ class MessagesViewControllerTests: XCTestCase {
         let messagesDataSource = MockMessagesDataSource()
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages.append(MockMessage(image: UIImage(),
-                                                       sender: messagesDataSource.senders[0],
+                                                       user: messagesDataSource.senders[0],
                                                        messageId: "test_id"))
 
         sut.messagesCollectionView.reloadData()
@@ -140,7 +140,7 @@ class MessagesViewControllerTests: XCTestCase {
         let messagesDataSource = MockMessagesDataSource()
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages.append(MockMessage(thumbnail: UIImage(),
-                                                       sender: messagesDataSource.senders[0],
+                                                       user: messagesDataSource.senders[0],
                                                        messageId: "test_id"))
 
         sut.messagesCollectionView.reloadData()
@@ -156,7 +156,7 @@ class MessagesViewControllerTests: XCTestCase {
         let messagesDataSource = MockMessagesDataSource()
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages.append(MockMessage(location: CLLocation(latitude: 60.0, longitude: 70.0),
-                                                       sender: messagesDataSource.senders[0],
+                                                       user: messagesDataSource.senders[0],
                                                        messageId: "test_id"))
 
         sut.messagesCollectionView.reloadData()
@@ -173,7 +173,7 @@ class MessagesViewControllerTests: XCTestCase {
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
         messagesDataSource.messages.append(MockMessage(audioURL: URL.init(fileURLWithPath: ""),
                                                        duration: 4.0,
-                                                       sender: messagesDataSource.senders[0],
+                                                       user: messagesDataSource.senders[0],
                                                        messageId: "test_id"))
 
         sut.messagesCollectionView.reloadData()
@@ -187,9 +187,9 @@ class MessagesViewControllerTests: XCTestCase {
 
     // MARK: - Assistants
 
-    private func makeMessages(for senders: [Sender]) -> [MessageType] {
-        return [MockMessage(text: "Text 1", sender: senders[0], messageId: "test_id_1"),
-                MockMessage(text: "Text 2", sender: senders[1], messageId: "test_id_2")]
+    private func makeMessages(for senders: [MockUser]) -> [MessageType] {
+        return [MockMessage(text: "Text 1", user: senders[0], messageId: "test_id_1"),
+                MockMessage(text: "Text 2", user: senders[1], messageId: "test_id_2")]
     }
 
 }

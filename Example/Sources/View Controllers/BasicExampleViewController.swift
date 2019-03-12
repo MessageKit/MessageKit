@@ -25,7 +25,6 @@
 import UIKit
 import MapKit
 import MessageKit
-import MessageInputBar
 
 final class BasicExampleViewController: ChatViewController {
   
