@@ -33,7 +33,7 @@ final internal class LaunchViewController: UITableViewController {
         return .lightContent
     }
 
-    let cells = ["Basic Example", "Advanced Example", "Embedded Example", "Settings", "Source Code", "Contributors"]
+    let cells = ["Basic Example", "Coredata Basic Example", "Advanced Example", "Embedded Example", "Settings", "Source Code", "Contributors"]
     
     // MARK: - View Life Cycle
     
@@ -78,6 +78,8 @@ final internal class LaunchViewController: UITableViewController {
         let cell = cells[indexPath.row]
         switch cell {
         case "Basic Example":
+            navigationController?.pushViewController(BasicExampleViewController(), animated: true)
+        case "Coredata Basic Example":
             navigationController?.pushViewController(BasicExampleViewController(), animated: true)
         case "Advanced Example":
             navigationController?.pushViewController(AdvancedExampleViewController(), animated: true)

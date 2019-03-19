@@ -23,7 +23,7 @@
  */
 
 import UIKit
-import CoreData
+import CoreData 
 
 @UIApplicationMain
 final internal class AppDelegate: UIResponder, UIApplicationDelegate {
