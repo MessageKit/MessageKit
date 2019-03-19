@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18A391" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ChatMessage" representedClassName="ChatMessage" syncable="YES" codeGenerationType="class">
+        <attribute name="chatMessageID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="chatMessageSentDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="chatMessageKind" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChatMessageKind" syncable="YES"/>
+        <relationship name="chatMessageSender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChatSender" syncable="YES"/>
+    </entity>
+    <entity name="ChatMessageKind" representedClassName="ChatMessageKind" syncable="YES" codeGenerationType="class">
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ChatSender" representedClassName="ChatSender" syncable="YES" codeGenerationType="class">
+        <attribute name="displayName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="senderID" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ChatMessage" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="ChatMessageKind" positionX="-36" positionY="27" width="128" height="60"/>
+        <element name="ChatSender" positionX="-54" positionY="9" width="128" height="75"/>
+    </elements>
+</model>
