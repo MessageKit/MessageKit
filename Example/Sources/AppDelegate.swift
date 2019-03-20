@@ -24,6 +24,7 @@
 
 import UIKit
 import CoreData 
+import MessageKit
 
 @UIApplicationMain
 final internal class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -59,7 +60,9 @@ final internal class AppDelegate: UIResponder, UIApplicationDelegate {
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
          */
-        let container = NSPersistentContainer(name: "ConversationAI")
+        // Raj: To get the Bundle from a project within Pods - https://stackoverflow.com/a/35903720/260665
+        let frameworkBundle = Bundle(for: ChatSender.self)
+        let container = NSPersistentContainer(name: "MessageKit", bundle: frameworkBundle)
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.

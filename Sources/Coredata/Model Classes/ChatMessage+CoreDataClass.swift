@@ -1,6 +1,6 @@
 //
 //  ChatMessage+CoreDataClass.swift
-//  ConversationAI
+//  MessageKit
 //
 //  Created by Gumdal, Raj Pawan on 14/03/19.
 //  Copyright © 2019 Gumdal, Raj Pawan. All rights reserved.

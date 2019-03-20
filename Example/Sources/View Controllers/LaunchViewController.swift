@@ -80,7 +80,7 @@ final internal class LaunchViewController: UITableViewController {
         case "Basic Example":
             navigationController?.pushViewController(BasicExampleViewController(), animated: true)
         case "Coredata Basic Example":
-            navigationController?.pushViewController(BasicExampleViewController(), animated: true)
+            navigationController?.pushViewController(CoredataChatViewController(), animated: true)
         case "Advanced Example":
             navigationController?.pushViewController(AdvancedExampleViewController(), animated: true)
         case "Embedded Example":

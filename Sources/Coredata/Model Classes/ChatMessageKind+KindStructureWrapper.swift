@@ -1,6 +1,6 @@
 //
 //  MessageKind+KindStructureWrapper.swift
-//  ConversationAI
+//  MessageKit
 //
 //  Created by Gumdal, Raj Pawan on 14/03/19.
 //  Copyright © 2019 Gumdal, Raj Pawan. All rights reserved.
@@ -11,7 +11,7 @@ import MessageKit
 
 extension ChatMessageKind {
     // From: https://stackoverflow.com/a/37877297/260665
-    var kind: MessageKind {
+    public var kind: MessageKind {
         get {
             return .text(self.text ?? "s")
         }
