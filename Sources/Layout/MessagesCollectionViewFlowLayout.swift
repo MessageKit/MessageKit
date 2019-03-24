@@ -198,7 +198,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
 
     public func shouldDisplayTypingIndicatorView(at indexPath: IndexPath) -> Bool {
-        guard !indexPath.isEmpty else { return false }
         let isLastIndexPath = indexPath.section == messagesCollectionView.numberOfSections - 1
         return isLastIndexPath && !isTypingIndicatorViewHidden
     }
