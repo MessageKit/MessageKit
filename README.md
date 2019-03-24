@@ -82,6 +82,32 @@ To integrate MessageKit using Carthage, add the following to your `Cartfile`:
 github "MessageKit/MessageKit"
 ````
 
+### Manual
+
+#### Embedded Framework
+
+- `cd` to your project directory, initialize git, and Add MessageKit as a git [submodule](https://git-scm.com/docs/git-submodule) by running the following command:
+
+  ```bash
+  $ git submodule add https://github.com/MessageKit/MessageKit.git
+  ```
+
+- `cd` to the new `MessageKit` folder and trigger [carthage](https://github.com/Carthage/Carthage) update by the following command:
+
+  ```bash
+  $ carthage update --platform iOS
+  ```
+
+- Open `MessageKit` folder, and drag the `MessageKit.xcodeproj` into the Project Navigator of your application's Xcode project. It should appear nested underneath your application's blue project icon.
+- Select the `MessageKit.xcodeproj` in the Project Navigator and verify the deployment target matches that of your application target.
+- Next, select your application project in the Project Navigator (blue project icon), navigate to the target configuration window and select the application target.
+- In the tab bar at the top of that window, open the "General" panel.
+- Click on the `+` button under the "Embedded Binaries" section.
+- You will see two different `MessageKit.xcodeproj` folders each with two different versions of the `MessageKit.framework` nested inside a `Products` folder.
+- Select the top `MessageKit.framework` for iOS and the bottom one for OS X.
+- Voila! Now you can `import MessageKit` and build the project.
+
+
 ## Getting Started
 
 Please have a look at the [Quick Start guide](https://github.com/MessageKit/MessageKit/blob/master/Documentation/QuickStart.md), the [FAQs](https://github.com/MessageKit/MessageKit/blob/master/Documentation/FAQs.md) and the [MessageInputBar docs](https://github.com/MessageKit/MessageKit/blob/master/Documentation/MessageInputBar.md).
@@ -122,6 +148,7 @@ Interested in contributing to MessageKit? Click here to join our [Slack](https:/
 
 Add your app to the list of apps using this library and make a pull request.
 
+- [Formacar](https://itunes.apple.com/ru/app/id1180117334)
 - [HopUp](https://itunes.apple.com/us/app/hopup-airsoft-community/id1128903141?mt=8)
 - [MediQuo](https://www.mediquo.com)
 - [RappresentaMe](https://itunes.apple.com/it/app/rappresentame/id1330914443)
