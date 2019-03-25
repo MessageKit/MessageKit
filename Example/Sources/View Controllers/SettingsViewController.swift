@@ -34,7 +34,6 @@ final internal class SettingsViewController: UITableViewController {
     }
     
     let cells = ["Mock messages count", "Text Messages", "AttributedText Messages", "Photo Messages", "Video Messages", "Audio Messages", "Emoji Messages", "Location Messages", "Url Messages", "Phone Messages"]
-
     
     // MARK: - Picker
     
