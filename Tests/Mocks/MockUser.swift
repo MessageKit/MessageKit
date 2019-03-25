@@ -26,6 +26,6 @@ import Foundation
 @testable import MessageKit
 
 struct MockUser: SenderType {
-    var id: String
+    var senderId: String
     var displayName: String
 }

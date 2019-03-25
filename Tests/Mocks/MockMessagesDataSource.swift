@@ -28,8 +28,10 @@ import Foundation
 class MockMessagesDataSource: MessagesDataSource {
 
     var messages: [MessageType] = []
-    let senders: [MockUser] = [MockUser(id: "sender_1", displayName: "Sender 1"),
-                             MockUser(id: "sender_2", displayName: "Sender 2")]
+    let senders: [MockUser] = [
+        MockUser(senderId: "sender_1", displayName: "Sender 1"),
+        MockUser(senderId: "sender_2", displayName: "Sender 2")
+    ]
 
     var currentUser: MockUser {
         return senders[0]
