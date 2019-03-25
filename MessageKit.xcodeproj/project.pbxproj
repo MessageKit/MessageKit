@@ -35,12 +35,11 @@
 		1FF377AA20087D78004FD648 /* MessagesViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377A920087D78004FD648 /* MessagesViewController+Menu.swift */; };
 		1FF377AC20087DA2004FD648 /* MessagesViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */; };
 		382C794221705D2000F4FAF5 /* HorizontalEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382C794121705D2000F4FAF5 /* HorizontalEdgeInsets.swift */; };
-		4C508649221C0BBA0043943C /* AccessoryPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C508648221C0BBA0043943C /* AccessoryPosition.swift */; };
 		383B9EB121728BAD008AB91A /* SenderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B9EB021728BAD008AB91A /* SenderType.swift */; };
 		38A2230F221FB8A300D14DAF /* MessageInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A2230E221FB8A300D14DAF /* MessageInputBar.swift */; };
 		38A223112223493500D14DAF /* InputBarAccessoryView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38A223102223493400D14DAF /* InputBarAccessoryView.framework */; };
-                38C2AE7C20D4878D00F8079E /* MessageInputBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38C2AE7B20D4878D00F8079E /* MessageInputBar.framework */; };		
 		38F8062F2173CD8F00CDB9DB /* MockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F8062D2173CD4300CDB9DB /* MockUser.swift */; };
+		4C508649221C0BBA0043943C /* AccessoryPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C508648221C0BBA0043943C /* AccessoryPosition.swift */; };
 		5073C1152175BE750040EAD5 /* AudioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5073C1142175BE750040EAD5 /* AudioItem.swift */; };
 		5073C1192175BE960040EAD5 /* AudioMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5073C1182175BE950040EAD5 /* AudioMessageCell.swift */; };
 		5073C11D2175BEC60040EAD5 /* AudioMessageSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5073C11C2175BEC60040EAD5 /* AudioMessageSizeCalculator.swift */; };
@@ -143,8 +142,8 @@
 		38A2230E221FB8A300D14DAF /* MessageInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBar.swift; sourceTree = "<group>"; };
 		38A223102223493400D14DAF /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InputBarAccessoryView.framework; path = Carthage/Build/iOS/InputBarAccessoryView.framework; sourceTree = "<group>"; };
 		38C2AE7B20D4878D00F8079E /* MessageInputBar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageInputBar.framework; path = Carthage/Build/iOS/MessageInputBar.framework; sourceTree = "<group>"; };
-		4C508648221C0BBA0043943C /* AccessoryPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryPosition.swift; sourceTree = "<group>"; };
 		38F8062D2173CD4300CDB9DB /* MockUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUser.swift; sourceTree = "<group>"; };
+		4C508648221C0BBA0043943C /* AccessoryPosition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryPosition.swift; sourceTree = "<group>"; };
 		5073C1142175BE750040EAD5 /* AudioItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioItem.swift; sourceTree = "<group>"; };
 		5073C1182175BE950040EAD5 /* AudioMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioMessageCell.swift; sourceTree = "<group>"; };
 		5073C11C2175BEC60040EAD5 /* AudioMessageSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioMessageSizeCalculator.swift; sourceTree = "<group>"; };
@@ -245,12 +244,12 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		2EB618F11F846899007FBA0E /* Headers & Footers */ = {
+		2EB618F11F846899007FBA0E /* HeadersFooters */ = {
 			isa = PBXGroup;
 			children = (
 				1F6C040D206A2AF4007BDE44 /* MessageReusableView.swift */,
 			);
-			path = "Headers & Footers";
+			path = HeadersFooters;
 			sourceTree = "<group>";
 		};
 		5073C1212175C1580040EAD5 /* Resources */ = {
@@ -414,7 +413,7 @@
 			isa = PBXGroup;
 			children = (
 				2EB618F01F84676A007FBA0E /* Cells */,
-				2EB618F11F846899007FBA0E /* Headers & Footers */,
+				2EB618F11F846899007FBA0E /* HeadersFooters */,
 				B7A03F3E1F86694F006AEF79 /* AvatarView.swift */,
 				1FE783A7206633C0007FA024 /* InsetLabel.swift */,
 				B7A03F431F86694F006AEF79 /* MessageContainerView.swift */,
