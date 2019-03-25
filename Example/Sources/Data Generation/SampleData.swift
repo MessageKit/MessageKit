@@ -31,7 +31,7 @@ final internal class SampleData {
     static let shared = SampleData()
 
     private init() {}
-    
+
     enum MessageTypes: UInt32, CaseIterable {
         case Text = 0
         case AttributedText = 1
@@ -45,12 +45,10 @@ final internal class SampleData {
         case Custom = 9
         
         static func random() -> MessageTypes {
-            // Update as new enumerations are added
-            let maxValue = Custom.rawValue
-            
-            let rand = arc4random_uniform(maxValue+1)
-            return MessageTypes(rawValue: rand)!
+            let randomIndex = Int(arc4random()) % MessageTypes.all.count
+            return all[randomIndex]
         }
+
     }
 
     let system = MockUser(id: "000000", displayName: "System")
@@ -143,7 +141,7 @@ final internal class SampleData {
     func randomMessageType() -> MessageTypes {
         let messageType = MessageTypes.random()
 
-        if !UserDefaults.standard.bool(forKey: "\(messageType)" + " Messages") {
+        if !UserDefaults.standard.bool(forKey: "\(messageType.rawValue)" + " Messages") {
             return randomMessageType()
         }
         
@@ -159,7 +157,7 @@ final internal class SampleData {
         let date = dateAddingRandomTime()
 
         switch randomMessageType() {
-        case .Text:
+        case .text:
             let randomSentence = Lorem.sentence()
             return MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date)
         case .AttributedText:
