@@ -125,15 +125,14 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             ofKind: MessagesCollectionView.elementKindTypingIndicator,
             at: [indexPathForTypingIndicatorView()]
         )
+        invalidateLayout(with: ctx)
 
         if animated {
             messagesCollectionView.performBatchUpdates({ [weak self] in
                 updates?()
-                self?.invalidateLayout(with: ctx)
             }, completion: completion)
         } else {
             updates?()
-            invalidateLayout(with: ctx)
             completion?(true)
         }
     }
