@@ -117,7 +117,10 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     ///   - completion: A completion block to execute after the insertion/deletion
     open func setTypingIndicatorViewHidden(_ isHidden: Bool, animated: Bool, whilePerforming updates: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
 
-        guard isTypingIndicatorViewHidden != isHidden else { return }
+        guard isTypingIndicatorViewHidden != isHidden, messagesCollectionView.numberOfSections > 0 else {
+            completion?(false)
+            return
+        }
         isTypingIndicatorViewHidden = isHidden
 
         let ctx = UICollectionViewFlowLayoutInvalidationContext()
@@ -125,13 +128,14 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             ofKind: MessagesCollectionView.elementKindTypingIndicator,
             at: [indexPathForTypingIndicatorView()]
         )
-        invalidateLayout(with: ctx)
 
         if animated {
             messagesCollectionView.performBatchUpdates({ [weak self] in
+                self?.invalidateLayout(with: ctx)
                 updates?()
             }, completion: completion)
         } else {
+            invalidateLayout(with: ctx)
             updates?()
             completion?(true)
         }
@@ -203,7 +207,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     private func indexPathForTypingIndicatorView() -> IndexPath {
         let section = messagesCollectionView.numberOfSections - 2
-        return IndexPath(row: 0, section: max(section, 0))
+        return IndexPath(item: 0, section: max(section, 0))
     }
 
     // MARK: - Layout Invalidation

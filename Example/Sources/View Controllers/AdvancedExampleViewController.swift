@@ -183,8 +183,8 @@ final class AdvancedExampleViewController: ChatViewController {
     
     func setTypingIndicatorViewHidden(_ isHidden: Bool, performUpdates updates: (() -> Void)? = nil) {
         updateTitleView(title: "MessageKit", subtitle: isHidden ? "2 Online" : "Typing...")
-        setTypingIndicatorViewHidden(isHidden, animated: true, whilePerforming: updates) { [weak self] (_) in
-            if self?.isLastSectionVisible() == true {
+        setTypingIndicatorViewHidden(isHidden, animated: true, whilePerforming: updates) { [weak self] success in
+            if success, self?.isLastSectionVisible() == true {
                 self?.messagesCollectionView.scrollToBottom(animated: true)
             }
         }
