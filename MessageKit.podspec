@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
       "SWIFT_VERSION" => "4.0",
    }
 
-   s.ios.deployment_target = '9.0'
+   s.ios.deployment_target = '10.0'
    s.ios.resource_bundle = { 'MessageKitAssets' => 'Assets/MessageKitAssets.bundle/Images' }
 
    s.requires_arc = true
