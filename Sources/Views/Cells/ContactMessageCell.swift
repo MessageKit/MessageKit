@@ -26,64 +26,56 @@ import UIKit
 
 open class ContactMessageCell: MessageContentCell {
     
-    public enum ConstrainsID: String {
+    public enum ConstraintsID: String {
         case initialsContainerLeftConstraint
         case disclouserRigtConstraint
     }
     
     /// The view container that holds contact initials
-    open lazy var initialsContainerView: UIView = {
+    public lazy var initialsContainerView: UIView = {
         let initialsContainer = UIView(frame: CGRect.zero)
         initialsContainer.backgroundColor = .white
-        initialsContainer.layer.shadowColor = UIColor.gray.cgColor
-        initialsContainer.layer.shadowOffset = CGSize(width: 0, height: 2)
-        initialsContainer.layer.shadowRadius = 2
-        initialsContainer.layer.shadowOpacity = 0.6
-        
         return initialsContainer
     }()
     
     /// The label that display the contact initials
-    open lazy var initialsLabel: UILabel = {
+    public lazy var initialsLabel: UILabel = {
         let initialsLabel = UILabel(frame: CGRect.zero)
         initialsLabel.textAlignment = .center
         initialsLabel.textColor = .darkText
         initialsLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
-
         return initialsLabel
     }()
     
     /// The label that display contact name
-    open lazy var nameLabel: UILabel = {
+    public lazy var nameLabel: UILabel = {
         let nameLabel = UILabel(frame: CGRect.zero)
         nameLabel.numberOfLines = 0
-        
         return nameLabel
     }()
     
     /// The disclouser image view
-    open lazy var disclouserImageView: UIImageView = {
+    public lazy var disclosureImageView: UIImageView = {
         let disclouserImage = UIImage.messageKitImageWith(type: .disclouser)?.withRenderingMode(.alwaysTemplate)
         let disclouser = UIImageView(image: disclouserImage)
-        
         return disclouser
     }()
     
     // MARK: - Methods
     open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
         super.apply(layoutAttributes)
-        if let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes {
-            nameLabel.font = attributes.messageLabelFont
+        guard let attributes = layoutAttributes as? MessagesCollectionViewLayoutAttributes else {
+            return
         }
+        nameLabel.font = attributes.messageLabelFont
     }
 
     open override func setupSubviews() {
         super.setupSubviews()
         messageContainerView.addSubview(initialsContainerView)
         messageContainerView.addSubview(nameLabel)
-        messageContainerView.addSubview(disclouserImageView)
+        messageContainerView.addSubview(disclosureImageView)
         initialsContainerView.addSubview(initialsLabel)
-        
         setupConstraints()
     }
     
@@ -97,17 +89,17 @@ open class ContactMessageCell: MessageContentCell {
         initialsContainerView.constraint(equalTo: CGSize(width: 26, height: 26))
         let initialsConstraints = initialsContainerView.addConstraints(left: messageContainerView.leftAnchor, centerY: messageContainerView.centerYAnchor,
                                                         leftConstant: 5)
-        initialsConstraints.first?.identifier = ConstrainsID.initialsContainerLeftConstraint.rawValue
+        initialsConstraints.first?.identifier = ConstraintsID.initialsContainerLeftConstraint.rawValue
         initialsContainerView.layer.cornerRadius = 13
         initialsLabel.fillSuperview()
-        disclouserImageView.constraint(equalTo: CGSize(width: 20, height: 20))
-        let disclouserConstraints = disclouserImageView.addConstraints(right: messageContainerView.rightAnchor, centerY: messageContainerView.centerYAnchor,
+        disclosureImageView.constraint(equalTo: CGSize(width: 20, height: 20))
+        let disclosureConstraints = disclosureImageView.addConstraints(right: messageContainerView.rightAnchor, centerY: messageContainerView.centerYAnchor,
                                            rightConstant: -10)
-        disclouserConstraints.first?.identifier = ConstrainsID.disclouserRigtConstraint.rawValue
+        disclosureConstraints.first?.identifier = ConstraintsID.disclouserRigtConstraint.rawValue
         nameLabel.addConstraints(messageContainerView.topAnchor,
                                  left: initialsContainerView.rightAnchor,
                                  bottom: messageContainerView.bottomAnchor,
-                                 right: disclouserImageView.leftAnchor,
+                                 right: disclosureImageView.leftAnchor,
                                  topConstant: 0,
                                  leftConstant: 10,
                                  bottomConstant: 0,
@@ -119,17 +111,17 @@ open class ContactMessageCell: MessageContentCell {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         // setup data
         guard case let .contact(contactItem) = message.kind else { fatalError("Failed decorate audio cell") }
-        nameLabel.text = contactItem.getName()
-        initialsLabel.text = contactItem.getInitials()
+        nameLabel.text = contactItem.displayText
+        initialsLabel.text = contactItem.initials
         // setup constraints
         guard let dataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
         let initialsContainerLeftConstraint = messageContainerView.constraints.filter { (constraint) -> Bool in
-            return constraint.identifier == ConstrainsID.initialsContainerLeftConstraint.rawValue
+            return constraint.identifier == ConstraintsID.initialsContainerLeftConstraint.rawValue
         }.first
         let disclouserRightConstraint = messageContainerView.constraints.filter { (constraint) -> Bool in
-            return constraint.identifier == ConstrainsID.disclouserRigtConstraint.rawValue
+            return constraint.identifier == ConstraintsID.disclouserRigtConstraint.rawValue
         }.first
         if dataSource.isFromCurrentSender(message: message) { // outgoing message
             initialsContainerLeftConstraint?.constant = 5
@@ -144,7 +136,7 @@ open class ContactMessageCell: MessageContentCell {
         }
         let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
         nameLabel.textColor = textColor
-        disclouserImageView.tintColor = textColor
+        disclosureImageView.tintColor = textColor
     }
     
 }

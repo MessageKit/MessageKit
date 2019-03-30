@@ -38,47 +38,36 @@ public protocol ContactItem {
     
     /// contact emails
     var emails: [String] { get }
-    
+}
+
+/// Default Implementation to get contact name and initials
+public extension ContactItem {
+
     /// Return full name from given contact item
     /// By default the priority in computing contact name is:
     /// 1. first + last name
     /// 2. phone number
     /// 3. email address
-    func getName() -> String
-    
-    /// Return name initials from given contact. If first and last name is not set it returns #
-    func getInitials() -> String
-}
-
-/// Default Implementation for contact name and initials
-public extension ContactItem {
-
-    func getName() -> String {
+    public var displayText: String {
         var name = firstName ?? ""
         if let lastName = lastName, lastName.count > 0 {
             name += (name.count > 0) ? " \(lastName)" : lastName
         }
-        if name.count == 0 { // if name is still 0 show first phone number
+        if name.isEmpty { // if name is still 0 show first phone number
             name = phoneNumbers.first ?? ""
         }
-        if name.count == 0 { // if name is still 0 show first email
+        if name.isEmpty { // if name is still 0 show first email
             name = emails.first ?? ""
         }
         return name
     }
 
-    func getInitials() -> String {
-        var initials = getFirstLeterFrom(firstName) + getFirstLeterFrom(lastName)
+    /// Return name initials from given contact. If first and last name is not set it returns #
+    public var initials: String {
+        var initials = String(firstName?.prefix(1) ?? "") + String(lastName?.prefix(1) ?? "")
         if initials.count == 0 {
             initials = "#"
         }
         return initials
-    }
-    
-    private func getFirstLeterFrom(_ string: String?) -> String {
-        guard let value = string, value.count > 0 else {
-            return ""
-        }
-        return String(value.first!).capitalized
     }
 }
