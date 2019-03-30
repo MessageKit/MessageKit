@@ -31,31 +31,25 @@ final internal class SampleData {
     static let shared = SampleData()
 
     private init() {}
-    
-    enum MessageTypes: UInt32, CaseIterable {
-        case Text = 0
-        case AttributedText = 1
-        case Photo = 2
-        case Video = 3
-        case Audio = 4
-        case Emoji = 5
-        case Location = 6
-        case Url = 7
-        case Phone = 8
-        case Custom = 9
-        case ShareContact = 10
-        
-        static func random() -> MessageTypes {
-            let maxValue = UInt32(MessageTypes.allCases.count)
-            let rand = arc4random_uniform(maxValue)
-            return MessageTypes(rawValue: rand)!
-        }
+
+    enum MessageTypes: String, CaseIterable {
+        case Text
+        case AttributedText
+        case Photo
+        case Video
+        case Audio
+        case Emoji
+        case Location
+        case Url
+        case Phone
+        case Custom
+        case ShareContact
     }
 
-    let system = MockUser(id: "000000", displayName: "System")
-    let nathan = MockUser(id: "000001", displayName: "Nathan Tannar")
-    let steven = MockUser(id: "000002", displayName: "Steven Deutsch")
-    let wu = MockUser(id: "000003", displayName: "Wu Zhong")
+    let system = MockUser(senderId: "000000", displayName: "System")
+    let nathan = MockUser(senderId: "000001", displayName: "Nathan Tannar")
+    let steven = MockUser(senderId: "000002", displayName: "Steven Deutsch")
+    let wu = MockUser(senderId: "000003", displayName: "Wu Zhong")
 
     lazy var senders = [nathan, steven, wu]
     
@@ -149,13 +143,13 @@ final internal class SampleData {
     }
     
     func randomMessageType() -> MessageTypes {
-        let messageType = MessageTypes.random()
- 
-        if !UserDefaults.standard.bool(forKey: "\(messageType)" + " Messages") {
-            return randomMessageType()
+        var messageTypes = [MessageTypes]()
+        for type in MessageTypes.allCases {
+            if UserDefaults.standard.bool(forKey: "\(type.rawValue)" + " Messages") {
+                messageTypes.append(type)
+            }
         }
-        
-        return messageType
+        return messageTypes.random()!
     }
 
     // swiftlint:disable cyclomatic_complexity
@@ -242,7 +236,7 @@ final internal class SampleData {
         let firstName = sender.displayName.components(separatedBy: " ").first
         let lastName = sender.displayName.components(separatedBy: " ").first
         let initials = "\(firstName?.first ?? "A")\(lastName?.first ?? "A")"
-        switch sender.id {
+        switch sender.senderId {
         case "000001":
             return Avatar(image: #imageLiteral(resourceName: "Nathan-Tannar"), initials: initials)
         case "000002":

@@ -253,12 +253,12 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		2EB618F11F846899007FBA0E /* Headers & Footers */ = {
+		2EB618F11F846899007FBA0E /* HeadersFooters */ = {
 			isa = PBXGroup;
 			children = (
 				1F6C040D206A2AF4007BDE44 /* MessageReusableView.swift */,
 			);
-			path = "Headers & Footers";
+			path = HeadersFooters;
 			sourceTree = "<group>";
 		};
 		5073C1212175C1580040EAD5 /* Resources */ = {
@@ -423,7 +423,7 @@
 			isa = PBXGroup;
 			children = (
 				2EB618F01F84676A007FBA0E /* Cells */,
-				2EB618F11F846899007FBA0E /* Headers & Footers */,
+				2EB618F11F846899007FBA0E /* HeadersFooters */,
 				B7A03F3E1F86694F006AEF79 /* AvatarView.swift */,
 				1FE783A7206633C0007FA024 /* InsetLabel.swift */,
 				B7A03F431F86694F006AEF79 /* MessageContainerView.swift */,

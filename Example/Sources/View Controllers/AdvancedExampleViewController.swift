@@ -279,11 +279,14 @@ extension AdvancedExampleViewController: MessagesDisplayDelegate {
     }
 
     func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key: Any] {
-        return MessageLabel.defaultAttributes
+        switch detector {
+        case .hashtag, .mention: return [.foregroundColor: UIColor.blue]
+        default: return MessageLabel.defaultAttributes
+        }
     }
 
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
-        return [.url, .address, .phoneNumber, .date, .transitInformation]
+        return [.url, .address, .phoneNumber, .date, .transitInformation, .mention, .hashtag]
     }
 
     // MARK: - All Messages
