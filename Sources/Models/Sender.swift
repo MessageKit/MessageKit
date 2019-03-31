@@ -47,7 +47,7 @@ public struct Sender {
 
 // MARK: - Equatable Conformance
 
-extension Sender: Equatable {
+extension Sender: Equatable { // swiftlint:disable:this explicit_acl explicit_top_level_acl
 
     /// Two senders are considered equal if they have the same id.
     public static func == (left: Sender, right: Sender) -> Bool {

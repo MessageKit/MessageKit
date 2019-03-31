@@ -25,7 +25,7 @@
 import Foundation
 import MessageInputBar
 
-extension MessagesViewController {
+extension MessagesViewController { // swiftlint:disable:this explicit_acl explicit_top_level_acl
 
     // MARK: - Register / Unregister Observers
 
