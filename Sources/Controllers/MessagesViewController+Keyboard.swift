@@ -112,7 +112,7 @@ extension MessagesViewController {
         // see https://developer.apple.com/videos/play/wwdc2017/242/ for more details
         let intersection = messagesCollectionView.frame.intersection(keyboardFrame)
         
-        if intersection.isNull || intersection.maxY < messagesCollectionView.frame.maxY {
+        if intersection.isNull || (messagesCollectionView.frame.maxY - intersection.maxY) > 0.001 {
             // The keyboard is hidden, is a hardware one, or is undocked and does not cover the bottom of the collection view.
             // Note: intersection.maxY may be less than messagesCollectionView.frame.maxY when dealing with undocked keyboards.
             return max(0, additionalBottomInset - automaticallyAddedBottomInset)
