@@ -29,6 +29,22 @@ import AVFoundation
 /// framework provided `MessageCollectionViewCell` subclasses.
 open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
+    /// There is a known issue where the layout invalidation
+    /// causes a fatal crash when setting the typing indicator
+    /// view to hidden. The cause has been isolated to
+    /// `UICollectionViewFlowLayoutInvalidationContext` which
+    /// causes an `IndexPath` with 0 indices to be passed into
+    /// `layoutAttributesForSupplementaryView` when accessing
+    /// `.section`. The current work around is to not use
+    /// `invalidateLayout(with: context)` for the case of
+    /// setting the typing indicator to hidden but rather
+    /// `invalidateLayout()`. This however is not efficent
+    /// and thus will not be the default behaviour. Instead,
+    /// if you experience the crash set this value to TRUE.
+    ///
+    /// The default value is FALSE
+    public var invalidateLayoutOnTypingIndicatorHidden: Bool = false
+
     open override class var layoutAttributesClass: AnyClass {
         return MessagesCollectionViewLayoutAttributes.self
     }
@@ -123,31 +139,16 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
         isTypingIndicatorViewHidden = isHidden
 
-        let ctx = UICollectionViewFlowLayoutInvalidationContext()
-        ctx.invalidateSupplementaryElements(
-            ofKind: MessagesCollectionView.elementKindTypingIndicator,
-            at: [indexPathForTypingIndicatorView()]
-        )
-
         if animated {
             messagesCollectionView.performBatchUpdates({ [weak self] in
-                self?.invalidateLayout(with: ctx)
+                self?.invalidateLayoutForTypingIndicatorChange()
                 updates?()
             }, completion: completion)
         } else {
-            invalidateLayout(with: ctx)
+            invalidateLayoutForTypingIndicatorChange()
             updates?()
             completion?(true)
         }
-    }
-
-    private func adjustBottomInsetForTypingIndicatorView() {
-        guard let delegate = messagesCollectionView.messagesLayoutDelegate else { return }
-        let height = delegate.typingIndicatorViewSize(in: messagesCollectionView).height
-        let inset = delegate.typingIndicatorViewTopInset(in: messagesCollectionView)
-        let totalHeight = height + inset
-        let delta = isTypingIndicatorViewHidden ? -totalHeight : totalHeight
-        messagesCollectionView.contentInset.bottom += delta
     }
 
     // MARK: - Attributes
@@ -201,7 +202,9 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
 
     public func shouldDisplayTypingIndicatorView(at indexPath: IndexPath) -> Bool {
-        guard !indexPath.isEmpty else { return false }
+        guard indexPath.count > 0 else {
+            fatalError("`indexPath` contained 0 indices, set `invalidateLayoutOnTypingIndicatorHidden` to `TRUE`")
+        }
         let isLastIndexPath = indexPath.section == messagesCollectionView.numberOfSections - 1
         return isLastIndexPath && !isTypingIndicatorViewHidden
     }
@@ -209,6 +212,19 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     private func indexPathForTypingIndicatorView() -> IndexPath {
         let section = messagesCollectionView.numberOfSections - 2
         return IndexPath(item: 0, section: max(section, 0))
+    }
+
+    private func invalidateLayoutForTypingIndicatorChange() {
+        if !isTypingIndicatorViewHidden || !invalidateLayoutOnTypingIndicatorHidden {
+            let ctx = UICollectionViewFlowLayoutInvalidationContext()
+            ctx.invalidateSupplementaryElements(
+                ofKind: MessagesCollectionView.elementKindTypingIndicator,
+                at: [indexPathForTypingIndicatorView()]
+            )
+            invalidateLayout(with: ctx)
+        } else {
+            invalidateLayout()
+        }
     }
 
     // MARK: - Layout Invalidation
