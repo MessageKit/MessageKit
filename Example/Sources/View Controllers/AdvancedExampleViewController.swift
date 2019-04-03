@@ -222,10 +222,10 @@ final class AdvancedExampleViewController: ChatViewController {
             fatalError("Ouch. nil data source for messages")
         }
         
-//        guard !isSectionReservedForTypingBubble(indexPath.section) else {
-//            return super.collectionView(collectionView, cellForItemAt: indexPath)
-//        }
-        
+        guard !isSectionReservedForTypingIndicator(indexPath.section) else {
+            return super.collectionView(collectionView, cellForItemAt: indexPath)
+        }
+
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         if case .custom = message.kind {
             let cell = messagesCollectionView.dequeueReusableCell(CustomCell.self, for: indexPath)

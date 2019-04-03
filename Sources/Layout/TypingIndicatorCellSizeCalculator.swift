@@ -1,18 +1,18 @@
 /*
  MIT License
- 
+
  Copyright (c) 2017-2019 MessageKit
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,43 +24,20 @@
 
 import UIKit
 
-/// A subclass of `MessageReusableView` used to display the typing indicator.
-open class TypingIndicatorView: MessageReusableView {
-    
-    // MARK: - Subviews
-    
-    public let typingBubble = TypingBubble()
-    
-    // MARK: - Initialization
-    
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupSubviews()
+open class TypingCellSizeCalculator: CellSizeCalculator {
+
+    open var height: CGFloat = 62
+
+    public init(layout: MessagesCollectionViewFlowLayout? = nil) {
+        super.init()
+        self.layout = layout
     }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupSubviews()
+
+    open override func sizeForItem(at indexPath: IndexPath) -> CGSize {
+        guard let layout = layout else { return .zero }
+        let collectionViewWidth = layout.collectionView?.bounds.width ?? 0
+        let contentInset = layout.collectionView?.contentInset ?? .zero
+        let inset = layout.sectionInset.horizontal + contentInset.horizontal
+        return CGSize(width: collectionViewWidth - inset, height: height)
     }
-    
-    open func setupSubviews() {
-        autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        addSubview(typingBubble)
-    }
-    
-    open override func prepareForReuse() {
-        super.prepareForReuse()
-        if typingBubble.isAnimating {
-            typingBubble.stopAnimating()
-            typingBubble.startAnimating()
-        }
-    }
-    
-    // MARK: - Layout
-    
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        typingBubble.frame = bounds
-    }
-    
 }

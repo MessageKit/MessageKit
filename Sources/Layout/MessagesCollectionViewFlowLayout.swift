@@ -29,22 +29,6 @@ import AVFoundation
 /// framework provided `MessageCollectionViewCell` subclasses.
 open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
-    /// There is a known issue where the layout invalidation
-    /// causes a fatal crash when setting the typing indicator
-    /// view to hidden. The cause has been isolated to
-    /// `UICollectionViewFlowLayoutInvalidationContext` which
-    /// causes an `IndexPath` with 0 indices to be passed into
-    /// `layoutAttributesForSupplementaryView` when accessing
-    /// `.section`. The current work around is to not use
-    /// `invalidateLayout(with: context)` for the case of
-    /// setting the typing indicator to hidden but rather
-    /// `invalidateLayout()`. This however is not efficent
-    /// and thus will not be the default behaviour. Instead,
-    /// if you experience the crash set this value to TRUE.
-    ///
-    /// The default value is FALSE
-    public var invalidateLayoutOnTypingIndicatorHidden: Bool = false
-
     open override class var layoutAttributesClass: AnyClass {
         return MessagesCollectionViewLayoutAttributes.self
     }
@@ -76,18 +60,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     public var itemWidth: CGFloat {
         guard let collectionView = collectionView else { return 0 }
         return collectionView.frame.width - sectionInset.left - sectionInset.right
-    }
-
-    open override var collectionViewContentSize: CGSize {
-        let size = super.collectionViewContentSize
-
-        guard !isTypingIndicatorViewHidden, let delegate = messagesCollectionView.messagesLayoutDelegate else { return size }
-        let typingIndicatorSize = delegate.typingIndicatorViewSize(in: messagesCollectionView)
-        let inset = delegate.typingIndicatorViewTopInset(in: messagesCollectionView) + 5
-        return CGSize(
-            width: size.width,
-            height: size.height + typingIndicatorSize.height + inset
-        )
     }
 
     public private(set) var isTypingIndicatorViewHidden: Bool = true
@@ -122,45 +94,31 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
 
     // MARK: - Typing Indicator API
 
-    /// Sets the typing indicator sate by inserting/deleting the `TypingIndicatorView`
+    /// Notifies the layout that the typing indicator will change state
     ///
     /// - Parameters:
     ///   - isHidden: A Boolean value that is to be the new state of the typing indicator
-    ///   - animated: A Boolean value determining if the insertion is to be animated
-    ///   - updates: A block of code that will be executed during `performBatchUpdates`
-    ///              when `animated` is `TRUE` or before the `completion` block executes
-    ///              when `animated` is `FALSE`
-    ///   - completion: A completion block to execute after the insertion/deletion
-    open func setTypingIndicatorViewHidden(_ isHidden: Bool, animated: Bool, whilePerforming updates: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
-
-        guard isTypingIndicatorViewHidden != isHidden, messagesCollectionView.numberOfSections > 0 else {
-            completion?(false)
-            return
-        }
+    open func setTypingIndicatorViewHidden(_ isHidden: Bool) {
         isTypingIndicatorViewHidden = isHidden
+    }
 
-        if animated {
-            messagesCollectionView.performBatchUpdates({ [weak self] in
-                self?.invalidateLayoutForTypingIndicatorChange()
-                updates?()
-            }, completion: completion)
-        } else {
-            invalidateLayoutForTypingIndicatorChange()
-            updates?()
-            completion?(true)
-        }
+    /// A method that by default checks if the section is the last in the
+    /// `messagesCollectionView` and that `isTypingIndicatorViewHidden`
+    /// is FALSE
+    ///
+    /// - Parameter section
+    /// - Returns: A Boolean indicating if the TypingIndicator should be presented at the given section
+    open func isSectionReservedForTypingIndicator(_ section: Int) -> Bool {
+        return !isTypingIndicatorViewHidden && section == messagesCollectionView.numberOfSections - 1
     }
 
     // MARK: - Attributes
 
     open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        guard var attributesArray = super.layoutAttributesForElements(in: rect) as? [MessagesCollectionViewLayoutAttributes] else {
+        guard let attributesArray = super.layoutAttributesForElements(in: rect) as? [MessagesCollectionViewLayoutAttributes] else {
             return nil
         }
         for attributes in attributesArray where attributes.representedElementCategory == .cell {
-            if let supplementaryAttributes = layoutAttributesForSupplementaryView(ofKind: MessagesCollectionView.elementKindTypingIndicator, at: attributes.indexPath) as? MessagesCollectionViewLayoutAttributes {
-                attributesArray.append(supplementaryAttributes)
-            }
             let cellSizeCalculator = cellSizeCalculatorForItem(at: attributes.indexPath)
             cellSizeCalculator.configure(attributes: attributes)
         }
@@ -176,55 +134,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             cellSizeCalculator.configure(attributes: attributes)
         }
         return attributes
-    }
-
-    open override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        switch elementKind {
-        case MessagesCollectionView.elementKindTypingIndicator:
-
-            guard shouldDisplayTypingIndicatorView(at: indexPath) else { return nil }
-            guard let delegate = messagesCollectionView.messagesLayoutDelegate else { return nil }
-            let size = delegate.typingIndicatorViewSize(in: messagesCollectionView)
-            guard size != .zero else { return nil }
-            let inset = delegate.typingIndicatorViewTopInset(in: messagesCollectionView)
-            let attributes = MessagesCollectionViewLayoutAttributes(forSupplementaryViewOfKind: elementKind, with: indexPath)
-
-            if let itemAttributes = layoutAttributesForItem(at: indexPath) {
-                attributes.frame = CGRect(x: itemAttributes.frame.origin.x,
-                                          y: itemAttributes.frame.maxY + inset,
-                                          width: size.width,
-                                          height: size.height)
-            }
-            return attributes
-        default:
-            return super.layoutAttributesForSupplementaryView(ofKind: elementKind, at: indexPath)
-        }
-    }
-
-    public func shouldDisplayTypingIndicatorView(at indexPath: IndexPath) -> Bool {
-        guard indexPath.count > 0 else {
-            fatalError("`indexPath` contained 0 indices, set `invalidateLayoutOnTypingIndicatorHidden` to `TRUE`")
-        }
-        let isLastIndexPath = indexPath.section == messagesCollectionView.numberOfSections - 1
-        return isLastIndexPath && !isTypingIndicatorViewHidden
-    }
-
-    private func indexPathForTypingIndicatorView() -> IndexPath {
-        let section = messagesCollectionView.numberOfSections - 2
-        return IndexPath(item: 0, section: max(section, 0))
-    }
-
-    private func invalidateLayoutForTypingIndicatorChange() {
-        if !isTypingIndicatorViewHidden || !invalidateLayoutOnTypingIndicatorHidden {
-            let ctx = UICollectionViewFlowLayoutInvalidationContext()
-            ctx.invalidateSupplementaryElements(
-                ofKind: MessagesCollectionView.elementKindTypingIndicator,
-                at: [indexPathForTypingIndicatorView()]
-            )
-            invalidateLayout(with: ctx)
-        } else {
-            invalidateLayout()
-        }
     }
 
     // MARK: - Layout Invalidation
@@ -245,20 +154,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         invalidateLayout()
     }
 
-    open override func indexPathsToInsertForSupplementaryView(ofKind elementKind: String) -> [IndexPath] {
-        guard elementKind == MessagesCollectionView.elementKindTypingIndicator else {
-            return super.indexPathsToInsertForSupplementaryView(ofKind: elementKind)
-        }
-        return [indexPathForTypingIndicatorView()]
-    }
-
-    open override func indexPathsToDeleteForSupplementaryView(ofKind elementKind: String) -> [IndexPath] {
-        guard elementKind == MessagesCollectionView.elementKindTypingIndicator else {
-            return super.indexPathsToDeleteForSupplementaryView(ofKind: elementKind)
-        }
-        return [indexPathForTypingIndicatorView()]
-    }
-
     // MARK: - Cell Sizing
 
     lazy open var textMessageSizeCalculator = TextMessageSizeCalculator(layout: self)
@@ -272,10 +167,17 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     lazy open var videoMessageSizeCalculator = MediaMessageSizeCalculator(layout: self)
     lazy open var locationMessageSizeCalculator = LocationMessageSizeCalculator(layout: self)
     lazy open var audioMessageSizeCalculator = AudioMessageSizeCalculator(layout: self)
+    lazy open var typingIndicatorSizeCalculator = TypingCellSizeCalculator(layout: self)
 
-    /// - Note:
-    ///   If you override this method, remember to call MessageLayoutDelegate's customCellSizeCalculator(for:at:in:) method for MessageKind.custom messages, if necessary
+    /// Note:
+    /// - If you override this method, remember to call MessageLayoutDelegate's
+    /// customCellSizeCalculator(for:at:in:) method for MessageKind.custom messages, if necessary
+    /// - If you are using the typing indicator be sure to return the `typingIndicatorSizeCalculator`
+    /// when the section is reserved for it, indicated by `isSectionReservedForTypingIndicator`
     open func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
+        if isSectionReservedForTypingIndicator(indexPath.section) {
+            return typingIndicatorSizeCalculator
+        }
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         switch message.kind {
         case .text:
