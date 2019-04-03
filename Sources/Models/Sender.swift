@@ -33,15 +33,25 @@ public struct Sender: SenderType {
     /// The unique String identifier for the sender.
     ///
     /// Note: This value must be unique across all senders.
-    public let id: String
+    public let senderId: String
+
+    @available(*, deprecated: 3.0.0, message: "`id` has been renamed `senderId` as defined in the `SenderType` protocol")
+    public var id: String {
+        return senderId
+    }
 
     /// The display name of a sender.
     public let displayName: String
 
     // MARK: - Intializers
 
-    public init(id: String, displayName: String) {
-        self.id = id
+    public init(senderId: String, displayName: String) {
+        self.senderId = senderId
         self.displayName = displayName
+    }
+
+    @available(*, deprecated: 3.0.0, message: "`id` has been renamed `senderId` as defined in the `SenderType` protocol")
+    public init(id: String, displayName: String) {
+        self.init(senderId: id, displayName: displayName)
     }
 }

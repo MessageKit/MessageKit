@@ -26,6 +26,6 @@ import Foundation
 import MessageKit
 
 struct MockUser: SenderType, Equatable {
-    var id: String
+    var senderId: String
     var displayName: String
 }

@@ -56,6 +56,25 @@ public protocol MessageLabelDelegate: AnyObject {
     /// - Parameters:
     ///   - transitInformation: The selected transit information.
     func didSelectTransitInformation(_ transitInformation: [String: String])
+    
+    /// Triggered when a tap occurs on a mention
+    ///
+    /// - Parameters:
+    ///   - mention: The selected mention
+    func didSelectMention(_ mention: String)
+    
+    /// Triggered when a tap occurs on a hashtag
+    ///
+    /// - Parameters:
+    ///   - mention: The selected hashtag
+    func didSelectHashtag(_ hashtag: String)
+
+    /// Triggered when a tap occurs on a custom regular expression
+    ///
+    /// - Parameters:
+    ///   - pattern: the pattern of the regular expression
+    ///   - match: part that match with the regular expression
+    func didSelectCustom(_ pattern: String, match: String?)
 
 }
 
@@ -70,5 +89,11 @@ public extension MessageLabelDelegate {
     func didSelectURL(_ url: URL) {}
     
     func didSelectTransitInformation(_ transitInformation: [String: String]) {}
+
+    func didSelectMention(_ mention: String) {}
+
+    func didSelectHashtag(_ hashtag: String) {}
+
+    func didSelectCustom(_ pattern: String, match: String?) {}
 
 }

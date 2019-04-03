@@ -277,7 +277,19 @@ extension ChatViewController: MessageLabelDelegate {
     func didSelectTransitInformation(_ transitInformation: [String: String]) {
         print("TransitInformation Selected: \(transitInformation)")
     }
-    
+
+    func didSelectHashtag(_ hashtag: String) {
+        print("Hashtag selected: \(hashtag)")
+    }
+
+    func didSelectMention(_ mention: String) {
+        print("Mention selected: \(mention)")
+    }
+
+    func didSelectCustom(_ pattern: String, match: String?) {
+        print("Custom data detector patter selected: \(pattern)")
+    }
+
 }
 
 // MARK: - MessageInputBarDelegate
