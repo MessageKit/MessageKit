@@ -130,7 +130,7 @@ open class MessagesCollectionView: UICollectionView {
     ///
     /// - Parameters:
     ///   - isHidden: A Boolean value that is to be the new state of the typing indicator
-    open func setTypingIndicatorViewHidden(_ isHidden: Bool) {
+    internal func setTypingIndicatorViewHidden(_ isHidden: Bool) {
         messagesCollectionViewFlowLayout.setTypingIndicatorViewHidden(isHidden)
     }
     
