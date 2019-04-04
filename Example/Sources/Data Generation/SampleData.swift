@@ -54,12 +54,12 @@ final internal class SampleData {
     lazy var senders = [nathan, steven, wu]
     
     lazy var contactsToShare = [
-        MockContactItem(firstName: "System"),
-        MockContactItem(firstName: "Nathan", lastName: "Tannar", emails: ["test@test.com"]),
-        MockContactItem(firstName: "Steven", lastName: "Deutsch", phoneNumbers: ["+1-202-555-0114", "+1-202-555-0145"]),
-        MockContactItem(firstName: "Wu", lastName: "Zhong", phoneNumbers: ["202-555-0158"]),
-        MockContactItem(phoneNumbers: ["+40 123 123"]),
-        MockContactItem(emails: ["test@test.com"])
+        MockContactItem(name: "System", initials: "S"),
+        MockContactItem(name: "Nathan Tannar", initials: "NT", emails: ["test@test.com"]),
+        MockContactItem(name: "Steven Deutsch", initials: "SD", phoneNumbers: ["+1-202-555-0114", "+1-202-555-0145"]),
+        MockContactItem(name: "Wu Zhong", initials: "WZ", phoneNumbers: ["202-555-0158"]),
+        MockContactItem(name:"+40 123 123", initials: "#", phoneNumbers: ["+40 123 123"]),
+        MockContactItem(name:"test@test.com", initials: "#", emails: ["test@test.com"])
     ]
 
     var currentSender: MockUser {

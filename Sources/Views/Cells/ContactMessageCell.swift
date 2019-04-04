@@ -111,7 +111,7 @@ open class ContactMessageCell: MessageContentCell {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
         // setup data
         guard case let .contact(contactItem) = message.kind else { fatalError("Failed decorate audio cell") }
-        nameLabel.text = contactItem.displayText
+        nameLabel.text = contactItem.displayName
         initialsLabel.text = contactItem.initials
         // setup constraints
         guard let dataSource = messagesCollectionView.messagesDataSource else {

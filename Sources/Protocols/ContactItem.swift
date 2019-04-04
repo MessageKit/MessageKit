@@ -27,47 +27,15 @@ import Foundation
 /// A protocol used to represent the data for a contact message.
 public protocol ContactItem {
     
-    /// contact first name
-    var firstName: String? { get }
+    /// contact displayed name
+    var displayName: String { get }
     
-    /// contact last name
-    var lastName: String? { get }
+    /// initials from contact first and last name
+    var initials: String { get }
     
     /// contact phone numbers
     var phoneNumbers: [String] { get }
     
     /// contact emails
     var emails: [String] { get }
-}
-
-/// Default Implementation to get contact name and initials
-public extension ContactItem {
-
-    /// Return full name from given contact item
-    /// By default the priority in computing contact name is:
-    /// 1. first + last name
-    /// 2. phone number
-    /// 3. email address
-    public var displayText: String {
-        var name = firstName ?? ""
-        if let lastName = lastName, lastName.count > 0 {
-            name += (name.count > 0) ? " \(lastName)" : lastName
-        }
-        if name.isEmpty { // if name is still 0 show first phone number
-            name = phoneNumbers.first ?? ""
-        }
-        if name.isEmpty { // if name is still 0 show first email
-            name = emails.first ?? ""
-        }
-        return name
-    }
-
-    /// Return name initials from given contact. If first and last name is not set it returns #
-    public var initials: String {
-        var initials = String(firstName?.prefix(1) ?? "") + String(lastName?.prefix(1) ?? "")
-        if initials.count == 0 {
-            initials = "#"
-        }
-        return initials
-    }
 }

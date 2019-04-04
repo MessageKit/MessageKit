@@ -50,7 +50,7 @@ open class ContactMessageSizeCalculator: MessageSizeCalculator {
         
         switch message.kind {
         case .contact(let item):
-            attributedText = NSAttributedString(string: item.displayText, attributes: [.font: contactLabelFont])
+            attributedText = NSAttributedString(string: item.displayName, attributes: [.font: contactLabelFont])
         default:
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }

@@ -29,7 +29,7 @@ import AVFoundation
 open class AudioMessageCell: MessageContentCell {
 
     /// The play button view to display on audio messages.
-    open lazy var playButton: UIButton = {
+    public lazy var playButton: UIButton = {
         let playButton = UIButton(type: .custom)
         let playImage = UIImage.messageKitImageWith(type: .play)
         let pauseImage = UIImage.messageKitImageWith(type: .pause)
@@ -39,7 +39,7 @@ open class AudioMessageCell: MessageContentCell {
     }()
 
     /// The time duration lable to display on audio messages.
-    open lazy var durationLabel: UILabel = {
+    public lazy var durationLabel: UILabel = {
         let durationLabel = UILabel(frame: CGRect.zero)
         durationLabel.textAlignment = .right
         durationLabel.font = UIFont.systemFont(ofSize: 14)
@@ -47,7 +47,7 @@ open class AudioMessageCell: MessageContentCell {
         return durationLabel
     }()
 
-    open lazy var progressView: UIProgressView = {
+    public lazy var progressView: UIProgressView = {
         let progressView = UIProgressView(progressViewStyle: .default)
         progressView.progress = 0.0
         return progressView

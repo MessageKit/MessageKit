@@ -72,14 +72,14 @@ private struct MockAudiotem: AudioItem {
 
 struct MockContactItem: ContactItem {
     
-    var firstName: String?
-    var lastName: String?
+    var displayName: String
+    var initials: String
     var phoneNumbers: [String]
     var emails: [String]
     
-    init(firstName: String? = nil, lastName: String? = nil, phoneNumbers: [String] = [], emails: [String] = []) {
-        self.firstName = firstName
-        self.lastName = lastName
+    init(name: String,  initials: String, phoneNumbers: [String] = [], emails: [String] = []) {
+        self.displayName = name
+        self.initials = initials
         self.phoneNumbers = phoneNumbers
         self.emails = emails
     }
