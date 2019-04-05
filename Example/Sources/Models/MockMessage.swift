@@ -77,7 +77,7 @@ struct MockContactItem: ContactItem {
     var phoneNumbers: [String]
     var emails: [String]
     
-    init(name: String,  initials: String, phoneNumbers: [String] = [], emails: [String] = []) {
+    init(name: String, initials: String, phoneNumbers: [String] = [], emails: [String] = []) {
         self.displayName = name
         self.initials = initials
         self.phoneNumbers = phoneNumbers

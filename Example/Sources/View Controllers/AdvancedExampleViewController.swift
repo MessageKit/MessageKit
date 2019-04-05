@@ -98,7 +98,6 @@ final class AdvancedExampleViewController: ChatViewController {
         layout?.setMessageIncomingAccessoryViewPosition(.messageBottom)
         layout?.setMessageOutgoingAccessoryViewSize(CGSize(width: 30, height: 30))
         layout?.setMessageOutgoingAccessoryViewPadding(HorizontalEdgeInsets(left: 0, right: 8))
-        layout?.setMessageOutgoingAccessoryViewPosition(.messageBottom)
 
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
@@ -221,7 +220,9 @@ final class AdvancedExampleViewController: ChatViewController {
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
             fatalError("Ouch. nil data source for messages")
         }
-        
+
+        // Very important to check this when overriding `cellForItemAt`
+        // Super method will handle returning the typing indicator cell
         guard !isSectionReservedForTypingIndicator(indexPath.section) else {
             return super.collectionView(collectionView, cellForItemAt: indexPath)
         }
@@ -274,7 +275,12 @@ extension AdvancedExampleViewController: MessagesDisplayDelegate {
 
     func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key: Any] {
         switch detector {
-        case .hashtag, .mention: return [.foregroundColor: UIColor.blue]
+        case .hashtag, .mention:
+            if isFromCurrentSender(message: message) {
+                return [.foregroundColor: UIColor.white]
+            } else {
+                return [.foregroundColor: UIColor.primaryColor]
+            }
         default: return MessageLabel.defaultAttributes
         }
     }
@@ -335,6 +341,9 @@ extension AdvancedExampleViewController: MessagesDisplayDelegate {
         // ensure any subviews are removed if not needed
         accessoryView.subviews.forEach { $0.removeFromSuperview() }
 
+        let shouldShow = Int.random(in: 0...10) == 0
+        guard shouldShow else { return }
+
         let button = UIButton(type: .infoLight)
         button.tintColor = .primaryColor
         accessoryView.addSubview(button)
@@ -371,7 +380,7 @@ extension AdvancedExampleViewController: MessagesDisplayDelegate {
     // MARK: - Audio Messages
 
     func audioTintColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return self.isFromCurrentSender(message: message) ? .white : UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+        return self.isFromCurrentSender(message: message) ? .white : .primaryColor
     }
 
     func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {

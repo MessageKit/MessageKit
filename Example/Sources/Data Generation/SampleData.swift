@@ -58,8 +58,8 @@ final internal class SampleData {
         MockContactItem(name: "Nathan Tannar", initials: "NT", emails: ["test@test.com"]),
         MockContactItem(name: "Steven Deutsch", initials: "SD", phoneNumbers: ["+1-202-555-0114", "+1-202-555-0145"]),
         MockContactItem(name: "Wu Zhong", initials: "WZ", phoneNumbers: ["202-555-0158"]),
-        MockContactItem(name:"+40 123 123", initials: "#", phoneNumbers: ["+40 123 123"]),
-        MockContactItem(name:"test@test.com", initials: "#", emails: ["test@test.com"])
+        MockContactItem(name: "+40 123 123", initials: "#", phoneNumbers: ["+40 123 123"]),
+        MockContactItem(name: "test@test.com", initials: "#", emails: ["test@test.com"])
     ]
 
     var currentSender: MockUser {

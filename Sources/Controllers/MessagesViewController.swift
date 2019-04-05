@@ -23,6 +23,7 @@
  */
 
 import UIKit
+import InputBarAccessoryView
 
 /// A subclass of `UIViewController` with a `MessagesCollectionView` object
 /// that is used to display conversation interfaces.
@@ -32,8 +33,8 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     /// The `MessagesCollectionView` managed by the messages view controller object.
     open var messagesCollectionView = MessagesCollectionView()
 
-    /// The `MessageInputBar` used as the `inputAccessoryView` in the view controller.
-    open var messageInputBar = MessageInputBar()
+    /// The `InputBarAccessoryView` used as the `inputAccessoryView` in the view controller.
+    open var messageInputBar = InputBarAccessoryView()
 
     /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
     /// bottom whenever the `InputTextView` begins editing.

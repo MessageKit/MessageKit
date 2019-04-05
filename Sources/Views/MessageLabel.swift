@@ -343,7 +343,7 @@ open class MessageLabel: UILabel {
 
         // Get all Checking Types of detectors, except for .custom because they contain their own regex
         let detectorCheckingTypes = enabledDetectors
-            .filter{ !$0.isCustom }
+            .filter { !$0.isCustom }
             .reduce(0) { $0 | $1.textCheckingType.rawValue }
         if detectorCheckingTypes > 0, let detector = try? NSDataDetector(types: detectorCheckingTypes) {
             let detectorMatches = detector.matches(in: text.string, options: [], range: range)
