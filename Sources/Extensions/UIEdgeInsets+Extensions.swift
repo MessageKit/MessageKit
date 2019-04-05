@@ -24,13 +24,15 @@
 
 import Foundation
 
-extension UIEdgeInsets {
+// swiftlint:disable explicit_acl
 
-    internal var vertical: CGFloat {
+internal extension UIEdgeInsets {
+
+    var vertical: CGFloat {
         return top + bottom
     }
 
-    internal var horizontal: CGFloat {
+    var horizontal: CGFloat {
         return left + right
     }
 

@@ -24,9 +24,9 @@
 
 import Foundation
 
-extension NSAttributedString {
+internal extension NSAttributedString {
 
-    internal func width(considering height: CGFloat) -> CGFloat {
+    func width(considering height: CGFloat) -> CGFloat { // swiftlint:disable:this explicit_acl
 
         let constraintBox = CGSize(width: .greatestFiniteMagnitude, height: height)
         let rect = self.boundingRect(with: constraintBox, options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil)

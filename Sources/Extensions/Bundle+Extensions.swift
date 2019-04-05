@@ -24,9 +24,9 @@
 
 import Foundation
 
-extension Bundle {
+internal extension Bundle {
 
-    internal static func messageKitAssetBundle() -> Bundle {
+    static func messageKitAssetBundle() -> Bundle { // swiftlint:disable:this explicit_acl
         let podBundle = Bundle(for: MessagesViewController.self)
         
         guard let resourceBundleUrl = podBundle.url(forResource: "MessageKitAssets", withExtension: "bundle") else {

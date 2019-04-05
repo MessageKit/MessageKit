@@ -111,7 +111,7 @@ public protocol MessagesDataSource: AnyObject {
     ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
     ///
     /// - Note:
-    ///   This method will call fatalError() on default. You must override this method if you are using MessageType.custom messages.
+    ///   This method will call fatalError() on default. You must override this method if you are using MessageKind.custom messages.
     func customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell
 }
 
