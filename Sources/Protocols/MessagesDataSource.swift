@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -28,17 +28,17 @@ import UIKit
 /// the data required by a `MessagesCollectionView`.
 public protocol MessagesDataSource: AnyObject {
 
-    /// The `Sender` of new messages in the `MessagesCollectionView`.
-    func currentSender() -> Sender
+    /// The `SenderType` of new messages in the `MessagesCollectionView`.
+    func currentSender() -> SenderType
 
-    /// A helper method to determine if a given message is from the current `Sender`.
+    /// A helper method to determine if a given message is from the current `SenderType`.
     ///
     /// - Parameters:
-    ///   - message: The message to check if it was sent by the current `Sender`.
+    ///   - message: The message to check if it was sent by the current `SenderType`.
     ///
     /// - Note:
     ///   The default implementation of this method checks for equality between
-    ///   the message's `Sender` and the current `Sender`.
+    ///   the message's `SenderType` and the current `SenderType`.
     func isFromCurrentSender(message: MessageType) -> Bool
 
     /// The message to be used for a `MessageCollectionViewCell` at the given `IndexPath`.
@@ -113,12 +113,20 @@ public protocol MessagesDataSource: AnyObject {
     /// - Note:
     ///   This method will call fatalError() on default. You must override this method if you are using MessageKind.custom messages.
     func customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell
+
+    /// Typing indicator cell used when the indicator is set to be shown
+    ///
+    /// - Parameters:
+    ///   - indexPath: The index path to dequeue the cell at
+    ///   - messagesCollectionView: The `MessagesCollectionView` the cell is to be rendered in
+    /// - Returns: A `UICollectionViewCell` that indicates a user is typing
+    func typingIndicator(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell
 }
 
 public extension MessagesDataSource {
 
     func isFromCurrentSender(message: MessageType) -> Bool {
-        return message.sender == currentSender()
+        return message.sender.senderId == currentSender().senderId
     }
 
     func numberOfItems(inSection section: Int, in messagesCollectionView: MessagesCollectionView) -> Int {
@@ -143,5 +151,9 @@ public extension MessagesDataSource {
     
     func customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell {
         fatalError(MessageKitError.customDataUnresolvedCell)
+    }
+
+    func typingIndicator(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell {
+        return messagesCollectionView.dequeueReusableCell(TypingIndicatorCell.self, for: indexPath)
     }
 }

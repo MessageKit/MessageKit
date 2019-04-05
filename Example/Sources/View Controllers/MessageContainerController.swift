@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -57,7 +57,7 @@ final class MessageContainerController: UIViewController {
         
         /// Add the `ConversationViewController` as a child view controller
         conversationViewController.willMove(toParent: self)
-        self.addChild(conversationViewController)
+        addChild(conversationViewController)
         view.addSubview(conversationViewController.view)
         conversationViewController.didMove(toParent: self)
         

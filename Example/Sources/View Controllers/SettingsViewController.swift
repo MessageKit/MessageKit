@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 
 import UIKit
 import MessageKit
-import MessageInputBar
 
 final internal class SettingsViewController: UITableViewController {
 
@@ -34,7 +33,7 @@ final internal class SettingsViewController: UITableViewController {
         return .lightContent
     }
     
-    let cells = ["Mock messages count", "Text Messages", "AttributedText Messages", "Photo Messages", "Video Messages", "Emoji Messages", "Location Messages", "Url Messages", "Phone Messages"]
+    let cells = ["Mock messages count", "Text Messages", "AttributedText Messages", "Photo Messages", "Video Messages", "Audio Messages", "Emoji Messages", "Location Messages", "Url Messages", "Phone Messages", "ShareContact Messages"]
     
     // MARK: - Picker
     
@@ -138,6 +137,7 @@ final internal class SettingsViewController: UITableViewController {
         let cell = cells[sender.tag]
                 
         UserDefaults.standard.set(sender.isOn, forKey: cell)
+        UserDefaults.standard.synchronize()
     }
 }
 

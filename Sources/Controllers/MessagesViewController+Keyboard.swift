@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
  */
 
 import Foundation
-import MessageInputBar
+import InputBarAccessoryView
 
 extension MessagesViewController { // swiftlint:disable:this explicit_acl explicit_top_level_acl
 
@@ -56,7 +56,7 @@ extension MessagesViewController { // swiftlint:disable:this explicit_acl explic
         guard !isMessagesControllerBeingDismissed else { return }
 
         guard let keyboardStartFrameInScreenCoords = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? CGRect else { return }
-        guard !keyboardStartFrameInScreenCoords.isEmpty else {
+        guard !keyboardStartFrameInScreenCoords.isEmpty || UIDevice.current.userInterfaceIdiom != .pad else {
             // WORKAROUND for what seems to be a bug in iPad's keyboard handling in iOS 11: we receive an extra spurious frame change
             // notification when undocking the keyboard, with a zero starting frame and an incorrect end frame. The workaround is to
             // ignore this notification.
@@ -112,7 +112,7 @@ extension MessagesViewController { // swiftlint:disable:this explicit_acl explic
         // see https://developer.apple.com/videos/play/wwdc2017/242/ for more details
         let intersection = messagesCollectionView.frame.intersection(keyboardFrame)
         
-        if intersection.isNull || intersection.maxY < messagesCollectionView.frame.maxY {
+        if intersection.isNull || (messagesCollectionView.frame.maxY - intersection.maxY) > 0.001 {
             // The keyboard is hidden, is a hardware one, or is undocked and does not cover the bottom of the collection view.
             // Note: intersection.maxY may be less than messagesCollectionView.frame.maxY when dealing with undocked keyboards.
             return max(0, additionalBottomInset - automaticallyAddedBottomInset)

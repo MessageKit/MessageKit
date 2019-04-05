@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -30,9 +30,9 @@ open class CustomMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     open lazy var customMessageSizeCalculator = CustomMessageSizeCalculator(layout: self)
     
     open override func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
-//        if isSectionReservedForTypingBubble(indexPath.section) {
-//            return typingMessageSizeCalculator
-//        }
+        if isSectionReservedForTypingIndicator(indexPath.section) {
+            return typingIndicatorSizeCalculator
+        }
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         if case .custom = message.kind {
             return customMessageSizeCalculator

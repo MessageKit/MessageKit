@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -109,6 +109,46 @@ public protocol MessageCellDelegate: MessageLabelDelegate {
     /// method `messageForItem(at:indexPath:messagesCollectionView)`.
     func didTapAccessoryView(in cell: MessageCollectionViewCell)
 
+    /// Triggered when a tap occurs on the play button from audio cell.
+    ///
+    /// - Parameters:
+    ///   - cell: The audio cell where the touch occurred.
+    ///
+    /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
+    /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
+    /// method `messageForItem(at:indexPath:messagesCollectionView)`.
+    func didTapPlayButton(in cell: AudioMessageCell)
+
+    /// Triggered when audio player start playing audio.
+    ///
+    /// - Parameters:
+    ///   - cell: The cell where the audio sound is playing.
+    ///
+    /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
+    /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
+    /// method `messageForItem(at:indexPath:messagesCollectionView)`.
+    func didStartAudio(in cell: AudioMessageCell)
+
+    /// Triggered when audio player pause audio.
+    ///
+    /// - Parameters:
+    ///   - cell: The cell where the audio sound is paused.
+    ///
+    /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
+    /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
+    /// method `messageForItem(at:indexPath:messagesCollectionView)`.
+    func didPauseAudio(in cell: AudioMessageCell)
+
+    /// Triggered when audio player stoped audio.
+    ///
+    /// - Parameters:
+    ///   - cell: The cell where the audio sound is stoped.
+    ///
+    /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
+    /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
+    /// method `messageForItem(at:indexPath:messagesCollectionView)`.
+    func didStopAudio(in cell: AudioMessageCell)
+
 }
 
 public extension MessageCellDelegate {
@@ -125,7 +165,16 @@ public extension MessageCellDelegate {
 
     func didTapMessageTopLabel(in cell: MessageCollectionViewCell) {}
 
+    func didTapPlayButton(in cell: AudioMessageCell) {}
+
+    func didStartAudio(in cell: AudioMessageCell) {}
+
+    func didPauseAudio(in cell: AudioMessageCell) {}
+
+    func didStopAudio(in cell: AudioMessageCell) {}
+
     func didTapMessageBottomLabel(in cell: MessageCollectionViewCell) {}
     
     func didTapAccessoryView(in cell: MessageCollectionViewCell) {}
+
 }

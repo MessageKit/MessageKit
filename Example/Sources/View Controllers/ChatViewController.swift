@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2017-2018 MessageKit
+Copyright (c) 2017-2019 MessageKit
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@ SOFTWARE.
 
 import UIKit
 import MessageKit
-import MessageInputBar
+import InputBarAccessoryView
 
 /// A base class for the example controllers
 class ChatViewController: MessagesViewController, MessagesDataSource {
@@ -33,6 +33,9 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         return .lightContent
     }
     
+    /// The `BasicAudioController` controll the AVAudioPlayer state (play, pause, stop) and udpate audio cell UI accordingly.
+    open lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
+
     var messageList: [MockMessage] = []
     
     let refreshControl = UIRefreshControl()
@@ -64,6 +67,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         MockSocket.shared.disconnect()
+        audioController.stopAnyOngoingPlaying()
     }
     
     func loadFirstMessages() {
@@ -107,7 +111,11 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     func configureMessageInputBar() {
         messageInputBar.delegate = self
         messageInputBar.inputTextView.tintColor = .primaryColor
-        messageInputBar.sendButton.tintColor = .primaryColor
+        messageInputBar.sendButton.setTitleColor(.primaryColor, for: .normal)
+        messageInputBar.sendButton.setTitleColor(
+            UIColor.primaryColor.withAlphaComponent(0.3),
+            for: .highlighted
+        )
     }
     
     // MARK: - Helpers
@@ -138,7 +146,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     
     // MARK: - MessagesDataSource
     
-    func currentSender() -> Sender {
+    func currentSender() -> SenderType {
         return SampleData.shared.currentSender
     }
     
@@ -202,11 +210,48 @@ extension ChatViewController: MessageCellDelegate {
     func didTapMessageBottomLabel(in cell: MessageCollectionViewCell) {
         print("Bottom label tapped")
     }
-    
+
+    func didTapPlayButton(in cell: AudioMessageCell) {
+        guard let indexPath = messagesCollectionView.indexPath(for: cell),
+            let message = messagesCollectionView.messagesDataSource?.messageForItem(at: indexPath, in: messagesCollectionView) else {
+                print("Failed to identify message when audio cell receive tap gesture")
+                return
+        }
+        guard audioController.state != .stopped else {
+            // There is no audio sound playing - prepare to start playing for given audio message
+            audioController.playSound(for: message, in: cell)
+            return
+        }
+        if audioController.playingMessage?.messageId == message.messageId {
+            // tap occur in the current cell that is playing audio sound
+            if audioController.state == .playing {
+                audioController.pauseSound(for: message, in: cell)
+            } else {
+                audioController.resumeSound()
+            }
+        } else {
+            // tap occur in a difference cell that the one is currently playing sound. First stop currently playing and start the sound for given message
+            audioController.stopAnyOngoingPlaying()
+            audioController.playSound(for: message, in: cell)
+        }
+    }
+
+    func didStartAudio(in cell: AudioMessageCell) {
+        print("Did start playing audio sound")
+    }
+
+    func didPauseAudio(in cell: AudioMessageCell) {
+        print("Did pause audio sound")
+    }
+
+    func didStopAudio(in cell: AudioMessageCell) {
+        print("Did stop audio sound")
+    }
+
     func didTapAccessoryView(in cell: MessageCollectionViewCell) {
         print("Accessory view tapped")
     }
-    
+
 }
 
 // MARK: - MessageLabelDelegate
@@ -232,28 +277,40 @@ extension ChatViewController: MessageLabelDelegate {
     func didSelectTransitInformation(_ transitInformation: [String: String]) {
         print("TransitInformation Selected: \(transitInformation)")
     }
-    
+
+    func didSelectHashtag(_ hashtag: String) {
+        print("Hashtag selected: \(hashtag)")
+    }
+
+    func didSelectMention(_ mention: String) {
+        print("Mention selected: \(mention)")
+    }
+
+    func didSelectCustom(_ pattern: String, match: String?) {
+        print("Custom data detector patter selected: \(pattern)")
+    }
+
 }
 
 // MARK: - MessageInputBarDelegate
 
-extension ChatViewController: MessageInputBarDelegate {
-    
-    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-          
+extension ChatViewController: InputBarAccessoryViewDelegate {
+
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+
         for component in inputBar.inputTextView.components {
-            
+
+            let user = SampleData.shared.currentSender
             if let str = component as? String {
-                let message = MockMessage(text: str, sender: currentSender(), messageId: UUID().uuidString, date: Date())
+                let message = MockMessage(text: str, user: user, messageId: UUID().uuidString, date: Date())
                 insertMessage(message)
             } else if let img = component as? UIImage {
-                let message = MockMessage(image: img, sender: currentSender(), messageId: UUID().uuidString, date: Date())
+                let message = MockMessage(image: img, user: user, messageId: UUID().uuidString, date: Date())
                 insertMessage(message)
             }
-            
+
         }
         inputBar.inputTextView.text = String()
         messagesCollectionView.scrollToBottom(animated: true)
     }
-    
 }

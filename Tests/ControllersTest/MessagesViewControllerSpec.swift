@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 
 import Quick
 import Nimble
-import MessageInputBar
+import InputBarAccessoryView
 @testable import MessageKit
 
 //swiftlint:disable function_body_length
@@ -51,7 +51,6 @@ final class MessagesViewControllerSpec: QuickSpec {
                 }
                 it("sets inputAccessoryView to the messageInputBar") {
                     expect(controller.inputAccessoryView).toNot(beNil())
-                    expect(controller.inputAccessoryView is MessageInputBar).to(beTrue())
                 }
                 it("has a MessagesCollectionView") {
                     expect(controller.messagesCollectionView).toNot(beNil())
