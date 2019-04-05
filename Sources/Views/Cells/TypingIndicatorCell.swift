@@ -22,27 +22,45 @@
  SOFTWARE.
  */
 
-import Foundation
+import UIKit
 
-/// Used to determine the `Horizontal` and `Vertical` position of
-// an `AccessoryView` in a `MessageCollectionViewCell`.
-public enum AccessoryPosition {
+/// A subclass of `MessageCollectionViewCell` used to display the typing indicator.
+open class TypingIndicatorCell: MessageCollectionViewCell {
     
-    /// Aligns the `AccessoryView`'s top edge to the cell's top edge.
-    case cellTop
+    // MARK: - Subviews
+
+    public var insets = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
     
-    /// Aligns the `AccessoryView`'s top edge to the `messageTopLabel`'s top edge.
-    case messageLabelTop
+    public let typingBubble = TypingBubble()
     
-    /// Aligns the `AccessoryView`'s top edge to the `MessageContainerView`'s top edge.
-    case messageTop
+    // MARK: - Initialization
     
-    /// Aligns the `AccessoryView` center to the `MessageContainerView` center.
-    case messageCenter
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupSubviews()
+    }
     
-    /// Aligns the `AccessoryView`'s bottom edge to the `MessageContainerView`s bottom edge.
-    case messageBottom
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupSubviews()
+    }
     
-    /// Aligns the `AccessoryView`'s bottom edge to the cell's bottom edge.
-    case cellBottom
+    open func setupSubviews() {
+        addSubview(typingBubble)
+    }
+    
+    open override func prepareForReuse() {
+        super.prepareForReuse()
+        if typingBubble.isAnimating {
+            typingBubble.stopAnimating()
+        }
+    }
+    
+    // MARK: - Layout
+    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        typingBubble.frame = bounds.inset(by: insets)
+    }
+    
 }

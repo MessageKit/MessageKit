@@ -22,27 +22,28 @@
  SOFTWARE.
  */
 
-import Foundation
+import UIKit
 
-/// Used to determine the `Horizontal` and `Vertical` position of
-// an `AccessoryView` in a `MessageCollectionViewCell`.
-public enum AccessoryPosition {
+/// A `UIView` subclass that maintains a mask to keep it fully circular
+open class BubbleCircle: UIView {
     
-    /// Aligns the `AccessoryView`'s top edge to the cell's top edge.
-    case cellTop
+    /// Lays out subviews and applys a circular mask to the layer
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.mask = roundedMask(corners: .allCorners, radius: bounds.height / 2)
+    }
     
-    /// Aligns the `AccessoryView`'s top edge to the `messageTopLabel`'s top edge.
-    case messageLabelTop
+    /// Returns a rounded mask of the view
+    ///
+    /// - Parameters:
+    ///   - corners: The corners to round
+    ///   - radius: The radius of curve
+    /// - Returns: A mask
+    open func roundedMask(corners: UIRectCorner, radius: CGFloat) -> CAShapeLayer {
+        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        return mask
+    }
     
-    /// Aligns the `AccessoryView`'s top edge to the `MessageContainerView`'s top edge.
-    case messageTop
-    
-    /// Aligns the `AccessoryView` center to the `MessageContainerView` center.
-    case messageCenter
-    
-    /// Aligns the `AccessoryView`'s bottom edge to the `MessageContainerView`s bottom edge.
-    case messageBottom
-    
-    /// Aligns the `AccessoryView`'s bottom edge to the cell's bottom edge.
-    case cellBottom
 }

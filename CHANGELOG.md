@@ -10,18 +10,26 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Changed
 
-- **Breaking Change** Add support for share contact. [#1013](https://github.com/MessageKit/MessageKit/pull/1013) by [@moldovaniosif](https://github.com/moldovaniosif)
+- **Breaking Change** Deprecated the Sender struct in favor of the `SenderType` protocol. 
+[#909](https://github.com/MessageKit/MessageKit/pull/909) by [@nathantannar4](https://github.com/nathantannar4)
 
 - **Breaking Change** Deprecated the Sender struct in favor of the `SenderType` protocol. [#909](https://github.com/MessageKit/MessageKit/pull/909) by [@nathantannar4](https://github.com/nathantannar4)
 
-- **Breaking Change**  Add support for audio messages [#892](https://github.com/MessageKit/MessageKit/pull/892) by [@moldovaniosif](https://github.com/moldovaniosif).  Added new protocols `AudioControllerDelegate`, `AudioItem` a new cell  `AudioMessageCell` and a new controller `BasicAudioController`. 
+- **Breaking Change**  Add support for audio messages. Added new protocols `AudioControllerDelegate`, `AudioItem` a new cell  `AudioMessageCell` and a new controller `BasicAudioController`. 
+[#892](https://github.com/MessageKit/MessageKit/pull/892) by [@moldovaniosif](https://github.com/moldovaniosif).
 
-- **Breaking Change** Moved `handleTapGesture` method to `MessageCollectionViewCell` [#950](https://github.com/MessageKit/MessageKit/pull/950) by [@nathantannar4](https://github.com/nathantannar4)
+- **Breaking Change** Moved `handleTapGesture` method to `MessageCollectionViewCell` 
+[#950](https://github.com/MessageKit/MessageKit/pull/950) by [@nathantannar4](https://github.com/nathantannar4)
 
 - **Breaking Change** Renamed function `layoutBottomLabel(with:)` to `layoutMessageBottomLabel(with:)` in `MessageContentCell` class.
 [#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
 
 ### Added
+
+- **Breaking Change** Add support for share contact. [#1013](https://github.com/MessageKit/MessageKit/pull/1013) by [@moldovaniosif](https://github.com/moldovaniosif)
+
+- Added typing indicator support, `func setTypingIndicatorViewHidden(_ isHidden: Bool, animated: Bool, whilePerforming updates: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil)`. Return a custom typing view by conforming to `MessagesDisplayDelegate` or use the [default appearance](https://github.com/nathantannar4/TypingIndicator). Customize the size with `MessagesLayoutDelegate` .
+[#989](https://github.com/MessageKit/MessageKit/pull/911) by [@nathantannar4](https://github.com/nathantannar4)
 
 - Added `AccessoryPosition` class.
 [#989](https://github.com/MessageKit/MessageKit/pull/989) by [@subdiox](https://github.com/subdiox)

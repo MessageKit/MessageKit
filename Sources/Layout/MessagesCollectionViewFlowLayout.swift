@@ -62,18 +62,18 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
         return collectionView.frame.width - sectionInset.left - sectionInset.right
     }
 
+    public private(set) var isTypingIndicatorViewHidden: Bool = true
+
     // MARK: - Initializers
 
     public override init() {
         super.init()
-        
         setupView()
         setupObserver()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
         setupView()
         setupObserver()
     }
@@ -90,6 +90,26 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     
     private func setupObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesCollectionViewFlowLayout.handleOrientationChange(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
+    }
+
+    // MARK: - Typing Indicator API
+
+    /// Notifies the layout that the typing indicator will change state
+    ///
+    /// - Parameters:
+    ///   - isHidden: A Boolean value that is to be the new state of the typing indicator
+    internal func setTypingIndicatorViewHidden(_ isHidden: Bool) {
+        isTypingIndicatorViewHidden = isHidden
+    }
+
+    /// A method that by default checks if the section is the last in the
+    /// `messagesCollectionView` and that `isTypingIndicatorViewHidden`
+    /// is FALSE
+    ///
+    /// - Parameter section
+    /// - Returns: A Boolean indicating if the TypingIndicator should be presented at the given section
+    open func isSectionReservedForTypingIndicator(_ section: Int) -> Bool {
+        return !isTypingIndicatorViewHidden && section == messagesCollectionView.numberOfSections - 1
     }
 
     // MARK: - Attributes
@@ -148,10 +168,17 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     lazy open var locationMessageSizeCalculator = LocationMessageSizeCalculator(layout: self)
     lazy open var audioMessageSizeCalculator = AudioMessageSizeCalculator(layout: self)
     lazy open var contactMessageSizeCalculator = ContactMessageSizeCalculator(layout: self)
+    lazy open var typingIndicatorSizeCalculator = TypingCellSizeCalculator(layout: self)
 
-    /// - Note:
-    ///   If you override this method, remember to call MessageLayoutDelegate's customCellSizeCalculator(for:at:in:) method for MessageKind.custom messages, if necessary
+    /// Note:
+    /// - If you override this method, remember to call MessageLayoutDelegate's
+    /// customCellSizeCalculator(for:at:in:) method for MessageKind.custom messages, if necessary
+    /// - If you are using the typing indicator be sure to return the `typingIndicatorSizeCalculator`
+    /// when the section is reserved for it, indicated by `isSectionReservedForTypingIndicator`
     open func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
+        if isSectionReservedForTypingIndicator(indexPath.section) {
+            return typingIndicatorSizeCalculator
+        }
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         switch message.kind {
         case .text:

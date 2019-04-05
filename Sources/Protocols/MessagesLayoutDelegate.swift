@@ -48,6 +48,25 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///   The default value returned by this method is a size of `GGSize.zero`.
     func footerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
+    /// Specifies the size to use for a typing indicator view.
+    ///
+    /// - Parameters:
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this view will be displayed.
+    ///
+    /// - Note:
+    ///   The default value returned by this method is the width of the `messagesCollectionView` and
+    ///   a height of 52.
+    func typingIndicatorViewSize(in messagesCollectionView: MessagesCollectionView) -> CGSize
+
+    /// Specifies the top inset to use for a typing indicator view.
+    ///
+    /// - Parameters:
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this view will be displayed.
+    ///
+    /// - Note:
+    ///   The default value returned by this method is a top inset of 15.
+    func typingIndicatorViewTopInset(in messagesCollectionView: MessagesCollectionView) -> CGFloat
+
     /// Specifies the height for the `MessageContentCell`'s top label.
     ///
     /// - Parameters:
@@ -112,6 +131,14 @@ public extension MessagesLayoutDelegate {
 
     func footerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
         return .zero
+    }
+
+    func typingIndicatorViewSize(in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return CGSize(width: messagesCollectionView.bounds.width, height: 48)
+    }
+
+    func typingIndicatorViewTopInset(in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 15
     }
 
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {

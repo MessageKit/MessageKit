@@ -113,6 +113,14 @@ public protocol MessagesDataSource: AnyObject {
     /// - Note:
     ///   This method will call fatalError() on default. You must override this method if you are using MessageKind.custom messages.
     func customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell
+
+    /// Typing indicator cell used when the indicator is set to be shown
+    ///
+    /// - Parameters:
+    ///   - indexPath: The index path to dequeue the cell at
+    ///   - messagesCollectionView: The `MessagesCollectionView` the cell is to be rendered in
+    /// - Returns: A `UICollectionViewCell` that indicates a user is typing
+    func typingIndicator(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell
 }
 
 public extension MessagesDataSource {
@@ -143,5 +151,9 @@ public extension MessagesDataSource {
     
     func customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell {
         fatalError(MessageKitError.customDataUnresolvedCell)
+    }
+
+    func typingIndicator(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell {
+        return messagesCollectionView.dequeueReusableCell(TypingIndicatorCell.self, for: indexPath)
     }
 }
