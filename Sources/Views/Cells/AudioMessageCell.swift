@@ -28,17 +28,11 @@ import AVFoundation
 /// A subclass of `MessageContentCell` used to display video and audio messages.
 open class AudioMessageCell: MessageContentCell {
 
-    /// The `ImageName` enum holds the names of default iamges used to decorate play button
-    public enum ImageName: String {
-        case play
-        case pause
-    }
-
     /// The play button view to display on audio messages.
     public lazy var playButton: UIButton = {
         let playButton = UIButton(type: .custom)
-        let playImage = AudioMessageCell.getImageWithName(.play)
-        let pauseImage = AudioMessageCell.getImageWithName(.pause)
+        let playImage = UIImage.messageKitImageWith(type: .play)
+        let pauseImage = UIImage.messageKitImageWith(type: .pause)
         playButton.setImage(playImage?.withRenderingMode(.alwaysTemplate), for: .normal)
         playButton.setImage(pauseImage?.withRenderingMode(.alwaysTemplate), for: .selected)
         return playButton
@@ -82,13 +76,6 @@ open class AudioMessageCell: MessageContentCell {
         progressView.progress = 0
         playButton.isSelected = false
         durationLabel.text = "0:00"
-    }
-
-    open class func getImageWithName(_ imageName: ImageName) -> UIImage? {
-        let assetBundle = Bundle.messageKitAssetBundle()
-        let imagePath = assetBundle.path(forResource: imageName.rawValue, ofType: "png", inDirectory: "Images")
-        let image = UIImage(contentsOfFile: imagePath ?? "")
-        return image
     }
 
     /// Handle tap gesture on contentView and its subviews.

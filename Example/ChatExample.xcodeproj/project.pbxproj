@@ -477,7 +477,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ChatExample/Pods-ChatExample-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-ChatExample/Pods-ChatExample-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/InputBarAccessoryView/InputBarAccessoryView.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
 			);
@@ -488,7 +488,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChatExample/Pods-ChatExample-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ChatExample/Pods-ChatExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		52AB594E03799821A66AFF18 /* [CP] Check Pods Manifest.lock */ = {

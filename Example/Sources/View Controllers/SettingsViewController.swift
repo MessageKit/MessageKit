@@ -33,7 +33,7 @@ final internal class SettingsViewController: UITableViewController {
         return .lightContent
     }
     
-    let cells = ["Mock messages count", "Text Messages", "AttributedText Messages", "Photo Messages", "Video Messages", "Audio Messages", "Emoji Messages", "Location Messages", "Url Messages", "Phone Messages"]
+    let cells = ["Mock messages count", "Text Messages", "AttributedText Messages", "Photo Messages", "Video Messages", "Audio Messages", "Emoji Messages", "Location Messages", "Url Messages", "Phone Messages", "ShareContact Messages"]
     
     // MARK: - Picker
     
@@ -137,6 +137,7 @@ final internal class SettingsViewController: UITableViewController {
         let cell = cells[sender.tag]
                 
         UserDefaults.standard.set(sender.isOn, forKey: cell)
+        UserDefaults.standard.synchronize()
     }
 }
 

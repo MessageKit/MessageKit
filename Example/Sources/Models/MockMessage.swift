@@ -70,6 +70,22 @@ private struct MockAudiotem: AudioItem {
 
 }
 
+struct MockContactItem: ContactItem {
+    
+    var displayName: String
+    var initials: String
+    var phoneNumbers: [String]
+    var emails: [String]
+    
+    init(name: String,  initials: String, phoneNumbers: [String] = [], emails: [String] = []) {
+        self.displayName = name
+        self.initials = initials
+        self.phoneNumbers = phoneNumbers
+        self.emails = emails
+    }
+    
+}
+
 internal struct MockMessage: MessageType {
 
     var messageId: String
@@ -124,4 +140,7 @@ internal struct MockMessage: MessageType {
         self.init(kind: .audio(audioItem), user: user, messageId: messageId, date: date)
     }
 
+    init(contact: MockContactItem, user: MockUser, messageId: String, date: Date) {
+        self.init(kind: .contact(contact), user: user, messageId: messageId, date: date)
+    }
 }
