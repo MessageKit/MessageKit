@@ -77,6 +77,7 @@ open class MessagesCollectionView: UICollectionView {
         register(MediaMessageCell.self)
         register(LocationMessageCell.self)
         register(AudioMessageCell.self)
+        register(ContactMessageCell.self)
         register(TypingIndicatorCell.self)
         register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
         register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter)

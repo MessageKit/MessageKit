@@ -43,6 +43,7 @@ final internal class SampleData {
         case Url
         case Phone
         case Custom
+        case ShareContact
     }
 
     let system = MockUser(senderId: "000000", displayName: "System")
@@ -51,6 +52,15 @@ final internal class SampleData {
     let wu = MockUser(senderId: "000003", displayName: "Wu Zhong")
 
     lazy var senders = [nathan, steven, wu]
+    
+    lazy var contactsToShare = [
+        MockContactItem(name: "System", initials: "S"),
+        MockContactItem(name: "Nathan Tannar", initials: "NT", emails: ["test@test.com"]),
+        MockContactItem(name: "Steven Deutsch", initials: "SD", phoneNumbers: ["+1-202-555-0114", "+1-202-555-0145"]),
+        MockContactItem(name: "Wu Zhong", initials: "WZ", phoneNumbers: ["202-555-0158"]),
+        MockContactItem(name:"+40 123 123", initials: "#", phoneNumbers: ["+40 123 123"]),
+        MockContactItem(name:"test@test.com", initials: "#", emails: ["test@test.com"])
+    ]
 
     var currentSender: MockUser {
         return nathan
@@ -142,8 +152,8 @@ final internal class SampleData {
         return messageTypes.random()!
     }
 
+    // swiftlint:disable cyclomatic_complexity
     func randomMessage(allowedSenders: [MockUser]) -> MockMessage {
-
         let randomNumberSender = Int(arc4random_uniform(UInt32(allowedSenders.count)))
         
         let uniqueID = NSUUID().uuidString
@@ -182,8 +192,12 @@ final internal class SampleData {
             return MockMessage(text: "123-456-7890", user: user, messageId: uniqueID, date: date)
         case .Custom:
             return MockMessage(custom: "Someone left the conversation", user: system, messageId: uniqueID, date: date)
+        case .ShareContact:
+            let randomContact = Int(arc4random_uniform(UInt32(contactsToShare.count)))
+            return MockMessage(contact: contactsToShare[randomContact], user: user, messageId: uniqueID, date: date)
         }
     }
+    // swiftlint:enable cyclomatic_complexity
 
     func getMessages(count: Int, completion: ([MockMessage]) -> Void) {
         var messages: [MockMessage] = []

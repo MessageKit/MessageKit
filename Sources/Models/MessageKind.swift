@@ -53,6 +53,9 @@ public enum MessageKind {
 
     /// An audio message.
     case audio(AudioItem)
+    
+    /// A contact message.
+    case contact(ContactItem)
 
     /// A custom message.
     /// - Note: Using this case requires that you implement the following methods and handle this case:
