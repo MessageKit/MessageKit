@@ -26,17 +26,7 @@
         alt="Contributions Welcome">
 </a>
 
-## Table of Contents
-
-* [**Goal**](#goals)📈
-* [**Contributing**](#contributing)
-* [**Requirements**](#requirements)
-* [**Code of Conduct**](https://github.com/MessageKit/MessageKit/blob/master/CODE_OF_CONDUCT.md)
-* [**What's Next**](#whats-next)
-* [**Contact**](#contact)
-* [**Apps using this library**](#apps-using-this-library)
-* [**License**](#license)
-
+## Screenshots
 
 ## Goals
 
@@ -49,29 +39,10 @@
 ## Vision
 See [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) for Goals, Scope, & Technical Considerations.
 
-
 ## Installation
 ### [CocoaPods](https://cocoapods.org/) **Recommended**
 ````ruby
 pod 'MessageKit'
-````
-
-If your project is still using Swift 3, you can add the following code to your Podfile:
-
-````ruby
-target 'TARGET_NAME' do
-    pod 'MessageKit'
-    ...
-    post_install do |installer|
-        installer.pods_project.targets.each do |target|
-            if target.name == 'MessageKit'
-                target.build_configurations.each do |config|
-                    config.build_settings['SWIFT_VERSION'] = '4.0'
-                end
-            end
-        end
-    end
-end
 ````
 
 ### [Carthage](https://github.com/Carthage/Carthage)

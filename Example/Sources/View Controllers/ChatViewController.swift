@@ -58,7 +58,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        MockSocket.shared.connect(with: [SampleData.shared.steven, SampleData.shared.wu])
+        MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
             .onNewMessage { [weak self] message in
                 self?.insertMessage(message)
         }
@@ -298,8 +298,37 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
 
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
 
-        for component in inputBar.inputTextView.components {
+        // Here we can parse for which substrings were autocompleted
+        let attributedText = messageInputBar.inputTextView.attributedText!
+        let range = NSRange(location: 0, length: attributedText.length)
+        attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { (_, range, _) in
 
+            let substring = attributedText.attributedSubstring(from: range)
+            let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
+            print("Autocompleted: `", substring, "` with context: ", context ?? [])
+        }
+
+        let components = inputBar.inputTextView.components
+        messageInputBar.inputTextView.text = String()
+        messageInputBar.invalidatePlugins()
+
+        // Send button activity animation
+        messageInputBar.sendButton.startAnimating()
+        messageInputBar.inputTextView.placeholder = "Sending..."
+        DispatchQueue.global(qos: .default).async {
+            // fake send request task
+            sleep(1)
+            DispatchQueue.main.async { [weak self] in
+                self?.messageInputBar.sendButton.stopAnimating()
+                self?.messageInputBar.inputTextView.placeholder = "Aa"
+                self?.insertMessages(components)
+                self?.messagesCollectionView.scrollToBottom(animated: true)
+            }
+        }
+    }
+
+    private func insertMessages(_ data: [Any]) {
+        for component in data {
             let user = SampleData.shared.currentSender
             if let str = component as? String {
                 let message = MockMessage(text: str, user: user, messageId: UUID().uuidString, date: Date())
@@ -308,9 +337,6 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 let message = MockMessage(image: img, user: user, messageId: UUID().uuidString, date: Date())
                 insertMessage(message)
             }
-
         }
-        inputBar.inputTextView.text = String()
-        messagesCollectionView.scrollToBottom(animated: true)
     }
 }
