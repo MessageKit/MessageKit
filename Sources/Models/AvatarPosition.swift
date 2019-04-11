@@ -26,7 +26,7 @@ import Foundation
 
 /// Used to determine the `Horizontal` and `Vertical` position of
 // an `AvatarView` in a `MessageCollectionViewCell`.
-public struct AvatarPosition {
+public struct AvatarPosition: Equatable {
     
     /// An enum representing the horizontal alignment of an `AvatarView`.
     public enum Horizontal {
@@ -89,9 +89,9 @@ public struct AvatarPosition {
 
 // MARK: - Equatable Conformance
 
-extension AvatarPosition: Equatable { // swiftlint:disable:this explicit_acl explicit_top_level_acl
+public extension AvatarPosition {
 
-    public static func == (lhs: AvatarPosition, rhs: AvatarPosition) -> Bool {
+    static func == (lhs: AvatarPosition, rhs: AvatarPosition) -> Bool {
         return lhs.vertical == rhs.vertical && lhs.horizontal == rhs.horizontal
     }
 
