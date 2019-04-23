@@ -198,6 +198,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         switch message.kind {
         case .text, .attributedText, .emoji:
             let cell = messagesCollectionView.dequeueReusableCell(TextMessageCell.self, for: indexPath)
+            cell.indexPath  = indexPath
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         case .photo, .video:

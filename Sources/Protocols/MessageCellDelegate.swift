@@ -94,7 +94,8 @@ public extension MessageCellDelegate {
 
     func didTapMessage(in cell: MessageCollectionViewCell) {}
 
-    func didTapAvatar(in cell: MessageCollectionViewCell) {}
+    //needed to identify, which avatar user tapped on
+    func didTapAvatar(in cell: MessageCollectionViewCell, indexPath : IndexPath?) {}
 
     func didTapCellTopLabel(in cell: MessageCollectionViewCell) {}
 

@@ -151,7 +151,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         case messageContainerView.frame.contains(touchLocation) && !cellContentView(canHandle: convert(touchLocation, to: messageContainerView)):
             delegate?.didTapMessage(in: self)
         case avatarView.frame.contains(touchLocation):
-            delegate?.didTapAvatar(in: self)
+            delegate?.didTapAvatar(in: self, indexPath : self.indexPath)
         case cellTopLabel.frame.contains(touchLocation):
             delegate?.didTapCellTopLabel(in: self)
         case messageTopLabel.frame.contains(touchLocation):

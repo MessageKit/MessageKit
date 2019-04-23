@@ -26,6 +26,10 @@ import UIKit
 
 /// A subclass of `UICollectionViewCell` to be used inside of a `MessagesCollectionView`.
 open class MessageCollectionViewCell: UICollectionViewCell {
+	
+
+	//to track of active IndexPath of cell
+	var indexPath : IndexPath?
 
     // MARK: - Initializers
 
