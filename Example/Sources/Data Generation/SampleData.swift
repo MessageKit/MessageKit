@@ -63,7 +63,7 @@ final internal class SampleData {
     ]
 
     var currentSender: MockUser {
-        return nathan
+        return steven
     }
 
     var now = Date()
@@ -156,7 +156,7 @@ final internal class SampleData {
     func randomMessage(allowedSenders: [MockUser]) -> MockMessage {
         let randomNumberSender = Int(arc4random_uniform(UInt32(allowedSenders.count)))
         
-        let uniqueID = NSUUID().uuidString
+        let uniqueID = UUID().uuidString
         let user = allowedSenders[randomNumberSender]
         let date = dateAddingRandomTime()
 
@@ -204,7 +204,11 @@ final internal class SampleData {
         // Disable Custom Messages
         UserDefaults.standard.set(false, forKey: "Custom Messages")
         for _ in 0..<count {
-            let message = randomMessage(allowedSenders: senders)
+            let uniqueID = UUID().uuidString
+            let user = senders.random()!
+            let date = dateAddingRandomTime()
+            let randomSentence = Lorem.sentence()
+            let message = MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date)
             messages.append(message)
         }
         completion(messages)
@@ -226,7 +230,11 @@ final internal class SampleData {
         // Disable Custom Messages
         UserDefaults.standard.set(false, forKey: "Custom Messages")
         for _ in 0..<count {
-            let message = randomMessage(allowedSenders: allowedSenders)
+            let uniqueID = UUID().uuidString
+            let user = senders.random()!
+            let date = dateAddingRandomTime()
+            let randomSentence = Lorem.sentence()
+            let message = MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date)
             messages.append(message)
         }
         completion(messages)

@@ -1,6 +1,9 @@
 <p>
   <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo">
 </p>
+<p>
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/TypingIndicator.png" title="MessageKit header">
+</p>
 
 [![CircleCI](https://circleci.com/gh/MessageKit/MessageKit.svg?style=svg)](https://circleci.com/gh/MessageKit/MessageKit)
 [![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
@@ -26,18 +29,6 @@
         alt="Contributions Welcome">
 </a>
 
-## Table of Contents
-
-* [**Goal**](#goals)📈
-* [**Contributing**](#contributing)
-* [**Requirements**](#requirements)
-* [**Code of Conduct**](https://github.com/MessageKit/MessageKit/blob/master/CODE_OF_CONDUCT.md)
-* [**What's Next**](#whats-next)
-* [**Contact**](#contact)
-* [**Apps using this library**](#apps-using-this-library)
-* [**License**](#license)
-
-
 ## Goals
 
 - Provide a :rotating_light:safe:rotating_light: environment for others to learn and grow through Open Source.
@@ -49,30 +40,14 @@
 ## Vision
 See [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) for Goals, Scope, & Technical Considerations.
 
-
 ## Installation
 ### [CocoaPods](https://cocoapods.org/) **Recommended**
 ````ruby
+# Swift 4.2
 pod 'MessageKit'
 ````
 
-If your project is still using Swift 3, you can add the following code to your Podfile:
-
-````ruby
-target 'TARGET_NAME' do
-    pod 'MessageKit'
-    ...
-    post_install do |installer|
-        installer.pods_project.targets.each do |target|
-            if target.name == 'MessageKit'
-                target.build_configurations.each do |config|
-                    config.build_settings['SWIFT_VERSION'] = '4.0'
-                end
-            end
-        end
-    end
-end
-````
+> If you are already using Swift 5, use the `3.0.0-swift5` branch until the offical release is made
 
 ### [Carthage](https://github.com/Carthage/Carthage)
 
@@ -82,42 +57,69 @@ To integrate MessageKit using Carthage, add the following to your `Cartfile`:
 github "MessageKit/MessageKit"
 ````
 
-### Manual
-
-#### Embedded Framework
-
-- `cd` to your project directory, initialize git, and Add MessageKit as a git [submodule](https://git-scm.com/docs/git-submodule) by running the following command:
-
-  ```bash
-  $ git submodule add https://github.com/MessageKit/MessageKit.git
-  ```
-
-- `cd` to the new `MessageKit` folder and trigger [carthage](https://github.com/Carthage/Carthage) update by the following command:
-
-  ```bash
-  $ carthage update --platform iOS
-  ```
-
-- Open `MessageKit` folder, and drag the `MessageKit.xcodeproj` into the Project Navigator of your application's Xcode project. It should appear nested underneath your application's blue project icon.
-- Select the `MessageKit.xcodeproj` in the Project Navigator and verify the deployment target matches that of your application target.
-- Next, select your application project in the Project Navigator (blue project icon), navigate to the target configuration window and select the application target.
-- In the tab bar at the top of that window, open the "General" panel.
-- Click on the `+` button under the "Embedded Binaries" section.
-- You will see two different `MessageKit.xcodeproj` folders each with two different versions of the `MessageKit.framework` nested inside a `Products` folder.
-- Select the top `MessageKit.framework` for iOS and the bottom one for OS X.
-- Voila! Now you can `import MessageKit` and build the project.
-
-
-## Getting Started
-
-Please have a look at the [Quick Start guide](https://github.com/MessageKit/MessageKit/blob/master/Documentation/QuickStart.md), the [FAQs](https://github.com/MessageKit/MessageKit/blob/master/Documentation/FAQs.md) and the [MessageInputBar docs](https://github.com/MessageKit/MessageKit/blob/master/Documentation/MessageInputBar.md).
-
-If you have any issues have a look at the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project or write a question with the "messagekit" tag on [Stack Overflow](https://stackoverflow.com/questions/tagged/messagekit).
-
+### [Manual]([https://github.com/MessageKit/MessageKit/blob/master/Documentation/MANUAL_INSTALLATION.md)
 
 ## Requirements
 
 - **iOS9** or later
+- **Swift 4.2** or later
+
+
+## Getting Started
+
+### Cell Structure
+<p>
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/CellStructure.png" title="CellStructure">
+</p>
+
+Each default cell is a subclass of [`MessageContentCell`](https://github.com/MessageKit/MessageKit/blob/master/Sources/Views/Cells/MessageContentCell.swift) which has 7 parts. From top down we have a: `cellTopLabel`, `messageTopLabel`, `messageContainerView`, `messageBottomLabel`, `cellBottomLabel` with the `avatarView` and `accessoryView` on either side respectively. Above we see the basic [`TextMessageCell`](https://github.com/MessageKit/MessageKit/blob/master/Sources/Views/Cells/TextMessageCell.swift) which uses a `MessageLabel` as its main content. 
+
+This structure will allow you to create a layout that suits your needs as you can customize the size, appearance and padding of each. If you need something more advanced you can implement a custom cell, which we show how to do in the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project.
+
+### MessageInputBar Structure
+<p>
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/InputBarAccessoryViewLayout.png" title="InputBarAccessoryViewLayout">
+</p>
+
+The `MessageInputBar`, derrived from [InputBarAccessoryView](https://github.com/nathantannar4/InputBarAccessoryView) is a flexible and robust way of creating any kind of input layout you wish. It is self-sizing which means as the user types it will grow to fill available space. It is centered around the `middleContentView` which by default holds the `InputTextView`. This is surrounded by `InputStackView`'s that will also grow in high based on the needs of their subviews `intrinsicContentSize`. See the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project for examples on how to taylor the layout for your own needs.
+
+### Guides
+
+Please have a look at the [Quick Start guide](https://github.com/MessageKit/MessageKit/blob/master/Documentation/QuickStart.md) and the [FAQs](https://github.com/MessageKit/MessageKit/blob/master/Documentation/FAQs.md).
+
+We recommend you start by looking at the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project or write a question with the "messagekit" tag on [Stack Overflow](https://stackoverflow.com/questions/tagged/messagekit). You can also look at previous issues here on GitHib with the **"Question"** tag.
+
+For more on how to use the MessageInputBar, see the dependency it is based on [InputBarAccessoryView](https://github.com/nathantannar4/InputBarAccessoryView). You can also see this [short guide]([https://github.com/MessageKit/MessageKit/blob/master/Documentation/MessageInputBar.md) 
+
+## Default Cells
+
+<p>
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/ExampleA.png" title="Example A" height=400>
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/ExampleB.png" title="Example B" height=400>
+</p>
+
+The type of cell rendered for a given message is based on the `MessageKind`
+
+```swift
+public enum MessageKind {
+    case text(String) // TextMessageCell
+    case attributedText(NSAttributedString) // TextMessageCell
+    case photo(MediaItem) // MediaMessageCell
+    case video(MediaItem) // MediaMessageCell
+    case location(LocationItem) // LocationMessageCell
+    case emoji(String) // TextMessageCell
+    case audio(AudioItem) // AudioMessageCell
+    case contact(ContactItem) // ContactMessageCell
+
+    /// A custom message.
+    /// - Note: Using this case requires that you implement the following methods and handle this case:
+    ///   - MessagesDataSource: customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell
+    ///   - MessagesLayoutDelegate: customCellSizeCalculator(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator
+    case custom(Any?)
+}
+```
+
+If you choose to use the `.custom` kind you are responsible for all of the cells layout. Any `UICollectionViewCell` can be returned for custom cells which means any of the styling you provide from the `MessageDisplayDelegate` will not effect your custom cell. Even if you subclass your cell from `MessageContentCell`.
 
 
 ## Contributing

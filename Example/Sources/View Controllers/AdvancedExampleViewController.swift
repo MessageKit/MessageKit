@@ -42,7 +42,7 @@ final class AdvancedExampleViewController: ChatViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        MockSocket.shared.connect(with: [SampleData.shared.steven, SampleData.shared.wu])
+        MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
             .onTypingStatus { [weak self] in
                 self?.setTypingIndicatorViewHidden(false)
             }.onNewMessage { [weak self] message in
@@ -147,7 +147,7 @@ final class AdvancedExampleViewController: ChatViewController {
                 let color = isOverLimit ? .red : UIColor(white: 0.6, alpha: 1)
                 item.setTitleColor(color, for: .normal)
         }
-        let bottomItems = [makeButton(named: "ic_at"), makeButton(named: "ic_hashtag"), makeButton(named: "ic_library"), .flexibleSpace, charCountButton]
+        let bottomItems = [.flexibleSpace, charCountButton]
         messageInputBar.middleContentViewPadding.bottom = 8
         messageInputBar.setStackViewItems(bottomItems, forStack: .bottom, animated: false)
 
@@ -340,6 +340,7 @@ extension AdvancedExampleViewController: MessagesDisplayDelegate {
         // Cells are reused, so only add a button here once. For real use you would need to
         // ensure any subviews are removed if not needed
         accessoryView.subviews.forEach { $0.removeFromSuperview() }
+        accessoryView.backgroundColor = .clear
 
         let shouldShow = Int.random(in: 0...10) == 0
         guard shouldShow else { return }

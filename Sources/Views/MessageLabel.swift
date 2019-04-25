@@ -461,6 +461,7 @@ open class MessageLabel: UILabel {
         return false
     }
 
+    // swiftlint:disable cyclomatic_complexity
     private func handleGesture(for detectorType: DetectorType, value: MessageTextCheckingType) {
         
         switch value {
@@ -499,6 +500,7 @@ open class MessageLabel: UILabel {
             }
         }
     }
+    // swiftlint:enable cyclomatic_complexity
     
     private func handleAddress(_ addressComponents: [String: String]) {
         delegate?.didSelectAddress(addressComponents)
