@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
    s.name = 'MessageKit'
-   s.version = '3.0.0-beta-swift4-2'
+   s.version = '3.0.0'
    s.license = { :type => "MIT", :file => "LICENSE.md" }
 
    s.summary = 'An elegant messages UI library for iOS.'
    s.homepage = 'https://github.com/MessageKit/MessageKit'
-   s.social_media_url = 'https://twitter.com/_SD10_'
-   s.author = { "Steven Deutsch" => "stevensdeutsch@yahoo.com" }
+   s.social_media_url = 'https://twitter.com/nathantannar4'
+   s.author = { "Nathan Tannar" => "nathantannar4@gmail.com" }
 
    s.source = { :git => 'https://github.com/MessageKit/MessageKit.git', :tag => s.version }
    s.source_files = 'Sources/**/*.swift'
