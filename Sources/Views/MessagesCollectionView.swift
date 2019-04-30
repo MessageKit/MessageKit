@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -36,10 +36,21 @@ open class MessagesCollectionView: UICollectionView {
 
     open weak var messageCellDelegate: MessageCellDelegate?
 
+    open var isTypingIndicatorHidden: Bool {
+        return messagesCollectionViewFlowLayout.isTypingIndicatorViewHidden
+    }
+
     private var indexPathForLastItem: IndexPath? {
         let lastSection = numberOfSections - 1
         guard lastSection >= 0, numberOfItems(inSection: lastSection) > 0 else { return nil }
         return IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
+    }
+
+    open var messagesCollectionViewFlowLayout: MessagesCollectionViewFlowLayout {
+        guard let layout = collectionViewLayout as? MessagesCollectionViewFlowLayout else {
+            fatalError(MessageKitError.layoutUsedOnForeignType)
+        }
+        return layout
     }
 
     // MARK: - Initializers
@@ -65,6 +76,9 @@ open class MessagesCollectionView: UICollectionView {
         register(TextMessageCell.self)
         register(MediaMessageCell.self)
         register(LocationMessageCell.self)
+        register(AudioMessageCell.self)
+        register(ContactMessageCell.self)
+        register(TypingIndicatorCell.self)
         register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
         register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter)
     }
@@ -82,7 +96,7 @@ open class MessagesCollectionView: UICollectionView {
         let touchLocation = gesture.location(in: self)
         guard let indexPath = indexPathForItem(at: touchLocation) else { return }
         
-        let cell = cellForItem(at: indexPath) as? MessageContentCell
+        let cell = cellForItem(at: indexPath) as? MessageCollectionViewCell
         cell?.handleTapGesture(gesture)
     }
 
@@ -111,14 +125,36 @@ open class MessagesCollectionView: UICollectionView {
         setContentOffset(newOffset, animated: false)
     }
 
+    // MARK: - Typing Indicator API
+
+    /// Notifies the layout that the typing indicator will change state
+    ///
+    /// - Parameters:
+    ///   - isHidden: A Boolean value that is to be the new state of the typing indicator
+    internal func setTypingIndicatorViewHidden(_ isHidden: Bool) {
+        messagesCollectionViewFlowLayout.setTypingIndicatorViewHidden(isHidden)
+    }
+    
+    /// A method that by default checks if the section is the last in the
+    /// `messagesCollectionView` and that `isTypingIndicatorViewHidden`
+    /// is FALSE
+    ///
+    /// - Parameter section
+    /// - Returns: A Boolean indicating if the TypingIndicator should be presented at the given section
+    public func isSectionReservedForTypingIndicator(_ section: Int) -> Bool {
+        return messagesCollectionViewFlowLayout.isSectionReservedForTypingIndicator(section)
+    }
+
+    // MARK: View Register/Dequeue
+
     /// Registers a particular cell using its reuse-identifier
     public func register<T: UICollectionViewCell>(_ cellClass: T.Type) {
         register(cellClass, forCellWithReuseIdentifier: String(describing: T.self))
     }
 
     /// Registers a reusable view for a specific SectionKind
-    public func register<T: UICollectionReusableView>(_ headerFooterClass: T.Type, forSupplementaryViewOfKind kind: String) {
-        register(headerFooterClass,
+    public func register<T: UICollectionReusableView>(_ reusableViewClass: T.Type, forSupplementaryViewOfKind kind: String) {
+        register(reusableViewClass,
                  forSupplementaryViewOfKind: kind,
                  withReuseIdentifier: String(describing: T.self))
     }

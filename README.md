@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo">
 </p>
 <p>
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/development/Assets/TypingIndicator.png" title="MessageKit header">
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/TypingIndicator.png" title="MessageKit header">
 </p>
 
 [![CircleCI](https://circleci.com/gh/MessageKit/MessageKit.svg?style=svg)](https://circleci.com/gh/MessageKit/MessageKit)
@@ -69,7 +69,7 @@ github "MessageKit/MessageKit"
 
 ### Cell Structure
 <p>
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/development/Assets/CellStructure.png" title="CellStructure">
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/CellStructure.png" title="CellStructure">
 </p>
 
 Each default cell is a subclass of [`MessageContentCell`](https://github.com/MessageKit/MessageKit/blob/master/Sources/Views/Cells/MessageContentCell.swift) which has 7 parts. From top down we have a: `cellTopLabel`, `messageTopLabel`, `messageContainerView`, `messageBottomLabel`, `cellBottomLabel` with the `avatarView` and `accessoryView` on either side respectively. Above we see the basic [`TextMessageCell`](https://github.com/MessageKit/MessageKit/blob/master/Sources/Views/Cells/TextMessageCell.swift) which uses a `MessageLabel` as its main content. 
@@ -78,7 +78,7 @@ This structure will allow you to create a layout that suits your needs as you ca
 
 ### MessageInputBar Structure
 <p>
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/development/Assets/InputBarAccessoryViewLayout.png" title="InputBarAccessoryViewLayout">
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/InputBarAccessoryViewLayout.png" title="InputBarAccessoryViewLayout">
 </p>
 
 The `MessageInputBar`, derrived from [InputBarAccessoryView](https://github.com/nathantannar4/InputBarAccessoryView) is a flexible and robust way of creating any kind of input layout you wish. It is self-sizing which means as the user types it will grow to fill available space. It is centered around the `middleContentView` which by default holds the `InputTextView`. This is surrounded by `InputStackView`'s that will also grow in high based on the needs of their subviews `intrinsicContentSize`. See the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project for examples on how to taylor the layout for your own needs.
@@ -94,8 +94,8 @@ For more on how to use the MessageInputBar, see the dependency it is based on [I
 ## Default Cells
 
 <p>
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/development/Assets/ExampleA.png" title="Example A" height=400>
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/development/Assets/ExampleB.png" title="Example B" height=400>
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/ExampleA.png" title="Example A" height=400>
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/ExampleB.png" title="Example B" height=400>
 </p>
 
 The type of cell rendered for a given message is based on the `MessageKind`

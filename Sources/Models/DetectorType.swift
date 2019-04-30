@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,19 +24,19 @@
 
 import Foundation
 
-public enum DetectorType {
+public enum DetectorType: Hashable {
 
     case address
     case date
     case phoneNumber
     case url
     case transitInformation
+    case custom(NSRegularExpression)
 
-    // MARK: - Not supported yet
-
-    //case mention
-    //case hashtag
-    //case custom
+    // swiftlint:disable force_try
+    public static var hashtag = DetectorType.custom(try! NSRegularExpression(pattern: "#[a-zA-Z0-9]{4,}", options: []))
+    public static var mention = DetectorType.custom(try! NSRegularExpression(pattern: "@[a-zA-Z0-9]{4,}", options: []))
+    // swiftlint:enable force_try
 
     internal var textCheckingType: NSTextCheckingResult.CheckingType {
         switch self {
@@ -45,6 +45,32 @@ public enum DetectorType {
         case .phoneNumber: return .phoneNumber
         case .url: return .link
         case .transitInformation: return .transitInformation
+        case .custom: return .regularExpression
+        }
+    }
+
+    /// Simply check if the detector type is a .custom
+    public var isCustom: Bool {
+        switch self {
+        case .custom: return true
+        default: return false
+        }
+    }
+
+    ///The hashValue of the `DetectorType` so we can conform to `Hashable` and be sorted.
+    public func hash(into: inout Hasher) {
+        into.combine(toInt())
+    }
+
+    /// Return an 'Int' value for each `DetectorType` type so `DetectorType` can conform to `Hashable`
+    private func toInt() -> Int {
+        switch self {
+        case .address: return 0
+        case .date: return 1
+        case .phoneNumber: return 2
+        case .url: return 3
+        case .transitInformation: return 4
+        case .custom(let regex): return regex.hashValue
         }
     }
 

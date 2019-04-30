@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -32,16 +32,16 @@ final class SenderSpec: QuickSpec {
         describe("equality between two Senders") {
             context("they have the same id ") {
                 it("should be equal") {
-                    let sender1 = Sender(id: "1", displayName: "Steven")
-                    let sender2 = Sender(id: "1", displayName: "Nathan")
-                    expect(sender1).to(equal(sender2))
+                    let sender1 = MockUser(senderId: "1", displayName: "Steven")
+                    let sender2 = MockUser(senderId: "1", displayName: "Nathan")
+                    expect(sender1.senderId == sender2.senderId).to(equal(true))
                 }
             }
             context("they have a different id") {
                 it("should not be equal") {
-                    let sender1 = Sender(id: "1", displayName: "Steven")
-                    let sender2 = Sender(id: "2", displayName: "Nathan")
-                    expect(sender1).toNot(equal(sender2))
+                    let sender1 = MockUser(senderId: "1", displayName: "Steven")
+                    let sender2 = MockUser(senderId: "2", displayName: "Nathan")
+                    expect(sender1.senderId == sender2.senderId).to(equal(false))
                 }
             }
         }

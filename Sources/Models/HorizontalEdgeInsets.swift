@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 import Foundation
 
 /// A varient of `UIEdgeInsets` that only has horizontal inset properties
-public struct HorizontalEdgeInsets {
+public struct HorizontalEdgeInsets: Equatable {
 
     public var left: CGFloat
     public var right: CGFloat
@@ -40,16 +40,16 @@ public struct HorizontalEdgeInsets {
     }
 }
 
-extension HorizontalEdgeInsets: Equatable { // swiftlint:disable:this explicit_acl explicit_top_level_acl
+public extension HorizontalEdgeInsets {
 
-    public static func == (lhs: HorizontalEdgeInsets, rhs: HorizontalEdgeInsets) -> Bool {
+    static func == (lhs: HorizontalEdgeInsets, rhs: HorizontalEdgeInsets) -> Bool {
         return lhs.left == rhs.left && lhs.right == rhs.right
     }
 }
 
 internal extension HorizontalEdgeInsets {
 
-    var horizontal: CGFloat { // swiftlint:disable:this explicit_acl
+    internal var horizontal: CGFloat {
         return left + right
     }
 }

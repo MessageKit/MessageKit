@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 import Foundation
 import CoreLocation
 import MessageKit
+import AVFoundation
 
 private struct CoordinateItem: LocationItem {
 
@@ -53,49 +54,93 @@ private struct ImageMediaItem: MediaItem {
 
 }
 
+private struct MockAudiotem: AudioItem {
+
+    var url: URL
+    var size: CGSize
+    var duration: Float
+
+    init(url: URL) {
+        self.url = url
+        self.size = CGSize(width: 160, height: 35)
+        // compute duration
+        let audioAsset = AVURLAsset(url: url)
+        self.duration = Float(CMTimeGetSeconds(audioAsset.duration))
+    }
+
+}
+
+struct MockContactItem: ContactItem {
+    
+    var displayName: String
+    var initials: String
+    var phoneNumbers: [String]
+    var emails: [String]
+    
+    init(name: String, initials: String, phoneNumbers: [String] = [], emails: [String] = []) {
+        self.displayName = name
+        self.initials = initials
+        self.phoneNumbers = phoneNumbers
+        self.emails = emails
+    }
+    
+}
+
 internal struct MockMessage: MessageType {
 
     var messageId: String
-    var sender: Sender
+    var sender: SenderType {
+        return user
+    }
     var sentDate: Date
     var kind: MessageKind
 
-    private init(kind: MessageKind, sender: Sender, messageId: String, date: Date) {
+    var user: MockUser
+
+    private init(kind: MessageKind, user: MockUser, messageId: String, date: Date) {
         self.kind = kind
-        self.sender = sender
+        self.user = user
         self.messageId = messageId
         self.sentDate = date
     }
     
-    init(custom: Any?, sender: Sender, messageId: String, date: Date) {
-        self.init(kind: .custom(custom), sender: sender, messageId: messageId, date: date)
+    init(custom: Any?, user: MockUser, messageId: String, date: Date) {
+        self.init(kind: .custom(custom), user: user, messageId: messageId, date: date)
     }
 
-    init(text: String, sender: Sender, messageId: String, date: Date) {
-        self.init(kind: .text(text), sender: sender, messageId: messageId, date: date)
+    init(text: String, user: MockUser, messageId: String, date: Date) {
+        self.init(kind: .text(text), user: user, messageId: messageId, date: date)
     }
 
-    init(attributedText: NSAttributedString, sender: Sender, messageId: String, date: Date) {
-        self.init(kind: .attributedText(attributedText), sender: sender, messageId: messageId, date: date)
+    init(attributedText: NSAttributedString, user: MockUser, messageId: String, date: Date) {
+        self.init(kind: .attributedText(attributedText), user: user, messageId: messageId, date: date)
     }
 
-    init(image: UIImage, sender: Sender, messageId: String, date: Date) {
+    init(image: UIImage, user: MockUser, messageId: String, date: Date) {
         let mediaItem = ImageMediaItem(image: image)
-        self.init(kind: .photo(mediaItem), sender: sender, messageId: messageId, date: date)
+        self.init(kind: .photo(mediaItem), user: user, messageId: messageId, date: date)
     }
 
-    init(thumbnail: UIImage, sender: Sender, messageId: String, date: Date) {
+    init(thumbnail: UIImage, user: MockUser, messageId: String, date: Date) {
         let mediaItem = ImageMediaItem(image: thumbnail)
-        self.init(kind: .video(mediaItem), sender: sender, messageId: messageId, date: date)
+        self.init(kind: .video(mediaItem), user: user, messageId: messageId, date: date)
     }
 
-    init(location: CLLocation, sender: Sender, messageId: String, date: Date) {
+    init(location: CLLocation, user: MockUser, messageId: String, date: Date) {
         let locationItem = CoordinateItem(location: location)
-        self.init(kind: .location(locationItem), sender: sender, messageId: messageId, date: date)
+        self.init(kind: .location(locationItem), user: user, messageId: messageId, date: date)
     }
 
-    init(emoji: String, sender: Sender, messageId: String, date: Date) {
-        self.init(kind: .emoji(emoji), sender: sender, messageId: messageId, date: date)
+    init(emoji: String, user: MockUser, messageId: String, date: Date) {
+        self.init(kind: .emoji(emoji), user: user, messageId: messageId, date: date)
     }
 
+    init(audioURL: URL, user: MockUser, messageId: String, date: Date) {
+        let audioItem = MockAudiotem(url: audioURL)
+        self.init(kind: .audio(audioItem), user: user, messageId: messageId, date: date)
+    }
+
+    init(contact: MockContactItem, user: MockUser, messageId: String, date: Date) {
+        self.init(kind: .contact(contact), user: user, messageId: messageId, date: date)
+    }
 }

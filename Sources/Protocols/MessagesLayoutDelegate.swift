@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -48,6 +48,25 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///   The default value returned by this method is a size of `GGSize.zero`.
     func footerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize
 
+    /// Specifies the size to use for a typing indicator view.
+    ///
+    /// - Parameters:
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this view will be displayed.
+    ///
+    /// - Note:
+    ///   The default value returned by this method is the width of the `messagesCollectionView` and
+    ///   a height of 52.
+    func typingIndicatorViewSize(in messagesCollectionView: MessagesCollectionView) -> CGSize
+
+    /// Specifies the top inset to use for a typing indicator view.
+    ///
+    /// - Parameters:
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this view will be displayed.
+    ///
+    /// - Note:
+    ///   The default value returned by this method is a top inset of 15.
+    func typingIndicatorViewTopInset(in messagesCollectionView: MessagesCollectionView) -> CGFloat
+
     /// Specifies the height for the `MessageContentCell`'s top label.
     ///
     /// - Parameters:
@@ -58,6 +77,17 @@ public protocol MessagesLayoutDelegate: AnyObject {
     /// - Note:
     ///   The default value returned by this method is zero.
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
+    
+    /// Specifies the height for the `MessageContentCell`'s bottom label.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed for this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// - Note:
+    ///   The default value returned by this method is zero.
+    func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
     
     /// Specifies the height for the message bubble's top label.
     ///
@@ -103,7 +133,19 @@ public extension MessagesLayoutDelegate {
         return .zero
     }
 
+    func typingIndicatorViewSize(in messagesCollectionView: MessagesCollectionView) -> CGSize {
+        return CGSize(width: messagesCollectionView.bounds.width, height: 48)
+    }
+
+    func typingIndicatorViewTopInset(in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 15
+    }
+
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 0
+    }
+    
+    func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return 0
     }
     

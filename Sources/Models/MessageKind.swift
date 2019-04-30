@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -51,6 +51,12 @@ public enum MessageKind {
     /// An emoji message.
     case emoji(String)
 
+    /// An audio message.
+    case audio(AudioItem)
+    
+    /// A contact message.
+    case contact(ContactItem)
+
     /// A custom message.
     /// - Note: Using this case requires that you implement the following methods and handle this case:
     ///   - MessagesDataSource: customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell
@@ -59,8 +65,6 @@ public enum MessageKind {
 
     // MARK: - Not supported yet
 
-//    case audio(Data)
-//
 //    case system(String)
 //    
 //    case placeholder

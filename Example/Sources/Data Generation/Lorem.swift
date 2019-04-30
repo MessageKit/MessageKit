@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -108,7 +108,7 @@ public class Lorem {
             return ""
         }
         
-        let result: String = self.words(nbWords: variable ? nbWords.randomize(variation: 40) : nbWords)
+        let result: String = words(nbWords: variable ? nbWords.randomize(variation: 40) : nbWords)
         
         return result.firstCapitalized + "."
     }

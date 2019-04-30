@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 
 import UIKit
 import MessageKit
-import MessageInputBar
 import SafariServices
 
 final internal class LaunchViewController: UITableViewController {
@@ -33,7 +32,7 @@ final internal class LaunchViewController: UITableViewController {
         return .lightContent
     }
 
-    let cells = ["Basic Example", "Advanced Example", "Embedded Example", "Settings", "Source Code", "Contributors"]
+    let cells = ["Basic Example", "Advanced Example", "Autocomplete Example", "Embedded Example", "Settings", "Source Code", "Contributors"]
     
     // MARK: - View Life Cycle
     
@@ -81,6 +80,8 @@ final internal class LaunchViewController: UITableViewController {
             navigationController?.pushViewController(BasicExampleViewController(), animated: true)
         case "Advanced Example":
             navigationController?.pushViewController(AdvancedExampleViewController(), animated: true)
+        case "Autocomplete Example":
+            navigationController?.pushViewController(AutocompleteExampleViewController(), animated: true)
         case "Embedded Example":
             navigationController?.pushViewController(MessageContainerController(), animated: true)
         case "Settings":

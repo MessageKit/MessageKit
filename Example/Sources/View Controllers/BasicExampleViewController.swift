@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -25,17 +25,13 @@
 import UIKit
 import MapKit
 import MessageKit
-import MessageInputBar
 
 final class BasicExampleViewController: ChatViewController {
-  
     override func configureMessageCollectionView() {
         super.configureMessageCollectionView()
-        
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
     }
-
 }
 
 // MARK: - MessagesDisplayDelegate
@@ -49,11 +45,14 @@ extension BasicExampleViewController: MessagesDisplayDelegate {
     }
     
     func detectorAttributes(for detector: DetectorType, and message: MessageType, at indexPath: IndexPath) -> [NSAttributedString.Key: Any] {
-        return MessageLabel.defaultAttributes
+        switch detector {
+        case .hashtag, .mention: return [.foregroundColor: UIColor.blue]
+        default: return MessageLabel.defaultAttributes
+        }
     }
     
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
-        return [.url, .address, .phoneNumber, .date, .transitInformation]
+        return [.url, .address, .phoneNumber, .date, .transitInformation, .mention, .hashtag]
     }
     
     // MARK: - All Messages
@@ -96,7 +95,17 @@ extension BasicExampleViewController: MessagesDisplayDelegate {
         
         return LocationMessageSnapshotOptions(showsBuildings: true, showsPointsOfInterest: true, span: MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10))
     }
+
+    // MARK: - Audio Messages
+
+    func audioTintColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
+        return isFromCurrentSender(message: message) ? .white : UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+    }
     
+    func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {
+        audioController.configureAudioCell(cell, message: message) // this is needed especily when the cell is reconfigure while is playing sound
+    }
+
 }
 
 // MARK: - MessagesLayoutDelegate
@@ -105,6 +114,10 @@ extension BasicExampleViewController: MessagesLayoutDelegate {
     
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return 18
+    }
+    
+    func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
+        return 17
     }
     
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {

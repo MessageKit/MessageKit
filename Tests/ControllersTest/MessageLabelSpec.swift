@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,90 @@ final class MessageLabelSpec: QuickSpec {
             messageLabel = MessageLabel()
         }
 
-//        describe("text recognized by a DetectorType") {
+        describe("text recognized by a DetectorType") {
+
+            let mentionsList = ["@julienkode", "@facebook", "@google", "@1234"]
+            let hashtagsList = ["#julienkode", "#facebook", "#google", "#1234"]
+
+            var detector: DetectorType!
+            var key: NSAttributedString.Key!
+            var attributes: [NSAttributedString.Key: Any]!
+
+            context("Mention detection") {
+
+                beforeEach {
+                    detector = DetectorType.mention
+                    key = NSAttributedString.Key(rawValue: "Mention")
+                    attributes = [key: "MentionDetected"]
+                }
+
+                it("match with multiples alpha and numerics") {
+                    let text = mentionsList.joined(separator: " #test ")
+                    self.set(text: text, and: [detector], with: attributes, to: messageLabel)
+                    let matches = self.extractCustomDetectors(for: detector, with: messageLabel)
+                    expect(matches).to(equal(mentionsList))
+                }
+
+                it("is invalid") {
+                    let invalids = hashtagsList.joined(separator: " ")
+                    self.set(text: invalids, and: [detector], with: attributes, to: messageLabel)
+                    let matches = self.extractCustomDetectors(for: detector, with: messageLabel)
+                    expect(matches.count).to(equal(0))
+                }
+
+            }
+
+            context("Hashtag detection") {
+
+                beforeEach {
+                    detector = DetectorType.hashtag
+                    key = NSAttributedString.Key(rawValue: "Hashtag")
+                    attributes = [key: "HashtagDetected"]
+                }
+
+                it("match with multiples alpha and numerics") {
+                    let text = hashtagsList.joined(separator: " @test ")
+                    self.set(text: text, and: [detector], with: attributes, to: messageLabel)
+                    let matches = self.extractCustomDetectors(for: detector, with: messageLabel)
+                    expect(matches).to(equal(hashtagsList))
+                }
+
+                it("is invalid") {
+                    let invalids = mentionsList.joined(separator: " ")
+                    self.set(text: invalids, and: [detector], with: attributes, to: messageLabel)
+                    let matches = self.extractCustomDetectors(for: detector, with: messageLabel)
+                    expect(matches.count).to(equal(0))
+                }
+
+            }
+
+            context("Custom detection") {
+
+                let shouldPass = ["1234", "1", "09876"]
+                let shouldFailed = ["abcd", "a", "!!!", ";"]
+
+                beforeEach {
+                    detector = DetectorType.custom(try! NSRegularExpression(pattern: "[0-9]+", options: .caseInsensitive))
+                    key = NSAttributedString.Key(rawValue: "Custom")
+                    attributes = [key: "CustomDetected"]
+                }
+
+                it("must match with one or more numerics") {
+                    let text = shouldPass.joined(separator: " ")
+                    self.set(text: text, and: [detector], with: attributes, to: messageLabel)
+                    let matches = self.extractCustomDetectors(for: detector, with: messageLabel)
+                    expect(matches).to(equal(shouldPass))
+                }
+
+                it("must failed with any non numerics characters") {
+                    let invalids = shouldFailed.joined(separator: " ")
+                    self.set(text: invalids, and: [detector], with: attributes, to: messageLabel)
+                    let matches = self.extractCustomDetectors(for: detector, with: messageLabel)
+                    expect(matches.count).to(equal(0))
+                }
+
+            }
+
 //            context("address detection is enabled") {
 //                it("applies addressAttributes to text") {
 //                    let expectedColor = UIColor.blue
@@ -83,7 +166,7 @@ final class MessageLabelSpec: QuickSpec {
 //                    expect(textFont).to(equal(expectedFont))
 //                }
 //            }
-//        }
+        }
 
         describe("the synchronization between text and attributedText") {
             context("when attributedText is set to a non-nil value") {
@@ -237,6 +320,44 @@ final class MessageLabelSpec: QuickSpec {
             }
         }
     }
+
+    // MARK: - Private helpers API for Detectors
+
+    /**
+     Takes a given `DetectorType` and extract matches from a `MessageLabel`
+
+     - Parameters: detector: `DetectorType` that you want to extract
+     - Parameters: label: `MessageLabel` where you want to get matches
+
+     - Returns: an array of `String` that contains all matches for the given detector
+     */
+    private func extractCustomDetectors(for detector: DetectorType, with label: MessageLabel) -> [String] {
+        guard let detection = label.rangesForDetectors[detector] else { return [] }
+        return detection.compactMap ({ (range, messageChecking) -> String? in
+            switch messageChecking {
+            case .custom(_, let match):
+                return match
+            default:
+                return nil
+            }
+        })
+    }
+
+    /**
+     Simply set text, detectors and attriutes to a given label
+
+     - Parameters: text: `String` that will be applied to the label
+     - Parameters: detector: `DetectorType` that you want to apply to the label
+     - Parameters: attributes: `[NSAttributedString.Key: Any]` that you want to apply to the label
+     - Parameters: label: `MessageLabel` that takes the previous parameters
+
+     */
+    private func set(text: String, and detectors: [DetectorType], with attributes: [NSAttributedString.Key: Any], to label: MessageLabel) {
+        label.mentionAttributes = attributes
+        label.enabledDetectors = detectors
+        label.text = text
+    }
+
 }
 
 // MARK: - Helpers
