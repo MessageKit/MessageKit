@@ -22,6 +22,6 @@ Pod::Spec.new do |s|
 
    s.requires_arc = true
 
-   s.dependency 'InputBarAccessoryView'
+   s.dependency 'InputBarAccessoryView', '~> 4.2.2'
 
 end
