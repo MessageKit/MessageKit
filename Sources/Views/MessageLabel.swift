@@ -503,35 +503,35 @@ open class MessageLabel: UILabel {
     // swiftlint:enable cyclomatic_complexity
     
     private func handleAddress(_ addressComponents: [String: String]) {
-        delegate?.didSelectAddress(addressComponents)
+        delegate?.didSelectAddress(addressComponents, in: self)
     }
     
     private func handleDate(_ date: Date) {
-        delegate?.didSelectDate(date)
+        delegate?.didSelectDate(date, in: self)
     }
     
     private func handleURL(_ url: URL) {
-        delegate?.didSelectURL(url)
+        delegate?.didSelectURL(url, in: self)
     }
     
     private func handlePhoneNumber(_ phoneNumber: String) {
-        delegate?.didSelectPhoneNumber(phoneNumber)
+        delegate?.didSelectPhoneNumber(phoneNumber, in: self)
     }
     
     private func handleTransitInformation(_ components: [String: String]) {
-        delegate?.didSelectTransitInformation(components)
+        delegate?.didSelectTransitInformation(components, in: self)
     }
 
     private func handleHashtag(_ hashtag: String) {
-        delegate?.didSelectHashtag(hashtag)
+        delegate?.didSelectHashtag(hashtag, in: self)
     }
 
     private func handleMention(_ mention: String) {
-        delegate?.didSelectMention(mention)
+        delegate?.didSelectMention(mention, in: self)
     }
 
     private func handleCustom(_ pattern: String, match: String) {
-        delegate?.didSelectCustom(pattern, match: match)
+        delegate?.didSelectCustom(pattern, match: match, in: self)
     }
 
 }
