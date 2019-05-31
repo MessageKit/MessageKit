@@ -258,35 +258,35 @@ extension ChatViewController: MessageCellDelegate {
 
 extension ChatViewController: MessageLabelDelegate {
     
-    func didSelectAddress(_ addressComponents: [String: String]) {
+    func didSelectAddress(_ addressComponents: [String: String], in messageLabel: MessageLabel) {
         print("Address Selected: \(addressComponents)")
     }
     
-    func didSelectDate(_ date: Date) {
+    func didSelectDate(_ date: Date, in messageLabel: MessageLabel) {
         print("Date Selected: \(date)")
     }
     
-    func didSelectPhoneNumber(_ phoneNumber: String) {
+    func didSelectPhoneNumber(_ phoneNumber: String, in messageLabel: MessageLabel) {
         print("Phone Number Selected: \(phoneNumber)")
     }
     
-    func didSelectURL(_ url: URL) {
+    func didSelectURL(_ url: URL, in messageLabel: MessageLabel) {
         print("URL Selected: \(url)")
     }
     
-    func didSelectTransitInformation(_ transitInformation: [String: String]) {
+    func didSelectTransitInformation(_ transitInformation: [String: String], in messageLabel: MessageLabel) {
         print("TransitInformation Selected: \(transitInformation)")
     }
 
-    func didSelectHashtag(_ hashtag: String) {
+    func didSelectHashtag(_ hashtag: String, in messageLabel: MessageLabel) {
         print("Hashtag selected: \(hashtag)")
     }
 
-    func didSelectMention(_ mention: String) {
+    func didSelectMention(_ mention: String, in messageLabel: MessageLabel) {
         print("Mention selected: \(mention)")
     }
 
-    func didSelectCustom(_ pattern: String, match: String?) {
+    func didSelectCustom(_ pattern: String, match: String?, in messageLabel: MessageLabel) {
         print("Custom data detector patter selected: \(pattern)")
     }
 
