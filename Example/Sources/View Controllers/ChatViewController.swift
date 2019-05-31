@@ -258,35 +258,35 @@ extension ChatViewController: MessageCellDelegate {
 
 extension ChatViewController: MessageLabelDelegate {
     
-    func didSelectAddress(_ addressComponents: [String: String], in messageLabel: MessageLabel) {
+    func didSelectAddress(_ addressComponents: [String: String], in messageLabel: MessageLabel, touchLocation: CGPoint) {
         print("Address Selected: \(addressComponents)")
     }
     
-    func didSelectDate(_ date: Date, in messageLabel: MessageLabel) {
+    func didSelectDate(_ date: Date, in messageLabel: MessageLabel, touchLocation: CGPoint) {
         print("Date Selected: \(date)")
     }
     
-    func didSelectPhoneNumber(_ phoneNumber: String, in messageLabel: MessageLabel) {
+    func didSelectPhoneNumber(_ phoneNumber: String, in messageLabel: MessageLabel, touchLocation: CGPoint) {
         print("Phone Number Selected: \(phoneNumber)")
     }
     
-    func didSelectURL(_ url: URL, in messageLabel: MessageLabel) {
+    func didSelectURL(_ url: URL, in messageLabel: MessageLabel, touchLocation: CGPoint) {
         print("URL Selected: \(url)")
     }
     
-    func didSelectTransitInformation(_ transitInformation: [String: String], in messageLabel: MessageLabel) {
+    func didSelectTransitInformation(_ transitInformation: [String: String], in messageLabel: MessageLabel, touchLocation: CGPoint) {
         print("TransitInformation Selected: \(transitInformation)")
     }
 
-    func didSelectHashtag(_ hashtag: String, in messageLabel: MessageLabel) {
+    func didSelectHashtag(_ hashtag: String, in messageLabel: MessageLabel, touchLocation: CGPoint) {
         print("Hashtag selected: \(hashtag)")
     }
 
-    func didSelectMention(_ mention: String, in messageLabel: MessageLabel) {
+    func didSelectMention(_ mention: String, in messageLabel: MessageLabel, touchLocation: CGPoint) {
         print("Mention selected: \(mention)")
     }
 
-    func didSelectCustom(_ pattern: String, match: String?, in messageLabel: MessageLabel) {
+    func didSelectCustom(_ pattern: String, match: String?, in messageLabel: MessageLabel, touchLocation: CGPoint) {
         print("Custom data detector patter selected: \(pattern)")
     }
 

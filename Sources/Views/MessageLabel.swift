@@ -50,7 +50,7 @@ open class MessageLabel: UILabel {
     }()
 
     internal lazy var rangesForDetectors: [DetectorType: [(NSRange, MessageTextCheckingType)]] = [:]
-    
+
     private var isConfiguring: Bool = false
 
     // MARK: - Public Properties
@@ -119,7 +119,7 @@ open class MessageLabel: UILabel {
         size.height += textInsets.vertical
         return size
     }
-    
+
     internal var messageLabelFont: UIFont?
 
     private var attributesNeedUpdate = false
@@ -139,11 +139,11 @@ open class MessageLabel: UILabel {
     open internal(set) var phoneNumberAttributes: [NSAttributedString.Key: Any] = defaultAttributes
 
     open internal(set) var urlAttributes: [NSAttributedString.Key: Any] = defaultAttributes
-    
+
     open internal(set) var transitInformationAttributes: [NSAttributedString.Key: Any] = defaultAttributes
-    
+
     open internal(set) var hashtagAttributes: [NSAttributedString.Key: Any] = defaultAttributes
-    
+
     open internal(set) var mentionAttributes: [NSAttributedString.Key: Any] = defaultAttributes
 
     open internal(set) var customAttributes: [NSRegularExpression: [NSAttributedString.Key: Any]] = [:]
@@ -201,7 +201,7 @@ open class MessageLabel: UILabel {
     }
 
     // MARK: - Public Methods
-    
+
     public func configure(block: () -> Void) {
         isConfiguring = true
         block()
@@ -222,19 +222,19 @@ open class MessageLabel: UILabel {
             setNeedsDisplay()
             return
         }
-        
+
         let style = paragraphStyle(for: newText)
         let range = NSRange(location: 0, length: newText.length)
-        
+
         let mutableText = NSMutableAttributedString(attributedString: newText)
         mutableText.addAttribute(.paragraphStyle, value: style, range: range)
-        
+
         if shouldParse {
             rangesForDetectors.removeAll()
             let results = parse(text: mutableText)
             setRangesForDetectors(in: results)
         }
-        
+
         for (detector, rangeTuples) in rangesForDetectors {
             if enabledDetectors.contains(detector) {
                 let attributes = detectorAttributes(for: detector)
@@ -250,17 +250,17 @@ open class MessageLabel: UILabel {
         if !isConfiguring { setNeedsDisplay() }
 
     }
-    
+
     private func paragraphStyle(for text: NSAttributedString) -> NSParagraphStyle {
         guard text.length > 0 else { return NSParagraphStyle() }
-        
+
         var range = NSRange(location: 0, length: text.length)
         let existingStyle = text.attribute(.paragraphStyle, at: 0, effectiveRange: &range) as? NSMutableParagraphStyle
         let style = existingStyle ?? NSMutableParagraphStyle()
-        
+
         style.lineBreakMode = lineBreakMode
         style.alignment = textAlignment
-        
+
         return style
     }
 
@@ -321,7 +321,7 @@ open class MessageLabel: UILabel {
             fatalError(MessageKitError.unrecognizedCheckingResult)
         }
     }
-    
+
     private func setupView() {
         numberOfLines = 0
         lineBreakMode = .byWordWrapping
@@ -378,7 +378,7 @@ open class MessageLabel: UILabel {
     private func setRangesForDetectors(in checkingResults: [NSTextCheckingResult]) {
 
         guard checkingResults.isEmpty == false else { return }
-        
+
         for result in checkingResults {
 
             switch result.resultType {
@@ -435,25 +435,25 @@ open class MessageLabel: UILabel {
         let index = layoutManager.glyphIndex(for: location, in: textContainer)
 
         let lineRect = layoutManager.lineFragmentUsedRect(forGlyphAt: index, effectiveRange: nil)
-        
+
         var characterIndex: Int?
-        
+
         if lineRect.contains(location) {
             characterIndex = layoutManager.characterIndexForGlyph(at: index)
         }
-        
+
         return characterIndex
 
     }
 
-  open func handleGesture(_ touchLocation: CGPoint) -> Bool {
+    open func handleGesture(_ touchLocation: CGPoint) -> Bool {
 
         guard let index = stringIndex(at: touchLocation) else { return false }
 
         for (detectorType, ranges) in rangesForDetectors {
             for (range, value) in ranges {
                 if range.contains(index) {
-                    handleGesture(for: detectorType, value: value)
+                    handleGesture(for: detectorType, value: value, touchLocation: touchLocation)
                     return true
                 }
             }
@@ -462,8 +462,8 @@ open class MessageLabel: UILabel {
     }
 
     // swiftlint:disable cyclomatic_complexity
-    private func handleGesture(for detectorType: DetectorType, value: MessageTextCheckingType) {
-        
+    private func handleGesture(for detectorType: DetectorType, value: MessageTextCheckingType, touchLocation: CGPoint) {
+
         switch value {
         case let .addressComponents(addressComponents):
             var transformedAddressComponents = [String: String]()
@@ -471,67 +471,67 @@ open class MessageLabel: UILabel {
             addressComponents.forEach { (key, value) in
                 transformedAddressComponents[key.rawValue] = value
             }
-            handleAddress(transformedAddressComponents)
+            handleAddress(transformedAddressComponents, touchLocation: touchLocation)
         case let .phoneNumber(phoneNumber):
             guard let phoneNumber = phoneNumber else { return }
-            handlePhoneNumber(phoneNumber)
+            handlePhoneNumber(phoneNumber, touchLocation: touchLocation)
         case let .date(date):
             guard let date = date else { return }
-            handleDate(date)
+            handleDate(date, touchLocation: touchLocation)
         case let .link(url):
             guard let url = url else { return }
-            handleURL(url)
+            handleURL(url, touchLocation: touchLocation)
         case let .transitInfoComponents(transitInformation):
             var transformedTransitInformation = [String: String]()
             guard let transitInformation = transitInformation else { return }
             transitInformation.forEach { (key, value) in
                 transformedTransitInformation[key.rawValue] = value
             }
-            handleTransitInformation(transformedTransitInformation)
+            handleTransitInformation(transformedTransitInformation, touchLocation: touchLocation)
         case let .custom(pattern, match):
             guard let match = match else { return }
             switch detectorType {
             case .hashtag:
-                handleHashtag(match)
+                handleHashtag(match, touchLocation: touchLocation)
             case .mention:
-                handleMention(match)
+                handleMention(match, touchLocation: touchLocation)
             default:
-                handleCustom(pattern, match: match)
+                handleCustom(pattern, match: match, touchLocation: touchLocation)
             }
         }
     }
     // swiftlint:enable cyclomatic_complexity
-    
-    private func handleAddress(_ addressComponents: [String: String]) {
-        delegate?.didSelectAddress(addressComponents, in: self)
-    }
-    
-    private func handleDate(_ date: Date) {
-        delegate?.didSelectDate(date, in: self)
-    }
-    
-    private func handleURL(_ url: URL) {
-        delegate?.didSelectURL(url, in: self)
-    }
-    
-    private func handlePhoneNumber(_ phoneNumber: String) {
-        delegate?.didSelectPhoneNumber(phoneNumber, in: self)
-    }
-    
-    private func handleTransitInformation(_ components: [String: String]) {
-        delegate?.didSelectTransitInformation(components, in: self)
+
+    private func handleAddress(_ addressComponents: [String: String], touchLocation: CGPoint) {
+        delegate?.didSelectAddress(addressComponents, in: self, touchLocation: touchLocation)
     }
 
-    private func handleHashtag(_ hashtag: String) {
-        delegate?.didSelectHashtag(hashtag, in: self)
+    private func handleDate(_ date: Date, touchLocation: CGPoint) {
+        delegate?.didSelectDate(date, in: self, touchLocation: touchLocation)
     }
 
-    private func handleMention(_ mention: String) {
-        delegate?.didSelectMention(mention, in: self)
+    private func handleURL(_ url: URL, touchLocation: CGPoint) {
+        delegate?.didSelectURL(url, in: self, touchLocation: touchLocation)
     }
 
-    private func handleCustom(_ pattern: String, match: String) {
-        delegate?.didSelectCustom(pattern, match: match, in: self)
+    private func handlePhoneNumber(_ phoneNumber: String, touchLocation: CGPoint) {
+        delegate?.didSelectPhoneNumber(phoneNumber, in: self, touchLocation: touchLocation)
+    }
+
+    private func handleTransitInformation(_ components: [String: String], touchLocation: CGPoint) {
+        delegate?.didSelectTransitInformation(components, in: self, touchLocation: touchLocation)
+    }
+
+    private func handleHashtag(_ hashtag: String, touchLocation: CGPoint) {
+        delegate?.didSelectHashtag(hashtag, in: self, touchLocation: touchLocation)
+    }
+
+    private func handleMention(_ mention: String, touchLocation: CGPoint) {
+        delegate?.didSelectMention(mention, in: self, touchLocation: touchLocation)
+    }
+
+    private func handleCustom(_ pattern: String, match: String, touchLocation: CGPoint) {
+        delegate?.didSelectCustom(pattern, match: match, in: self, touchLocation: touchLocation)
     }
 
 }
