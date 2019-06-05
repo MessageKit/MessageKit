@@ -83,7 +83,6 @@ open class AudioMessageCell: MessageContentCell {
     open func setupConstraints() {
         playButton.constraint(equalTo: CGSize(width: 25, height: 25))
         playButton.addConstraints(left: messageContainerView.leftAnchor, centerY: messageContainerView.centerYAnchor, leftConstant: 10)
-        activityIndicatorView.constraint(equalTo: CGSize(width: 25, height: 25))
         activityIndicatorView.addConstraints(centerY: playButton.centerYAnchor, centerX: playButton.centerXAnchor)
         durationLabel.addConstraints(right: messageContainerView.rightAnchor, centerY: messageContainerView.centerYAnchor, rightConstant: 15)
         progressView.addConstraints(left: playButton.rightAnchor, right: durationLabel.leftAnchor, centerY: messageContainerView.centerYAnchor, leftConstant: 5, rightConstant: 5)
