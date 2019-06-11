@@ -446,7 +446,7 @@ open class MessageLabel: UILabel {
 
     }
 
-  open func handleGesture(_ touchLocation: CGPoint) -> Bool {
+    open func handleGesture(_ touchLocation: CGPoint) -> Bool {
 
         guard let index = stringIndex(at: touchLocation) else { return false }
 
@@ -458,6 +458,15 @@ open class MessageLabel: UILabel {
                 }
             }
         }
+
+        if NSTextAttachment.character == (textStorage.string as NSString).character(at: index) {
+            let attributes = textStorage.attributes(at: index, effectiveRange: nil)
+            if let attachment = attributes[NSAttributedString.Key.attachment] as? NSTextAttachment {
+                delegate?.didSelectTextAttachment(attachment, characterIndex: index, in: self, touchLocation: touchLocation)
+                return true
+            }
+        }
+
         return false
     }
 
