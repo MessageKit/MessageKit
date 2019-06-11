@@ -4,6 +4,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## 3.0.0
 
+## Upcoming Release
+
+### Added
+- Support for tapping NSTextAttachments in MessageLabel. [#1090](https://github.com/MessageKit/MessageKit/pull/1090) by [@marcetcheverry](https://github.com/marcetcheverry)
+
 ### Dependency Changes
 
 - **Breaking Change** The dependency `MessageInputBar` was replaced with `InputBarAccessoryView`. As `MessageInputBar` was previously a fork this means no functionality has been lost but improvements and bug fixes will be present. `InputBarAccessoryView` has more of a following outside of `MessageKit` making its development faster than `MessageInputBar`. Maintaining two versions only increased the workload. You can find the changelog for `InputBarAccessoryView` [here](https://github.com/nathantannar4/InputBarAccessoryView/blob/master/CHANGELOG.md).
