@@ -47,7 +47,7 @@ open class AudioMessageCell: MessageContentCell {
         return durationLabel
     }()
 
-    private lazy var activityIndicatorView: UIActivityIndicatorView = {
+    public lazy var activityIndicatorView: UIActivityIndicatorView = {
         let activityIndicatorView = UIActivityIndicatorView(style: .gray)
         activityIndicatorView.hidesWhenStopped = true
         activityIndicatorView.isHidden = true
@@ -59,30 +59,13 @@ open class AudioMessageCell: MessageContentCell {
         progressView.progress = 0.0
         return progressView
     }()
-
-    public var isLoadingIndicatorVisible: Bool {
-        get {
-            return activityIndicatorView.isHidden
-        }
-        set {
-            if newValue {
-                activityIndicatorView.isHidden = false
-                playButton.isHidden = true
-                activityIndicatorView.startAnimating()
-            }
-            else {
-                playButton.isHidden = false
-                activityIndicatorView.stopAnimating()
-            }
-        }
-    }
     
     // MARK: - Methods
 
     /// Responsible for setting up the constraints of the cell's subviews.
     open func setupConstraints() {
         playButton.constraint(equalTo: CGSize(width: 25, height: 25))
-        playButton.addConstraints(left: messageContainerView.leftAnchor, centerY: messageContainerView.centerYAnchor, leftConstant: 10)
+        playButton.addConstraints(left: messageContainerView.leftAnchor, centerY: messageContainerView.centerYAnchor, leftConstant: 5)
         activityIndicatorView.addConstraints(centerY: playButton.centerYAnchor, centerX: playButton.centerXAnchor)
         durationLabel.addConstraints(right: messageContainerView.rightAnchor, centerY: messageContainerView.centerYAnchor, rightConstant: 15)
         progressView.addConstraints(left: playButton.rightAnchor, right: durationLabel.leftAnchor, centerY: messageContainerView.centerYAnchor, leftConstant: 5, rightConstant: 5)
