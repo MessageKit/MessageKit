@@ -290,6 +290,9 @@ extension ChatViewController: MessageLabelDelegate {
         print("Custom data detector patter selected: \(pattern)")
     }
 
+    func didSelectTextAttachment(_ textAttachment: NSTextAttachment, characterIndex: Int, in messageLabel: MessageLabel, touchLocation: CGPoint) {
+        print("Text attachment selected: \(textAttachment)")
+    }
 }
 
 // MARK: - MessageInputBarDelegate

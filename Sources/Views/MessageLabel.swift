@@ -459,12 +459,10 @@ open class MessageLabel: UILabel {
             }
         }
 
-        if NSTextAttachment.character == (textStorage.string as NSString).character(at: index) {
-            let attributes = textStorage.attributes(at: index, effectiveRange: nil)
-            if let attachment = attributes[NSAttributedString.Key.attachment] as? NSTextAttachment {
-                delegate?.didSelectTextAttachment(attachment, characterIndex: index, in: self, touchLocation: touchLocation)
-                return true
-            }
+        let attributes = textStorage.attributes(at: index, effectiveRange: nil)
+        if let attachment = attributes[NSAttributedString.Key.attachment] as? NSTextAttachment {
+            delegate?.didSelectTextAttachment(attachment, characterIndex: index, in: self, touchLocation: touchLocation)
+            return true
         }
 
         return false
