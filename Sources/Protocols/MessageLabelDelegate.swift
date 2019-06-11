@@ -31,49 +31,65 @@ public protocol MessageLabelDelegate: AnyObject {
     ///
     /// - Parameters:
     ///   - addressComponents: The components of the selected address.
+    ///   - messageLabel: The `MessageLabel` in which the tap happened.
+    ///   - touchLocation: The location in the `MessageLabel` in which the tap happened.
     func didSelectAddress(_ addressComponents: [String: String], in messageLabel: MessageLabel, touchLocation: CGPoint)
 
     /// Triggered when a tap occurs on a detected date.
     ///
     /// - Parameters:
     ///   - date: The selected date.
+    ///   - messageLabel: The `MessageLabel` in which the tap happened.
+    ///   - touchLocation: The location in the `MessageLabel` in which the tap happened.
     func didSelectDate(_ date: Date, in messageLabel: MessageLabel, touchLocation: CGPoint)
 
     /// Triggered when a tap occurs on a detected phone number.
     ///
     /// - Parameters:
     ///   - phoneNumber: The selected phone number.
+    ///   - messageLabel: The `MessageLabel` in which the tap happened.
+    ///   - touchLocation: The location in the `MessageLabel` in which the tap happened.
     func didSelectPhoneNumber(_ phoneNumber: String, in messageLabel: MessageLabel, touchLocation: CGPoint)
 
     /// Triggered when a tap occurs on a detected URL.
     ///
     /// - Parameters:
     ///   - url: The selected URL.
+    ///   - messageLabel: The `MessageLabel` in which the tap happened.
+    ///   - touchLocation: The location in the `MessageLabel` in which the tap happened.
     func didSelectURL(_ url: URL, in messageLabel: MessageLabel, touchLocation: CGPoint)
 
     /// Triggered when a tap occurs on detected transit information.
     ///
     /// - Parameters:
     ///   - transitInformation: The selected transit information.
+    ///   - messageLabel: The `MessageLabel` in which the tap happened.
+    ///   - touchLocation: The location in the `MessageLabel` in which the tap happened.
     func didSelectTransitInformation(_ transitInformation: [String: String], in messageLabel: MessageLabel, touchLocation: CGPoint)
 
     /// Triggered when a tap occurs on a mention
     ///
     /// - Parameters:
-    ///   - mention: The selected mention
+    ///   - mention: The selected mention.
+    ///   - messageLabel: The `MessageLabel` in which the tap happened.
+    ///   - touchLocation: The location in the `MessageLabel` in which the tap happened.
     func didSelectMention(_ mention: String, in messageLabel: MessageLabel, touchLocation: CGPoint)
 
     /// Triggered when a tap occurs on a hashtag
     ///
     /// - Parameters:
-    ///   - mention: The selected hashtag
+    ///   - mention: The selected hashtag.
+    ///   - messageLabel: The `MessageLabel` in which the tap happened.
+    ///   - touchLocation: The location in the `MessageLabel` in which the tap happened.
     func didSelectHashtag(_ hashtag: String, in messageLabel: MessageLabel, touchLocation: CGPoint)
 
     /// Triggered when a tap occurs on a custom regular expression
     ///
     /// - Parameters:
-    ///   - pattern: the pattern of the regular expression
-    ///   - match: part that match with the regular expression
+    ///   - pattern: the pattern of the regular expression.
+    ///   - match: part that match with the regular expression.
+    ///   - messageLabel: The `MessageLabel` in which the tap happened.
+    ///   - touchLocation: The location in the `MessageLabel` in which the tap happened.
     func didSelectCustom(_ pattern: String, match: String?, in messageLabel: MessageLabel, touchLocation: CGPoint)
 
 }
