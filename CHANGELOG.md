@@ -2,12 +2,12 @@
 
 The changelog for `MessageKit`. Also see the [releases](https://github.com/MessageKit/MessageKit/releases) on GitHub.
 
-## 3.0.0
-
 ## Upcoming Release
 
 ### Added
 - Support for tapping NSTextAttachments in MessageLabel. [#1090](https://github.com/MessageKit/MessageKit/pull/1090) by [@marcetcheverry](https://github.com/marcetcheverry)
+
+## 3.0.0
 
 ### Dependency Changes
 
