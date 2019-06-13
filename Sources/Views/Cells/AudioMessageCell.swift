@@ -47,18 +47,26 @@ open class AudioMessageCell: MessageContentCell {
         return durationLabel
     }()
 
+    public lazy var activityIndicatorView: UIActivityIndicatorView = {
+        let activityIndicatorView = UIActivityIndicatorView(style: .gray)
+        activityIndicatorView.hidesWhenStopped = true
+        activityIndicatorView.isHidden = true
+        return activityIndicatorView
+    }()
+
     public lazy var progressView: UIProgressView = {
         let progressView = UIProgressView(progressViewStyle: .default)
         progressView.progress = 0.0
         return progressView
     }()
-
+    
     // MARK: - Methods
 
     /// Responsible for setting up the constraints of the cell's subviews.
     open func setupConstraints() {
         playButton.constraint(equalTo: CGSize(width: 25, height: 25))
         playButton.addConstraints(left: messageContainerView.leftAnchor, centerY: messageContainerView.centerYAnchor, leftConstant: 5)
+        activityIndicatorView.addConstraints(centerY: playButton.centerYAnchor, centerX: playButton.centerXAnchor)
         durationLabel.addConstraints(right: messageContainerView.rightAnchor, centerY: messageContainerView.centerYAnchor, rightConstant: 15)
         progressView.addConstraints(left: playButton.rightAnchor, right: durationLabel.leftAnchor, centerY: messageContainerView.centerYAnchor, leftConstant: 5, rightConstant: 5)
     }
@@ -66,6 +74,7 @@ open class AudioMessageCell: MessageContentCell {
     open override func setupSubviews() {
         super.setupSubviews()
         messageContainerView.addSubview(playButton)
+        messageContainerView.addSubview(activityIndicatorView)
         messageContainerView.addSubview(durationLabel)
         messageContainerView.addSubview(progressView)
         setupConstraints()
@@ -75,6 +84,8 @@ open class AudioMessageCell: MessageContentCell {
         super.prepareForReuse()
         progressView.progress = 0
         playButton.isSelected = false
+        activityIndicatorView.stopAnimating()
+        playButton.isHidden = false
         durationLabel.text = "0:00"
     }
 
