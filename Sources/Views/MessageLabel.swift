@@ -223,12 +223,28 @@ open class MessageLabel: UILabel {
             return
         }
         
-        let style = paragraphStyle(for: newText)
         let range = NSRange(location: 0, length: newText.length)
         
         let mutableText = NSMutableAttributedString(attributedString: newText)
-        mutableText.addAttribute(.paragraphStyle, value: style, range: range)
         
+        var paragraphStyleFound = false
+        mutableText.enumerateAttribute(.paragraphStyle,
+                                       in: range,
+                                       options: []) { (style, attributeRange, _) in
+                                        if let style = style as? NSMutableParagraphStyle {
+                                            paragraphStyleFound = true
+                                            style.lineBreakMode = lineBreakMode
+                                            style.alignment = textAlignment
+                                        }
+        }
+
+        if !paragraphStyleFound {
+            let style = NSMutableParagraphStyle()
+            style.lineBreakMode = lineBreakMode
+            style.alignment = textAlignment
+            mutableText.addAttribute(.paragraphStyle, value: style, range: range)
+        }
+
         if shouldParse {
             rangesForDetectors.removeAll()
             let results = parse(text: mutableText)
@@ -251,19 +267,6 @@ open class MessageLabel: UILabel {
 
     }
     
-    private func paragraphStyle(for text: NSAttributedString) -> NSParagraphStyle {
-        guard text.length > 0 else { return NSParagraphStyle() }
-        
-        var range = NSRange(location: 0, length: text.length)
-        let existingStyle = text.attribute(.paragraphStyle, at: 0, effectiveRange: &range) as? NSMutableParagraphStyle
-        let style = existingStyle ?? NSMutableParagraphStyle()
-        
-        style.lineBreakMode = lineBreakMode
-        style.alignment = textAlignment
-        
-        return style
-    }
-
     private func updateAttributes(for detectors: [DetectorType]) {
 
         guard let attributedText = attributedText, attributedText.length > 0 else { return }
