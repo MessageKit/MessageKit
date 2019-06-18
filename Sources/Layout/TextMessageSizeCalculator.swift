@@ -31,7 +31,7 @@ open class TextMessageSizeCalculator: MessageSizeCalculator {
 
     public var messageLabelFont = UIFont.preferredFont(forTextStyle: .body)
 
-    internal func messageLabelInsets(for message: MessageType) -> UIEdgeInsets {
+    open func messageLabelInsets(for message: MessageType) -> UIEdgeInsets {
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingMessageLabelInsets : incomingMessageLabelInsets
