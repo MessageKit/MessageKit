@@ -88,16 +88,19 @@ open class MessagesCollectionView: UICollectionView {
         tapGesture.delaysTouchesBegan = true
         addGestureRecognizer(tapGesture)
     }
-    
+
+    open func cellForGestureRecognizer(_ gesture: UIGestureRecognizer) -> MessageCollectionViewCell? {
+        let touchLocation = gesture.location(in: self)
+        guard let indexPath = indexPathForItem(at: touchLocation) else { return nil }
+
+        return cellForItem(at: indexPath) as? MessageCollectionViewCell
+    }
+
     @objc
     open func handleTapGesture(_ gesture: UIGestureRecognizer) {
         guard gesture.state == .ended else { return }
-        
-        let touchLocation = gesture.location(in: self)
-        guard let indexPath = indexPathForItem(at: touchLocation) else { return }
-        
-        let cell = cellForItem(at: indexPath) as? MessageCollectionViewCell
-        cell?.handleTapGesture(gesture)
+
+        cellForGestureRecognizer(gesture)?.handleTapGesture(gesture)
     }
 
     public func scrollToBottom(animated: Bool = false) {
@@ -190,6 +193,12 @@ open class MessagesCollectionView: UICollectionView {
             fatalError("Unable to dequeue \(String(describing: viewClass)) with reuseId of \(String(describing: T.self))")
         }
         return viewType
+    }
+
+    override open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        let cell = cellForGestureRecognizer(gestureRecognizer)
+
+        return cell?.gestureRecognizerShouldBegin(gestureRecognizer) ?? super.gestureRecognizerShouldBegin(gestureRecognizer)
     }
 
 }
