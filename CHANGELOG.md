@@ -6,6 +6,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
+- **Breaking Change** Add support for audio seeking in AudioMessageCell. [#1102](hub.com/MessageKit/MessageKit/pull/1102) by [@marcetcheverry](https://github.com/marcetcheverry)
+
 - Add loading indicator to AudioMessageCell. [#1084](https://github.com/MessageKit/MessageKit/pull/1084) by [@marcetcheverry](https://github.com/marcetcheverry)
 
 - Lazily initialize the MessageInputBar on MessagesViewController. [#1092](https://github.com/MessageKit/MessageKit/pull/1092) by [@marcetcheverry](https://github.com/marcetcheverry)
