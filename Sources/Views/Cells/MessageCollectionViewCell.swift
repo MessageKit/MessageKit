@@ -25,7 +25,7 @@
 import UIKit
 
 /// A subclass of `UICollectionViewCell` to be used inside of a `MessagesCollectionView`.
-open class MessageCollectionViewCell: UICollectionViewCell {
+open class MessageCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
     // MARK: - Initializers
 
@@ -42,4 +42,7 @@ open class MessageCollectionViewCell: UICollectionViewCell {
         // Should be overridden
     }
 
+    open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return true
+    }
 }

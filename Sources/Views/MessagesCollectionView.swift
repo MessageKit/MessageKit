@@ -24,7 +24,7 @@
 
 import UIKit
 
-open class MessagesCollectionView: UICollectionView {
+open class MessagesCollectionView: UICollectionView, UIGestureRecognizerDelegate {
 
     // MARK: - Properties
 
@@ -85,7 +85,13 @@ open class MessagesCollectionView: UICollectionView {
     
     private func setupGestureRecognizers() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
-        tapGesture.delaysTouchesBegan = true
+        tapGesture.delegate = self
+
+        tapGesture.require(toFail: self.panGestureRecognizer)
+        if let pinchGestureRecognizer = self.pinchGestureRecognizer {
+            tapGesture.require(toFail: pinchGestureRecognizer)
+        }
+
         addGestureRecognizer(tapGesture)
     }
 
@@ -201,4 +207,9 @@ open class MessagesCollectionView: UICollectionView {
         return cell?.gestureRecognizerShouldBegin(gestureRecognizer) ?? super.gestureRecognizerShouldBegin(gestureRecognizer)
     }
 
+    open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        let cell = cellForGestureRecognizer(gestureRecognizer)
+
+        return cell?.gestureRecognizer(gestureRecognizer, shouldReceive: touch) ?? true
+    }
 }

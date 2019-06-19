@@ -97,11 +97,25 @@ open class AudioMessageCell: MessageContentCell {
     open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         let touchPoint = gestureRecognizer.location(in: messageContainerView)
 
-        if playButton.frame.contains(touchPoint) || slider.frame.contains(touchPoint) {
+        if slider.frame.contains(touchPoint) {
             return false
         }
 
         return super.gestureRecognizerShouldBegin(gestureRecognizer)
+    }
+
+    /// Handle tap gesture on contentView and its subviews.
+    open override func handleTapGesture(_ gesture: UIGestureRecognizer) {
+        let touchLocation = gesture.location(in: self)
+        // compute play button touch area, currently play button size is (25, 25) which is hardly touchable
+        // add 10 px around current button frame and test the touch against this new frame
+        let playButtonTouchArea = CGRect(playButton.frame.origin.x - 10.0, playButton.frame.origin.y - 10, playButton.frame.size.width + 20, playButton.frame.size.height + 20)
+        let translateTouchLocation = convert(touchLocation, to: messageContainerView)
+        if playButtonTouchArea.contains(translateTouchLocation) {
+            delegate?.didTapPlayButton(in: self)
+        } else {
+            super.handleTapGesture(gesture)
+        }
     }
 
     @objc open func didTapPlayButton(_ button: UIButton) {
@@ -143,4 +157,10 @@ open class AudioMessageCell: MessageContentCell {
             durationLabel.text = displayDelegate.audioProgressTextFormat(audioItem.duration, for: self, in: messagesCollectionView)
         }
     }
+
+    // MARK: - UIGestureRecognizerDelegate
+    override open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return touch.view != slider
+    }
+
 }
