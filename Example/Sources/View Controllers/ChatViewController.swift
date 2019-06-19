@@ -248,6 +248,10 @@ extension ChatViewController: MessageCellDelegate {
         print("Did stop audio sound")
     }
 
+    func didSeekAudio(in cell: AudioMessageCell) {
+        audioController.seekSound(toPercentage: TimeInterval(cell.slider.value))
+    }
+
     func didTapAccessoryView(in cell: MessageCollectionViewCell) {
         print("Accessory view tapped")
     }
