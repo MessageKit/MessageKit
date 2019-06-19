@@ -147,6 +147,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         state = .stopped
         if let cell = playingCell {
             cell.slider.value = 0.0
+            cell.slider.isUserInteractionEnabled = false
             cell.playButton.isSelected = false
             guard let displayDelegate = collectionView.messagesDisplayDelegate else {
                 fatalError("MessagesDisplayDelegate has not been set.")
