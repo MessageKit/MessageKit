@@ -149,6 +149,15 @@ public protocol MessageCellDelegate: MessageLabelDelegate {
     /// method `messageForItem(at:indexPath:messagesCollectionView)`.
     func didStopAudio(in cell: AudioMessageCell)
 
+    /// Triggered when the user seeks the audio cell slider.
+    ///
+    /// - Parameters:
+    ///   - cell: The cell where the audio sound is stoped.
+    ///
+    /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
+    /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
+    /// method `messageForItem(at:indexPath:messagesCollectionView)`.
+    func didSeekAudio(in cell: AudioMessageCell)
 }
 
 public extension MessageCellDelegate {

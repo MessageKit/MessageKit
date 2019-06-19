@@ -62,9 +62,18 @@ open class AudioMessageCell: MessageContentCell {
         let slider = UISlider()
         let thumbImage = UIImage.messageKitImageWith(type: .sliderThumb)
         slider.setThumbImage(thumbImage?.withRenderingMode(.alwaysTemplate), for: .normal)
+
+        slider.addTarget(self,
+                         action: #selector(sliderValueChanged(_:)),
+                         for: .valueChanged)
         return slider
     }()
-    
+
+    // MARK: - Interface Actions
+    @objc func sliderValueChanged(_ slider: UISlider) {
+        delegate?.didSeekAudio(in: self)
+    }
+
     // MARK: - Methods
 
     /// Responsible for setting up the constraints of the cell's subviews.
