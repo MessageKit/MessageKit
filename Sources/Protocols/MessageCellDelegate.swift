@@ -182,6 +182,8 @@ public extension MessageCellDelegate {
 
     func didStopAudio(in cell: AudioMessageCell) {}
 
+    func didSeekAudio(in cell: AudioMessageCell) {}
+
     func didTapMessageBottomLabel(in cell: MessageCollectionViewCell) {}
     
     func didTapAccessoryView(in cell: MessageCollectionViewCell) {}
