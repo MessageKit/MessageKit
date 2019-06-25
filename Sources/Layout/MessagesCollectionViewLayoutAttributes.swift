@@ -40,15 +40,19 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
 
     public var cellTopLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
     public var cellTopLabelSize: CGSize = .zero
+    public var cellTopLabelPadding: UIEdgeInsets = .zero
     
     public var cellBottomLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
     public var cellBottomLabelSize: CGSize = .zero
+    public var cellBottomLabelPadding: UIEdgeInsets = .zero
     
     public var messageTopLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
     public var messageTopLabelSize: CGSize = .zero
+    public var messageTopLabelPadding: UIEdgeInsets = .zero
 
     public var messageBottomLabelAlignment = LabelAlignment(textAlignment: .center, textInsets: .zero)
     public var messageBottomLabelSize: CGSize = .zero
+    public var messageBottomLabelPadding: UIEdgeInsets = .zero
 
     public var accessoryViewSize: CGSize = .zero
     public var accessoryViewPadding: HorizontalEdgeInsets = .zero
