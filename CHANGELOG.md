@@ -10,6 +10,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - Lazily initialize the MessageInputBar on MessagesViewController. [#1092](https://github.com/MessageKit/MessageKit/pull/1092) by [@marcetcheverry](https://github.com/marcetcheverry)
 
+### Changed
+
+- Fixes scrollToBottom method to properly handle calls made early in the view lifecycle. [#1110](https://github.com/MessageKit/MessageKit/pull/1110) by [@marcetcheverry](https://github.com/marcetcheverry)
+
 ## 3.0.0
 
 ### Dependency Changes
