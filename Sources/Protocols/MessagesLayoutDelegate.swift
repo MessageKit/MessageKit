@@ -78,6 +78,16 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///   The default value returned by this method is zero.
     func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
     
+    /// Specifies padding to be used for `MessageContentCell`'s top label.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is `.zero`.
+    func cellTopLabelPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets
+
     /// Specifies the height for the `MessageContentCell`'s bottom label.
     ///
     /// - Parameters:
@@ -88,6 +98,16 @@ public protocol MessagesLayoutDelegate: AnyObject {
     /// - Note:
     ///   The default value returned by this method is zero.
     func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
+    
+    /// Specifies padding to be used for the `MessageContentCell`'s bottom label.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is `.zero`.
+    func cellBottomLabelPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets
     
     /// Specifies the height for the message bubble's top label.
     ///
@@ -100,6 +120,16 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///   The default value returned by this method is zero.
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
 
+    /// Specifies padding to be used for message bubble's top label.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is `.zero`.
+    func messageTopLabelPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets
+
     /// Specifies the height for the `MessageContentCell`'s bottom label.
     ///
     /// - Parameters:
@@ -111,6 +141,16 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///   The default value returned by this method is zero.
     func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat
     
+    /// Specifies padding to be used for message bubble's bottom label.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// The default value returned by this method is `.zero`.
+    func messageBottomLabelPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets
+
     /// Custom cell size calculator for messages with MessageType.custom.
     ///
     /// - Parameters:
@@ -145,16 +185,31 @@ public extension MessagesLayoutDelegate {
         return 0
     }
     
+    func cellTopLabelPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
+        return .zero
+    }
+
     func cellBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return 0
+    }
+    
+    func cellBottomLabelPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
+        return .zero
     }
     
     func messageTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return 0
     }
 
+    func messageTopLabelPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
+        return .zero    }
+    
     func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return 0
+    }
+    
+    func messageBottomLabelPadding(for message: MessageType, at indexPath: IndexPath) -> UIEdgeInsets {
+        return .zero
     }
     
     func customCellSizeCalculator(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator {
