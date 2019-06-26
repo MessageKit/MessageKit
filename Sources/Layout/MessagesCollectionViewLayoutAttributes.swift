@@ -72,12 +72,16 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
         copy.messageLabelInsets = messageLabelInsets
         copy.cellTopLabelAlignment = cellTopLabelAlignment
         copy.cellTopLabelSize = cellTopLabelSize
+        copy.cellTopLabelPadding = cellTopLabelPadding
         copy.cellBottomLabelAlignment = cellBottomLabelAlignment
         copy.cellBottomLabelSize = cellBottomLabelSize
+        copy.cellBottomLabelPadding = cellBottomLabelPadding
         copy.messageTopLabelAlignment = messageTopLabelAlignment
         copy.messageTopLabelSize = messageTopLabelSize
+        copy.messageTopLabelPadding = messageTopLabelPadding
         copy.messageBottomLabelAlignment = messageBottomLabelAlignment
         copy.messageBottomLabelSize = messageBottomLabelSize
+        copy.messageBottomLabelPadding = messageBottomLabelPadding
         copy.accessoryViewSize = accessoryViewSize
         copy.accessoryViewPadding = accessoryViewPadding
         copy.accessoryViewPosition = accessoryViewPosition
@@ -97,12 +101,16 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
                 && attributes.messageLabelInsets == messageLabelInsets
                 && attributes.cellTopLabelAlignment == cellTopLabelAlignment
                 && attributes.cellTopLabelSize == cellTopLabelSize
+                && attributes.cellTopLabelPadding == cellTopLabelPadding
                 && attributes.cellBottomLabelAlignment == cellBottomLabelAlignment
                 && attributes.cellBottomLabelSize == cellBottomLabelSize
+                && attributes.cellBottomLabelPadding == cellBottomLabelPadding
                 && attributes.messageTopLabelAlignment == messageTopLabelAlignment
                 && attributes.messageTopLabelSize == messageTopLabelSize
+                && attributes.messageTopLabelPadding == messageTopLabelPadding
                 && attributes.messageBottomLabelAlignment == messageBottomLabelAlignment
                 && attributes.messageBottomLabelSize == messageBottomLabelSize
+                && attributes.messageBottomLabelPadding == messageBottomLabelPadding
                 && attributes.accessoryViewSize == accessoryViewSize
                 && attributes.accessoryViewPadding == accessoryViewPadding
                 && attributes.accessoryViewPosition == accessoryViewPosition
