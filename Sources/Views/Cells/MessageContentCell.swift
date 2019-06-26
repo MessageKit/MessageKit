@@ -234,7 +234,7 @@ open class MessageContentCell: MessageCollectionViewCell {
 
         switch attributes.avatarPosition.vertical {
         case .messageBottom:
-            origin.y = attributes.size.height - attributes.messageContainerPadding.bottom - attributes.cellBottomLabelSize.height - attributes.messageBottomLabelSize.height - attributes.messageContainerSize.height - attributes.messageContainerPadding.top
+            origin.y = attributes.size.height - attributes.messageContainerPadding.bottom - attributes.cellBottomLabelSize.height - attributes.cellBottomLabelPadding.vertical - attributes.messageBottomLabelSize.height - attributes.messageBottomLabelPadding.vertical - attributes.messageContainerSize.height - attributes.messageContainerPadding.top
         case .messageCenter:
             if attributes.avatarSize.height > attributes.messageContainerSize.height {
                 let messageHeight = attributes.messageContainerSize.height + attributes.messageContainerPadding.vertical
@@ -247,7 +247,7 @@ open class MessageContentCell: MessageCollectionViewCell {
                 let messageHeight = attributes.messageContainerSize.height + attributes.messageContainerPadding.vertical
                 origin.y = (attributes.size.height / 2) - (messageHeight / 2)
             } else {
-                origin.y = attributes.cellTopLabelSize.height + attributes.messageTopLabelSize.height + attributes.messageContainerPadding.top
+                origin.y = attributes.cellTopLabelSize.height + attributes.cellTopLabelPadding.vertical + attributes.messageTopLabelSize.height + attributes.messageTopLabelPadding.vertical + attributes.messageContainerPadding.top
             }
         }
 
@@ -267,7 +267,11 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// Positions the cell's top label.
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutCellTopLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
-        cellTopLabel.frame = CGRect(origin: .zero, size: attributes.cellTopLabelSize)
+        let y = attributes.cellTopLabelPadding.top
+        let x = attributes.cellTopLabelPadding.left
+        let origin = CGPoint(x: x, y: y)
+
+        cellTopLabel.frame = CGRect(origin: origin, size: attributes.cellTopLabelSize)
     }
     
     /// Positions the cell's bottom label.
@@ -276,8 +280,9 @@ open class MessageContentCell: MessageCollectionViewCell {
         cellBottomLabel.textAlignment = attributes.cellBottomLabelAlignment.textAlignment
         cellBottomLabel.textInsets = attributes.cellBottomLabelAlignment.textInsets
         
-        let y = messageBottomLabel.frame.maxY
-        let origin = CGPoint(x: 0, y: y)
+        let y = messageBottomLabel.frame.maxY + attributes.messageBottomLabelPadding.bottom + attributes.cellBottomLabelPadding.top
+        let x = attributes.cellBottomLabelPadding.left
+        let origin = CGPoint(x: x, y: y)
         
         cellBottomLabel.frame = CGRect(origin: origin, size: attributes.cellBottomLabelSize)
     }
@@ -288,8 +293,9 @@ open class MessageContentCell: MessageCollectionViewCell {
         messageTopLabel.textAlignment = attributes.messageTopLabelAlignment.textAlignment
         messageTopLabel.textInsets = attributes.messageTopLabelAlignment.textInsets
 
-        let y = messageContainerView.frame.minY - attributes.messageContainerPadding.top - attributes.messageTopLabelSize.height
-        let origin = CGPoint(x: 0, y: y)
+        let y = messageContainerView.frame.minY - attributes.messageContainerPadding.top - attributes.messageTopLabelPadding.bottom - attributes.messageTopLabelSize.height
+        let x = attributes.messageTopLabelPadding.left
+        let origin = CGPoint(x: x, y: y)
         
         messageTopLabel.frame = CGRect(origin: origin, size: attributes.messageTopLabelSize)
     }
@@ -300,8 +306,9 @@ open class MessageContentCell: MessageCollectionViewCell {
         messageBottomLabel.textAlignment = attributes.messageBottomLabelAlignment.textAlignment
         messageBottomLabel.textInsets = attributes.messageBottomLabelAlignment.textInsets
 
-        let y = messageContainerView.frame.maxY + attributes.messageContainerPadding.bottom
-        let origin = CGPoint(x: 0, y: y)
+        let y = messageContainerView.frame.maxY + attributes.messageContainerPadding.bottom + attributes.messageBottomLabelPadding.top
+        let x = attributes.messageBottomLabelPadding.left
+        let origin = CGPoint(x: x, y: y)
 
         messageBottomLabel.frame = CGRect(origin: origin, size: attributes.messageBottomLabelSize)
     }
