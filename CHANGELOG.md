@@ -10,6 +10,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - Lazily initialize the MessageInputBar on MessagesViewController. [#1092](https://github.com/MessageKit/MessageKit/pull/1092) by [@marcetcheverry](https://github.com/marcetcheverry)
 
+### Changed
+
+- Add missing cellTopLabelAlignment to MessageSizeCalculator. [#1113](https://github.com/MessageKit/MessageKit/pull/1113) by [@marcetcheverry](https://github.com/marcetcheverry)
+
 ## 3.0.0
 
 ### Dependency Changes
