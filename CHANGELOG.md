@@ -2,6 +2,14 @@
 
 The changelog for `MessageKit`. Also see the [releases](https://github.com/MessageKit/MessageKit/releases) on GitHub.
 
+## Upcoming Release
+
+### Added
+
+- Add loading indicator to AudioMessageCell. [#1084](https://github.com/MessageKit/MessageKit/pull/1084) by [@marcetcheverry](https://github.com/marcetcheverry)
+
+- Lazily initialize the MessageInputBar on MessagesViewController. [#1092](https://github.com/MessageKit/MessageKit/pull/1092) by [@marcetcheverry](https://github.com/marcetcheverry)
+
 ## 3.0.0
 
 ### Dependency Changes
