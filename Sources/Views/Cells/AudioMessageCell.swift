@@ -70,7 +70,7 @@ open class AudioMessageCell: MessageContentCell {
     }()
 
     // MARK: - Interface Actions
-    @objc func sliderValueChanged(_ slider: UISlider) {
+    @objc private func sliderValueChanged(_ slider: UISlider) {
         delegate?.didSeekAudio(in: self)
     }
 
