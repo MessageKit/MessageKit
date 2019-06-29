@@ -40,6 +40,8 @@ public struct HorizontalEdgeInsets: Equatable {
     }
 }
 
+// MARK: Equatable Conformance
+
 public extension HorizontalEdgeInsets {
 
     static func == (lhs: HorizontalEdgeInsets, rhs: HorizontalEdgeInsets) -> Bool {
@@ -49,7 +51,7 @@ public extension HorizontalEdgeInsets {
 
 internal extension HorizontalEdgeInsets {
 
-    internal var horizontal: CGFloat {
+    var horizontal: CGFloat {
         return left + right
     }
 }
