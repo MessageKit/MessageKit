@@ -226,23 +226,30 @@ open class MessageLabel: UILabel {
         let range = NSRange(location: 0, length: newText.length)
         
         let mutableText = NSMutableAttributedString(attributedString: newText)
-        
-        var paragraphStyleFound = false
+
+        // Find all of the existing paragraph styles in the text
+        var existingParagraphStyles: [NSRange: NSMutableParagraphStyle] = [:]
+
         mutableText.enumerateAttribute(.paragraphStyle,
                                        in: range,
                                        options: []) { (style, attributeRange, _) in
                                         if let style = style as? NSMutableParagraphStyle {
-                                            paragraphStyleFound = true
-                                            style.lineBreakMode = lineBreakMode
-                                            style.alignment = textAlignment
+                                            existingParagraphStyles[attributeRange] = style
                                         }
         }
 
-        if !paragraphStyleFound {
-            let style = NSMutableParagraphStyle()
-            style.lineBreakMode = lineBreakMode
-            style.alignment = textAlignment
-            mutableText.addAttribute(.paragraphStyle, value: style, range: range)
+        // Override the entire text with a paragraph style, since not all parts of it may have a paragraph style.
+        // There may or may not be existing paragraph styles we will reapply later on, ignoring certain properties
+        let style = NSMutableParagraphStyle()
+        style.lineBreakMode = lineBreakMode
+        style.alignment = textAlignment
+        mutableText.addAttribute(.paragraphStyle, value: style, range: range)
+
+        for (existingRange, existingMutableParagraphStyle) in existingParagraphStyles {
+            // Apply our overrides, but keep everything else from the original
+            existingMutableParagraphStyle.lineBreakMode = lineBreakMode
+            existingMutableParagraphStyle.alignment = textAlignment
+            mutableText.addAttribute(.paragraphStyle, value: existingMutableParagraphStyle, range: existingRange)
         }
 
         if shouldParse {
