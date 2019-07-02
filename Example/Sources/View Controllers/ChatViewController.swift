@@ -249,7 +249,7 @@ extension ChatViewController: MessageCellDelegate {
     }
 
     func didSeekAudio(in cell: AudioMessageCell) {
-        audioController.seekSound(toPercentage: TimeInterval(cell.slider.value))
+        audioController.seekSound(toPercentage: TimeInterval(cell.progressControl.value))
     }
 
     func didTapAccessoryView(in cell: MessageCollectionViewCell) {

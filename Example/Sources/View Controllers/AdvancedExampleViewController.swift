@@ -388,7 +388,7 @@ extension AdvancedExampleViewController: MessagesDisplayDelegate {
         audioController.configureAudioCell(cell, message: message) // this is needed especily when the cell is reconfigure while is playing sound
 
         // If you want to hide the thumb image and make it look like an `UIProgressView`
-        // cell.slider.setThumbImage(UIImage(), for: .normal)
+        // cell.progressControl.setThumbImage(UIImage(), for: .normal)
     }
     
 }

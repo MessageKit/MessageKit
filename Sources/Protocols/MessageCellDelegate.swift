@@ -149,7 +149,7 @@ public protocol MessageCellDelegate: MessageLabelDelegate {
     /// method `messageForItem(at:indexPath:messagesCollectionView)`.
     func didStopAudio(in cell: AudioMessageCell)
 
-    /// Triggered when the user seeks the audio cell slider.
+    /// Triggered when the user seeks the audio cell progressControl.
     ///
     /// - Parameters:
     ///   - cell: The cell where the audio sound is stoped.

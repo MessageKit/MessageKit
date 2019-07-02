@@ -84,8 +84,8 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
     open func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {
         if playingMessage?.messageId == message.messageId, let collectionView = messageCollectionView, let player = audioPlayer {
             playingCell = cell
-            cell.slider.isUserInteractionEnabled = true
-            cell.slider.value = (player.duration == 0) ? 0 : Float(player.currentTime/player.duration)
+            cell.progressControl.isUserInteractionEnabled = true
+            cell.progressControl.value = (player.duration == 0) ? 0 : Float(player.currentTime/player.duration)
             cell.playButton.isSelected = (player.isPlaying == true) ? true : false
             guard let displayDelegate = collectionView.messagesDisplayDelegate else {
                 fatalError("MessagesDisplayDelegate has not been set.")
@@ -93,7 +93,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             cell.durationLabel.text = displayDelegate.audioProgressTextFormat(Float(player.currentTime), for: cell, in: collectionView)
         }
         else {
-            cell.slider.isUserInteractionEnabled = false
+            cell.progressControl.isUserInteractionEnabled = false
         }
     }
 
@@ -115,7 +115,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             audioPlayer?.prepareToPlay()
             audioPlayer?.delegate = self
             audioPlayer?.play()
-            playingCell?.slider.isUserInteractionEnabled = true
+            playingCell?.progressControl.isUserInteractionEnabled = true
             state = .playing
             audioCell.playButton.isSelected = true  // show pause button on audio cell
             startProgressTimer()
@@ -146,8 +146,8 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         player.stop()
         state = .stopped
         if let cell = playingCell {
-            cell.slider.value = 0.0
-            cell.slider.isUserInteractionEnabled = false
+            cell.progressControl.value = 0.0
+            cell.progressControl.isUserInteractionEnabled = false
             cell.playButton.isSelected = false
             guard let displayDelegate = collectionView.messagesDisplayDelegate else {
                 fatalError("MessagesDisplayDelegate has not been set.")
@@ -204,8 +204,8 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             let currentMessage = collectionView.messagesDataSource?.messageForItem(at: playingCellIndexPath, in: collectionView)
             if currentMessage != nil && currentMessage?.messageId == playingMessage?.messageId {
                 // messages are the same update cell content
-                if !cell.slider.isTracking {
-                    cell.slider.value = (player.duration == 0) ? 0 : Float(player.currentTime/player.duration)
+                if !cell.progressControl.isTracking {
+                    cell.progressControl.value = (player.duration == 0) ? 0 : Float(player.currentTime/player.duration)
                 }
                 guard let displayDelegate = collectionView.messagesDisplayDelegate else {
                     fatalError("MessagesDisplayDelegate has not been set.")
