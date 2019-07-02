@@ -155,6 +155,7 @@ Add your app to the list of apps using this library and make a pull request.
 - [MediQuo](https://www.mediquo.com)
 - [RappresentaMe](https://itunes.apple.com/it/app/rappresentame/id1330914443)
 - [WiseEyes](https://itunes.apple.com/us/app/wiseeyes/id1391408511?mt=8)
+- [SwiftHub](https://github.com/khoren93/SwiftHub)
 
 *Please provide attribution, it is greatly appreciated.*
 
