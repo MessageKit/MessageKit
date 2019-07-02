@@ -62,7 +62,6 @@ open class AudioMessageCell: MessageContentCell {
         let slider = UISlider()
         let thumbImage = UIImage.messageKitImageWith(type: .sliderThumb)
         slider.setThumbImage(thumbImage?.withRenderingMode(.alwaysTemplate), for: .normal)
-
         slider.addTarget(self,
                          action: #selector(sliderValueChanged(_:)),
                          for: .valueChanged)
