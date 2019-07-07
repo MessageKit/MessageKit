@@ -73,6 +73,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Added `cellBottomLabelSize(for:, at:)` and `cellBottomLabelAlignment(for:)` functions to `MessageSizeCalculator` class.
 [#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
 
+### Fixed
+ - Set the proper notification to invalidate layout. MessageKit now relies on `UIApplication` orientation notification instead of `UIDevice`, which invalidates the layout only when it is needed. [#1126](https://github.com/MessageKit/MessageKit/pull/1126) by [@bguidolim](https://github.com/bguidolim)
+
 ## [2.0.0](https://github.com/MessageKit/MessageKit/releases/tag/2.0.0)
 
 ### Added
