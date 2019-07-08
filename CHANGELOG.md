@@ -6,6 +6,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
+- Add support for styling NSLinkAttribute with existing urlAttributes in MessageLabel. [#1091](https://github.com/MessageKit/MessageKit/pull/1091) by [@marcetcheverry](https://github.com/marcetcheverry)
+
 - Add loading indicator to AudioMessageCell. [#1084](https://github.com/MessageKit/MessageKit/pull/1084) by [@marcetcheverry](https://github.com/marcetcheverry)
 
 - Lazily initialize the MessageInputBar on MessagesViewController. [#1092](https://github.com/MessageKit/MessageKit/pull/1092) by [@marcetcheverry](https://github.com/marcetcheverry)
@@ -13,6 +15,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ### Changed
 
 - Fixes scrollToBottom method to properly handle calls made early in the view lifecycle. [#1110](https://github.com/MessageKit/MessageKit/pull/1110) by [@marcetcheverry](https://github.com/marcetcheverry)
+
+- Add missing cellTopLabelAlignment to MessageSizeCalculator. [#1113](https://github.com/MessageKit/MessageKit/pull/1113) by [@marcetcheverry](https://github.com/marcetcheverry)
 
 ## 3.0.0
 
