@@ -273,6 +273,11 @@ open class MessageLabel: UILabel {
             guard let rangeTuples = rangesForDetectors[detector] else { continue }
 
             for (range, _)  in rangeTuples {
+                // This will enable us to attribute it with our own styles, since `UILabel` does not provide link attribute overrides like `UITextView` does
+                if detector.textCheckingType == .link {
+                    mutableAttributedString.removeAttribute(NSAttributedString.Key.link, range: range)
+                }
+
                 let attributes = detectorAttributes(for: detector)
                 mutableAttributedString.addAttributes(attributes, range: range)
             }
