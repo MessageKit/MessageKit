@@ -2,7 +2,11 @@
 
 The changelog for `MessageKit`. Also see the [releases](https://github.com/MessageKit/MessageKit/releases) on GitHub.
 
-## Upcoming Release
+## Upcoming release
+
+### Fixed
+
+ - Set the proper notification to invalidate layout. MessageKit now relies on `UIApplication` orientation notification instead of `UIDevice`, which invalidates the layout only when it is needed. [#1126](https://github.com/MessageKit/MessageKit/pull/1126) by [@bguidolim](https://github.com/bguidolim)
 
 ### Added
 
