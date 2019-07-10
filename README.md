@@ -121,6 +121,7 @@ public enum MessageKind {
 
 If you choose to use the `.custom` kind you are responsible for all of the cells layout. Any `UICollectionViewCell` can be returned for custom cells which means any of the styling you provide from the `MessageDisplayDelegate` will not effect your custom cell. Even if you subclass your cell from `MessageContentCell`.
 
+[Read more about the cases on the Quick Start guide.](https://github.com/MessageKit/MessageKit/blob/whoyawn-documentation-update/Documentation/QuickStart.md#messagekind)
 
 ## Contributing
 
