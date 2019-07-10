@@ -10,6 +10,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - Lazily initialize the MessageInputBar on MessagesViewController. [#1092](https://github.com/MessageKit/MessageKit/pull/1092) by [@marcetcheverry](https://github.com/marcetcheverry)
 
+### Changed
+
+- Fix text clipping caused by MessageSizeCalculator when textInsets are zero in MessageLabel. [#1136](https://github.com/MessageKit/MessageKit/pull/1136) by [@marcetcheverry](https://github.com/marcetcheverry)
+
 ## 3.0.0
 
 ### Dependency Changes
