@@ -50,7 +50,7 @@ open class MessageLabel: UILabel {
     }()
 
     internal lazy var rangesForDetectors: [DetectorType: [(NSRange, MessageTextCheckingType)]] = [:]
-
+    
     private var isConfiguring: Bool = false
 
     // MARK: - Public Properties
@@ -135,11 +135,11 @@ open class MessageLabel: UILabel {
     open internal(set) var phoneNumberAttributes: [NSAttributedString.Key: Any] = defaultAttributes
 
     open internal(set) var urlAttributes: [NSAttributedString.Key: Any] = defaultAttributes
-
+    
     open internal(set) var transitInformationAttributes: [NSAttributedString.Key: Any] = defaultAttributes
-
+    
     open internal(set) var hashtagAttributes: [NSAttributedString.Key: Any] = defaultAttributes
-
+    
     open internal(set) var mentionAttributes: [NSAttributedString.Key: Any] = defaultAttributes
 
     open internal(set) var customAttributes: [NSRegularExpression: [NSAttributedString.Key: Any]] = [:]
@@ -198,6 +198,7 @@ open class MessageLabel: UILabel {
 
     // This enables proper calculation of intrinsicContentSize and sizeThatFits
     open override func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
+        
         // UIKit often uses MAX values for 2 dimensional constraint based layout of text, we don't want to adjust those values
         var insetBounds = bounds
         if !insetBounds.size.width.isGreatestFiniteMagnitude {
@@ -218,7 +219,7 @@ open class MessageLabel: UILabel {
     }
 
     // MARK: - Public Methods
-
+    
     public func configure(block: () -> Void) {
         isConfiguring = true
         block()
@@ -239,19 +240,19 @@ open class MessageLabel: UILabel {
             setNeedsDisplay()
             return
         }
-
+        
         let style = paragraphStyle(for: newText)
         let range = NSRange(location: 0, length: newText.length)
-
+        
         let mutableText = NSMutableAttributedString(attributedString: newText)
         mutableText.addAttribute(.paragraphStyle, value: style, range: range)
-
+        
         if shouldParse {
             rangesForDetectors.removeAll()
             let results = parse(text: mutableText)
             setRangesForDetectors(in: results)
         }
-
+        
         for (detector, rangeTuples) in rangesForDetectors {
             if enabledDetectors.contains(detector) {
                 let attributes = detectorAttributes(for: detector)
@@ -267,7 +268,7 @@ open class MessageLabel: UILabel {
         if !isConfiguring { setNeedsDisplay() }
 
     }
-
+    
     private func paragraphStyle(for text: NSAttributedString) -> NSParagraphStyle {
         guard text.length > 0 else { return NSParagraphStyle() }
         
@@ -338,7 +339,7 @@ open class MessageLabel: UILabel {
             fatalError(MessageKitError.unrecognizedCheckingResult)
         }
     }
-
+    
     private func setupView() {
         numberOfLines = 0
         lineBreakMode = .byWordWrapping
@@ -395,7 +396,7 @@ open class MessageLabel: UILabel {
     private func setRangesForDetectors(in checkingResults: [NSTextCheckingResult]) {
 
         guard checkingResults.isEmpty == false else { return }
-
+        
         for result in checkingResults {
 
             switch result.resultType {
@@ -452,18 +453,18 @@ open class MessageLabel: UILabel {
         let index = layoutManager.glyphIndex(for: location, in: textContainer)
 
         let lineRect = layoutManager.lineFragmentUsedRect(forGlyphAt: index, effectiveRange: nil)
-
+        
         var characterIndex: Int?
-
+        
         if lineRect.contains(location) {
             characterIndex = layoutManager.characterIndexForGlyph(at: index)
         }
-
+        
         return characterIndex
 
     }
 
-    open func handleGesture(_ touchLocation: CGPoint) -> Bool {
+  open func handleGesture(_ touchLocation: CGPoint) -> Bool {
 
         guard let index = stringIndex(at: touchLocation) else { return false }
 
@@ -480,7 +481,7 @@ open class MessageLabel: UILabel {
 
     // swiftlint:disable cyclomatic_complexity
     private func handleGesture(for detectorType: DetectorType, value: MessageTextCheckingType) {
-
+        
         switch value {
         case let .addressComponents(addressComponents):
             var transformedAddressComponents = [String: String]()
@@ -518,23 +519,23 @@ open class MessageLabel: UILabel {
         }
     }
     // swiftlint:enable cyclomatic_complexity
-
+    
     private func handleAddress(_ addressComponents: [String: String]) {
         delegate?.didSelectAddress(addressComponents)
     }
-
+    
     private func handleDate(_ date: Date) {
         delegate?.didSelectDate(date)
     }
-
+    
     private func handleURL(_ url: URL) {
         delegate?.didSelectURL(url)
     }
-
+    
     private func handlePhoneNumber(_ phoneNumber: String) {
         delegate?.didSelectPhoneNumber(phoneNumber)
     }
-
+    
     private func handleTransitInformation(_ components: [String: String]) {
         delegate?.didSelectTransitInformation(components)
     }
