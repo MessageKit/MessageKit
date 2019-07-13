@@ -158,6 +158,7 @@ Add your app to the list of apps using this library and make a pull request.
 - [WiseEyes](https://itunes.apple.com/us/app/wiseeyes/id1391408511?mt=8)
 - [SwiftHub](https://github.com/khoren93/SwiftHub)
 - [Studievenn](https://studievenn.no)
+- [SmooveText](https://apps.apple.com/np/app/smoove-text/id1362792811)
 
 *Please provide attribution, it is greatly appreciated.*
 
