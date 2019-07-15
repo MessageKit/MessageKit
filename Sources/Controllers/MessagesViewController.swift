@@ -33,7 +33,8 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     /// The `MessagesCollectionView` managed by the messages view controller object.
     open var messagesCollectionView = MessagesCollectionView()
 
-    /// The `InputBarAccessoryView` used as the `inputAccessoryView` in the view controller.
+    /// The lazily created `InputBarAccessoryView` used as the `inputAccessoryView` in the view controller.
+    /// See `inputAccessoryView` and `inputTextView` which reference this.
     open lazy var messageInputBar = InputBarAccessoryView()
 
     /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
@@ -52,8 +53,15 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         return true
     }
 
+    /// You should override `inputTextView` if you override this.
     open override var inputAccessoryView: UIView? {
         return messageInputBar
+    }
+
+    /// The default textView responsible for `scrollsToBottomOnKeyboardBeginsEditing`.
+    /// Override this property if you override `inputAccessoryView`.
+    open var inputTextView: UITextView? {
+        return messageInputBar.inputTextView
     }
 
     open override var shouldAutorotate: Bool {
