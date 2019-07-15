@@ -58,9 +58,10 @@ internal extension MessagesViewController {
         guard let selectedCell = messagesCollectionView.cellForItem(at: selectedIndexPath) as? MessageContentCell else { return }
         let selectedCellMessageBubbleFrame = selectedCell.convert(selectedCell.messageContainerView.frame, to: view)
 
-        var messageInputBarFrame: CGRect = .zero
-        if let messageInputBarSuperview = messageInputBar.superview {
-            messageInputBarFrame = view.convert(messageInputBar.frame, from: messageInputBarSuperview)
+        var inputAccessoryViewFrame: CGRect = .zero
+        if let inputAccessoryView = inputAccessoryView,
+            let messageInputBarSuperview = inputAccessoryView.superview {
+            inputAccessoryViewFrame = view.convert(inputAccessoryView.frame, from: messageInputBarSuperview)
         }
 
         var topNavigationBarFrame: CGRect = navigationBarFrame
@@ -76,8 +77,8 @@ internal extension MessagesViewController {
         currentMenuController.arrowDirection = .default
 
         /// Message bubble intersects with navigationBar and keyboard
-        if selectedCellMessageBubblePlusMenuFrame.intersects(topNavigationBarFrame) && selectedCellMessageBubblePlusMenuFrame.intersects(messageInputBarFrame) {
-            let centerY = (selectedCellMessageBubblePlusMenuFrame.intersection(messageInputBarFrame).minY + selectedCellMessageBubblePlusMenuFrame.intersection(topNavigationBarFrame).maxY) / 2
+        if selectedCellMessageBubblePlusMenuFrame.intersects(topNavigationBarFrame) && selectedCellMessageBubblePlusMenuFrame.intersects(inputAccessoryViewFrame) {
+            let centerY = (selectedCellMessageBubblePlusMenuFrame.intersection(inputAccessoryViewFrame).minY + selectedCellMessageBubblePlusMenuFrame.intersection(topNavigationBarFrame).maxY) / 2
             targetRect = CGRect(selectedCellMessageBubblePlusMenuFrame.midX, centerY, 1, 1)
         } /// Message bubble only intersects with navigationBar
         else if selectedCellMessageBubblePlusMenuFrame.intersects(topNavigationBarFrame) {
