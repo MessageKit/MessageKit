@@ -2,17 +2,29 @@
 
 The changelog for `MessageKit`. Also see the [releases](https://github.com/MessageKit/MessageKit/releases) on GitHub.
 
-## Upcoming Release
+## Upcoming release
+
+### Fixed
+
+ - Set the proper notification to invalidate layout. MessageKit now relies on `UIApplication` orientation notification instead of `UIDevice`, which invalidates the layout only when it is needed. [#1126](https://github.com/MessageKit/MessageKit/pull/1126) by [@bguidolim](https://github.com/bguidolim)
 
 ### Added
 
 - **Breaking Change** Add support for audio seeking in AudioMessageCell. [#1102](hub.com/MessageKit/MessageKit/pull/1102) by [@marcetcheverry](https://github.com/marcetcheverry)
+
+- Add missing textAlignment and textInsets assignments to layoutCellTopLabel method in MessageContentCell. [#1117](https://github.com/MessageKit/MessageKit/pull/1117) by [@mdescalzo](https://github.com/mdescalzo)
 
 - Add support for styling NSLinkAttribute with existing urlAttributes in MessageLabel. [#1091](https://github.com/MessageKit/MessageKit/pull/1091) by [@marcetcheverry](https://github.com/marcetcheverry)
 
 - Add loading indicator to AudioMessageCell. [#1084](https://github.com/MessageKit/MessageKit/pull/1084) by [@marcetcheverry](https://github.com/marcetcheverry)
 
 - Lazily initialize the MessageInputBar on MessagesViewController. [#1092](https://github.com/MessageKit/MessageKit/pull/1092) by [@marcetcheverry](https://github.com/marcetcheverry)
+
+### Changed
+
+- Fixes scrollToBottom method to properly handle calls made early in the view lifecycle. [#1110](https://github.com/MessageKit/MessageKit/pull/1110) by [@marcetcheverry](https://github.com/marcetcheverry)
+
+- Add missing cellTopLabelAlignment to MessageSizeCalculator. [#1113](https://github.com/MessageKit/MessageKit/pull/1113) by [@marcetcheverry](https://github.com/marcetcheverry)
 
 ## 3.0.0
 

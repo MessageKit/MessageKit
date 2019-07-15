@@ -110,9 +110,8 @@ open class MessagesCollectionView: UICollectionView, UIGestureRecognizerDelegate
     }
 
     public func scrollToBottom(animated: Bool = false) {
-        let collectionViewContentHeight = collectionViewLayout.collectionViewContentSize.height
-
         performBatchUpdates(nil) { _ in
+            let collectionViewContentHeight = self.collectionViewLayout.collectionViewContentSize.height
             self.scrollRectToVisible(CGRect(0.0, collectionViewContentHeight - 1.0, 1.0, 1.0), animated: animated)
         }
     }
