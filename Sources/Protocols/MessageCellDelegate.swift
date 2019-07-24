@@ -148,6 +148,63 @@ public protocol MessageCellDelegate: MessageLabelDelegate {
     /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
     /// method `messageForItem(at:indexPath:messagesCollectionView)`.
     func didStopAudio(in cell: AudioMessageCell)
+    
+    
+    
+    
+    // MARK: from MessageLabelDelegate
+    
+    
+    
+    
+    /// Triggered when a tap occurs on a detected address.
+    ///
+    /// - Parameters:
+    ///   - addressComponents: The components of the selected address.
+    func didSelectAddress(in cell: MessageContentCell, addressComponents: [String: String])
+    
+    /// Triggered when a tap occurs on a detected date.
+    ///
+    /// - Parameters:
+    ///   - date: The selected date.
+    func didSelectDate(in cell: MessageContentCell, date: Date)
+    
+    /// Triggered when a tap occurs on a detected phone number.
+    ///
+    /// - Parameters:
+    ///   - phoneNumber: The selected phone number.
+    func didSelectPhoneNumber(in cell: MessageContentCell, phoneNumber: String)
+    
+    /// Triggered when a tap occurs on a detected URL.
+    ///
+    /// - Parameters:
+    ///   - url: The selected URL.
+    func didSelectURL(in cell: MessageContentCell, url: URL)
+    
+    /// Triggered when a tap occurs on detected transit information.
+    ///
+    /// - Parameters:
+    ///   - transitInformation: The selected transit information.
+    func didSelectTransitInformation(in cell: MessageContentCell, transitInformation: [String: String])
+    
+    /// Triggered when a tap occurs on a mention
+    ///
+    /// - Parameters:
+    ///   - mention: The selected mention
+    func didSelectMention(in cell: MessageContentCell, mention: String)
+    
+    /// Triggered when a tap occurs on a hashtag
+    ///
+    /// - Parameters:
+    ///   - mention: The selected hashtag
+    func didSelectHashtag(in cell: MessageContentCell, hashtag: String)
+    
+    /// Triggered when a tap occurs on a custom regular expression
+    ///
+    /// - Parameters:
+    ///   - pattern: the pattern of the regular expression
+    ///   - match: part that match with the regular expression
+    func didSelectCustom(in cell: MessageContentCell, pattern: String, match: String?)
 
 }
 
@@ -176,5 +233,20 @@ public extension MessageCellDelegate {
     func didTapMessageBottomLabel(in cell: MessageCollectionViewCell) {}
     
     func didTapAccessoryView(in cell: MessageCollectionViewCell) {}
-
+    
+    func didSelectAddress(in cell: MessageContentCell, addressComponents: [String: String]) {}
+    
+    func didSelectDate(in cell: MessageContentCell, date: Date) {}
+    
+    func didSelectPhoneNumber(in cell: MessageContentCell, phoneNumber: String) {}
+    
+    func didSelectURL(in cell: MessageContentCell, url: URL) {}
+    
+    func didSelectTransitInformation(in cell: MessageContentCell, transitInformation: [String: String]) {}
+    
+    func didSelectMention(in cell: MessageContentCell, mention: String) {}
+    
+    func didSelectHashtag(in cell: MessageContentCell, hashtag: String) {}
+    
+    func didSelectCustom(in cell: MessageContentCell, pattern: String, match: String?) {}
 }

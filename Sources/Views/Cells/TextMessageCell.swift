@@ -29,13 +29,6 @@ open class TextMessageCell: MessageContentCell {
 
     // MARK: - Properties
 
-    /// The `MessageCellDelegate` for the cell.
-    open override weak var delegate: MessageCellDelegate? {
-        didSet {
-            messageLabel.delegate = delegate
-        }
-    }
-
     /// The label used to display the message's text.
     open var messageLabel = MessageLabel()
 
@@ -70,6 +63,7 @@ open class TextMessageCell: MessageContentCell {
 
         let enabledDetectors = displayDelegate.enabledDetectors(for: message, at: indexPath, in: messagesCollectionView)
 
+        messageLabel.delegate = self
         messageLabel.configure {
             messageLabel.enabledDetectors = enabledDetectors
             for detector in enabledDetectors {
@@ -96,6 +90,41 @@ open class TextMessageCell: MessageContentCell {
     /// Return false when the contentView does not need to handle the gesture.
     open override func cellContentView(canHandle touchPoint: CGPoint) -> Bool {
         return messageLabel.handleGesture(touchPoint)
+    }
+
+}
+
+extension TextMessageCell: MessageLabelDelegate {
+    public func didSelectAddress(_ addressComponents: [String: String]) {
+        self.delegate?.didSelectAddress(in: self, addressComponents: addressComponents)
+    }
+    
+    public func didSelectDate(_ date: Date) {
+        self.delegate?.didSelectDate(in: self, date: date)
+    }
+    
+    public func didSelectPhoneNumber(_ phoneNumber: String) {
+        self.delegate?.didSelectPhoneNumber(in: self, phoneNumber: phoneNumber)
+    }
+    
+    public func didSelectURL(_ url: URL) {
+        self.delegate?.didSelectURL(in: self, url: url)
+    }
+    
+    public func didSelectTransitInformation(_ transitInformation: [String: String]) {
+        self.delegate?.didSelectTransitInformation(in: self, transitInformation: transitInformation)
+    }
+    
+    public func didSelectMention(_ mention: String) {
+        self.delegate?.didSelectMention(in: self, mention: mention)
+    }
+    
+    public func didSelectHashtag(_ hashtag: String) {
+        self.delegate?.didSelectHashtag(in: self, hashtag:  hashtag)
+    }
+    
+    public func didSelectCustom(_ pattern: String, match: String?) {
+        self.delegate?.didSelectCustom(in: self, pattern: pattern, match: match)
     }
 
 }
