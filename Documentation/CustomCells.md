@@ -4,7 +4,7 @@
 
 To make a custom cell, you have to make a cell that inherit from `UICollectionViewCell`.
 
-```
+```swift
 import UIKit
 import MessageKit
 
@@ -61,7 +61,7 @@ You must override two method to achieve that:
 
 You can see this example from the master branch:
 
-```
+```swift
 open class CustomMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     
     open lazy var customMessageSizeCalculator = CustomMessageSizeCalculator(layout: self)
@@ -107,7 +107,7 @@ open class CustomMessageSizeCalculator: MessageSizeCalculator {
 [MessageContentCell](https://github.com/MessageKit/MessageKit/blob/master/Sources/Views/Cells/MessageContentCell.swift) is the class used by [MessageKit](https://github.com/MessageKit/MessageKit) to display your message in a chat bubble
 You can create a cell by just extending this class: 
 
-```
+```swift
 import MessageKit
 import UIKit
 
