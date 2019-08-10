@@ -89,6 +89,8 @@ Please have a look at the [Quick Start guide](https://github.com/MessageKit/Mess
 
 We recommend you start by looking at the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project or write a question with the "messagekit" tag on [Stack Overflow](https://stackoverflow.com/questions/tagged/messagekit). You can also look at previous issues here on GitHib with the **"Question"** tag.
 
+You can also take a look at the [Custom cells guide](https://github.com/MessageKit/MessageKit/blob/master/Documentation/CustomCells.md)
+
 For more on how to use the MessageInputBar, see the dependency it is based on [InputBarAccessoryView](https://github.com/nathantannar4/InputBarAccessoryView). You can also see this [short guide]([https://github.com/MessageKit/MessageKit/blob/master/Documentation/MessageInputBar.md) 
 
 ## Default Cells
