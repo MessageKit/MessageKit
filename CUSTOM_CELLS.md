@@ -1,7 +1,7 @@
 # MessageKit Custom Cell Guide(s)
 
 - [How can I add a custom cell?](#how-can-i-add-a-custom-cell)
-- [Issue Reference](#other-custom-cell-guides?)
+- [Issue Reference](#other-custom-cell-guides)
 
 ## How can I add a custom cell?
 
