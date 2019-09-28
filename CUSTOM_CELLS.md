@@ -7,7 +7,7 @@
 
 **Note:** If you choose to use the `.custom` kind you are responsible for all of the cell's layout. You can design the cell in code or Interface Builder. Any `UICollectionViewCell` can be returned for custom cells which means any of the styling you provide from the `MessageDisplayDelegate` will not affect your custom cell, even if you subclass your cell from `MessageContentCell`.
 
-Creating a custom cell involves four parts:
+**Creating a custom cell involves four parts:**
 1. Build a cell in Interface Builder or code that inherits from `UICollectionViewCell`
 2. Set the size of your cell. Subclass  `MessageSizeCalculator` if you want your cell to have the default MessageKit layout design. Subclass  `CellSizeCalculator` if you want to further customize your own cell design. The implementation of this class will allow your custom cell to automatically size itself within the `messagesCollectionView`.
 3. Add your custom cell size to the collection view flow layout. Subclass `MessagesCollectionViewFlowLayout`, and use the custom message size calculator from step 2, above.
