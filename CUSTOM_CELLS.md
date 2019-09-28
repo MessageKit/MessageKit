@@ -1,7 +1,7 @@
 # MessageKit Custom Cell Guide(s)
 
 - [How can I add a custom cell?](#how-can-i-add-a-custom-cell)
-- [Issue Reference](#how-can-i-add-a-custom-cell)
+- [Issue Reference](#other-custom-cell-guides?)
 
 ## How can I add a custom cell?
 
@@ -81,5 +81,5 @@ internal class ConversationViewController: MessagesViewController {
 }
 ```
 
-## How can I add a custom cell?
+## Other custom cell guides?
 - 
