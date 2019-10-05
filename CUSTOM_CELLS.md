@@ -1,7 +1,6 @@
 # MessageKit Custom Cell Guide(s)
 
 - [How can I add a custom cell?](#how-can-i-add-a-custom-cell)
-- [Issue Reference](#other-custom-cell-guides)
 
 ## How can I add a custom cell?
 
@@ -33,7 +32,8 @@ open class MyCustomCell: UICollectionViewCell {
 ```swift
 open class CustomMessageSizeCalculator: MessageSizeCalculator {
     open override func messageContainerSize(for message: MessageType) -> CGSize {
-    //HERE - Customize to size your content appropriately. This just returns a constant size.
+    // Customize this function implementation to size your content appropriately. This example simply returns a constant size
+    // Refer to the default MessageKit cell implementations, and the Example App to see how to size a custom cell dynamically
     return CGSize(width: 300, height: 130)
     }
 }
@@ -80,6 +80,3 @@ internal class ConversationViewController: MessagesViewController {
     }
 }
 ```
-
-## Other custom cell guides?
-- 
