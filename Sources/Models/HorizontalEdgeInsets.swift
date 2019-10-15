@@ -49,7 +49,7 @@ public extension HorizontalEdgeInsets {
 
 internal extension HorizontalEdgeInsets {
 
-    internal var horizontal: CGFloat {
+    var horizontal: CGFloat {
         return left + right
     }
 }
