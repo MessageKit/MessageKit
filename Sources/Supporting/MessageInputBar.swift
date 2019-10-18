@@ -25,10 +25,10 @@
 import UIKit
 import InputBarAccessoryView
 
-@available(*, obsoleted: 3.0.0, renamed: "InputBarAccessoryView")
+@available(*, unavailable, renamed: "InputBarAccessoryView")
 public typealias MessageInputBar = InputBarAccessoryView
 
-@available(*, obsoleted: 3.0.0, renamed: "InputBarAccessoryViewDelegate")
+@available(*, unavailable, renamed: "InputBarAccessoryViewDelegate")
 public typealias MessageInputBarDelegate = InputBarAccessoryViewDelegate
 
 //public extension MessageInputBarDelegate {
