@@ -15,17 +15,18 @@ public protocol MessageType {
     var kind: MessageKind { get }
 }
 ```
-First, each `MessageType` is required to have a `Sender` which contains two properties, `id` and `displayName`:
+First, each `MessageType` is required to have a `SenderType` which contains two properties, `senderId` and `displayName`:
 ### Sender
 ```Swift
-public struct Sender {
+public protocol SenderType {
 
-    public let id: String
-
-    public let displayName: String
+    var senderId: String { get }
+    
+    var displayName: String { get }
 }
+
 ```
-**MessageKit** uses the `Sender` type to determine if a message was sent by the current user or to the current user.
+**MessageKit** uses the `SenderType` type to determine if a message was sent by the current user or to the current user.
 
 Second, each message must have its own `messageId` which is a unique `String` identifier for the message.
 
@@ -91,13 +92,20 @@ class ChatViewController: MessagesViewController {
 You must implement the following 3 methods to conform to `MessagesDataSource`:
 
 ```Swift
+
+public struct Sender: SenderType {
+    public let senderId: String
+
+    public let displayName: String
+}
+
 // Some global variables for the sake of the example. Using globals is not recommended!
 let sender = Sender(id: "any_unique_id", displayName: "Steven")
 let messages: [MessageType] = []
 
 extension ChatViewController: MessagesDataSource {
 
-	func currentSender() -> Sender {
+	func currentSender() -> SenderType {
 		return Sender(id: "any_unique_id", displayName: "Steven")
 	}
 
