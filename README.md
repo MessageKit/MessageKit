@@ -121,6 +121,7 @@ public enum MessageKind {
 
 If you choose to use the `.custom` kind you are responsible for all of the cells layout. Any `UICollectionViewCell` can be returned for custom cells which means any of the styling you provide from the `MessageDisplayDelegate` will not effect your custom cell. Even if you subclass your cell from `MessageContentCell`.
 
+[Read more about the cases on the Quick Start guide.](https://github.com/MessageKit/MessageKit/blob/master/Documentation/QuickStart.md#messagekind)
 
 ## Contributing
 
@@ -156,6 +157,8 @@ Add your app to the list of apps using this library and make a pull request.
 - [RappresentaMe](https://itunes.apple.com/it/app/rappresentame/id1330914443)
 - [WiseEyes](https://itunes.apple.com/us/app/wiseeyes/id1391408511?mt=8)
 - [SwiftHub](https://github.com/khoren93/SwiftHub)
+- [Studievenn](https://studievenn.no)
+- [SmooveText](https://apps.apple.com/np/app/smoove-text/id1362792811)
 
 *Please provide attribution, it is greatly appreciated.*
 

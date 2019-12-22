@@ -32,35 +32,28 @@ Second, each message must have its own `messageId` which is a unique `String` id
 Third, each message must have a `sentDate` which represents the `Date` that each message was sent.
 
 Fourth, each message must specify what kind of message it is through the `kind: MessageKind` property:
-### MessageKind
+### [MessageKind](https://github.com/MessageKit/MessageKit#default-cells)
 
-```Swift
-public enum MessageKind {
-    case text(String)
-    case attributedText(NSAttributedString)
-    case emoji(String)
-    case photo(MediaItem)
-    case video(MediaItem)
-    case location(LocationItem)
-    case custom(Any?)
-}
-```
-`MessageData` has 7 different cases representing the types of messages that **MessageKit** can display.
+`MessageData` has 8 different cases representing the types of messages that **MessageKit** can display.
 
 - `text(String)` - Use this case if you just want to display a normal text message without any attributes.
-- **NOTE**: You must also specify the `UIFont` you want to use for this text by setting the `messageLabelFont` property of the `textMessageSizeCalculator` in `MessagesCollectionViewFlowLayout`.
-
-- `emoji(String)` - Use this case to display a message that only contains emoji.
-- **NOTE**: You must also specify the `UIFont` you want to use for this text by setting the `messageLabelFont` property of the `emojiMessageSizeCalculator` in `MessagesCollectionViewFlowLayout`.
+  - **NOTE**: You must also specify the `UIFont` you want to use for this text by setting the `messageLabelFont` property of the `textMessageSizeCalculator` in `MessagesCollectionViewFlowLayout`.
 
 - `attributedText(NSAttributedString)` - Use this case if you want to display a text message with attributes.
-- **NOTE**: It is recommended that you use `attributedText` for text messages.
+  - **NOTE**: It is recommended that you use `attributedText` for text messages.
+
+- `emoji(String)` - Use this case to display a message that only contains emoji.
+  - **NOTE**: You must also specify the `UIFont` you want to use for this text by setting the `messageLabelFont` property of the `emojiMessageSizeCalculator` in `MessagesCollectionViewFlowLayout`.
 
 - `photo(MediaItem)` - Use this case to display a photo message.
 
 - `video(MediaItem)` - Use this case to display a video message.
 
 - `location(LocationItem)` - Use this case to display a location message.
+
+- `audio(AudioItem)` - Use this case to display an audio message.
+
+- `contact(ContactItem)` - Use this case to display a contact message.
 
 # MessagesViewController
 
