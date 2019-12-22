@@ -267,6 +267,9 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// Positions the cell's top label.
     /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
     open func layoutCellTopLabel(with attributes: MessagesCollectionViewLayoutAttributes) {
+        cellTopLabel.textAlignment = attributes.cellTopLabelAlignment.textAlignment
+        cellTopLabel.textInsets = attributes.cellTopLabelAlignment.textInsets
+
         cellTopLabel.frame = CGRect(origin: .zero, size: attributes.cellTopLabelSize)
     }
     

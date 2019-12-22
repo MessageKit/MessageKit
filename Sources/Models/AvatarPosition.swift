@@ -94,5 +94,5 @@ public extension AvatarPosition {
     static func == (lhs: AvatarPosition, rhs: AvatarPosition) -> Bool {
         return lhs.vertical == rhs.vertical && lhs.horizontal == rhs.horizontal
     }
-
+    
 }

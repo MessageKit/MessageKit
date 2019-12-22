@@ -26,7 +26,7 @@ import Foundation
 
 internal extension CGRect {
     
-    init(_ x: CGFloat, _ y: CGFloat, _ w: CGFloat, _ h: CGFloat) { // swiftlint:disable:this explicit_acl
+    init(_ x: CGFloat, _ y: CGFloat, _ w: CGFloat, _ h: CGFloat) {
         self.init(x: x, y: y, width: w, height: h)
     }
 
