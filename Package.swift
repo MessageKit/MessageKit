@@ -9,11 +9,12 @@ let package = Package(
                 targets: ["MessageKit"])
    ],
    dependencies: [
-        .package(url: "https://github.com/nathantannar4/InputBarAccessoryView.git", from: "4.2.1")
+        .package(url: "https://github.com/Nixon506E/InputBarAccessoryView.git", from: "4.2.1")
    ],
    targets: [
        .target(
            name: "MessageKit",
+           dependencies: ["InputBarAccessoryView"],
            path: "Sources"
        )
    ],

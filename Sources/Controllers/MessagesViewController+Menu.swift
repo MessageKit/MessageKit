@@ -23,16 +23,17 @@
  */
 
 import Foundation
+import UIKit
 
 internal extension MessagesViewController {
 
     // MARK: - Register / Unregister Observers
 
-    internal func addMenuControllerObservers() {
+    func addMenuControllerObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.menuControllerWillShow(_:)), name: UIMenuController.willShowMenuNotification, object: nil)
     }
 
-    internal func removeMenuControllerObservers() {
+    func removeMenuControllerObservers() {
         NotificationCenter.default.removeObserver(self, name: UIMenuController.willShowMenuNotification, object: nil)
     }
 
