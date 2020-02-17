@@ -53,6 +53,7 @@
 		50FF34572237FE6A0004DCD7 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FF34562237FE6A0004DCD7 /* UIImage+Extension.swift */; };
 		50FF34592237FE850004DCD7 /* ContactMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FF34582237FE840004DCD7 /* ContactMessageCell.swift */; };
 		50FF345B2237FE9C0004DCD7 /* ContactMessageSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FF345A2237FE9C0004DCD7 /* ContactMessageSizeCalculator.swift */; };
+		797AD26423422BDB00E63579 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797AD26323422BDB00E63579 /* UIColor.swift */; };
 		88916B2D1CF0DF2F00469F91 /* MessageKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88916B221CF0DF2F00469F91 /* MessageKit.framework */; };
 		8962AC8A1F87AB7D0030B058 /* MessagesCollectionViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC831F87AB230030B058 /* MessagesCollectionViewTests.swift */; };
 		8962AC8C1F87AB7D0030B058 /* AvatarViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8962AC851F87AB230030B058 /* AvatarViewTests.swift */; };
@@ -166,6 +167,7 @@
 		50FF34562237FE6A0004DCD7 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		50FF34582237FE840004DCD7 /* ContactMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactMessageCell.swift; sourceTree = "<group>"; };
 		50FF345A2237FE9C0004DCD7 /* ContactMessageSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactMessageSizeCalculator.swift; sourceTree = "<group>"; };
+		797AD26323422BDB00E63579 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		88916B221CF0DF2F00469F91 /* MessageKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MessageKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88916B2C1CF0DF2F00469F91 /* MessageKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessageKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8962AC741F87AB230030B058 /* MessageKitDateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageKitDateFormatterTests.swift; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 				B7A03F651F8669EB006AEF79 /* UIColor+Extensions.swift */,
 				B7A03F661F8669EB006AEF79 /* UIView+Extensions.swift */,
 				1FCA6D2F201C1CC900BC3480 /* UIEdgeInsets+Extensions.swift */,
+				797AD26323422BDB00E63579 /* UIColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -643,6 +646,7 @@
 				38F8063321740D9E00CDB9DB /* BubbleCircle.swift in Sources */,
 				B7A03F5C1F8669CA006AEF79 /* MessageCellDelegate.swift in Sources */,
 				5073C11D2175BEC60040EAD5 /* AudioMessageSizeCalculator.swift in Sources */,
+				797AD26423422BDB00E63579 /* UIColor.swift in Sources */,
 				1FF377A420087C82004FD648 /* MessageKitError.swift in Sources */,
 				1F6C040E206A2AF4007BDE44 /* MessageReusableView.swift in Sources */,
 				388119462253EC30004B26AF /* TypingIndicatorCellSizeCalculator.swift in Sources */,
