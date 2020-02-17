@@ -101,7 +101,7 @@ open class MessagesCollectionView: UICollectionView {
     }
 
     // NOTE: It's possible for small content size this wouldn't work - https://github.com/MessageKit/MessageKit/issues/725
-    public func scrollToLastItem(at pos: UICollectionView.ScrollPosition = .centeredVertically, animated: Bool = true) {
+    public func scrollToLastItem(at pos: UICollectionView.ScrollPosition = .bottom, animated: Bool = true) {
         guard numberOfSections > 0 else { return }
         
         let lastSection = numberOfSections - 1
