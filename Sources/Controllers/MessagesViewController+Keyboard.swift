@@ -127,8 +127,8 @@ internal extension MessagesViewController {
     }
 
     func requiredInitialScrollViewBottomInset() -> CGFloat {
-        guard let inputAccessoryView = inputAccessoryView else { return 0 }
-        return max(0, inputAccessoryView.frame.height + additionalBottomInset - automaticallyAddedBottomInset)
+        let inputAccessoryViewHeight = inputAccessoryView?.frame.height ?? 0
+        return max(0, inputAccessoryViewHeight + additionalBottomInset - automaticallyAddedBottomInset)
     }
 
     /// iOS 11's UIScrollView can automatically add safe area insets to its contentInset,
