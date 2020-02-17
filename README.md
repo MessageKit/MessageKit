@@ -1,8 +1,8 @@
 <p>
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo" width="600">
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo" width="400">
 </p>
 <p>
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/TypingIndicator.png" title="MessageKit header" width="600">
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/TypingIndicator.png" title="MessageKit header" width="400">
 </p>
 
 [![CircleCI](https://circleci.com/gh/MessageKit/MessageKit.svg?style=svg)](https://circleci.com/gh/MessageKit/MessageKit)
