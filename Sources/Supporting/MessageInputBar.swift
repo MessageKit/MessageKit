@@ -29,7 +29,4 @@ import InputBarAccessoryView
 public typealias MessageInputBar = InputBarAccessoryView
 
 @available(*, unavailable, renamed: "InputBarAccessoryViewDelegate")
-public typealias MessageInputBar = InputBarAccessoryView
-
-@available(*, deprecated, renamed: "InputBarAccessoryViewDelegate")
 public typealias MessageInputBarDelegate = InputBarAccessoryViewDelegate
