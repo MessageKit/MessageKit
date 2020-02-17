@@ -195,6 +195,10 @@ extension ChatViewController: MessageCellDelegate {
         print("Message tapped")
     }
     
+    func didTapImage(in cell: MessageCollectionViewCell) {
+        print("Image tapped")
+    }
+    
     func didTapCellTopLabel(in cell: MessageCollectionViewCell) {
         print("Top cell label tapped")
     }
