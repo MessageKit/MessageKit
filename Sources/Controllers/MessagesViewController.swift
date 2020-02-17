@@ -34,7 +34,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     open var messagesCollectionView = MessagesCollectionView()
 
     /// The `InputBarAccessoryView` used as the `inputAccessoryView` in the view controller.
-    open var messageInputBar = InputBarAccessoryView()
+    open lazy var messageInputBar = InputBarAccessoryView()
 
     /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
     /// bottom whenever the `InputTextView` begins editing.
@@ -146,9 +146,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     private func setupDefaults() {
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = false
-        view.backgroundColor = .white
+        view.backgroundColor = .backgroundColor
         messagesCollectionView.keyboardDismissMode = .interactive
         messagesCollectionView.alwaysBounceVertical = true
+        messagesCollectionView.backgroundColor = .backgroundColor
     }
 
     private func setupDelegates() {
