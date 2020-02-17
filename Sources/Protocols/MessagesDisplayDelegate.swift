@@ -229,7 +229,7 @@ public extension MessagesDisplayDelegate {
         case .emoji:
             return .clear
         default:
-            guard let dataSource = messagesCollectionView.messagesDataSource else { return .white }
+            guard let dataSource = messagesCollectionView.messagesDataSource else { return .backgroundColor }
             return dataSource.isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
         }
     }
@@ -254,7 +254,7 @@ public extension MessagesDisplayDelegate {
         guard let dataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
-        return dataSource.isFromCurrentSender(message: message) ? .white : .darkText
+        return dataSource.isFromCurrentSender(message: message) ? .backgroundColor : .labelColor
     }
 
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {

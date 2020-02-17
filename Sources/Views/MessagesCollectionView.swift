@@ -57,7 +57,7 @@ open class MessagesCollectionView: UICollectionView {
 
     public override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
-        backgroundColor = .white
+        backgroundColor = .backgroundColor
         registerReusableViews()
         setupGestureRecognizers()
     }
@@ -101,9 +101,8 @@ open class MessagesCollectionView: UICollectionView {
     }
 
     public func scrollToBottom(animated: Bool = false) {
-        let collectionViewContentHeight = collectionViewLayout.collectionViewContentSize.height
-
         performBatchUpdates(nil) { _ in
+            let collectionViewContentHeight = self.collectionViewLayout.collectionViewContentSize.height
             self.scrollRectToVisible(CGRect(0.0, collectionViewContentHeight - 1.0, 1.0, 1.0), animated: animated)
         }
     }
