@@ -8,11 +8,11 @@ jobs:
   build-and-test:
 
     environment:
-      - DESTINATION: "platform=iOS Simulator,name=iPhone XS"
+      - DESTINATION: "platform=iOS Simulator,name=iPhone 11 Pro"
 
     # Specify the Xcode version to use.
     macos:
-      xcode: "10.2.0"
+      xcode: "11.3.1"
 
     # Define the steps required to build the project.
     steps:
