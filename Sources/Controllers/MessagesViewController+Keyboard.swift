@@ -29,13 +29,13 @@ internal extension MessagesViewController {
 
     // MARK: - Register / Unregister Observers
 
-    func addKeyboardObservers() {
+    internal func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleKeyboardDidChangeState(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleTextViewDidBeginEditing(_:)), name: UITextView.textDidBeginEditingNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.adjustScrollViewTopInset), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
 
-    func removeKeyboardObservers() {
+    internal func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UITextView.textDidBeginEditingNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
@@ -95,7 +95,7 @@ internal extension MessagesViewController {
     // MARK: - Inset Computation
 
     @objc
-    func adjustScrollViewTopInset() {
+    internal func adjustScrollViewTopInset() {
         if #available(iOS 11.0, *) {
             // No need to add to the top contentInset
         } else {
@@ -121,7 +121,7 @@ internal extension MessagesViewController {
         }
     }
 
-    func requiredInitialScrollViewBottomInset() -> CGFloat {
+    internal func requiredInitialScrollViewBottomInset() -> CGFloat {
         let inputAccessoryViewHeight = inputAccessoryView?.frame.height ?? 0
         return max(0, inputAccessoryViewHeight + additionalBottomInset - automaticallyAddedBottomInset)
     }

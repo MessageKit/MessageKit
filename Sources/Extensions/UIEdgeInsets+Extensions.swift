@@ -24,6 +24,8 @@
 
 import Foundation
 
+// swiftlint:disable explicit_acl
+
 internal extension UIEdgeInsets {
 
     var vertical: CGFloat {

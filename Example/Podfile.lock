@@ -1,7 +1,7 @@
 PODS:
-  - InputBarAccessoryView (4.3.0)
-  - MessageKit (3.1.0):
-    - InputBarAccessoryView (~> 4.3.0)
+  - InputBarAccessoryView (4.2.2)
+  - MessageKit (3.0.0-beta-swift4-2):
+    - InputBarAccessoryView
 
 DEPENDENCIES:
   - MessageKit (from `../`)
@@ -15,9 +15,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  InputBarAccessoryView: 28dca73f28df7822fe5377f83cfc4547e22f90ff
-  MessageKit: 72add24fcba6c6ca1e09385285f6f66757340769
+  InputBarAccessoryView: 2b937602598e2fab3149f37f51dd7ad795653812
+  MessageKit: feb3ca4fa02a14f3391781323ced1da84a0aa73c
 
 PODFILE CHECKSUM: cecdb7bc8129cf99f66de9f68eea3256fec30c3d
 
-COCOAPODS: 1.7.0
+COCOAPODS: 1.6.1
