@@ -63,6 +63,11 @@ internal extension MessagesViewController {
             return
         }
         
+        guard self.presentedViewController == nil else {
+            // This is important to skip notifications from child modal controllers in iOS >= 13.0
+            return
+        }
+        
         // Note that the check above does not exclude all notifications from an undocked keyboard, only the weird ones.
         //
         // We've tried following Apple's recommended approach of tracking UIKeyboardWillShow / UIKeyboardDidHide and ignoring frame
