@@ -34,7 +34,7 @@ open class ContactMessageCell: MessageContentCell {
     /// The view container that holds contact initials
     public lazy var initialsContainerView: UIView = {
         let initialsContainer = UIView(frame: CGRect.zero)
-        initialsContainer.backgroundColor = .white
+        initialsContainer.backgroundColor = .backgroundColor
         return initialsContainer
     }()
     
@@ -42,7 +42,7 @@ open class ContactMessageCell: MessageContentCell {
     public lazy var initialsLabel: UILabel = {
         let initialsLabel = UILabel(frame: CGRect.zero)
         initialsLabel.textAlignment = .center
-        initialsLabel.textColor = .darkText
+        initialsLabel.textColor = .labelColor
         initialsLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         return initialsLabel
     }()
