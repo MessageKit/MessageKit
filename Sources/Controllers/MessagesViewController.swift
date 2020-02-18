@@ -37,9 +37,17 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     open lazy var messageInputBar = InputBarAccessoryView()
 
     /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
+    /// last item whenever the `InputTextView` begins editing.
+    ///
+    /// The default value of this property is `false`.
+    /// NOTE: This calls scrollToLastItem where as the below flag calls scrollToBottom - check methods for differences
+    open var scrollsToLastItemOnKeyboardBeginsEditing: Bool = false
+
+    /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
     /// bottom whenever the `InputTextView` begins editing.
     ///
     /// The default value of this property is `false`.
+    /// NOTE: This calls scrollToBottome where as the above flag calls  scrollToLastItem - check methods for differences
     open var scrollsToBottomOnKeyboardBeginsEditing: Bool = false
     
     /// A Boolean value that determines whether the `MessagesCollectionView`
