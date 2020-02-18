@@ -40,7 +40,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     /// last item whenever the `InputTextView` begins editing.
     ///
     /// The default value of this property is `false`.
-    /// NOTE: This calls scrollToLastItem where as the below flag calls scrollToBottome - check methods for differences
+    /// NOTE: This calls scrollToLastItem where as the below flag calls scrollToBottom - check methods for differences
     open var scrollsToLastItemOnKeyboardBeginsEditing: Bool = false
 
     /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
