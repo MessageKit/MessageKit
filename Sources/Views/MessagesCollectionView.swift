@@ -100,8 +100,24 @@ open class MessagesCollectionView: UICollectionView {
         cell?.handleTapGesture(gesture)
     }
 
+    // NOTE: It's possible for small content size this wouldn't work - https://github.com/MessageKit/MessageKit/issues/725
+    public func scrollToLastItem(at pos: UICollectionView.ScrollPosition = .bottom, animated: Bool = true) {
+        guard numberOfSections > 0 else { return }
+        
+        let lastSection = numberOfSections - 1
+        let lastItem = numberOfItems(inSection: lastSection) - 1
+        
+        guard lastItem >= 0 else { return }
+        
+        let indexPath = IndexPath(row: lastItem, section: lastSection)
+        scrollToItem(at: indexPath, at: pos, animated: animated)
+    }
+    
+    // NOTE: This method seems to cause crash in certain cases - https://github.com/MessageKit/MessageKit/issues/725
+    // Could try using `scrollToLastItem` above
     public func scrollToBottom(animated: Bool = false) {
-        performBatchUpdates(nil) { _ in
+        performBatchUpdates(nil) { [weak self] _ in
+            guard let self = self else { return }
             let collectionViewContentHeight = self.collectionViewLayout.collectionViewContentSize.height
             self.scrollRectToVisible(CGRect(0.0, collectionViewContentHeight - 1.0, 1.0, 1.0), animated: animated)
         }
