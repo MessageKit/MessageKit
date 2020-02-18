@@ -105,11 +105,11 @@ open class MessagesCollectionView: UICollectionView {
         guard numberOfSections > 0 else { return }
         
         let lastSection = numberOfSections - 1
-        let lastItem = numberOfItems(inSection: lastSection) - 1
+        let lastItemIndex = numberOfItems(inSection: lastSection) - 1
         
-        guard lastItem >= 0 else { return }
+        guard lastItemIndex >= 0 else { return }
         
-        let indexPath = IndexPath(row: lastItem, section: lastSection)
+        let indexPath = IndexPath(row: lastItemIndex, section: lastSection)
         scrollToItem(at: indexPath, at: pos, animated: animated)
     }
     
