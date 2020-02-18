@@ -24,6 +24,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - Add missing cellTopLabelAlignment to MessageSizeCalculator. [#1113](https://github.com/MessageKit/MessageKit/pull/1113) by [@marcetcheverry](https://github.com/marcetcheverry)
 
+- **Breaking Change** `MessageInputBar`, and `MessageInputBarDelegate` have been obsoleted. Use`InputBarAccessoryView` and `InputBarAccessoryViewDelegate` respectively. This change was previously meant for 3.0.0 but was implemented erroneously. [#1201](https://github.com/MessageKit/MessageKit/pull/1201) by [@kinoroy](https://github.com/kinoroy)
+
+- Deprecated `SenderType.id` in favour of `SenderType.senderId`. This change was previously meant for 3.0.0 but
+  was implemented erroneously. [#1201](https://github.com/MessageKit/MessageKit/pull/1201) by [@kinoroy](https://github.com/kinoroy)
+
 ## 3.0.0
 
 ### Dependency Changes
