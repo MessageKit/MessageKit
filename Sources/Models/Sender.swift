@@ -35,7 +35,7 @@ public struct Sender: SenderType {
     /// Note: This value must be unique across all senders.
     public let senderId: String
 
-    @available(*, deprecated, message: "`id` has been renamed `senderId` as defined in the `SenderType` protocol")
+    @available(*, deprecated, renamed: "senderId", message: "`id` has been renamed `senderId` as defined in the `SenderType` protocol")
     public var id: String {
         return senderId
     }
