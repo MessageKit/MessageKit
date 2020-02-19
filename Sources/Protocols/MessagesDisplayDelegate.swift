@@ -30,6 +30,17 @@ public protocol MessagesDisplayDelegate: AnyObject {
 
     // MARK: - All Messages
 
+    /// Specifies the `UIEdgeInsets` to be used for a `MessageContainerView`.
+    ///
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed by this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    ///
+    /// - Note:
+    ///   The default value returned by this method is `MessageStyle.bubble`.
+    func messageStyleInsets(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets
+
     /// Specifies the `MessageStyle` to be used for a `MessageContainerView`.
     ///
     /// - Parameters:
@@ -218,6 +229,10 @@ public protocol MessagesDisplayDelegate: AnyObject {
 public extension MessagesDisplayDelegate {
 
     // MARK: - All Messages Defaults
+
+    func messageStyleInsets(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIEdgeInsets {
+        return .zero
+    }
 
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         return .bubble
