@@ -30,6 +30,8 @@ open class MessageContainerView: UIImageView {
 
     private let imageMask = UIImageView()
 
+    open var styleInsets: UIEdgeInsets = .zero
+
     open var style: MessageStyle = .none {
         didSet {
             applyMessageStyle()
@@ -49,7 +51,7 @@ open class MessageContainerView: UIImageView {
         case .none, .custom:
             break
         case .bubble, .bubbleTail, .bubbleOutline, .bubbleTailOutline:
-            imageMask.frame = bounds
+            imageMask.frame = bounds.inset(by: styleInsets)
         }
     }
 
