@@ -136,6 +136,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         delegate = messagesCollectionView.messageCellDelegate
 
         let messageColor = displayDelegate.backgroundColor(for: message, at: indexPath, in: messagesCollectionView)
+        let messageStyleInsets = displayDelegate.messageStyleInsets(for: message, at: indexPath, in: messagesCollectionView)
         let messageStyle = displayDelegate.messageStyle(for: message, at: indexPath, in: messagesCollectionView)
 
         displayDelegate.configureAvatarView(avatarView, for: message, at: indexPath, in: messagesCollectionView)
@@ -143,6 +144,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         displayDelegate.configureAccessoryView(accessoryView, for: message, at: indexPath, in: messagesCollectionView)
 
         messageContainerView.backgroundColor = messageColor
+        messageContainerView.styleInsets = messageStyleInsets
         messageContainerView.style = messageStyle
 
         let topCellLabelText = dataSource.cellTopLabelAttributedText(for: message, at: indexPath)
