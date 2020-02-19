@@ -6,6 +6,14 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
+### Added
+
+### Changed
+
+## 3.1.0
+
+### Fixed
+
  - Set the proper notification to invalidate layout. MessageKit now relies on `UIApplication` orientation notification instead of `UIDevice`, which invalidates the layout only when it is needed. [#1126](https://github.com/MessageKit/MessageKit/pull/1126) by [@bguidolim](https://github.com/bguidolim)
 
 ### Added
@@ -19,6 +27,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Lazily initialize the MessageInputBar on MessagesViewController. [#1092](https://github.com/MessageKit/MessageKit/pull/1092) by [@marcetcheverry](https://github.com/marcetcheverry)
 
 ### Changed
+
+- **Breaking Change** Updated to Swift 5.0 [#1039](https://github.com/MessageKit/MessageKit/pull/1039) by [@nathantannar4](https://github.com/nathantannar4)
 
 - Fixes scrollToBottom method to properly handle calls made early in the view lifecycle. [#1110](https://github.com/MessageKit/MessageKit/pull/1110) by [@marcetcheverry](https://github.com/marcetcheverry)
 
