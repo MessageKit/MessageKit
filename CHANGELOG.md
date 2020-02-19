@@ -15,6 +15,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ### Fixed
 
  - Set the proper notification to invalidate layout. MessageKit now relies on `UIApplication` orientation notification instead of `UIDevice`, which invalidates the layout only when it is needed. [#1126](https://github.com/MessageKit/MessageKit/pull/1126) by [@bguidolim](https://github.com/bguidolim)
+ 
+ - Fixed `requiredInitialScrollViewBottomInset` when `inputAccessoryView` is `nil` [#1218](https://github.com/MessageKit/MessageKit/pull/1218) by [@aabosh](https://github.com/aabosh) 
 
 ### Added
 
@@ -25,6 +27,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Add loading indicator to AudioMessageCell. [#1084](https://github.com/MessageKit/MessageKit/pull/1084) by [@marcetcheverry](https://github.com/marcetcheverry)
 
 - Lazily initialize the MessageInputBar on MessagesViewController. [#1092](https://github.com/MessageKit/MessageKit/pull/1092) by [@marcetcheverry](https://github.com/marcetcheverry)
+
+- Add support for Dark Mode [#1189](https://github.com/MessageKit/MessageKit/pull/1189) by [@Vlada31R](https://github.com/Vlada31R)
+
+- Add support for `scrollToLastItem` and `scrollsToLastItemOnKeyboardBeginsEditing` [#1247](https://github.com/MessageKit/MessageKit/pull/1247) by [@youuu](https://github.com/youuu)
 
 ### Changed
 
