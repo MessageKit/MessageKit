@@ -43,11 +43,14 @@ See [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) 
 ## Installation
 ### [CocoaPods](https://cocoapods.org/) **Recommended**
 ````ruby
-# Swift 4.2
+# Swift 5.0
 pod 'MessageKit'
 ````
-
-> If you are already using Swift 5, use the `3.0.0-swift5` branch until the offical release is made
+> For Swift 4.2 use version 3.0.0
+````ruby
+# Swift 4.2
+pod 'MessageKit', '~> 3.0.0'
+````
 
 ### [Carthage](https://github.com/Carthage/Carthage)
 
@@ -61,9 +64,8 @@ github "MessageKit/MessageKit"
 
 ## Requirements
 
-- **iOS9** or later
-- **Swift 4.2** or later
-
+- **iOS 9** or later
+- **Swift 5.0** or later
 
 ## Getting Started
 
