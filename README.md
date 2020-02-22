@@ -1,7 +1,7 @@
-<p>
+<p align="center">
   <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo" width="400">
-</p>
-<p>
+  </p>
+  <p align="center">
   <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/TypingIndicator.png" title="MessageKit header" width="400">
 </p>
 
