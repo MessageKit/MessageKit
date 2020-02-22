@@ -1,8 +1,7 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo" width="400">
-  </p>
-  <p align="center">
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/TypingIndicator.png" title="MessageKit header" width="400">
+  
+  A community-driven replacement for JSQMessagesViewController https://messagekit.github.io
 </p>
 
 [![CircleCI](https://circleci.com/gh/MessageKit/MessageKit.svg?style=svg)](https://circleci.com/gh/MessageKit/MessageKit)
@@ -28,6 +27,10 @@
    <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"
         alt="Contributions Welcome">
 </a>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/TypingIndicator.png" title="MessageKit header" width="400">
+</p>
 
 ## Goals
 
