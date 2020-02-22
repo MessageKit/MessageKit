@@ -1,5 +1,7 @@
 PODS:
-  - InputBarAccessoryView (4.3.0)
+  - InputBarAccessoryView (4.3.1):
+    - InputBarAccessoryView/Core (= 4.3.1)
+  - InputBarAccessoryView/Core (4.3.1)
   - MessageKit (3.1.0):
     - InputBarAccessoryView (~> 4.3.0)
 
@@ -7,7 +9,7 @@ DEPENDENCIES:
   - MessageKit (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - InputBarAccessoryView
 
 EXTERNAL SOURCES:
@@ -15,9 +17,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  InputBarAccessoryView: 28dca73f28df7822fe5377f83cfc4547e22f90ff
-  MessageKit: 72add24fcba6c6ca1e09385285f6f66757340769
+  InputBarAccessoryView: 58a348be7ea2736c7eec60e5c315511c2dbb39fd
+  MessageKit: 3beb578737a5aa2bba25cc27c7b6d6faa09af5a7
 
-PODFILE CHECKSUM: cecdb7bc8129cf99f66de9f68eea3256fec30c3d
+PODFILE CHECKSUM: 90bd12ca685503630d7fe716609f4974660ed5ee
 
-COCOAPODS: 1.7.0
+COCOAPODS: 1.8.4
