@@ -66,3 +66,55 @@ internal extension UIColor {
         }
     }
 }
+
+internal extension UIColor {
+
+    static var backgroundColor: UIColor {
+        if #available(iOS 13, *) {
+            return systemBackground
+        } else {
+            return white
+        }
+    }
+
+    static var labelColor: UIColor {
+        if #available(iOS 13, *) {
+            return label
+        } else {
+            return black
+        }
+    }
+
+    static var placeholderTextColor: UIColor {
+        if #available(iOS 13, *) {
+            return placeholderText
+        } else {
+            return .darkGray
+        }
+    }
+
+    static var grayColor: UIColor {
+        if #available(iOS 13, *) {
+            return .systemGray
+        } else {
+            return gray
+        }
+    }
+
+    static var darkTextColor: UIColor {
+        if #available(iOS 13, *) {
+            return .systemGray
+        } else {
+            return darkText
+        }
+    }
+
+    static var lightGrayColor: UIColor {
+        if #available(iOS 13, *) {
+            return .systemGray5
+        } else {
+            return .lightGray
+        }
+    }
+}
+
