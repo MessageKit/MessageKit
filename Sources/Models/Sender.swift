@@ -25,17 +25,17 @@
 import Foundation
 
 /// An object that groups the metadata of a messages sender.
-@available(*, deprecated: 3.0.0, message: "`Sender` has been replaced with the `SenderType` protocol in 3.0.0")
+@available(*, deprecated, message: "`Sender` has been replaced with the `SenderType` protocol in 3.0.0")
 public struct Sender: SenderType {
 
-    /// MARK: - Properties
+    // MARK: - Properties
 
     /// The unique String identifier for the sender.
     ///
     /// Note: This value must be unique across all senders.
     public let senderId: String
 
-    @available(*, deprecated: 3.0.0, message: "`id` has been renamed `senderId` as defined in the `SenderType` protocol")
+    @available(*, deprecated, renamed: "senderId", message: "`id` has been renamed `senderId` as defined in the `SenderType` protocol")
     public var id: String {
         return senderId
     }
@@ -50,7 +50,7 @@ public struct Sender: SenderType {
         self.displayName = displayName
     }
 
-    @available(*, deprecated: 3.0.0, message: "`id` has been renamed `senderId` as defined in the `SenderType` protocol")
+    @available(*, deprecated, message: "`id` has been renamed `senderId` as defined in the `SenderType` protocol")
     public init(id: String, displayName: String) {
         self.init(senderId: id, displayName: displayName)
     }

@@ -24,18 +24,97 @@
 
 import Foundation
 
-// swiftlint:disable explicit_acl
+internal extension UIColor {
+
+    static var incomingGray: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor.systemGray5
+        } else {
+            return UIColor(red: 230/255, green: 230/255, blue: 235/255, alpha: 1.0)
+        }
+    }
+
+    static var outgoingGreen: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor.systemGreen
+        } else {
+            return UIColor(red: 69/255, green: 214/255, blue: 93/255, alpha: 1.0)
+        }
+    }
+
+    static var inputBarGray: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor.systemGray2
+        } else {
+            return UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
+        }
+    }
+
+    static var playButtonLightGray: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor.systemGray6
+        } else {
+            return UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1.0)
+        }
+    }
+
+    static var sendButtonBlue: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor.systemBlue
+        } else {
+            return UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+        }
+    }
+}
 
 internal extension UIColor {
 
-    static let incomingGray = UIColor(red: 230/255, green: 230/255, blue: 235/255, alpha: 1.0)
+    static var backgroundColor: UIColor {
+        if #available(iOS 13, *) {
+            return systemBackground
+        } else {
+            return white
+        }
+    }
 
-    static let outgoingGreen = UIColor(red: 69/255, green: 214/255, blue: 93/255, alpha: 1.0)
+    static var labelColor: UIColor {
+        if #available(iOS 13, *) {
+            return label
+        } else {
+            return black
+        }
+    }
 
-    static let inputBarGray = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
+    static var placeholderTextColor: UIColor {
+        if #available(iOS 13, *) {
+            return placeholderText
+        } else {
+            return .darkGray
+        }
+    }
 
-    static let playButtonLightGray = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1.0)
+    static var grayColor: UIColor {
+        if #available(iOS 13, *) {
+            return .systemGray
+        } else {
+            return gray
+        }
+    }
 
-    static let sendButtonBlue = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+    static var darkTextColor: UIColor {
+        if #available(iOS 13, *) {
+            return .systemGray
+        } else {
+            return darkText
+        }
+    }
 
+    static var lightGrayColor: UIColor {
+        if #available(iOS 13, *) {
+            return .systemGray5
+        } else {
+            return .lightGray
+        }
+    }
 }
+

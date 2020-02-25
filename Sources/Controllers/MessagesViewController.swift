@@ -34,12 +34,20 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     open var messagesCollectionView = MessagesCollectionView()
 
     /// The `InputBarAccessoryView` used as the `inputAccessoryView` in the view controller.
-    open var messageInputBar = InputBarAccessoryView()
+    open lazy var messageInputBar = InputBarAccessoryView()
+
+    /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
+    /// last item whenever the `InputTextView` begins editing.
+    ///
+    /// The default value of this property is `false`.
+    /// NOTE: This is related to `scrollToLastItem` whereas the below flag is related to `scrollToBottom` - check each function for differences
+    open var scrollsToLastItemOnKeyboardBeginsEditing: Bool = false
 
     /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
     /// bottom whenever the `InputTextView` begins editing.
     ///
     /// The default value of this property is `false`.
+    /// NOTE: This is related to `scrollToBottom` whereas the above flag is related to `scrollToLastItem` - check each function for differences
     open var scrollsToBottomOnKeyboardBeginsEditing: Bool = false
     
     /// A Boolean value that determines whether the `MessagesCollectionView`
@@ -146,9 +154,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     private func setupDefaults() {
         extendedLayoutIncludesOpaqueBars = true
         automaticallyAdjustsScrollViewInsets = false
-        view.backgroundColor = .white
+        view.backgroundColor = .backgroundColor
         messagesCollectionView.keyboardDismissMode = .interactive
         messagesCollectionView.alwaysBounceVertical = true
+        messagesCollectionView.backgroundColor = .backgroundColor
     }
 
     private func setupDelegates() {

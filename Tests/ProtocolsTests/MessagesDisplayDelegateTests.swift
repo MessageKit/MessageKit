@@ -71,7 +71,7 @@ class MessagesDisplayDelegateTests: XCTestCase {
                                                   at: IndexPath(item: 0, section: 0),
                                                   in: sut.messagesCollectionView)
 
-        XCTAssertEqual(backgroundColor, .white)
+        XCTAssertEqual(backgroundColor, .backgroundColor)
     }
 
     func testBackgroundColorForMessageWithEmoji_returnsClearForDefault() {
@@ -143,7 +143,7 @@ class TextMessageDisplayDelegateTests: XCTestCase {
                                       at: IndexPath(item: 0, section: 0),
                                       in: sut.messagesCollectionView)
 
-        XCTAssertEqual(textColor, .white)
+        XCTAssertEqual(textColor, .backgroundColor)
     }
 
     func testTextColorFromYou_returnsDarkTextForDefault() {
@@ -151,7 +151,7 @@ class TextMessageDisplayDelegateTests: XCTestCase {
                                       at: IndexPath(item: 0, section: 0),
                                       in: sut.messagesCollectionView)
 
-        XCTAssertEqual(textColor, .darkText)
+        XCTAssertEqual(textColor, .labelColor)
     }
 
     func testTextColorWithoutDataSource_returnsDarkTextForDefault() {
@@ -161,7 +161,7 @@ class TextMessageDisplayDelegateTests: XCTestCase {
                                       at: IndexPath(item: 0, section: 0),
                                       in: sut.messagesCollectionView)
 
-        XCTAssertEqual(textColor, .darkText)
+        XCTAssertEqual(textColor, .labelColor)
     }
 
     func testEnableDetectors_returnsEmptyForDefault() {

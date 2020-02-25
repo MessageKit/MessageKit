@@ -1,8 +1,7 @@
-<p>
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo">
-</p>
-<p>
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/TypingIndicator.png" title="MessageKit header">
+<p align="center">
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo" width="400">
+  
+  A community-driven replacement for JSQMessagesViewController https://messagekit.github.io
 </p>
 
 [![CircleCI](https://circleci.com/gh/MessageKit/MessageKit.svg?style=svg)](https://circleci.com/gh/MessageKit/MessageKit)
@@ -29,6 +28,10 @@
         alt="Contributions Welcome">
 </a>
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/TypingIndicator.png" title="MessageKit header" width="400">
+</p>
+
 ## Goals
 
 - Provide a :rotating_light:safe:rotating_light: environment for others to learn and grow through Open Source.
@@ -43,11 +46,14 @@ See [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) 
 ## Installation
 ### [CocoaPods](https://cocoapods.org/) **Recommended**
 ````ruby
-# Swift 4.2
+# Swift 5.0
 pod 'MessageKit'
 ````
-
-> If you are already using Swift 5, use the `3.0.0-swift5` branch until the offical release is made
+> For Swift 4.2 use version 3.0.0
+````ruby
+# Swift 4.2
+pod 'MessageKit', '~> 3.0.0'
+````
 
 ### [Carthage](https://github.com/Carthage/Carthage)
 
@@ -61,9 +67,8 @@ github "MessageKit/MessageKit"
 
 ## Requirements
 
-- **iOS9** or later
-- **Swift 4.2** or later
-
+- **iOS 9** or later
+- **Swift 5.0** or later
 
 ## Getting Started
 
@@ -120,6 +125,7 @@ public enum MessageKind {
 ```
 
 If you choose to use the `.custom` kind you are responsible for all of the cells layout. Any `UICollectionViewCell` can be returned for custom cells which means any of the styling you provide from the `MessageDisplayDelegate` will not effect your custom cell. Even if you subclass your cell from `MessageContentCell`.
+[Read more about custom cells](https://github.com/MessageKit/MessageKit/blob/master/Documentation/CUSTOM_CELLS.md)
 
 [Read more about the cases on the Quick Start guide.](https://github.com/MessageKit/MessageKit/blob/master/Documentation/QuickStart.md#messagekind)
 

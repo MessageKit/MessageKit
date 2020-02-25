@@ -25,31 +25,8 @@
 import UIKit
 import InputBarAccessoryView
 
-@available(*, obsoleted: 3.0.0, renamed: "InputBarAccessoryView")
+@available(*, unavailable, renamed: "InputBarAccessoryView")
 public typealias MessageInputBar = InputBarAccessoryView
 
-@available(*, obsoleted: 3.0.0, renamed: "InputBarAccessoryViewDelegate")
+@available(*, unavailable, renamed: "InputBarAccessoryViewDelegate")
 public typealias MessageInputBarDelegate = InputBarAccessoryViewDelegate
-
-//public extension MessageInputBarDelegate {
-//
-//    @available(*, obsoleted: 3.0.0, message: "`MessageInputBar` has been replaced with `InputBarAccessoryView` in 3.0.0. Use `inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String)` instead.")
-//    func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
-//    }
-//
-//    @available(*, obsoleted: 3.0.0, message: "`MessageInputBar` has been replaced with `InputBarAccessoryView` in 3.0.0. Use `inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String)` instead.")
-//    func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: String) {
-//    }
-//
-//    @available(*, obsoleted: 3.0.0, message: "`MessageInputBar` has been replaced with `InputBarAccessoryView` in 3.0.0. Use `inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize)` instead.")
-//    func messageInputBar(_ inputBar: MessageInputBar, didChangeIntrinsicContentTo size: CGSize) {
-//    }
-//}
-//
-//extension InputBarButtonItem {
-//
-//    @available(*, renamed: "inputBarAccessoryView")
-//    public var messageInputBar: MessageInputBar? {
-//        return inputBarAccessoryView
-//    }
-//}
