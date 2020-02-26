@@ -34,7 +34,7 @@ jobs:
 #          command: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
       - run:
           name: Update Pods
-              command: cd Example && pod install
+          command: cd Example && pod install
       - save_cache:
           name: Save Pods cache
           paths:
