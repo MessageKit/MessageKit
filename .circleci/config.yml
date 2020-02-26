@@ -1,19 +1,13 @@
-# .circleci/config.yml
-
-# Specify the config version - version 2 is latest.
+# Specify the config version
 version: 2.1
 
-# Define the jobs for the current project.
+# Define the jobs for the current project
 jobs:
-  build-and-test:
-
+  build_tests:
+    macos:
+      xcode: 11.3.1
     environment:
       - DESTINATION: "platform=iOS Simulator,name=iPhone 11 Pro"
-
-    # Specify the Xcode version to use.
-    macos:
-      xcode: "11.3.1"
-
     # Define the steps required to build the project.
     steps:
       # Get the code from the VCS provider.
@@ -71,6 +65,6 @@ jobs:
       #    destination: scan-logs
 
 workflows:
-  build-and-deploy:
-    jobs:
-      - build-and-test
+    build_and_tests:
+        jobs:
+            - build_tests
