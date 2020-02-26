@@ -16,11 +16,11 @@ jobs:
           name: Update Homebrew
           command: brew update
       - run:
-          name: Pre-start simulator
-          command: xcrun instruments -w "iPhone 11 Pro (13.3) [" || true
-      - run:
           name: Bootstrap Carthage
           command: carthage bootstrap --platform ios
+      - run:
+          name: Pre-start simulator
+          command: xcrun instruments -w "iPhone 11 Pro (13.3) [" || true
       - run:
           name: Build framework
           command: xcodebuild build -project MessageKit.xcodeproj -scheme MessageKit -destination "$DESTINATION" CODE_SIGNING_REQUIRED=NO | xcpretty -c
