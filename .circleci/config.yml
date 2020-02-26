@@ -30,25 +30,22 @@ jobs:
       - run:
           name: Build and run tests
           command: xcodebuild test -project MessageKit.xcodeproj -scheme MessageKitTests -destination "$DESTINATION" CODE_SIGNING_REQUIRED=NO | xcpretty -c
-      - run:
-          name: Open Example
-          command: cd Example
       - restore_cache:
           name: Restore Pods cache
           keys:
-              - v1-pods-cache-{{ arch }}-{{ checksum "Podfile.lock" }}
+              - v1-pods-cache-{{ arch }}-{{ checksum "Example/Podfile.lock" }}
               - v1-pods-cache-{{ arch }}-
 #      - run:
 #          name: Fetch CocoaPods Specs
 #          command: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
       - run:
           name: Update Pods
-          command: pod install
+              command: cd Example && pod install
       - save_cache:
           name: Save Pods cache
           paths:
               - Pods
-          key: v1-pods-cache-{{ arch }}-{{ checksum "Podfile.lock" }}
+          key: v1-pods-cache-{{ arch }}-{{ checksum "Example/Podfile.lock" }}
       - run:
           name: Build and analyze Example
           command: xcodebuild build analyze -workspace Example/ChatExample.xcworkspace -scheme ChatExample -destination "$DESTINATION" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | xcpretty -c
