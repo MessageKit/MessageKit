@@ -16,6 +16,9 @@ jobs:
           name: Update Homebrew
           command: brew update
       - run:
+          name: Pre-start simulator
+          command: xcrun instruments -w "iPhone 11 Pro (13.3) [" || true
+      - run:
           name: Bootstrap Carthage
           command: carthage bootstrap --platform ios
       - run:
