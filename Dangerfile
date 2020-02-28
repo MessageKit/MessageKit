@@ -14,7 +14,8 @@ if github.pr_body.length < 5
 end
 
 declared_hashtag = github.pr_title.include?("#trivial")
-if !git.modified_files.include?("CHANGELOG.md") && !declared_hashtag
+hasChangelogEntry = git.modified_files.include?("CHANGELOG.md")
+if !hasChangelogEntry && !declared_hashtag
   fail("Please include a CHANGELOG entry. \nYou can find it at [CHANGELOG.md](https://github.com/MessageKit/MessageKit/blob/master/CHANGELOG.md).")
 end
 
