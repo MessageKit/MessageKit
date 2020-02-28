@@ -1,4 +1,3 @@
-# By Jakub Kaspar 26/02/2020
 # MessageKit, 2020
 
 # This runs on CI
@@ -14,13 +13,14 @@ if github.pr_body.length < 5
   fail("Please provide a summary in the Pull Request description")
 end
 
-if !git.modified_files.include?("CHANGELOG.md") && has_app_changes
+declared_hashtag = github.pr_title.include?("#trivial")
+if !git.modified_files.include?("CHANGELOG.md") && !declared_hashtag
   fail("Please include a CHANGELOG entry. \nYou can find it at [CHANGELOG.md](https://github.com/MessageKit/MessageKit/blob/master/CHANGELOG.md).")
 end
 
 # Warn when there is a big PR
 if git.lines_of_code > 1000
-  warn("Big PR - you should create smaller!")
+  warn("Big Pull Request - Please consider splitting up your changes into smaller Pull Requests.")
 end
 
 swiftlint.config_file = '.swiftlint.yml'
