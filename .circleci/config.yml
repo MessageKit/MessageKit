@@ -19,6 +19,7 @@ jobs:
           name: Bootstrap Carthage
           command: carthage bootstrap --platform ios
       - run:
+          # More info about pre-start of the simulator at https://circleci.com/docs/2.0/testing-ios/#pre-starting-the-simulator
           name: Pre-start simulator
           command: xcrun instruments -w "iPhone 11 Pro (13.3) [" || true
       - run:
@@ -30,8 +31,8 @@ jobs:
       - restore_cache:
           name: Restore Pods cache
           keys:
-              - v1-pods-cache-{{ arch }}-{{ checksum "Example/Podfile.lock" }}
-              - v1-pods-cache-{{ arch }}-
+              - v1-pods-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Example/Podfile.lock" }}
+              - v1-pods-cache-{{ arch }}-{{ .Branch }}-
 #      - run:
 #          name: Fetch CocoaPods Specs
 #          command: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
@@ -42,7 +43,7 @@ jobs:
           name: Save Pods cache
           paths:
               - Pods
-          key: v1-pods-cache-{{ arch }}-{{ checksum "Example/Podfile.lock" }}
+          key: v1-pods-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Example/Podfile.lock" }}
       - run:
           name: Build and analyze Example
           command: xcodebuild build analyze -workspace Example/ChatExample.xcworkspace -scheme ChatExample -destination "$DESTINATION" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | xcpretty -c
@@ -68,6 +69,6 @@ jobs:
       #    destination: scan-logs
 
 workflows:
-    build_and_tests:
-        jobs:
-            - build_tests
+  build_and_tests:
+    jobs:
+      - build_tests
