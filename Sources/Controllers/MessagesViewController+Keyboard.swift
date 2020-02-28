@@ -123,7 +123,7 @@ internal extension MessagesViewController {
         return max(0, inputAccessoryViewHeight + additionalBottomInset - automaticallyAddedBottomInset)
     }
 
-    /// iOS 11's UIScrollView can automatically add safe area insets to its contentInset,
+    /// UIScrollView can automatically add safe area insets to its contentInset,
     /// which needs to be accounted for when setting the contentInset based on screen coordinates.
     ///
     /// - Returns: The distance automatically added to contentInset.bottom, if any.
