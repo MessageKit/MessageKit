@@ -8,24 +8,19 @@
 [![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 <a href="https://swift.org">
- <img src="https://img.shields.io/badge/Swift-4-orange.svg"
-      alt="Swift" />
+ <img src="https://img.shields.io/badge/Swift-5-green.svg" alt="Swift" />
 </a>
 <a href="https://cocoapods.org/">
-  <img src="https://cocoapod-badges.herokuapp.com/v/MessageKit/badge.png"
-      alt="CocoaPods">
+  <img src="https://cocoapod-badges.herokuapp.com/v/MessageKit/badge.png" alt="CocoaPods">
 </a>
 <a href="https://developer.apple.com/xcode">
-  <img src="https://img.shields.io/badge/Xcode-9-blue.svg"
-      alt="Xcode">
+  <img src="https://img.shields.io/badge/Xcode-11-blue.svg" alt="Xcode">
 </a>
 <a href="https://opensource.org/licenses/MIT">
-  <img src="https://img.shields.io/badge/License-MIT-red.svg"
-      alt="MIT">
+  <img src="https://img.shields.io/badge/License-MIT-red.svg" alt="MIT">
 </a>
 <a href="https://github.com/MessageKit/MessageKit/issues">
-   <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"
-        alt="Contributions Welcome">
+   <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="Contributions Welcome">
 </a>
 
 <p align="center">
