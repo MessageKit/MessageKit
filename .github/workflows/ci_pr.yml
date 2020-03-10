@@ -22,7 +22,7 @@ jobs:
     - name: Build and run tests
       run: xcodebuild test -project MessageKit.xcodeproj -scheme MessageKitTests -destination "platform=iOS Simulator,name=iPhone 11 Pro" CODE_SIGNING_REQUIRED=NO | xcpretty -c
     - name: Install bundler and cocoapods
-      run: cd Example && bundle check || bundle install
+      run: cd Example && gem install bundler && bundle check || bundle install
     - name: Install pods
       run: cd Example && bundle exec pod install
     - name: Cache Pods
