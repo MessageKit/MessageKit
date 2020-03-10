@@ -30,27 +30,31 @@ jobs:
           command: xcodebuild test -project MessageKit.xcodeproj -scheme MessageKitTests -destination "$DESTINATION" CODE_SIGNING_REQUIRED=NO | xcpretty -c
       - restore_cache:
           name: Restore bundle cache
-          key: 1-gems-{{ arch }}-{{ .Branch }}-{{ checksum "Example/Gemfile.lock" }}
+          keys:
+            - 1-gems-{{ arch }}-{{ .Branch }}-{{ checksum "Example/Gemfile.lock" }}
+            - 1-gems-{{ arch }}-{{ .Branch }}-
       - run:
           name: Install bundle
           command: cd Example && bundle check || bundle install --path vendor/bundle
       - save_cache:
           name: Save bundle cache
-          key: 1-gems-{{ arch }}-{{ .Branch }}-{{ checksum "Example/Gemfile.lock" }}
+          keys:
+            - 1-gems-{{ arch }}-{{ .Branch }}-{{ checksum "Example/Gemfile.lock" }}
+            - 1-gems-{{ arch }}-{{ .Branch }}-
           paths:
             - vendor/bundle
       - restore_cache:
           name: Restore Pods cache
           keys:
-              - v1-pods-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Example/Podfile.lock" }}
-              - v1-pods-cache-{{ arch }}-{{ .Branch }}-
+            - v1-pods-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Example/Podfile.lock" }}
+            - v1-pods-cache-{{ arch }}-{{ .Branch }}-
       - run:
           name: Update Pods
           command: cd Example && bundle exec pod install
       - save_cache:
           name: Save Pods cache
           paths:
-              - Pods
+            - Pods
           key: v1-pods-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Example/Podfile.lock" }}
       - run:
           name: Build and analyze Example
