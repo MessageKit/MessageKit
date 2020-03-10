@@ -1,26 +1,14 @@
-name: PR Tests
+name: PR Example app
 
 on: pull_request
 
 jobs:
   tests:
-    name: Run Tests
+    name: Build Example app
     runs-on: macOS-latest
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
-#    - name: Cancel the previous run
-#      uses: rokroskar/workflow-run-cleanup-action@v0.2.1
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Update Homebrew
-      run: brew update
-    - name: Bootstrap Carthage
-      run: carthage bootstrap --platform ios
-    - name: Build framework
-      run: xcodebuild build -project MessageKit.xcodeproj -scheme MessageKit -destination "platform=iOS Simulator,name=iPhone 11 Pro" CODE_SIGNING_REQUIRED=NO | xcpretty -c
-    - name: Build and run tests
-      run: xcodebuild test -project MessageKit.xcodeproj -scheme MessageKitTests -destination "platform=iOS Simulator,name=iPhone 11 Pro" CODE_SIGNING_REQUIRED=NO | xcpretty -c
     - name: Install bundler and cocoapods
       run: cd Example && gem install bundler && bundle check || bundle install
     - name: Install pods

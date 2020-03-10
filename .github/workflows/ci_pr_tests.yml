@@ -1,0 +1,15 @@
+name: PR Tests
+
+on: pull_request
+
+jobs:
+  tests:
+    name: Run Tests
+    runs-on: macOS-latest
+    steps:
+    - name: Checkout the Git repository
+      uses: actions/checkout@v2
+    - name: Bootstrap Carthage
+      run: carthage bootstrap --platform ios
+    - name: Build and run tests
+      run: xcodebuild test -project MessageKit.xcodeproj -scheme MessageKitTests -destination "platform=iOS Simulator,name=iPhone 11 Pro" CODE_SIGNING_REQUIRED=NO | xcpretty -c
