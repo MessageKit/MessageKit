@@ -9,5 +9,12 @@ jobs:
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
+    - name: Cache Carthage
+      uses: actions/cache@v1
+      with:
+        path: Carthage
+        key: ${{ runner.os }}-carthage-${{ hashFiles('**/Cartfile.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-carthage-
     - name: Build and run tests
       run: ./build.sh tests

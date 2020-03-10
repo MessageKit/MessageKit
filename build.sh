@@ -32,8 +32,7 @@ if [ "$MODE" = "example" -o "$MODE" = "all" ]; then
   gem install bundler
   bundle check || bundle install
   bundle exec pod install
-  carthage bootstrap --platform ios
-  set -o pipefail && xcodebuild build analyze -workspace Example/ChatExample.xcworkspace -scheme ChatExample -destination "platform=iOS Simulator,name=iPhone 11 Pro" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | xcpretty -c
+  set -o pipefail && xcodebuild build analyze -workspace ChatExample.xcworkspace -scheme ChatExample -destination "platform=iOS Simulator,name=iPhone 11 Pro" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | xcpretty -c
   success="1"
 fi
 

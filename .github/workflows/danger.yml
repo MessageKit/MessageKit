@@ -5,14 +5,10 @@ on: pull_request
 jobs:
   danger:
     name: Run Danger
-    runs-on: ubuntu-latest
+    runs-on: macOS-latest
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
-    - name: Setup ruby
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: '2.6'
     - name: Install bundler and cocoapods
       run: cd Example && gem install bundler && bundle check || bundle install
     - name: Install pods
