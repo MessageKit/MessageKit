@@ -10,4 +10,4 @@ jobs:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
     - name: Build framework
-      run: xcodebuild build -project MessageKit.xcodeproj -scheme MessageKit -destination "platform=iOS Simulator,name=iPhone 11 Pro" CODE_SIGNING_REQUIRED=NO | xcpretty -c
+      run: ./build.sh framework
