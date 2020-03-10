@@ -1,0 +1,21 @@
+name: PR Danger
+
+on: pull_request
+
+jobs:
+  danger:
+    name: Run Danger
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the Git repository
+      uses: actions/checkout@v2
+    - name: Install bundler and cocoapods
+      run: cd Example && bundle check || bundle install
+    - name: Install pods
+      run: cd Example && bundle exec pod install
+    - name: Danger
+      uses: danger/swift@3.1.0
+      with:
+        args: --failOnErrors
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
