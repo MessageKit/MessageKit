@@ -13,7 +13,7 @@ if !changelogChanged && !declaredHashtag {
 }
 
 var bigPRThreshold = 1000;
-if danger.github.pullRequest.additions + danger.github.pullRequest.deletions > bigPRThreshold {
+if danger.github.pullRequest.additions ?? 0 + danger.github.pullRequest.deletions ?? 0 > bigPRThreshold {
   warn("> Pull Request size seems relatively large - Please consider splitting up your changes into smaller Pull Requests.");
 }
 
