@@ -9,11 +9,11 @@ jobs:
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
-    - name: Install bundler and cocoapods
-      run: brew install swiftlint && brew --prefix swiftlint
-#    - name: Danger
-#      uses: danger/swift@3.1.0
-#      with:
-#        args: --failOnErrors
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Install Swiftlint
+      run: brew install swiftlint
+    - name: Danger
+      uses: danger/swift@3.1.0
+      with:
+        args: --failOnErrors
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
