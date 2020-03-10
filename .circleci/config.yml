@@ -46,7 +46,7 @@ jobs:
               - v1-pods-cache-{{ arch }}-{{ .Branch }}-
       - run:
           name: Update Pods
-          command: bundle exec pod install
+          command: cd Example && bundle exec pod install
       - save_cache:
           name: Save Pods cache
           paths:
