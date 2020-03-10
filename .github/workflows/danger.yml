@@ -13,6 +13,13 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: '2.6'
+    - name: Cache Gems
+      uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
     - name: Run build script
       run: gem install bundler && bundle install && bundle exec danger --fail-on-errors=true
       env:
