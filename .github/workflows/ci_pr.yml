@@ -1,8 +1,8 @@
 name: PR Tests
 
- on: pull_request
+on: pull_request
 
- jobs:
+jobs:
   tests:
     name: Run Tests
     runs-on: macOS-latest
