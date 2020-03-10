@@ -30,13 +30,13 @@ jobs:
           command: xcodebuild test -project MessageKit.xcodeproj -scheme MessageKitTests -destination "$DESTINATION" CODE_SIGNING_REQUIRED=NO | xcpretty -c
       - restore_cache:
           name: Restore bundle cache
-          key: 1-gems-{{ checksum "Example/Gemfile.lock" }}
+          key: 1-gems-{{ arch }}-{{ .Branch }}-{{ checksum "Example/Gemfile.lock" }}
       - run:
           name: Install bundle
           command: cd Example && bundle check || bundle install --path vendor/bundle
       - save_cache:
           name: Save bundle cache
-          key: 1-gems-{{ checksum "Example/Gemfile.lock" }}
+          key: 1-gems-{{ arch }}-{{ .Branch }}-{{ checksum "Example/Gemfile.lock" }}
           paths:
             - vendor/bundle
       - restore_cache:
