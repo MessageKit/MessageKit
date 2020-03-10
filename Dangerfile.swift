@@ -19,4 +19,4 @@ if additions + deletions > bigPRThreshold {
   warn("Pull Request size seems relatively large - Please consider splitting up your changes into smaller Pull Requests.")
 }
 
-SwiftLint.lint(inline: true)
+SwiftLint.lint(inline: true, swiftlintPath: "Example/Pods/SwiftLint/swiftlint")

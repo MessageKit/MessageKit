@@ -1,0 +1,49 @@
+name: PR Tests
+
+ on: pull_request
+
+ jobs:
+  tests:
+    name: Run Tests
+    runs-on: macOS-latest
+    steps:
+    - name: Checkout the Git repository
+      uses: actions/checkout@v2
+#    - name: Cancel the previous run
+#      uses: rokroskar/workflow-run-cleanup-action@v0.2.1
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Cache Pods
+      uses: actions/cache@v1
+      with:
+        path: Pods
+        key: ${{ runner.os }}-pods-${{ hashFiles('**/Example/Podfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-pods-
+    - name: Cache SPM
+      uses: actions/cache@v1
+      with:
+        path: .build
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Example/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+    - name: Install bundler and cocoapods
+      run: cd Example && bundle check || bundle install --path vendor/bundle
+    - name: Install pods
+      run: cd Example && bundle exec pod install
+    - name: Danger
+      uses: danger/swift@3.1.0
+      with:
+        args: --failOnErrors
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Update Homebrew
+      run: brew update
+    - name: Bootstrap Carthage
+      run: carthage bootstrap --platform ios
+    - name: Build framework
+      run: xcodebuild build -project MessageKit.xcodeproj -scheme MessageKit -destination "platform=iOS Simulator,name=iPhone 11 Pro" CODE_SIGNING_REQUIRED=NO | xcpretty -c
+    - name: Build and run tests
+      run: xcodebuild test -project MessageKit.xcodeproj -scheme MessageKitTests -destination "platform=iOS Simulator,name=iPhone 11 Pro" CODE_SIGNING_REQUIRED=NO | xcpretty -c
+    - name: Build and run example project
+      run: xcodebuild build analyze -workspace Example/ChatExample.xcworkspace -scheme ChatExample -destination "platform=iOS Simulator,name=iPhone 11 Pro" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_REQUIRED=NO | xcpretty -c
