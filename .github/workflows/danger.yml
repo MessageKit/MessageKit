@@ -9,7 +9,9 @@ jobs:
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
-    - name: Danger JS
-      uses: danger/danger-js@9.1.8
+    - name: Danger
+      uses: danger/swift@2.0.3
+      with:
+        args: --failOnErrors
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
