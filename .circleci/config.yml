@@ -33,10 +33,12 @@ jobs:
           key: 1-gems-{{ checksum "Example/Gemfile.lock" }}
       - run:
           name: Install bundle
-          command: cd Example && bundle check || bundle install
+          command: cd Example && bundle check || bundle install --path vendor/bundle
       - save_cache:
           name: Save bundle cache
           key: 1-gems-{{ checksum "Example/Gemfile.lock" }}
+          paths:
+            - vendor/bundle
       - restore_cache:
           name: Restore Pods cache
           keys:
