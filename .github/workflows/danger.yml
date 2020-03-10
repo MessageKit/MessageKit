@@ -10,7 +10,7 @@ jobs:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
     - name: Danger
-      uses: danger/swift@2.0.3
+      uses: danger/swift@3.1.0
       with:
         args: --failOnErrors
       env:
