@@ -24,4 +24,4 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gems-
     - name: Build and run example project
-      run: ./build.sh example
+      run: ./GitHubActions/build.sh example

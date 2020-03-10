@@ -17,4 +17,4 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-carthage-
     - name: Build framework
-      run: ./build.sh framework
+      run: ./GitHubActions/build.sh framework

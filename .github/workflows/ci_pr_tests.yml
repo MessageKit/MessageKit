@@ -17,4 +17,4 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-carthage-
     - name: Build and run tests
-      run: ./build.sh tests
+      run: ./GitHubActions/build.sh tests
