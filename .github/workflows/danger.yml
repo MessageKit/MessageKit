@@ -10,12 +10,10 @@ jobs:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
     - name: Install bundler and cocoapods
-      run: cd Example && gem install bundler && bundle check || bundle install
-    - name: Install pods
-      run: cd Example && bundle exec pod install
-    - name: Danger
-      uses: danger/swift@3.1.0
-      with:
-        args: --failOnErrors
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: brew install swiftlint && brew --prefix swiftlint
+#    - name: Danger
+#      uses: danger/swift@3.1.0
+#      with:
+#        args: --failOnErrors
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
