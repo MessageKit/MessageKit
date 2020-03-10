@@ -38,9 +38,7 @@ jobs:
           command: cd Example && bundle check || bundle install --path vendor/bundle
       - save_cache:
           name: Save bundle cache
-          keys:
-            - 1-gems-{{ arch }}-{{ .Branch }}-{{ checksum "Example/Gemfile.lock" }}
-            - 1-gems-{{ arch }}-{{ .Branch }}-
+          key: 1-gems-{{ arch }}-{{ .Branch }}-{{ checksum "Example/Gemfile.lock" }}
           paths:
             - vendor/bundle
       - restore_cache:
