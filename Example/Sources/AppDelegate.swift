@@ -30,9 +30,15 @@ final internal class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+        let masterVC = NavigationController(rootViewController: LaunchViewController())
+        let detailVC = NavigationController()
+        let splitVC = UISplitViewController()
+        splitVC.viewControllers = [masterVC, detailVC]
+        splitVC.preferredDisplayMode = .allVisible
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = NavigationController(rootViewController: LaunchViewController())
+        window?.rootViewController = splitVC
         window?.makeKeyAndVisible()
         
         if UserDefaults.isFirstLaunch() {

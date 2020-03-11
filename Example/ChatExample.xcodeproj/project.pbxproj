@@ -29,6 +29,8 @@
 		50739F9621C5090A008CA369 /* BasicAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50739F9521C5090A008CA369 /* BasicAudioController.swift */; };
 		5074EF4E2163555900D82952 /* sound2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5074EF4C2163555900D82952 /* sound2.m4a */; };
 		5074EF4F2163555900D82952 /* sound1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5074EF4D2163555900D82952 /* sound1.m4a */; };
+		63ECDABE24182A470016C349 /* MessageSubviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ECDABD24182A470016C349 /* MessageSubviewViewController.swift */; };
+		63ECDAC2241889630016C349 /* MessageSubviewContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ECDAC1241889630016C349 /* MessageSubviewContainerViewController.swift */; };
 		882B5E811CF7D53600B6E160 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E781CF7D53600B6E160 /* AppDelegate.swift */; };
 		882B5E821CF7D53600B6E160 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 882B5E791CF7D53600B6E160 /* Assets.xcassets */; };
 		882B5E831CF7D53600B6E160 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 882B5E7A1CF7D53600B6E160 /* LaunchScreen.storyboard */; };
@@ -96,6 +98,8 @@
 		5074EF4C2163555900D82952 /* sound2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound2.m4a; sourceTree = "<group>"; };
 		5074EF4D2163555900D82952 /* sound1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound1.m4a; sourceTree = "<group>"; };
 		56F0AC85B38034EC92CCBC7D /* Pods_ChatExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		63ECDABD24182A470016C349 /* MessageSubviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSubviewViewController.swift; sourceTree = "<group>"; };
+		63ECDAC1241889630016C349 /* MessageSubviewContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSubviewContainerViewController.swift; sourceTree = "<group>"; };
 		882B5E331CF7D4B900B6E160 /* ChatExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		882B5E491CF7D4B900B6E160 /* ChatExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		882B5E541CF7D4B900B6E160 /* ChatExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,6 +202,8 @@
 				385C293D211FF38F0010B4BA /* MessageContainerController.swift */,
 				385C293E211FF38F0010B4BA /* NavigationController.swift */,
 				385C293C211FF38E0010B4BA /* SettingsViewController.swift */,
+				63ECDABD24182A470016C349 /* MessageSubviewViewController.swift */,
+				63ECDAC1241889630016C349 /* MessageSubviewContainerViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -536,6 +542,7 @@
 				385C2946211FF38F0010B4BA /* LaunchViewController.swift in Sources */,
 				385C2939211FF37B0010B4BA /* Lorem.swift in Sources */,
 				385C2928211FF33B0010B4BA /* MockMessage.swift in Sources */,
+				63ECDABE24182A470016C349 /* MessageSubviewViewController.swift in Sources */,
 				385C2923211FF32E0010B4BA /* TableViewCells.swift in Sources */,
 				385C2942211FF38F0010B4BA /* AdvancedExampleViewController.swift in Sources */,
 				50739F9621C5090A008CA369 /* BasicAudioController.swift in Sources */,
@@ -553,6 +560,7 @@
 				882B5E811CF7D53600B6E160 /* AppDelegate.swift in Sources */,
 				385C292D211FF3520010B4BA /* CustomMessageFlowLayout.swift in Sources */,
 				38CCCC592258419300DD5482 /* AutocompleteExampleViewController.swift in Sources */,
+				63ECDAC2241889630016C349 /* MessageSubviewContainerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

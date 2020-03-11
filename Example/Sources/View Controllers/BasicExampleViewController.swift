@@ -26,7 +26,7 @@ import UIKit
 import MapKit
 import MessageKit
 
-final class BasicExampleViewController: ChatViewController {
+class BasicExampleViewController: ChatViewController {
     override func configureMessageCollectionView() {
         super.configureMessageCollectionView()
         messagesCollectionView.messagesLayoutDelegate = self
