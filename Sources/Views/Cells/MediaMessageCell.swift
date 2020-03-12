@@ -84,7 +84,7 @@ open class MediaMessageCell: MessageContentCell {
     
     /// Handle tap gesture on contentView and its subviews.
     open override func handleTapGesture(_ gesture: UIGestureRecognizer) {
-        let touchLocation = gesture.location(in: self)
+        let touchLocation = gesture.location(in: imageView)
         
         switch true {
         case imageView.frame.contains(touchLocation):
