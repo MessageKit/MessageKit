@@ -11,6 +11,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
  - Fixed `requiredInitialScrollViewBottomInset` when `inputAccessoryView` is `nil` [#1218](https://github.com/MessageKit/MessageKit/pull/1218) by [@aabosh](https://github.com/aabosh) 
 
  - Fixed `MessagesCollectionView.scrollToBottom(animated:)` method to properly handle calls made early in the view lifecycle. [#1110](https://github.com/MessageKit/MessageKit/pull/1110) by [@marcetcheverry](https://github.com/marcetcheverry)
+ 
+ - Fixed `TypingIndicator` `dotColor` for light mode. [#1266](https://github.com/MessageKit/MessageKit/pull/1266) by [@lewis-smith](https://github.com/lewis-smith)
 
 ### Added
 
