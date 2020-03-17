@@ -12,7 +12,6 @@ Here you can find the general guidelines for maintaining the Changelog (or addin
 - Mention whether you follow Semantic Versioning.
 
 ... with MessageKit-specific additions:
-- Keep an unreleased section at the top.
 - Add PR number and a GitHub tag at the end of each entry.
 - Each breaking change entry should have **Breaking Change** label at the beginning of this entry.
 - **Breaking Change** entries should be placed at the top of the section it's in.
