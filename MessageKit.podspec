@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
    s.name = 'MessageKit'
-   s.version = '3.1.0-beta.1'
+   s.version = '3.1.0'
    s.license = { :type => "MIT", :file => "LICENSE.md" }
 
    s.summary = 'An elegant messages UI library for iOS.'
@@ -22,6 +22,6 @@ Pod::Spec.new do |s|
 
    s.requires_arc = true
 
-   s.dependency 'InputBarAccessoryView', '~> 4.3.0'
+   s.dependency 'InputBarAccessoryView', '~> 4.3.2'
 
 end
