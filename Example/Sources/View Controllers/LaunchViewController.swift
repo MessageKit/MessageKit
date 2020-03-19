@@ -96,9 +96,7 @@ final internal class LaunchViewController: UITableViewController {
     
     func openURL(_ url: URL) {
         let webViewController = SFSafariViewController(url: url)
-        if #available(iOS 10.0, *) {
-            webViewController.preferredControlTintColor = .primaryColor
-        }
+        webViewController.preferredControlTintColor = .primaryColor
         present(webViewController, animated: true, completion: nil)
     }
 }
