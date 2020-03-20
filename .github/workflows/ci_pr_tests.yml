@@ -13,8 +13,10 @@ jobs:
       uses: actions/cache@v1
       with:
         path: Carthage
-        key: ${{ runner.os }}-carthage-${{ hashFiles('**/Cartfile.resolved') }}
+        key: ${{ runner.os }}-tests-${{ env.cache-name }}-carthage-${{ hashFiles('**/Cartfile.resolved') }}
         restore-keys: |
-          ${{ runner.os }}-carthage-
+          ${{ runner.os }}-tests-${{ env.cache-name }}-carthage-
+          ${{ runner.os }}-tests-${{ env.cache-name }}-
+          ${{ runner.os }}-tests-
     - name: Build and run tests
       run: ./GitHubActions/build.sh tests

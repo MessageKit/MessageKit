@@ -13,15 +13,19 @@ jobs:
       uses: actions/cache@v1
       with:
         path: Example/Pods
-        key: ${{ runner.os }}-pods-${{ hashFiles('**/Example/Podfile.lock') }}
+        key: ${{ runner.os }}-example-${{ env.cache-name }}-pods-${{ hashFiles('**/Example/Podfile.lock') }}
         restore-keys: |
-          ${{ runner.os }}-pods-
-    - name: Cache SPM
+          ${{ runner.os }}-example-${{ env.cache-name }}-pods-
+          ${{ runner.os }}-example-${{ env.cache-name }}-
+          ${{ runner.os }}-example-
+    - name: Cache Gems
       uses: actions/cache@v1
       with:
-        path: .build
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Example/Gemfile.lock') }}
+        path: vendor/bundle
+        key: ${{ runner.os }}-example-${{ env.cache-name }}-gems-${{ hashFiles('**/Example/Gemfile.lock') }}
         restore-keys: |
-          ${{ runner.os }}-gems-
+          ${{ runner.os }}-example-${{ env.cache-name }}-gems-
+          ${{ runner.os }}-example-${{ env.cache-name }}-
+          ${{ runner.os }}-example-
     - name: Build and run example project
       run: ./GitHubActions/build.sh example
