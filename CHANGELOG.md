@@ -10,6 +10,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Changed
 
+- **Breaking Change** Dropped support for iOS 9 and iOS 10 [#1261](https://github.com/MessageKit/MessageKit/pull/1261) by [@kaspik](https://github.com/kaspik)
+
 ## 3.1.0
 
 ### Fixed

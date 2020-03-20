@@ -12,7 +12,7 @@ jobs:
     - name: Cache Pods
       uses: actions/cache@v1
       with:
-        path: Pods
+        path: Example/Pods
         key: ${{ runner.os }}-pods-${{ hashFiles('**/Example/Podfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-pods-

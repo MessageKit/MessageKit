@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
 
    s.swift_version = '5.0'
 
-   s.ios.deployment_target = '9.0'
+   s.ios.deployment_target = '11.0'
    s.ios.resource_bundle = { 'MessageKitAssets' => 'Assets/MessageKitAssets.bundle/Images' }
 
    s.dependency 'InputBarAccessoryView', '~> 4.3.0'
