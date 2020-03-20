@@ -142,6 +142,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		13FCBEED2424D36900CB489F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				882B5E7F1CF7D53600B6E160 /* Info.plist */,
+				882B5E791CF7D53600B6E160 /* Assets.xcassets */,
+				882B5E7A1CF7D53600B6E160 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		385C2924211FF3310010B4BA /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +182,7 @@
 		385C2933211FF3670010B4BA /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				385C292A211FF3450010B4BA /* Settings+UserDefaults.swift */,
 				385C292F211FF3630010B4BA /* UIColor+Extensions.swift */,
 				385C2930211FF3630010B4BA /* UIViewController+Extensions.swift */,
 			);
@@ -259,17 +270,14 @@
 			children = (
 				882B5E781CF7D53600B6E160 /* AppDelegate.swift */,
 				50739F9421C5075D008CA369 /* AudioController */,
-				385C2949211FF3930010B4BA /* View Controllers */,
 				385C293A211FF3800010B4BA /* Data Generation */,
+				385C2933211FF3670010B4BA /* Extensions */,
 				385C292E211FF3540010B4BA /* Layout */,
 				385C2929211FF33D0010B4BA /* Models */,
-				385C2924211FF3310010B4BA /* Views */,
+				13FCBEED2424D36900CB489F /* Resources */,
 				5074EF4B2163554900D82952 /* Sounds */,
-				882B5E791CF7D53600B6E160 /* Assets.xcassets */,
-				882B5E7F1CF7D53600B6E160 /* Info.plist */,
-				882B5E7A1CF7D53600B6E160 /* LaunchScreen.storyboard */,
-				385C292A211FF3450010B4BA /* Settings+UserDefaults.swift */,
-				385C2933211FF3670010B4BA /* Extensions */,
+				385C2949211FF3930010B4BA /* View Controllers */,
+				385C2924211FF3310010B4BA /* Views */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -483,11 +491,17 @@
 				"${PODS_ROOT}/Target Support Files/Pods-ChatExample/Pods-ChatExample-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/InputBarAccessoryView/InputBarAccessoryView.framework",
 				"${BUILT_PRODUCTS_DIR}/MessageKit/MessageKit.framework",
+				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
+				"${BUILT_PRODUCTS_DIR}/PINOperation/PINOperation.framework",
+				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/InputBarAccessoryView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessageKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINOperation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -714,7 +728,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.messagekit.ChatExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -728,7 +742,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.messagekit.ChatExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
