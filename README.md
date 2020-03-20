@@ -5,7 +5,7 @@
 </p>
 
 [![CircleCI](https://circleci.com/gh/MessageKit/MessageKit.svg?style=svg)](https://circleci.com/gh/MessageKit/MessageKit)
-[![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
+[![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/development/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 <a href="https://swift.org">
  <img src="https://img.shields.io/badge/Swift-5-green.svg" alt="Swift" />
@@ -160,6 +160,7 @@ Add your app to the list of apps using this library and make a pull request.
 - [SwiftHub](https://github.com/khoren93/SwiftHub)
 - [Studievenn](https://studievenn.no)
 - [SmooveText](https://apps.apple.com/np/app/smoove-text/id1362792811)
+- [COYO Engage](https://apps.apple.com/app/coyo-engage/id1341588804)
 
 *Please provide attribution, it is greatly appreciated.*
 

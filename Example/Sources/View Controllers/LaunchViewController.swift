@@ -46,16 +46,12 @@ final internal class LaunchViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = true
-        }
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if #available(iOS 11.0, *) {
-            navigationController?.navigationBar.prefersLargeTitles = false
-        }
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     // MARK: - UITableViewDataSource
@@ -115,9 +111,7 @@ final internal class LaunchViewController: UITableViewController {
     
     func openURL(_ url: URL) {
         let webViewController = SFSafariViewController(url: url)
-        if #available(iOS 10.0, *) {
-            webViewController.preferredControlTintColor = .primaryColor
-        }
+        webViewController.preferredControlTintColor = .primaryColor
         splitViewController?.showDetailViewController(webViewController, sender: self)
     }
 }
