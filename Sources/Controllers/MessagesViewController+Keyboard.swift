@@ -130,5 +130,4 @@ internal extension MessagesViewController {
     private var automaticallyAddedBottomInset: CGFloat {
         return messagesCollectionView.adjustedContentInset.bottom - messagesCollectionView.contentInset.bottom
     }
-
 }
