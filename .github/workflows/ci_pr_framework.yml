@@ -13,8 +13,10 @@ jobs:
       uses: actions/cache@v1
       with:
         path: Carthage
-        key: ${{ runner.os }}-carthage-${{ hashFiles('**/Cartfile.resolved') }}
+        key: ${{ runner.os }}-framework-${{ env.cache-name }}-carthage-${{ hashFiles('**/Cartfile.resolved') }}
         restore-keys: |
-          ${{ runner.os }}-carthage-
+          ${{ runner.os }}-framework-${{ env.cache-name }}-carthage-
+          ${{ runner.os }}-framework-${{ env.cache-name }}-
+          ${{ runner.os }}-framework-
     - name: Build framework
       run: ./GitHubActions/build.sh framework
