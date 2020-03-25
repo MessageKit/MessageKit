@@ -49,7 +49,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     /// The default value of this property is `false`.
     /// NOTE: This is related to `scrollToBottom` whereas the above flag is related to `scrollToLastItem `- check each function for differences
     open var scrollsToBottomOnKeyboardBeginsEditing: Bool = false
-    
+
     /// A Boolean value that determines whether the `MessagesCollectionView`
     /// maintains it's current position when the height of the `MessageInputBar` changes.
     ///
@@ -86,7 +86,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     public var selectedIndexPathForMenu: IndexPath?
 
     private var isFirstLayout: Bool = true
-    
+
     internal var isMessagesControllerBeingDismissed: Bool = false
 
     internal var messageCollectionViewBottomInset: CGFloat = 0 {
@@ -107,22 +107,22 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         addMenuControllerObservers()
         addObservers()
     }
-    
+
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         isMessagesControllerBeingDismissed = false
     }
-    
+
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         isMessagesControllerBeingDismissed = true
     }
-    
+
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         isMessagesControllerBeingDismissed = false
     }
-    
+
     open override func viewDidLayoutSubviews() {
         // Hack to prevent animation of the contentInset after viewDidAppear
         if isFirstLayout {
@@ -130,13 +130,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             addKeyboardObservers()
             messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
         }
-        adjustScrollViewTopInset()
     }
 
     open override func viewSafeAreaInsetsDidChange() {
-        if #available(iOS 11.0, *) {
-            super.viewSafeAreaInsetsDidChange()
-        }
+        super.viewSafeAreaInsetsDidChange()
         messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
     }
 
@@ -153,8 +150,8 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     private func setupDefaults() {
         extendedLayoutIncludesOpaqueBars = true
-        automaticallyAdjustsScrollViewInsets = false
         view.backgroundColor = .backgroundColor
+        messagesCollectionView.contentInsetAdjustmentBehavior = .never
         messagesCollectionView.keyboardDismissMode = .interactive
         messagesCollectionView.alwaysBounceVertical = true
         messagesCollectionView.backgroundColor = .backgroundColor
@@ -171,18 +168,12 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     private func setupConstraints() {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: topLayoutGuide.length)
+
+        let top = messagesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         let bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        if #available(iOS 11.0, *) {
-            let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
-            let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-            NSLayoutConstraint.activate([top, bottom, trailing, leading])
-        } else {
-            let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-            let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            NSLayoutConstraint.activate([top, bottom, trailing, leading])
-        }
+        let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
+        let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        NSLayoutConstraint.activate([top, bottom, trailing, leading])
     }
 
     // MARK: - Typing Indicator API
@@ -412,16 +403,16 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     }
 
     // MARK: - Helpers
-    
+
     private func addObservers() {
         NotificationCenter.default.addObserver(
             self, selector: #selector(clearMemoryCache), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
     }
-    
+
     private func removeObservers() {
         NotificationCenter.default.removeObserver(self, name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
     }
-    
+
     @objc private func clearMemoryCache() {
         MessageStyle.bubbleImageCache.removeAllObjects()
     }

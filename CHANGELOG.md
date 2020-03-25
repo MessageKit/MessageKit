@@ -6,7 +6,25 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
+### Added
+
+- Added option to use Photo messages with remote image URL in Example project [#1294](https://github.com/MessageKit/MessageKit/pull/1294) by [@martinpucik](https://github.com/martinpucik)
+
+### Changed
+
+- **Breaking Change** Dropped support for iOS 9 and iOS 10 [#1261](https://github.com/MessageKit/MessageKit/pull/1261) by [@kaspik](https://github.com/kaspik)
+
+## 3.1.0
+
+### Fixed
+
  - Set the proper notification to invalidate layout. MessageKit now relies on `UIApplication` orientation notification instead of `UIDevice`, which invalidates the layout only when it is needed. [#1126](https://github.com/MessageKit/MessageKit/pull/1126) by [@bguidolim](https://github.com/bguidolim)
+ 
+ - Fixed `requiredInitialScrollViewBottomInset` when `inputAccessoryView` is `nil` [#1218](https://github.com/MessageKit/MessageKit/pull/1218) by [@aabosh](https://github.com/aabosh) 
+
+ - Fixed `MessagesCollectionView.scrollToBottom(animated:)` method to properly handle calls made early in the view lifecycle. [#1110](https://github.com/MessageKit/MessageKit/pull/1110) by [@marcetcheverry](https://github.com/marcetcheverry)
+ 
+ - Fixed `TypingIndicator` `dotColor` for light mode. [#1266](https://github.com/MessageKit/MessageKit/pull/1266) by [@lewis-smith](https://github.com/lewis-smith)
 
 ### Added
 
@@ -16,18 +34,27 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - Add loading indicator to AudioMessageCell. [#1084](https://github.com/MessageKit/MessageKit/pull/1084) by [@marcetcheverry](https://github.com/marcetcheverry)
 
-- Lazily initialize the MessageInputBar on MessagesViewController. [#1092](https://github.com/MessageKit/MessageKit/pull/1092) by [@marcetcheverry](https://github.com/marcetcheverry)
+- Add support for Dark Mode [#1189](https://github.com/MessageKit/MessageKit/pull/1189) by [@Vlada31R](https://github.com/Vlada31R)
+
+- Add support for `scrollToLastItem` and `scrollsToLastItemOnKeyboardBeginsEditing` [#1247](https://github.com/MessageKit/MessageKit/pull/1247) by [@hyouuu](https://github.com/hyouuu)
+
+- Added `MessageCellDelegate.didTapImage(in cell: MessageCollectionViewCell)` [#1166](https://github.com/MessageKit/MessageKit/pull/1166) by [@domeniconicoli](https://github.com/domeniconicoli), [#1278](https://github.com/MessageKit/MessageKit/pull/1278) by [@bguidolim](https://github.com/bguidolim), [1285](https://github.com/MessageKit/MessageKit/pull/1285) by [@austinwright](https://github.com/austinwright)
+
+- Added missing cellTopLabelAlignment to MessageSizeCalculator. [#1113](https://github.com/MessageKit/MessageKit/pull/1113) by [@marcetcheverry](https://github.com/marcetcheverry)
 
 ### Changed
 
-- Fixes scrollToBottom method to properly handle calls made early in the view lifecycle. [#1110](https://github.com/MessageKit/MessageKit/pull/1110) by [@marcetcheverry](https://github.com/marcetcheverry)
+- **Breaking Change** Updated to Swift 5.0 [#1039](https://github.com/MessageKit/MessageKit/pull/1039) by [@nathantannar4](https://github.com/nathantannar4)
 
-- Add missing cellTopLabelAlignment to MessageSizeCalculator. [#1113](https://github.com/MessageKit/MessageKit/pull/1113) by [@marcetcheverry](https://github.com/marcetcheverry)
+- Lazily initialize the MessageInputBar on MessagesViewController. [#1092](https://github.com/MessageKit/MessageKit/pull/1092) by [@marcetcheverry](https://github.com/marcetcheverry)
 
-- **Breaking Change** `MessageInputBar`, and `MessageInputBarDelegate` have been obsoleted. Use`InputBarAccessoryView` and `InputBarAccessoryViewDelegate` respectively. This change was previously meant for 3.0.0 but was implemented erroneously. [#1201](https://github.com/MessageKit/MessageKit/pull/1201) by [@kinoroy](https://github.com/kinoroy)
+### Deprecated
 
-- Deprecated `SenderType.id` in favour of `SenderType.senderId`. This change was previously meant for 3.0.0 but
-  was implemented erroneously. [#1201](https://github.com/MessageKit/MessageKit/pull/1201) by [@kinoroy](https://github.com/kinoroy)
+- Deprecated `SenderType.id` in favour of `SenderType.senderId`. This change was previously meant for 3.0.0. [#1201](https://github.com/MessageKit/MessageKit/pull/1201) by [@kinoroy](https://github.com/kinoroy)
+
+### Removed
+
+- **Breaking Change** `MessageInputBar`, and `MessageInputBarDelegate` have been obsoleted. Use `InputBarAccessoryView` and `InputBarAccessoryViewDelegate` respectively. This change was previously meant for 3.0.0. [#1201](https://github.com/MessageKit/MessageKit/pull/1201) by [@kinoroy](https://github.com/kinoroy)
 
 ## 3.0.0
 

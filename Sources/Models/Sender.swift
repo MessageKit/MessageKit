@@ -28,7 +28,7 @@ import Foundation
 @available(*, deprecated, message: "`Sender` has been replaced with the `SenderType` protocol in 3.0.0")
 public struct Sender: SenderType {
 
-    /// MARK: - Properties
+    // MARK: - Properties
 
     /// The unique String identifier for the sender.
     ///

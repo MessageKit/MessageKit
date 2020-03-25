@@ -1,15 +1,18 @@
-platform :ios, '9.0'
+source 'https://cdn.cocoapods.org/'
+
+platform :ios, '11.0'
 
 target 'ChatExample' do
   use_frameworks!
   pod 'MessageKit', :path => '../'
+  pod 'SwiftLint', '~> 0.39.1'
+  pod 'PINRemoteImage', '~> 3.0.0', :subspecs => ['iOS', 'PINCache']
 
-target 'ChatExampleTests' do
-  inherit! :search_paths
-end
+  target 'ChatExampleTests' do
+    inherit! :search_paths
+  end
 
-target 'ChatExampleUITests' do
-  inherit! :search_paths
-end
-
+  target 'ChatExampleUITests' do
+    inherit! :search_paths
+  end
 end
