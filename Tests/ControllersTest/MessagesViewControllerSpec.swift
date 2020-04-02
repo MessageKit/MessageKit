@@ -63,9 +63,6 @@ final class MessagesViewControllerSpec: QuickSpec {
                 beforeEach {
                     controller.view.layoutIfNeeded()
                 }
-                it("sets automaticallyAdjustsScrollViewInsets to false") {
-                    expect(controller.automaticallyAdjustsScrollViewInsets).to(beFalse())
-                }
                 it("sets extendedLayoutIncludesOpaqueBars to true") {
                     expect(controller.extendedLayoutIncludesOpaqueBars).to(beTrue())
                 }
