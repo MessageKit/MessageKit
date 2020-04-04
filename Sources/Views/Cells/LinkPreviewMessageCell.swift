@@ -52,14 +52,13 @@ open class LinkPreviewMessageCell: TextMessageCell {
     }
 
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
-        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
-            return
-        }
+        let displayDelegate = messagesCollectionView.messagesDisplayDelegate
 
-        let textColor: UIColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
-        linkPreviewView.titleLabel.textColor = textColor
-        linkPreviewView.teaserLabel.textColor = textColor
-        linkPreviewView.domainLabel.textColor = textColor
+        if let textColor: UIColor = displayDelegate?.textColor(for: message, at: indexPath, in: messagesCollectionView) {
+            linkPreviewView.titleLabel.textColor = textColor
+            linkPreviewView.teaserLabel.textColor = textColor
+            linkPreviewView.domainLabel.textColor = textColor
+        }
 
         guard case MessageKind.linkPreview(let linkItem) = message.kind else {
             fatalError("LinkPreviewMessageCell received unhandled MessageDataType: \(message.kind)")
@@ -76,6 +75,8 @@ open class LinkPreviewMessageCell: TextMessageCell {
         linkPreviewView.domainLabel.text = linkItem.url.host?.lowercased()
         linkPreviewView.imageView.image = linkItem.thumbnailImage
         linkURL = linkItem.url
+
+        displayDelegate?.configureLinkPreviewImageView(linkPreviewView.imageView, for: message, at: indexPath, in: messagesCollectionView)
     }
 
     open override func prepareForReuse() {
