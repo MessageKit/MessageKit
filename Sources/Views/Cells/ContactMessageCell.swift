@@ -28,7 +28,7 @@ open class ContactMessageCell: MessageContentCell {
     
     public enum ConstraintsID: String {
         case initialsContainerLeftConstraint
-        case disclosureRigtConstraint
+        case disclosureRightConstraint
     }
     
     /// The view container that holds contact initials
@@ -95,7 +95,7 @@ open class ContactMessageCell: MessageContentCell {
         disclosureImageView.constraint(equalTo: CGSize(width: 20, height: 20))
         let disclosureConstraints = disclosureImageView.addConstraints(right: messageContainerView.rightAnchor, centerY: messageContainerView.centerYAnchor,
                                            rightConstant: -10)
-        disclosureConstraints.first?.identifier = ConstraintsID.disclosureRigtConstraint.rawValue
+        disclosureConstraints.first?.identifier = ConstraintsID.disclosureRightConstraint.rawValue
         nameLabel.addConstraints(messageContainerView.topAnchor,
                                  left: initialsContainerView.rightAnchor,
                                  bottom: messageContainerView.bottomAnchor,
@@ -121,7 +121,7 @@ open class ContactMessageCell: MessageContentCell {
             return constraint.identifier == ConstraintsID.initialsContainerLeftConstraint.rawValue
         }.first
         let disclosureRightConstraint = messageContainerView.constraints.filter { (constraint) -> Bool in
-            return constraint.identifier == ConstraintsID.disclosureRigtConstraint.rawValue
+            return constraint.identifier == ConstraintsID.disclosureRightConstraint.rawValue
         }.first
         if dataSource.isFromCurrentSender(message: message) { // outgoing message
             initialsContainerLeftConstraint?.constant = 5
