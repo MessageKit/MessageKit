@@ -76,12 +76,10 @@ final class MockSocket {
             onNewMessageCode?(message)
             queuedMessage = nil
         } else {
-            let sender = arc4random_uniform(1) % 2 == 0 ? connectedUsers.first! : connectedUsers.last!
-            SampleData.shared.getMessages(count: 1, allowedSenders: [sender]) { (message) in
-                queuedMessage = message.first
-            }
+            let sender = connectedUsers.random()!
+            let message = SampleData.shared.randomMessage(allowedSenders: [sender])
+            queuedMessage = message
             onTypingStatusCode?()
         }
     }
-    
 }
