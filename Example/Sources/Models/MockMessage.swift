@@ -91,6 +91,15 @@ struct MockContactItem: ContactItem {
     
 }
 
+struct MockLinkItem: LinkItem {
+    let text: String?
+    let attributedText: NSAttributedString?
+    let url: URL
+    let title: String?
+    let teaser: String
+    let thumbnailImage: UIImage
+}
+
 internal struct MockMessage: MessageType {
 
     var messageId: String
@@ -152,5 +161,9 @@ internal struct MockMessage: MessageType {
 
     init(contact: MockContactItem, user: MockUser, messageId: String, date: Date) {
         self.init(kind: .contact(contact), user: user, messageId: messageId, date: date)
+    }
+
+    init(linkItem: LinkItem, user: MockUser, messageId: String, date: Date) {
+        self.init(kind: .linkPreview(linkItem), user: user, messageId: messageId, date: date)
     }
 }

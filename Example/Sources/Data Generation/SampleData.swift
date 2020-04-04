@@ -99,6 +99,17 @@ final internal class SampleData {
                          Bundle.main.url(forResource: "sound2", withExtension: "m4a")!
     ]
 
+    let linkItem: (() -> MockLinkItem) = {
+        MockLinkItem(
+            text: "\(Lorem.sentence()) https://github.com/MessageKit",
+            attributedText: nil,
+            url: URL(string: "https://github.com/MessageKit")!,
+            title: "MessageKit",
+            teaser: "A community-driven replacement for JSQMessagesViewController - MessageKit",
+            thumbnailImage: UIImage(named: "mkorglogo")!
+        )
+    }
+
     func attributedString(with text: String) -> NSAttributedString {
         let nsString = NSString(string: text)
         var mutableAttributedString = NSMutableAttributedString(string: text)
@@ -186,7 +197,7 @@ final internal class SampleData {
         case .Location:
             return MockMessage(location: locations.random()!, user: user, messageId: uniqueID, date: date)
         case .Url:
-            return MockMessage(text: "https://github.com/MessageKit", user: user, messageId: uniqueID, date: date)
+            return MockMessage(linkItem: linkItem(), user: user, messageId: uniqueID, date: date)
         case .Phone:
             return MockMessage(text: "123-456-7890", user: user, messageId: uniqueID, date: date)
         case .Custom:
