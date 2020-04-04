@@ -23,44 +23,14 @@
  */
 
 import Foundation
-import CoreGraphics
 
-/// A protocol used to represent the data for a link preview message.
-public protocol LinkItem {
-
-    /// A link item needs a message to present, it can be a simple String or
-    /// a NSAttributedString, but only one will be shown.
-    /// LinkItem.text has priority over LinkeItem.attributedText.
-
-    /// The message text.
-    var text: String? { get }
-
-    /// The message attributed text.
-    var attributedText: NSAttributedString? { get }
-
-    /// The URL.
-    var url: URL { get }
-
-    /// The title.
-    var title: String? { get }
-
-    /// The teaser text.
-    var teaser: String { get }
-
-    /// The thumbnail image.
-    var thumbnailImage: UIImage { get }
-}
-
-public extension LinkItem {
-    var textKind: MessageKind {
-        let kind: MessageKind
-        if let text = self.text {
-            kind = .text(text)
-        } else if let attributedText = self.attributedText {
-            kind = .attributedText(attributedText)
-        } else {
-            fatalError("LinkItem must have \"text\" or \"attributedText\"")
-        }
-        return kind
-    }
+/// Concrete type of MessageType
+/// 
+/// Use this when you are subclassing calculators and/or cells that needs
+/// a concrete type to handle super's method.
+internal struct ConcreteMessageType: MessageType {
+    let sender: SenderType
+    let messageId: String
+    let sentDate: Date
+    var kind: MessageKind
 }

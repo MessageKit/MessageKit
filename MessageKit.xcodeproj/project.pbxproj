@@ -35,6 +35,9 @@
 		1FF377AA20087D78004FD648 /* MessagesViewController+Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377A920087D78004FD648 /* MessagesViewController+Menu.swift */; };
 		1FF377AC20087DA2004FD648 /* MessagesViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */; };
 		3725C9D42438C8EF00800CED /* LinkPreviewMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725C9D32438C8EF00800CED /* LinkPreviewMessageCell.swift */; };
+		3725C9D62438DC7900800CED /* LinkPreviewFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725C9D52438DC7900800CED /* LinkPreviewFonts.swift */; };
+		3725C9D82438E35100800CED /* LinkPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725C9D72438E35100800CED /* LinkPreviewView.swift */; };
+		3725C9DA2438E50600800CED /* ConcreteMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3725C9D92438E50600800CED /* ConcreteMessage.swift */; };
 		375CC61E2438B2C100D80CE7 /* LinkItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CC61D2438B2C100D80CE7 /* LinkItem.swift */; };
 		375CC6202438B6FC00D80CE7 /* LinkPreviewMessageSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CC61F2438B6FC00D80CE7 /* LinkPreviewMessageSizeCalculator.swift */; };
 		382C794221705D2000F4FAF5 /* HorizontalEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 382C794121705D2000F4FAF5 /* HorizontalEdgeInsets.swift */; };
@@ -150,6 +153,9 @@
 		1FF377A920087D78004FD648 /* MessagesViewController+Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Menu.swift"; sourceTree = "<group>"; };
 		1FF377AB20087DA2004FD648 /* MessagesViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagesViewController+Keyboard.swift"; sourceTree = "<group>"; };
 		3725C9D32438C8EF00800CED /* LinkPreviewMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPreviewMessageCell.swift; sourceTree = "<group>"; };
+		3725C9D52438DC7900800CED /* LinkPreviewFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPreviewFonts.swift; sourceTree = "<group>"; };
+		3725C9D72438E35100800CED /* LinkPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPreviewView.swift; sourceTree = "<group>"; };
+		3725C9D92438E50600800CED /* ConcreteMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteMessage.swift; sourceTree = "<group>"; };
 		375CC61D2438B2C100D80CE7 /* LinkItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkItem.swift; sourceTree = "<group>"; };
 		375CC61F2438B6FC00D80CE7 /* LinkPreviewMessageSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPreviewMessageSizeCalculator.swift; sourceTree = "<group>"; };
 		382C794121705D2000F4FAF5 /* HorizontalEdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalEdgeInsets.swift; sourceTree = "<group>"; };
@@ -433,6 +439,8 @@
 				B7A03F1F1F866895006AEF79 /* MessageStyle.swift */,
 				B7A03F1A1F866895006AEF79 /* NSConstraintLayoutSet.swift */,
 				B7A03F1E1F866895006AEF79 /* Sender.swift */,
+				3725C9D52438DC7900800CED /* LinkPreviewFonts.swift */,
+				3725C9D92438E50600800CED /* ConcreteMessage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -451,6 +459,7 @@
 				B7A03F451F86694F006AEF79 /* MessagesCollectionView.swift */,
 				B7A03F441F86694F006AEF79 /* PlayButtonView.swift */,
 				38F8063021740D9D00CDB9DB /* TypingIndicator.swift */,
+				3725C9D72438E35100800CED /* LinkPreviewView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -661,9 +670,11 @@
 				B7A03F6C1F8669EB006AEF79 /* UIView+Extensions.swift in Sources */,
 				383B9EB121728BAD008AB91A /* SenderType.swift in Sources */,
 				B7A03F3A1F866946006AEF79 /* TextMessageCell.swift in Sources */,
+				3725C9DA2438E50600800CED /* ConcreteMessage.swift in Sources */,
 				50FF34552237FE4C0004DCD7 /* ContactItem.swift in Sources */,
 				B7A03F191F86682C006AEF79 /* MessagesCollectionViewLayoutAttributes.swift in Sources */,
 				38A2230F221FB8A300D14DAF /* MessageInputBar.swift in Sources */,
+				3725C9D82438E35100800CED /* LinkPreviewView.swift in Sources */,
 				B7A03F461F86694F006AEF79 /* AvatarView.swift in Sources */,
 				1FCA6D30201C1CC900BC3480 /* UIEdgeInsets+Extensions.swift in Sources */,
 				B7A03F3D1F866946006AEF79 /* MediaMessageCell.swift in Sources */,
@@ -710,6 +721,7 @@
 				50FF34572237FE6A0004DCD7 /* UIImage+Extension.swift in Sources */,
 				1F82D1431FB1B75B00B81A88 /* AvatarPosition.swift in Sources */,
 				1FF377AC20087DA2004FD648 /* MessagesViewController+Keyboard.swift in Sources */,
+				3725C9D62438DC7900800CED /* LinkPreviewFonts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

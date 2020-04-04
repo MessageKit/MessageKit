@@ -26,31 +26,24 @@ import Foundation
 
 open class LinkPreviewMessageSizeCalculator: TextMessageSizeCalculator {
 
-    private struct DummyMessage: MessageType {
-        let sender: SenderType
-        let messageId: String
-        let sentDate: Date
-        var kind: MessageKind
-    }
-
     static let imageViewSize: CGFloat = 60
     static let imageViewMargin: CGFloat = 8
 
-    static var titleFont: UIFont = {
-        let font = UIFont.systemFont(ofSize: 13, weight: .semibold)
-        let fontMetrics = UIFontMetrics(forTextStyle: .footnote)
-        return fontMetrics.scaledFont(for: font)
-    }()
+    public var titleFont: UIFont
+    public var teaserFont: UIFont = .preferredFont(forTextStyle: .caption2)
+    public var domainFont: UIFont
 
-    static var teaserFont: UIFont = {
-        .preferredFont(forTextStyle: .caption2)
-    }()
+    public override init(layout: MessagesCollectionViewFlowLayout?) {
+        let titleFont = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        let titleFontMetrics = UIFontMetrics(forTextStyle: .footnote)
+        self.titleFont = titleFontMetrics.scaledFont(for: titleFont)
 
-    static var domainFont: UIFont = {
-        let font = UIFont.systemFont(ofSize: 12, weight: .semibold)
-        let fontMetrics = UIFontMetrics(forTextStyle: .caption1)
-        return fontMetrics.scaledFont(for: font)
-    }()
+        let domainFont = UIFont.systemFont(ofSize: 12, weight: .semibold)
+        let domainFontMetrics = UIFontMetrics(forTextStyle: .caption1)
+        self.domainFont = domainFontMetrics.scaledFont(for: domainFont)
+
+        super.init(layout: layout)
+    }
 
     open override func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
         switch message.kind {
@@ -67,19 +60,10 @@ open class LinkPreviewMessageSizeCalculator: TextMessageSizeCalculator {
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }
 
-        let kind: MessageKind
-        if let text = linkItem.text {
-            kind = .text(text)
-        } else if let attributedText = linkItem.attributedText {
-            kind = .attributedText(attributedText)
-        } else {
-            fatalError("LinkItem must have \"text\" or \"attributedText\"")
-        }
-
-        let dummyMessage = DummyMessage(sender: message.sender,
-                                        messageId: message.messageId,
-                                        sentDate: message.sentDate,
-                                        kind: kind)
+        let dummyMessage = ConcreteMessageType(sender: message.sender,
+                                               messageId: message.messageId,
+                                               sentDate: message.sentDate,
+                                               kind: linkItem.textKind)
 
         var containerSize = super.messageContainerSize(for: dummyMessage)
         containerSize.width = max(containerSize.width, messageContainerMaxWidth(for: message))
@@ -89,21 +73,27 @@ open class LinkPreviewMessageSizeCalculator: TextMessageSizeCalculator {
         let minHeight = containerSize.height + LinkPreviewMessageSizeCalculator.imageViewSize
         let previewMaxWidth = containerSize.width - (LinkPreviewMessageSizeCalculator.imageViewSize + LinkPreviewMessageSizeCalculator.imageViewMargin + labelInsets.horizontal)
 
-        calculateContainerSize(with: NSAttributedString(string: linkItem.title ?? "", attributes: [.font: LinkPreviewMessageSizeCalculator.titleFont]),
+        calculateContainerSize(with: NSAttributedString(string: linkItem.title ?? "", attributes: [.font: titleFont]),
                                containerSize: &containerSize,
                                maxWidth: previewMaxWidth)
 
-        calculateContainerSize(with: NSAttributedString(string: linkItem.teaser, attributes: [.font: LinkPreviewMessageSizeCalculator.teaserFont]),
+        calculateContainerSize(with: NSAttributedString(string: linkItem.teaser, attributes: [.font: teaserFont]),
                                containerSize: &containerSize,
                                maxWidth: previewMaxWidth)
 
-        calculateContainerSize(with: NSAttributedString(string: linkItem.url.host ?? "", attributes: [.font: LinkPreviewMessageSizeCalculator.domainFont]),
+        calculateContainerSize(with: NSAttributedString(string: linkItem.url.host ?? "", attributes: [.font: domainFont]),
                                containerSize: &containerSize,
                                maxWidth: previewMaxWidth)
 
         containerSize.height = max(minHeight, containerSize.height) + labelInsets.vertical
 
         return containerSize
+    }
+
+    open override func configure(attributes: UICollectionViewLayoutAttributes) {
+        super.configure(attributes: attributes)
+        guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
+        attributes.linkPreviewFonts = LinkPreviewFonts(titleFont: titleFont, teaserFont: teaserFont, domainFont: domainFont)
     }
 }
 
