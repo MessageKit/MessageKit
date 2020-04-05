@@ -22,22 +22,20 @@
  SOFTWARE.
  */
 
+import UIKit
+
 public enum ImageType: String {
     case play
     case pause
-    case disclouser
+    case disclosure
 }
 
-import UIKit
-
 /// This extension provide a way to access image resources with in framework
-public extension UIImage {
-    
+internal extension UIImage {
     class func messageKitImageWith(type: ImageType) -> UIImage? {
         let assetBundle = Bundle.messageKitAssetBundle()
         let imagePath = assetBundle.path(forResource: type.rawValue, ofType: "png", inDirectory: "Images")
         let image = UIImage(contentsOfFile: imagePath ?? "")
         return image
     }
-    
 }
