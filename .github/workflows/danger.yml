@@ -9,7 +9,7 @@ on:
 jobs:
   danger:
     name: Run Danger
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
