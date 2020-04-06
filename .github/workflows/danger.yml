@@ -23,6 +23,6 @@ jobs:
 #          ${{ runner.os }}-danger-${{ env.cache-name }}-
 #          ${{ runner.os }}-danger-
     - name: Danger Swift
-      uses: danger/swift@2.0.3
+      uses: danger/swift@3.3.0
       env:
         DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
