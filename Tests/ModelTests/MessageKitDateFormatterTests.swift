@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import XCTest
 class MessageKitDateFormatterTests: XCTestCase {
 
     var formatter: DateFormatter!
-    let attributes = [NSAttributedStringKey.backgroundColor: "red"]
+    let attributes = [NSAttributedString.Key.backgroundColor: "red"]
     override func setUp() {
         super.setUp()
 

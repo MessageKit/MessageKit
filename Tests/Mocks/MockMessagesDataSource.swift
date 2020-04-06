@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -28,11 +28,17 @@ import Foundation
 class MockMessagesDataSource: MessagesDataSource {
 
     var messages: [MessageType] = []
-    let senders: [Sender] = [Sender(id: "sender_1", displayName: "Sender 1"),
-                             Sender(id: "sender_2", displayName: "Sender 2")]
+    let senders: [MockUser] = [
+        MockUser(senderId: "sender_1", displayName: "Sender 1"),
+        MockUser(senderId: "sender_2", displayName: "Sender 2")
+    ]
 
-    func currentSender() -> Sender {
+    var currentUser: MockUser {
         return senders[0]
+    }
+
+    func currentSender() -> SenderType {
+        return currentUser
     }
 
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {

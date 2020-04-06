@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ import MapKit
 open class LocationMessageCell: MessageContentCell {
 
     /// The activity indicator to be displayed while the map image is loading.
-    open var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    open var activityIndicator = UIActivityIndicatorView(style: .gray)
 
     /// The image view holding the map image.
     open var imageView = UIImageView()
@@ -68,7 +68,7 @@ open class LocationMessageCell: MessageContentCell {
 
         activityIndicator.startAnimating()
 
-        let snapshotOptions = MKMapSnapshotOptions()
+        let snapshotOptions = MKMapSnapshotter.Options()
         snapshotOptions.region = MKCoordinateRegion(center: locationItem.location.coordinate, span: options.span)
         snapshotOptions.showsBuildings = options.showsBuildings
         snapshotOptions.showsPointsOfInterest = options.showsPointsOfInterest

@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,13 @@
 
 import Foundation
 
-extension UIEdgeInsets {
+internal extension UIEdgeInsets {
 
-    internal var vertical: CGFloat {
+    var vertical: CGFloat {
         return top + bottom
     }
 
-    internal var horizontal: CGFloat {
+    var horizontal: CGFloat {
         return left + right
     }
 

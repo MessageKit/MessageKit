@@ -12,9 +12,7 @@ custom_rules:
     message: "Use like open override or public override instead" # violation message. optional.
     severity: warning # violation severity. optional.
 opt_in_rules:
-  - explicit_acl
   - explicit_top_level_acl
-explicit_acl: error
 explicit_top_level_acl: error
 included:
   - Sources

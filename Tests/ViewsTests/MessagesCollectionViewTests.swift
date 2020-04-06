@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@ class MessagesCollectionViewTests: XCTestCase {
     func testInit() {
         XCTAssertEqual(messagesCollectionView.frame, rect)
         XCTAssertEqual(messagesCollectionView.collectionViewLayout, layout)
-        XCTAssertEqual(messagesCollectionView.backgroundColor, .white)
+        XCTAssertEqual(messagesCollectionView.backgroundColor, .backgroundColor)
     }
 
 }

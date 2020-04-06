@@ -1,0 +1,22 @@
+name: PR Tests
+
+on: pull_request
+
+jobs:
+  tests:
+    name: Run Tests
+    runs-on: macOS-latest
+    steps:
+    - name: Checkout the Git repository
+      uses: actions/checkout@v2
+    - name: Cache Carthage
+      uses: actions/cache@v1
+      with:
+        path: Carthage
+        key: ${{ runner.os }}-tests-${{ env.cache-name }}-carthage-${{ hashFiles('**/Cartfile.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-tests-${{ env.cache-name }}-carthage-
+          ${{ runner.os }}-tests-${{ env.cache-name }}-
+          ${{ runner.os }}-tests-
+    - name: Build and run tests
+      run: ./GitHubActions/build.sh tests

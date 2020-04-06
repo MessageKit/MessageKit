@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,12 @@ open class MessageCollectionViewCell: UICollectionViewCell {
     }
 
     public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+    }
+
+    /// Handle tap gesture on contentView and its subviews.
+    open func handleTapGesture(_ gesture: UIGestureRecognizer) {
+        // Should be overridden
     }
 
 }

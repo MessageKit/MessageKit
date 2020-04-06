@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -71,12 +71,12 @@ class MessagesDisplayDelegateTests: XCTestCase {
                                                   at: IndexPath(item: 0, section: 0),
                                                   in: sut.messagesCollectionView)
 
-        XCTAssertEqual(backgroundColor, .white)
+        XCTAssertEqual(backgroundColor, .backgroundColor)
     }
 
     func testBackgroundColorForMessageWithEmoji_returnsClearForDefault() {
         sut.dataProvider.messages.append(MockMessage(emoji: "🤔",
-                                                     sender: sut.dataProvider.currentSender(),
+                                                     user: sut.dataProvider.currentUser,
                                                      messageId: "003"))
         let backgroundColor = sut.backgroundColor(for: sut.dataProvider.messages[2],
                                                   at: IndexPath(item: 0, section: 0),
@@ -90,8 +90,8 @@ class MessagesDisplayDelegateTests: XCTestCase {
                                                                  at: IndexPath(item: 0, section: 0)))
     }
 
-    func testCellBottomLabelDefaultState() {
-        XCTAssertNil(sut.dataProvider.cellBottomLabelAttributedText(for: sut.dataProvider.messages[0],
+    func testMessageBottomLabelDefaultState() {
+        XCTAssertNil(sut.dataProvider.messageBottomLabelAttributedText(for: sut.dataProvider.messages[0],
                                                                     at: IndexPath(item: 0, section: 0)))
     }
 
@@ -143,7 +143,7 @@ class TextMessageDisplayDelegateTests: XCTestCase {
                                       at: IndexPath(item: 0, section: 0),
                                       in: sut.messagesCollectionView)
 
-        XCTAssertEqual(textColor, .white)
+        XCTAssertEqual(textColor, .backgroundColor)
     }
 
     func testTextColorFromYou_returnsDarkTextForDefault() {
@@ -151,7 +151,7 @@ class TextMessageDisplayDelegateTests: XCTestCase {
                                       at: IndexPath(item: 0, section: 0),
                                       in: sut.messagesCollectionView)
 
-        XCTAssertEqual(textColor, .darkText)
+        XCTAssertEqual(textColor, .labelColor)
     }
 
     func testTextColorWithoutDataSource_returnsDarkTextForDefault() {
@@ -161,7 +161,7 @@ class TextMessageDisplayDelegateTests: XCTestCase {
                                       at: IndexPath(item: 0, section: 0),
                                       in: sut.messagesCollectionView)
 
-        XCTAssertEqual(textColor, .darkText)
+        XCTAssertEqual(textColor, .labelColor)
     }
 
     func testEnableDetectors_returnsEmptyForDefault() {
@@ -196,10 +196,10 @@ private class MockMessagesViewController: MessagesViewController, MessagesDispla
     fileprivate func makeDataSource() -> MockMessagesDataSource {
         let dataSource = MockMessagesDataSource()
         dataSource.messages.append(MockMessage(text: "Text 1",
-                                               sender: dataSource.senders[0],
+                                               user: dataSource.senders[0],
                                                messageId: "001"))
         dataSource.messages.append(MockMessage(text: "Text 2",
-                                               sender: dataSource.senders[1],
+                                               user: dataSource.senders[1],
                                                messageId: "002"))
 
         return dataSource

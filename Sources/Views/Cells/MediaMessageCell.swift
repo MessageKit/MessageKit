@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -55,6 +55,11 @@ open class MediaMessageCell: MessageContentCell {
         messageContainerView.addSubview(playButtonView)
         setupConstraints()
     }
+    
+    open override func prepareForReuse() {
+        super.prepareForReuse()
+        self.imageView.image = nil
+    }
 
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
         super.configure(with: message, at: indexPath, and: messagesCollectionView)
@@ -76,4 +81,16 @@ open class MediaMessageCell: MessageContentCell {
 
         displayDelegate.configureMediaMessageImageView(imageView, for: message, at: indexPath, in: messagesCollectionView)
     }
+    
+    /// Handle tap gesture on contentView and its subviews.
+    open override func handleTapGesture(_ gesture: UIGestureRecognizer) {
+        let touchLocation = gesture.location(in: imageView)
+
+        guard imageView.frame.contains(touchLocation) else {
+            super.handleTapGesture(gesture)
+            return
+        }
+        delegate?.didTapImage(in: self)
+    }
+    
 }

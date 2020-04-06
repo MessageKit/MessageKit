@@ -2,9 +2,219 @@
 
 The changelog for `MessageKit`. Also see the [releases](https://github.com/MessageKit/MessageKit/releases) on GitHub.
 
---------------------------------------
-
 ## Upcoming release
+
+### Fixed
+
+### Added
+
+- Added option to use Photo messages with remote image URL in Example project [#1294](https://github.com/MessageKit/MessageKit/pull/1294) by [@martinpucik](https://github.com/martinpucik)
+
+### Changed
+
+- **Breaking Change** Dropped support for iOS 9 and iOS 10 [#1261](https://github.com/MessageKit/MessageKit/pull/1261) by [@kaspik](https://github.com/kaspik)
+
+## 3.1.0
+
+### Fixed
+
+ - Set the proper notification to invalidate layout. MessageKit now relies on `UIApplication` orientation notification instead of `UIDevice`, which invalidates the layout only when it is needed. [#1126](https://github.com/MessageKit/MessageKit/pull/1126) by [@bguidolim](https://github.com/bguidolim)
+ 
+ - Fixed `requiredInitialScrollViewBottomInset` when `inputAccessoryView` is `nil` [#1218](https://github.com/MessageKit/MessageKit/pull/1218) by [@aabosh](https://github.com/aabosh) 
+
+ - Fixed `MessagesCollectionView.scrollToBottom(animated:)` method to properly handle calls made early in the view lifecycle. [#1110](https://github.com/MessageKit/MessageKit/pull/1110) by [@marcetcheverry](https://github.com/marcetcheverry)
+ 
+ - Fixed `TypingIndicator` `dotColor` for light mode. [#1266](https://github.com/MessageKit/MessageKit/pull/1266) by [@lewis-smith](https://github.com/lewis-smith)
+
+### Added
+
+- Add missing textAlignment and textInsets assignments to layoutCellTopLabel method in MessageContentCell. [#1117](https://github.com/MessageKit/MessageKit/pull/1117) by [@mdescalzo](https://github.com/mdescalzo)
+
+- Add support for styling NSLinkAttribute with existing urlAttributes in MessageLabel. [#1091](https://github.com/MessageKit/MessageKit/pull/1091) by [@marcetcheverry](https://github.com/marcetcheverry)
+
+- Add loading indicator to AudioMessageCell. [#1084](https://github.com/MessageKit/MessageKit/pull/1084) by [@marcetcheverry](https://github.com/marcetcheverry)
+
+- Add support for Dark Mode [#1189](https://github.com/MessageKit/MessageKit/pull/1189) by [@Vlada31R](https://github.com/Vlada31R)
+
+- Add support for `scrollToLastItem` and `scrollsToLastItemOnKeyboardBeginsEditing` [#1247](https://github.com/MessageKit/MessageKit/pull/1247) by [@hyouuu](https://github.com/hyouuu)
+
+- Added `MessageCellDelegate.didTapImage(in cell: MessageCollectionViewCell)` [#1166](https://github.com/MessageKit/MessageKit/pull/1166) by [@domeniconicoli](https://github.com/domeniconicoli), [#1278](https://github.com/MessageKit/MessageKit/pull/1278) by [@bguidolim](https://github.com/bguidolim), [1285](https://github.com/MessageKit/MessageKit/pull/1285) by [@austinwright](https://github.com/austinwright)
+
+- Added missing cellTopLabelAlignment to MessageSizeCalculator. [#1113](https://github.com/MessageKit/MessageKit/pull/1113) by [@marcetcheverry](https://github.com/marcetcheverry)
+
+### Changed
+
+- **Breaking Change** Updated to Swift 5.0 [#1039](https://github.com/MessageKit/MessageKit/pull/1039) by [@nathantannar4](https://github.com/nathantannar4)
+
+- Lazily initialize the MessageInputBar on MessagesViewController. [#1092](https://github.com/MessageKit/MessageKit/pull/1092) by [@marcetcheverry](https://github.com/marcetcheverry)
+
+### Deprecated
+
+- Deprecated `SenderType.id` in favour of `SenderType.senderId`. This change was previously meant for 3.0.0. [#1201](https://github.com/MessageKit/MessageKit/pull/1201) by [@kinoroy](https://github.com/kinoroy)
+
+### Removed
+
+- **Breaking Change** `MessageInputBar`, and `MessageInputBarDelegate` have been obsoleted. Use `InputBarAccessoryView` and `InputBarAccessoryViewDelegate` respectively. This change was previously meant for 3.0.0. [#1201](https://github.com/MessageKit/MessageKit/pull/1201) by [@kinoroy](https://github.com/kinoroy)
+
+## 3.0.0
+
+### Dependency Changes
+
+- **Breaking Change** The dependency `MessageInputBar` was replaced with `InputBarAccessoryView`. As `MessageInputBar` was previously a fork this means no functionality has been lost but improvements and bug fixes will be present. `InputBarAccessoryView` has more of a following outside of `MessageKit` making its development faster than `MessageInputBar`. Maintaining two versions only increased the workload. You can find the changelog for `InputBarAccessoryView` [here](https://github.com/nathantannar4/InputBarAccessoryView/blob/master/CHANGELOG.md).
+
+### Changed
+
+- **Breaking Change** Deprecated the Sender struct in favor of the `SenderType` protocol. 
+[#909](https://github.com/MessageKit/MessageKit/pull/909) by [@nathantannar4](https://github.com/nathantannar4)
+
+- **Breaking Change** Deprecated the Sender struct in favor of the `SenderType` protocol. [#909](https://github.com/MessageKit/MessageKit/pull/909) by [@nathantannar4](https://github.com/nathantannar4)
+
+- **Breaking Change**  Add support for audio messages. Added new protocols `AudioControllerDelegate`, `AudioItem` a new cell  `AudioMessageCell` and a new controller `BasicAudioController`. 
+[#892](https://github.com/MessageKit/MessageKit/pull/892) by [@moldovaniosif](https://github.com/moldovaniosif).
+
+- **Breaking Change** Moved `handleTapGesture` method to `MessageCollectionViewCell` 
+[#950](https://github.com/MessageKit/MessageKit/pull/950) by [@nathantannar4](https://github.com/nathantannar4)
+
+- **Breaking Change** Renamed function `layoutBottomLabel(with:)` to `layoutMessageBottomLabel(with:)` in `MessageContentCell` class.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
+### Added
+
+- **Breaking Change** Add support for share contact. [#1013](https://github.com/MessageKit/MessageKit/pull/1013) by [@moldovaniosif](https://github.com/moldovaniosif)
+
+- Added typing indicator support, `func setTypingIndicatorViewHidden(_ isHidden: Bool, animated: Bool, whilePerforming updates: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil)`. Return a custom typing view by conforming to `MessagesDisplayDelegate` or use the [default appearance](https://github.com/nathantannar4/TypingIndicator). Customize the size with `MessagesLayoutDelegate` .
+[#989](https://github.com/MessageKit/MessageKit/pull/911) by [@nathantannar4](https://github.com/nathantannar4)
+
+- Added `AccessoryPosition` class.
+[#989](https://github.com/MessageKit/MessageKit/pull/989) by [@subdiox](https://github.com/subdiox)
+
+- Added `incomingAccessoryViewPosition` and `outgoingAccessoryViewPosition` variables to `MessageSizeCalculator` class.
+[#989](https://github.com/MessageKit/MessageKit/pull/989) by [@subdiox](https://github.com/subdiox)
+
+- Added `setMessageIncomingAccessoryViewPosition(_:)` and `setMessageOutgoingAccessoryViewPosition(_:)` functions to `MessagesCollectionViewFlowLayout` class.
+[#989](https://github.com/MessageKit/MessageKit/pull/989) by [@subdiox](https://github.com/subdiox)
+
+- **Breaking Change** Added `avatarLeadingTrailingPadding` as a property of `CellSizeCalculator` and `MessagesCollectionViewLayoutAttributes` to inset the `AvatarView` layout
+[#944](https://github.com/MessageKit/MessageKit/pull/944) by [@nathantannar4](https://github.com/nathantannar4)
+
+- **Breaking Change** Added `didTapBackground(in:)` function to `MessageCellDelegate` protocol.
+[#922](https://github.com/MessageKit/MessageKit/pull/922) by [@kpennacchia](https://github.com/kpennacchia)
+
+- **Breaking Change** Added `didTapCellBottomLabel(in:)` function to `MessageCellDelegate` protocol.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+    
+- **Breaking Change** Added `cellBottomLabelAttributedText(for:, at:)` function to `MessagesDataSource` protocol.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+    
+- **Breaking Change** Added `cellBottomLabelHeight(for:, at:, in messagesCollectionView:)` function to `MessagesLayoutDelegate` protocol.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
+- Added `cellBottomLabel` to `MessageContentCell`.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
+- Added `layoutCellBottomLabel(with:)` function to `MessageContentCell` class. 
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
+- Added `setMessageIncomingCellBottomLabelAlignment(_:)` and `setMessageOutgoingCellBottomLabelAlignment(_:)` functions to `MessagesCollectionViewFlowLayout` class.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
+- Added `cellBottomLabelAlignment` and `cellBottomLabelSize` variables to `MessagesCollectionViewLayoutAttributes` class.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
+- Added `incomingCellBottomLabelAlignment` and `outgoingCellBottomLabelAlignment` variables to `MessageSizeCalculator` class.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
+- Added `cellBottomLabelSize(for:, at:)` and `cellBottomLabelAlignment(for:)` functions to `MessageSizeCalculator` class.
+[#920](https://github.com/MessageKit/MessageKit/pull/920) by [@maxxx777](https://github.com/maxxx777)
+
+## [2.0.0](https://github.com/MessageKit/MessageKit/releases/tag/2.0.0)
+
+### Added
+
+- **Breaking Change** Added new methods to simplify using of custom messages: `customCellSizeCalculator(for:at:in:)` for `MessagesLayoutDelegate` and `customCell(for:at:in:)` for `MessagesDataSource`.
+[#879](https://github.com/MessageKit/MessageKit/pull/879) by [@realbonus](https://github.com/RealBonus)
+
+### Changed
+
+- Change acl of `handleGesture(touchLocation:)` in `MessageLabel` from internal to open. 
+[#912](https://github.com/MessageKit/MessageKit/pull/912) by [@julienkode](https://github.com/JulienKode)
+
+## [2.0.0-beta.1](https://github.com/MessageKit/MessageKit/releases/tag/2.0.0-beta.1)
+
+### Changed
+
+- **Breaking Change** Updated codebase to Swift 4.2 [#883](https://github.com/MessageKit/MessageKit/pull/883) by [@nathantannar4](https://github.com/nathantannar4)
+
+- Fixed the way that the Strings and UIImages are parsed in the `InputTextView` to prevent crashes in `parseForComponents()`. 
+[#791](https://github.com/MessageKit/MessageKit/pull/791) by [@nathantannar4](https://github.com/nathantannar4)
+
+### Added
+
+- **Breaking Change** Added  `.hashtag`, .`mention` to detect theses pattern inside the `messageLabel`. We also add  `.custom(pattern: YOUR_PATTERN)` to `DetectorType` to manage and deal with your own regular expression.
+[#913](https://github.com/MessageKit/MessageKit/pull/913) by [@JulienKode](https://github.com/julienkode).
+
+- Added support for detection and handling of `NSLink`s inside of messages.
+[#815](https://github.com/MessageKit/MessageKit/pull/815) by [@jnic](https://github.com/jnic)
+
+- Added customizable `accessoryView`, with a new `MessagesDisplayDelegate` function `configureAccessoryView`, and corresponding size & padding properties in `MessageSizeCalculator`. The `accessoryView` is aligned to the center of the `messageContainerView`.
+[#710](https://github.com/MessageKit/MessageKit/pull/710) by [@hyouuu](https://github.com/hyouuu)
+
+- Added a tap gesture recognition to the `accessoryView` which calls the  `MessageCellDelagate` function `didTapAccessoryView(in:)`. 
+[#834](https://github.com/MessageKit/MessageKit/pull/834) by [@nathantannar4](https://github.com/nathantannar4)
+
+- Added `additionalBottomInset` property that allows to adjust the bottom content inset automatically set on the messages collection view by the view controller. 
+[#787](https://github.com/MessageKit/MessageKit/pull/787) by [@andreyvit](https://github.com/andreyvit)
+
+### Fixed
+
+- **Breaking Change** Fixed typo of `scrollsToBottomOnKeybordBeginsEditing` to `scrollsToBottomOnKeyboardBeginsEditing`.
+[#856](https://github.com/MessageKit/MessageKit/pull/856) by [@p-petrenko](https://github.com/p-petrenko)
+
+-  Fixed a bug that prevented `MessageLabel` from laying out properly when contained by superviews using autolayout.
+[#889](https://github.com/MessageKit/MessageKit/pull/889) by [@marius-serban](https://github.com/marius-serban).
+
+- Fixed bottom content inset adjustment when using an undocked keyboard on iPad, or when `edgesForExtendedLayout` does not include `.top`, or when a parent container view controller adds extra views at the top of the screen. 
+[#787](https://github.com/MessageKit/MessageKit/pull/787) by [@andreyvit](https://github.com/andreyvit)
+
+- Fixed the `MessageData.emoji` case to use 2x the `messageLabelFont` size by default.
+[#795](https://github.com/MessageKit/MessageKit/pull/795) by [@Vortec4800](https://github.com/vortec4800).
+
+### Fixed
+
+- Fixed `MessagesCollectionView` to allow to use nibs with `MessageReusableView`.
+[#832](https://github.com/MessageKit/MessageKit/pull/832) by [@maxxx777](https://github.com/maxxx777).
+
+- Fixed multiple crashes at views, when views are being called from another XIB.
+[#905](https://github.com/MessageKit/MessageKit/pull/905) by [@talanov](https://github.com/talanov).
+
+## [1.0.0](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0)
+
+- First major release.
+
+## [[Prerelease] 1.0.0-beta.2](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0-beta.2)
+
+### Changed
+
+- Relaxed the settable requirement for the `LocationItem` and `MediaItem` protocols.
+[#727](https://github.com/MessageKit/MessageKit/pull/716) by [@SD10](https://github.com/sd10).
+
+### Fixed
+
+- Fixed `MessageContentCell`'s subviews `frame` when size equal to `.zero`.
+[#716](https://github.com/MessageKit/MessageKit/pull/716) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- Fixed `MessagesCollectionView`'s bottom inset when hardware keyboard is connected. Do not adjust `MessagesCollection`'s inset when being popped.
+[#707](https://github.com/MessageKit/MessageKit/pull/707) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+- Fixed `LabelAlignment` initializer which has default internal access control.
+[#705](https://github.com/MessageKit/MessageKit/pull/705) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+### Added
+
+- Added convenience method to set properties for all `MessageSizeCalculator`s.
+[#697](https://github.com/MessageKit/MessageKit/pull/697) by [@zhongwuzw](https://github.com/zhongwuzw).
+
+## [[Prerelease] 1.0.0-beta.1](https://github.com/MessageKit/MessageKit/releases/tag/1.0.0-beta.1)
 
 ### Added
 
@@ -25,6 +235,9 @@ the `MessageData.location` case.
 - **Breaking Change** Added `.custom(Any?)` case to `MessageData`.
 [#498](https://github.com/MessageKit/MessageKit/pull/498) by [@SD10](https://github.com/SD10).
 
+- **Breaking Change** Added `.messageLabelTop` case to `AvatarPosition.Vertical` enum.
+[#596](https://github.com/MessageKit/MessageKit/pull/596) by [@zhongwuzw](https://github.com/zhongwuzw)
+
 - Added `CellSizeCalculator` protocol that is responsible for sizing and configuring attributes of a  `MessageCollectionViewCell`.
 [#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/SD10).
 
@@ -32,7 +245,7 @@ the `MessageData.location` case.
 classes that are responsible for sizing the `MessagesCollectionViewCell` types provided by MessageKit.
 [#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/sd10).
 
-- Added two new methods `cellTopLabelHeight(for:at:in)` and `cellBottomLabelHeight(for:at:in)` to `MessagesLayoutDelegate`
+- Added three new methods `cellTopLabelHeight(for:at:in)`, `messageTopLabelHeight(for:at:in)`, and `messageBottomLabelHeight(for:at:in)` to `MessagesLayoutDelegate`.
 [#580](https://github.com/MessageKit/MessageKit/pull/580) by [@SD10](https://github.com/sd10).
 
 - Added new class `InsetLabel`.
@@ -48,7 +261,7 @@ classes that are responsible for sizing the `MessagesCollectionViewCell` types p
 ### Changed
 
 - **Breaking Change** Renamed `MessageData` enum to `MessageKind` and changed `MessageType`'s `data` property name to `kind`.
- [#658](https://github.com/MessageKit/MessageKit/658) by [@zhongwuzw](https://github.com/zhongwuzw).
+ [#658](https://github.com/MessageKit/MessageKit/pull/658) by [@zhongwuzw](https://github.com/zhongwuzw).
 
 - **Breaking Change** Changed the `messageFooterView(for:in)` and `messageHeaderView(for:in)` methods of
 `MessagesDisplayDelegate` by removing the `message` parameter.
@@ -61,12 +274,6 @@ by removing the `MessageType` and `IndexPath` parameters and replacing them with
 - **Breaking Change** The reuse identifiers of all `MessageReusableView`s and `MessageCollectionViewCell`s have been 
 changed to match their class name exactly.
 [#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
-
-- **Breaking Change** Changed the superclass of `MessageDateHeaderView` from `MessageHeaderView` to `MessageReusableView`.
-[#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
-
-- **Breaking Change** Change `NSLayoutConstraintSet` class from `public` to `internal`.
-[#607](https://github.com/MessageKit/MessageKit/pull/607) by [@zhongwuzw](https://github.com/zhongwuzw).
 
 - **Breaking Change** `MessageHeaderView` and `MessageFooterView` now subclass `MessageReusableView` class.
 [#596](https://github.com/MessageKit/MessageKit/pull/596) by [@SD10](https://github.com/sd10).
@@ -82,6 +289,15 @@ The `MessageCollectionViewCell` class is now a bare bones subclass.
 - **Breaking Change** The type of `cellTopLabel` and `cellBottomLabel` has been changed to `InsetLabel`.
 [#580](https://github.com/MessageKit/MessageKit/pull/580) by [@SD10](https://github.com/sd10).
 
+- **Breaking Change** Renamed `cellTopLabel` to `messageTopLabel` and renamed `cellBottomLabel` to `messageBottomLabel`.
+[#659](https://github.com/MessageKit/MessageKit/pull/659) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Renamed the `didTapTopLabel` and `didTapBottomLabel` methods of `MessageCellDelegate` to `didTapMessageTopLabel` and `didTapMessageBottomLabel`.
+[#659](https://github.com/MessageKit/MessageKit/pull/659) by [@SD10](https://github.com/sd10).
+
+- **Breaking Change** Renamed `cellBottomLabelAttributedText` method of `MessagesDataSource` to `messageBottomLabelAttributedText`.
+[#659](https://github.com/MessageKit/MessageKit/pull/659) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 - The `MessageData.emoji` case no longer uses a default font of 2x the `messageLabelFont` size.
 You must now set this font explicitly through the `emojiMessageSizeCalculator` on `MessagesCollectionViewFlowLayout`.
 [#530](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/sd10).
@@ -92,7 +308,13 @@ You must now set this font explicitly through the `emojiMessageSizeCalculator` o
 - The result of the `MessagesDisplayDelegate` method `textColor(for message:...)` no longer applies to `.attributedText` case of `MessageData`.
 [#625](https://github.com/MessageKit/MessageKit/pull/625) by [@cwalo](https://github.com/cwalo).
 
+- Removed the explicit height constraint from the `separatorLine` in `MessageInputBar`.
+[#667](https://github.com/MessageKit/MessageKit/pull/667) by [@zhongwuzw](https://github.com/zhongwuzw)
+
 ### Removed
+
+- **Breaking Change** Removed `NSLayoutConstraintSet` by changing access control from `public` to `internal`.
+[#607](https://github.com/MessageKit/MessageKit/pull/607) by [@zhongwuzw](https://github.com/zhongwuzw).
 
 - **Breaking Change** Removed the `showsDateHeaderAfterTimeInterval` property of `MessagesCollectionView`.
 [#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
@@ -114,10 +336,20 @@ You must now set this font explicitly through the `emojiMessageSizeCalculator` o
 You can now set this property through `textMessageSizeCalculator` property.
 [#579](https://github.com/MessageKit/MessageKit/pull/579) by [@SD10](https://github.com/sd10).
 
+- **Breaking Change** Removed `MessageDateHeaderView` class in favor of using `cellTopLabel`.
+[#659](https://github.com/MessageKit/MessageKit/pull/659) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 ### Fixed
 
 - Fixed equality checking on `MessagesCollectionViewLayoutAttributes`.
 [#593](https://github.com/MessageKit/MessageKit/pull/593) by [@zhongwuzw](https://github.com/zhongwuzw), [@SD10](https://github.com/sd10)
+
+## [[Prerelease] 0.13.5](https://github.com/MessageKit/MessageKit/releases/tag/0.13.5)
+
+### Fixed
+
+- Fixed `MessageLabel` touch location offset calculation.
+[#664](https://github.com/MessageKit/MessageKit/pull/664) by [@austinwright](https://github.com/austinwright).
 
 ## [[Prerelease] 0.13.4](https://github.com/MessageKit/MessageKit/releases/tag/0.13.4)
 

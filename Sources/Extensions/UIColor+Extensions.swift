@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,94 @@
 
 import Foundation
 
-extension UIColor {
+internal extension UIColor {
 
-    internal static let incomingGray = UIColor(red: 230/255, green: 230/255, blue: 235/255, alpha: 1.0)
+    static var incomingGray: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor.systemGray5
+        } else {
+            return UIColor(red: 230/255, green: 230/255, blue: 235/255, alpha: 1.0)
+        }
+    }
 
-    internal static let outgoingGreen = UIColor(red: 69/255, green: 214/255, blue: 93/255, alpha: 1.0)
+    static var outgoingGreen: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor.systemGreen
+        } else {
+            return UIColor(red: 69/255, green: 214/255, blue: 93/255, alpha: 1.0)
+        }
+    }
 
-    internal static let inputBarGray = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
+    static var inputBarGray: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor.systemGray2
+        } else {
+            return UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
+        }
+    }
 
-    internal static let playButtonLightGray = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1.0)
+    static var playButtonLightGray: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor.systemGray6
+        } else {
+            return UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1.0)
+        }
+    }
 
-    internal static let sendButtonBlue = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+    static var sendButtonBlue: UIColor {
+        if #available(iOS 13, *) {
+            return UIColor.systemBlue
+        } else {
+            return UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+        }
+    }
 
+    static var backgroundColor: UIColor {
+        if #available(iOS 13, *) {
+            return systemBackground
+        } else {
+            return white
+        }
+    }
+
+    static var labelColor: UIColor {
+        if #available(iOS 13, *) {
+            return label
+        } else {
+            return black
+        }
+    }
+
+    static var placeholderTextColor: UIColor {
+        if #available(iOS 13, *) {
+            return placeholderText
+        } else {
+            return .darkGray
+        }
+    }
+
+    static var grayColor: UIColor {
+        if #available(iOS 13, *) {
+            return .systemGray
+        } else {
+            return gray
+        }
+    }
+
+    static var darkTextColor: UIColor {
+        if #available(iOS 13, *) {
+            return .systemGray
+        } else {
+            return darkText
+        }
+    }
+
+    static var lightGrayColor: UIColor {
+        if #available(iOS 13, *) {
+            return .systemGray5
+        } else {
+            return .lightGray
+        }
+    }
 }
+

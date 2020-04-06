@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2018 MessageKit
+ Copyright (c) 2017-2019 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 
 import Quick
 import Nimble
+import InputBarAccessoryView
 @testable import MessageKit
 
 //swiftlint:disable function_body_length
@@ -40,7 +41,7 @@ final class MessagesViewControllerSpec: QuickSpec {
         describe("default property values") {
             context("after initialization") {
                 it("sets scrollsToBottomOnKeyboardBeginsEditing to false") {
-                    expect(controller.scrollsToBottomOnKeybordBeginsEditing).to(beFalse())
+                    expect(controller.scrollsToBottomOnKeyboardBeginsEditing).to(beFalse())
                 }
                 it("sets canBecomeFirstResponder to true") {
                     expect(controller.canBecomeFirstResponder).to(beTrue())
@@ -50,28 +51,27 @@ final class MessagesViewControllerSpec: QuickSpec {
                 }
                 it("sets inputAccessoryView to the messageInputBar") {
                     expect(controller.inputAccessoryView).toNot(beNil())
-                    expect(controller.inputAccessoryView is MessageInputBar).to(beTrue())
                 }
                 it("has a MessagesCollectionView") {
                     expect(controller.messagesCollectionView).toNot(beNil())
+                }
+                it("sets the CollectionView's layout to be an instance of MessagesCollectionViewFlowLayout") {
+                    expect(controller.messagesCollectionView.collectionViewLayout).to(beAnInstanceOf(MessagesCollectionViewFlowLayout.self))
                 }
             }
             context("after viewDidLoad") {
                 beforeEach {
                     controller.view.layoutIfNeeded()
                 }
-                it("sets automaticallyAdjustsScrollViewInsets to false") {
-                    expect(controller.automaticallyAdjustsScrollViewInsets).to(beFalse())
-                }
                 it("sets extendedLayoutIncludesOpaqueBars to true") {
                     expect(controller.extendedLayoutIncludesOpaqueBars).to(beTrue())
                 }
                 it("sets the background color to be white") {
-                    expect(controller.view.backgroundColor).to(be(UIColor.white))
+                    expect(controller.view.backgroundColor).to(be(UIColor.backgroundColor))
                 }
                 it("sets keyboardDismissMode to .interactive") {
                     let dismissMode = controller.messagesCollectionView.keyboardDismissMode
-                    expect(dismissMode).to(equal(UIScrollViewKeyboardDismissMode.interactive))
+                    expect(dismissMode).to(equal(UIScrollView.KeyboardDismissMode.interactive))
                 }
                 it("sets alwaysBounceVertical to true") {
                     expect(controller.messagesCollectionView.alwaysBounceVertical).to(beTrue())
@@ -124,12 +124,12 @@ final class MessagesViewControllerSpec: QuickSpec {
         }
 
         describe("scrolling behavior when keyboard begins editing") {
-            context("scrollsToBottomOnKeybordBeginsEditing is true") {
+            context("scrollsToBottomOnKeyboardBeginsEditing is true") {
                 it("should scroll to bottom") {
 
                 }
             }
-            context("scrollsToBottomOnKeybordBeginsEditing is false") {
+            context("scrollsToBottomOnKeyboardBeginsEditing is false") {
                 it("should not scroll to bottom") {
 
                 }
