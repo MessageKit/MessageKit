@@ -1,4 +1,4 @@
-name: PR Danger
+name: PR Danger Swift
 
 on:
   pull_request:
@@ -13,16 +13,16 @@ jobs:
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
-    - name: Cache Gems
-      uses: actions/cache@v1
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-danger-${{ env.cache-name }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-danger-${{ env.cache-name }}-gems-
-          ${{ runner.os }}-danger-${{ env.cache-name }}-
-          ${{ runner.os }}-danger-
-    - name: Run build script
-      run: gem install bundler && bundle install && bundle exec danger --fail-on-errors=true
+#    - name: Cache Gems
+#      uses: actions/cache@v1
+#      with:
+#        path: vendor/bundle
+#        key: ${{ runner.os }}-danger-${{ env.cache-name }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+#        restore-keys: |
+#          ${{ runner.os }}-danger-${{ env.cache-name }}-gems-
+#          ${{ runner.os }}-danger-${{ env.cache-name }}-
+#          ${{ runner.os }}-danger-
+    - name: Danger Swift
+      uses: danger/swift@2.0.3
       env:
         DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
