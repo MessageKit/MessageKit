@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - master
+      - development
 
 jobs:
   danger:
@@ -24,4 +25,4 @@ jobs:
     - name: Run build script
       run: gem install bundler && bundle install && bundle exec danger --fail-on-errors=true
       env:
-        DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DANGER_GITHUB_API_TOKEN: ${{ secrets.MESSAGEKIT_DANGER_GITHUB_API_TOKEN }}
