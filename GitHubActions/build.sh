@@ -38,7 +38,7 @@ if [ "$MODE" = "danger" -o "$MODE" = "all" ]; then
   cd Example
   gem install bundler
   bundle check || bundle install
-  bundle exec pod update SwiftLint
+  bundle exec pod update
   success="1"
 fi
 
