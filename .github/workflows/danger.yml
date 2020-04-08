@@ -13,12 +13,6 @@ jobs:
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
-    - name: Setup Ruby
-      uses: actions/setup-ruby@v1
-      with:
-        ruby-version: '2.6'
-    - name: Prepare Danger
-      run: ./GitHubActions/build.sh danger
 #    - name: Cache Gems
 #      uses: actions/cache@v1
 #      with:

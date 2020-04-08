@@ -33,12 +33,6 @@ trap trap_handler INT TERM EXIT
 
 MODE="$1"
 
-if [ "$MODE" = "danger" -o "$MODE" = "all" ]; then
-  echo "Running danger"
-  brew install SwiftLint
-  success="1"
-fi
-
 if [ "$MODE" = "tests" -o "$MODE" = "all" ]; then
   echo "Running MessageKit tests."
   carthage bootstrap --platform ios
