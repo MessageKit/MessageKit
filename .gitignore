@@ -29,8 +29,7 @@ xcuserdata
 *.ipa
 
 # CocoaPods
-Example/Pods/*
-!Example/Pods/SwiftLint
+Pods
 
 # Carthage
 Carthage
