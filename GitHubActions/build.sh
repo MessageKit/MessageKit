@@ -35,10 +35,7 @@ MODE="$1"
 
 if [ "$MODE" = "danger" -o "$MODE" = "all" ]; then
   echo "Running danger"
-  cd Example
-  gem install bundler
-  bundle check || bundle install
-  bundle exec pod update
+  brew install SwiftLint
   success="1"
 fi
 

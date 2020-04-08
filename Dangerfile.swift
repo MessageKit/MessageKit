@@ -51,7 +51,7 @@ if danger.git.createdFiles.count + danger.git.modifiedFiles.count - danger.git.d
     warn("Big Pull Request - Please consider splitting up your changes into smaller Pull Requests.")
 }
 
-SwiftLint.lint(.modifiedAndCreatedFiles(directory: "Sources"), inline: true, swiftlintPath: "Example/Pods/SwiftLint/swiftlint")
+SwiftLint.lint(.modifiedAndCreatedFiles(directory: "Sources"), inline: true)
 
 //swiftlint.config_file = '.swiftlint.yml'
 //swiftlint.binary_path = 'Example/Pods/SwiftLint/swiftlint'
