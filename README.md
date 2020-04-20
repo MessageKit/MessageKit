@@ -152,6 +152,7 @@ Interested in contributing to MessageKit? Click here to join our [Slack](https:/
 
 Add your app to the list of apps using this library and make a pull request.
 
+- [Ring4](https://www.ring4.com)
 - [Formacar](https://itunes.apple.com/ru/app/id1180117334)
 - [HopUp](https://itunes.apple.com/us/app/hopup-airsoft-community/id1128903141?mt=8)
 - [MediQuo](https://www.mediquo.com)
