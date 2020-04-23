@@ -36,9 +36,7 @@ final class NavigationController: UINavigationController {
         navigationBar.tintColor = .white
         navigationBar.barTintColor = .primaryColor
         navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-        if #available(iOS 11.0, *) {
-            navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-        }
+        navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         navigationBar.shadowImage = UIImage()
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         view.backgroundColor = .primaryColor
@@ -50,17 +48,13 @@ final class NavigationController: UINavigationController {
             navigationBar.barTintColor = .primaryColor
             navigationBar.tintColor = .white
             navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-            if #available(iOS 11.0, *) {
-                navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-            }
+            navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         } else if style == .lightContent {
             navigationBar.shadowImage = nil
             navigationBar.barTintColor = .white
             navigationBar.tintColor = UIColor(red: 0, green: 0.5, blue: 1, alpha: 1)
             navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
-            if #available(iOS 11.0, *) {
-                navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
-            }
+            navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
         }
     }
 
