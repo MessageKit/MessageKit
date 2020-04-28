@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "InputBarAccessoryView",
+        "repositoryURL": "https://github.com/classdojo/InputBarAccessoryView",
+        "state": {
+          "branch": "dropRxSPM",
+          "revision": "cbc9ed734fbce8a7f65e40ec00516d8723827bfe",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
