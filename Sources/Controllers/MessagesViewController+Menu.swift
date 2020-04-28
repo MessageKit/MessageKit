@@ -23,6 +23,7 @@
  */
 
 import Foundation
+import UIKit
 
 internal extension MessagesViewController {
 

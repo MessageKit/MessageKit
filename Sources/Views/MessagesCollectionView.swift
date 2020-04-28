@@ -22,6 +22,7 @@
  SOFTWARE.
  */
 
+import Foundation
 import UIKit
 
 open class MessagesCollectionView: UICollectionView {

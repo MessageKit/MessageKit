@@ -23,6 +23,7 @@
  */
 
 import Foundation
+import UIKit
 import InputBarAccessoryView
 
 internal extension MessagesViewController {
