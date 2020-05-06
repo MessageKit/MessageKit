@@ -65,9 +65,6 @@ internal extension UIColor {
             return UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
         }
     }
-}
-
-internal extension UIColor {
 
     static var backgroundColor: UIColor {
         if #available(iOS 13, *) {
