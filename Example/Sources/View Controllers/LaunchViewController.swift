@@ -74,29 +74,29 @@ final internal class LaunchViewController: UITableViewController {
         let cell = cells[indexPath.row]
         switch cell {
         case "Basic Example":
-            let vc = BasicExampleViewController()
-            let detailVC = NavigationController(rootViewController: vc)
-            splitViewController?.showDetailViewController(detailVC, sender: self)
+            let viewController = BasicExampleViewController()
+            let detailViewController = NavigationController(rootViewController: viewController)
+            splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Advanced Example":
-            let vc = AdvancedExampleViewController()
-            let detailVC = NavigationController(rootViewController: vc)
-            splitViewController?.showDetailViewController(detailVC, sender: self)
+            let viewController = AdvancedExampleViewController()
+            let detailViewController = NavigationController(rootViewController: viewController)
+            splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Autocomplete Example":
-            let vc = AutocompleteExampleViewController()
-            let detailVC = NavigationController(rootViewController: vc)
-            splitViewController?.showDetailViewController(detailVC, sender: self)
+            let viewController = AutocompleteExampleViewController()
+            let detailViewController = NavigationController(rootViewController: viewController)
+            splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Embedded Example":
-            let vc = MessageContainerController()
-            let detailVC = NavigationController(rootViewController: vc)
-            splitViewController?.showDetailViewController(detailVC, sender: self)
+            let viewController = MessageContainerController()
+            let detailViewController = NavigationController(rootViewController: viewController)
+            splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Settings":
-            let vc = SettingsViewController()
-            let detailVC = NavigationController(rootViewController: vc)
-            splitViewController?.showDetailViewController(detailVC, sender: self)
+            let viewController = SettingsViewController()
+            let detailViewController = NavigationController(rootViewController: viewController)
+            splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Subview Example":
-            let vc = MessageSubviewContainerViewController()
-            let detailVC = NavigationController(rootViewController: vc)
-            splitViewController?.showDetailViewController(detailVC, sender: self)
+            let viewController = MessageSubviewContainerViewController()
+            let detailViewController = NavigationController(rootViewController: viewController)
+            splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Source Code":
             guard let url = URL(string: "https://github.com/MessageKit/MessageKit") else { return }
             openURL(url)
