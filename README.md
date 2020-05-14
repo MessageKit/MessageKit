@@ -58,7 +58,7 @@ To integrate MessageKit using Carthage, add the following to your `Cartfile`:
 github "MessageKit/MessageKit"
 ````
 
-### [Manual]([https://github.com/MessageKit/MessageKit/blob/master/Documentation/MANUAL_INSTALLATION.md)
+### [Manual](https://github.com/MessageKit/MessageKit/blob/master/Documentation/MANUAL_INSTALLATION.md)
 
 ## Requirements
 
