@@ -27,7 +27,7 @@ import MapKit
 import MessageKit
 import PINRemoteImage
 
-final class BasicExampleViewController: ChatViewController {
+class BasicExampleViewController: ChatViewController {
     override func configureMessageCollectionView() {
         super.configureMessageCollectionView()
         messagesCollectionView.messagesLayoutDelegate = self

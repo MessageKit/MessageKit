@@ -32,7 +32,7 @@ final internal class LaunchViewController: UITableViewController {
         return .lightContent
     }
 
-    let cells = ["Basic Example", "Advanced Example", "Autocomplete Example", "Embedded Example", "Settings", "Source Code", "Contributors"]
+    let cells = ["Basic Example", "Advanced Example", "Autocomplete Example", "Embedded Example", "Subview Example", "Settings", "Source Code", "Contributors"]
     
     // MARK: - View Life Cycle
     
@@ -69,19 +69,34 @@ final internal class LaunchViewController: UITableViewController {
     
     // MARK: - UITableViewDelegate
     
+    // swiftlint:disable cyclomatic_complexity
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = cells[indexPath.row]
         switch cell {
         case "Basic Example":
-            navigationController?.pushViewController(BasicExampleViewController(), animated: true)
+            let viewController = BasicExampleViewController()
+            let detailViewController = NavigationController(rootViewController: viewController)
+            splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Advanced Example":
-            navigationController?.pushViewController(AdvancedExampleViewController(), animated: true)
+            let viewController = AdvancedExampleViewController()
+            let detailViewController = NavigationController(rootViewController: viewController)
+            splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Autocomplete Example":
-            navigationController?.pushViewController(AutocompleteExampleViewController(), animated: true)
+            let viewController = AutocompleteExampleViewController()
+            let detailViewController = NavigationController(rootViewController: viewController)
+            splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Embedded Example":
-            navigationController?.pushViewController(MessageContainerController(), animated: true)
+            let viewController = MessageContainerController()
+            let detailViewController = NavigationController(rootViewController: viewController)
+            splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Settings":
-            navigationController?.pushViewController(SettingsViewController(), animated: true)
+            let viewController = SettingsViewController()
+            let detailViewController = NavigationController(rootViewController: viewController)
+            splitViewController?.showDetailViewController(detailViewController, sender: self)
+        case "Subview Example":
+            let viewController = MessageSubviewContainerViewController()
+            let detailViewController = NavigationController(rootViewController: viewController)
+            splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Source Code":
             guard let url = URL(string: "https://github.com/MessageKit/MessageKit") else { return }
             openURL(url)
@@ -97,6 +112,6 @@ final internal class LaunchViewController: UITableViewController {
     func openURL(_ url: URL) {
         let webViewController = SFSafariViewController(url: url)
         webViewController.preferredControlTintColor = .primaryColor
-        present(webViewController, animated: true, completion: nil)
+        splitViewController?.showDetailViewController(webViewController, sender: self)
     }
 }
