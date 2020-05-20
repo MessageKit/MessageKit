@@ -9,7 +9,11 @@ assignees: ''
 
 <!--
 🛑 Read this 🛑
-Before you open an issue. Please check the quick start guide, the FAQ, and the example project to see if your question is answered there (links in the README). Please also search through previous issues to see if your question was previously answered. 
+Before you open an issue. Please check the following to see if your question is answered there: 
+  - The quick start guide: https://github.com/MessageKit/MessageKit/blob/master/Documentation/QuickStart.md 
+  - The FAQ: https://github.com/MessageKit/MessageKit/blob/master/Documentation/FAQs.md 
+  - The example project: https://github.com/MessageKit/MessageKit/tree/master/Example 
+Please also search through previous issues to see if your question was previously addressed. 
 Also consider posting(/crossposting) your question to StackOverflow (with the tag 'messagekit').
 
 ⚠️ If you need to include code, please wrap it in backticks so it will get Swift highlighting like this:
