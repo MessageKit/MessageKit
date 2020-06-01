@@ -31,12 +31,12 @@ extension UserDefaults {
     // MARK: - Mock Messages
     
     func setMockMessages(count: Int) {
-        set(count, forKey: "mockMessages")
+        set(count, forKey: messagesKey)
         synchronize()
     }
     
     func mockMessagesCount() -> Int {
-        if let value = object(forKey: "mockMessages") as? Int {
+        if let value = object(forKey: messagesKey) as? Int {
             return value
         }
         return 20
