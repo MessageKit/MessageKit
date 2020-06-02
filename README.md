@@ -4,9 +4,9 @@
   A community-driven replacement for JSQMessagesViewController https://messagekit.github.io
 </p>
 
-[![tests](https://github.com/MessageKit/MessageKit/workflows/PR%20Tests/badge.svg)](https://github.com/MessageKit/MessageKit/workflows/PR%20Tests/badge.svg)
-[![framework](https://github.com/MessageKit/MessageKit/workflows/PR%20Framework/badge.svg)](https://github.com/MessageKit/MessageKit/workflows/PR%20Framework/badge.svg)
-[![example](https://github.com/MessageKit/MessageKit/workflows/PR%20Example%20app/badge.svg)](https://github.com/MessageKit/MessageKit/workflows/PR%20Example%20app/badge.svg)
+[![tests](https://github.com/MessageKit/MessageKit/workflows/PR%20Tests/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22PR+Tests%22)
+[![framework](https://github.com/MessageKit/MessageKit/workflows/PR%20Framework/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22PR+Framework%22)
+[![example](https://github.com/MessageKit/MessageKit/workflows/PR%20Example%20app/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22PR+Example+app%22)
 [![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 <a href="https://swift.org">
