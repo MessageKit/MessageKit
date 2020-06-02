@@ -28,7 +28,7 @@ extension UserDefaults {
     
     static let messagesKey = "mockMessages"
     
-    // MARK: - Mock Messages
+    // MARK: Mock Messages
     
     func setMockMessages(count: Int) {
         set(count, forKey: UserDefaults.messagesKey)
