@@ -1,4 +1,4 @@
-name: PR Framework
+name: Build Framework
 
 on: pull_request
 
