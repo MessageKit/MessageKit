@@ -9,6 +9,8 @@ jobs:
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Cache Gems
       uses: actions/cache@v1
       with:
