@@ -230,7 +230,7 @@ public extension MessagesDisplayDelegate {
             return .clear
         default:
             guard let dataSource = messagesCollectionView.messagesDataSource else { return .backgroundColor }
-            return dataSource.isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
+            return dataSource.isFromCurrentSender(message: message) ? .outgoingMessageBackground : .incomingMessageBackground
         }
     }
     
@@ -254,7 +254,7 @@ public extension MessagesDisplayDelegate {
         guard let dataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
-        return dataSource.isFromCurrentSender(message: message) ? .backgroundColor : .labelColor
+        return dataSource.isFromCurrentSender(message: message) ? .outgoingMessageLabel : .incomingMessageLabel
     }
 
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
