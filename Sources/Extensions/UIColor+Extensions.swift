@@ -45,15 +45,7 @@ internal extension UIColor {
     
     static var outgoingAudioMessageTint: UIColor { colorFromAssetBundle(named: "outgoingAudioMessageTint") }
 
-    static var collectionViewBackground: UIColor { colorFromAssetBundle(named: "collectionViewBackground") }    
-
-    static var placeholderTextColor: UIColor {
-        if #available(iOS 13, *) {
-            return placeholderText
-        } else {
-            return .darkGray
-        }
-    }
+    static var collectionViewBackground: UIColor { colorFromAssetBundle(named: "collectionViewBackground") }
 
     static var grayColor: UIColor {
         if #available(iOS 13, *) {
