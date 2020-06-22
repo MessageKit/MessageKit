@@ -48,12 +48,6 @@ internal extension UIColor {
     static var collectionViewBackground: UIColor { colorFromAssetBundle(named: "collectionViewBackground") }
 
     static var typingIndicatorDot: UIColor { colorFromAssetBundle(named: "typingIndicatorDot") }
-    static var lightGrayColor: UIColor {
-        if #available(iOS 13, *) {
-            return .systemGray5
-        } else {
-            return .lightGray
-        }
-    }
+
 }
 
