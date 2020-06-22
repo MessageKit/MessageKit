@@ -45,13 +45,7 @@ internal extension UIColor {
     
     static var outgoingAudioMessageTint: UIColor { colorFromAssetBundle(named: "outgoingAudioMessageTint") }
 
-    static var backgroundColor: UIColor {
-        if #available(iOS 13, *) {
-            return systemBackground
-        } else {
-            return white
-        }
-    }
+    static var collectionViewBackground: UIColor { colorFromAssetBundle(named: "collectionViewBackground") }
 
     static var labelColor: UIColor {
         if #available(iOS 13, *) {
