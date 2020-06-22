@@ -41,14 +41,6 @@ internal extension UIColor {
     
     static var outgoingMessageLabel: UIColor { colorFromAssetBundle(named: "outgoingMessageLabel") }
 
-    static var playButtonLightGray: UIColor {
-        if #available(iOS 13, *) {
-            return UIColor.systemGray6
-        } else {
-            return UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1.0)
-        }
-    }
-
     static var sendButtonBlue: UIColor {
         if #available(iOS 13, *) {
             return UIColor.systemBlue
