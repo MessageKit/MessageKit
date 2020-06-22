@@ -19,6 +19,36 @@
         "reference" : "systemGray5Color"
       },
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "contrast",
+          "value" : "high"
+        }
+      ],
+      "color" : {
+        "platform" : "ios",
+        "reference" : "systemGray5Color"
+      },
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        },
+        {
+          "appearance" : "contrast",
+          "value" : "high"
+        }
+      ],
+      "color" : {
+        "platform" : "ios",
+        "reference" : "systemGray5Color"
+      },
+      "idiom" : "universal"
     }
   ],
   "info" : {
