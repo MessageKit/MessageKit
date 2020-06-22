@@ -40,14 +40,10 @@ internal extension UIColor {
     static var incomingMessageLabel: UIColor { colorFromAssetBundle(named: "incomingMessageLabel") }
     
     static var outgoingMessageLabel: UIColor { colorFromAssetBundle(named: "outgoingMessageLabel") }
-
-    static var sendButtonBlue: UIColor {
-        if #available(iOS 13, *) {
-            return UIColor.systemBlue
-        } else {
-            return UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
-        }
-    }
+    
+    static var incomingAudioMessageTint: UIColor { colorFromAssetBundle(named: "incomingAudioMessageTint") }
+    
+    static var outgoingAudioMessageTint: UIColor { colorFromAssetBundle(named: "outgoingAudioMessageTint") }
 
     static var backgroundColor: UIColor {
         if #available(iOS 13, *) {
