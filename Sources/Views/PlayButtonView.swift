@@ -117,7 +117,7 @@ open class PlayButtonView: UIView {
     }
 
     private func updateTriangleConstraints() {
-        triangleCenterXConstraint?.constant = frame.width/8
+        triangleCenterXConstraint?.constant = triangleView.frame.width / 8
     }
 
     private func applyTriangleMask() {
