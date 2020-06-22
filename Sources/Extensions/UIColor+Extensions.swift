@@ -50,4 +50,3 @@ internal extension UIColor {
     static var typingIndicatorDot: UIColor { colorFromAssetBundle(named: "typingIndicatorDot") }
 
 }
-

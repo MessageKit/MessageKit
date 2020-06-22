@@ -22,7 +22,7 @@
  SOFTWARE.
  */
 
-struct MessageKitError {
+internal struct MessageKitError {
     static let avatarPositionUnresolved = "AvatarPosition Horizontal.natural needs to be resolved."
     static let nilMessagesDataSource = "MessagesDataSource has not been set."
     static let nilMessagesDisplayDelegate = "MessagesDisplayDelegate has not been set."
