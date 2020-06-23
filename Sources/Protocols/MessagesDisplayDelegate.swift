@@ -230,7 +230,7 @@ public extension MessagesDisplayDelegate {
             return .clear
         default:
             guard let dataSource = messagesCollectionView.messagesDataSource else {
-                fatalError(MessageKitError.nilMessagesDataSource)
+                return .white
             }
             return dataSource.isFromCurrentSender(message: message) ? .outgoingMessageBackground : .incomingMessageBackground
         }
