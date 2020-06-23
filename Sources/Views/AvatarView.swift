@@ -161,7 +161,7 @@ open class AvatarView: UIImageView {
     // MARK: - Internal methods
 
     internal func prepareView() {
-        backgroundColor = .grayColor
+        backgroundColor = .avatarViewBackground
         contentMode = .scaleAspectFill
         layer.masksToBounds = true
         clipsToBounds = true

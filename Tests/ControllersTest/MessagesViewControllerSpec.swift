@@ -67,7 +67,7 @@ final class MessagesViewControllerSpec: QuickSpec {
                     expect(controller.extendedLayoutIncludesOpaqueBars).to(beTrue())
                 }
                 it("sets the background color to be white") {
-                    expect(controller.view.backgroundColor).to(be(UIColor.backgroundColor))
+                    expect(controller.view.backgroundColor == UIColor.collectionViewBackground).to(be(true))
                 }
                 it("sets keyboardDismissMode to .interactive") {
                     let dismissMode = controller.messagesCollectionView.keyboardDismissMode
