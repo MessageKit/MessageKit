@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		0EE91E661FDEC888005420A2 /* CGRect+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE91E651FDEC887005420A2 /* CGRect+Extensions.swift */; };
 		0EF0888C206F7E83007F2F58 /* CellSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF0888B206F7E83007F2F58 /* CellSizeCalculator.swift */; };
+		1CE43E5A24A19FA5005AD21C /* MessageKitAssets.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B0C8D99A1F73076B000A86E4 /* MessageKitAssets.bundle */; };
+		1CE43EAF24A1C01E005AD21C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CE43EAE24A1C01B005AD21C /* Assets.xcassets */; };
+		1CE43EB024A1C01F005AD21C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CE43EAE24A1C01B005AD21C /* Assets.xcassets */; };
 		1F066E131FD90BB600E11013 /* MessagesViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7FC8CB1FD2700B006CC979 /* MessagesViewControllerSpec.swift */; };
 		1F066E141FD90BB700E11013 /* MessageLabelSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E101FD90A0600E11013 /* MessageLabelSpec.swift */; };
 		1F066E1D1FDA3C1700E11013 /* SenderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F066E1C1FDA3C1700E11013 /* SenderSpec.swift */; };
@@ -124,6 +127,7 @@
 /* Begin PBXFileReference section */
 		0EE91E651FDEC887005420A2 /* CGRect+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+Extensions.swift"; sourceTree = "<group>"; };
 		0EF0888B206F7E83007F2F58 /* CellSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellSizeCalculator.swift; sourceTree = "<group>"; };
+		1CE43EAE24A1C01B005AD21C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F066E101FD90A0600E11013 /* MessageLabelSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageLabelSpec.swift; sourceTree = "<group>"; };
 		1F066E1C1FDA3C1700E11013 /* SenderSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderSpec.swift; sourceTree = "<group>"; };
 		1F066E201FDA3DEA00E11013 /* AvatarSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarSpec.swift; sourceTree = "<group>"; };
@@ -390,6 +394,7 @@
 		B01E2DCC1F5BA34700E4FA1C /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1CE43EAE24A1C01B005AD21C /* Assets.xcassets */,
 				B0C8D99A1F73076B000A86E4 /* MessageKitAssets.bundle */,
 			);
 			name = Assets;
@@ -599,6 +604,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CE43EAF24A1C01E005AD21C /* Assets.xcassets in Resources */,
 				B0C8D99B1F73076B000A86E4 /* MessageKitAssets.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -608,6 +614,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5073C1232175C1980040EAD5 /* sound1.m4a in Resources */,
+				1CE43EB024A1C01F005AD21C /* Assets.xcassets in Resources */,
+				1CE43E5A24A19FA5005AD21C /* MessageKitAssets.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

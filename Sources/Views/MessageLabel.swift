@@ -126,9 +126,9 @@ open class MessageLabel: UILabel {
 
     public static var defaultAttributes: [NSAttributedString.Key: Any] = {
         return [
-            NSAttributedString.Key.foregroundColor: UIColor.darkTextColor,
+            NSAttributedString.Key.foregroundColor: UIColor.darkText,
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-            NSAttributedString.Key.underlineColor: UIColor.darkTextColor
+            NSAttributedString.Key.underlineColor: UIColor.darkText
         ]
     }()
 

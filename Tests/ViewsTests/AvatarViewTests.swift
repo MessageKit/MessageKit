@@ -44,7 +44,7 @@ class AvatarViewTests: XCTestCase {
         XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
         // For certain dynamic colors, need to compare cgColor in XCTest
         // https://stackoverflow.com/questions/58065340/how-to-compare-two-uidynamicprovidercolor
-        XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.grayColor.cgColor)
+        XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.avatarViewBackground.cgColor)
     }
 
     func testWithImage() {
@@ -52,7 +52,7 @@ class AvatarViewTests: XCTestCase {
         avatarView.set(avatar: avatar)
         XCTAssertEqual(avatar.initials, "?")
         XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
-        XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.grayColor.cgColor)
+        XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.avatarViewBackground.cgColor)
     }
 
     func testInitialsOnly() {
@@ -61,11 +61,11 @@ class AvatarViewTests: XCTestCase {
         XCTAssertEqual(avatarView.initials, avatar.initials)
         XCTAssertEqual(avatar.initials, "DL")
         XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
-        XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.grayColor.cgColor)
+        XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.avatarViewBackground.cgColor)
     }
 
     func testSetBackground() {
-        XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.grayColor.cgColor)
+        XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.avatarViewBackground.cgColor)
         avatarView.backgroundColor = UIColor.red
         XCTAssertEqual(avatarView.backgroundColor!, UIColor.red)
     }
