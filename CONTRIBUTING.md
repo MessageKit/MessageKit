@@ -67,7 +67,7 @@ Writing clean code and upholding project standards is as important as adding new
 If any of the sections above are unclear and require further explanation, *do not hesitate to reach out*.
 MessageKit strives to build an inclusive open source community and to make contributing as easy as possible for members of all experience levels.
 
-**You can get in touch with the MessageKit core team directly by joining our open Slack community channel: [here](https://join.slack.com/t/messagekit/shared_invite/MjI0NDkxNjgwMzA3LTE1MDIzMTU0MjUtMzJhZDZlNTkxMA).**
+**You can get in touch with the MessageKit core team directly by joining our open Slack community channel: [here](https://join.slack.com/t/messagekit/shared_invite/MjI4NzIzNzMyMzU0LTE1MDMwODIzMDUtYzllYzIyNTU4MA).**
 
 ----
 
