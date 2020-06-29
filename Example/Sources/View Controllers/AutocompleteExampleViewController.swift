@@ -9,6 +9,7 @@
 import UIKit
 import MessageKit
 import InputBarAccessoryView
+import PINRemoteImage
 
 final class AutocompleteExampleViewController: ChatViewController {
 
@@ -335,6 +336,14 @@ extension AutocompleteExampleViewController: MessagesDisplayDelegate {
         button.isUserInteractionEnabled = false // respond to accessoryView tap through `MessageCellDelegate`
         accessoryView.layer.cornerRadius = accessoryView.frame.height / 2
         accessoryView.backgroundColor = UIColor.primaryColor.withAlphaComponent(0.3)
+    }
+    
+    func configureMediaMessageImageView(_ imageView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        if case MessageKind.photo(let media) = message.kind, let imageURL = media.url {
+            imageView.pin_setImage(from: imageURL)
+        } else {
+            imageView.pin_cancelImageDownload()
+        }
     }
 }
 

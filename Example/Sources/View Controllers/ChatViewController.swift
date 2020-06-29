@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2017-2019 MessageKit
+Copyright (c) 2017-2020 MessageKit
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,24 +28,30 @@ import InputBarAccessoryView
 
 /// A base class for the example controllers
 class ChatViewController: MessagesViewController, MessagesDataSource {
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    /// The `BasicAudioController` controll the AVAudioPlayer state (play, pause, stop) and udpate audio cell UI accordingly.
-    open lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
 
-    var messageList: [MockMessage] = []
+    // MARK: - Public properties
+
+    /// The `BasicAudioController` controll the AVAudioPlayer state (play, pause, stop) and udpate audio cell UI accordingly.
+    lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
+
+    lazy var messageList: [MockMessage] = []
     
-    let refreshControl = UIRefreshControl()
-    
-    let formatter: DateFormatter = {
+    private(set) lazy var refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
+        return control
+    }()
+
+    // MARK: - Private properties
+
+    private let formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         return formatter
     }()
-    
+
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -69,6 +75,10 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         MockSocket.shared.disconnect()
         audioController.stopAnyOngoingPlaying()
     }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     func loadFirstMessages() {
         DispatchQueue.global(qos: .userInitiated).async {
@@ -83,8 +93,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         }
     }
     
-    @objc
-    func loadMoreMessages() {
+    @objc func loadMoreMessages() {
         DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
             SampleData.shared.getMessages(count: 20) { messages in
                 DispatchQueue.main.async {
@@ -104,8 +113,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         scrollsToBottomOnKeyboardBeginsEditing = true // default false
         maintainPositionOnKeyboardFrameChanged = true // default false
         
-        messagesCollectionView.addSubview(refreshControl)
-        refreshControl.addTarget(self, action: #selector(loadMoreMessages), for: .valueChanged)
+        messagesCollectionView.refreshControl = refreshControl
     }
     
     func configureMessageInputBar() {
@@ -143,50 +151,46 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         
         return messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)
     }
-    
+
     // MARK: - MessagesDataSource
-    
+
     func currentSender() -> SenderType {
         return SampleData.shared.currentSender
     }
-    
+
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
         return messageList.count
     }
-    
+
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
         return messageList[indexPath.section]
     }
-    
+
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         if indexPath.section % 3 == 0 {
             return NSAttributedString(string: MessageKitDateFormatter.shared.string(from: message.sentDate), attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         }
         return nil
     }
-    
+
     func cellBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        
         return NSAttributedString(string: "Read", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
     }
-    
+
     func messageTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let name = message.sender.displayName
         return NSAttributedString(string: name, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
     }
-    
+
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        
         let dateString = formatter.string(from: message.sentDate)
         return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
-    
 }
 
 // MARK: - MessageCellDelegate
 
 extension ChatViewController: MessageCellDelegate {
-    
     func didTapAvatar(in cell: MessageCollectionViewCell) {
         print("Avatar tapped")
     }
@@ -261,7 +265,6 @@ extension ChatViewController: MessageCellDelegate {
 // MARK: - MessageLabelDelegate
 
 extension ChatViewController: MessageLabelDelegate {
-    
     func didSelectAddress(_ addressComponents: [String: String]) {
         print("Address Selected: \(addressComponents)")
     }
@@ -293,17 +296,20 @@ extension ChatViewController: MessageLabelDelegate {
     func didSelectCustom(_ pattern: String, match: String?) {
         print("Custom data detector patter selected: \(pattern)")
     }
-
 }
 
 // MARK: - MessageInputBarDelegate
 
 extension ChatViewController: InputBarAccessoryViewDelegate {
 
+    @objc
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+        processInputBar(messageInputBar)
+    }
 
+    func processInputBar(_ inputBar: InputBarAccessoryView) {
         // Here we can parse for which substrings were autocompleted
-        let attributedText = messageInputBar.inputTextView.attributedText!
+        let attributedText = inputBar.inputTextView.attributedText!
         let range = NSRange(location: 0, length: attributedText.length)
         attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { (_, range, _) in
 
@@ -313,18 +319,19 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         }
 
         let components = inputBar.inputTextView.components
-        messageInputBar.inputTextView.text = String()
-        messageInputBar.invalidatePlugins()
-
+        inputBar.inputTextView.text = String()
+        inputBar.invalidatePlugins()
         // Send button activity animation
-        messageInputBar.sendButton.startAnimating()
-        messageInputBar.inputTextView.placeholder = "Sending..."
+        inputBar.sendButton.startAnimating()
+        inputBar.inputTextView.placeholder = "Sending..."
+        // Resign first responder for iPad split view
+        inputBar.inputTextView.resignFirstResponder()
         DispatchQueue.global(qos: .default).async {
             // fake send request task
             sleep(1)
             DispatchQueue.main.async { [weak self] in
-                self?.messageInputBar.sendButton.stopAnimating()
-                self?.messageInputBar.inputTextView.placeholder = "Aa"
+                inputBar.sendButton.stopAnimating()
+                inputBar.inputTextView.placeholder = "Aa"
                 self?.insertMessages(components)
                 self?.messagesCollectionView.scrollToBottom(animated: true)
             }
