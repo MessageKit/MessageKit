@@ -23,6 +23,7 @@
  */
 
 import Foundation
+import UIKit
 import MapKit
 
 /// A protocol used by the `MessagesViewController` to customize the appearance of a `MessageContentCell`.
@@ -236,8 +237,10 @@ public extension MessagesDisplayDelegate {
         case .emoji:
             return .clear
         default:
-            guard let dataSource = messagesCollectionView.messagesDataSource else { return .backgroundColor }
-            return dataSource.isFromCurrentSender(message: message) ? .outgoingGreen : .incomingGray
+            guard let dataSource = messagesCollectionView.messagesDataSource else {
+                return .white
+            }
+            return dataSource.isFromCurrentSender(message: message) ? .outgoingMessageBackground : .incomingMessageBackground
         }
     }
     
@@ -261,7 +264,7 @@ public extension MessagesDisplayDelegate {
         guard let dataSource = messagesCollectionView.messagesDataSource else {
             fatalError(MessageKitError.nilMessagesDataSource)
         }
-        return dataSource.isFromCurrentSender(message: message) ? .backgroundColor : .labelColor
+        return dataSource.isFromCurrentSender(message: message) ? .outgoingMessageLabel : .incomingMessageLabel
     }
 
     func enabledDetectors(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> [DetectorType] {
@@ -298,7 +301,10 @@ public extension MessagesDisplayDelegate {
     }
 
     func audioTintColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return UIColor.sendButtonBlue
+        guard let dataSource = messagesCollectionView.messagesDataSource else {
+            fatalError(MessageKitError.nilMessagesDataSource)
+        }
+        return dataSource.isFromCurrentSender(message: message) ? .outgoingAudioMessageTint : .incomingAudioMessageTint
     }
 
     func audioProgressTextFormat(_ duration: Float, for audioCell: AudioMessageCell, in messageCollectionView: MessagesCollectionView) -> String {

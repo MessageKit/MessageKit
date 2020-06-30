@@ -1,4 +1,4 @@
-name: PR Example app
+name: Build Example app
 
 on: pull_request
 

@@ -22,6 +22,7 @@
  SOFTWARE.
  */
 
+import Foundation
 import UIKit
 
 open class ContactMessageCell: MessageContentCell {
@@ -34,7 +35,7 @@ open class ContactMessageCell: MessageContentCell {
     /// The view container that holds contact initials
     public lazy var initialsContainerView: UIView = {
         let initialsContainer = UIView(frame: CGRect.zero)
-        initialsContainer.backgroundColor = .backgroundColor
+        initialsContainer.backgroundColor = .collectionViewBackground
         return initialsContainer
     }()
     
@@ -42,7 +43,7 @@ open class ContactMessageCell: MessageContentCell {
     public lazy var initialsLabel: UILabel = {
         let initialsLabel = UILabel(frame: CGRect.zero)
         initialsLabel.textAlignment = .center
-        initialsLabel.textColor = .labelColor
+        initialsLabel.textColor = .label
         initialsLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
         return initialsLabel
     }()

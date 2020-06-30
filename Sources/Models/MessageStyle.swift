@@ -74,16 +74,17 @@ public enum MessageStyle {
     // MARK: - Public
 
     public var image: UIImage? {
-        
-        guard let imageCacheKey = imageCacheKey, let path = imagePath else { return nil }
-
-        let cache = MessageStyle.bubbleImageCache
-
-        if let cachedImage = cache.object(forKey: imageCacheKey as NSString) {
+        if let imageCacheKey = imageCacheKey, let cachedImage = MessageStyle.bubbleImageCache.object(forKey: imageCacheKey as NSString) {
             return cachedImage
         }
-        guard var image = UIImage(contentsOfFile: path) else { return nil }
-        
+
+        guard
+            let imageName = imageName,
+            var image = UIImage(named: imageName, in: Bundle.messageKitAssetBundle, compatibleWith: nil)
+        else {
+            return nil
+        }
+
         switch self {
         case .none, .custom:
             return nil
@@ -95,7 +96,9 @@ public enum MessageStyle {
         }
         
         let stretchedImage = stretch(image)
-        cache.setObject(stretchedImage, forKey: imageCacheKey as NSString)
+        if let imageCacheKey = imageCacheKey {
+            MessageStyle.bubbleImageCache.setObject(stretchedImage, forKey: imageCacheKey as NSString)
+        }
         return stretchedImage
     }
 
@@ -135,12 +138,6 @@ public enum MessageStyle {
         case .none, .custom:
             return nil
         }
-    }
-
-    private var imagePath: String? {
-        guard let imageName = imageName else { return nil }
-        let assetBundle = Bundle.messageKitAssetBundle()
-        return assetBundle.path(forResource: imageName, ofType: "png", inDirectory: "Images")
     }
 
     private func stretch(_ image: UIImage) -> UIImage {

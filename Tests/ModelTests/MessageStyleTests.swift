@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2019 MessageKit
+ Copyright (c) 2017-2020 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -22,20 +22,12 @@
  SOFTWARE.
  */
 
+import Foundation
 import XCTest
 @testable import MessageKit
 
-class MessageStyleTests: XCTestCase {
-
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
+final class MessageStyleTests: XCTestCase {
+    private let assetBundle = Bundle.messageKitAssetBundle
 
     func testTailCornerImageOrientation() {
         XCTAssertEqual(MessageStyle.TailCorner.bottomRight.imageOrientation, UIImage.Orientation.up)
@@ -54,102 +46,92 @@ class MessageStyleTests: XCTestCase {
     }
 
     func testImageBubble() {
-        let assetBundle = Bundle.messageKitAssetBundle()
-        let imagePath = assetBundle.path(forResource: "bubble_full", ofType: "png", inDirectory: "Images")
         let originalData = (MessageStyle.bubble.image ?? UIImage()).pngData()
-        let testData = stretch(UIImage(contentsOfFile: imagePath!)!).withRenderingMode(.alwaysTemplate).pngData()
+        let testImage = UIImage(named: "bubble_full", in: assetBundle, compatibleWith: nil)
+        let testData = stretch(testImage!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
     }
 
     func testImageBubbleOutline() {
-        let assetBundle = Bundle.messageKitAssetBundle()
-        let imagePath = assetBundle.path(forResource: "bubble_outlined", ofType: "png", inDirectory: "Images")
         let originalData = (MessageStyle.bubbleOutline(.black).image ?? UIImage()).pngData()
-        let testData = stretch(UIImage(contentsOfFile: imagePath!)!).withRenderingMode(.alwaysTemplate).pngData()
+        let testImage = UIImage(named: "bubble_outlined", in: assetBundle, compatibleWith: nil)
+        let testData = stretch(testImage!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
     }
 
     func testImageBubbleTailCurved() {
-        let assetBundle = Bundle.messageKitAssetBundle()
-        let imagePath = assetBundle.path(forResource: "bubble_full_tail_v2", ofType: "png", inDirectory: "Images")
-
         var originalData = (MessageStyle.bubbleTail(.bottomLeft, .curved).image ?? UIImage()).pngData()
-        var testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
+        var testImage = UIImage(named: "bubble_full_tail_v2", in: assetBundle, compatibleWith: nil)
+        var testData = stretch(transform(image: testImage!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
         originalData = (MessageStyle.bubbleTail(.bottomRight, .curved).image ?? UIImage()).pngData()
-        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate).pngData()
+        testData = stretch(transform(image: testImage!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
         originalData = (MessageStyle.bubbleTail(.topLeft, .curved).image ?? UIImage()).pngData()
-        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate).pngData()
+        testData =  stretch(transform(image: testImage!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
         originalData = (MessageStyle.bubbleTail(.topRight, .curved).image ?? UIImage()).pngData()
-        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topRight)!).withRenderingMode(.alwaysTemplate).pngData()
+        testData =  stretch(transform(image: testImage!, corner: .topRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
     }
 
     func testImageBubbleTailPointedEdge() {
-        let assetBundle = Bundle.messageKitAssetBundle()
-        let imagePath = assetBundle.path(forResource: "bubble_full_tail_v1", ofType: "png", inDirectory: "Images")
-
         var originalData = (MessageStyle.bubbleTail(.bottomLeft, .pointedEdge).image ?? UIImage()).pngData()
-        var testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
+        var testImage = UIImage(named: "bubble_full_tail_v1", in: assetBundle, compatibleWith: nil)
+        var testData =  stretch(transform(image: testImage!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
         originalData = (MessageStyle.bubbleTail(.bottomRight, .pointedEdge).image ?? UIImage()).pngData()
-        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate).pngData()
+        testData =  stretch(transform(image: testImage!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
         originalData = (MessageStyle.bubbleTail(.topLeft, .pointedEdge).image ?? UIImage()).pngData()
-        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate).pngData()
+        testData =  stretch(transform(image: testImage!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
         originalData = (MessageStyle.bubbleTail(.topRight, .pointedEdge).image ?? UIImage()).pngData()
-        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topRight)!).withRenderingMode(.alwaysTemplate).pngData()
+        testData =  stretch(transform(image: testImage!, corner: .topRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
     }
 
     func testImageBubbleTailOutlineCurved() {
-        let assetBundle = Bundle.messageKitAssetBundle()
-        let imagePath = assetBundle.path(forResource: "bubble_outlined_tail_v2", ofType: "png", inDirectory: "Images")
-
         var originalData = (MessageStyle.bubbleTailOutline(.red, .bottomLeft, .curved).image ?? UIImage()).pngData()
-        var testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
+        var testImage = UIImage(named: "bubble_outlined_tail_v2", in: assetBundle, compatibleWith: nil)
+        var testData =  stretch(transform(image: testImage!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
         originalData = (MessageStyle.bubbleTailOutline(.red, .bottomRight, .curved).image ?? UIImage()).pngData()
-        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate).pngData()
+        testData =  stretch(transform(image: testImage!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
         originalData = (MessageStyle.bubbleTailOutline(.red, .topLeft, .curved).image ?? UIImage()).pngData()
-        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate).pngData()
+        testData =  stretch(transform(image: testImage!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
         originalData = (MessageStyle.bubbleTailOutline(.red, .topRight, .curved).image ?? UIImage()).pngData()
-        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topRight)!).withRenderingMode(.alwaysTemplate).pngData()
+        testData =  stretch(transform(image: testImage!, corner: .topRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
     }
 
     func testImageBubbleTailOutlinePointedEdge() {
-        let assetBundle = Bundle.messageKitAssetBundle()
-        let imagePath = assetBundle.path(forResource: "bubble_outlined_tail_v1", ofType: "png", inDirectory: "Images")
-
         var originalData = (MessageStyle.bubbleTailOutline(.red, .bottomLeft, .pointedEdge).image ?? UIImage()).pngData()
-        var testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
+        var testImage = UIImage(named: "bubble_outlined_tail_v1", in: assetBundle, compatibleWith: nil)
+        var testData =  stretch(transform(image: testImage!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
         originalData = (MessageStyle.bubbleTailOutline(.red, .bottomRight, .pointedEdge).image ?? UIImage()).pngData()
-        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate).pngData()
+        testData =  stretch(transform(image: testImage!, corner: .bottomRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
         originalData = (MessageStyle.bubbleTailOutline(.red, .topLeft, .pointedEdge).image ?? UIImage()).pngData()
-        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate).pngData()
+        testData =  stretch(transform(image: testImage!, corner: .topLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
         originalData = (MessageStyle.bubbleTailOutline(.red, .topRight, .pointedEdge).image ?? UIImage()).pngData()
-        testData =  stretch(transform(image: UIImage(contentsOfFile: imagePath!)!, corner: .topRight)!).withRenderingMode(.alwaysTemplate).pngData()
+        testData =  stretch(transform(image: testImage!, corner: .topRight)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
     }
 
@@ -159,7 +141,7 @@ class MessageStyleTests: XCTestCase {
         XCTAssertEqual(image1, image2)
         // After clearing cache a new image instance will be loaded from disk
         MessageStyle.bubbleImageCache.removeAllObjects()
-        XCTAssertNotEqual(image1, MessageStyle.bubbleTail(.topLeft, .pointedEdge).image)
+        XCTAssertFalse(image1 === MessageStyle.bubbleTail(.topLeft, .pointedEdge).image)
     }
 
     private func stretch(_ image: UIImage) -> UIImage {

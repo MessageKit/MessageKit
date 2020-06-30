@@ -44,7 +44,7 @@ class MessagesCollectionViewTests: XCTestCase {
     func testInit() {
         XCTAssertEqual(messagesCollectionView.frame, rect)
         XCTAssertEqual(messagesCollectionView.collectionViewLayout, layout)
-        XCTAssertEqual(messagesCollectionView.backgroundColor, .backgroundColor)
+        XCTAssertEqual(messagesCollectionView.backgroundColor, UIColor.collectionViewBackground)
     }
 
 }
