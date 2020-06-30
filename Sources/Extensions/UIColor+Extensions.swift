@@ -28,7 +28,7 @@ import UIKit
 internal extension UIColor {
 
     private static func colorFromAssetBundle(named: String) -> UIColor {
-        guard let color = UIColor(named: named, in: Bundle(for: MessagesViewController.self), compatibleWith: nil) else {
+        guard let color = UIColor(named: named, in: Bundle.messageKitAssetBundle, compatibleWith: nil) else {
             fatalError(MessageKitError.couldNotFindColorAsset)
         }
         return color
