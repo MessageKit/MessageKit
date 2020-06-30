@@ -141,7 +141,7 @@ final class MessageStyleTests: XCTestCase {
         XCTAssertEqual(image1, image2)
         // After clearing cache a new image instance will be loaded from disk
         MessageStyle.bubbleImageCache.removeAllObjects()
-        XCTAssertNotEqual(image1, MessageStyle.bubbleTail(.topLeft, .pointedEdge).image)
+        XCTAssertFalse(image1 === MessageStyle.bubbleTail(.topLeft, .pointedEdge).image)
     }
 
     private func stretch(_ image: UIImage) -> UIImage {
