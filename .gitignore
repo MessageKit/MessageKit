@@ -37,3 +37,4 @@ Carthage
 
 # SPM
 .swiftpm
+Package.resolved
