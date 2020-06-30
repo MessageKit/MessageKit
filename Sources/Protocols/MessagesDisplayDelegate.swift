@@ -23,6 +23,7 @@
  */
 
 import Foundation
+import UIKit
 import MapKit
 
 /// A protocol used by the `MessagesViewController` to customize the appearance of a `MessageContentCell`.

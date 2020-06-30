@@ -67,6 +67,22 @@ To integrate MessageKit using Carthage, add the following to your `Cartfile`:
 github "MessageKit/MessageKit"
 ```
 
+### [Swift Package Manager](https://swift.org/package-manager/) **Beta** ⚠️
+
+Swift 5.3 in Xcode 12 [added support](https://github.com/apple/swift-evolution/blob/master/proposals/0271-package-manager-resources.md) for assets in Swift Packages.
+So if you're using Xcode 12, you can [just add](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app) MessageKit package to your project by entering it's repository URL
+
+```
+https://github.com/MessageKit/MessageKit
+```
+
+If you're using an older version of Xcode (mainly Xcode 11), it's still possible to use MessageKit as Swift package, but you will be limited to only `custom` cell types as any other cell type will crash your application ❗️
+After adding MessageKit's repository URL to your project, point the branch to:
+
+```
+spm-5_2
+```
+
 ### [Manual](https://github.com/MessageKit/MessageKit/blob/master/Documentation/MANUAL_INSTALLATION.md)
 
 ## Requirements
