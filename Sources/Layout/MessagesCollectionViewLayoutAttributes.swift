@@ -53,6 +53,10 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
     public var accessoryViewSize: CGSize = .zero
     public var accessoryViewPadding: HorizontalEdgeInsets = .zero
     public var accessoryViewPosition: AccessoryPosition = .messageCenter
+
+    public var linkPreviewFonts = LinkPreviewFonts(titleFont: .preferredFont(forTextStyle: .footnote),
+                                                   teaserFont: .preferredFont(forTextStyle: .caption2),
+                                                   domainFont: .preferredFont(forTextStyle: .caption1))
     
     // MARK: - Methods
 
@@ -77,6 +81,7 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
         copy.accessoryViewSize = accessoryViewSize
         copy.accessoryViewPadding = accessoryViewPadding
         copy.accessoryViewPosition = accessoryViewPosition
+        copy.linkPreviewFonts = linkPreviewFonts
         return copy
         // swiftlint:enable force_cast
     }
@@ -102,6 +107,7 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
                 && attributes.accessoryViewSize == accessoryViewSize
                 && attributes.accessoryViewPadding == accessoryViewPadding
                 && attributes.accessoryViewPosition == accessoryViewPosition
+                && attributes.linkPreviewFonts == linkPreviewFonts
         } else {
             return false
         }

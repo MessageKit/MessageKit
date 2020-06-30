@@ -137,6 +137,7 @@ public enum MessageKind {
     case emoji(String) // TextMessageCell
     case audio(AudioItem) // AudioMessageCell
     case contact(ContactItem) // ContactMessageCell
+    case linkPreview(LinkItem) // LinkPreviewMessageCell
 
     /// A custom message.
     /// - Note: Using this case requires that you implement the following methods and handle this case:
