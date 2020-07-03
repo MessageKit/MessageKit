@@ -91,7 +91,7 @@ The `MessageInputBar`, derrived from [InputBarAccessoryView](https://github.com/
 
 Please have a look at the [Quick Start guide](https://github.com/MessageKit/MessageKit/blob/master/Documentation/QuickStart.md) and the [FAQs](https://github.com/MessageKit/MessageKit/blob/master/Documentation/FAQs.md).
 
-We recommend you start by looking at the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project or write a question with the "messagekit" tag on [Stack Overflow](https://stackoverflow.com/questions/tagged/messagekit). You can also look at previous issues here on GitHib with the **"Question"** tag.
+We recommend you start by looking at the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project or write a question with the "messagekit" tag on [Stack Overflow](https://stackoverflow.com/questions/tagged/messagekit). You can also look at previous issues here on GitHub with the **"Question"** tag.
 
 For more on how to use the MessageInputBar, see the dependency it is based on [InputBarAccessoryView](https://github.com/nathantannar4/InputBarAccessoryView). You can also see this [short guide]([https://github.com/MessageKit/MessageKit/blob/master/Documentation/MessageInputBar.md) 
 
@@ -138,7 +138,7 @@ Great! Look over these things first.
 - Download the project and check out the current code base. Suggest any improvements by opening a new issue. 
 - Check out the [What's Next](#whats-next) section :point_down: to see where we are headed.
 - Check [StackOverflow](https://stackoverflow.com/questions/tagged/messagekit)
-- Install [SwiftLint](https://github.com/realm/SwiftLint) too keep yourself in :neckbeard: style. 
+- Install [SwiftLint](https://github.com/realm/SwiftLint) to keep yourself in :neckbeard: style. 
 - Be kind and helpful.  
 
 
