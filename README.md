@@ -165,6 +165,7 @@ Add your app to the list of apps using this library and make a pull request.
 - [Studievenn](https://studievenn.no)
 - [SmooveText](https://apps.apple.com/np/app/smoove-text/id1362792811)
 - [COYO Engage](https://apps.apple.com/app/coyo-engage/id1341588804)
+- [HitchPin](https://www.hitchpin.com)
 
 *Please provide attribution, it is greatly appreciated.*
 
