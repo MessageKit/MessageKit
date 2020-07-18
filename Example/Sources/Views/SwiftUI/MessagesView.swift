@@ -23,6 +23,7 @@ class MessageSwiftUIVC: MessagesViewController {
 @available(iOS 13.0.0, *)
 struct MessagesView: UIViewControllerRepresentable {
     
+    @State var initialized = false
     @Binding var messages: [MessageType]
     
     func makeUIViewController(context: Context) -> MessagesViewController {
@@ -37,8 +38,14 @@ struct MessagesView: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: MessagesViewController, context: Context) {
         uiViewController.messagesCollectionView.reloadData()
+        scrollToBottom(uiViewController)
+    }
+    
+    private func scrollToBottom(_ uiViewController: MessagesViewController) {
         DispatchQueue.main.async {
-            uiViewController.messagesCollectionView.scrollToBottom(animated: true)
+            // The initialized state variable allows us to start at the bottom with the initial messages without seeing the inital scroll flash by
+            uiViewController.messagesCollectionView.scrollToBottom(animated: self.initialized)
+            self.initialized = true
         }
     }
     
