@@ -25,14 +25,6 @@ struct SwiftUIExampleView: View {
         .navigationBarTitle("SwiftUI Example", displayMode: .inline)
     }
     
-    private func getInitialMessages() {
-        SampleData.shared.getMessages(count: 20) { messages in
-            DispatchQueue.main.async {
-                self.messages.append(contentsOf: messages)
-            }
-        }
-    }
-    
     private func connectToMessageSocket() {
         MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu]).onNewMessage { message in
             self.messages.append(message)
