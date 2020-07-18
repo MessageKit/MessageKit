@@ -34,6 +34,8 @@ struct MessagesView: UIViewControllerRepresentable {
         messagesVC.messagesCollectionView.messagesLayoutDelegate = context.coordinator
         messagesVC.messagesCollectionView.messagesDataSource = context.coordinator
         messagesVC.messageInputBar.delegate = context.coordinator
+        messagesVC.scrollsToBottomOnKeyboardBeginsEditing = true // default false
+        messagesVC.maintainPositionOnKeyboardFrameChanged = true // default false
         
         return messagesVC
     }
