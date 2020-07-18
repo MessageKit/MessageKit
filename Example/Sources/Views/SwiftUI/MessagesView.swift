@@ -14,7 +14,9 @@ import MessageKit
 class MessageSwiftUIVC: MessagesViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // Because SwiftUI wont automatically make our controller the first responder, we need to do it on viewDidAppear
         becomeFirstResponder()
+        messagesCollectionView.scrollToBottom(animated: true)
     }
 }
 
@@ -34,10 +36,10 @@ struct MessagesView: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ uiViewController: MessagesViewController, context: Context) {
-        if !uiViewController.isFirstResponder {
-            uiViewController.becomeFirstResponder()
-        }
         uiViewController.messagesCollectionView.reloadData()
+        DispatchQueue.main.async {
+            uiViewController.messagesCollectionView.scrollToBottom(animated: true)
+        }
     }
     
     func makeCoordinator() -> Coordinator {
@@ -73,24 +75,5 @@ extension MessagesView.Coordinator: MessagesLayoutDelegate, MessagesDisplayDeleg
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
         avatarView.set(avatar: avatar)
-    }
-}
-
-@available(iOS 13.0.0, *)
-struct MessageViewPreviewWrapper: View {
-    @State var messages = [MessageType]()
-    var body: some View {
-        MessagesView(messages: $messages).onAppear {
-            SampleData.shared.getMessages(count: 20) { messages in
-                self.messages.append(contentsOf: messages)
-            }
-        }
-    }
-}
-
-@available(iOS 13.0.0, *)
-struct MessagesView_Previews: PreviewProvider {
-    static var previews: some View {
-        MessageViewPreviewWrapper()
     }
 }

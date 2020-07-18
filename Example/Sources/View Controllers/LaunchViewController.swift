@@ -89,7 +89,7 @@ final internal class LaunchViewController: UITableViewController {
             navigationController?.pushViewController(MessageContainerController(), animated: true)
         case "SwiftUI Example":
             if #available(iOS 13, *) {
-                navigationController?.pushViewController(UIHostingController(rootView: MessageViewPreviewWrapper()), animated: true)
+                navigationController?.pushViewController(UIHostingController(rootView: SwiftUIExampleView()), animated: true)
             }
         case "Settings":
             navigationController?.pushViewController(SettingsViewController(), animated: true)
