@@ -25,6 +25,9 @@
 import UIKit
 import MessageKit
 import SafariServices
+#if canImport(SwiftUI)
+import SwiftUI
+#endif
 
 final internal class LaunchViewController: UITableViewController {
     
@@ -32,7 +35,7 @@ final internal class LaunchViewController: UITableViewController {
         return .lightContent
     }
 
-    let cells = ["Basic Example", "Advanced Example", "Autocomplete Example", "Embedded Example", "Settings", "Source Code", "Contributors"]
+    let cells = ["Basic Example", "Advanced Example", "Autocomplete Example", "Embedded Example", "SwiftUI Example", "Settings", "Source Code", "Contributors"]
     
     // MARK: - View Life Cycle
     
@@ -84,6 +87,10 @@ final internal class LaunchViewController: UITableViewController {
             navigationController?.pushViewController(AutocompleteExampleViewController(), animated: true)
         case "Embedded Example":
             navigationController?.pushViewController(MessageContainerController(), animated: true)
+        case "SwiftUI Example":
+            if #available(iOS 13, *) {
+                navigationController?.pushViewController(UIHostingController(rootView: MessageViewPreviewWrapper()), animated: true)
+            }
         case "Settings":
             navigationController?.pushViewController(SettingsViewController(), animated: true)
         case "Source Code":
