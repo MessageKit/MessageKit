@@ -10,6 +10,7 @@
 import SwiftUI
 #endif
 import MessageKit
+import InputBarAccessoryView
 
 class MessageSwiftUIVC: MessagesViewController {
     override func viewDidAppear(_ animated: Bool) {
@@ -32,6 +33,7 @@ struct MessagesView: UIViewControllerRepresentable {
         messagesVC.messagesCollectionView.messagesDisplayDelegate = context.coordinator
         messagesVC.messagesCollectionView.messagesLayoutDelegate = context.coordinator
         messagesVC.messagesCollectionView.messagesDataSource = context.coordinator
+        messagesVC.messageInputBar.delegate = context.coordinator
         
         return messagesVC
     }
@@ -74,6 +76,15 @@ extension MessagesView.Coordinator: MessagesDataSource {
     
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
         return messages.wrappedValue.count
+    }
+}
+
+@available(iOS 13.0.0, *)
+extension MessagesView.Coordinator: InputBarAccessoryViewDelegate {
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+        let message = MockMessage(text: text, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date())
+        messages.wrappedValue.append(message)
+        inputBar.inputTextView.text = ""
     }
 }
 
