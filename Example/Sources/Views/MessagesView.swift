@@ -7,8 +7,8 @@
 //
 
 #if canImport(SwiftUI)
-
 import SwiftUI
+#endif
 import MessageKit
 
 class MessageSwiftUIVC: MessagesViewController {
@@ -56,7 +56,7 @@ struct MessagesView: UIViewControllerRepresentable {
 @available(iOS 13.0.0, *)
 extension MessagesView.Coordinator: MessagesDataSource {
     func currentSender() -> SenderType {
-        return MockUser(senderId: "", displayName: "")
+        return SampleData.shared.currentSender
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
@@ -70,7 +70,10 @@ extension MessagesView.Coordinator: MessagesDataSource {
 
 @available(iOS 13.0.0, *)
 extension MessagesView.Coordinator: MessagesLayoutDelegate, MessagesDisplayDelegate {
-    
+    func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
+        let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
+        avatarView.set(avatar: avatar)
+    }
 }
 
 @available(iOS 13.0.0, *)
@@ -91,5 +94,3 @@ struct MessagesView_Previews: PreviewProvider {
         MessageViewPreviewWrapper()
     }
 }
-
-#endif
