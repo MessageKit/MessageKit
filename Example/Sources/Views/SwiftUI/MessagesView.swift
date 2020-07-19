@@ -6,9 +6,7 @@
 //  Copyright © 2020 MessageKit. All rights reserved.
 //
 
-#if canImport(SwiftUI)
 import SwiftUI
-#endif
 import MessageKit
 import InputBarAccessoryView
 

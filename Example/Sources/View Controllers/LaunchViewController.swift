@@ -25,9 +25,7 @@
 import UIKit
 import MessageKit
 import SafariServices
-#if canImport(SwiftUI)
 import SwiftUI
-#endif
 
 final internal class LaunchViewController: UITableViewController {
     
