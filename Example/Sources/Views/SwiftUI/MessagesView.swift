@@ -10,7 +10,7 @@ import SwiftUI
 import MessageKit
 import InputBarAccessoryView
 
-class MessageSwiftUIVC: MessagesViewController {
+final class MessageSwiftUIVC: MessagesViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Because SwiftUI wont automatically make our controller the first responder, we need to do it on viewDidAppear
@@ -19,7 +19,7 @@ class MessageSwiftUIVC: MessagesViewController {
     }
 }
 
-@available(iOS 13.0.0, *)
+@available(iOS 13.0, *)
 struct MessagesView: UIViewControllerRepresentable {
     
     @State var initialized = false
@@ -72,7 +72,7 @@ struct MessagesView: UIViewControllerRepresentable {
 
 }
 
-@available(iOS 13.0.0, *)
+@available(iOS 13.0, *)
 extension MessagesView.Coordinator: MessagesDataSource {
     func currentSender() -> SenderType {
         return SampleData.shared.currentSender
@@ -97,7 +97,7 @@ extension MessagesView.Coordinator: MessagesDataSource {
     }
 }
 
-@available(iOS 13.0.0, *)
+@available(iOS 13.0, *)
 extension MessagesView.Coordinator: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         let message = MockMessage(text: text, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date())
@@ -106,7 +106,7 @@ extension MessagesView.Coordinator: InputBarAccessoryViewDelegate {
     }
 }
 
-@available(iOS 13.0.0, *)
+@available(iOS 13.0, *)
 extension MessagesView.Coordinator: MessagesLayoutDelegate, MessagesDisplayDelegate {
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         let avatar = SampleData.shared.getAvatarFor(sender: message.sender)
