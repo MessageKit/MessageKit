@@ -35,7 +35,7 @@ struct SwiftUIExampleView: View {
     
 }
 
-@available(iOS 13.0.0, *)
+@available(iOS 13.0, *)
 struct SwiftUIExampleView_Previews: PreviewProvider {
     static var previews: some View {
         SwiftUIExampleView()
