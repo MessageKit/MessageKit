@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F16CA6DDBA8B2AED7933182 /* Pods_ChatExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5667D3D8E25D4659A3133C2 /* Pods_ChatExample.framework */; };
+		1C5433DD24C389C300A5383B /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5433DC24C389C300A5383B /* MessagesView.swift */; };
+		1C5433DF24C38DBF00A5383B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C5433DE24C38DBF00A5383B /* SwiftUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		1C5433E224C3A33600A5383B /* SwiftUIExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5433E124C3A33600A5383B /* SwiftUIExampleView.swift */; };
 		383B9EB32172A1C4008AB91A /* MockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B9EB22172A1C4008AB91A /* MockUser.swift */; };
 		385C2922211FF32E0010B4BA /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C2920211FF32E0010B4BA /* CustomCell.swift */; };
 		385C2923211FF32E0010B4BA /* TableViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C2921211FF32E0010B4BA /* TableViewCells.swift */; };
@@ -72,10 +74,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		10FACBA391F222F83B0D0F14 /* Pods_ChatExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		14FD0CD310DC61B22EE2F774 /* Pods-ChatExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-ChatExampleTests/Pods-ChatExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
-		15E7C4C168DF654D009EE593 /* Pods-ChatExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatExample.release.xcconfig"; path = "Target Support Files/Pods-ChatExample/Pods-ChatExample.release.xcconfig"; sourceTree = "<group>"; };
-		19FCAA41E5FB273F95706474 /* Pods-ChatExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatExample.debug.xcconfig"; path = "Target Support Files/Pods-ChatExample/Pods-ChatExample.debug.xcconfig"; sourceTree = "<group>"; };
+		0364943D08CDBE656E6F6DF8 /* Pods-ChatExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatExampleTests/Pods-ChatExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1C5433DC24C389C300A5383B /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
+		1C5433DE24C38DBF00A5383B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		1C5433E124C3A33600A5383B /* SwiftUIExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExampleView.swift; sourceTree = "<group>"; };
+		2AC6E3F5C11E39F57598DBE6 /* Pods_ChatExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		383B9EB22172A1C4008AB91A /* MockUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUser.swift; sourceTree = "<group>"; };
 		385C2920211FF32E0010B4BA /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		385C2921211FF32E0010B4BA /* TableViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCells.swift; sourceTree = "<group>"; };
@@ -123,7 +126,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F16CA6DDBA8B2AED7933182 /* Pods_ChatExample.framework in Frameworks */,
+				1C5433DF24C38DBF00A5383B /* SwiftUI.framework in Frameworks */,
+				C7CA53A1B85256A5097E7DC7 /* Pods_ChatExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,19 +150,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13FCBEED2424D36900CB489F /* Resources */ = {
+		1C5433E024C3A32400A5383B /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				882B5E7F1CF7D53600B6E160 /* Info.plist */,
-				882B5E791CF7D53600B6E160 /* Assets.xcassets */,
-				882B5E7A1CF7D53600B6E160 /* LaunchScreen.storyboard */,
+				1C5433DC24C389C300A5383B /* MessagesView.swift */,
+				1C5433E124C3A33600A5383B /* SwiftUIExampleView.swift */,
 			);
-			path = Resources;
+			path = SwiftUI;
 			sourceTree = "<group>";
 		};
 		385C2924211FF3310010B4BA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1C5433E024C3A32400A5383B /* SwiftUI */,
 				385C2920211FF32E0010B4BA /* CustomCell.swift */,
 				385C2921211FF32E0010B4BA /* TableViewCells.swift */,
 			);
@@ -309,9 +313,10 @@
 		955AE3B8EFF8FDB8F572D3F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C5667D3D8E25D4659A3133C2 /* Pods_ChatExample.framework */,
-				4E9F9C2F0EDEAB72320FDD25 /* Pods_ChatExampleTests.framework */,
-				10FACBA391F222F83B0D0F14 /* Pods_ChatExampleUITests.framework */,
+				1C5433DE24C38DBF00A5383B /* SwiftUI.framework */,
+				3B316705C4717C3B4C916D62 /* Pods_ChatExample.framework */,
+				56F0AC85B38034EC92CCBC7D /* Pods_ChatExampleTests.framework */,
+				2AC6E3F5C11E39F57598DBE6 /* Pods_ChatExampleUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -566,6 +571,7 @@
 			files = (
 				385C2922211FF32E0010B4BA /* CustomCell.swift in Sources */,
 				385C2946211FF38F0010B4BA /* LaunchViewController.swift in Sources */,
+				1C5433E224C3A33600A5383B /* SwiftUIExampleView.swift in Sources */,
 				385C2939211FF37B0010B4BA /* Lorem.swift in Sources */,
 				385C2928211FF33B0010B4BA /* MockMessage.swift in Sources */,
 				63ECDABE24182A470016C349 /* MessageSubviewViewController.swift in Sources */,
@@ -583,6 +589,7 @@
 				385C2943211FF38F0010B4BA /* SettingsViewController.swift in Sources */,
 				385C2927211FF33B0010B4BA /* MockSocket.swift in Sources */,
 				385C2947211FF38F0010B4BA /* BasicExampleViewController.swift in Sources */,
+				1C5433DD24C389C300A5383B /* MessagesView.swift in Sources */,
 				882B5E811CF7D53600B6E160 /* AppDelegate.swift in Sources */,
 				385C292D211FF3520010B4BA /* CustomMessageFlowLayout.swift in Sources */,
 				38CCCC592258419300DD5482 /* AutocompleteExampleViewController.swift in Sources */,

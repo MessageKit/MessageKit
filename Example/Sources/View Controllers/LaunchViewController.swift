@@ -25,6 +25,7 @@
 import UIKit
 import MessageKit
 import SafariServices
+import SwiftUI
 
 final internal class LaunchViewController: UITableViewController {
     
@@ -32,7 +33,7 @@ final internal class LaunchViewController: UITableViewController {
         return .lightContent
     }
 
-    let cells = ["Basic Example", "Advanced Example", "Autocomplete Example", "Embedded Example", "Subview Example", "Settings", "Source Code", "Contributors"]
+    let cells = ["Basic Example", "Advanced Example", "Autocomplete Example", "Embedded Example", "Subview Example", "SwiftUI Example", "Settings", "Source Code", "Contributors"]
     
     // MARK: - View Life Cycle
     
@@ -86,9 +87,11 @@ final internal class LaunchViewController: UITableViewController {
             let detailViewController = NavigationController(rootViewController: viewController)
             splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Embedded Example":
-            let viewController = MessageContainerController()
-            let detailViewController = NavigationController(rootViewController: viewController)
-            splitViewController?.showDetailViewController(detailViewController, sender: self)
+            navigationController?.pushViewController(MessageContainerController(), animated: true)
+        case "SwiftUI Example":
+            if #available(iOS 13, *) {
+                navigationController?.pushViewController(UIHostingController(rootView: SwiftUIExampleView()), animated: true)
+            }
         case "Settings":
             let viewController = SettingsViewController()
             let detailViewController = NavigationController(rootViewController: viewController)
