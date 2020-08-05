@@ -16,6 +16,6 @@ Pod::Spec.new do |s|
    s.ios.deployment_target = '11.0'
    s.ios.resources = ['Sources/Assets.xcassets']
 
-   s.dependency 'InputBarAccessoryView', '~> 4.3.0'
+   s.dependency 'InputBarAccessoryView', '~> 5.0.0'
 
 end
