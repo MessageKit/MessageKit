@@ -1,9 +1,9 @@
 PODS:
-  - InputBarAccessoryView (4.3.2):
-    - InputBarAccessoryView/Core (= 4.3.2)
-  - InputBarAccessoryView/Core (4.3.2)
+  - InputBarAccessoryView (5.0.0):
+    - InputBarAccessoryView/Core (= 5.0.0)
+  - InputBarAccessoryView/Core (5.0.0)
   - MessageKit (3.1.0):
-    - InputBarAccessoryView (~> 4.3.0)
+    - InputBarAccessoryView (~> 5.0.0)
   - PINCache (3.0.1-beta.8):
     - PINCache/Arc-exception-safe (= 3.0.1-beta.8)
     - PINCache/Core (= 3.0.1-beta.8)
@@ -19,7 +19,7 @@ PODS:
   - PINRemoteImage/PINCache (3.0.0):
     - PINCache (= 3.0.1-beta.8)
     - PINRemoteImage/Core
-  - SwiftLint (0.39.1)
+  - SwiftLint (0.39.2)
 
 DEPENDENCIES:
   - MessageKit (from `../`)
@@ -40,13 +40,13 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  InputBarAccessoryView: 7985d418040a05fe894bd4b8328dd43ab35517c3
-  MessageKit: 3c593dc22f7465f74822e4a873ef3157a3e05080
+  InputBarAccessoryView: cbc0b2d9456058e1166898897865f9f4960fac81
+  MessageKit: 83cb90a9087b46d1e7da2451ca3e2bde462ad7e7
   PINCache: 534fd41d358d828dfdf227a0d327f3673a65e20b
   PINOperation: 24b774353ca248fcf87d67b2d61eef42087c125a
   PINRemoteImage: e2b89e19fb6e77ffc099f9d9f3b3fe1745e3f9f9
-  SwiftLint: 55e96a4a4d537d4a3156859fc1c54bd24851a046
+  SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
 PODFILE CHECKSUM: cf0af8a506e2b58d4d51b99e165b58c56c26d619
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

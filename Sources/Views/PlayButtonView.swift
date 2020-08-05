@@ -28,6 +28,7 @@ open class PlayButtonView: UIView {
 
     // MARK: - Properties
 
+    public let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     public let triangleView = UIView()
 
     private var triangleCenterXConstraint: NSLayoutConstraint?
@@ -65,14 +66,15 @@ open class PlayButtonView: UIView {
     }
 
     private func setupSubviews() {
+        addSubview(blurView)
         addSubview(triangleView)
     }
     
     private func setupView() {
         triangleView.clipsToBounds = true
         triangleView.backgroundColor = .black
-        
-        backgroundColor = .playButtonLightGray
+        blurView.clipsToBounds = true
+        backgroundColor = .clear
     }
 
     private func setupConstraints() {
@@ -86,6 +88,14 @@ open class PlayButtonView: UIView {
         triangleCenterXConstraint = centerX
 
         NSLayoutConstraint.activate([centerX, centerY, width, height])
+        
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            blurView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            blurView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            blurView.heightAnchor.constraint(equalTo: heightAnchor),
+            blurView.widthAnchor.constraint(equalTo: widthAnchor)
+        ])
     }
 
     private func triangleMask(for frame: CGRect) -> CAShapeLayer {
@@ -107,7 +117,7 @@ open class PlayButtonView: UIView {
     }
 
     private func updateTriangleConstraints() {
-        triangleCenterXConstraint?.constant = frame.width/8
+        triangleCenterXConstraint?.constant = triangleView.frame.width / 8
     }
 
     private func applyTriangleMask() {
@@ -116,7 +126,7 @@ open class PlayButtonView: UIView {
     }
 
     private func applyCornerRadius() {
-        layer.cornerRadius = frame.width / 2
+        blurView.layer.cornerRadius = frame.width / 2
     }
     
 }

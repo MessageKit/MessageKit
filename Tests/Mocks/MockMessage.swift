@@ -68,6 +68,14 @@ private struct MockAudiotem: AudioItem {
 
 }
 
+struct MockLinkItem: LinkItem {
+    let text: String?
+    let attributedText: NSAttributedString?
+    let url: URL
+    let title: String?
+    let teaser: String
+    let thumbnailImage: UIImage
+}
 
 struct MockMessage: MessageType {
 
@@ -118,4 +126,7 @@ struct MockMessage: MessageType {
         self.init(kind: .audio(audioItem), user: user, messageId: messageId)
     }
 
+    init(linkItem: LinkItem, user: MockUser, messageId: String) {
+        self.init(kind: .linkPreview(linkItem), user: user, messageId: messageId)
+    }
 }

@@ -105,7 +105,7 @@ class MessagesViewControllerTests: XCTestCase {
     func testCellForItemWithAttributedTextData_returnsTextMessageCell() {
         let messagesDataSource = MockMessagesDataSource()
         sut.messagesCollectionView.messagesDataSource = messagesDataSource
-        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.labelColor]
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.outgoingMessageLabel]
         let attriutedString = NSAttributedString(string: "Test", attributes: attributes)
         messagesDataSource.messages.append(MockMessage(attributedText: attriutedString,
                                                        user: messagesDataSource.senders[0],
@@ -183,6 +183,30 @@ class MessagesViewControllerTests: XCTestCase {
 
         XCTAssertNotNil(cell)
         XCTAssertTrue(cell is AudioMessageCell)
+    }
+
+    func testCellForItemWithLinkPreviewData_returnsLinkPreviewMessageCell() {
+        let messagesDataSource = MockMessagesDataSource()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+
+        let linkItem = MockLinkItem(text: "https://link.test",
+                                    attributedText: nil,
+                                    url: URL(string: "https://github.com/MessageKit")!,
+                                    title: "Link Title",
+                                    teaser: "Link Teaser",
+                                    thumbnailImage: UIImage())
+
+        messagesDataSource.messages.append(MockMessage(linkItem: linkItem,
+                                                       user: messagesDataSource.senders[0],
+                                                       messageId: "test_id"))
+
+        sut.messagesCollectionView.reloadData()
+
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(sut.messagesCollectionView,
+                                                                         cellForItemAt: IndexPath(item: 0, section: 0))
+
+        XCTAssertNotNil(cell)
+        XCTAssertTrue(cell is LinkPreviewMessageCell)
     }
 
     // MARK: - Assistants
