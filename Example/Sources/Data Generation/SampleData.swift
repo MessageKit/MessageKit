@@ -214,21 +214,6 @@ final internal class SampleData {
         completion(messages)
     }
     
-    func getMessages(count: Int) -> [MockMessage] {
-        var messages: [MockMessage] = []
-        // Disable Custom Messages
-        UserDefaults.standard.set(false, forKey: "Custom Messages")
-        for _ in 0..<count {
-            let uniqueID = UUID().uuidString
-            let user = senders.random()!
-            let date = dateAddingRandomTime()
-            let randomSentence = Lorem.sentence()
-            let message = MockMessage(text: randomSentence, user: user, messageId: uniqueID, date: date)
-            messages.append(message)
-        }
-        return messages
-    }
-    
     func getAdvancedMessages(count: Int, completion: ([MockMessage]) -> Void) {
         var messages: [MockMessage] = []
         // Enable Custom Messages
