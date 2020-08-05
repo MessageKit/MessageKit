@@ -3,11 +3,11 @@
     "pins": [
       {
         "package": "InputBarAccessoryView",
-        "repositoryURL": "https://github.com/classdojo/InputBarAccessoryView",
+        "repositoryURL": "https://github.com/nathantannar4/InputBarAccessoryView",
         "state": {
-          "branch": "dropRxSPM",
-          "revision": "cbc9ed734fbce8a7f65e40ec00516d8723827bfe",
-          "version": null
+          "branch": null,
+          "revision": "710aa5e53b6b15bb240e6bced5b5fe0f2d568d69",
+          "version": "5.0.0"
         }
       }
     ]
