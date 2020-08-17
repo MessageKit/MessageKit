@@ -34,7 +34,8 @@ GEM
       faraday (~> 0.8)
     git (1.6.0)
       rchardet (~> 1.8)
-    kramdown (2.1.0)
+    kramdown (2.3.0)
+      rexml
     kramdown-parser-gfm (1.1.0)
       kramdown (~> 2.0)
     multipart-post (2.1.1)
@@ -47,6 +48,7 @@ GEM
     public_suffix (4.0.3)
     rake (13.0.1)
     rchardet (1.8.0)
+    rexml (3.2.4)
     sawyer (0.8.2)
       addressable (>= 2.3.5)
       faraday (> 0.8, < 2.0)
