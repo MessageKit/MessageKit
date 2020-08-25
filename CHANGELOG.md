@@ -6,16 +6,21 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
-- Fixes an incorrect animation of message cells while dragging to dismiss the keyboard by [@lhr000lhrmega](https://github.com/lhr000lhrmega)
+- Fixes an incorrect animation of message cells while dragging to dismiss the keyboard [#1433](https://github.com/MessageKit/MessageKit/pull/1433) by [@lhr000lhrmega](https://github.com/lhr000lhrmega)
+- Fixes an issue where the video message playback icon was too dark when in dark mode [#1386](https://github.com/MessageKit/MessageKit/pull/1386) by [@kinoroy](https://github.com/kinoroy)
+- Fixes an issue where the video message playback button triangle was not centered within the circle [#1386](https://github.com/MessageKit/MessageKit/pull/1386) by [@kinoroy](https://github.com/kinoroy)
 
 ### Added
 
 - Added option to use Photo messages with remote image URL in Example project [#1294](https://github.com/MessageKit/MessageKit/pull/1294) by [@martinpucik](https://github.com/martinpucik)
 - **Breaking Change** Added new `linkPreview` message type, which display a subclass of `TextMessageCell` with support to present title, teaser and a thumbnail image for a link [#1310](https://github.com/MessageKit/MessageKit/pull/1310) by [@bguidolim](https://github.com/bguidolim)
+- Added a SwiftUI view using MessageKit in the Example Project by [#1410](https://github.com/MessageKit/MessageKit/pull/1410) [@kinoroy](https://github.com/kinoroy)
 
 ### Changed
 
 - **Breaking Change** Dropped support for iOS 9 and iOS 10 [#1261](https://github.com/MessageKit/MessageKit/pull/1261) by [@kaspik](https://github.com/kaspik)
+- Converted internal, static colors into color assets to better support dark and high contrast modes [#1386](https://github.com/MessageKit/MessageKit/pull/1386) by [@kinoroy](https://github.com/kinoroy)
+- Change the video message playback button to use a UIVisualEffectsView to better match the look and feel of iMessage. [#1386](https://github.com/MessageKit/MessageKit/pull/1386) by [@kinoroy](https://github.com/kinoroy)
 
 ## 3.1.0
 
