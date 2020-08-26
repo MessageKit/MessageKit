@@ -6,6 +6,15 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
+
+### Added
+
+### Changed
+
+## 3.2.0
+
+### Fixed
+
 - Fixes an incorrect animation of message cells while dragging to dismiss the keyboard [#1433](https://github.com/MessageKit/MessageKit/pull/1433) by [@lhr000lhrmega](https://github.com/lhr000lhrmega)
 - Fixes an issue where the video message playback icon was too dark when in dark mode [#1386](https://github.com/MessageKit/MessageKit/pull/1386) by [@kinoroy](https://github.com/kinoroy)
 - Fixes an issue where the video message playback button triangle was not centered within the circle [#1386](https://github.com/MessageKit/MessageKit/pull/1386) by [@kinoroy](https://github.com/kinoroy)
