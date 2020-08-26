@@ -87,8 +87,10 @@ spm-5_2
 
 ## Requirements
 
-- **iOS 9** or later
+- **iOS 11** or later
 - **Swift 5.0** or later
+
+> For iOS 9 and iOS 10 please use version 3.1.0
 
 ## Getting Started
 
