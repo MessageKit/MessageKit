@@ -130,13 +130,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             addKeyboardObservers()
             messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
         }
-        adjustScrollViewTopInset()
     }
 
     open override func viewSafeAreaInsetsDidChange() {
-        if #available(iOS 11.0, *) {
-            super.viewSafeAreaInsetsDidChange()
-        }
+        super.viewSafeAreaInsetsDidChange()
         messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
     }
 
@@ -153,11 +150,11 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     private func setupDefaults() {
         extendedLayoutIncludesOpaqueBars = true
-        automaticallyAdjustsScrollViewInsets = false
-        view.backgroundColor = .backgroundColor
+        view.backgroundColor = .collectionViewBackground
+        messagesCollectionView.contentInsetAdjustmentBehavior = .never
         messagesCollectionView.keyboardDismissMode = .interactive
         messagesCollectionView.alwaysBounceVertical = true
-        messagesCollectionView.backgroundColor = .backgroundColor
+        messagesCollectionView.backgroundColor = .collectionViewBackground
     }
 
     private func setupDelegates() {
@@ -172,17 +169,11 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     private func setupConstraints() {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
-        let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: topLayoutGuide.length)
+        let top = messagesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         let bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        if #available(iOS 11.0, *) {
-            let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
-            let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-            NSLayoutConstraint.activate([top, bottom, trailing, leading])
-        } else {
-            let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-            let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            NSLayoutConstraint.activate([top, bottom, trailing, leading])
-        }
+        let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
+        let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        NSLayoutConstraint.activate([top, bottom, trailing, leading])
     }
 
     // MARK: - Typing Indicator API
@@ -301,6 +292,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             return cell
         case .contact:
             let cell = messagesCollectionView.dequeueReusableCell(ContactMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .linkPreview:
+            let cell = messagesCollectionView.dequeueReusableCell(LinkPreviewMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         case .custom:

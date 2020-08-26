@@ -23,6 +23,7 @@
  */
 
 import Foundation
+import UIKit
 import InputBarAccessoryView
 
 internal extension MessagesViewController {
@@ -32,7 +33,6 @@ internal extension MessagesViewController {
     func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleKeyboardDidChangeState(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleTextViewDidBeginEditing(_:)), name: UITextView.textDidBeginEditingNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.adjustScrollViewTopInset), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
 
     func removeKeyboardObservers() {
@@ -100,23 +100,12 @@ internal extension MessagesViewController {
             messagesCollectionView.setContentOffset(contentOffset, animated: false)
         }
 
-        messageCollectionViewBottomInset = newBottomInset
+        UIView.performWithoutAnimation {
+            messageCollectionViewBottomInset = newBottomInset
+        }
     }
 
     // MARK: - Inset Computation
-
-    @objc
-    func adjustScrollViewTopInset() {
-        if #available(iOS 11.0, *) {
-            // No need to add to the top contentInset
-        } else {
-            let navigationBarInset = navigationController?.navigationBar.frame.height ?? 0
-            let statusBarInset: CGFloat = UIApplication.shared.isStatusBarHidden ? 0 : 20
-            let topInset = navigationBarInset + statusBarInset
-            messagesCollectionView.contentInset.top = topInset
-            messagesCollectionView.scrollIndicatorInsets.top = topInset
-        }
-    }
 
     private func requiredScrollViewBottomInset(forKeyboardFrame keyboardFrame: CGRect) -> CGFloat {
         // we only need to adjust for the part of the keyboard that covers (i.e. intersects) our collection view;
@@ -137,16 +126,11 @@ internal extension MessagesViewController {
         return max(0, inputAccessoryViewHeight + additionalBottomInset - automaticallyAddedBottomInset)
     }
 
-    /// iOS 11's UIScrollView can automatically add safe area insets to its contentInset,
+    /// UIScrollView can automatically add safe area insets to its contentInset,
     /// which needs to be accounted for when setting the contentInset based on screen coordinates.
     ///
     /// - Returns: The distance automatically added to contentInset.bottom, if any.
     private var automaticallyAddedBottomInset: CGFloat {
-        if #available(iOS 11.0, *) {
-            return messagesCollectionView.adjustedContentInset.bottom - messagesCollectionView.contentInset.bottom
-        } else {
-            return 0
-        }
+        return messagesCollectionView.adjustedContentInset.bottom - messagesCollectionView.contentInset.bottom
     }
-
 }

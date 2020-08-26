@@ -22,6 +22,7 @@
  SOFTWARE.
  */
 
+import Foundation
 import UIKit
 
 open class MessagesCollectionView: UICollectionView {
@@ -57,7 +58,7 @@ open class MessagesCollectionView: UICollectionView {
 
     public override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
-        backgroundColor = .backgroundColor
+        backgroundColor = .collectionViewBackground
         registerReusableViews()
         setupGestureRecognizers()
     }
@@ -79,6 +80,7 @@ open class MessagesCollectionView: UICollectionView {
         register(AudioMessageCell.self)
         register(ContactMessageCell.self)
         register(TypingIndicatorCell.self)
+        register(LinkPreviewMessageCell.self)
         register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
         register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter)
     }

@@ -34,3 +34,7 @@ Example/Pods/*
 
 # Carthage
 Carthage
+
+# SPM
+.swiftpm
+Package.resolved
