@@ -1,9 +1,9 @@
 PODS:
-  - InputBarAccessoryView (5.0.0):
-    - InputBarAccessoryView/Core (= 5.0.0)
-  - InputBarAccessoryView/Core (5.0.0)
-  - MessageKit (3.1.0):
-    - InputBarAccessoryView (~> 5.0.0)
+  - InputBarAccessoryView (5.1.0):
+    - InputBarAccessoryView/Core (= 5.1.0)
+  - InputBarAccessoryView/Core (5.1.0)
+  - MessageKit (3.2.0):
+    - InputBarAccessoryView (~> 5.1.0)
   - PINCache (3.0.1-beta.8):
     - PINCache/Arc-exception-safe (= 3.0.1-beta.8)
     - PINCache/Core (= 3.0.1-beta.8)
@@ -40,8 +40,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  InputBarAccessoryView: cbc0b2d9456058e1166898897865f9f4960fac81
-  MessageKit: 83cb90a9087b46d1e7da2451ca3e2bde462ad7e7
+  InputBarAccessoryView: 19953f486a23e846e9487099f92bbe3456e46ce5
+  MessageKit: ce553a92153b597540ea4688b654680542c4af6a
   PINCache: 534fd41d358d828dfdf227a0d327f3673a65e20b
   PINOperation: 24b774353ca248fcf87d67b2d61eef42087c125a
   PINRemoteImage: e2b89e19fb6e77ffc099f9d9f3b3fe1745e3f9f9
