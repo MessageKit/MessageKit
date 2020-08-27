@@ -33,12 +33,14 @@
 		5074EF4E2163555900D82952 /* sound2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5074EF4C2163555900D82952 /* sound2.m4a */; };
 		5074EF4F2163555900D82952 /* sound1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5074EF4D2163555900D82952 /* sound1.m4a */; };
 		512CD041B78B8B72CBEFB439 /* Pods_ChatExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6596D36DCF8979FCD9D50547 /* Pods_ChatExample.framework */; };
+		5168957524F7AD560058C643 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5168957124F7AD560058C643 /* Assets.xcassets */; };
+		5168957624F7AD560058C643 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5168957224F7AD560058C643 /* LaunchScreen.storyboard */; };
 		63ECDABE24182A470016C349 /* MessageSubviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ECDABD24182A470016C349 /* MessageSubviewViewController.swift */; };
 		63ECDAC2241889630016C349 /* MessageSubviewContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ECDAC1241889630016C349 /* MessageSubviewContainerViewController.swift */; };
 		882B5E811CF7D53600B6E160 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E781CF7D53600B6E160 /* AppDelegate.swift */; };
 		882B5E901CF7D56000B6E160 /* ChatExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E8E1CF7D56000B6E160 /* ChatExampleUITests.swift */; };
 		882B5E951CF7D56E00B6E160 /* ChatExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E931CF7D56E00B6E160 /* ChatExampleTests.swift */; };
-		9961327FB4F9B96CFD84A126 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		9961327FB4F9B96CFD84A126 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		D4036D91BB2480E403CDC2F1 /* Pods_ChatExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC6E3F5C11E39F57598DBE6 /* Pods_ChatExampleUITests.framework */; };
 		F182DD0E2148F655FC0DFF91 /* Pods_ChatExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25FCE8536D329EC8856E2BA8 /* Pods_ChatExampleTests.framework */; };
 /* End PBXBuildFile section */
@@ -102,6 +104,9 @@
 		50739F9521C5090A008CA369 /* BasicAudioController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAudioController.swift; sourceTree = "<group>"; };
 		5074EF4C2163555900D82952 /* sound2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound2.m4a; sourceTree = "<group>"; };
 		5074EF4D2163555900D82952 /* sound1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = sound1.m4a; sourceTree = "<group>"; };
+		5168957124F7AD560058C643 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5168957324F7AD560058C643 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5168957424F7AD560058C643 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		59A26FF036CD2E01EB584DD4 /* Pods-ChatExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatExampleUITests.debug.xcconfig"; path = "Target Support Files/Pods-ChatExampleUITests/Pods-ChatExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		63ECDABD24182A470016C349 /* MessageSubviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSubviewViewController.swift; sourceTree = "<group>"; };
 		63ECDAC1241889630016C349 /* MessageSubviewContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSubviewContainerViewController.swift; sourceTree = "<group>"; };
@@ -142,7 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9961327FB4F9B96CFD84A126 /* BuildFile in Frameworks */,
+				9961327FB4F9B96CFD84A126 /* (null) in Frameworks */,
 				D4036D91BB2480E403CDC2F1 /* Pods_ChatExampleUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -240,6 +245,16 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
+		5168957024F7AD560058C643 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5168957124F7AD560058C643 /* Assets.xcassets */,
+				5168957224F7AD560058C643 /* LaunchScreen.storyboard */,
+				5168957424F7AD560058C643 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		7077DB8E202C35C7500F8863 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,6 +299,7 @@
 				385C2933211FF3670010B4BA /* Extensions */,
 				385C292E211FF3540010B4BA /* Layout */,
 				385C2929211FF33D0010B4BA /* Models */,
+				5168957024F7AD560058C643 /* Resources */,
 				5074EF4B2163554900D82952 /* Sounds */,
 				385C2949211FF3930010B4BA /* View Controllers */,
 				385C2924211FF3310010B4BA /* Views */,
@@ -433,6 +449,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5074EF4F2163555900D82952 /* sound1.m4a in Resources */,
+				5168957624F7AD560058C643 /* LaunchScreen.storyboard in Resources */,
+				5168957524F7AD560058C643 /* Assets.xcassets in Resources */,
 				5074EF4E2163555900D82952 /* sound2.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -625,6 +643,17 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		5168957224F7AD560058C643 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5168957324F7AD560058C643 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		882B5E5B1CF7D4B900B6E160 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -739,6 +768,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A17AACB177F81B8A5ACA7D64 /* Pods-ChatExample.debug.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.messagekit.ChatExample;
@@ -751,6 +781,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ABBB75782A3594E6FECDF6CD /* Pods-ChatExample.release.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.messagekit.ChatExample;
