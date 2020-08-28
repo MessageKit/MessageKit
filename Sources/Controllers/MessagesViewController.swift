@@ -28,7 +28,7 @@ import InputBarAccessoryView
 /// A subclass of `UIViewController` with a `MessagesCollectionView` object
 /// that is used to display conversation interfaces.
 open class MessagesViewController: UIViewController,
-UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecognizerDelegate {
 
     /// The `MessagesCollectionView` managed by the messages view controller object.
     open var messagesCollectionView = MessagesCollectionView()
@@ -152,6 +152,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     /// Display time of message by swiping the cell
     private func addPanGesture() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        panGesture.delegate = self
         messagesCollectionView.addGestureRecognizer(panGesture)
         messagesCollectionView.clipsToBounds = false
     }
@@ -164,7 +165,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
         switch gesture.state {
         case .began, .changed:
-            // show time
+            messagesCollectionView.showsVerticalScrollIndicator = false
             let translation = gesture.translation(in: view)
             let minX = -(view.frame.size.width * 0.3)
             let maxX: CGFloat = 0
@@ -173,7 +174,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             offsetValue = min(offsetValue, maxX)
             parentView.frame.origin.x = offsetValue
         case .ended:
-            // hide time
+            messagesCollectionView.showsVerticalScrollIndicator = true
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.8, options: .curveEaseOut, animations: {
                 parentView.frame.origin.x = 0
             }, completion: nil)
@@ -453,5 +454,16 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     @objc private func clearMemoryCache() {
         MessageStyle.bubbleImageCache.removeAllObjects()
+    }
+
+    // MARK: - UIGestureRecognizerDelegate
+
+    /// check pan gesture direction
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer else {
+            return false
+        }
+        let velocity = panGesture.velocity(in: messagesCollectionView)
+        return abs(velocity.x) > abs(velocity.y)
     }
 }
