@@ -69,6 +69,9 @@ open class MessageContentCell: MessageCollectionViewCell {
         return label
     }()
 
+    /// The time label of the messageBubble.
+    open var timeLabel: InsetLabel = InsetLabel()
+
     // Should only add customized subviews - don't change accessoryView itself.
     open var accessoryView: UIView = UIView()
 
@@ -95,6 +98,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         contentView.addSubview(cellBottomLabel)
         contentView.addSubview(messageContainerView)
         contentView.addSubview(avatarView)
+        contentView.addSubview(timeLabel)
     }
 
     open override func prepareForReuse() {
@@ -103,6 +107,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         cellBottomLabel.text = nil
         messageTopLabel.text = nil
         messageBottomLabel.text = nil
+        timeLabel.attributedText = nil
     }
 
     // MARK: - Configuration
@@ -118,6 +123,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         layoutMessageTopLabel(with: attributes)
         layoutAvatarView(with: attributes)
         layoutAccessoryView(with: attributes)
+        layoutTimeLabelView(with: attributes)
     }
 
     /// Used to configure the cell.
@@ -151,10 +157,18 @@ open class MessageContentCell: MessageCollectionViewCell {
         let topMessageLabelText = dataSource.messageTopLabelAttributedText(for: message, at: indexPath)
         let bottomMessageLabelText = dataSource.messageBottomLabelAttributedText(for: message, at: indexPath)
 
+        let sentDate = message.sentDate
+        let sentDateString = MessageKitDateFormatter.shared.string(from: sentDate)
+        let timeLabelFont : UIFont = .boldSystemFont(ofSize: 10)
+        let timeLabelColor: UIColor = .darkGray
+        let timeLabelText =
+        NSAttributedString(string: sentDateString, attributes: [NSAttributedString.Key.font: timeLabelFont, NSAttributedString.Key.foregroundColor: timeLabelColor])
+
         cellTopLabel.attributedText = topCellLabelText
         cellBottomLabel.attributedText = bottomCellLabelText
         messageTopLabel.attributedText = topMessageLabelText
         messageBottomLabel.attributedText = bottomMessageLabelText
+        timeLabel.attributedText = timeLabelText
     }
 
     /// Handle tap gesture on contentView and its subviews.
@@ -343,5 +357,14 @@ open class MessageContentCell: MessageCollectionViewCell {
         }
 
         accessoryView.frame = CGRect(origin: origin, size: attributes.accessoryViewSize)
+    }
+
+    ///  Positions the message bubble's time label.
+    /// - attributes: The `MessagesCollectionViewLayoutAttributes` for the cell.
+    open func layoutTimeLabelView(with attributes: MessagesCollectionViewLayoutAttributes) {
+        let paddingLeft: CGFloat = 10
+        let origin = CGPoint(x: contentView.frame.size.width + paddingLeft, y: 0)
+        let size = CGSize(width: attributes.messageTimeLabelSize.width, height: attributes.messageTimeLabelSize.height)
+        timeLabel.frame = CGRect(origin: origin, size: size)
     }
 }

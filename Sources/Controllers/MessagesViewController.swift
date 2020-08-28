@@ -167,7 +167,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
         case .began, .changed:
             messagesCollectionView.showsVerticalScrollIndicator = false
             let translation = gesture.translation(in: view)
-            let minX = -(view.frame.size.width * 0.3)
+            let minX = -(view.frame.size.width * 0.4)
             let maxX: CGFloat = 0
             var offsetValue = translation.x
             offsetValue = max(offsetValue, minX)
