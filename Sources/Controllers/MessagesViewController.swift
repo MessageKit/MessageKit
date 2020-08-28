@@ -56,6 +56,14 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
     /// The default value of this property is `false`.
     open var maintainPositionOnKeyboardFrameChanged: Bool = false
 
+    /// Display the date of message by swiping left.
+    /// The default value of this property is `false`.
+    open var displayTimeBySwipingLeft: Bool = false {
+        didSet {
+            addPanGesture()
+        }
+    }
+
     open override var canBecomeFirstResponder: Bool {
         return true
     }
@@ -102,7 +110,6 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
         super.viewDidLoad()
         setupDefaults()
         setupSubviews()
-        addPanGesture()
         setupConstraints()
         setupDelegates()
         addMenuControllerObservers()
@@ -151,6 +158,9 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
 
     /// Display time of message by swiping the cell
     private func addPanGesture() {
+        guard displayTimeBySwipingLeft else {
+            return
+        }
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         panGesture.delegate = self
         messagesCollectionView.addGestureRecognizer(panGesture)
@@ -167,7 +177,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
         case .began, .changed:
             messagesCollectionView.showsVerticalScrollIndicator = false
             let translation = gesture.translation(in: view)
-            let minX = -(view.frame.size.width * 0.4)
+            let minX = -(view.frame.size.width * 0.35)
             let maxX: CGFloat = 0
             var offsetValue = translation.x
             offsetValue = max(offsetValue, minX)
