@@ -102,6 +102,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         super.viewDidLoad()
         setupDefaults()
         setupSubviews()
+        addPanGesture()
         setupConstraints()
         setupDelegates()
         addMenuControllerObservers()
@@ -147,6 +148,39 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     }
 
     // MARK: - Methods [Private]
+
+    /// Display time of message by swiping the cell
+    private func addPanGesture() {
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        messagesCollectionView.addGestureRecognizer(panGesture)
+        messagesCollectionView.clipsToBounds = false
+    }
+
+    @objc
+    private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        guard let parentView = gesture.view else {
+            return
+        }
+
+        switch gesture.state {
+        case .began, .changed:
+            // show time
+            let translation = gesture.translation(in: view)
+            let minX = -(view.frame.size.width * 0.3)
+            let maxX: CGFloat = 0
+            var offsetValue = translation.x
+            offsetValue = max(offsetValue, minX)
+            offsetValue = min(offsetValue, maxX)
+            parentView.frame.origin.x = offsetValue
+        case .ended:
+            // hide time
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.8, options: .curveEaseOut, animations: {
+                parentView.frame.origin.x = 0
+            }, completion: nil)
+        default:
+            break
+        }
+    }
 
     private func setupDefaults() {
         extendedLayoutIncludesOpaqueBars = true
