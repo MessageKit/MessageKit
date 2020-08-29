@@ -205,9 +205,8 @@ open class MessageSizeCalculator: CellSizeCalculator {
         let sentDate = message.sentDate
         let sentDateString = MessageKitDateFormatter.shared.string(from: sentDate)
         let timeLabelFont : UIFont = .boldSystemFont(ofSize: 10)
-        let timeLabelColor: UIColor = .darkGray
         let timeLabelText =
-            NSAttributedString(string: sentDateString, attributes: [NSAttributedString.Key.font: timeLabelFont, NSAttributedString.Key.foregroundColor: timeLabelColor])
+            NSAttributedString(string: sentDateString, attributes: [NSAttributedString.Key.font: timeLabelFont])
         let size = timeLabelText.size()
         return CGSize(width: size.width, height: size.height)
     }
