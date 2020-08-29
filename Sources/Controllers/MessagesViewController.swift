@@ -60,9 +60,16 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
     /// The default value of this property is `false`.
     open var displayTimeBySwipingLeft: Bool = false {
         didSet {
-            addPanGesture()
+            if displayTimeBySwipingLeft {
+                addPanGesture()
+            } else {
+                removePanGesture()
+            }
         }
     }
+
+    /// Pan gesture for display the date of message by swiping left.
+    private var panGesture: UIPanGestureRecognizer?
 
     open override var canBecomeFirstResponder: Bool {
         return true
@@ -158,13 +165,23 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
 
     /// Display time of message by swiping the cell
     private func addPanGesture() {
-        guard displayTimeBySwipingLeft else {
+        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        guard let panGesture = panGesture else {
             return
         }
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         panGesture.delegate = self
         messagesCollectionView.addGestureRecognizer(panGesture)
         messagesCollectionView.clipsToBounds = false
+    }
+
+    private func removePanGesture() {
+        guard let panGesture = panGesture else {
+            return
+        }
+        panGesture.delegate = nil
+        self.panGesture = nil
+        messagesCollectionView.removeGestureRecognizer(panGesture)
+        messagesCollectionView.clipsToBounds = true
     }
 
     @objc
