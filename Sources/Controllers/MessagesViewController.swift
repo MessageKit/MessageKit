@@ -60,6 +60,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
     /// The default value of this property is `false`.
     open var displayTimeBySwipingLeft: Bool = false {
         didSet {
+            messagesCollectionView.displayTimeBySwipingLeft = displayTimeBySwipingLeft
             if displayTimeBySwipingLeft {
                 addPanGesture()
             } else {

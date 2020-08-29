@@ -41,6 +41,10 @@ open class MessagesCollectionView: UICollectionView {
         return messagesCollectionViewFlowLayout.isTypingIndicatorViewHidden
     }
 
+    /// Display the date of message by swiping left.
+    /// The default value of this property is `false`.
+    open var displayTimeBySwipingLeft: Bool = false
+
     private var indexPathForLastItem: IndexPath? {
         let lastSection = numberOfSections - 1
         guard lastSection >= 0, numberOfItems(inSection: lastSection) > 0 else { return nil }

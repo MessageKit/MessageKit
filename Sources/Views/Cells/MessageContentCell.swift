@@ -173,9 +173,8 @@ open class MessageContentCell: MessageCollectionViewCell {
         messageBottomLabel.attributedText = bottomMessageLabelText
         timeLabel.attributedText = timeLabelText
 
-        let displayTimeBySwipingLeft = messagesCollectionView.clipsToBounds == false
-        messageBottomLabel.isHidden = displayTimeBySwipingLeft
-        timeLabel.isHidden = !displayTimeBySwipingLeft
+        messageBottomLabel.isHidden = messagesCollectionView.displayTimeBySwipingLeft
+        timeLabel.isHidden = !messageBottomLabel.isHidden
     }
 
     /// Handle tap gesture on contentView and its subviews.
