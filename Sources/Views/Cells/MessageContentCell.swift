@@ -160,7 +160,10 @@ open class MessageContentCell: MessageCollectionViewCell {
         let sentDate = message.sentDate
         let sentDateString = MessageKitDateFormatter.shared.string(from: sentDate)
         let timeLabelFont : UIFont = .boldSystemFont(ofSize: 10)
-        let timeLabelColor: UIColor = .darkGray
+        var timeLabelColor: UIColor = .darkGray
+        if #available(iOS 12.0, *), traitCollection.userInterfaceStyle == .dark {
+            timeLabelColor = .white
+        }
         let timeLabelText =
         NSAttributedString(string: sentDateString, attributes: [NSAttributedString.Key.font: timeLabelFont, NSAttributedString.Key.foregroundColor: timeLabelColor])
 
