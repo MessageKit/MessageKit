@@ -176,7 +176,7 @@ open class MessageContentCell: MessageCollectionViewCell {
         timeLabel.attributedText = timeLabelText
 
         messageBottomLabel.isHidden = messagesCollectionView.displayTimeBySwipingLeft
-        timeLabel.isHidden = !messageBottomLabel.isHidden
+        timeLabel.isHidden = !messagesCollectionView.displayTimeBySwipingLeft
     }
 
     /// Handle tap gesture on contentView and its subviews.
