@@ -5,7 +5,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ## Upcoming release
 
 ### Fixed
-
+- Fixes missing insets for link preview messages [#1447](https://github.com/MessageKit/MessageKit/pull/1447) by [@bguidolim](https://github.com/bguidolim)
 
 ### Added
 
