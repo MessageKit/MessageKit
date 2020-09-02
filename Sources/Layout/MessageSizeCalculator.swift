@@ -202,12 +202,11 @@ open class MessageSizeCalculator: CellSizeCalculator {
     // MARK: - Message time label
 
     open func messageTimeLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
-        let sentDate = message.sentDate
-        let sentDateString = MessageKitDateFormatter.shared.string(from: sentDate)
-        let timeLabelFont : UIFont = .boldSystemFont(ofSize: 10)
-        let timeLabelText =
-            NSAttributedString(string: sentDateString, attributes: [NSAttributedString.Key.font: timeLabelFont])
-        let size = timeLabelText.size()
+        let dataSource = messagesLayout.messagesDataSource
+        guard let attributedText = dataSource.messageTimestampLabelAttributedText(for: message, at: indexPath) else {
+            return .zero
+        }
+        let size = attributedText.size()
         return CGSize(width: size.width, height: size.height)
     }
 

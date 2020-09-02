@@ -43,7 +43,7 @@ open class MessagesCollectionView: UICollectionView {
 
     /// Display the date of message by swiping left.
     /// The default value of this property is `false`.
-    open var displayTimeBySwipingLeft: Bool = false
+    internal var showMessageTimestampOnSwipeLeft: Bool = false
 
     private var indexPathForLastItem: IndexPath? {
         let lastSection = numberOfSections - 1

@@ -34,6 +34,7 @@ struct MessagesView: UIViewControllerRepresentable {
         messagesVC.messageInputBar.delegate = context.coordinator
         messagesVC.scrollsToBottomOnKeyboardBeginsEditing = true // default false
         messagesVC.maintainPositionOnKeyboardFrameChanged = true // default false
+        messagesVC.showMessageTimestampOnSwipeLeft = true // default false
         
         return messagesVC
     }
@@ -94,6 +95,14 @@ extension MessagesView.Coordinator: MessagesDataSource {
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let dateString = formatter.string(from: message.sentDate)
         return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
+    }
+
+    func messageTimestampLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
+        let sentDate = message.sentDate
+        let sentDateString = MessageKitDateFormatter.shared.string(from: sentDate)
+        let timeLabelFont: UIFont = .boldSystemFont(ofSize: 10)
+        let timeLabelColor: UIColor = .systemGray
+        return NSAttributedString(string: sentDateString, attributes: [NSAttributedString.Key.font: timeLabelFont, NSAttributedString.Key.foregroundColor: timeLabelColor])
     }
 }
 

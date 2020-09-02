@@ -58,10 +58,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
 
     /// Display the date of message by swiping left.
     /// The default value of this property is `false`.
-    open var displayTimeBySwipingLeft: Bool = false {
+    open var showMessageTimestampOnSwipeLeft: Bool = false {
         didSet {
-            messagesCollectionView.displayTimeBySwipingLeft = displayTimeBySwipingLeft
-            if displayTimeBySwipingLeft {
+            messagesCollectionView.showMessageTimestampOnSwipeLeft = showMessageTimestampOnSwipeLeft
+            if showMessageTimestampOnSwipeLeft {
                 addPanGesture()
             } else {
                 removePanGesture()
