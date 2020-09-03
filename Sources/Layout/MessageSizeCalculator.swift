@@ -81,6 +81,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
         attributes.cellTopLabelSize = cellTopLabelSize(for: message, at: indexPath)
         attributes.cellTopLabelAlignment = cellTopLabelAlignment(for: message)
         attributes.cellBottomLabelSize = cellBottomLabelSize(for: message, at: indexPath)
+        attributes.messageTimeLabelSize = messageTimeLabelSize(for: message, at: indexPath)
         attributes.cellBottomLabelAlignment = cellBottomLabelAlignment(for: message)
         attributes.messageTopLabelSize = messageTopLabelSize(for: message, at: indexPath)
         attributes.messageTopLabelAlignment = messageTopLabelAlignment(for: message)
@@ -197,7 +198,18 @@ open class MessageSizeCalculator: CellSizeCalculator {
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingMessageTopLabelAlignment : incomingMessageTopLabelAlignment
     }
-    
+
+    // MARK: - Message time label
+
+    open func messageTimeLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+        let dataSource = messagesLayout.messagesDataSource
+        guard let attributedText = dataSource.messageTimestampLabelAttributedText(for: message, at: indexPath) else {
+            return .zero
+        }
+        let size = attributedText.size()
+        return CGSize(width: size.width, height: size.height)
+    }
+
     // MARK: - Bottom cell Label
     
     open func cellBottomLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {

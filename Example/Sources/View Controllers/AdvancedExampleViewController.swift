@@ -278,7 +278,6 @@ final class AdvancedExampleViewController: ChatViewController {
         }
         return nil
     }
-
 }
 
 // MARK: - MessagesDisplayDelegate
