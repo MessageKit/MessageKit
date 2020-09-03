@@ -8,7 +8,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Fixes missing insets for link preview messages [#1447](https://github.com/MessageKit/MessageKit/pull/1447) by [@bguidolim](https://github.com/bguidolim)
 
 ### Added
-- show message time by swiping left over the chat controller. [#718] by @amirpirzad
+- Show message time by swiping left over the chat controller. [#1444](https://github.com/MessageKit/MessageKit/pull/1444) by [@amirpirzad](https://github.com/amirpirzad)
 
 ### Changed
 
