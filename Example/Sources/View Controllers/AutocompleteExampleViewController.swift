@@ -187,19 +187,6 @@ final class AutocompleteExampleViewController: ChatViewController {
         return nil
     }
 
-    override func messageTimestampLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        let sentDate = message.sentDate
-        let sentDateString = MessageKitDateFormatter.shared.string(from: sentDate)
-        let timeLabelFont: UIFont = .boldSystemFont(ofSize: 10)
-        let timeLabelColor: UIColor
-        if #available(iOS 13, *) {
-            timeLabelColor = .systemGray
-        } else {
-            timeLabelColor = .darkGray
-        }
-        return NSAttributedString(string: sentDateString, attributes: [NSAttributedString.Key.font: timeLabelFont, NSAttributedString.Key.foregroundColor: timeLabelColor])
-    }
-
     // Async autocomplete requires the manager to reload
     func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
         guard autocompleteManager.currentSession != nil, autocompleteManager.currentSession?.prefix == "#" else { return }

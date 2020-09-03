@@ -188,19 +188,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         let dateString = formatter.string(from: message.sentDate)
         return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
-
-    func messageTimestampLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        let sentDate = message.sentDate
-        let sentDateString = MessageKitDateFormatter.shared.string(from: sentDate)
-        let timeLabelFont: UIFont = .boldSystemFont(ofSize: 10)
-        let timeLabelColor: UIColor
-        if #available(iOS 13, *) {
-            timeLabelColor = .systemGray
-        } else {
-            timeLabelColor = .darkGray
-        }
-        return NSAttributedString(string: sentDateString, attributes: [NSAttributedString.Key.font: timeLabelFont, NSAttributedString.Key.foregroundColor: timeLabelColor])
-    }
 }
 
 // MARK: - MessageCellDelegate

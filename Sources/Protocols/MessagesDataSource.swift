@@ -104,6 +104,7 @@ public protocol MessagesDataSource: AnyObject {
     func messageBottomLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString?
 
     /// The attributed text to be used for cell's timestamp label.
+    /// The timestamp label is shown when showMessageTimestampOnSwipeLeft is enabled by swiping left over the chat controller.
     ///
     /// - Parameters:
     ///   - message: The `MessageType` that will be displayed by this cell.
