@@ -2,6 +2,17 @@
 
 The changelog for `MessageKit`. Also see the [releases](https://github.com/MessageKit/MessageKit/releases) on GitHub.
 
+## Next release
+
+### Fixed
+
+
+### Added
+
+
+### Changed
+
+
 ## 3.3.0
 
 ### Fixed
