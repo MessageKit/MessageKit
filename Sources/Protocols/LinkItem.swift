@@ -24,6 +24,7 @@
 
 import Foundation
 import CoreGraphics
+import UIKit
 
 /// A protocol used to represent the data for a link preview message.
 public protocol LinkItem {
