@@ -11,7 +11,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 
 ### Changed
-
+- Changed `resources` to `resource_bundle` in MessageKit.podspec [#1460](https://github.com/MessageKit/MessageKit/pull/1460) by [@martinpucik](https://github.com/martinpucik)
 
 ## 3.3.0
 
