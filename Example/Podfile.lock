@@ -2,51 +2,79 @@ PODS:
   - InputBarAccessoryView (5.1.0):
     - InputBarAccessoryView/Core (= 5.1.0)
   - InputBarAccessoryView/Core (5.1.0)
-  - MessageKit (3.2.0):
+  - libwebp (1.1.0):
+    - libwebp/demux (= 1.1.0)
+    - libwebp/mux (= 1.1.0)
+    - libwebp/webp (= 1.1.0)
+  - libwebp/demux (1.1.0):
+    - libwebp/webp
+  - libwebp/mux (1.1.0):
+    - libwebp/demux
+  - libwebp/webp (1.1.0)
+  - MessageKit (3.3.0):
     - InputBarAccessoryView (~> 5.1.0)
-  - PINCache (3.0.1-beta.8):
-    - PINCache/Arc-exception-safe (= 3.0.1-beta.8)
-    - PINCache/Core (= 3.0.1-beta.8)
-  - PINCache/Arc-exception-safe (3.0.1-beta.8):
+  - PINCache (3.0.1):
+    - PINCache/Arc-exception-safe (= 3.0.1)
+    - PINCache/Core (= 3.0.1)
+  - PINCache/Arc-exception-safe (3.0.1):
     - PINCache/Core
-  - PINCache/Core (3.0.1-beta.8):
-    - PINOperation (~> 1.1.1)
-  - PINOperation (1.1.2)
+  - PINCache/Core (3.0.1):
+    - PINOperation (~> 1.2.0)
+  - PINOperation (1.2)
   - PINRemoteImage/Core (3.0.0):
     - PINOperation
   - PINRemoteImage/iOS (3.0.0):
     - PINRemoteImage/Core
   - PINRemoteImage/PINCache (3.0.0):
-    - PINCache (= 3.0.1-beta.8)
+    - PINCache (= 3.0.1)
+    - PINRemoteImage/Core
+  - PINRemoteImage/WebP (3.0.0):
+    - libwebp
     - PINRemoteImage/Core
   - SwiftLint (0.39.2)
 
 DEPENDENCIES:
   - MessageKit (from `../`)
-  - PINRemoteImage/iOS (~> 3.0.0)
-  - PINRemoteImage/PINCache (~> 3.0.0)
+  - PINCache (from `https://github.com/pinterest/PINCache`, branch `master`)
+  - PINRemoteImage/iOS (from `https://github.com/classdojo/PINRemoteImage`, branch `master`)
+  - PINRemoteImage/PINCache (from `https://github.com/classdojo/PINRemoteImage`, branch `master`)
+  - PINRemoteImage/WebP (from `https://github.com/classdojo/PINRemoteImage`, branch `master`)
   - SwiftLint (~> 0.39.1)
 
 SPEC REPOS:
   trunk:
     - InputBarAccessoryView
-    - PINCache
+    - libwebp
     - PINOperation
-    - PINRemoteImage
     - SwiftLint
 
 EXTERNAL SOURCES:
   MessageKit:
     :path: "../"
+  PINCache:
+    :branch: master
+    :git: https://github.com/pinterest/PINCache
+  PINRemoteImage:
+    :branch: master
+    :git: https://github.com/classdojo/PINRemoteImage
+
+CHECKOUT OPTIONS:
+  PINCache:
+    :commit: 7d1f63ab03ff71a5bbf033201e59072a6a69c17a
+    :git: https://github.com/pinterest/PINCache
+  PINRemoteImage:
+    :commit: 31ed719a62eb3b0928276e8a41aae3040647bbb6
+    :git: https://github.com/classdojo/PINRemoteImage
 
 SPEC CHECKSUMS:
   InputBarAccessoryView: 19953f486a23e846e9487099f92bbe3456e46ce5
-  MessageKit: ce553a92153b597540ea4688b654680542c4af6a
-  PINCache: 534fd41d358d828dfdf227a0d327f3673a65e20b
-  PINOperation: 24b774353ca248fcf87d67b2d61eef42087c125a
-  PINRemoteImage: e2b89e19fb6e77ffc099f9d9f3b3fe1745e3f9f9
+  libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
+  MessageKit: a044ec1c25cf16dfe374038ebecc1ef673265028
+  PINCache: ee3c4abadd09970a61cdda0cfc345e69a3d75b26
+  PINOperation: 3a967a927e7867e61976c6cc23e5770416449fbc
+  PINRemoteImage: 9ec6c34b0c37ab63e68d9b7696bc9b3d641b9fa7
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: cf0af8a506e2b58d4d51b99e165b58c56c26d619
+PODFILE CHECKSUM: 35c4ed13310c7e0905963b872f4e07eef806b9ab
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.9.1
