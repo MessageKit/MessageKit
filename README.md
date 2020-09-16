@@ -52,7 +52,7 @@ See [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) 
 pod 'MessageKit'
 ```
 
-> For Swift 4.2 use version 3.0.0
+> For Swift 5.0 use version 3.3.0
 
 ```ruby
 # Swift 5.0
