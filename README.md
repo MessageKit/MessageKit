@@ -18,7 +18,7 @@
 <img src="https://cocoapod-badges.herokuapp.com/v/MessageKit/badge.png" alt="CocoaPods">
 </a>
 <a href="https://developer.apple.com/xcode">
-<img src="https://img.shields.io/badge/Xcode-11-blue.svg" alt="Xcode">
+<img src="https://img.shields.io/badge/Xcode-12-blue.svg" alt="Xcode">
 </a>
 <a href="https://opensource.org/licenses/MIT">
 <img src="https://img.shields.io/badge/License-MIT-red.svg" alt="MIT">
@@ -48,8 +48,15 @@ See [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) 
 ### [CocoaPods](https://cocoapods.org/) **Recommended**
 
 ```ruby
-# Swift 5.0
+# Swift 5.3
 pod 'MessageKit'
+```
+
+> For Swift 4.2 use version 3.0.0
+
+```ruby
+# Swift 5.0
+pod 'MessageKit', '~> 3.3.0'
 ```
 
 > For Swift 4.2 use version 3.0.0
@@ -67,28 +74,24 @@ To integrate MessageKit using Carthage, add the following to your `Cartfile`:
 github "MessageKit/MessageKit"
 ```
 
-### [Swift Package Manager](https://swift.org/package-manager/) **Beta** ⚠️
+### [Swift Package Manager](https://swift.org/package-manager/)
 
 Swift 5.3 in Xcode 12 [added support](https://github.com/apple/swift-evolution/blob/master/proposals/0271-package-manager-resources.md) for assets in Swift Packages.
-So if you're using Xcode 12, you can [just add](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app) MessageKit package to your project by entering it's repository URL
+You can [just add](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app) MessageKit package to your project by entering it's repository URL
 
 ```
 https://github.com/MessageKit/MessageKit
 ```
-
-If you're using an older version of Xcode (mainly Xcode 11), it's still possible to use MessageKit as Swift package, but you will be limited to only `custom` cell types as any other cell type will crash your application ❗️
-After adding MessageKit's repository URL to your project, point the branch to:
-
-```
-spm-5_2
-```
+Older versions of Swift and XCode don't support MessageKit via SPM.
 
 ### [Manual](https://github.com/MessageKit/MessageKit/blob/master/Documentation/MANUAL_INSTALLATION.md)
 
 ## Requirements
 
-- **iOS 11** or later
-- **Swift 5.0** or later
+- **iOS 12** or later
+- **Swift 5.3** or later
+
+> For iOS 11 please use version 3.3.0
 
 > For iOS 9 and iOS 10 please use version 3.1.0
 

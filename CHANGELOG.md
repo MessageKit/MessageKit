@@ -11,7 +11,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 
 ### Changed
-
+- **Breaking Change** Dropped support for iOS 11 [#1261](https://github.com/MessageKit/MessageKit/pull/1261) by [@kaspik](https://github.com/kaspik)
 
 ## 3.3.0
 
