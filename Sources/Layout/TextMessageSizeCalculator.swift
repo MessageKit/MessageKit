@@ -50,7 +50,8 @@ open class TextMessageSizeCalculator: MessageSizeCalculator {
         var messageContainerSize: CGSize
         let attributedText: NSAttributedString
 
-        switch message.kind {
+        let textMessageKind = message.kind.textMessageKind
+        switch textMessageKind {
         case .attributedText(let text):
             attributedText = text
         case .text(let text), .emoji(let text):

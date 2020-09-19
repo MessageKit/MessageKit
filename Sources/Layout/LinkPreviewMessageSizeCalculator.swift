@@ -61,15 +61,10 @@ open class LinkPreviewMessageSizeCalculator: TextMessageSizeCalculator {
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }
 
-        let dummyMessage = ConcreteMessageType(sender: message.sender,
-                                               messageId: message.messageId,
-                                               sentDate: message.sentDate,
-                                               kind: linkItem.textKind)
-
-        var containerSize = super.messageContainerSize(for: dummyMessage)
+        var containerSize = super.messageContainerSize(for: message)
         containerSize.width = max(containerSize.width, messageContainerMaxWidth(for: message))
 
-        let labelInsets: UIEdgeInsets = messageLabelInsets(for: dummyMessage)
+        let labelInsets: UIEdgeInsets = messageLabelInsets(for: message)
 
         let minHeight = containerSize.height + LinkPreviewMessageSizeCalculator.imageViewSize
         let previewMaxWidth = containerSize.width - (LinkPreviewMessageSizeCalculator.imageViewSize + LinkPreviewMessageSizeCalculator.imageViewMargin + labelInsets.horizontal)
