@@ -24,7 +24,7 @@
 
 import Foundation
 
-extension MessageKind {
+internal extension MessageKind {
     var textMessageKind: MessageKind {
         switch self {
         case .linkPreview(let linkItem):
