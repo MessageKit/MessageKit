@@ -2,6 +2,12 @@
 
 The changelog for `MessageKit`. Also see the [releases](https://github.com/MessageKit/MessageKit/releases) on GitHub.
 
+## 3.4.2
+
+### Fixed
+
+- Fixes an issue with casting MessageType to a custom type when using LinkPreview cells [#1469](https://github.com/MessageKit/MessageKit/pull/1469) by [@kinoroy](https://github.com/kinoroy)
+
 ## 3.4.0
 
 ### Changed
