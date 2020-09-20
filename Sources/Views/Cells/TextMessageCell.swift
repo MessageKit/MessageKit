@@ -76,7 +76,8 @@ open class TextMessageCell: MessageContentCell {
                 let attributes = displayDelegate.detectorAttributes(for: detector, and: message, at: indexPath)
                 messageLabel.setAttributes(attributes, detector: detector)
             }
-            switch message.kind {
+            let textMessageKind = message.kind.textMessageKind
+            switch textMessageKind {
             case .text(let text), .emoji(let text):
                 let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
                 messageLabel.text = text
