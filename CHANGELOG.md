@@ -2,6 +2,16 @@
 
 The changelog for `MessageKit`. Also see the [releases](https://github.com/MessageKit/MessageKit/releases) on GitHub.
 
+## Future release
+
+### Fixed
+
+### Added
+
+### Changed
+
+### Removed
+
 ## 3.4.2
 
 - Updated `InputBarAccessoryView` to 5.2.1 with fixed warning on XCode 12 when used via SPM
