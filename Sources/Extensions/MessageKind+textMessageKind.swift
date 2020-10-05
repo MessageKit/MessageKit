@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2019 MessageKit
+ Copyright (c) 2017-2020 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,15 @@
 
 import Foundation
 
-/// Concrete type of MessageType
-/// 
-/// Use this when you are subclassing calculators and/or cells that needs
-/// a concrete type to handle super's method.
-internal struct ConcreteMessageType: MessageType {
-    let sender: SenderType
-    let messageId: String
-    let sentDate: Date
-    var kind: MessageKind
+internal extension MessageKind {
+    var textMessageKind: MessageKind {
+        switch self {
+        case .linkPreview(let linkItem):
+            return linkItem.textKind
+        case .text, .emoji, .attributedText:
+            return self
+        default:
+            fatalError("textMessageKind not supported for messageKind: \(self)")
+        }
+    }
 }
