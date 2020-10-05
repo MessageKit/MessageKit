@@ -42,11 +42,7 @@ let package = Package(
             exclude: ["Supporting/Info.plist", "Supporting/MessageKit.h"],
             swiftSettings: [SwiftSetting.define("IS_SPM")]
         ),
-        .testTarget(
-            name: "MessageKitTests",
-            dependencies: ["MessageKit"],
-            exclude: ["Resources/sound1.m4a", "Supporting Files/Info.plist"]
-        )
+        .testTarget(name: "MessageKitTests", dependencies: ["MessageKit"])
     ],
     swiftLanguageVersions: [.v5]
 )
