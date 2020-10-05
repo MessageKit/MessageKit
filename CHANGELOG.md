@@ -4,6 +4,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## 3.4.2
 
+- Updated `InputBarAccessoryView` to 5.2.1 with fixed warning on XCode 12 when used via SPM
+
+## 3.4.1
+
 ### Fixed
 
 - Fixes an issue with casting MessageType to a custom type when using LinkPreview cells [#1469](https://github.com/MessageKit/MessageKit/pull/1469) by [@kinoroy](https://github.com/kinoroy)
