@@ -5,10 +5,8 @@ platform :ios, '12.0'
 target 'ChatExample' do
   use_frameworks!
   pod 'MessageKit', :path => '../'
-  pod 'SwiftLint', '~> 0.39.1'
-  pod 'PINRemoteImage', :git => 'https://github.com/classdojo/PINRemoteImage', :branch => 'master', :subspecs => ['PINCache', 'iOS', 'WebP']
-  pod 'PINCache', :git => 'https://github.com/pinterest/PINCache', :branch => 'master'
-
+  pod 'SwiftLint', '~> 0.40'
+  pod 'PINRemoteImage', '~> 3.0.1', :subspecs => ['iOS', 'PINCache']
 
   target 'ChatExampleTests' do
     inherit! :search_paths
