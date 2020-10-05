@@ -10,6 +10,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Changed
 
+- Changed `resources` to `resource_bundle` in MessageKit.podspec [#1460](https://github.com/MessageKit/MessageKit/pull/1460) by [@martinpucik](https://github.com/martinpucik)
+
 ### Removed
 
 ## 3.4.2
@@ -23,10 +25,6 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Fixes an issue with casting MessageType to a custom type when using LinkPreview cells [#1469](https://github.com/MessageKit/MessageKit/pull/1469) by [@kinoroy](https://github.com/kinoroy)
 
 - Fixes an issue where the MessagesViewController keyboard observers were not cleaned up when MessagesViewController was no longer visible on screen [#1476](https://github.com/MessageKit/MessageKit/pull/1476) by [@kinoroy](https://github.com/kinoroy)
-
-### Changed
-
-- Changed `resources` to `resource_bundle` in MessageKit.podspec [#1460](https://github.com/MessageKit/MessageKit/pull/1460) by [@martinpucik](https://github.com/martinpucik)
 
 ## 3.4.0
 
