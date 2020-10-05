@@ -10,12 +10,15 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - Fixes an issue where the MessagesViewController keyboard observers were not cleaned up when MessagesViewController was no longer visible on screen [#1476](https://github.com/MessageKit/MessageKit/pull/1476) by [@kinoroy](https://github.com/kinoroy)
 
+### Changed
+
+- Changed `resources` to `resource_bundle` in MessageKit.podspec [#1460](https://github.com/MessageKit/MessageKit/pull/1460) by [@martinpucik](https://github.com/martinpucik)
+
 ## 3.4.0
 
 ### Changed
 
 - **Breaking Change** Dropped support for iOS 11, added support for Swift 5.3 SPM and XCode 12 [#1464](https://github.com/MessageKit/MessageKit/pull/1464) by [@kaspik](https://github.com/kaspik)
-- Changed `resources` to `resource_bundle` in MessageKit.podspec [#1460](https://github.com/MessageKit/MessageKit/pull/1460) by [@martinpucik](https://github.com/martinpucik)
 
 ## 3.3.0
 
