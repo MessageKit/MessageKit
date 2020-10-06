@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2019 MessageKit
+ Copyright (c) 2017-2020 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,11 @@
  SOFTWARE.
  */
 
+import Foundation
 import XCTest
 @testable import MessageKit
 
-class AvatarViewTests: XCTestCase {
+final class AvatarViewTests: XCTestCase {
 
     var avatarView: AvatarView!
 

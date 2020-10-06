@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2019 MessageKit
+ Copyright (c) 2017-2020 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -22,23 +22,10 @@
  SOFTWARE.
  */
 
-import Quick
-import Nimble
-@testable import MessageKit
+import Foundation
+import XCTest
+import MessageKitTests
 
-final class AvatarSpec: QuickSpec {
-
-    override func spec() {
-        describe("default property values") {
-            context("after intialization") {
-                let avatar = Avatar()
-                it("should set image to nil") {
-                    expect(avatar.image).to(beNil())
-                }
-                it("should set initials to ?") {
-                    expect(avatar.initials).to(equal("?"))
-                }
-            }
-        }
-    }
-}
+var tests = [XCTestCaseEntry]()
+tests += MessageKitTests.allTests()
+XCTMain(tests)
