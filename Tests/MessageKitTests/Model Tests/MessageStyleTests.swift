@@ -1,18 +1,18 @@
 /*
  MIT License
- 
+
  Copyright (c) 2017-2020 MessageKit
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -61,7 +61,7 @@ final class MessageStyleTests: XCTestCase {
 
     func testImageBubbleTailCurved() {
         var originalData = (MessageStyle.bubbleTail(.bottomLeft, .curved).image ?? UIImage()).pngData()
-        var testImage = UIImage(named: "bubble_full_tail_v2", in: assetBundle, compatibleWith: nil)
+        let testImage = UIImage(named: "bubble_full_tail_v2", in: assetBundle, compatibleWith: nil)
         var testData = stretch(transform(image: testImage!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
@@ -80,7 +80,7 @@ final class MessageStyleTests: XCTestCase {
 
     func testImageBubbleTailPointedEdge() {
         var originalData = (MessageStyle.bubbleTail(.bottomLeft, .pointedEdge).image ?? UIImage()).pngData()
-        var testImage = UIImage(named: "bubble_full_tail_v1", in: assetBundle, compatibleWith: nil)
+        let testImage = UIImage(named: "bubble_full_tail_v1", in: assetBundle, compatibleWith: nil)
         var testData =  stretch(transform(image: testImage!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
@@ -99,7 +99,7 @@ final class MessageStyleTests: XCTestCase {
 
     func testImageBubbleTailOutlineCurved() {
         var originalData = (MessageStyle.bubbleTailOutline(.red, .bottomLeft, .curved).image ?? UIImage()).pngData()
-        var testImage = UIImage(named: "bubble_outlined_tail_v2", in: assetBundle, compatibleWith: nil)
+        let testImage = UIImage(named: "bubble_outlined_tail_v2", in: assetBundle, compatibleWith: nil)
         var testData =  stretch(transform(image: testImage!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 
@@ -118,7 +118,7 @@ final class MessageStyleTests: XCTestCase {
 
     func testImageBubbleTailOutlinePointedEdge() {
         var originalData = (MessageStyle.bubbleTailOutline(.red, .bottomLeft, .pointedEdge).image ?? UIImage()).pngData()
-        var testImage = UIImage(named: "bubble_outlined_tail_v1", in: assetBundle, compatibleWith: nil)
+        let testImage = UIImage(named: "bubble_outlined_tail_v1", in: assetBundle, compatibleWith: nil)
         var testData =  stretch(transform(image: testImage!, corner: .bottomLeft)!).withRenderingMode(.alwaysTemplate).pngData()
         XCTAssertEqual(originalData, testData)
 

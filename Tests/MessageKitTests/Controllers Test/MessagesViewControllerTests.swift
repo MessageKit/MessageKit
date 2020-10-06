@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2019 MessageKit
+ Copyright (c) 2017-2020 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ import XCTest
 import CoreLocation
 @testable import MessageKit
 
-class MessagesViewControllerTests: XCTestCase {
+final class MessagesViewControllerTests: XCTestCase {
 
     var sut: MessagesViewController!
     // swiftlint:disable weak_delegate
@@ -216,6 +216,35 @@ class MessagesViewControllerTests: XCTestCase {
                 MockMessage(text: "Text 2", user: senders[1], messageId: "test_id_2")]
     }
 
+    // MARK: - Setups
+    
+    func testSubviewsSetup() {
+        let controller = MessagesViewController()
+        XCTAssertTrue(controller.view.subviews.contains(controller.messagesCollectionView))
+    }
+
+    func testDelegateAndDataSourceSetup() {
+        let controller = MessagesViewController()
+        controller.view.layoutIfNeeded()
+        XCTAssertTrue(controller.messagesCollectionView.delegate is MessagesViewController)
+        XCTAssertTrue(controller.messagesCollectionView.dataSource is MessagesViewController)
+    }
+    
+    func testDefaultPropertyValues() {
+        let controller = MessagesViewController()
+        XCTAssertFalse(controller.scrollsToBottomOnKeyboardBeginsEditing)
+        XCTAssertTrue(controller.canBecomeFirstResponder)
+        XCTAssertFalse(controller.shouldAutorotate)
+        XCTAssertNotNil(controller.inputAccessoryView)
+        XCTAssertNotNil(controller.messagesCollectionView)
+        XCTAssertTrue(controller.messagesCollectionView.collectionViewLayout is MessagesCollectionViewFlowLayout)
+        
+        controller.view.layoutIfNeeded()
+        XCTAssertTrue(controller.extendedLayoutIncludesOpaqueBars)
+        XCTAssertEqual(controller.view.backgroundColor, UIColor.collectionViewBackground)
+        XCTAssertEqual(controller.messagesCollectionView.keyboardDismissMode, UIScrollView.KeyboardDismissMode.interactive)
+        XCTAssertTrue(controller.messagesCollectionView.alwaysBounceVertical)
+    }
 }
 
 private class MockLayoutDelegate: MessagesLayoutDelegate, MessagesDisplayDelegate {

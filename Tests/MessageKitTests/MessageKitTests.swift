@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2019 MessageKit
+ Copyright (c) 2017-2020 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,30 +23,11 @@
  */
 
 import Foundation
+import XCTest
 @testable import MessageKit
 
-class MockMessagesDataSource: MessagesDataSource {
-
-    var messages: [MessageType] = []
-    let senders: [MockUser] = [
-        MockUser(senderId: "sender_1", displayName: "Sender 1"),
-        MockUser(senderId: "sender_2", displayName: "Sender 2")
+final class MessageKitTests: XCTestCase {
+    static var allTests = [
+        ""
     ]
-
-    var currentUser: MockUser {
-        return senders[0]
-    }
-
-    func currentSender() -> SenderType {
-        return currentUser
-    }
-
-    func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
-        return messages.count
-    }
-
-    func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
-        return messages[indexPath.section]
-    }
-
 }
