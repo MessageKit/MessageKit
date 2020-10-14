@@ -6,17 +6,10 @@ jobs:
   tests:
     name: Build Framework
     runs-on: macOS-latest
+    env: 
+       DEVELOPER_DIR: /Applications/Xcode_12.app/Contents/Developer
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
-    - name: Cache Carthage
-      uses: actions/cache@v1
-      with:
-        path: Carthage
-        key: ${{ runner.os }}-framework-${{ env.cache-name }}-carthage-${{ hashFiles('**/Cartfile.resolved') }}
-        restore-keys: |
-          ${{ runner.os }}-framework-${{ env.cache-name }}-carthage-
-          ${{ runner.os }}-framework-${{ env.cache-name }}-
-          ${{ runner.os }}-framework-
     - name: Build framework
       run: ./GitHubActions/build.sh framework

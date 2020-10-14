@@ -23,6 +23,7 @@
  */
 
 import Foundation
+import UIKit
 import CoreLocation
 import MessageKit
 import AVFoundation

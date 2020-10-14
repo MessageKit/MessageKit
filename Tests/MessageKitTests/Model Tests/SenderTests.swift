@@ -23,18 +23,18 @@
  */
 
 import Foundation
+import XCTest
+@testable import MessageKit
 
-internal extension Bundle {
-    #if IS_SPM
-    static var messageKitAssetBundle: Bundle = Bundle.module
-    #else
-    static var messageKitAssetBundle: Bundle {
-        guard let url = Bundle(for: MessagesViewController.self).url(forResource: "MessageKit", withExtension: "bundle"),
-              let resourcesBundle = Bundle(url: url)
-        else {
-            fatalError(MessageKitError.couldNotLoadAssetsBundle)
-        }
-        return resourcesBundle
+final class SenderTests: XCTestCase {
+    func testEqualityBetweenTwoSenders() {
+        let sender1 = MockUser(senderId: "1", displayName: "Steven")
+        let sender2 = MockUser(senderId: "1", displayName: "Nathan")
+        XCTAssertEqual(sender1.senderId, sender2.senderId)
     }
-    #endif
+    func testNotEqualityBetweenTwoSenders() {
+        let sender1 = MockUser(senderId: "1", displayName: "Steven")
+        let sender2 = MockUser(senderId: "2", displayName: "Nathan")
+        XCTAssertNotEqual(sender1.senderId, sender2.senderId)
+    }
 }

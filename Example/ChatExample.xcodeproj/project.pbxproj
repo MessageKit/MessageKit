@@ -40,7 +40,7 @@
 		882B5E811CF7D53600B6E160 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E781CF7D53600B6E160 /* AppDelegate.swift */; };
 		882B5E901CF7D56000B6E160 /* ChatExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E8E1CF7D56000B6E160 /* ChatExampleUITests.swift */; };
 		882B5E951CF7D56E00B6E160 /* ChatExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E931CF7D56E00B6E160 /* ChatExampleTests.swift */; };
-		9961327FB4F9B96CFD84A126 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		9961327FB4F9B96CFD84A126 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		D4036D91BB2480E403CDC2F1 /* Pods_ChatExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AC6E3F5C11E39F57598DBE6 /* Pods_ChatExampleUITests.framework */; };
 		F182DD0E2148F655FC0DFF91 /* Pods_ChatExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25FCE8536D329EC8856E2BA8 /* Pods_ChatExampleTests.framework */; };
 /* End PBXBuildFile section */
@@ -147,7 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9961327FB4F9B96CFD84A126 /* (null) in Frameworks */,
+				9961327FB4F9B96CFD84A126 /* BuildFile in Frameworks */,
 				D4036D91BB2480E403CDC2F1 /* Pods_ChatExampleUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -541,6 +541,7 @@
 				"${BUILT_PRODUCTS_DIR}/PINCache/PINCache.framework",
 				"${BUILT_PRODUCTS_DIR}/PINOperation/PINOperation.framework",
 				"${BUILT_PRODUCTS_DIR}/PINRemoteImage/PINRemoteImage.framework",
+				"${BUILT_PRODUCTS_DIR}/libwebp/libwebp.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -549,6 +550,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINCache.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINOperation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PINRemoteImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libwebp.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

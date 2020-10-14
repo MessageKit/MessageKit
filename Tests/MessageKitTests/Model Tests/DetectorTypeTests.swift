@@ -23,18 +23,25 @@
  */
 
 import Foundation
+import XCTest
+@testable import MessageKit
 
-internal extension Bundle {
-    #if IS_SPM
-    static var messageKitAssetBundle: Bundle = Bundle.module
-    #else
-    static var messageKitAssetBundle: Bundle {
-        guard let url = Bundle(for: MessagesViewController.self).url(forResource: "MessageKit", withExtension: "bundle"),
-              let resourcesBundle = Bundle(url: url)
-        else {
-            fatalError(MessageKitError.couldNotLoadAssetsBundle)
-        }
-        return resourcesBundle
+final class DetectorTypeTests: XCTestCase {
+    func testMappingToNSTextCheckingResultCheckingType() {
+        /// case .address should equal .address
+        let address = DetectorType.address.textCheckingType
+        XCTAssertEqual(address, NSTextCheckingResult.CheckingType.address)
+        /// case .url should equal to .link
+        let url = DetectorType.url.textCheckingType
+        XCTAssertEqual(url, NSTextCheckingResult.CheckingType.link)
+        /// case .date should equal to .date
+        let date = DetectorType.date.textCheckingType
+        XCTAssertEqual(date, NSTextCheckingResult.CheckingType.date)
+        /// case .phoneNumber should equal to .phoneNumber
+        let phoneNumber = DetectorType.phoneNumber.textCheckingType
+        XCTAssertEqual(phoneNumber, NSTextCheckingResult.CheckingType.phoneNumber)
+        /// case .transitInformation should equal to .transitInformation
+        let transitInformation = DetectorType.transitInformation.textCheckingType
+        XCTAssertEqual(transitInformation, NSTextCheckingResult.CheckingType.transitInformation)
     }
-    #endif
 }

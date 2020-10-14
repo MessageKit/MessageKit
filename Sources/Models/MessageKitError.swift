@@ -32,7 +32,6 @@ internal struct MessageKitError {
     static let unrecognizedSectionKind = "Received unrecognized element kind:"
     static let unrecognizedCheckingResult = "Received an unrecognized NSTextCheckingResult.CheckingType"
     static let couldNotLoadAssetsBundle = "MessageKit: Could not load the assets bundle"
-    static let couldNotCreateAssetsPath = "MessageKit: Could not create path to the assets bundle."
     static let customDataUnresolvedCell = "Did not return a cell for MessageKind.custom(Any)."
     static let customDataUnresolvedSize = "Did not return a size for MessageKind.custom(Any)."
     static let couldNotFindColorAsset = "MessageKit: Could not load the color asset."
