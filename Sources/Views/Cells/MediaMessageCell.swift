@@ -42,7 +42,7 @@ open class MediaMessageCell: MessageContentCell {
 
     open var gifView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.backgroundColor = UIColor.label.withAlphaComponent(0.5)
         view.layer.cornerRadius = 8
         view.layer.masksToBounds = true
         return view
@@ -51,7 +51,7 @@ open class MediaMessageCell: MessageContentCell {
     open var gifLabel: UILabel = {
         let label = UILabel()
         label.text = "GIF"
-        label.textColor = .white
+        label.textColor = .collectionViewBackground
         label.font = .boldSystemFont(ofSize: 12)
         return label
     }()
