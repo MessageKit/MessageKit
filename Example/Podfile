@@ -1,12 +1,12 @@
 source 'https://cdn.cocoapods.org/'
 
-platform :ios, '11.0'
+platform :ios, '12.0'
 
 target 'ChatExample' do
   use_frameworks!
   pod 'MessageKit', :path => '../'
-  pod 'SwiftLint', '~> 0.39.1'
-  pod 'PINRemoteImage', '~> 3.0.0', :subspecs => ['iOS', 'PINCache']
+  pod 'SwiftLint', '~> 0.40'
+  pod 'PINRemoteImage', '~> 3.0.1', :subspecs => ['iOS', 'PINCache']
 
   target 'ChatExampleTests' do
     inherit! :search_paths

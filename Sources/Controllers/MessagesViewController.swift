@@ -124,6 +124,13 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
         addObservers()
     }
     
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if !isFirstLayout {
+            addKeyboardObservers()
+        }
+    }
+    
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         isMessagesControllerBeingDismissed = false
@@ -132,6 +139,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         isMessagesControllerBeingDismissed = true
+        removeKeyboardObservers()
     }
     
     open override func viewDidDisappear(_ animated: Bool) {
@@ -156,7 +164,6 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
     // MARK: - Initializers
 
     deinit {
-        removeKeyboardObservers()
         removeMenuControllerObservers()
         removeObservers()
         clearMemoryCache()

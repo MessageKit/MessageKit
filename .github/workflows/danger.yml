@@ -4,7 +4,6 @@ on:
   pull_request:
     branches:
       - master
-#       - development
 
 jobs:
   danger:
@@ -15,16 +14,16 @@ jobs:
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - name: Cache Gems
-      uses: actions/cache@v1
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-danger-${{ env.cache-name }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-danger-${{ env.cache-name }}-gems-
-          ${{ runner.os }}-danger-${{ env.cache-name }}-
-          ${{ runner.os }}-danger-
-    - name: Run build script
-      run: gem install bundler && bundle install && bundle exec danger --fail-on-errors=true
-      env:
-        DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#    - name: Cache Gems
+#      uses: actions/cache@v1
+#      with:
+#        path: vendor/bundle
+#        key: ${{ runner.os }}-danger-${{ env.cache-name }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+#        restore-keys: |
+#          ${{ runner.os }}-danger-${{ env.cache-name }}-gems-
+#          ${{ runner.os }}-danger-${{ env.cache-name }}-
+#          ${{ runner.os }}-danger-
+#    - name: Run build script
+#      run: gem install bundler && bundle install && bundle exec danger --fail-on-errors=true
+#      env:
+#        DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}

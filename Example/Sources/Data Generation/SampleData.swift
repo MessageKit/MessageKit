@@ -22,6 +22,7 @@
  SOFTWARE.
  */
 
+import UIKit
 import MessageKit
 import CoreLocation
 import AVFoundation
