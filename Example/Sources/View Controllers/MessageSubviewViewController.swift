@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 import Foundation
+import UIKit
 import InputBarAccessoryView
 
 final class MessageSubviewViewController: BasicExampleViewController {

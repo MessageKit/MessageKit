@@ -2,15 +2,45 @@
 
 The changelog for `MessageKit`. Also see the [releases](https://github.com/MessageKit/MessageKit/releases) on GitHub.
 
-## Upcoming release
+## Future release
 
 ### Fixed
+
+### Added
+
+### Changed
+
+- Changed `resources` to `resource_bundle` in MessageKit.podspec [#1460](https://github.com/MessageKit/MessageKit/pull/1460) by [@martinpucik](https://github.com/martinpucik)
+
+### Removed
+
+## 3.4.2
+
+- Updated `InputBarAccessoryView` to 5.2.1 with fixed warning on XCode 12 when used via SPM
+
+## 3.4.1
+
+### Fixed
+
+- Fixes an issue with casting MessageType to a custom type when using LinkPreview cells [#1469](https://github.com/MessageKit/MessageKit/pull/1469) by [@kinoroy](https://github.com/kinoroy)
+
+- Fixes an issue where the MessagesViewController keyboard observers were not cleaned up when MessagesViewController was no longer visible on screen [#1476](https://github.com/MessageKit/MessageKit/pull/1476) by [@kinoroy](https://github.com/kinoroy)
+
+## 3.4.0
+
+### Changed
+
+- **Breaking Change** Dropped support for iOS 11, added support for Swift 5.3 SPM and XCode 12 [#1464](https://github.com/MessageKit/MessageKit/pull/1464) by [@kaspik](https://github.com/kaspik)
+
+## 3.3.0
+
+### Fixed
+
 - Fixes missing insets for link preview messages [#1447](https://github.com/MessageKit/MessageKit/pull/1447) by [@bguidolim](https://github.com/bguidolim)
 
 ### Added
-- Show message time by swiping left over the chat controller. [#1444](https://github.com/MessageKit/MessageKit/pull/1444) by [@amirpirzad](https://github.com/amirpirzad)
 
-### Changed
+- Show message time by swiping left over the chat controller. [#1444](https://github.com/MessageKit/MessageKit/pull/1444) by [@amirpirzad](https://github.com/amirpirzad)
 
 ## 3.2.0
 
