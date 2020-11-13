@@ -40,6 +40,23 @@ open class MediaMessageCell: MessageContentCell {
         return imageView
     }()
 
+    open var gifView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.layer.cornerRadius = 8
+        view.layer.masksToBounds = true
+        return view
+    }()
+
+    open var gifLabel: UILabel = {
+        let label = UILabel()
+        label.text = "GIF"
+        label.textColor = .white
+        label.font = .boldSystemFont(ofSize: 12)
+        return label
+    }()
+    open var gifUrl: URL?
+
     // MARK: - Methods
 
     /// Responsible for setting up the constraints of the cell's subviews.
@@ -47,12 +64,16 @@ open class MediaMessageCell: MessageContentCell {
         imageView.fillSuperview()
         playButtonView.centerInSuperview()
         playButtonView.constraint(equalTo: CGSize(width: 35, height: 35))
+        gifView.addConstraints(imageView.topAnchor, left: imageView.leftAnchor, topConstant: 10, leftConstant: 10, widthConstant: 50, heightConstant: 20)
+        gifLabel.centerInSuperview()
     }
 
     open override func setupSubviews() {
         super.setupSubviews()
         messageContainerView.addSubview(imageView)
         messageContainerView.addSubview(playButtonView)
+        imageView.addSubview(gifView)
+        gifView.addSubview(gifLabel)
         setupConstraints()
     }
     
@@ -70,9 +91,16 @@ open class MediaMessageCell: MessageContentCell {
 
         switch message.kind {
         case .photo(let mediaItem):
+            gifView.isHidden = true
             imageView.image = mediaItem.image ?? mediaItem.placeholderImage
             playButtonView.isHidden = true
         case .video(let mediaItem):
+            gifView.isHidden = true
+            imageView.image = mediaItem.image ?? mediaItem.placeholderImage
+            playButtonView.isHidden = false
+        case .gif(let mediaItem):
+            gifUrl = mediaItem.url
+            gifView.isHidden = false
             imageView.image = mediaItem.image ?? mediaItem.placeholderImage
             playButtonView.isHidden = false
         default:
@@ -84,13 +112,17 @@ open class MediaMessageCell: MessageContentCell {
     
     /// Handle tap gesture on contentView and its subviews.
     open override func handleTapGesture(_ gesture: UIGestureRecognizer) {
-        let touchLocation = gesture.location(in: imageView)
+        if let gifUrl = gifUrl {
+            delegate?.didTapGif(in: self, url: gifUrl)
+        } else {
+            let touchLocation = gesture.location(in: imageView)
 
-        guard imageView.frame.contains(touchLocation) else {
-            super.handleTapGesture(gesture)
-            return
+            guard imageView.frame.contains(touchLocation) else {
+                super.handleTapGesture(gesture)
+                return
+            }
+            delegate?.didTapImage(in: self)
         }
-        delegate?.didTapImage(in: self)
     }
     
 }

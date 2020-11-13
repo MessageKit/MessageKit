@@ -38,6 +38,7 @@ final internal class SampleData {
         case Photo
         case PhotoFromURL = "Photo from URL"
         case Video
+        case Gif
         case Audio
         case Emoji
         case Location
@@ -189,6 +190,9 @@ final internal class SampleData {
         case .Video:
             let image = messageImages.random()!
             return MockMessage(thumbnail: image, user: user, messageId: uniqueID, date: date)
+        case .Gif:
+            let image = messageImages.random()!
+            return MockMessage(thumbnail: image, user: user, messageId: uniqueID, date: date, streamingUrl: "https://www.radiantmediaplayer.com/media/big-buck-bunny-360p.mp4")
         case .Audio:
             let soundURL = sounds.random()!
             return MockMessage(audioURL: soundURL, user: user, messageId: uniqueID, date: date)

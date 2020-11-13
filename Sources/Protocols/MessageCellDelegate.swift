@@ -119,6 +119,9 @@ public protocol MessageCellDelegate: MessageLabelDelegate {
     /// method `messageForItem(at:indexPath:messagesCollectionView)`.
     func didTapImage(in cell: MessageCollectionViewCell)
 
+    func didTapGif(in cell: MessageCollectionViewCell, url: URL)
+
+
     /// Triggered when a tap occurs on the play button from audio cell.
     ///
     /// - Parameters:

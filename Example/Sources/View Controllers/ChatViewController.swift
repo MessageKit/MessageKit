@@ -25,6 +25,7 @@ SOFTWARE.
 import UIKit
 import MessageKit
 import InputBarAccessoryView
+import AVKit
 
 /// A base class for the example controllers
 class ChatViewController: MessagesViewController, MessagesDataSource {
@@ -203,6 +204,14 @@ extension ChatViewController: MessageCellDelegate {
     
     func didTapImage(in cell: MessageCollectionViewCell) {
         print("Image tapped")
+    }
+
+    func didTapGif(in cell: MessageCollectionViewCell, url: URL) {
+        let controller = AVPlayerViewController()
+        controller.player = AVPlayer(url: url)
+        controller.player?.isMuted = true
+        controller.player?.play()
+        present(controller, animated: true, completion: nil)
     }
     
     func didTapCellTopLabel(in cell: MessageCollectionViewCell) {

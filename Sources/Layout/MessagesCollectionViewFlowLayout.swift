@@ -191,7 +191,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
             return emojiMessageSizeCalculator
         case .photo:
             return photoMessageSizeCalculator
-        case .video:
+        case .video, .gif:
             return videoMessageSizeCalculator
         case .location:
             return locationMessageSizeCalculator
