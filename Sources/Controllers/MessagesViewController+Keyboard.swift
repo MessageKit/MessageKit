@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2019 MessageKit
+ Copyright (c) 2017-2020 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -46,13 +46,16 @@ internal extension MessagesViewController {
     @objc
     private func handleTextViewDidBeginEditing(_ notification: Notification) {
         if scrollsToLastItemOnKeyboardBeginsEditing || scrollsToBottomOnKeyboardBeginsEditing {
-            guard let inputTextView = notification.object as? InputTextView,
-                inputTextView === messageInputBar.inputTextView else { return }
-
+            guard
+                let inputTextView = notification.object as? InputTextView,
+                inputTextView === messageInputBar.inputTextView
+            else {
+                return
+            }
             if scrollsToLastItemOnKeyboardBeginsEditing {
                 messagesCollectionView.scrollToLastItem()
             } else {
-                messagesCollectionView.scrollToBottom(animated: true)
+                messagesCollectionView.scrollToLastItem(animated: true)
             }
         }
     }

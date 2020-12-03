@@ -87,7 +87,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
                 DispatchQueue.main.async {
                     self.messageList = messages
                     self.messagesCollectionView.reloadData()
-                    self.messagesCollectionView.scrollToBottom()
+                    self.messagesCollectionView.scrollToLastItem()
                 }
             }
         }
@@ -110,7 +110,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         messagesCollectionView.messagesDataSource = self
         messagesCollectionView.messageCellDelegate = self
         
-        scrollsToBottomOnKeyboardBeginsEditing = true // default false
+        scrollsToLastItemOnKeyboardBeginsEditing = true // default false
         maintainPositionOnKeyboardFrameChanged = true // default false
 
         showMessageTimestampOnSwipeLeft = true // default false
@@ -140,7 +140,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
             }
         }, completion: { [weak self] _ in
             if self?.isLastSectionVisible() == true {
-                self?.messagesCollectionView.scrollToBottom(animated: true)
+                self?.messagesCollectionView.scrollToLastItem(animated: true)
             }
         })
     }
@@ -335,7 +335,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
                 inputBar.sendButton.stopAnimating()
                 inputBar.inputTextView.placeholder = "Aa"
                 self?.insertMessages(components)
-                self?.messagesCollectionView.scrollToBottom(animated: true)
+                self?.messagesCollectionView.scrollToLastItem(animated: true)
             }
         }
     }
