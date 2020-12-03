@@ -25,7 +25,7 @@
 import UIKit
 import MapKit
 import MessageKit
-import PINRemoteImage
+import Kingfisher
 
 class BasicExampleViewController: ChatViewController {
     override func configureMessageCollectionView() {
@@ -75,9 +75,9 @@ extension BasicExampleViewController: MessagesDisplayDelegate {
 
     func configureMediaMessageImageView(_ imageView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         if case MessageKind.photo(let media) = message.kind, let imageURL = media.url {
-            imageView.pin_setImage(from: imageURL)
+            imageView.kf.setImage(with: imageURL)
         } else {
-            imageView.pin_cancelImageDownload()
+            imageView.kf.cancelDownloadTask()
         }
     }
     
