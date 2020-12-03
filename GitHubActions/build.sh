@@ -49,6 +49,7 @@ if [ "$MODE" = "example" -o "$MODE" = "all" ]; then
   echo "Building & testing MessageKit Example app."
   cd Example
   set -o pipefail && xcodebuild build analyze -scheme ChatExample -destination "platform=iOS Simulator,name=iPhone 11" CODE_SIGNING_REQUIRED=NO | xcpretty -c
+  success="1"
 fi
 
 if [ "$success" = "1" ]; then
