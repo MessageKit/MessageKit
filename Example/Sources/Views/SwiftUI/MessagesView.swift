@@ -1,10 +1,26 @@
-//
-//  MessagesView.swift
-//  ChatExample
-//
-//  Created by Kino Roy on 2020-07-18.
-//  Copyright © 2020 MessageKit. All rights reserved.
-//
+/*
+ MIT License
+
+ Copyright (c) 2017-2020 MessageKit
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
 
 import SwiftUI
 import MessageKit
@@ -15,7 +31,7 @@ final class MessageSwiftUIVC: MessagesViewController {
         super.viewDidAppear(animated)
         // Because SwiftUI wont automatically make our controller the first responder, we need to do it on viewDidAppear
         becomeFirstResponder()
-        messagesCollectionView.scrollToBottom(animated: true)
+        messagesCollectionView.scrollToLastItem(animated: true)
     }
 }
 
@@ -32,7 +48,7 @@ struct MessagesView: UIViewControllerRepresentable {
         messagesVC.messagesCollectionView.messagesLayoutDelegate = context.coordinator
         messagesVC.messagesCollectionView.messagesDataSource = context.coordinator
         messagesVC.messageInputBar.delegate = context.coordinator
-        messagesVC.scrollsToBottomOnKeyboardBeginsEditing = true // default false
+        messagesVC.scrollsToLastItemOnKeyboardBeginsEditing = true // default false
         messagesVC.maintainPositionOnKeyboardFrameChanged = true // default false
         messagesVC.showMessageTimestampOnSwipeLeft = true // default false
         
@@ -47,7 +63,7 @@ struct MessagesView: UIViewControllerRepresentable {
     private func scrollToBottom(_ uiViewController: MessagesViewController) {
         DispatchQueue.main.async {
             // The initialized state variable allows us to start at the bottom with the initial messages without seeing the inital scroll flash by
-            uiViewController.messagesCollectionView.scrollToBottom(animated: self.initialized)
+            uiViewController.messagesCollectionView.scrollToLastItem(animated: self.initialized)
             self.initialized = true
         }
     }
