@@ -9,23 +9,7 @@ jobs:
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
-    - name: Cache Pods
-      uses: actions/cache@v1
       with:
-        path: Example/Pods
-        key: ${{ runner.os }}-example-${{ env.cache-name }}-pods-${{ hashFiles('**/Example/Podfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-example-${{ env.cache-name }}-pods-
-          ${{ runner.os }}-example-${{ env.cache-name }}-
-          ${{ runner.os }}-example-
-    - name: Cache Gems
-      uses: actions/cache@v1
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-example-${{ env.cache-name }}-gems-${{ hashFiles('**/Example/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-example-${{ env.cache-name }}-gems-
-          ${{ runner.os }}-example-${{ env.cache-name }}-
-          ${{ runner.os }}-example-
+        fetch-depth: 10
     - name: Build and run example project
       run: ./GitHubActions/build.sh example

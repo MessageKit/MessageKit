@@ -48,10 +48,7 @@ fi
 if [ "$MODE" = "example" -o "$MODE" = "all" ]; then
   echo "Building & testing MessageKit Example app."
   cd Example
-  gem install bundler
-  bundle check || bundle install
-  bundle exec pod install
-  set -o pipefail && xcodebuild build analyze -workspace ChatExample.xcworkspace -scheme ChatExample -destination "platform=iOS Simulator,name=iPhone 11" CODE_SIGNING_REQUIRED=NO | xcpretty -c
+  set -o pipefail && xcodebuild build analyze -scheme ChatExample -destination "platform=iOS Simulator,name=iPhone 11" CODE_SIGNING_REQUIRED=NO | xcpretty -c
   success="1"
 fi
 

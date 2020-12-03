@@ -23,6 +23,7 @@
  */
 
 import Foundation
+import UIKit
 import MessageKit
 
 open class CustomMessagesFlowLayout: MessagesCollectionViewFlowLayout {
