@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		032A15DD25965D9A00E00FE3 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032A15DC25965D9A00E00FE3 /* AlertService.swift */; };
+		032A15E225965E1100E00FE3 /* CameraInputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032A15E125965E1100E00FE3 /* CameraInputBarAccessoryView.swift */; };
 		13CCA04625793058005C19BB /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 13CCA04525793058005C19BB /* MessageKit */; };
 		13CCA06325793E24005C19BB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 13CCA06225793E24005C19BB /* Kingfisher */; };
 		1C5433DD24C389C300A5383B /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5433DC24C389C300A5383B /* MessagesView.swift */; };
@@ -62,6 +64,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		032A15DC25965D9A00E00FE3 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
+		032A15E125965E1100E00FE3 /* CameraInputBarAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraInputBarAccessoryView.swift; sourceTree = "<group>"; };
 		13CCA04225793002005C19BB /* MessageKit */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MessageKit; sourceTree = "<group>"; };
 		1C5433DC24C389C300A5383B /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		1C5433DE24C38DBF00A5383B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -147,6 +151,7 @@
 				1C5433E024C3A32400A5383B /* SwiftUI */,
 				385C2920211FF32E0010B4BA /* CustomCell.swift */,
 				385C2921211FF32E0010B4BA /* TableViewCells.swift */,
+				032A15E125965E1100E00FE3 /* CameraInputBarAccessoryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -175,6 +180,7 @@
 				385C292A211FF3450010B4BA /* Settings+UserDefaults.swift */,
 				385C292F211FF3630010B4BA /* UIColor+Extensions.swift */,
 				385C2930211FF3630010B4BA /* UIViewController+Extensions.swift */,
+				032A15DC25965D9A00E00FE3 /* AlertService.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -516,6 +522,7 @@
 				385C2932211FF3630010B4BA /* UIViewController+Extensions.swift in Sources */,
 				385C292B211FF3450010B4BA /* Settings+UserDefaults.swift in Sources */,
 				385C2945211FF38F0010B4BA /* NavigationController.swift in Sources */,
+				032A15DD25965D9A00E00FE3 /* AlertService.swift in Sources */,
 				385C2948211FF38F0010B4BA /* ChatViewController.swift in Sources */,
 				385C2944211FF38F0010B4BA /* MessageContainerController.swift in Sources */,
 				383B9EB32172A1C4008AB91A /* MockUser.swift in Sources */,
@@ -525,6 +532,7 @@
 				1C5433DD24C389C300A5383B /* MessagesView.swift in Sources */,
 				882B5E811CF7D53600B6E160 /* AppDelegate.swift in Sources */,
 				385C292D211FF3520010B4BA /* CustomMessageFlowLayout.swift in Sources */,
+				032A15E225965E1100E00FE3 /* CameraInputBarAccessoryView.swift in Sources */,
 				38CCCC592258419300DD5482 /* AutocompleteExampleViewController.swift in Sources */,
 				63ECDAC2241889630016C349 /* MessageSubviewContainerViewController.swift in Sources */,
 			);
