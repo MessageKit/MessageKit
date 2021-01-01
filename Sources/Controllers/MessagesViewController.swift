@@ -74,13 +74,13 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
     /// Pan gesture for display the date of message by swiping left.
     private var panGesture: UIPanGestureRecognizer?
 
-    open override var canBecomeFirstResponder: Bool {
-        return true
-    }
-
-    open override var inputAccessoryView: UIView? {
-        return messageInputBar
-    }
+//    open override var canBecomeFirstResponder: Bool {
+//        return true
+//    }
+//
+//    open override var inputAccessoryView: UIView? {
+//        return messageInputBar
+//    }
 
     open override var shouldAutorotate: Bool {
         return false
@@ -236,16 +236,24 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
 
     private func setupSubviews() {
         view.addSubview(messagesCollectionView)
+        view.addSubview(messageInputBar)
     }
 
     private func setupConstraints() {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let top = messagesCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-        let bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+
+        let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.safeAreaInsets.top)
         let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
         let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-        NSLayoutConstraint.activate([top, bottom, trailing, leading])
+        NSLayoutConstraint.activate([top, trailing, leading])
+
+        messageInputBar.translatesAutoresizingMaskIntoConstraints = false
+
+        let messagesBottom = messagesCollectionView.bottomAnchor.constraint(equalTo: messageInputBar.topAnchor)
+        let mesaageInputBarBottom = messageInputBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        let messageInputBarLeading = messageInputBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
+        let messageInputBarTrailing = messageInputBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        NSLayoutConstraint.activate([messagesBottom, mesaageInputBarBottom, messageInputBarLeading, messageInputBarTrailing])
     }
 
     // MARK: - Typing Indicator API
