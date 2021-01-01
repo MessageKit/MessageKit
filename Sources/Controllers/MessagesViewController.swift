@@ -74,14 +74,6 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
     /// Pan gesture for display the date of message by swiping left.
     private var panGesture: UIPanGestureRecognizer?
 
-//    open override var canBecomeFirstResponder: Bool {
-//        return true
-//    }
-//
-//    open override var inputAccessoryView: UIView? {
-//        return messageInputBar
-//    }
-
     open override var shouldAutorotate: Bool {
         return false
     }
