@@ -37,6 +37,9 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
     /// The `InputBarAccessoryView` used as the `inputAccessoryView` in the view controller.
     open lazy var messageInputBar = InputBarAccessoryView()
 
+    /// The message bar is not added as an accessory view anymore. Manage the bottom constraint manually.
+    open var mesaageInputBarBottomConstraint: NSLayoutConstraint!
+
     /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
     /// last item whenever the `InputTextView` begins editing.
     ///
@@ -242,10 +245,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
         messageInputBar.translatesAutoresizingMaskIntoConstraints = false
 
         let messagesBottom = messagesCollectionView.bottomAnchor.constraint(equalTo: messageInputBar.topAnchor)
-        let mesaageInputBarBottom = messageInputBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        mesaageInputBarBottomConstraint = messageInputBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         let messageInputBarLeading = messageInputBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
         let messageInputBarTrailing = messageInputBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-        NSLayoutConstraint.activate([messagesBottom, mesaageInputBarBottom, messageInputBarLeading, messageInputBarTrailing])
+        NSLayoutConstraint.activate([messagesBottom, mesaageInputBarBottomConstraint, messageInputBarLeading, messageInputBarTrailing])
     }
 
     // MARK: - Typing Indicator API
