@@ -227,6 +227,9 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
         messagesCollectionView.keyboardDismissMode = .interactive
         messagesCollectionView.alwaysBounceVertical = true
         messagesCollectionView.backgroundColor = .collectionViewBackground
+        if #available(iOS 13.0, *) {
+            messagesCollectionView.automaticallyAdjustsScrollIndicatorInsets = false
+        }
     }
 
     private func setupDelegates() {
