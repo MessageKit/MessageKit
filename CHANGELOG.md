@@ -6,6 +6,16 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
+### Added
+
+### Changed
+
+### Removed
+
+## 3.5.0
+
+### Fixed
+
 - maintainPositionOnKeyboardFrameChanged for small contentSize would scroll content out of bounds [#1506](https://github.com/MessageKit/MessageKit/pull/1506) by [@martinpucik](https://github.com/martinpucik)
 
 ### Added

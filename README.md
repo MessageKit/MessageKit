@@ -206,6 +206,8 @@ _Please provide attribution, it is greatly appreciated._
 - [@nathantannar4](https://github.com/nathantannar4), Nathan Tannar
 - [@zhongwuzw](https://github.com/zhongwuzw), Wu Zhong
 - [@austinwright](https://github.com/austinwright), Austin Wright
+- [@kaspik](https://github.com/kaspik), Jakub Kaspar
+- [@martinpucik](https://github.com/martinpucik), Martin Pucik
 
 ## Thanks
 
