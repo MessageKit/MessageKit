@@ -10,7 +10,6 @@
 [![Danger](https://github.com/MessageKit/MessageKit/workflows/Danger/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22Danger%22)
 
 [![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 <a href="https://swift.org">
 <img src="https://img.shields.io/badge/Swift-5-green.svg" alt="Swift" />
 </a>
@@ -64,14 +63,6 @@ pod 'MessageKit', '~> 3.3.0'
 ```ruby
 # Swift 4.2
 pod 'MessageKit', '~> 3.0.0'
-```
-
-### [Carthage](https://github.com/Carthage/Carthage)
-
-To integrate MessageKit using Carthage, add the following to your `Cartfile`:
-
-```
-github "MessageKit/MessageKit"
 ```
 
 ### [Swift Package Manager](https://swift.org/package-manager/)
