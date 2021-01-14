@@ -188,7 +188,7 @@ Add your app to the list of apps using this library and make a pull request.
 - [SmooveText](https://apps.apple.com/np/app/smoove-text/id1362792811)
 - [COYO Engage](https://apps.apple.com/app/coyo-engage/id1341588804)
 - [HitchPin](https://www.hitchpin.com)
-- [Charge Running](https://www.chargerunning.com)
+- [Charge Running](https://apps.apple.com/app/charge-running-live-coaching/id1204578360)
 
 _Please provide attribution, it is greatly appreciated._
 
