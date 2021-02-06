@@ -18,11 +18,16 @@ class AlertService {
         for action in actions {
             alert.addAction(action)
         }
-        if let topVC = UIApplication.getTopMostViewController() {
-            alert.popoverPresentationController?.sourceView = topVC.view
-            alert.popoverPresentationController?.sourceRect = CGRect(x: topVC.view.bounds.midX, y: topVC.view.bounds.midY, width: 0, height: 0)
-            alert.popoverPresentationController?.permittedArrowDirections = []
-            topVC.present(alert, animated: true, completion: completion)
+//        if let topVC = UIApplication.getTopMostViewController() {
+//            alert.popoverPresentationController?.sourceView = topVC.view
+//            alert.popoverPresentationController?.sourceRect = CGRect(x: topVC.view.bounds.midX, y: topVC.view.bounds.midY, width: 0, height: 0)
+//            alert.popoverPresentationController?.permittedArrowDirections = []
+//            topVC.present(alert, animated: true, completion: completion)
+//        }
+        
+        if let current = (UIApplication.shared.delegate as? AppDelegate)?.window?.rootViewController {
+            
+            current.present(alert, animated: true, completion: completion)
         }
     }
     
