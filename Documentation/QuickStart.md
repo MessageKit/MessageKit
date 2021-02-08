@@ -100,13 +100,13 @@ public struct Sender: SenderType {
 }
 
 // Some global variables for the sake of the example. Using globals is not recommended!
-let sender = Sender(id: "any_unique_id", displayName: "Steven")
+let sender = Sender(senderId: "any_unique_id", displayName: "Steven")
 let messages: [MessageType] = []
 
 extension ChatViewController: MessagesDataSource {
 
 	func currentSender() -> SenderType {
-		return Sender(id: "any_unique_id", displayName: "Steven")
+		return Sender(senderId: "any_unique_id", displayName: "Steven")
 	}
 
 	func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
