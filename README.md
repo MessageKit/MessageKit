@@ -190,6 +190,7 @@ Add your app to the list of apps using this library and make a pull request.
 - [HitchPin](https://www.hitchpin.com)
 - [Charge Running](https://apps.apple.com/app/charge-running-live-coaching/id1204578360)
 - [HER](https://apps.apple.com/us/app/id573328837)
+- [Girlfriend Plus](https://apps.apple.com/us/app/girlfriend-plus/id1011637655)
 
 _Please provide attribution, it is greatly appreciated._
 
