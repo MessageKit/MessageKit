@@ -5,13 +5,20 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ## Future release
 
 ### Fixed
-- `MessagesViewController` now smoothly scrolls messages off screen. [1531](https://github.com/MessageKit/MessageKit/issues/1531) & [1547](https://github.com/MessageKit/MessageKit/pull/1547) by [@mredig](https://github.com/mredig)
 
 ### Added
 
 ### Changed
 
 ### Removed
+
+## 3.5.1
+
+### Fixed
+- `MessagesViewController` now smoothly scrolls messages off screen. [1531](https://github.com/MessageKit/MessageKit/issues/1531) & [1547](https://github.com/MessageKit/MessageKit/pull/1547) by [@mredig](https://github.com/mredig)
+
+### Changed
+- Bump `InputBarAccessoryView`
 
 ## 3.5.0
 

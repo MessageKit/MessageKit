@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
    s.name = 'MessageKit'
-   s.version = '3.5.0'
+   s.version = '3.5.1'
    s.license = { :type => "MIT", :file => "LICENSE.md" }
 
    s.summary = 'An elegant messages UI library for iOS.'
@@ -16,6 +16,6 @@ Pod::Spec.new do |s|
    s.ios.deployment_target = '12.0'
    s.ios.resource_bundle = { 'MessageKit' => 'Sources/Assets.xcassets' }
 
-   s.dependency 'InputBarAccessoryView', '~> 5.2.3'
+   s.dependency 'InputBarAccessoryView', '~> 5.3.0'
 
 end

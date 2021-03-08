@@ -28,7 +28,7 @@ GEM
       danger
       rake (> 10)
       thor (~> 0.19)
-    faraday (0.17.3)
+    faraday (0.17.4)
       multipart-post (>= 1.2, < 3)
     faraday-http-cache (2.2.0)
       faraday (>= 0.8)
