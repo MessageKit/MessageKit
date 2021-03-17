@@ -8,6 +8,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - Fixes an issue with Scroll problem on new messages with keyboard open [#1529](https://github.com/MessageKit/MessageKit/pull/1529) by [@politan8](https://github.com/politan8)
 
+- Fixes time stamp vertical alignment so labels align with messages when showMessageTimestampOnSwipeLeft is true.
+  by [@kurtsequoia](https://github.com/MessageKit/MessageKit/pull/1556)
+
 ### Added
 
 ### Changed
