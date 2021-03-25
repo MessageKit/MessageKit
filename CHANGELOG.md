@@ -10,6 +10,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - Fixes time stamp vertical alignment so labels align with messages when showMessageTimestampOnSwipeLeft is true.
   by [@kurtsequoia](https://github.com/MessageKit/MessageKit/pull/1556)
+  
+- **Breaking Change** Changed `MessagesLayoutDelegate`'s method for typing indicator size. Typing indicator's size is now correctly calculated based on delegate method `func typingIndicatorViewSize(for layout: MessagesCollectionViewFlowLayout) -> CGSize` [#1563](https://github.com/MessageKit/MessageKit/pull/1563) by [@kaspik](https://github.com/kaspik)
 
 ### Added
 
