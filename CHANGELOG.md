@@ -6,6 +6,16 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
+### Added
+
+### Changed
+
+### Removed
+
+## 3.6.0
+
+### Fixed
+
 - Fixes an issue with Scroll problem on new messages with keyboard open [#1529](https://github.com/MessageKit/MessageKit/pull/1529) by [@politan8](https://github.com/politan8)
 
 - Fixes time stamp vertical alignment so labels align with messages when showMessageTimestampOnSwipeLeft is true.
@@ -16,6 +26,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ### Added
 
 ### Changed
+
+- Changed `resource_bundle` back to `resources` in MessageKit.podspec [#1565](https://github.com/MessageKit/MessageKit/pull/1565) by [@kaspik](https://github.com/kaspik)
 
 ### Removed
 
