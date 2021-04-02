@@ -105,7 +105,16 @@ final class AdvancedExampleViewController: ChatViewController {
     }
     
     override func configureMessageInputBar() {
-        super.configureMessageInputBar()
+        //super.configureMessageInputBar()
+        
+        messageInputBar = CameraInputBarAccessoryView()
+        messageInputBar.delegate = self
+        messageInputBar.inputTextView.tintColor = .primaryColor
+        messageInputBar.sendButton.setTitleColor(.primaryColor, for: .normal)
+        messageInputBar.sendButton.setTitleColor(
+            UIColor.primaryColor.withAlphaComponent(0.3),
+            for: .highlighted)
+        
         
         messageInputBar.isTranslucent = true
         messageInputBar.separatorLine.isHidden = true
@@ -439,3 +448,28 @@ extension AdvancedExampleViewController: MessagesLayoutDelegate {
     }
 
 }
+
+
+extension AdvancedExampleViewController: CameraInputBarAccessoryViewDelegate {
+
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith attachments: [AttachmentManager.Attachment]) {
+        
+        
+        for item in attachments {
+            if  case .image(let image) = item {
+              
+                self.sendImageMessage(photo: image)
+            }
+        }
+        inputBar.invalidatePlugins()
+    }
+    
+    
+    func sendImageMessage( photo  : UIImage)  {
+       
+        let photoMessage = MockMessage(image: photo, user: self.currentSender() as! MockUser, messageId: UUID().uuidString, date: Date())
+        self.insertMessage(photoMessage)
+    }
+    
+}
+
