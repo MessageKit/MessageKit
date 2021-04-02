@@ -43,7 +43,7 @@ extension CameraInputBarAccessoryViewDelegate {
     }()
     
     func configure(){
-        let camera = makeButton(named: "camera")
+        let camera = makeButton(named: "ic_camera")
         camera.tintColor = .darkGray
         camera.onTouchUpInside { (item) in
             self.showImagePickerControllerActionSheet()
@@ -76,7 +76,7 @@ extension CameraInputBarAccessoryViewDelegate {
                 if #available(iOS 13.0, *) {
                     $0.image = UIImage(systemName: "camera.fill")?.withRenderingMode(.alwaysTemplate)
                 } else {
-                    $0.image = UIImage(named: named)
+                    $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
                 }
                 
                 $0.setSize(CGSize(width: 30, height: 30), animated: false)
