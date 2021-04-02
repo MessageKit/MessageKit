@@ -6,6 +6,43 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
+### Added
+
+### Changed
+
+### Removed
+
+## 3.6.0
+
+### Fixed
+
+- Fixes an issue with Scroll problem on new messages with keyboard open [#1529](https://github.com/MessageKit/MessageKit/pull/1529) by [@politan8](https://github.com/politan8)
+
+- Fixes time stamp vertical alignment so labels align with messages when showMessageTimestampOnSwipeLeft is true.
+  by [@kurtsequoia](https://github.com/MessageKit/MessageKit/pull/1556)
+  
+- **Breaking Change** Changed `MessagesLayoutDelegate`'s method for typing indicator size. Typing indicator's size is now correctly calculated based on delegate method `func typingIndicatorViewSize(for layout: MessagesCollectionViewFlowLayout) -> CGSize` [#1563](https://github.com/MessageKit/MessageKit/pull/1563) by [@kaspik](https://github.com/kaspik)
+
+### Added
+
+### Changed
+
+- Changed `resource_bundle` back to `resources` in MessageKit.podspec [#1565](https://github.com/MessageKit/MessageKit/pull/1565) by [@kaspik](https://github.com/kaspik)
+
+### Removed
+
+## 3.5.1
+
+### Fixed
+- `MessagesViewController` now smoothly scrolls messages off screen. [1531](https://github.com/MessageKit/MessageKit/issues/1531) & [1547](https://github.com/MessageKit/MessageKit/pull/1547) by [@mredig](https://github.com/mredig)
+
+### Changed
+- Bump `InputBarAccessoryView`
+
+## 3.5.0
+
+### Fixed
+
 - maintainPositionOnKeyboardFrameChanged for small contentSize would scroll content out of bounds [#1506](https://github.com/MessageKit/MessageKit/pull/1506) by [@martinpucik](https://github.com/martinpucik)
 
 ### Added

@@ -232,7 +232,6 @@ final class MessagesViewControllerTests: XCTestCase {
     
     func testDefaultPropertyValues() {
         let controller = MessagesViewController()
-        XCTAssertFalse(controller.scrollsToBottomOnKeyboardBeginsEditing)
         XCTAssertTrue(controller.canBecomeFirstResponder)
         XCTAssertFalse(controller.shouldAutorotate)
         XCTAssertNotNil(controller.inputAccessoryView)

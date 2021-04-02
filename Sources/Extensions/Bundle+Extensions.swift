@@ -29,12 +29,7 @@ internal extension Bundle {
     static var messageKitAssetBundle: Bundle = Bundle.module
     #else
     static var messageKitAssetBundle: Bundle {
-        guard let url = Bundle(for: MessagesViewController.self).url(forResource: "MessageKit", withExtension: "bundle"),
-              let resourcesBundle = Bundle(url: url)
-        else {
-            fatalError(MessageKitError.couldNotLoadAssetsBundle)
-        }
-        return resourcesBundle
+        return Bundle(for: MessagesViewController.self)
     }
     #endif
 }
