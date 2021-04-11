@@ -1,6 +1,6 @@
 # MessageInputBar
 
-The `MessageInputBar` is the reactive `InputAccessoryView` of the `MessagesViewController`. It has a fairly basic delegate, `MessageInputBarDelegate`, that can be used to detect when the send button is pressed however its individual `InputBarButtonItem`'s can be individually set up to react to various events.
+The `MessageInputBar` is the reactive `InputAccessoryView` of the `MessagesViewController`. It has a fairly basic delegate, `InputBarAccessoryViewDelegate`, that can be used to detect when the send button is pressed however its individual `InputBarButtonItem`'s can be individually set up to react to various events.
 
 ## Basic Setup
 
