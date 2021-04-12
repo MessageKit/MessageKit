@@ -308,20 +308,20 @@ public extension MessagesDisplayDelegate {
     }
 
     func audioProgressTextFormat(_ duration: Float, for audioCell: AudioMessageCell, in messageCollectionView: MessagesCollectionView) -> String {
-        var retunValue = "0:00"
+        var returnValue = "0:00"
         // print the time as 0:ss if duration is up to 59 seconds
         // print the time as m:ss if duration is up to 59:59 seconds
         // print the time as h:mm:ss for anything longer
         if duration < 60 {
-            retunValue = String(format: "0:%.02d", Int(duration.rounded(.up)))
+            returnValue = String(format: "0:%.02d", Int(duration.rounded(.up)))
         } else if duration < 3600 {
-            retunValue = String(format: "%.02d:%.02d", Int(duration/60), Int(duration) % 60)
+            returnValue = String(format: "%.02d:%.02d", Int(duration/60), Int(duration) % 60)
         } else {
             let hours = Int(duration/3600)
             let remainingMinutsInSeconds = Int(duration) - hours*3600
-            retunValue = String(format: "%.02d:%.02d:%.02d", hours, Int(remainingMinutsInSeconds/60), Int(remainingMinutsInSeconds) % 60)
+            returnValue = String(format: "%.02d:%.02d:%.02d", hours, Int(remainingMinutsInSeconds/60), Int(remainingMinutsInSeconds) % 60)
         }
-        return retunValue
+        return returnValue
     }
 
     // MARK: - LinkPreview Message Defaults
