@@ -204,10 +204,6 @@ public extension MessagesDataSource {
         return nil
     }
     
-    func customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell {
-        fatalError(MessageKitError.customDataUnresolvedCell)
-    }
-    
     func textCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell? {
         return nil
     }
@@ -226,6 +222,10 @@ public extension MessagesDataSource {
     
     func contactCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell? {
         return nil
+    }
+    
+    func customCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell {
+        fatalError(MessageKitError.customDataUnresolvedCell)
     }
 
     func typingIndicator(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell {
