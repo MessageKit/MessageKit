@@ -44,6 +44,11 @@
 		882B5E901CF7D56000B6E160 /* ChatExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E8E1CF7D56000B6E160 /* ChatExampleUITests.swift */; };
 		882B5E951CF7D56E00B6E160 /* ChatExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 882B5E931CF7D56E00B6E160 /* ChatExampleTests.swift */; };
 		9961327FB4F9B96CFD84A126 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		9B49D528263C31FC008804B5 /* CustomLayoutExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B49D527263C31FC008804B5 /* CustomLayoutExampleViewController.swift */; };
+		9B49D52D263C3E1F008804B5 /* CustomTextLayoutSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B49D52C263C3E1F008804B5 /* CustomTextLayoutSizeCalculator.swift */; };
+		9B49D53A263D9606008804B5 /* CustomLayoutSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B49D539263D9606008804B5 /* CustomLayoutSizeCalculator.swift */; };
+		9B49D542263DA6F9008804B5 /* CustomMessageContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B49D541263DA6F9008804B5 /* CustomMessageContentCell.swift */; };
+		9B49D547263DAA29008804B5 /* CustomTextMessageContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B49D546263DAA29008804B5 /* CustomTextMessageContentCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +110,11 @@
 		882B5E8F1CF7D56000B6E160 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		882B5E931CF7D56E00B6E160 /* ChatExampleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatExampleTests.swift; sourceTree = "<group>"; };
 		882B5E941CF7D56E00B6E160 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9B49D527263C31FC008804B5 /* CustomLayoutExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayoutExampleViewController.swift; sourceTree = "<group>"; };
+		9B49D52C263C3E1F008804B5 /* CustomTextLayoutSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextLayoutSizeCalculator.swift; sourceTree = "<group>"; };
+		9B49D539263D9606008804B5 /* CustomLayoutSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayoutSizeCalculator.swift; sourceTree = "<group>"; };
+		9B49D541263DA6F9008804B5 /* CustomMessageContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMessageContentCell.swift; sourceTree = "<group>"; };
+		9B49D546263DAA29008804B5 /* CustomTextMessageContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextMessageContentCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +162,8 @@
 				385C2920211FF32E0010B4BA /* CustomCell.swift */,
 				385C2921211FF32E0010B4BA /* TableViewCells.swift */,
 				032A15E125965E1100E00FE3 /* CameraInputBarAccessoryView.swift */,
+				9B49D541263DA6F9008804B5 /* CustomMessageContentCell.swift */,
+				9B49D546263DAA29008804B5 /* CustomTextMessageContentCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -162,6 +174,8 @@
 				385C2926211FF33B0010B4BA /* MockMessage.swift */,
 				385C2925211FF33A0010B4BA /* MockSocket.swift */,
 				383B9EB22172A1C4008AB91A /* MockUser.swift */,
+				9B49D52C263C3E1F008804B5 /* CustomTextLayoutSizeCalculator.swift */,
+				9B49D539263D9606008804B5 /* CustomLayoutSizeCalculator.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -207,6 +221,7 @@
 				385C293C211FF38E0010B4BA /* SettingsViewController.swift */,
 				63ECDABD24182A470016C349 /* MessageSubviewViewController.swift */,
 				63ECDAC1241889630016C349 /* MessageSubviewContainerViewController.swift */,
+				9B49D527263C31FC008804B5 /* CustomLayoutExampleViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -508,8 +523,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B49D53A263D9606008804B5 /* CustomLayoutSizeCalculator.swift in Sources */,
 				385C2922211FF32E0010B4BA /* CustomCell.swift in Sources */,
+				9B49D542263DA6F9008804B5 /* CustomMessageContentCell.swift in Sources */,
 				385C2946211FF38F0010B4BA /* LaunchViewController.swift in Sources */,
+				9B49D52D263C3E1F008804B5 /* CustomTextLayoutSizeCalculator.swift in Sources */,
 				1C5433E224C3A33600A5383B /* SwiftUIExampleView.swift in Sources */,
 				385C2939211FF37B0010B4BA /* Lorem.swift in Sources */,
 				385C2928211FF33B0010B4BA /* MockMessage.swift in Sources */,
@@ -522,6 +540,8 @@
 				385C2932211FF3630010B4BA /* UIViewController+Extensions.swift in Sources */,
 				385C292B211FF3450010B4BA /* Settings+UserDefaults.swift in Sources */,
 				385C2945211FF38F0010B4BA /* NavigationController.swift in Sources */,
+				9B49D547263DAA29008804B5 /* CustomTextMessageContentCell.swift in Sources */,
+				9B49D528263C31FC008804B5 /* CustomLayoutExampleViewController.swift in Sources */,
 				032A15DD25965D9A00E00FE3 /* AlertService.swift in Sources */,
 				385C2948211FF38F0010B4BA /* ChatViewController.swift in Sources */,
 				385C2944211FF38F0010B4BA /* MessageContainerController.swift in Sources */,

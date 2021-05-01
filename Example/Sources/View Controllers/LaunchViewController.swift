@@ -33,7 +33,7 @@ final internal class LaunchViewController: UITableViewController {
         return .lightContent
     }
 
-    let cells = ["Basic Example", "Advanced Example", "Autocomplete Example", "Embedded Example", "Subview Example", "SwiftUI Example", "Settings", "Source Code", "Contributors"]
+    let cells = ["Basic Example", "Advanced Example", "Autocomplete Example", "Embedded Example", "Custom Layout Example", "Subview Example", "SwiftUI Example", "Settings", "Source Code", "Contributors"]
     
     // MARK: - View Life Cycle
     
@@ -88,6 +88,8 @@ final internal class LaunchViewController: UITableViewController {
             splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Embedded Example":
             navigationController?.pushViewController(MessageContainerController(), animated: true)
+        case "Custom Layout Example":
+            navigationController?.pushViewController(CustomLayoutExampleViewController(), animated: true)
         case "SwiftUI Example":
             if #available(iOS 13, *) {
                 navigationController?.pushViewController(UIHostingController(rootView: SwiftUIExampleView()), animated: true)

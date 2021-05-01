@@ -188,6 +188,10 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         let dateString = formatter.string(from: message.sentDate)
         return NSAttributedString(string: dateString, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption2)])
     }
+    
+    func textCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell? {
+        return nil
+    }
 }
 
 // MARK: - MessageCellDelegate
