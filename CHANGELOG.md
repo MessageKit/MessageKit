@@ -8,6 +8,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
+- Added enough data source and delegate methods to display customized `UICollectionViewCell` for MessageTypes other than `.custom` in [#1577](https://github.com/MessageKit/MessageKit/pull/1577) by [@jvigneshcs](https://github.com/jvigneshcs)
+
 ### Changed
 
 ### Removed
