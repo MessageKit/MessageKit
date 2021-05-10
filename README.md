@@ -84,7 +84,7 @@ Older versions of Swift and XCode don't support MessageKit via SPM.
 
 > For iOS 11 please use version 3.3.0
 
-> For iOS 9 and iOS 10 please use version 3.1.0
+> For iOS 9 and iOS 10 please use version 3.1.1
 
 ## Getting Started
 

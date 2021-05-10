@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
    s.name = 'MessageKit'
-   s.version = '3.6.0'
+   s.version = '3.6.1'
    s.license = { :type => "MIT", :file => "LICENSE.md" }
 
    s.summary = 'An elegant messages UI library for iOS.'
