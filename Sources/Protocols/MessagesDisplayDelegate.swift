@@ -318,8 +318,8 @@ public extension MessagesDisplayDelegate {
             returnValue = String(format: "%.02d:%.02d", Int(duration/60), Int(duration) % 60)
         } else {
             let hours = Int(duration/3600)
-            let remainingMinutsInSeconds = Int(duration) - hours*3600
-            returnValue = String(format: "%.02d:%.02d:%.02d", hours, Int(remainingMinutsInSeconds/60), Int(remainingMinutsInSeconds) % 60)
+            let remainingMinutesInSeconds = Int(duration) - hours*3600
+            returnValue = String(format: "%.02d:%.02d:%.02d", hours, Int(remainingMinutesInSeconds/60), Int(remainingMinutesInSeconds) % 60)
         }
         return returnValue
     }
