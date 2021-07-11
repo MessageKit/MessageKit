@@ -31,7 +31,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 
     // MARK: - Public properties
 
-    /// The `BasicAudioController` controll the AVAudioPlayer state (play, pause, stop) and udpate audio cell UI accordingly.
+    /// The `BasicAudioController` control the AVAudioPlayer state (play, pause, stop) and update audio cell UI accordingly.
     lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
 
     lazy var messageList: [MockMessage] = []

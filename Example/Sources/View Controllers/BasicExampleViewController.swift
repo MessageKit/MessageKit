@@ -116,7 +116,7 @@ extension BasicExampleViewController: MessagesDisplayDelegate {
     }
     
     func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {
-        audioController.configureAudioCell(cell, message: message) // this is needed especily when the cell is reconfigure while is playing sound
+        audioController.configureAudioCell(cell, message: message) // this is needed especially when the cell is reconfigure while is playing sound
     }
 
 }

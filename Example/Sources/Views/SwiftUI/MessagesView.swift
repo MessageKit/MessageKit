@@ -62,7 +62,7 @@ struct MessagesView: UIViewControllerRepresentable {
     
     private func scrollToBottom(_ uiViewController: MessagesViewController) {
         DispatchQueue.main.async {
-            // The initialized state variable allows us to start at the bottom with the initial messages without seeing the inital scroll flash by
+            // The initialized state variable allows us to start at the bottom with the initial messages without seeing the initial scroll flash by
             uiViewController.messagesCollectionView.scrollToLastItem(animated: self.initialized)
             self.initialized = true
         }
