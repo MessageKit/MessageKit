@@ -223,6 +223,10 @@ public extension Array {
      Shuffle the array in-place using the Fisher-Yates algorithm.
      */
     mutating func shuffle() {
+        if count == 0 {
+            return
+        }
+
         for i in 0..<(count - 1) {
             let j = Int(arc4random_uniform(UInt32(count - i))) + i
             if j != i {
