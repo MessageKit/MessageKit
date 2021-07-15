@@ -6,9 +6,13 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
+Fixed the right text alignment for messageBottomLabel.
+
 ### Added
 
 ### Changed
+
+Changed right inset for outgoingMessageBottomLabelAlignment to 4 in MessageSizeCalculator - with previous value 42 the right alignment for messageBottomLabel didn't work correctly.
 
 ### Removed
 
