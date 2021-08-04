@@ -5,6 +5,6 @@
       location = "container:ChatExample.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:MessageKit">
+      location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>

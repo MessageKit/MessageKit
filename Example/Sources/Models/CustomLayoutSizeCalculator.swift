@@ -9,6 +9,55 @@
 import UIKit
 import MessageKit
 
+//extension NSAttributedString {
+//
+//    func width(considering height: CGFloat) -> CGFloat {
+//
+//        let constraintBox = CGSize(width: .greatestFiniteMagnitude, height: height)
+//        let rect = self.boundingRect(with: constraintBox, options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil)
+//        return rect.width
+//
+//    }
+//}
+
+
+extension NSAttributedString {
+
+    
+    func size(containerWidth: CGFloat) -> CGSize {
+
+        let rect = self.boundingRect(with: CGSize.init(width: containerWidth, height: CGFloat.greatestFiniteMagnitude),
+                                     options: [.usesLineFragmentOrigin, .usesFontLeading],
+                                     context: nil)
+        return rect.size
+    }
+    
+    func size(containerHeight: CGFloat) -> CGSize {
+
+        let rect = self.boundingRect(with: CGSize.init(width: CGFloat.greatestFiniteMagnitude, height: containerHeight),
+                                     options: [.usesLineFragmentOrigin, .usesFontLeading],
+                                     context: nil)
+        return rect.size
+    }
+    
+    func height(containerWidth: CGFloat) -> CGFloat {
+
+        let rect = self.boundingRect(with: CGSize.init(width: containerWidth, height: CGFloat.greatestFiniteMagnitude),
+                                     options: [.usesLineFragmentOrigin, .usesFontLeading],
+                                     context: nil)
+        return ceil(rect.size.height)
+    }
+
+    func width(containerHeight: CGFloat) -> CGFloat {
+
+        let rect = self.boundingRect(with: CGSize.init(width: CGFloat.greatestFiniteMagnitude, height: containerHeight),
+                                     options: [.usesLineFragmentOrigin, .usesFontLeading],
+                                     context: nil)
+        return ceil(rect.size.width)
+    }
+}
+
+
 class CustomLayoutSizeCalculator: CellSizeCalculator {
     
     var cellTopLabelVerticalPadding: CGFloat = 32
@@ -70,7 +119,8 @@ class CustomLayoutSizeCalculator: CellSizeCalculator {
         }
         
         let maxWidth = self.messagesLayout.itemWidth - self.cellTopLabelHorizontalPadding
-        let size = attributedText.size(consideringWidth: maxWidth)
+        
+        let size = attributedText.size(containerWidth: maxWidth)
         let height = size.height + self.cellTopLabelVerticalPadding
         
         return CGSize(width: maxWidth,
@@ -101,7 +151,7 @@ class CustomLayoutSizeCalculator: CellSizeCalculator {
         }
         let maxWidth = self.messageContainerMaxWidth - self.cellDateLabelHorizontalPadding
         
-        return attributedText.size(consideringWidth: maxWidth)
+        return attributedText.size(containerWidth: maxWidth)
     }
     
     func cellMessageBottomLabelFrame(for message: MessageType,

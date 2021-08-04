@@ -48,7 +48,7 @@ class CustomTextLayoutSizeCalculator: CustomLayoutSizeCalculator {
             self.cellMessageContentHorizontalPadding -
             self.cellMessageContainerRightSpacing
         
-        return attributedText.size(consideringWidth: maxWidth)
+        return attributedText.size(containerWidth: maxWidth)
     }
     
     func messageLabelFrame(for message: MessageType,
