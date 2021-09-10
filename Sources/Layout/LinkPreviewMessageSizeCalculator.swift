@@ -94,9 +94,9 @@ open class LinkPreviewMessageSizeCalculator: TextMessageSizeCalculator {
 }
 
 private extension LinkPreviewMessageSizeCalculator {
-    private func calculateContainerSize(with attibutedString: NSAttributedString, containerSize: inout CGSize, maxWidth: CGFloat) {
-        guard !attibutedString.string.isEmpty else { return }
-        let size = labelSize(for: attibutedString, considering: maxWidth)
+    private func calculateContainerSize(with attributedString: NSAttributedString, containerSize: inout CGSize, maxWidth: CGFloat) {
+        guard !attributedString.string.isEmpty else { return }
+        let size = labelSize(for: attributedString, considering: maxWidth)
         containerSize.height += size.height
     }
 }
