@@ -48,7 +48,7 @@ final class AutocompleteExampleViewController: ChatViewController {
         return manager
     }()
 
-    var hastagAutocompletes: [AutocompleteCompletion] = {
+    var hashtagAutocompletes: [AutocompleteCompletion] = {
         var array: [AutocompleteCompletion] = []
         for _ in 1...100 {
             array.append(AutocompleteCompletion(text: Lorem.word(), context: nil))
@@ -235,7 +235,7 @@ extension AutocompleteExampleViewController: AutocompleteManagerDelegate, Autoco
                                                   context: ["id": user.senderId])
             }
         } else if prefix == "#" {
-            return hastagAutocompletes + asyncCompletions
+            return hashtagAutocompletes + asyncCompletions
         }
         return []
     }

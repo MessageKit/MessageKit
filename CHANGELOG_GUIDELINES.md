@@ -43,7 +43,7 @@ Here you can find the general guidelines for maintaining the Changelog (or addin
 
 ### Fixed
 
--  Fixed a bug that prevented the `textAllignment` property of `InputTextView`'s `placeholderLabel` from having noticable differences when changed to `.center` or `.right`.
+-  Fixed a bug that prevented the `textAlignment` property of `InputTextView`'s `placeholderLabel` from having noticeable differences when changed to `.center` or `.right`.
 [#262](https://github.com/MessageKit/MessageKit/pull/262) by [@nathantannar4](https://github.com/nathantannar4).
 
 ### Removed

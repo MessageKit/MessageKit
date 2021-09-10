@@ -104,7 +104,7 @@ This structure will allow you to create a layout that suits your needs as you ca
   <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/InputBarAccessoryViewLayout.png" title="InputBarAccessoryViewLayout">
 </p>
 
-The `MessageInputBar`, derrived from [InputBarAccessoryView](https://github.com/nathantannar4/InputBarAccessoryView) is a flexible and robust way of creating any kind of input layout you wish. It is self-sizing which means as the user types it will grow to fill available space. It is centered around the `middleContentView` which by default holds the `InputTextView`. This is surrounded by `InputStackView`'s that will also grow in high based on the needs of their subviews `intrinsicContentSize`. See the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project for examples on how to taylor the layout for your own needs.
+The `MessageInputBar`, derived from [InputBarAccessoryView](https://github.com/nathantannar4/InputBarAccessoryView) is a flexible and robust way of creating any kind of input layout you wish. It is self-sizing which means as the user types it will grow to fill available space. It is centered around the `middleContentView` which by default holds the `InputTextView`. This is surrounded by `InputStackView`'s that will also grow in high based on the needs of their subviews `intrinsicContentSize`. See the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project for examples on how to tailor the layout for your own needs.
 
 ### Guides
 

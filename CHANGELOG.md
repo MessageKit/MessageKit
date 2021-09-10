@@ -262,7 +262,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
-- **Breaking Change** Fixed typo of `scrollsToBottomOnKeybordBeginsEditing` to `scrollsToBottomOnKeyboardBeginsEditing`.
+- **Breaking Change** Fixed typo of `scrollsToBottomOnKeyboardBeginsEditing` to `scrollsToBottomOnKeyboardBeginsEditing`.
 [#856](https://github.com/MessageKit/MessageKit/pull/856) by [@p-petrenko](https://github.com/p-petrenko)
 
 -  Fixed a bug that prevented `MessageLabel` from laying out properly when contained by superviews using autolayout.
@@ -414,7 +414,7 @@ You must now set this font explicitly through the `emojiMessageSizeCalculator` o
 - **Breaking Change** Removed the `showsDateHeaderAfterTimeInterval` property of `MessagesCollectionView`.
 [#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
 
-- **Breaking Change** Removed the `reuseIdentifer` method from `MessageCollectionViewCell`, `TextMessageCell`,
+- **Breaking Change** Removed the `reuseIdentifier` method from `MessageCollectionViewCell`, `TextMessageCell`,
 `LocationMessageCell`, `MediaMessageCell`, and `MessageContentCell`.
 [#615](https://github.com/MessageKit/MessageKit/pull/615) by [@SD10](https://github.com/sd10).
 
@@ -620,8 +620,8 @@ typed as `MessageLabel` and are now regular `UILabel`s.
 
 ### Fixed
 
-- **Breaking Change** Fixed all instances of misspelled `inital` property. `Avatar.inital` has changed to `Avatar.initial` 
-and the initializer has changed from `public init(image: UIImage? = nil, initals: String = "?")` to `public init(image: UIImage? = nil, initials: String = "?")`. 
+- **Breaking Change** Fixed all instances of misspelled `initial` property. `Avatar.initial` has changed to `Avatar.initial` 
+and the initializer has changed from `public init(image: UIImage? = nil, initials: String = "?")` to `public init(image: UIImage? = nil, initials: String = "?")`. 
 [#298](https://github.com/MessageKit/MessageKit/issues/298) by [@sidmclaughlin](https://github.com/sidmclaughlin).
 
 - Fixed `MessageInputBar`'s `translucent` functionality.
@@ -654,7 +654,7 @@ moved their methods into the `MessagesLayoutDelegate` protocol.
 - Fixed `contentInset.top` adjustment of the `MessagesCollectionView` on iOS versions less than 11 where it was found that messages appeared under the navigation var
 [#334](https://github.com/MessageKit/MessageKit/pull/334) by [@nathantannar4](https://github.com/nathantannar4).
 
-- Fixed `cellbottomLabel` origin X for the `.messageLeading` alignment and
+- Fixed `cellBottomLabel` origin X for the `.messageLeading` alignment and
 origin Y so that the `cellBottomLabel` is always under the `MessageContainerView`.
 [#326](https://github.com/MessageKit/MessageKit/pull/326) by [@SD10](https://github.com/sd10). 
 
@@ -674,7 +674,7 @@ origin Y so that the `cellBottomLabel` is always under the `MessageContainerView
 -  Fixed a bug that caused a race condition to be met when invalidating the `intrinsicContentSize` of the `MessageInputBar` which froze the app during a "Select" or "Select All" long press
 [#313](https://github.com/MessageKit/MessageKit/pull/313) by [@zhongwuzw](https://github.com/nathantannar4).
 
--  Fixed a bug that the `placeholderLabel` `subview` of `InputTextView` leads to ambiguous content size because of uncorrect `Auto Layout`.
+-  Fixed a bug that the `placeholderLabel` `subview` of `InputTextView` leads to ambiguous content size because of incorrect `Auto Layout`.
 [#310](https://github.com/MessageKit/MessageKit/pull/310) by [@zhongwuzw](https://github.com/zhongwuzw).
 
 -  Fixed a bug that the `leftStackView`、`rightStackView` `subview` of `MessageInputBar` leads to ambiguous `Auto Layout` issue because of typo.
@@ -710,7 +710,7 @@ origin Y so that the `cellBottomLabel` is always under the `MessageContainerView
 
 ### Fixed
 
--  Fixed a bug that prevented the `textAllignment` property of `InputTextView`'s `placeholderLabel` from having noticable differences when changed to `.center` or `.right`.
+-  Fixed a bug that prevented the `textAlignment` property of `InputTextView`'s `placeholderLabel` from having noticeable differences when changed to `.center` or `.right`.
 [#262](https://github.com/MessageKit/MessageKit/pull/262) by [@nathantannar4](https://github.com/nathantannar4).
 
 -  Initial `contentInset.bottom` reference changed from `messageInputBar` to `inputAccessoryView` to allow custom `inputAccessoryView`'s that don't break the initial layout.
@@ -741,7 +741,7 @@ when `extendedLayoutIncludesOpaqueBars` is `true`.
 - **Breaking Change** `.emoji(String)` case to `MessageData` enum. 
 [#222](https://github.com/MessageKit/MessageKit/pull/222) by [@SirArkimdes](https://github.com/SirArkimedes).
 
-- **Breaking Change** `TextMessageDisplayDelegate` to handle `enabledDetecors(for:at:in)` and moves `textColor(for:at:in)` to this namespace.
+- **Breaking Change** `TextMessageDisplayDelegate` to handle `enabledDetectors(for:at:in)` and moves `textColor(for:at:in)` to this namespace.
 [#230](https://github.com/MessageKit/MessageKit/pull/230) by [@SD10](https://github.com/sd10)
 
 - `LocationMessageDisplayDelegate` to customize a location messages appearance and add a `MKAnnotationView` to location message snapshots. 
@@ -759,7 +759,7 @@ when `extendedLayoutIncludesOpaqueBars` is `true`.
 - `scrollsToBottomOnKeyboardDidBeginEditing` property to automatically scroll to the bottom of `MessagesCollectionView` when the keyboard begins editing.
 [#217](https://github.com/MessageKit/MessageKit/pull/217) by [@SD10](https://github.com/SD10).
 
-- `additionalTopContentInset` property to `MessagesColectionViewController` to allow users to account for extra subviews.
+- `additionalTopContentInset` property to `MessagesCollectionViewController` to allow users to account for extra subviews.
 [#218](https://github.com/MessageKit/MessageKit/pull/218) by [@SD10](https://github.com/SD10).
 
 - `messagePadding(for:at:in)` method to `MessagesLayoutDelegate` to dynamically set padding around `MessageContainerView`.

@@ -109,7 +109,7 @@ final internal class LaunchViewController: UITableViewController {
             guard let url = URL(string: "https://github.com/orgs/MessageKit/teams/contributors/members") else { return }
             openURL(url)
         default:
-            assertionFailure("You need to impliment the action for this cell: \(cell)")
+            assertionFailure("You need to implement the action for this cell: \(cell)")
             return
         }
     }
