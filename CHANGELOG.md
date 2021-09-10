@@ -145,7 +145,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Deprecated
 
-- Deprecated `SenderType.id` in favour of `SenderType.senderId`. This change was previously meant for 3.0.0. [#1201](https://github.com/MessageKit/MessageKit/pull/1201) by [@kinoroy](https://github.com/kinoroy)
+- Deprecated `SenderType.id` in favor of `SenderType.senderId`. This change was previously meant for 3.0.0. [#1201](https://github.com/MessageKit/MessageKit/pull/1201) by [@kinoroy](https://github.com/kinoroy)
 
 ### Removed
 
@@ -254,7 +254,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Added customizable `accessoryView`, with a new `MessagesDisplayDelegate` function `configureAccessoryView`, and corresponding size & padding properties in `MessageSizeCalculator`. The `accessoryView` is aligned to the center of the `messageContainerView`.
 [#710](https://github.com/MessageKit/MessageKit/pull/710) by [@hyouuu](https://github.com/hyouuu)
 
-- Added a tap gesture recognition to the `accessoryView` which calls the  `MessageCellDelagate` function `didTapAccessoryView(in:)`. 
+- Added a tap gesture recognition to the `accessoryView` which calls the  `MessageCellDelegate` function `didTapAccessoryView(in:)`. 
 [#834](https://github.com/MessageKit/MessageKit/pull/834) by [@nathantannar4](https://github.com/nathantannar4)
 
 - Added `additionalBottomInset` property that allows to adjust the bottom content inset automatically set on the messages collection view by the view controller. 
