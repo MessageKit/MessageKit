@@ -31,7 +31,7 @@ public protocol LinkItem {
 
     /// A link item needs a message to present, it can be a simple String or
     /// a NSAttributedString, but only one will be shown.
-    /// LinkItem.text has priority over LinkeItem.attributedText.
+    /// LinkItem.text has priority over LinkItem.attributedText.
 
     /// The message text.
     var text: String? { get }
