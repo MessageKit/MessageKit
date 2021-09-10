@@ -56,7 +56,7 @@ final class AutocompleteExampleViewController: ChatViewController {
         return array
     }()
 
-    // Completions loaded async that get appeneded to local cached completions
+    // Completions loaded async that get appended to local cached completions
     var asyncCompletions: [AutocompleteCompletion] = []
 
     override func viewDidAppear(_ animated: Bool) {
