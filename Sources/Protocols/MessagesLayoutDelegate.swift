@@ -188,7 +188,7 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///   The default implementation will return nil. You must override this method if you are using your own cell for messages with MessageType.audio.
     func audioCellSizeCalculator(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator?
     
-    /// Constact cell size calculator for messages with MessageType.contact.
+    /// Contact cell size calculator for messages with MessageType.contact.
     ///
     /// - Parameters:
     ///   - message: The contact message
