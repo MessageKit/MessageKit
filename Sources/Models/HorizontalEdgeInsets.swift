@@ -25,7 +25,7 @@
 import Foundation
 import UIKit
 
-/// A varient of `UIEdgeInsets` that only has horizontal inset properties
+/// A variant of `UIEdgeInsets` that only has horizontal inset properties
 public struct HorizontalEdgeInsets: Equatable {
 
     public var left: CGFloat
