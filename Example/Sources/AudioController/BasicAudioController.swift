@@ -72,7 +72,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
 
     /// Used to configure the audio cell UI:
     ///     1. play button selected state;
-    ///     2. progresssView progress;
+    ///     2. progressView progress;
     ///     3. durationLabel text;
     ///
     /// - Parameters:
@@ -116,7 +116,7 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
             startProgressTimer()
             audioCell.delegate?.didStartAudio(in: audioCell)
         default:
-            print("BasicAudioPlayer failed play sound becasue given message kind is not Audio")
+            print("BasicAudioPlayer failed play sound because given message kind is not Audio")
         }
     }
 
