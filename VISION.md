@@ -19,7 +19,7 @@ Instead, MessageKit will provide you with hooks to easily handle these situation
 We will strive to support the 3 latest versions of iOS.
 
 - **Objective-C Compatibility**: 
-We will not sacrifice functionality or an idiomatic Swift API to support Objective-C, but would love to improve Objective-C compatability where possible.
+We will not sacrifice functionality or an idiomatic Swift API to support Objective-C, but would love to improve Objective-C compatibility where possible.
 
 - **Layouts**: 
 We will favor programmatic layouts over `.xib`s where ever possible.
