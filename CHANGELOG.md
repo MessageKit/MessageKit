@@ -12,6 +12,13 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Removed
 
+## 3.7.0
+
+### Fixed
+- Updated InputBarAccessoryView to 5.4.0 with XCode 13 support
+- Fixed Example project loading MessageKit through SPM
+- Make sure MessageKit works on XCode 13 correctly
+
 ## 3.6.1
 
 ### Added
