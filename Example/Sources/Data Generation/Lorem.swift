@@ -149,7 +149,7 @@ public class Lorem {
     }
     
     /**
-     Generate a string of random paragrahs.
+     Generate a string of random paragraphs.
      - parameter nbParagraphs: The number of paragraphs to generate.
      - returns: Returns a string of random paragraphs.
      */
