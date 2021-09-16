@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		032A15DD25965D9A00E00FE3 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032A15DC25965D9A00E00FE3 /* AlertService.swift */; };
 		032A15E225965E1100E00FE3 /* CameraInputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032A15E125965E1100E00FE3 /* CameraInputBarAccessoryView.swift */; };
-		13CCA04625793058005C19BB /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 13CCA04525793058005C19BB /* MessageKit */; };
 		13CCA06325793E24005C19BB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 13CCA06225793E24005C19BB /* Kingfisher */; };
 		1C5433DD24C389C300A5383B /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5433DC24C389C300A5383B /* MessagesView.swift */; };
 		1C5433DF24C38DBF00A5383B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C5433DE24C38DBF00A5383B /* SwiftUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -36,6 +35,7 @@
 		50739F9621C5090A008CA369 /* BasicAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50739F9521C5090A008CA369 /* BasicAudioController.swift */; };
 		5074EF4E2163555900D82952 /* sound2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5074EF4C2163555900D82952 /* sound2.m4a */; };
 		5074EF4F2163555900D82952 /* sound1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5074EF4D2163555900D82952 /* sound1.m4a */; };
+		5117FB4626F3230F00F71A2C /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5117FB4526F3230F00F71A2C /* MessageKit */; };
 		5168957524F7AD560058C643 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5168957124F7AD560058C643 /* Assets.xcassets */; };
 		5168957624F7AD560058C643 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5168957224F7AD560058C643 /* LaunchScreen.storyboard */; };
 		63ECDABE24182A470016C349 /* MessageSubviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ECDABD24182A470016C349 /* MessageSubviewViewController.swift */; };
@@ -122,9 +122,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5117FB4626F3230F00F71A2C /* MessageKit in Frameworks */,
 				13CCA06325793E24005C19BB /* Kingfisher in Frameworks */,
 				1C5433DF24C38DBF00A5383B /* SwiftUI.framework in Frameworks */,
-				13CCA04625793058005C19BB /* MessageKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,12 +333,12 @@
 			buildRules = (
 			);
 			dependencies = (
-				13CCA051257932DD005C19BB /* PBXTargetDependency */,
+				5117FB4826F3231600F71A2C /* PBXTargetDependency */,
 			);
 			name = ChatExample;
 			packageProductDependencies = (
-				13CCA04525793058005C19BB /* MessageKit */,
 				13CCA06225793E24005C19BB /* Kingfisher */,
+				5117FB4526F3230F00F71A2C /* MessageKit */,
 			);
 			productName = ChatExample;
 			productReference = 882B5E331CF7D4B900B6E160 /* ChatExample.app */;
@@ -416,6 +416,7 @@
 			mainGroup = 882B5E2A1CF7D4B900B6E160;
 			packageReferences = (
 				13CCA06125793E24005C19BB /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				5117FB4226F322FD00F71A2C /* XCRemoteSwiftPackageReference "MessageKit" */,
 			);
 			productRefGroup = 882B5E341CF7D4B900B6E160 /* Products */;
 			projectDirPath = "";
@@ -531,9 +532,9 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		13CCA051257932DD005C19BB /* PBXTargetDependency */ = {
+		5117FB4826F3231600F71A2C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = 13CCA050257932DD005C19BB /* MessageKit */;
+			productRef = 5117FB4726F3231600F71A2C /* MessageKit */;
 		};
 		882B5E4B1CF7D4B900B6E160 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -822,21 +823,31 @@
 				minimumVersion = 5.15.8;
 			};
 		};
+		5117FB4226F322FD00F71A2C /* XCRemoteSwiftPackageReference "MessageKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MessageKit/MessageKit";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		13CCA04525793058005C19BB /* MessageKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MessageKit;
-		};
-		13CCA050257932DD005C19BB /* MessageKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MessageKit;
-		};
 		13CCA06225793E24005C19BB /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 13CCA06125793E24005C19BB /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		5117FB4526F3230F00F71A2C /* MessageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5117FB4226F322FD00F71A2C /* XCRemoteSwiftPackageReference "MessageKit" */;
+			productName = MessageKit;
+		};
+		5117FB4726F3231600F71A2C /* MessageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5117FB4226F322FD00F71A2C /* XCRemoteSwiftPackageReference "MessageKit" */;
+			productName = MessageKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
