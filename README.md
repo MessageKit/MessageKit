@@ -17,7 +17,10 @@
 <img src="https://cocoapod-badges.herokuapp.com/v/MessageKit/badge.png" alt="CocoaPods">
 </a>
 <a href="https://developer.apple.com/xcode">
-<img src="https://img.shields.io/badge/Xcode-12-blue.svg" alt="Xcode">
+<img src="https://img.shields.io/badge/Xcode-12-green.svg" alt="Xcode">
+</a>
+<a href="https://developer.apple.com/xcode">
+<img src="https://img.shields.io/badge/Xcode-13-blue.svg" alt="Xcode">
 </a>
 <a href="https://opensource.org/licenses/MIT">
 <img src="https://img.shields.io/badge/License-MIT-red.svg" alt="MIT">
