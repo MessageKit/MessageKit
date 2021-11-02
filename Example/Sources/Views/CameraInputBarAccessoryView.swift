@@ -115,11 +115,12 @@ extension CameraInputBarAccessoryView : UIImagePickerControllerDelegate , UINavi
     func showImagePickerController(sourceType: UIImagePickerController.SourceType){
         
         let imgPicker = UIImagePickerController()
-         imgPicker.delegate = self
-         imgPicker.allowsEditing = true
-         imgPicker.sourceType = sourceType
-         inputAccessoryView?.isHidden = true
-         getRootViewController()?.present(imgPicker, animated: true, completion: nil)
+        imgPicker.delegate = self
+        imgPicker.allowsEditing = true
+        imgPicker.sourceType = sourceType
+        imgPicker.presentationController?.delegate = self
+        inputAccessoryView?.isHidden = true
+        getRootViewController()?.present(imgPicker, animated: true, completion: nil)
       
     }
     
@@ -196,4 +197,9 @@ extension CameraInputBarAccessoryView: AttachmentManagerDelegate {
 }
 
 
-
+extension CameraInputBarAccessoryView: UIAdaptivePresentationControllerDelegate {
+    // Swipe to dismiss image modal
+    public func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        isHidden = false
+    }
+}
