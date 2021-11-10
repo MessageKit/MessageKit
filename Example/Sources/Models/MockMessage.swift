@@ -60,7 +60,7 @@ private struct ImageMediaItem: MediaItem {
     }
 }
 
-private struct MockAudiotem: AudioItem {
+private struct MockAudioItem: AudioItem {
 
     var url: URL
     var size: CGSize
@@ -156,7 +156,7 @@ internal struct MockMessage: MessageType {
     }
 
     init(audioURL: URL, user: MockUser, messageId: String, date: Date) {
-        let audioItem = MockAudiotem(url: audioURL)
+        let audioItem = MockAudioItem(url: audioURL)
         self.init(kind: .audio(audioItem), user: user, messageId: messageId, date: date)
     }
 

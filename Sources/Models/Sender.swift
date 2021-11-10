@@ -43,7 +43,7 @@ public struct Sender: SenderType {
     /// The display name of a sender.
     public let displayName: String
 
-    // MARK: - Intializers
+    // MARK: - Initializers
 
     public init(senderId: String, displayName: String) {
         self.senderId = senderId

@@ -149,7 +149,7 @@ public class Lorem {
     }
     
     /**
-     Generate a string of random paragrahs.
+     Generate a string of random paragraphs.
      - parameter nbParagraphs: The number of paragraphs to generate.
      - returns: Returns a string of random paragraphs.
      */
@@ -223,6 +223,10 @@ public extension Array {
      Shuffle the array in-place using the Fisher-Yates algorithm.
      */
     mutating func shuffle() {
+        if count == 0 {
+            return
+        }
+
         for i in 0..<(count - 1) {
             let j = Int(arc4random_uniform(UInt32(count - i))) + i
             if j != i {

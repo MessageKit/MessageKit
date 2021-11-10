@@ -4,7 +4,4 @@
    <FileRef
       location = "container:ChatExample.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:MessageKit">
-   </FileRef>
 </Workspace>

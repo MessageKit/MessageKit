@@ -105,7 +105,16 @@ final class AdvancedExampleViewController: ChatViewController {
     }
     
     override func configureMessageInputBar() {
-        super.configureMessageInputBar()
+        //super.configureMessageInputBar()
+        
+        messageInputBar = CameraInputBarAccessoryView()
+        messageInputBar.delegate = self
+        messageInputBar.inputTextView.tintColor = .primaryColor
+        messageInputBar.sendButton.setTitleColor(.primaryColor, for: .normal)
+        messageInputBar.sendButton.setTitleColor(
+            UIColor.primaryColor.withAlphaComponent(0.3),
+            for: .highlighted)
+        
         
         messageInputBar.isTranslucent = true
         messageInputBar.separatorLine.isHidden = true
@@ -166,7 +175,7 @@ final class AdvancedExampleViewController: ChatViewController {
         }
     }
     
-    /// The input bar will autosize based on the contained text, but we can add padding to adjust the height or width if neccesary
+    /// The input bar will autosize based on the contained text, but we can add padding to adjust the height or width if necessary
     /// See the InputBar diagram here to visualize how each of these would take effect:
     /// https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/InputBarAccessoryViewLayout.png
     private func configureInputBarPadding() {
@@ -410,7 +419,7 @@ extension AdvancedExampleViewController: MessagesDisplayDelegate {
     }
 
     func configureAudioCell(_ cell: AudioMessageCell, message: MessageType) {
-        audioController.configureAudioCell(cell, message: message) // this is needed especily when the cell is reconfigure while is playing sound
+        audioController.configureAudioCell(cell, message: message) // this is needed especially when the cell is reconfigure while is playing sound
     }
     
 }
@@ -439,3 +448,28 @@ extension AdvancedExampleViewController: MessagesLayoutDelegate {
     }
 
 }
+
+
+extension AdvancedExampleViewController: CameraInputBarAccessoryViewDelegate {
+
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith attachments: [AttachmentManager.Attachment]) {
+        
+        
+        for item in attachments {
+            if  case .image(let image) = item {
+              
+                self.sendImageMessage(photo: image)
+            }
+        }
+        inputBar.invalidatePlugins()
+    }
+    
+    
+    func sendImageMessage( photo  : UIImage)  {
+       
+        let photoMessage = MockMessage(image: photo, user: self.currentSender() as! MockUser, messageId: UUID().uuidString, date: Date())
+        self.insertMessage(photoMessage)
+    }
+    
+}
+

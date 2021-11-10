@@ -141,7 +141,7 @@ open class AvatarView: UIImageView {
 
     /**
      Calculates the inner circle's width.
-     Note: Assumes corner radius cannot be more than width/2 (this creates circle).
+     - Note: Assumes corner radius cannot be more than width/2 (this creates circle).
      */
     private func calculateTextRect(outerViewWidth: CGFloat, outerViewHeight: CGFloat) -> CGRect {
         guard outerViewWidth > 0 else {

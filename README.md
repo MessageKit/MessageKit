@@ -17,7 +17,10 @@
 <img src="https://cocoapod-badges.herokuapp.com/v/MessageKit/badge.png" alt="CocoaPods">
 </a>
 <a href="https://developer.apple.com/xcode">
-<img src="https://img.shields.io/badge/Xcode-12-blue.svg" alt="Xcode">
+<img src="https://img.shields.io/badge/Xcode-12-green.svg" alt="Xcode">
+</a>
+<a href="https://developer.apple.com/xcode">
+<img src="https://img.shields.io/badge/Xcode-13-blue.svg" alt="Xcode">
 </a>
 <a href="https://opensource.org/licenses/MIT">
 <img src="https://img.shields.io/badge/License-MIT-red.svg" alt="MIT">
@@ -84,7 +87,7 @@ Older versions of Swift and XCode don't support MessageKit via SPM.
 
 > For iOS 11 please use version 3.3.0
 
-> For iOS 9 and iOS 10 please use version 3.1.0
+> For iOS 9 and iOS 10 please use version 3.1.1
 
 ## Getting Started
 
@@ -104,7 +107,7 @@ This structure will allow you to create a layout that suits your needs as you ca
   <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/InputBarAccessoryViewLayout.png" title="InputBarAccessoryViewLayout">
 </p>
 
-The `MessageInputBar`, derrived from [InputBarAccessoryView](https://github.com/nathantannar4/InputBarAccessoryView) is a flexible and robust way of creating any kind of input layout you wish. It is self-sizing which means as the user types it will grow to fill available space. It is centered around the `middleContentView` which by default holds the `InputTextView`. This is surrounded by `InputStackView`'s that will also grow in high based on the needs of their subviews `intrinsicContentSize`. See the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project for examples on how to taylor the layout for your own needs.
+The `MessageInputBar`, derived from [InputBarAccessoryView](https://github.com/nathantannar4/InputBarAccessoryView) is a flexible and robust way of creating any kind of input layout you wish. It is self-sizing which means as the user types it will grow to fill available space. It is centered around the `middleContentView` which by default holds the `InputTextView`. This is surrounded by `InputStackView`'s that will also grow in high based on the needs of their subviews `intrinsicContentSize`. See the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project for examples on how to tailor the layout for your own needs.
 
 ### Guides
 
@@ -191,6 +194,7 @@ Add your app to the list of apps using this library and make a pull request.
 - [Charge Running](https://apps.apple.com/app/charge-running-live-coaching/id1204578360)
 - [HER](https://apps.apple.com/us/app/id573328837)
 - [Girlfriend Plus](https://apps.apple.com/us/app/girlfriend-plus/id1011637655)
+- [Noon Happen](https://apps.apple.com/app/id1477310602)
 
 _Please provide attribution, it is greatly appreciated._
 

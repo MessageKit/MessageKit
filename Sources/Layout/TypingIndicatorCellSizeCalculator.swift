@@ -26,18 +26,13 @@ import UIKit
 
 open class TypingCellSizeCalculator: CellSizeCalculator {
 
-    open var height: CGFloat = 62
-
     public init(layout: MessagesCollectionViewFlowLayout? = nil) {
         super.init()
         self.layout = layout
     }
 
     open override func sizeForItem(at indexPath: IndexPath) -> CGSize {
-        guard let layout = layout else { return .zero }
-        let collectionViewWidth = layout.collectionView?.bounds.width ?? 0
-        let contentInset = layout.collectionView?.contentInset ?? .zero
-        let inset = layout.sectionInset.horizontal + contentInset.horizontal
-        return CGSize(width: collectionViewWidth - inset, height: height)
+        guard let layout = layout as? MessagesCollectionViewFlowLayout else { return .zero }
+        return layout.messagesLayoutDelegate.typingIndicatorViewSize(for: layout)
     }
 }

@@ -35,7 +35,7 @@ Third, each message must have a `sentDate` which represents the `Date` that each
 Fourth, each message must specify what kind of message it is through the `kind: MessageKind` property:
 ### [MessageKind](https://github.com/MessageKit/MessageKit#default-cells)
 
-`MessageData` has 8 different cases representing the types of messages that **MessageKit** can display.
+`MessageKind` has 8 different cases representing the types of messages that **MessageKit** can display.
 
 - `text(String)` - Use this case if you just want to display a normal text message without any attributes.
   - **NOTE**: You must also specify the `UIFont` you want to use for this text by setting the `messageLabelFont` property of the `textMessageSizeCalculator` in `MessagesCollectionViewFlowLayout`.
