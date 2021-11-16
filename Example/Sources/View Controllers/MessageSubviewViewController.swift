@@ -27,21 +27,30 @@ import UIKit
 import InputBarAccessoryView
 
 final class MessageSubviewViewController: BasicExampleViewController {
-
+    
     private var keyboardManager = KeyboardManager()
-
+    
     private let subviewInputBar = InputBarAccessoryView()
-
+    
+    // In order to reach the subviewInputBar
+    override var inputAccessoryView: UIView?{
+        return self.subviewInputBar
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
         subviewInputBar.delegate = self
         // Take into account the height of the bottom input bar
         additionalBottomInset = 88
+        // Binding to the messagesCollectionView will enable interactive dismissal
+        keyboardManager.bind(to: messagesCollectionView)
     }
 
     override func didMove(toParent parent: UIViewController?) {
         super.didMove(toParent: parent)
         parent?.view.addSubview(subviewInputBar)
+        // Binding the inputBar will set the needed callback actions to position the inputBar on top of the keyboard
         keyboardManager.bind(inputAccessoryView: subviewInputBar)
     }
 
