@@ -526,3 +526,26 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
         return abs(velocity.x) > abs(velocity.y)
     }
 }
+
+        // MARK: - UIScrollViewDelegate
+
+extension MessagesViewController:UIScrollViewDelegate{
+    
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) { }
+    
+    open func scrollViewWillBeginDragging(_ scrollView: UIScrollView){ }
+    
+    open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>){ }
+    
+    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool){ }
+    
+    open func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView){ }
+    
+    open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) { }
+    
+    open func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) { }
+    
+    open func scrollViewDidScrollToTop(_ scrollView: UIScrollView){ }
+    
+    open func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) { }
+}
