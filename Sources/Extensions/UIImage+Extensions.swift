@@ -28,6 +28,7 @@ public enum ImageType: String {
     case play
     case pause
     case disclosure
+    case scrollToBottom = "scroll_to_bottom"
 }
 
 /// This extension provide a way to access image resources with in framework

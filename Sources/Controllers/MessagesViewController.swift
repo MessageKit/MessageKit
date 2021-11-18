@@ -43,6 +43,24 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
     /// The default value of this property is `false`.
     /// NOTE: This is related to `scrollToLastItem` whereas the below flag is related to `scrollToBottom` - check each function for differences
     open var scrollsToLastItemOnKeyboardBeginsEditing: Bool = false
+    
+    /// Floating Button that scrolls to bottom when the scroll `y` position less that the `contentSize.height`
+    /// By defaults it is hidden
+    private lazy var scrollToBottomFloatButton:UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage.messageKitImageWith(type: .scrollToBottom), for: .normal)
+        button.isHidden = !self.showScrollToBottomButton
+        button.addTarget(self, action: #selector(handleScrollToButton), for: .touchUpInside)
+        return button
+    }()
+    
+    /// A boolean value that determines whether to show the `scrollToBottomFloatButton`
+    /// The default value of this property is `false`.
+    open var showScrollToBottomButton:Bool = false{
+        didSet{
+            self.scrollToBottomFloatButton.isHidden = !showScrollToBottomButton
+        }
+    }
 
     /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
     /// bottom whenever the `InputTextView` begins editing.
@@ -192,6 +210,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
         self.panGesture = nil
         messagesCollectionView.removeGestureRecognizer(panGesture)
         messagesCollectionView.clipsToBounds = true
+    }
+    
+    @objc private func handleScrollToButton(){
+        
     }
 
     @objc
