@@ -38,7 +38,7 @@ open class AudioMessageCell: MessageContentCell {
         return playButton
     }()
 
-    /// The time duration lable to display on audio messages.
+    /// The time duration label to display on audio messages.
     public lazy var durationLabel: UILabel = {
         let durationLabel = UILabel(frame: CGRect.zero)
         durationLabel.textAlignment = .right
