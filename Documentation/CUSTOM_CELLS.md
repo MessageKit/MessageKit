@@ -46,6 +46,10 @@ open class MyCustomMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy open var customMessageSizeCalculator = CustomMessageSizeCalculator(layout: self)
 
     override open func cellSizeCalculatorForItem(at indexPath: IndexPath) -> CellSizeCalculator {
+        //before checking the messages check if section is reserved for typing otherwise it will cause IndexOutOfBounds error
+        if isSectionReservedForTypingIndicator(indexPath.section) {
+            return typingIndicatorSizeCalculator
+        }
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         if case .custom = message.kind {
             return customMessageSizeCalculator
@@ -69,7 +73,10 @@ internal class ConversationViewController: MessagesViewController {
         guard let messagesDataSource = messagesCollectionView.messagesDataSource else {
             fatalError("Ouch. nil data source for messages")
         }
-
+        //before checking the messages check if section is reserved for typing otherwise it will cause IndexOutOfBounds error
+        if isSectionReservedForTypingIndicator(indexPath.section){
+            return super.collectionView(collectionView, cellForItemAt: indexPath)
+        }
         let message = messagesDataSource.messageForItem(at: indexPath, in: messagesCollectionView)
         if case .custom = message.kind {
             let cell = messagesCollectionView.dequeueReusableCell(MyCustomCell.self, for: indexPath)
