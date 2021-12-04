@@ -6,8 +6,8 @@ jobs:
   tests:
     name: Run Tests
     runs-on: macOS-latest
-    env: 
-       DEVELOPER_DIR: /Applications/Xcode_12.app/Contents/Developer
+    #env: 
+       #DEVELOPER_DIR: /Applications/Xcode_12.app/Contents/Developer
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
