@@ -45,13 +45,12 @@ extension CameraInputBarAccessoryViewDelegate {
     func configure(){
         let camera = makeButton(named: "ic_camera")
         camera.tintColor = .darkGray
-        camera.onTouchUpInside { (item) in
-            self.showImagePickerControllerActionSheet()
+        camera.onTouchUpInside { [weak self] item in
+            self?.showImagePickerControllerActionSheet()
         }
         self.setLeftStackViewWidthConstant(to: 35, animated: true)
         self.setStackViewItems([camera], forStack: .left, animated: false)
         self.inputPlugins = [attachmentManager]
-
     }
     
     override func didSelectSendButton() {
@@ -99,12 +98,12 @@ extension CameraInputBarAccessoryView : UIImagePickerControllerDelegate , UINavi
     @objc  func showImagePickerControllerActionSheet()  {
         
 
-        let photoLibraryAction = UIAlertAction(title: "Choose From Library", style: .default) { (action) in
-            self.showImagePickerController(sourceType: .photoLibrary)
+        let photoLibraryAction = UIAlertAction(title: "Choose From Library", style: .default) { [weak self] action in
+            self?.showImagePickerController(sourceType: .photoLibrary)
         }
         
-        let cameraAction = UIAlertAction(title: "Take From Camera", style: .default) { (action) in
-            self.showImagePickerController(sourceType: .camera)
+        let cameraAction = UIAlertAction(title: "Take From Camera", style: .default) { [weak self] action in
+            self?.showImagePickerController(sourceType: .camera)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .default , handler: nil)
