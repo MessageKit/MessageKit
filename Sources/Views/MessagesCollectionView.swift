@@ -46,9 +46,16 @@ open class MessagesCollectionView: UICollectionView {
     internal var showMessageTimestampOnSwipeLeft: Bool = false
 
     private var indexPathForLastItem: IndexPath? {
-        let lastSection = numberOfSections - 1
-        guard lastSection >= 0, numberOfItems(inSection: lastSection) > 0 else { return nil }
-        return IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
+        guard numberOfSections > 0 else { return nil }
+        
+        for offset in 1...numberOfSections {
+            let section = numberOfSections - offset
+            let lastItem = numberOfItems(inSection: section) - 1
+            if lastItem >= 0 {
+                return IndexPath(item: lastItem, section: section)
+            }
+        }
+        return nil
     }
 
     open var messagesCollectionViewFlowLayout: MessagesCollectionViewFlowLayout {
@@ -108,14 +115,8 @@ open class MessagesCollectionView: UICollectionView {
 
     // NOTE: It's possible for small content size this wouldn't work - https://github.com/MessageKit/MessageKit/issues/725
     public func scrollToLastItem(at pos: UICollectionView.ScrollPosition = .bottom, animated: Bool = true) {
-        guard numberOfSections > 0 else { return }
+        guard let indexPath = indexPathForLastItem else { return }
         
-        let lastSection = numberOfSections - 1
-        let lastItemIndex = numberOfItems(inSection: lastSection) - 1
-        
-        guard lastItemIndex >= 0 else { return }
-        
-        let indexPath = IndexPath(row: lastItemIndex, section: lastSection)
         scrollToItem(at: indexPath, at: pos, animated: animated)
     }
     
