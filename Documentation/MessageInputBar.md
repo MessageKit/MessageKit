@@ -34,7 +34,7 @@ func messageInputBar(_ inputBar: MessageInputBar, textViewTextDidChangeTo text: 
 
 The layout of the `MessageInputBar` is made of of 3 `UIStackView`'s and an `InputTextView` (subclass of `UITextView`). The padding of the subviews can be easily adjusted by changing the `padding` and `textViewPadding` properties. The constraints will automatically be updated.
 
-<img src="../Assets/MessageInputBarLayout.png">
+<img src="../Assets/InputBarAccessoryViewLayout.png">
 
 ```swift
 H:|-(padding.left)-[UIStackView(leftStackViewWidthContant)]-(textViewPadding.left)-[InputTextView]-(textViewPadding.right)-[UIStackView(rightStackViewWidthContant)]-(padding.right)-|
