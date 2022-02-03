@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2019 MessageKit
+ Copyright (c) 2017-2022 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -84,9 +84,9 @@ open class MessageSizeCalculator: CellSizeCalculator {
         attributes.messageTimeLabelSize = messageTimeLabelSize(for: message, at: indexPath)
         attributes.cellBottomLabelAlignment = cellBottomLabelAlignment(for: message)
         attributes.messageTopLabelSize = messageTopLabelSize(for: message, at: indexPath)
-        attributes.messageTopLabelAlignment = messageTopLabelAlignment(for: message)
+        attributes.messageTopLabelAlignment = messageTopLabelAlignment(for: message, at: indexPath)
 
-        attributes.messageBottomLabelAlignment = messageBottomLabelAlignment(for: message)
+        attributes.messageBottomLabelAlignment = messageBottomLabelAlignment(for: message, at: indexPath)
         attributes.messageBottomLabelSize = messageBottomLabelSize(for: message, at: indexPath)
 
         attributes.accessoryViewSize = accessoryViewSize(for: message)
@@ -185,7 +185,7 @@ open class MessageSizeCalculator: CellSizeCalculator {
     }
     
     // MARK: - Top message Label
-    
+
     open func messageTopLabelSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         let layoutDelegate = messagesLayout.messagesLayoutDelegate
         let collectionView = messagesLayout.messagesCollectionView
@@ -193,7 +193,14 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return CGSize(width: messagesLayout.itemWidth, height: height)
     }
     
-    open func messageTopLabelAlignment(for message: MessageType) -> LabelAlignment {
+    open func messageTopLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment {
+        let collectionView = messagesLayout.messagesCollectionView
+        let layoutDelegate = messagesLayout.messagesLayoutDelegate
+
+        if let alignment = layoutDelegate.messageTopLabelAlignment(for: message, at: indexPath, in: collectionView) {
+            return alignment
+        }
+
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingMessageTopLabelAlignment : incomingMessageTopLabelAlignment
@@ -234,7 +241,14 @@ open class MessageSizeCalculator: CellSizeCalculator {
         return CGSize(width: messagesLayout.itemWidth, height: height)
     }
 
-    open func messageBottomLabelAlignment(for message: MessageType) -> LabelAlignment {
+    open func messageBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath) -> LabelAlignment {
+        let collectionView = messagesLayout.messagesCollectionView
+        let layoutDelegate = messagesLayout.messagesLayoutDelegate
+
+        if let alignment = layoutDelegate.messageBottomLabelAlignment(for: message, at: indexPath, in: collectionView) {
+            return alignment
+        }
+
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingMessageBottomLabelAlignment : incomingMessageBottomLabelAlignment
