@@ -127,6 +127,6 @@ internal extension UIView {
     }
 
     func addSubviews(_ subviews: UIView...) {
-        subviews.forEach { addSubviews($0) }
+        subviews.forEach { addSubview($0) }
     }
 }
