@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		032A15DD25965D9A00E00FE3 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032A15DC25965D9A00E00FE3 /* AlertService.swift */; };
 		032A15E225965E1100E00FE3 /* CameraInputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032A15E125965E1100E00FE3 /* CameraInputBarAccessoryView.swift */; };
-		13CCA06325793E24005C19BB /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 13CCA06225793E24005C19BB /* Kingfisher */; };
+		13EFA5D727AC5631003002CC /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 13EFA5D627AC5631003002CC /* MessageKit */; };
+		13EFA5D927AC5634003002CC /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 13EFA5D827AC5634003002CC /* Kingfisher */; };
 		1C5433DD24C389C300A5383B /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5433DC24C389C300A5383B /* MessagesView.swift */; };
 		1C5433DF24C38DBF00A5383B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C5433DE24C38DBF00A5383B /* SwiftUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1C5433E224C3A33600A5383B /* SwiftUIExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5433E124C3A33600A5383B /* SwiftUIExampleView.swift */; };
@@ -35,7 +36,6 @@
 		50739F9621C5090A008CA369 /* BasicAudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50739F9521C5090A008CA369 /* BasicAudioController.swift */; };
 		5074EF4E2163555900D82952 /* sound2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5074EF4C2163555900D82952 /* sound2.m4a */; };
 		5074EF4F2163555900D82952 /* sound1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5074EF4D2163555900D82952 /* sound1.m4a */; };
-		5117FB4626F3230F00F71A2C /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5117FB4526F3230F00F71A2C /* MessageKit */; };
 		5168957524F7AD560058C643 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5168957124F7AD560058C643 /* Assets.xcassets */; };
 		5168957624F7AD560058C643 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5168957224F7AD560058C643 /* LaunchScreen.storyboard */; };
 		63ECDABE24182A470016C349 /* MessageSubviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63ECDABD24182A470016C349 /* MessageSubviewViewController.swift */; };
@@ -72,6 +72,7 @@
 		032A15DC25965D9A00E00FE3 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		032A15E125965E1100E00FE3 /* CameraInputBarAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraInputBarAccessoryView.swift; sourceTree = "<group>"; };
 		13CCA04225793002005C19BB /* MessageKit */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MessageKit; sourceTree = "<group>"; };
+		13EFA5D027AC5368003002CC /* MessageKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MessageKit; path = ..; sourceTree = "<group>"; };
 		1C5433DC24C389C300A5383B /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
 		1C5433DE24C38DBF00A5383B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		1C5433E124C3A33600A5383B /* SwiftUIExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExampleView.swift; sourceTree = "<group>"; };
@@ -122,9 +123,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5117FB4626F3230F00F71A2C /* MessageKit in Frameworks */,
-				13CCA06325793E24005C19BB /* Kingfisher in Frameworks */,
+				13EFA5D927AC5634003002CC /* Kingfisher in Frameworks */,
 				1C5433DF24C38DBF00A5383B /* SwiftUI.framework in Frameworks */,
+				13EFA5D727AC5631003002CC /* MessageKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +147,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		13EFA5CF27AC5368003002CC /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				13EFA5D027AC5368003002CC /* MessageKit */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		1C5433E024C3A32400A5383B /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -259,6 +268,7 @@
 				882B5E771CF7D53600B6E160 /* Sources */,
 				882B5E921CF7D56D00B6E160 /* Tests */,
 				882B5E8D1CF7D56000B6E160 /* UITests */,
+				13EFA5CF27AC5368003002CC /* Packages */,
 				882B5E341CF7D4B900B6E160 /* Products */,
 				955AE3B8EFF8FDB8F572D3F7 /* Frameworks */,
 			);
@@ -333,12 +343,13 @@
 			buildRules = (
 			);
 			dependencies = (
-				5117FB4826F3231600F71A2C /* PBXTargetDependency */,
+				13EFA5D527AC557F003002CC /* PBXTargetDependency */,
+				13EFA5D327AC557A003002CC /* PBXTargetDependency */,
 			);
 			name = ChatExample;
 			packageProductDependencies = (
-				13CCA06225793E24005C19BB /* Kingfisher */,
-				5117FB4526F3230F00F71A2C /* MessageKit */,
+				13EFA5D627AC5631003002CC /* MessageKit */,
+				13EFA5D827AC5634003002CC /* Kingfisher */,
 			);
 			productName = ChatExample;
 			productReference = 882B5E331CF7D4B900B6E160 /* ChatExample.app */;
@@ -416,7 +427,6 @@
 			mainGroup = 882B5E2A1CF7D4B900B6E160;
 			packageReferences = (
 				13CCA06125793E24005C19BB /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				5117FB4226F322FD00F71A2C /* XCRemoteSwiftPackageReference "MessageKit" */,
 			);
 			productRefGroup = 882B5E341CF7D4B900B6E160 /* Products */;
 			projectDirPath = "";
@@ -532,9 +542,13 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		5117FB4826F3231600F71A2C /* PBXTargetDependency */ = {
+		13EFA5D327AC557A003002CC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = 5117FB4726F3231600F71A2C /* MessageKit */;
+			productRef = 13EFA5D227AC557A003002CC /* Kingfisher */;
+		};
+		13EFA5D527AC557F003002CC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 13EFA5D427AC557F003002CC /* MessageKit */;
 		};
 		882B5E4B1CF7D4B900B6E160 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -823,31 +837,26 @@
 				minimumVersion = 5.15.8;
 			};
 		};
-		5117FB4226F322FD00F71A2C /* XCRemoteSwiftPackageReference "MessageKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/MessageKit/MessageKit";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		13CCA06225793E24005C19BB /* Kingfisher */ = {
+		13EFA5D227AC557A003002CC /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 13CCA06125793E24005C19BB /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
-		5117FB4526F3230F00F71A2C /* MessageKit */ = {
+		13EFA5D427AC557F003002CC /* MessageKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5117FB4226F322FD00F71A2C /* XCRemoteSwiftPackageReference "MessageKit" */;
 			productName = MessageKit;
 		};
-		5117FB4726F3231600F71A2C /* MessageKit */ = {
+		13EFA5D627AC5631003002CC /* MessageKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5117FB4226F322FD00F71A2C /* XCRemoteSwiftPackageReference "MessageKit" */;
 			productName = MessageKit;
+		};
+		13EFA5D827AC5634003002CC /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13CCA06125793E24005C19BB /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

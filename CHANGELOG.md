@@ -8,9 +8,13 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
+- New methods in `MessagesLayoutDelegate` for adjusting alignment of message top and bottom labels [#1671](https://github.com/MessageKit/MessageKit/pull/1671) by [@martinpucik](https://github.com/martinpucik)
+
 ### Changed
 
 ### Removed
+
+- Not used workspace files in example project [#1671](https://github.com/MessageKit/MessageKit/pull/1671) by [@martinpucik](https://github.com/martinpucik) 
 
 ## 3.7.0
 

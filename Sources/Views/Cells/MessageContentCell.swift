@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2019 MessageKit
+ Copyright (c) 2017-2022 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -78,6 +78,8 @@ open class MessageContentCell: MessageCollectionViewCell {
     /// The `MessageCellDelegate` for the cell.
     open weak var delegate: MessageCellDelegate?
 
+    // MARK: - Lifecycle
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -90,17 +92,6 @@ open class MessageContentCell: MessageCollectionViewCell {
         setupSubviews()
     }
 
-    open func setupSubviews() {
-        contentView.addSubview(accessoryView)
-        contentView.addSubview(cellTopLabel)
-        contentView.addSubview(messageTopLabel)
-        contentView.addSubview(messageBottomLabel)
-        contentView.addSubview(cellBottomLabel)
-        contentView.addSubview(messageContainerView)
-        contentView.addSubview(avatarView)
-        contentView.addSubview(messageTimestampLabel)
-    }
-
     open override func prepareForReuse() {
         super.prepareForReuse()
         cellTopLabel.text = nil
@@ -108,6 +99,19 @@ open class MessageContentCell: MessageCollectionViewCell {
         messageTopLabel.text = nil
         messageBottomLabel.text = nil
         messageTimestampLabel.attributedText = nil
+    }
+
+    open func setupSubviews() {
+        contentView.addSubviews(
+            accessoryView,
+            cellTopLabel,
+            messageTopLabel,
+            messageBottomLabel,
+            cellBottomLabel,
+            messageContainerView,
+            avatarView,
+            messageTimestampLabel
+        )
     }
 
     // MARK: - Configuration
