@@ -164,6 +164,11 @@ open class MessageSizeCalculator: CellSizeCalculator {
     }
 
     open func avatarSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+        let layoutDelegate = messagesLayout.messagesLayoutDelegate
+        let collectionView = messagesLayout.messagesCollectionView
+        if let size = layoutDelegate.avatarSize(for: message, at: indexPath, in: collectionView) {
+            return size
+        }
         let dataSource = messagesLayout.messagesDataSource
         let isFromCurrentSender = dataSource.isFromCurrentSender(message: message)
         return isFromCurrentSender ? outgoingAvatarSize : incomingAvatarSize

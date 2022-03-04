@@ -129,6 +129,15 @@ public protocol MessagesLayoutDelegate: AnyObject {
     ///  alignment from MessageSizeCalculator will be used depending if the message is outgoing or incoming
     func messageBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment?
 
+    /// Specifies the size for the `MessageContentCell`'s avatar image view.
+    /// - Parameters:
+    ///   - message: The `MessageType` that will be displayed for this cell.
+    ///   - indexPath: The `IndexPath` of the cell.
+    ///   - messagesCollectionView: The `MessagesCollectionView` in which this cell will be displayed.
+    /// - Returns: Optional CGSize for the avatar image view. If nil is returned or delegate method is not implemented,
+    /// size from `MessageSizeCalculator`'s `incomingAvatarSize` or `outgoingAvatarSize` will be used depending if the message is outgoing or incoming
+    func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize?
+
     /// Text cell size calculator for messages with MessageType.text.
     ///
     /// - Parameters:
@@ -268,6 +277,10 @@ public extension MessagesLayoutDelegate {
 
     func messageBottomLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
         return 0
+    }
+
+    func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize? {
+        return nil
     }
 
     func messageBottomLabelAlignment(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LabelAlignment? {
