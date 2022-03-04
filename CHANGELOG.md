@@ -12,8 +12,23 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Changed
 
-- BREAKING CHANGE: `MessageSizeCalculator.messageContainerMaxWidth(for message: MessageType) -> CGFloat` now has IndexPath argument `MessageSizeCalculator.messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat` [cd4f75b](https://github.com/MessageKit/MessageKit/commit/cd4f75b561129fc25e6c4576000e5a92ccd81cad) by [@martinpucik](https://github.com/martinpucik)
-- BREAKING CHANGE: `MessageSizeCalculator.messageContainerSize(for message: MessageType) -> CGSize` now has IndexPath argument `MessageSizeCalculator.messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize` [cd4f75b](https://github.com/MessageKit/MessageKit/commit/cd4f75b561129fc25e6c4576000e5a92ccd81cad) by [@martinpucik](https://github.com/martinpucik)
+
+- BREAKING CHANGE: [cd4f75b](https://github.com/MessageKit/MessageKit/commit/cd4f75b561129fc25e6c4576000e5a92ccd81cad) by [@martinpucik](https://github.com/martinpucik)
+    ```swift
+    MessageSizeCalculator.messageContainerMaxWidth(for message: MessageType) -> CGFloat
+    ```
+    now has IndexPath argument
+    ```swift
+    MessageSizeCalculator.messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat
+    ```
+- BREAKING CHANGE: [cd4f75b](https://github.com/MessageKit/MessageKit/commit/cd4f75b561129fc25e6c4576000e5a92ccd81cad) by [@martinpucik](https://github.com/martinpucik)
+    ```swift
+    MessageSizeCalculator.messageContainerSize(for message: MessageType) -> CGSize
+    ```
+    now has IndexPath argument 
+    ```swift
+    MessageSizeCalculator.messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize
+    ```
 
 ### Removed
 
