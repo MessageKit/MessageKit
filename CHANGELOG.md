@@ -9,9 +9,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ### Added
 
 - New methods in `MessagesLayoutDelegate` for adjusting alignment of message top and bottom labels [#1671](https://github.com/MessageKit/MessageKit/pull/1671) by [@martinpucik](https://github.com/martinpucik)
+- New method in `MessagesLayoutDelegate` for setting message avatar size [ddfc814](https://github.com/MessageKit/MessageKit/commit/ddfc814d325ee5aa238484c90128d32e5a72a49b) by [@martinpucik](https://github.com/martinpucik)
 
 ### Changed
-
 
 - BREAKING CHANGE: [cd4f75b](https://github.com/MessageKit/MessageKit/commit/cd4f75b561129fc25e6c4576000e5a92ccd81cad) by [@martinpucik](https://github.com/martinpucik)
     ```swift
