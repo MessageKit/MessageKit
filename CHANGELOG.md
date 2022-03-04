@@ -2,7 +2,7 @@
 
 The changelog for `MessageKit`. Also see the [releases](https://github.com/MessageKit/MessageKit/releases) on GitHub.
 
-## Future release
+## 4.0.0
 
 ### Fixed
 
@@ -11,6 +11,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - New methods in `MessagesLayoutDelegate` for adjusting alignment of message top and bottom labels [#1671](https://github.com/MessageKit/MessageKit/pull/1671) by [@martinpucik](https://github.com/martinpucik)
 
 ### Changed
+
+- BREAKING CHANGE: `MessageSizeCalculator.messageContainerMaxWidth(for message: MessageType) -> CGFloat` now has IndexPath argument `MessageSizeCalculator.messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat` [cd4f75b](https://github.com/MessageKit/MessageKit/commit/cd4f75b561129fc25e6c4576000e5a92ccd81cad) by [@martinpucik](https://github.com/martinpucik)
+- BREAKING CHANGE: `MessageSizeCalculator.messageContainerSize(for message: MessageType) -> CGSize` now has IndexPath argument `MessageSizeCalculator.messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize` [cd4f75b](https://github.com/MessageKit/MessageKit/commit/cd4f75b561129fc25e6c4576000e5a92ccd81cad) by [@martinpucik](https://github.com/martinpucik)
 
 ### Removed
 
