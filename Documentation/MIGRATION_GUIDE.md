@@ -4,5 +4,19 @@ Version 4.0 contains some breaking changes if you want to upgrade from the previ
 
 ### Migration
 
-- BREAKING CHANGE: `MessageSizeCalculator.messageContainerMaxWidth(for message: MessageType) -> CGFloat` now has IndexPath argument `MessageSizeCalculator.messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat`
-- BREAKING CHANGE: `MessageSizeCalculator.messageContainerSize(for message: MessageType) -> CGSize` now has IndexPath argument `MessageSizeCalculator.messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize`
+- BREAKING CHANGE:
+    ```swift
+    MessageSizeCalculator.messageContainerMaxWidth(for message: MessageType) -> CGFloat
+    ```
+    now has IndexPath argument
+    ```swift
+    MessageSizeCalculator.messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat
+    ```
+- BREAKING CHANGE:
+    ```swift
+    MessageSizeCalculator.messageContainerSize(for message: MessageType) -> CGSize
+    ```
+    now has IndexPath argument 
+    ```swift
+    MessageSizeCalculator.messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize
+    ```
