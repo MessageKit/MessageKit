@@ -46,23 +46,23 @@ open class LinkPreviewMessageSizeCalculator: TextMessageSizeCalculator {
         super.init(layout: layout)
     }
 
-    open override func messageContainerMaxWidth(for message: MessageType) -> CGFloat {
+    open override func messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
         switch message.kind {
         case .linkPreview:
-            let maxWidth = super.messageContainerMaxWidth(for: message)
+            let maxWidth = super.messageContainerMaxWidth(for: message, at: indexPath)
             return max(maxWidth, (layout?.collectionView?.bounds.width ?? 0) * 0.75)
         default:
-            return super.messageContainerMaxWidth(for: message)
+            return super.messageContainerMaxWidth(for: message, at: indexPath)
         }
     }
 
-    open override func messageContainerSize(for message: MessageType) -> CGSize {
+    open override func messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
         guard case MessageKind.linkPreview(let linkItem) = message.kind else {
             fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
         }
 
-        var containerSize = super.messageContainerSize(for: message)
-        containerSize.width = max(containerSize.width, messageContainerMaxWidth(for: message))
+        var containerSize = super.messageContainerSize(for: message, at: indexPath)
+        containerSize.width = max(containerSize.width, messageContainerMaxWidth(for: message, at: indexPath))
 
         let labelInsets: UIEdgeInsets = messageLabelInsets(for: message)
 
