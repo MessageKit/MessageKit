@@ -529,7 +529,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
 
         // MARK: - UIScrollViewDelegate
 
-extension MessagesViewController:UIScrollViewDelegate{
+extension MessagesViewController: UIScrollViewDelegate{
     
     open func scrollViewDidScroll(_ scrollView: UIScrollView) { }
     
