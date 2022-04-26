@@ -76,7 +76,7 @@ You can [just add](https://developer.apple.com/documentation/xcode/adding_packag
 ```
 https://github.com/MessageKit/MessageKit
 ```
-Older versions of Swift and XCode don't support MessageKit via SPM.
+Older versions of Swift and Xcode don't support MessageKit via SPM.
 
 ### [Manual](https://github.com/MessageKit/MessageKit/blob/master/Documentation/MANUAL_INSTALLATION.md)
 
