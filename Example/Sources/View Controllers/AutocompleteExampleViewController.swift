@@ -24,7 +24,6 @@
 
 import UIKit
 import MessageKit
-import InputBarAccessoryView
 import Kingfisher
 
 final class AutocompleteExampleViewController: ChatViewController {

@@ -24,7 +24,6 @@
 
 import SwiftUI
 import MessageKit
-import InputBarAccessoryView
 
 final class MessageSwiftUIVC: MessagesViewController {
     override func viewDidAppear(_ animated: Bool) {

@@ -25,7 +25,6 @@
 import UIKit
 import MapKit
 import MessageKit
-import InputBarAccessoryView
 import Kingfisher
 
 final class AdvancedExampleViewController: ChatViewController {

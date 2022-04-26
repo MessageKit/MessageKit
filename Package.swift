@@ -31,13 +31,11 @@ let package = Package(
     products: [
         .library(name: "MessageKit", targets: ["MessageKit"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/nathantannar4/InputBarAccessoryView", .upToNextMajor(from: "5.4.0"))
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "MessageKit",
-            dependencies: ["InputBarAccessoryView"],
+            dependencies: [],
             path: "Sources",
             exclude: ["Supporting/Info.plist", "Supporting/MessageKit.h"],
             swiftSettings: [SwiftSetting.define("IS_SPM")]
