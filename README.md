@@ -101,13 +101,13 @@ Each default cell is a subclass of [`MessageContentCell`](https://github.com/Mes
 
 This structure will allow you to create a layout that suits your needs as you can customize the size, appearance and padding of each. If you need something more advanced you can implement a custom cell, which we show how to do in the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project.
 
-### MessageInputBar Structure
+### InputBarAccessoryView Structure
 
 <p>
   <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/InputBarAccessoryViewLayout.png" title="InputBarAccessoryViewLayout">
 </p>
 
-The `MessageInputBar`, derived from [InputBarAccessoryView](https://github.com/nathantannar4/InputBarAccessoryView) is a flexible and robust way of creating any kind of input layout you wish. It is self-sizing which means as the user types it will grow to fill available space. It is centered around the `middleContentView` which by default holds the `InputTextView`. This is surrounded by `InputStackView`'s that will also grow in high based on the needs of their subviews `intrinsicContentSize`. See the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project for examples on how to tailor the layout for your own needs.
+The `InputBarAccessoryView`, 3rd party dependency from [InputBarAccessoryView](https://github.com/nathantannar4/InputBarAccessoryView) is a flexible and robust way of creating any kind of input layout you wish. Check the repo and examples there for more info.
 
 ### Guides
 
