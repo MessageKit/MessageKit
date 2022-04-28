@@ -30,6 +30,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
     MessageSizeCalculator.messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize
     ```
 
+- BREAKING CHANGE: Moved InputBarAccessoryView files into project and removed it as a dependency [#1699](https://github.com/MessageKit/MessageKit/pull/1699) by [@martinpucik](https://github.com/martinpucik)
+
 ### Removed
 
 - Not used workspace files in example project [#1671](https://github.com/MessageKit/MessageKit/pull/1671) by [@martinpucik](https://github.com/martinpucik) 

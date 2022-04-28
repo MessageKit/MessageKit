@@ -12,6 +12,7 @@ Version 4.0 contains some breaking changes if you want to upgrade from the previ
     ```swift
     MessageSizeCalculator.messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat
     ```
+
 - BREAKING CHANGE:
     ```swift
     MessageSizeCalculator.messageContainerSize(for message: MessageType) -> CGSize
@@ -19,4 +20,13 @@ Version 4.0 contains some breaking changes if you want to upgrade from the previ
     now has IndexPath argument 
     ```swift
     MessageSizeCalculator.messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize
+    ```
+
+- BREAKING CHANGE: Moved InputBarAccessoryView files into project and removed it as a dependency. Replace
+    ```swift
+    import InputBarAccessoryView
+    ```
+    with
+    ```
+    import MessageKit
     ```
