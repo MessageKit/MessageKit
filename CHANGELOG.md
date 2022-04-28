@@ -8,9 +8,15 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
-- New methods in `MessagesLayoutDelegate` for adjusting alignment of message top and bottom labels [#1671](https://github.com/MessageKit/MessageKit/pull/1671) by [@martinpucik](https://github.com/martinpucik)
-
 ### Changed
+
+### Removed
+
+## 3.8.0
+
+### Added
+
+- New methods in `MessagesLayoutDelegate` for adjusting alignment of message top and bottom labels [#1671](https://github.com/MessageKit/MessageKit/pull/1671) by [@martinpucik](https://github.com/martinpucik)
 
 ### Removed
 
@@ -19,6 +25,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ## 3.7.0
 
 ### Fixed
+
 - Updated InputBarAccessoryView to 5.4.0 with XCode 13 support
 - Fixed Example project loading MessageKit through SPM
 - Make sure MessageKit works on XCode 13 correctly
