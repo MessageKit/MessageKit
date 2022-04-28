@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageKit
 
 protocol  CameraInputBarAccessoryViewDelegate : InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith attachments: [AttachmentManager.Attachment])

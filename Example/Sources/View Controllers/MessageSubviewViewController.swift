@@ -24,6 +24,7 @@ SOFTWARE.
 
 import Foundation
 import UIKit
+import MessageKit
 
 final class MessageSubviewViewController: BasicExampleViewController {
     
