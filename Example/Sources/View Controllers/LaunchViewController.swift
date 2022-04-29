@@ -29,9 +29,9 @@ import SwiftUI
 
 final internal class LaunchViewController: UITableViewController {
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return .lightContent
+//    }
 
     let cells = ["Basic Example", "Advanced Example", "Autocomplete Example", "Embedded Example", "Custom Layout Example", "Subview Example", "SwiftUI Example", "Settings", "Source Code", "Contributors"]
     
@@ -44,16 +44,16 @@ final internal class LaunchViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.tableFooterView = UIView()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = false
-    }
+//    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//    }
+//    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        navigationController?.navigationBar.prefersLargeTitles = false
+//    }
     
     // MARK: - UITableViewDataSource
 

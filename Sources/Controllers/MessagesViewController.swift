@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2020 MessageKit
+ Copyright (c) 2017-2022 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,12 @@
 
 import Foundation
 import UIKit
+import Combine
 import InputBarAccessoryView
 
 /// A subclass of `UIViewController` with a `MessagesCollectionView` object
 /// that is used to display conversation interfaces.
-open class MessagesViewController: UIViewController,
-UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecognizerDelegate {
+open class MessagesViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecognizerDelegate {
 
     /// The `MessagesCollectionView` managed by the messages view controller object.
     open var messagesCollectionView = MessagesCollectionView()
@@ -71,21 +71,6 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
         }
     }
 
-    /// Pan gesture for display the date of message by swiping left.
-    private var panGesture: UIPanGestureRecognizer?
-
-    open override var canBecomeFirstResponder: Bool {
-        return true
-    }
-
-    open override var inputAccessoryView: UIView? {
-        return messageInputBar
-    }
-
-    open override var shouldAutorotate: Bool {
-        return false
-    }
-
     /// A CGFloat value that adds to (or, if negative, subtracts from) the automatically
     /// computed value of `messagesCollectionView.contentInset.bottom`. Meant to be used
     /// as a measure of last resort when the built-in algorithm does not produce the right
@@ -103,18 +88,30 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
 
     public var selectedIndexPathForMenu: IndexPath?
 
-    private var isFirstLayout: Bool = true
-    
+    // MARK: - Internal properties
+
     internal var isMessagesControllerBeingDismissed: Bool = false
 
     internal var messageCollectionViewBottomInset: CGFloat = 0 {
         didSet {
             messagesCollectionView.contentInset.bottom = messageCollectionViewBottomInset
             messagesCollectionView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset
+            messagesCollectionView.verticalScrollIndicatorInsets.bottom = messageCollectionViewBottomInset
         }
     }
 
-    // MARK: - View Life Cycle
+    internal private(set) lazy var inputAccessoryKeyboardObservingView = InputAccessoryKeyboardObservingView()
+    internal private(set) lazy var inputContainerView = UIView()
+    @available(iOS 13.0, *)
+    internal lazy var disposeBag: Set<AnyCancellable> = Set()
+
+    // MARK: - Private properties
+
+    private var isFirstLayout: Bool = true
+    /// Pan gesture for display the date of message by swiping left.
+    private var panGesture: UIPanGestureRecognizer?
+
+    // MARK: - Lifecycle
 
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,12 +121,13 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
         setupDelegates()
         addMenuControllerObservers()
         addObservers()
+        addKeyboardObservers()
     }
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if !isFirstLayout {
-            addKeyboardObservers()
+//            addKeyboardObservers()
         }
     }
     
@@ -141,7 +139,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         isMessagesControllerBeingDismissed = true
-        removeKeyboardObservers()
+//        removeKeyboardObservers()
     }
     
     open override func viewDidDisappear(_ animated: Bool) {
@@ -153,7 +151,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
         // Hack to prevent animation of the contentInset after viewDidAppear
         if isFirstLayout {
             defer { isFirstLayout = false }
-            addKeyboardObservers()
+//            addKeyboardObservers()
             messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
         }
     }
@@ -163,7 +161,17 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
         messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
     }
 
-    // MARK: - Initializers
+    open override var canBecomeFirstResponder: Bool {
+        return true
+    }
+
+    open override var inputAccessoryView: UIView? {
+        return inputAccessoryKeyboardObservingView
+    }
+
+    open override var shouldAutorotate: Bool {
+        return false
+    }
 
     deinit {
         removeMenuControllerObservers()
@@ -238,16 +246,36 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
 
     private func setupSubviews() {
         view.addSubview(messagesCollectionView)
+        view.addSubview(inputContainerView)
+        inputContainerView.backgroundColor = .red
+
+        inputContainerView.addSubviews(messageInputBar)
+        messageInputBar.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            messageInputBar.topAnchor.constraint(equalTo: inputContainerView.topAnchor),
+            messageInputBar.bottomAnchor.constraint(equalTo: inputContainerView.bottomAnchor),
+            messageInputBar.leadingAnchor.constraint(equalTo: inputContainerView.safeAreaLayoutGuide.leadingAnchor),
+            messageInputBar.trailingAnchor.constraint(equalTo: inputContainerView.safeAreaLayoutGuide.trailingAnchor)
+        ])
     }
 
     private func setupConstraints() {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor)
-        let bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
-        let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-        NSLayoutConstraint.activate([top, bottom, trailing, leading])
+        inputContainerView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+
+        NSLayoutConstraint.activate([
+            inputContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            inputContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            inputContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            inputContainerView.heightAnchor.constraint(equalToConstant: 1)
+        ])
     }
 
     // MARK: - Typing Indicator API
