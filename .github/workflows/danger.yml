@@ -1,14 +1,13 @@
 name: Danger
 
-on:
+on: 
   pull_request:
-    branches:
-      - master
+    types: [opened, reopened, synchronize, ready_for_review]
 
 jobs:
   danger:
     name: Run Danger
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
