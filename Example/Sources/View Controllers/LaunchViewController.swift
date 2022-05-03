@@ -28,32 +28,26 @@ import SafariServices
 import SwiftUI
 
 final internal class LaunchViewController: UITableViewController {
-    
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        return .lightContent
-//    }
 
-    let cells = ["Basic Example", "Advanced Example", "Autocomplete Example", "Embedded Example", "Custom Layout Example", "Subview Example", "SwiftUI Example", "Settings", "Source Code", "Contributors"]
+    private let cells = ["Basic Example", "Advanced Example", "Autocomplete Example", "Embedded Example", "Custom Layout Example", "Subview Example", "SwiftUI Example", "Settings", "Source Code", "Contributors"]
     
     // MARK: - View Life Cycle
-    
+
+    init() {
+        super.init(style: .insetGrouped)
+    }
+
+    required init?(coder: NSCoder) { nil }
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "MessageKit"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationController?.navigationBar.prefersLargeTitles = false
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.tableFooterView = UIView()
     }
-//    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        navigationController?.navigationBar.prefersLargeTitles = true
-//    }
-//    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        navigationController?.navigationBar.prefersLargeTitles = false
-//    }
     
     // MARK: - UITableViewDataSource
 
@@ -76,15 +70,15 @@ final internal class LaunchViewController: UITableViewController {
         switch cell {
         case "Basic Example":
             let viewController = BasicExampleViewController()
-            let detailViewController = NavigationController(rootViewController: viewController)
+            let detailViewController = UINavigationController(rootViewController: viewController)
             splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Advanced Example":
             let viewController = AdvancedExampleViewController()
-            let detailViewController = NavigationController(rootViewController: viewController)
+            let detailViewController = UINavigationController(rootViewController: viewController)
             splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Autocomplete Example":
             let viewController = AutocompleteExampleViewController()
-            let detailViewController = NavigationController(rootViewController: viewController)
+            let detailViewController = UINavigationController(rootViewController: viewController)
             splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Embedded Example":
             navigationController?.pushViewController(MessageContainerController(), animated: true)
@@ -96,11 +90,11 @@ final internal class LaunchViewController: UITableViewController {
             }
         case "Settings":
             let viewController = SettingsViewController()
-            let detailViewController = NavigationController(rootViewController: viewController)
+            let detailViewController = UINavigationController(rootViewController: viewController)
             splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Subview Example":
             let viewController = MessageSubviewContainerViewController()
-            let detailViewController = NavigationController(rootViewController: viewController)
+            let detailViewController = UINavigationController(rootViewController: viewController)
             splitViewController?.showDetailViewController(detailViewController, sender: self)
         case "Source Code":
             guard let url = URL(string: "https://github.com/MessageKit/MessageKit") else { return }

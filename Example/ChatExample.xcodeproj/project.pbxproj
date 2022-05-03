@@ -28,7 +28,6 @@
 		385C2942211FF38F0010B4BA /* AdvancedExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C293B211FF38E0010B4BA /* AdvancedExampleViewController.swift */; };
 		385C2943211FF38F0010B4BA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C293C211FF38E0010B4BA /* SettingsViewController.swift */; };
 		385C2944211FF38F0010B4BA /* MessageContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C293D211FF38F0010B4BA /* MessageContainerController.swift */; };
-		385C2945211FF38F0010B4BA /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C293E211FF38F0010B4BA /* NavigationController.swift */; };
 		385C2946211FF38F0010B4BA /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C293F211FF38F0010B4BA /* LaunchViewController.swift */; };
 		385C2947211FF38F0010B4BA /* BasicExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C2940211FF38F0010B4BA /* BasicExampleViewController.swift */; };
 		385C2948211FF38F0010B4BA /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C2941211FF38F0010B4BA /* ChatViewController.swift */; };
@@ -90,7 +89,6 @@
 		385C293B211FF38E0010B4BA /* AdvancedExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedExampleViewController.swift; sourceTree = "<group>"; };
 		385C293C211FF38E0010B4BA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		385C293D211FF38F0010B4BA /* MessageContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageContainerController.swift; sourceTree = "<group>"; };
-		385C293E211FF38F0010B4BA /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		385C293F211FF38F0010B4BA /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		385C2940211FF38F0010B4BA /* BasicExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicExampleViewController.swift; sourceTree = "<group>"; };
 		385C2941211FF38F0010B4BA /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -226,7 +224,6 @@
 				385C2941211FF38F0010B4BA /* ChatViewController.swift */,
 				385C293F211FF38F0010B4BA /* LaunchViewController.swift */,
 				385C293D211FF38F0010B4BA /* MessageContainerController.swift */,
-				385C293E211FF38F0010B4BA /* NavigationController.swift */,
 				385C293C211FF38E0010B4BA /* SettingsViewController.swift */,
 				63ECDABD24182A470016C349 /* MessageSubviewViewController.swift */,
 				63ECDAC1241889630016C349 /* MessageSubviewContainerViewController.swift */,
@@ -504,7 +501,6 @@
 				385C2931211FF3630010B4BA /* UIColor+Extensions.swift in Sources */,
 				385C2932211FF3630010B4BA /* UIViewController+Extensions.swift in Sources */,
 				385C292B211FF3450010B4BA /* Settings+UserDefaults.swift in Sources */,
-				385C2945211FF38F0010B4BA /* NavigationController.swift in Sources */,
 				9B49D547263DAA29008804B5 /* CustomTextMessageContentCell.swift in Sources */,
 				9B49D528263C31FC008804B5 /* CustomLayoutExampleViewController.swift in Sources */,
 				032A15DD25965D9A00E00FE3 /* AlertService.swift in Sources */,
@@ -623,7 +619,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -676,7 +672,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
