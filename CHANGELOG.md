@@ -31,6 +31,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Removed
 
+- NSConstraintLayoutSet.swift [#1700](https://github.com/MessageKit/MessageKit/pull/1700) by [@martinpucik](https://github.com/martinpucik) 
+
 ## 3.8.0
 
 ### Added

@@ -50,7 +50,7 @@ See [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) 
 ### [CocoaPods](https://cocoapods.org/) **Recommended**
 
 ```ruby
-# Swift 5.3
+# Swift 5.5
 pod 'MessageKit'
 ```
 
@@ -83,7 +83,7 @@ Older versions of Swift and Xcode don't support MessageKit via SPM.
 ## Requirements
 
 - **iOS 12** or later
-- **Swift 5.3** or later
+- **Swift 5.5** or later
 
 > For iOS 11 please use version 3.3.0
 
