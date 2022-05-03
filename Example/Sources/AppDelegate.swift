@@ -31,8 +31,8 @@ final internal class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        let masterViewController = NavigationController(rootViewController: LaunchViewController())
-        let detailViewController = NavigationController()
+        let masterViewController = UINavigationController(rootViewController: LaunchViewController())
+        let detailViewController = UINavigationController()
         let splitViewController = UISplitViewController()
         splitViewController.viewControllers = [masterViewController, detailViewController]
         splitViewController.preferredDisplayMode = .allVisible
