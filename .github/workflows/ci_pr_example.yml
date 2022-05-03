@@ -12,4 +12,4 @@ jobs:
       with:
         fetch-depth: 10
     - name: Build and run example project
-      run: ./GitHubActions/build.sh example
+      run: ./build.sh example

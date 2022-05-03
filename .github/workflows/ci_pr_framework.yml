@@ -12,4 +12,4 @@ jobs:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
     - name: Build framework
-      run: ./GitHubActions/build.sh framework
+      run: ./build.sh framework

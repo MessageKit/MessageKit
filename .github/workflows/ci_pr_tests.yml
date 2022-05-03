@@ -12,7 +12,4 @@ jobs:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
     - name: Build and run tests
-      run: ./GitHubActions/build.sh tests
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1.0.13
-
+      run: ./build.sh tests
