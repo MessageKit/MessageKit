@@ -1,6 +1,3 @@
-// swift-tools-version:5.5
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
 /*
  MIT License
 
@@ -12,8 +9,10 @@
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,27 +22,27 @@
  SOFTWARE.
  */
 
-import PackageDescription
+import Foundation
+import UIKit
 
-let package = Package(
-    name: "MessageKit",
-    platforms: [.iOS(.v12)],
-    products: [
-        .library(name: "MessageKit", targets: ["MessageKit"]),
-    ],
-    dependencies: [
-//        .package(url: "https://github.com/nathantannar4/InputBarAccessoryView", .upToNextMajor(from: "5.5.0"))
-        .package(url: "https://github.com/nathantannar4/InputBarAccessoryView", .branch("master"))
-    ],
-    targets: [
-        .target(
-            name: "MessageKit",
-            dependencies: ["InputBarAccessoryView"],
-            path: "Sources",
-            exclude: ["Supporting/Info.plist", "Supporting/MessageKit.h"],
-            swiftSettings: [SwiftSetting.define("IS_SPM")]
-        ),
-        .testTarget(name: "MessageKitTests", dependencies: ["MessageKit"])
-    ],
-    swiftLanguageVersions: [.v5]
-)
+extension MessagesViewController {
+    class State {
+
+        // MARK: Lifecycle flags
+
+        var viewWillAppearInvoked: Bool = false
+        var viewIsVisible: Bool = false
+    }
+
+    // MARK: - Getters
+
+    var viewWillAppearInvoked: Bool {
+        get { state.viewWillAppearInvoked }
+        set { state.viewWillAppearInvoked = newValue }
+    }
+
+    var viewIsVisible: Bool  {
+        get { state.viewIsVisible }
+        set { state.viewIsVisible = newValue }
+    }
+}

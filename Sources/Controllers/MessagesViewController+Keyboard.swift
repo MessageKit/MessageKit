@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2020 MessageKit
+ Copyright (c) 2017-2022 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,37 +24,71 @@
 
 import Foundation
 import UIKit
+import Combine
 import InputBarAccessoryView
 
 internal extension MessagesViewController {
 
-    // MARK: - Register / Unregister Observers
+    // MARK: - Register Observers
 
     func addKeyboardObservers() {
-//        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleKeyboardDidChangeState(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(MessagesViewController.handleTextViewDidBeginEditing(_:)), name: UITextView.textDidBeginEditingNotification, object: nil)
-
         if #available(iOS 13.0, *) {
-            inputAccessoryKeyboardObservingView.$keyboardNotification
+            NotificationCenter.default
+                .publisher(for: UITextView.textDidBeginEditingNotification)
                 .subscribe(on: DispatchQueue.global())
-                .compactMap { $0 }
                 .receive(on: DispatchQueue.main)
-                .sink(receiveValue: { [weak self] notification in
-                    self?.handleKeyboardDidChangeState(notification)
-                })
+                .sink { [weak self] notification in
+                    self?.handleTextViewDidBeginEditing(notification)
+                }
                 .store(in: &disposeBag)
+
+            Publishers.MergeMany(
+                NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification),
+                NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification),
+                NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification),
+                NotificationCenter.default.publisher(for: UIResponder.keyboardDidShowNotification)
+            )
+            .subscribe(on: DispatchQueue.global())
+            .sink(receiveValue: { [weak self] _ in
+                self?.updateMessageCollectionViewBottomInset()
+            })
+            .store(in: &disposeBag)
         }
     }
 
-    func removeKeyboardObservers() {
-//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-//        NotificationCenter.default.removeObserver(self, name: UITextView.textDidBeginEditingNotification, object: nil)
-//        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
+    // MARK: - Private methods
+
+    private func updateMessageCollectionViewBottomInset() {
+
+        /// This is important to skip notifications from child modal controllers in iOS >= 13.0
+        guard
+            viewIsVisible,
+            self.presentedViewController == nil
+        else {
+            return
+        }
+
+        let collectionViewHeight = messagesCollectionView.frame.height
+        let newBottomInset = collectionViewHeight - (inputContainerView.frame.minY - additionalBottomInset) - automaticallyAddedBottomInset
+        let differenceOfBottomInset = newBottomInset - messageCollectionViewBottomInset
+
+        UIView.performWithoutAnimation {
+            if differenceOfBottomInset != 0 {
+                messageCollectionViewBottomInset = newBottomInset
+            }
+        }
+
+        if maintainPositionOnKeyboardFrameChanged && differenceOfBottomInset != 0 {
+            let contentOffset = CGPoint(x: messagesCollectionView.contentOffset.x, y: messagesCollectionView.contentOffset.y + differenceOfBottomInset)
+            // Changing contentOffset to bigger number than the contentSize will result in a jump of content
+            // https://github.com/MessageKit/MessageKit/issues/1486
+            guard contentOffset.y <= messagesCollectionView.contentSize.height else {
+                return
+            }
+            messagesCollectionView.setContentOffset(contentOffset, animated: false)
+        }
     }
 
-    // MARK: - Notification Handlers
-
-    @objc
     private func handleTextViewDidBeginEditing(_ notification: Notification) {
         if scrollsToLastItemOnKeyboardBeginsEditing || scrollsToLastItemOnKeyboardBeginsEditing {
             guard
@@ -71,132 +105,33 @@ internal extension MessagesViewController {
         }
     }
 
-    private func handleKeyboardDidChangeState(_ n: KeyboardNotification) {
-        guard !isMessagesControllerBeingDismissed else { return }
-
-        let keyboardStartFrameInScreenCoords = n.startFrame
-//        guard !keyboardStartFrameInScreenCoords.isEmpty || UIDevice.current.userInterfaceIdiom != .pad else {
-//            // WORKAROUND for what seems to be a bug in iPad's keyboard handling in iOS 11: we receive an extra spurious frame change
-//            // notification when undocking the keyboard, with a zero starting frame and an incorrect end frame. The workaround is to
-//            // ignore this notification.
-//            return
-//        }
-
-        guard self.presentedViewController == nil else {
-            // This is important to skip notifications from child modal controllers in iOS >= 13.0
-            return
-        }
-
-        // Note that the check above does not exclude all notifications from an undocked keyboard, only the weird ones.
-        //
-        // We've tried following Apple's recommended approach of tracking UIKeyboardWillShow / UIKeyboardDidHide and ignoring frame
-        // change notifications while the keyboard is hidden or undocked (undocked keyboard is considered hidden by those events).
-        // Unfortunately, we do care about the difference between hidden and undocked, because we have an input bar which is at the
-        // bottom when the keyboard is hidden, and is tied to the keyboard when it's undocked.
-        //
-        // If we follow what Apple recommends and ignore notifications while the keyboard is hidden/undocked, we get an extra inset
-        // at the bottom when the undocked keyboard is visible (the inset that tries to compensate for the missing input bar).
-        // (Alternatives like setting newBottomInset to 0 or to the height of the input bar don't work either.)
-        //
-        // We could make it work by adding extra checks for the state of the keyboard and compensating accordingly, but it seems easier
-        // to simply check whether the current keyboard frame, whatever it is (even when undocked), covers the bottom of the collection
-        // view.
-
-        let keyboardEndFrameInScreenCoords = n.endFrame
-        let keyboardEndFrame = view.convert(keyboardEndFrameInScreenCoords, from: view.window)
-
-        var newBottomInset = requiredScrollViewBottomInset(forKeyboardFrame: keyboardEndFrame)
-        newBottomInset += inputContainerView.frame.height
-        let differenceOfBottomInset = newBottomInset - messageCollectionViewBottomInset
-
-        UIView.performWithoutAnimation {
-            messageCollectionViewBottomInset = newBottomInset
-        }
-
-        if maintainPositionOnKeyboardFrameChanged && differenceOfBottomInset != 0 {
-            let contentOffset = CGPoint(x: messagesCollectionView.contentOffset.x, y: messagesCollectionView.contentOffset.y + differenceOfBottomInset)
-            // Changing contentOffset to bigger number than the contentSize will result in a jump of content
-            // https://github.com/MessageKit/MessageKit/issues/1486
-            guard contentOffset.y <= messagesCollectionView.contentSize.height else {
-                return
-            }
-            messagesCollectionView.setContentOffset(contentOffset, animated: false)
-        }
-    }
-
-    @objc
-    private func handleKeyboardDidChangeState(_ notification: Notification) {
-        guard !isMessagesControllerBeingDismissed else { return }
-
-        guard let keyboardStartFrameInScreenCoords = notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? CGRect else { return }
-        guard !keyboardStartFrameInScreenCoords.isEmpty || UIDevice.current.userInterfaceIdiom != .pad else {
-            // WORKAROUND for what seems to be a bug in iPad's keyboard handling in iOS 11: we receive an extra spurious frame change
-            // notification when undocking the keyboard, with a zero starting frame and an incorrect end frame. The workaround is to
-            // ignore this notification.
-            return
-        }
-
-        guard self.presentedViewController == nil else {
-            // This is important to skip notifications from child modal controllers in iOS >= 13.0
-            return
-        }
-
-        // Note that the check above does not exclude all notifications from an undocked keyboard, only the weird ones.
-        //
-        // We've tried following Apple's recommended approach of tracking UIKeyboardWillShow / UIKeyboardDidHide and ignoring frame
-        // change notifications while the keyboard is hidden or undocked (undocked keyboard is considered hidden by those events).
-        // Unfortunately, we do care about the difference between hidden and undocked, because we have an input bar which is at the
-        // bottom when the keyboard is hidden, and is tied to the keyboard when it's undocked.
-        //
-        // If we follow what Apple recommends and ignore notifications while the keyboard is hidden/undocked, we get an extra inset
-        // at the bottom when the undocked keyboard is visible (the inset that tries to compensate for the missing input bar).
-        // (Alternatives like setting newBottomInset to 0 or to the height of the input bar don't work either.)
-        //
-        // We could make it work by adding extra checks for the state of the keyboard and compensating accordingly, but it seems easier
-        // to simply check whether the current keyboard frame, whatever it is (even when undocked), covers the bottom of the collection
-        // view.
-
-        guard let keyboardEndFrameInScreenCoords = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-        let keyboardEndFrame = view.convert(keyboardEndFrameInScreenCoords, from: view.window)
-
-        var newBottomInset = requiredScrollViewBottomInset(forKeyboardFrame: keyboardEndFrame)
-        newBottomInset += inputContainerView.frame.height
-        let differenceOfBottomInset = newBottomInset - messageCollectionViewBottomInset
-
-        UIView.performWithoutAnimation {
-            messageCollectionViewBottomInset = newBottomInset
-        }
-        
-        if maintainPositionOnKeyboardFrameChanged && differenceOfBottomInset != 0 {
-            let contentOffset = CGPoint(x: messagesCollectionView.contentOffset.x, y: messagesCollectionView.contentOffset.y + differenceOfBottomInset)
-            // Changing contentOffset to bigger number than the contentSize will result in a jump of content
-            // https://github.com/MessageKit/MessageKit/issues/1486
-            guard contentOffset.y <= messagesCollectionView.contentSize.height else {
-                return
-            }
-            messagesCollectionView.setContentOffset(contentOffset, animated: false)
-        }
-    }
-
     // MARK: - Inset Computation
 
-    private func requiredScrollViewBottomInset(forKeyboardFrame keyboardFrame: CGRect) -> CGFloat {
+    private func requiredScrollViewBottomInset(for inputViewFrame: CGRect) -> CGFloat {
         // we only need to adjust for the part of the keyboard that covers (i.e. intersects) our collection view;
         // see https://developer.apple.com/videos/play/wwdc2017/242/ for more details
-        let intersection = messagesCollectionView.frame.intersection(keyboardFrame)
-
+        let intersection = messagesCollectionView.frame.intersection(inputViewFrame)
         if intersection.isNull || (messagesCollectionView.frame.maxY - intersection.maxY) > 0.001 {
             // The keyboard is hidden, is a hardware one, or is undocked and does not cover the bottom of the collection view.
             // Note: intersection.maxY may be less than messagesCollectionView.frame.maxY when dealing with undocked keyboards.
             return max(0, additionalBottomInset - automaticallyAddedBottomInset)
-        } else {
-            return max(0, intersection.height + additionalBottomInset - automaticallyAddedBottomInset)
         }
+
+        let heightOfSpaceUnderInputContainer = max(0, messagesCollectionView.frame.height - intersection.maxY)
+        return heightOfSpaceUnderInputContainer
+//        if intersection.isNull || (messagesCollectionView.frame.maxY - intersection.maxY) > 0.001 {
+//            // The keyboard is hidden, is a hardware one, or is undocked and does not cover the bottom of the collection view.
+//            // Note: intersection.maxY may be less than messagesCollectionView.frame.maxY when dealing with undocked keyboards.
+//            return max(0, additionalBottomInset - automaticallyAddedBottomInset)
+//        } else {
+//            return max(0, intersection.height + additionalBottomInset - automaticallyAddedBottomInset)
+//        }
     }
 
     func requiredInitialScrollViewBottomInset() -> CGFloat {
-        let inputAccessoryViewHeight = inputAccessoryView?.frame.height ?? 0
-        return max(0, inputAccessoryViewHeight + additionalBottomInset - automaticallyAddedBottomInset)
+//        let inputAccessoryViewHeight = inputAccessoryView?.frame.height ?? 0
+        let inputContainerViewHeight = inputContainerView.frame.height
+        return max(0, inputContainerViewHeight + additionalBottomInset - automaticallyAddedBottomInset)
     }
 
     /// UIScrollView can automatically add safe area insets to its contentInset,

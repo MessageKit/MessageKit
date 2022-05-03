@@ -29,7 +29,7 @@ import InputBarAccessoryView
 
 /// A subclass of `UIViewController` with a `MessagesCollectionView` object
 /// that is used to display conversation interfaces.
-open class MessagesViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecognizerDelegate {
+open class MessagesViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     /// The `MessagesCollectionView` managed by the messages view controller object.
     open var messagesCollectionView = MessagesCollectionView()
@@ -90,7 +90,8 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
 
     // MARK: - Internal properties
 
-    internal var isMessagesControllerBeingDismissed: Bool = false
+    internal let state: State = .init()
+//    internal var isMessagesControllerBeingDismissed: Bool = false
 
     internal var messageCollectionViewBottomInset: CGFloat = 0 {
         didSet {
@@ -100,13 +101,13 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
         }
     }
 
-    internal private(set) lazy var inputAccessoryKeyboardObservingView = InputAccessoryKeyboardObservingView()
-    internal private(set) lazy var inputContainerView = UIView()
+    internal private(set) lazy var inputContainerView: UIView = UIView()
     @available(iOS 13.0, *)
     internal lazy var disposeBag: Set<AnyCancellable> = Set()
 
     // MARK: - Private properties
 
+    internal lazy var keyboardManager: KeyboardManager = KeyboardManager(inputAccessoryView: inputContainerView)
     private var isFirstLayout: Bool = true
     /// Pan gesture for display the date of message by swiping left.
     private var panGesture: UIPanGestureRecognizer?
@@ -119,32 +120,37 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
         setupSubviews()
         setupConstraints()
         setupDelegates()
-        addMenuControllerObservers()
         addObservers()
         addKeyboardObservers()
+        addMenuControllerObservers()
+        keyboardManager.bind(to: messagesCollectionView)
     }
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if !isFirstLayout {
+
+        viewWillAppearInvoked = true
+//        if !isFirstLayout {
 //            addKeyboardObservers()
-        }
+//        }
     }
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        isMessagesControllerBeingDismissed = false
+        viewIsVisible = true
+//        isMessagesControllerBeingDismissed = false
     }
     
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        isMessagesControllerBeingDismissed = true
+//        isMessagesControllerBeingDismissed = true
 //        removeKeyboardObservers()
     }
     
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        isMessagesControllerBeingDismissed = false
+        viewIsVisible = false
+//        isMessagesControllerBeingDismissed = false
     }
     
     open override func viewDidLayoutSubviews() {
@@ -152,22 +158,22 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
         if isFirstLayout {
             defer { isFirstLayout = false }
 //            addKeyboardObservers()
-            messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
+//            messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
         }
     }
 
     open override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
-        messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
+//        messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
     }
 
-    open override var canBecomeFirstResponder: Bool {
-        return true
-    }
+//    open override var canBecomeFirstResponder: Bool {
+//        return true
+//    }
 
-    open override var inputAccessoryView: UIView? {
-        return inputAccessoryKeyboardObservingView
-    }
+//    open override var inputAccessoryView: UIView? {
+//        return inputAccessoryKeyboardObservingView
+//    }
 
     open override var shouldAutorotate: Bool {
         return false
@@ -175,7 +181,6 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
 
     deinit {
         removeMenuControllerObservers()
-        removeObservers()
         clearMemoryCache()
     }
 
@@ -239,30 +244,16 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
         }
     }
 
-    private func setupDelegates() {
-        messagesCollectionView.delegate = self
-        messagesCollectionView.dataSource = self
-    }
-
     private func setupSubviews() {
-        view.addSubview(messagesCollectionView)
-        view.addSubview(inputContainerView)
-        inputContainerView.backgroundColor = .red
-
+        view.addSubviews(messagesCollectionView, inputContainerView)
         inputContainerView.addSubviews(messageInputBar)
-        messageInputBar.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            messageInputBar.topAnchor.constraint(equalTo: inputContainerView.topAnchor),
-            messageInputBar.bottomAnchor.constraint(equalTo: inputContainerView.bottomAnchor),
-            messageInputBar.leadingAnchor.constraint(equalTo: inputContainerView.safeAreaLayoutGuide.leadingAnchor),
-            messageInputBar.trailingAnchor.constraint(equalTo: inputContainerView.safeAreaLayoutGuide.trailingAnchor)
-        ])
     }
 
     private func setupConstraints() {
         messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
         inputContainerView.translatesAutoresizingMaskIntoConstraints = false
-
+        messageInputBar.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
             messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -270,12 +261,19 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
             messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
 
+        /// Constraints of inputContainerView are managed by keyboardManager
+
         NSLayoutConstraint.activate([
-            inputContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            inputContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            inputContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            inputContainerView.heightAnchor.constraint(equalToConstant: 1)
+            messageInputBar.topAnchor.constraint(equalTo: inputContainerView.topAnchor),
+            messageInputBar.bottomAnchor.constraint(equalTo: inputContainerView.bottomAnchor),
+            messageInputBar.leadingAnchor.constraint(equalTo: inputContainerView.leadingAnchor),
+            messageInputBar.trailingAnchor.constraint(equalTo: inputContainerView.trailingAnchor)
         ])
+    }
+
+    private func setupDelegates() {
+        messagesCollectionView.delegate = self
+        messagesCollectionView.dataSource = self
     }
 
     // MARK: - Typing Indicator API
@@ -528,23 +526,29 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
         }
     }
 
-    // MARK: - Helpers
-    
+    // MARK: - Private methods
+
     private func addObservers() {
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(clearMemoryCache), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
-    }
-    
-    private func removeObservers() {
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
-    }
-    
-    @objc private func clearMemoryCache() {
-        MessageStyle.bubbleImageCache.removeAllObjects()
+        if #available(iOS 13.0, *) {
+            NotificationCenter.default
+                .publisher(for: UIApplication.didReceiveMemoryWarningNotification)
+                .subscribe(on: DispatchQueue.global())
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] _ in
+                    self?.clearMemoryCache()
+                }
+                .store(in: &disposeBag)
+        }
     }
 
-    // MARK: - UIGestureRecognizerDelegate
-           
+    private func clearMemoryCache() {
+        MessageStyle.bubbleImageCache.removeAllObjects()
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension MessagesViewController: UIGestureRecognizerDelegate {
     /// Check Pan Gesture Direction:
     open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer else {
@@ -555,9 +559,9 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     }
 }
 
-        // MARK: - UIScrollViewDelegate
+// MARK: - UIScrollViewDelegate
 
-extension MessagesViewController: UIScrollViewDelegate{
+extension MessagesViewController: UIScrollViewDelegate {
     
     open func scrollViewDidScroll(_ scrollView: UIScrollView) { }
     
