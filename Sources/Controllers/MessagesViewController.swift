@@ -44,14 +44,6 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     /// NOTE: This is related to `scrollToLastItem` whereas the below flag is related to `scrollToBottom` - check each function for differences
     open var scrollsToLastItemOnKeyboardBeginsEditing: Bool = false
 
-    /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
-    /// bottom whenever the `InputTextView` begins editing.
-    ///
-    /// The default value of this property is `false`.
-    /// NOTE: This is related to `scrollToBottom` whereas the above flag is related to `scrollToLastItem` - check each function for differences
-    @available(*, deprecated, message: "Control scrolling to bottom on keyboardBeginEditing by using scrollsToLastItemOnKeyboardBeginsEditing instead", renamed: "scrollsToLastItemOnKeyboardBeginsEditing")
-    open var scrollsToBottomOnKeyboardBeginsEditing: Bool = false
-    
     /// A Boolean value that determines whether the `MessagesCollectionView`
     /// maintains it's current position when the height of the `MessageInputBar` changes.
     ///
@@ -79,10 +71,6 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
         didSet {
             updateMessageCollectionViewBottomInset()
         }
-    }
-
-    public var isTypingIndicatorHidden: Bool {
-        return messagesCollectionView.isTypingIndicatorHidden
     }
 
     public var selectedIndexPathForMenu: IndexPath?
@@ -174,60 +162,6 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
 
     private func clearMemoryCache() {
         MessageStyle.bubbleImageCache.removeAllObjects()
-    }
-
-    // MARK: - Typing Indicator API
-
-    /// Sets the typing indicator sate by inserting/deleting the `TypingBubbleCell`
-    ///
-    /// - Parameters:
-    ///   - isHidden: A Boolean value that is to be the new state of the typing indicator
-    ///   - animated: A Boolean value determining if the insertion is to be animated
-    ///   - updates: A block of code that will be executed during `performBatchUpdates`
-    ///              when `animated` is `TRUE` or before the `completion` block executes
-    ///              when `animated` is `FALSE`
-    ///   - completion: A completion block to execute after the insertion/deletion
-    open func setTypingIndicatorViewHidden(_ isHidden: Bool, animated: Bool, whilePerforming updates: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
-
-        guard isTypingIndicatorHidden != isHidden else {
-            completion?(false)
-            return
-        }
-
-        let section = messagesCollectionView.numberOfSections
-        messagesCollectionView.setTypingIndicatorViewHidden(isHidden)
-
-        if animated {
-            messagesCollectionView.performBatchUpdates({ [weak self] in
-                self?.performUpdatesForTypingIndicatorVisability(at: section)
-                updates?()
-                }, completion: completion)
-        } else {
-            performUpdatesForTypingIndicatorVisability(at: section)
-            updates?()
-            completion?(true)
-        }
-    }
-
-    /// Performs a delete or insert on the `MessagesCollectionView` on the provided section
-    ///
-    /// - Parameter section: The index to modify
-    private func performUpdatesForTypingIndicatorVisability(at section: Int) {
-        if isTypingIndicatorHidden {
-            messagesCollectionView.deleteSections([section - 1])
-        } else {
-            messagesCollectionView.insertSections([section])
-        }
-    }
-
-    /// A method that by default checks if the section is the last in the
-    /// `messagesCollectionView` and that `isTypingIndicatorViewHidden`
-    /// is FALSE
-    ///
-    /// - Parameter section
-    /// - Returns: A Boolean indicating if the TypingIndicator should be presented at the given section
-    public func isSectionReservedForTypingIndicator(_ section: Int) -> Bool {
-        return !messagesCollectionView.isTypingIndicatorHidden && section == self.numberOfSections(in: messagesCollectionView) - 1
     }
 
     // MARK: - UICollectionViewDataSource
