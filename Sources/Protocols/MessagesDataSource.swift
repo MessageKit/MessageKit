@@ -220,11 +220,7 @@ public extension MessagesDataSource {
         let sentDateString = MessageKitDateFormatter.shared.string(from: sentDate)
         let timeLabelFont: UIFont = .boldSystemFont(ofSize: 10)
         let timeLabelColor: UIColor
-        if #available(iOS 13, *) {
-            timeLabelColor = .systemGray
-        } else {
-            timeLabelColor = .darkGray
-        }
+        timeLabelColor = .systemGray
         return NSAttributedString(string: sentDateString, attributes: [NSAttributedString.Key.font: timeLabelFont, NSAttributedString.Key.foregroundColor: timeLabelColor])
     }
     

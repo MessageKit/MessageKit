@@ -77,8 +77,7 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     /// value for your app. Please let us know when you end up having to use this property.
     open var additionalBottomInset: CGFloat = 0 {
         didSet {
-            let delta = additionalBottomInset - oldValue
-            messageCollectionViewBottomInset += delta
+            updateMessageCollectionViewBottomInset()
         }
     }
 
@@ -91,26 +90,6 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     // MARK: - Internal properties
 
     internal let state: State = .init()
-//    internal var isMessagesControllerBeingDismissed: Bool = false
-
-    internal var messageCollectionViewBottomInset: CGFloat = 0 {
-        didSet {
-            messagesCollectionView.contentInset.bottom = messageCollectionViewBottomInset
-            messagesCollectionView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset
-            messagesCollectionView.verticalScrollIndicatorInsets.bottom = messageCollectionViewBottomInset
-        }
-    }
-
-    internal private(set) lazy var inputContainerView: UIView = UIView()
-    @available(iOS 13.0, *)
-    internal lazy var disposeBag: Set<AnyCancellable> = Set()
-
-    // MARK: - Private properties
-
-    internal lazy var keyboardManager: KeyboardManager = KeyboardManager(inputAccessoryView: inputContainerView)
-    private var isFirstLayout: Bool = true
-    /// Pan gesture for display the date of message by swiping left.
-    private var panGesture: UIPanGestureRecognizer?
 
     // MARK: - Lifecycle
 
@@ -123,60 +102,14 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
         addObservers()
         addKeyboardObservers()
         addMenuControllerObservers()
-        keyboardManager.bind(to: messagesCollectionView)
+        /// Layout input container view and update messagesCollectionViewInsets
+        view.layoutIfNeeded()
+        updateMessageCollectionViewBottomInset()
     }
     
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        viewWillAppearInvoked = true
-//        if !isFirstLayout {
-//            addKeyboardObservers()
-//        }
-    }
-    
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        viewIsVisible = true
-//        isMessagesControllerBeingDismissed = false
-    }
-    
-    open override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-//        isMessagesControllerBeingDismissed = true
-//        removeKeyboardObservers()
-    }
-    
-    open override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        viewIsVisible = false
-//        isMessagesControllerBeingDismissed = false
-    }
-    
-    open override func viewDidLayoutSubviews() {
-        // Hack to prevent animation of the contentInset after viewDidAppear
-        if isFirstLayout {
-            defer { isFirstLayout = false }
-//            addKeyboardObservers()
-//            messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
-        }
-    }
-
     open override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
-//        messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
-    }
-
-//    open override var canBecomeFirstResponder: Bool {
-//        return true
-//    }
-
-//    open override var inputAccessoryView: UIView? {
-//        return inputAccessoryKeyboardObservingView
-//    }
-
-    open override var shouldAutorotate: Bool {
-        return false
+        updateMessageCollectionViewBottomInset()
     }
 
     deinit {
@@ -184,54 +117,7 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
         clearMemoryCache()
     }
 
-    // MARK: - Methods [Private]
-
-    /// Display time of message by swiping the cell
-    private func addPanGesture() {
-        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-        guard let panGesture = panGesture else {
-            return
-        }
-        panGesture.delegate = self
-        messagesCollectionView.addGestureRecognizer(panGesture)
-        messagesCollectionView.clipsToBounds = false
-    }
-
-    private func removePanGesture() {
-        guard let panGesture = panGesture else {
-            return
-        }
-        panGesture.delegate = nil
-        self.panGesture = nil
-        messagesCollectionView.removeGestureRecognizer(panGesture)
-        messagesCollectionView.clipsToBounds = true
-    }
-
-    @objc
-    private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
-        guard let parentView = gesture.view else {
-            return
-        }
-
-        switch gesture.state {
-        case .began, .changed:
-            messagesCollectionView.showsVerticalScrollIndicator = false
-            let translation = gesture.translation(in: view)
-            let minX = -(view.frame.size.width * 0.35)
-            let maxX: CGFloat = 0
-            var offsetValue = translation.x
-            offsetValue = max(offsetValue, minX)
-            offsetValue = min(offsetValue, maxX)
-            parentView.frame.origin.x = offsetValue
-        case .ended:
-            messagesCollectionView.showsVerticalScrollIndicator = true
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.8, options: .curveEaseOut, animations: {
-                parentView.frame.origin.x = 0
-            }, completion: nil)
-        default:
-            break
-        }
-    }
+    // MARK: - Private methods
 
     private func setupDefaults() {
         extendedLayoutIncludesOpaqueBars = true
@@ -239,9 +125,6 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
         messagesCollectionView.keyboardDismissMode = .interactive
         messagesCollectionView.alwaysBounceVertical = true
         messagesCollectionView.backgroundColor = .collectionViewBackground
-        if #available(iOS 13.0, *) {
-            messagesCollectionView.automaticallyAdjustsScrollIndicatorInsets = false
-        }
     }
 
     private func setupSubviews() {
@@ -257,8 +140,8 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
         NSLayoutConstraint.activate([
             messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
             messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            messagesCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            messagesCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            messagesCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            messagesCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
 
         /// Constraints of inputContainerView are managed by keyboardManager
@@ -274,6 +157,23 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     private func setupDelegates() {
         messagesCollectionView.delegate = self
         messagesCollectionView.dataSource = self
+    }
+
+    // MARK: - Private methods
+
+    private func addObservers() {
+        NotificationCenter.default
+            .publisher(for: UIApplication.didReceiveMemoryWarningNotification)
+            .subscribe(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.clearMemoryCache()
+            }
+            .store(in: &disposeBag)
+    }
+
+    private func clearMemoryCache() {
+        MessageStyle.bubbleImageCache.removeAllObjects()
     }
 
     // MARK: - Typing Indicator API
@@ -525,59 +425,4 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
             break
         }
     }
-
-    // MARK: - Private methods
-
-    private func addObservers() {
-        if #available(iOS 13.0, *) {
-            NotificationCenter.default
-                .publisher(for: UIApplication.didReceiveMemoryWarningNotification)
-                .subscribe(on: DispatchQueue.global())
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] _ in
-                    self?.clearMemoryCache()
-                }
-                .store(in: &disposeBag)
-        }
-    }
-
-    private func clearMemoryCache() {
-        MessageStyle.bubbleImageCache.removeAllObjects()
-    }
-}
-
-// MARK: - UIGestureRecognizerDelegate
-
-extension MessagesViewController: UIGestureRecognizerDelegate {
-    /// Check Pan Gesture Direction:
-    open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer else {
-            return false
-        }
-        let velocity = panGesture.velocity(in: messagesCollectionView)
-        return abs(velocity.x) > abs(velocity.y)
-    }
-}
-
-// MARK: - UIScrollViewDelegate
-
-extension MessagesViewController: UIScrollViewDelegate {
-    
-    open func scrollViewDidScroll(_ scrollView: UIScrollView) { }
-    
-    open func scrollViewWillBeginDragging(_ scrollView: UIScrollView){ }
-    
-    open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>){ }
-    
-    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool){ }
-    
-    open func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView){ }
-    
-    open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) { }
-    
-    open func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) { }
-    
-    open func scrollViewDidScrollToTop(_ scrollView: UIScrollView){ }
-    
-    open func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) { }
 }

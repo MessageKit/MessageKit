@@ -85,9 +85,7 @@ final internal class LaunchViewController: UITableViewController {
         case "Custom Layout Example":
             navigationController?.pushViewController(CustomLayoutExampleViewController(), animated: true)
         case "SwiftUI Example":
-            if #available(iOS 13, *) {
-                navigationController?.pushViewController(UIHostingController(rootView: SwiftUIExampleView()), animated: true)
-            }
+            navigationController?.pushViewController(UIHostingController(rootView: SwiftUIExampleView()), animated: true)
         case "Settings":
             let viewController = SettingsViewController()
             let detailViewController = UINavigationController(rootViewController: viewController)

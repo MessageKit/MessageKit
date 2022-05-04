@@ -24,31 +24,15 @@
 
 import Foundation
 import UIKit
-import Combine
-import InputBarAccessoryView
 
-extension MessagesViewController {
-    class State {
-        /// Pan gesture for display the date of message by swiping left.
-        var panGesture: UIPanGestureRecognizer?
-
-        let inputContainerView: MessagesInputContainerView = .init()
-        let keyboardManager: KeyboardManager = KeyboardManager()
-        var disposeBag: Set<AnyCancellable> = .init()
-    }
-
-    // MARK: - Getters
-
-    var inputContainerView: MessagesInputContainerView { state.inputContainerView }
-    var keyboardManager: KeyboardManager { state.keyboardManager }
-
-    var panGesture: UIPanGestureRecognizer? {
-        get { state.panGesture }
-        set { state.panGesture = newValue }
-    }
-
-    var disposeBag: Set<AnyCancellable> {
-        get { state.disposeBag }
-        set { state.disposeBag = newValue }
-    }
+extension MessagesViewController: UIScrollViewDelegate {
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) { }
+    open func scrollViewWillBeginDragging(_ scrollView: UIScrollView) { }
+    open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) { }
+    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { }
+    open func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) { }
+    open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) { }
+    open func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) { }
+    open func scrollViewDidScrollToTop(_ scrollView: UIScrollView) { }
+    open func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) { }
 }

@@ -166,11 +166,11 @@
 			isa = PBXGroup;
 			children = (
 				1C5433E024C3A32400A5383B /* SwiftUI */,
-				385C2920211FF32E0010B4BA /* CustomCell.swift */,
-				385C2921211FF32E0010B4BA /* TableViewCells.swift */,
 				032A15E125965E1100E00FE3 /* CameraInputBarAccessoryView.swift */,
+				385C2920211FF32E0010B4BA /* CustomCell.swift */,
 				9B49D541263DA6F9008804B5 /* CustomMessageContentCell.swift */,
 				9B49D546263DAA29008804B5 /* CustomTextMessageContentCell.swift */,
+				385C2921211FF32E0010B4BA /* TableViewCells.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -178,11 +178,11 @@
 		385C2929211FF33D0010B4BA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9B49D539263D9606008804B5 /* CustomLayoutSizeCalculator.swift */,
+				9B49D52C263C3E1F008804B5 /* CustomTextLayoutSizeCalculator.swift */,
 				385C2926211FF33B0010B4BA /* MockMessage.swift */,
 				385C2925211FF33A0010B4BA /* MockSocket.swift */,
 				383B9EB22172A1C4008AB91A /* MockUser.swift */,
-				9B49D52C263C3E1F008804B5 /* CustomTextLayoutSizeCalculator.swift */,
-				9B49D539263D9606008804B5 /* CustomLayoutSizeCalculator.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -198,10 +198,10 @@
 		385C2933211FF3670010B4BA /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				032A15DC25965D9A00E00FE3 /* AlertService.swift */,
 				385C292A211FF3450010B4BA /* Settings+UserDefaults.swift */,
 				385C292F211FF3630010B4BA /* UIColor+Extensions.swift */,
 				385C2930211FF3630010B4BA /* UIViewController+Extensions.swift */,
-				032A15DC25965D9A00E00FE3 /* AlertService.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -222,12 +222,12 @@
 				38CCCC582258419300DD5482 /* AutocompleteExampleViewController.swift */,
 				385C2940211FF38F0010B4BA /* BasicExampleViewController.swift */,
 				385C2941211FF38F0010B4BA /* ChatViewController.swift */,
+				9B49D527263C31FC008804B5 /* CustomLayoutExampleViewController.swift */,
 				385C293F211FF38F0010B4BA /* LaunchViewController.swift */,
 				385C293D211FF38F0010B4BA /* MessageContainerController.swift */,
-				385C293C211FF38E0010B4BA /* SettingsViewController.swift */,
-				63ECDABD24182A470016C349 /* MessageSubviewViewController.swift */,
 				63ECDAC1241889630016C349 /* MessageSubviewContainerViewController.swift */,
-				9B49D527263C31FC008804B5 /* CustomLayoutExampleViewController.swift */,
+				63ECDABD24182A470016C349 /* MessageSubviewViewController.swift */,
+				385C293C211FF38E0010B4BA /* SettingsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
