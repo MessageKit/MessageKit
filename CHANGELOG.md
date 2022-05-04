@@ -12,6 +12,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Changed
 
+- BREAKING CHANGE: Dropped support for iOS 12 [2bd234b](https://github.com/MessageKit/MessageKit/commit/2bd234b1e878f392089f166d6868ce644d6c9e95) by [@martinpucik](https://github.com/martinpucik)
+
+- BREAKING CHANGE: Moved messageInputBar from inputAccessoryView to a subview in MessagesViewController [#1704](https://github.com/MessageKit/MessageKit/pull/1704) by [@martinpucik](https://github.com/martinpucik)
+
 - BREAKING CHANGE: [cd4f75b](https://github.com/MessageKit/MessageKit/commit/cd4f75b561129fc25e6c4576000e5a92ccd81cad) by [@martinpucik](https://github.com/martinpucik)
     ```swift
     MessageSizeCalculator.messageContainerMaxWidth(for message: MessageType) -> CGFloat
@@ -28,7 +32,6 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
     ```swift
     MessageSizeCalculator.messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize
     ```
-- BREAKING CHANGE: Dropped support for iOS 12 [2bd234b](https://github.com/MessageKit/MessageKit/commit/2bd234b1e878f392089f166d6868ce644d6c9e95) by [@martinpucik](https://github.com/martinpucik) 
 
 ### Removed
 
