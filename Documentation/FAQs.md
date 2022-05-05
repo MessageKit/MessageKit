@@ -113,4 +113,4 @@ In general, if you're experiencing performance issues, you should look through t
 
 ## How can I use MessageKit with SwiftUI?
 
-MessageKit support of SwiftUI is experimental at best and there is no active work on adding more support
+MessageKit support of SwiftUI is experimental at best and there is no active work being done on adding more support
