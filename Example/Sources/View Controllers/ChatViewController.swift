@@ -60,10 +60,11 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         loadFirstMessages()
         title = "MessageKit"
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
+        messagesCollectionView.scrollToLastItem(animated: false)
         MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
             .onNewMessage { [weak self] message in
                 self?.insertMessage(message)
@@ -76,10 +77,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         audioController.stopAnyOngoingPlaying()
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     func loadFirstMessages() {
         DispatchQueue.global(qos: .userInitiated).async {
             let count = UserDefaults.standard.mockMessagesCount()
@@ -87,7 +84,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
                 DispatchQueue.main.async {
                     self.messageList = messages
                     self.messagesCollectionView.reloadData()
-                    self.messagesCollectionView.scrollToLastItem()
                 }
             }
         }
