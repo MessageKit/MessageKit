@@ -28,9 +28,46 @@ import SafariServices
 import SwiftUI
 
 final internal class LaunchViewController: UITableViewController {
+    private enum Row {
+        case basic, advanced, autocomplete, embedded, customLayout, subview, swiftUI
+        case settings, sourceCode, contributors
 
-    private let cells = ["Basic Example", "Advanced Example", "Autocomplete Example", "Embedded Example", "Custom Layout Example", "Subview Example", "SwiftUI Example", "Settings", "Source Code", "Contributors"]
-    
+        var title: String {
+            switch self {
+            case .basic:
+                return "Basic Example"
+            case .advanced:
+                return "Advanced Example"
+            case .autocomplete:
+                return "Autocomplete Example"
+            case .embedded:
+                return "Embedded Example"
+            case .customLayout:
+                return "Custom Layout Example"
+            case .subview:
+                return "Subview Example"
+            case .swiftUI:
+                return "SwiftUI Example"
+            case .settings:
+                return "Settings"
+            case .sourceCode:
+                return "Source Code"
+            case .contributors:
+                return "Contributors"
+            }
+        }
+    }
+
+    private struct Section {
+        let title: String
+        let rows: [Row]
+    }
+
+    private let sections: [Section] = [
+        .init(title: "Examples", rows: [.basic, .advanced, .autocomplete, .embedded, .customLayout, .subview, .swiftUI]),
+        .init(title: "Support", rows: [.settings, .sourceCode, .contributors])
+    ]
+
     // MARK: - View Life Cycle
 
     init() {
@@ -39,25 +76,28 @@ final internal class LaunchViewController: UITableViewController {
 
     required init?(coder: NSCoder) { nil }
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "MessageKit"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationController?.navigationBar.prefersLargeTitles = true
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.tableFooterView = UIView()
     }
     
     // MARK: - UITableViewDataSource
 
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return sections.count
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cells.count
+        return sections[section].rows.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell()
-        cell.textLabel?.text = cells[indexPath.row]
+        cell.textLabel?.text = sections[indexPath.section].rows[indexPath.row].title
         cell.accessoryType = .disclosureIndicator
         return cell
     }
@@ -66,45 +106,40 @@ final internal class LaunchViewController: UITableViewController {
     
     // swiftlint:disable cyclomatic_complexity
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = cells[indexPath.row]
+        let cell = sections[indexPath.section].rows[indexPath.row]
         switch cell {
-        case "Basic Example":
+        case .basic:
             let viewController = BasicExampleViewController()
             let detailViewController = UINavigationController(rootViewController: viewController)
             splitViewController?.showDetailViewController(detailViewController, sender: self)
-        case "Advanced Example":
+        case .advanced:
             let viewController = AdvancedExampleViewController()
             let detailViewController = UINavigationController(rootViewController: viewController)
             splitViewController?.showDetailViewController(detailViewController, sender: self)
-        case "Autocomplete Example":
+        case .autocomplete:
             let viewController = AutocompleteExampleViewController()
             let detailViewController = UINavigationController(rootViewController: viewController)
             splitViewController?.showDetailViewController(detailViewController, sender: self)
-        case "Embedded Example":
+        case .embedded:
             navigationController?.pushViewController(MessageContainerController(), animated: true)
-        case "Custom Layout Example":
+        case .customLayout:
             navigationController?.pushViewController(CustomLayoutExampleViewController(), animated: true)
-        case "SwiftUI Example":
+        case .swiftUI:
             if #available(iOS 13, *) {
                 navigationController?.pushViewController(UIHostingController(rootView: SwiftUIExampleView()), animated: true)
             }
-        case "Settings":
-            let viewController = SettingsViewController()
-            let detailViewController = UINavigationController(rootViewController: viewController)
-            splitViewController?.showDetailViewController(detailViewController, sender: self)
-        case "Subview Example":
+        case .subview:
             let viewController = MessageSubviewContainerViewController()
             let detailViewController = UINavigationController(rootViewController: viewController)
             splitViewController?.showDetailViewController(detailViewController, sender: self)
-        case "Source Code":
-            guard let url = URL(string: "https://github.com/MessageKit/MessageKit") else { return }
-            openURL(url)
-        case "Contributors":
-            guard let url = URL(string: "https://github.com/orgs/MessageKit/teams/contributors/members") else { return }
-            openURL(url)
-        default:
-            assertionFailure("You need to implement the action for this cell: \(cell)")
-            return
+        case .settings:
+            let viewController = SettingsViewController()
+            let detailViewController = UINavigationController(rootViewController: viewController)
+            splitViewController?.showDetailViewController(detailViewController, sender: self)
+        case .sourceCode:
+            openURL(URL(string: "https://github.com/MessageKit/MessageKit")!)
+        case .contributors:
+            openURL(URL(string: "https://github.com/MessageKit/MessageKit/graphs/contributors")!)
         }
     }
     
