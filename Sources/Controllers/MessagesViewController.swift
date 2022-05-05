@@ -37,19 +37,6 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     /// The `InputBarAccessoryView` used as the `inputAccessoryView` in the view controller.
     open lazy var messageInputBar = InputBarAccessoryView()
 
-    /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
-    /// last item whenever the `InputTextView` begins editing.
-    ///
-    /// The default value of this property is `false`.
-    /// NOTE: This is related to `scrollToLastItem` whereas the below flag is related to `scrollToBottom` - check each function for differences
-    open var scrollsToLastItemOnKeyboardBeginsEditing: Bool = false
-
-    /// A Boolean value that determines whether the `MessagesCollectionView`
-    /// maintains it's current position when the height of the `MessageInputBar` changes.
-    ///
-    /// The default value of this property is `false`.
-    open var maintainPositionOnKeyboardFrameChanged: Bool = false
-
     /// Display the date of message by swiping left.
     /// The default value of this property is `false`.
     open var showMessageTimestampOnSwipeLeft: Bool = false {

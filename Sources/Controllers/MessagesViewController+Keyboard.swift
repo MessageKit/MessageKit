@@ -34,7 +34,8 @@ internal extension MessagesViewController {
     func addKeyboardObservers() {
         keyboardManager.bind(inputAccessoryView: inputContainerView)
         keyboardManager.bind(to: messagesCollectionView)
-        
+
+        /// Observe didBeginEditing to scroll down the content
         NotificationCenter.default
             .publisher(for: UITextView.textDidBeginEditingNotification)
             .subscribe(on: DispatchQueue.global())
@@ -43,12 +44,30 @@ internal extension MessagesViewController {
                 self?.handleTextViewDidBeginEditing(notification)
             }
             .store(in: &disposeBag)
-        
+
+        NotificationCenter.default
+            .publisher(for: UITextView.textDidChangeNotification)
+            .subscribe(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
+            .compactMap { $0.object as? InputTextView }
+            .filter { [weak self] textView in
+                return textView == self?.messageInputBar.inputTextView
+            }
+            .map(\.text)
+            .removeDuplicates()
+            .delay(for: .milliseconds(50), scheduler: DispatchQueue.main) /// Wait for next runloop to lay out inputView properly
+            .sink { [weak self] _ in
+                self?.updateMessageCollectionViewBottomInset()
+
+                if !(self?.maintainPositionOnInputBarHeightChanged ?? false) {
+                    self?.messagesCollectionView.scrollToLastItem()
+                }
+            }
+            .store(in: &disposeBag)
+
         Publishers.MergeMany(
             NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification),
-            NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification),
-            NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification),
-            NotificationCenter.default.publisher(for: UIResponder.keyboardDidShowNotification)
+            NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
         )
         .subscribe(on: DispatchQueue.global())
         .receive(on: DispatchQueue.main)
@@ -66,38 +85,27 @@ internal extension MessagesViewController {
         guard self.presentedViewController == nil else { return }
         let collectionViewHeight = messagesCollectionView.frame.height
         let newBottomInset = collectionViewHeight - (inputContainerView.frame.minY - additionalBottomInset) - automaticallyAddedBottomInset
+        let normalizedNewBottomInset = max(0, newBottomInset)
         let differenceOfBottomInset = newBottomInset - messageCollectionViewBottomInset
 
         UIView.performWithoutAnimation {
             guard differenceOfBottomInset != 0 else { return }
-            messagesCollectionView.contentInset.bottom = max(0, newBottomInset)
+            messagesCollectionView.contentInset.bottom = normalizedNewBottomInset
             messagesCollectionView.verticalScrollIndicatorInsets.bottom = newBottomInset
-        }
-
-        if maintainPositionOnKeyboardFrameChanged && differenceOfBottomInset != 0 {
-            let contentOffset = CGPoint(x: messagesCollectionView.contentOffset.x, y: messagesCollectionView.contentOffset.y + differenceOfBottomInset)
-            // Changing contentOffset to bigger number than the contentSize will result in a jump of content
-            // https://github.com/MessageKit/MessageKit/issues/1486
-            guard contentOffset.y <= messagesCollectionView.contentSize.height else { return }
-            messagesCollectionView.setContentOffset(contentOffset, animated: false)
         }
     }
 
     // MARK: - Private methods
 
     private func handleTextViewDidBeginEditing(_ notification: Notification) {
-        guard scrollsToLastItemOnKeyboardBeginsEditing || scrollsToLastItemOnKeyboardBeginsEditing else { return }
         guard
+            scrollsToLastItemOnKeyboardBeginsEditing,
             let inputTextView = notification.object as? InputTextView,
             inputTextView === messageInputBar.inputTextView
         else {
             return
         }
-        if scrollsToLastItemOnKeyboardBeginsEditing {
-            messagesCollectionView.scrollToLastItem()
-        } else {
-            messagesCollectionView.scrollToLastItem(animated: true)
-        }
+        messagesCollectionView.scrollToLastItem()
     }
 
     /// UIScrollView can automatically add safe area insets to its contentInset,
@@ -105,10 +113,22 @@ internal extension MessagesViewController {
     ///
     /// - Returns: The distance automatically added to contentInset.bottom, if any.
     private var automaticallyAddedBottomInset: CGFloat {
-        return messagesCollectionView.adjustedContentInset.bottom - messagesCollectionView.contentInset.bottom
+        return messagesCollectionView.adjustedContentInset.bottom - messageCollectionViewBottomInset
     }
 
     private var messageCollectionViewBottomInset: CGFloat {
         return messagesCollectionView.contentInset.bottom
+    }
+
+    /// UIScrollView can automatically add safe area insets to its contentInset,
+    /// which needs to be accounted for when setting the contentInset based on screen coordinates.
+    ///
+    /// - Returns: The distance automatically added to contentInset.top, if any.
+    private var automaticallyAddedTopInset: CGFloat {
+        return messagesCollectionView.adjustedContentInset.top - messageCollectionViewTopInset
+    }
+
+    private var messageCollectionViewTopInset: CGFloat {
+        return messagesCollectionView.contentInset.top
     }
 }

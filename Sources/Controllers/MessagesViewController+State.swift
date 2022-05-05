@@ -31,6 +31,8 @@ extension MessagesViewController {
     class State {
         /// Pan gesture for display the date of message by swiping left.
         var panGesture: UIPanGestureRecognizer?
+        var maintainPositionOnInputBarHeightChanged: Bool = false
+        var scrollsToLastItemOnKeyboardBeginsEditing: Bool = false
 
         let inputContainerView: MessagesInputContainerView = .init()
         let keyboardManager: KeyboardManager = KeyboardManager()
@@ -50,5 +52,37 @@ extension MessagesViewController {
     var disposeBag: Set<AnyCancellable> {
         get { state.disposeBag }
         set { state.disposeBag = newValue }
+    }
+}
+
+public extension MessagesViewController {
+    /// A Boolean value that determines whether the `MessagesCollectionView`
+    /// maintains it's current position when the height of the `MessageInputBar` changes.
+    ///
+    /// The default value of this property is `false`.
+    @available(*, deprecated, renamed: "maintainPositionOnInputBarHeightChanged", message: "Please use new property - maintainPositionOnInputBarHeightChanged")
+    var maintainPositionOnKeyboardFrameChanged: Bool {
+        get { state.maintainPositionOnInputBarHeightChanged }
+        set { state.maintainPositionOnInputBarHeightChanged = newValue }
+    }
+
+    /// A Boolean value that determines whether the `MessagesCollectionView`
+    /// maintains it's current position when the height of the `MessageInputBar` changes.
+    ///
+    /// The default value of this property is `false` and the `MessagesCollectionView` will scroll to bottom after the
+    /// height of the `MessageInputBar` changes.
+    var maintainPositionOnInputBarHeightChanged: Bool {
+        get { state.maintainPositionOnInputBarHeightChanged }
+        set { state.maintainPositionOnInputBarHeightChanged = newValue }
+    }
+
+    /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
+    /// last item whenever the `InputTextView` begins editing.
+    ///
+    /// The default value of this property is `false`.
+    /// NOTE: This is related to `scrollToLastItem` whereas the below flag is related to `scrollToBottom` - check each function for differences
+    var scrollsToLastItemOnKeyboardBeginsEditing: Bool {
+        get { state.scrollsToLastItemOnKeyboardBeginsEditing }
+        set { state.scrollsToLastItemOnKeyboardBeginsEditing = newValue }
     }
 }

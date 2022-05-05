@@ -48,7 +48,7 @@ struct MessagesView: UIViewControllerRepresentable {
         messagesVC.messagesCollectionView.messagesDataSource = context.coordinator
         messagesVC.messageInputBar.delegate = context.coordinator
         messagesVC.scrollsToLastItemOnKeyboardBeginsEditing = true // default false
-        messagesVC.maintainPositionOnKeyboardFrameChanged = true // default false
+        messagesVC.maintainPositionOnInputBarHeightChanged = true // default false
         messagesVC.showMessageTimestampOnSwipeLeft = true // default false
         
         return messagesVC
