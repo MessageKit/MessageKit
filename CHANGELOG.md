@@ -14,6 +14,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - **Breaking change**: Dropped support for iOS 12 [2bd234b](https://github.com/MessageKit/MessageKit/commit/2bd234b1e878f392089f166d6868ce644d6c9e95) by [@martinpucik](https://github.com/martinpucik)
 - **Breaking change**: Moved messageInputBar from inputAccessoryView to a subview in MessagesViewController [#1704](https://github.com/MessageKit/MessageKit/pull/1704) by [@martinpucik](https://github.com/martinpucik)
+- **Deprecation**: Deprecated `maintainPositionOnKeyboardFrameChangedMoved` in favor of `maintainPositionOnInputBarHeightChanged` which better describes the intended use of this property [#1704](https://github.com/MessageKit/MessageKit/pull/1705) by [@martinpucik](https://github.com/martinpucik)
 - **Breaking change**: Added an argument to `messageContainerMaxWidth` [cd4f75b](https://github.com/MessageKit/MessageKit/commit/cd4f75b561129fc25e6c4576000e5a92ccd81cad) by [@martinpucik](https://github.com/martinpucik)
     ```swift
     MessageSizeCalculator.messageContainerMaxWidth(for message: MessageType) -> CGFloat
