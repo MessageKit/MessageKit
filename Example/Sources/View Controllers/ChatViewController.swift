@@ -60,13 +60,11 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         configureMessageCollectionView()
         configureMessageInputBar()
         loadFirstMessages()
-
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        messagesCollectionView.scrollToLastItem(animated: false)
         MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
             .onNewMessage { [weak self] message in
                 self?.insertMessage(message)
@@ -86,6 +84,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
                 DispatchQueue.main.async {
                     self.messageList = messages
                     self.messagesCollectionView.reloadData()
+                    self.messagesCollectionView.scrollToLastItem(animated: false)
                 }
             }
         }
@@ -109,8 +108,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         messagesCollectionView.messageCellDelegate = self
         
         scrollsToLastItemOnKeyboardBeginsEditing = true // default false
-        maintainPositionOnKeyboardFrameChanged = true // default false
-
+        maintainPositionOnInputBarHeightChanged = true // default false
         showMessageTimestampOnSwipeLeft = true // default false
         
         messagesCollectionView.refreshControl = refreshControl
