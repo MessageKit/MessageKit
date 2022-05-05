@@ -122,11 +122,11 @@ final internal class LaunchViewController: UITableViewController {
             let detailViewController = UINavigationController(rootViewController: viewController)
             splitViewController?.showDetailViewController(detailViewController, sender: self)
         case .embedded:
-            navigationController?.pushViewController(MessageContainerController(), animated: true)
+            splitViewController?.showDetailViewController(MessageContainerController(), sender: self)
         case .customLayout:
-            navigationController?.pushViewController(CustomLayoutExampleViewController(), animated: true)
+            splitViewController?.showDetailViewController(CustomLayoutExampleViewController(), sender: self)
         case .swiftUI:
-            navigationController?.pushViewController(UIHostingController(rootView: SwiftUIExampleView()), animated: true)
+            splitViewController?.showDetailViewController(UIHostingController(rootView: SwiftUIExampleView()), sender: self)
         case .subview:
             let viewController = MessageSubviewContainerViewController()
             let detailViewController = UINavigationController(rootViewController: viewController)
