@@ -6,6 +6,7 @@
 - [How can I dismiss the keyboard?](#how-can-i-dismiss-the-keyboard)
 - [How can I get a reference to the `MessageType` in the `MessageCellDelegate` methods?](#how-can-i-get-a-reference-to-the-messagetype-in-the-messagecelldelegate-methods)
 - [Animations are laggy/Scrolling is not smooth/General poor performance](#animations-are-laggyscrolling-is-not-smoothgeneral-poor-performance)
+- [How can I use MessageKit with SwiftUI](#how-can-i-use-messagekit-with-swiftui)
 
 ## Why doesn't the `MessageInputBar` appear in my controller?
 
@@ -109,3 +110,7 @@ func didTapMessage(in cell: MessageCollectionViewCell) {
 ## Animations are laggy/Scrolling is not smooth/General poor performance
 
 In general, if you're experiencing performance issues, you should look through the implementation of your MessageKit delegate methods like `currentSender()`, etc to find any expensive/blocking method calls or operations. Some delegate methods are called many times per message rendered and thus if their implementations are not efficient then performance can significantly degrade. Avoid doing blocking activities like synchronous database lookups, keychain access, networking, etc. in your MessageKit delegate methods. You should instead cache what you need.
+
+## How can I use MessageKit with SwiftUI?
+
+MessageKit support of SwiftUI is experimental at best and there is no active work on adding more support
