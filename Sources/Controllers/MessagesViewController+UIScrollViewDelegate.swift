@@ -1,6 +1,3 @@
-// swift-tools-version:5.5
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
 /*
  MIT License
 
@@ -12,8 +9,10 @@
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,26 +22,17 @@
  SOFTWARE.
  */
 
-import PackageDescription
+import Foundation
+import UIKit
 
-let package = Package(
-    name: "MessageKit",
-    platforms: [.iOS(.v13)],
-    products: [
-        .library(name: "MessageKit", targets: ["MessageKit"]),
-    ],
-    dependencies: [
-        .package(url: "https://github.com/nathantannar4/InputBarAccessoryView", .upToNextMajor(from: "6.0.0"))
-    ],
-    targets: [
-        .target(
-            name: "MessageKit",
-            dependencies: ["InputBarAccessoryView"],
-            path: "Sources",
-            exclude: ["Supporting/Info.plist", "Supporting/MessageKit.h"],
-            swiftSettings: [SwiftSetting.define("IS_SPM")]
-        ),
-        .testTarget(name: "MessageKitTests", dependencies: ["MessageKit"])
-    ],
-    swiftLanguageVersions: [.v5]
-)
+extension MessagesViewController: UIScrollViewDelegate {
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) { }
+    open func scrollViewWillBeginDragging(_ scrollView: UIScrollView) { }
+    open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) { }
+    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { }
+    open func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) { }
+    open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) { }
+    open func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) { }
+    open func scrollViewDidScrollToTop(_ scrollView: UIScrollView) { }
+    open func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) { }
+}

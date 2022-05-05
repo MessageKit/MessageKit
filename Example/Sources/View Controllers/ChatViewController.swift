@@ -54,11 +54,13 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.title = "MessageKit"
+
         configureMessageCollectionView()
         configureMessageInputBar()
         loadFirstMessages()
-        title = "MessageKit"
+
     }
 
     override func viewDidAppear(_ animated: Bool) {

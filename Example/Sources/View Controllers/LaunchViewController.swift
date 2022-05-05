@@ -81,6 +81,7 @@ final internal class LaunchViewController: UITableViewController {
         title = "MessageKit"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.tintColor = .primaryColor
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.tableFooterView = UIView()
     }
@@ -125,9 +126,7 @@ final internal class LaunchViewController: UITableViewController {
         case .customLayout:
             navigationController?.pushViewController(CustomLayoutExampleViewController(), animated: true)
         case .swiftUI:
-            if #available(iOS 13, *) {
-                navigationController?.pushViewController(UIHostingController(rootView: SwiftUIExampleView()), animated: true)
-            }
+            navigationController?.pushViewController(UIHostingController(rootView: SwiftUIExampleView()), animated: true)
         case .subview:
             let viewController = MessageSubviewContainerViewController()
             let detailViewController = UINavigationController(rootViewController: viewController)
