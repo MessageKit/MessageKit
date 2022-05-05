@@ -92,7 +92,6 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
         addMenuControllerObservers()
         /// Layout input container view and update messagesCollectionViewInsets
         view.layoutIfNeeded()
-        updateMessageCollectionViewBottomInset()
     }
     
     open override func viewSafeAreaInsetsDidChange() {
