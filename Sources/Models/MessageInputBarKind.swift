@@ -25,4 +25,7 @@
 import Foundation
 import UIKit
 
-public final class MessagesInputContainerView: UIView {}
+public enum MessageInputBarKind: Equatable {
+    case messageInputBar
+    case custom(UIView)
+}

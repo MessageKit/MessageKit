@@ -25,4 +25,27 @@
 import Foundation
 import UIKit
 
-public final class MessagesInputContainerView: UIView {}
+final class CustomInputBarExampleViewController: BasicExampleViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let customInputView = UIView()
+        customInputView.backgroundColor = .secondarySystemBackground
+        let customLabel = UILabel()
+        customLabel.translatesAutoresizingMaskIntoConstraints = false
+        customLabel.font = .preferredFont(forTextStyle: .headline)
+        customLabel.textAlignment = .center
+        customLabel.text = "This chat is read only."
+        customLabel.textColor = .primaryColor
+        customInputView.addSubview(customLabel)
+
+        NSLayoutConstraint.activate([
+            customLabel.topAnchor.constraint(equalTo: customInputView.topAnchor, constant: 16),
+            customLabel.bottomAnchor.constraint(equalTo: customInputView.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            customLabel.leadingAnchor.constraint(equalTo: customInputView.leadingAnchor),
+            customLabel.trailingAnchor.constraint(equalTo: customInputView.trailingAnchor)
+        ])
+
+        inputBarType = .custom(customInputView)
+    }
+}

@@ -29,14 +29,8 @@ final internal class SettingsViewController: UITableViewController {
 
     // MARK: - Properties
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     let cells = ["Mock messages count", "Text Messages", "AttributedText Messages", "Photo Messages", "Photo from URL Messages", "Video Messages", "Audio Messages", "Emoji Messages", "Location Messages", "Url Messages", "Phone Messages", "ShareContact Messages"]
-    
-    // MARK: - Picker
-    
+
     var messagesPicker = UIPickerView()
     
     @objc func onDoneWithPickerView() {
@@ -71,9 +65,16 @@ final internal class SettingsViewController: UITableViewController {
     }
     
     // MARK: - View lifecycle
-    
+
+    init() {
+        super.init(style: .insetGrouped)
+    }
+
+    required init?(coder: NSCoder) { nil }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Settings"
         tableView.register(TextFieldTableViewCell.self, forCellReuseIdentifier: TextFieldTableViewCell.identifier)
         tableView.tableFooterView = UIView()
         configurePickerView()
@@ -98,6 +99,7 @@ final internal class SettingsViewController: UITableViewController {
             let switchView = UISwitch(frame: .zero)
             switchView.isOn = UserDefaults.standard.bool(forKey: cellValue)
             switchView.tag = indexPath.row
+            switchView.onTintColor = .primaryColor
             switchView.addTarget(self, action: #selector(self.switchChanged(_:)), for: .valueChanged)
             cell.accessoryView = switchView
         }
