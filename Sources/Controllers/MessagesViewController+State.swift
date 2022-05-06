@@ -28,20 +28,20 @@ import Combine
 import InputBarAccessoryView
 
 extension MessagesViewController {
-    class State {
+    final class State {
         /// Pan gesture for display the date of message by swiping left.
         var panGesture: UIPanGestureRecognizer?
         var maintainPositionOnInputBarHeightChanged: Bool = false
         var scrollsToLastItemOnKeyboardBeginsEditing: Bool = false
 
         let inputContainerView: MessagesInputContainerView = .init()
+        @Published var inputBarType: MessageInputBarKind = .messageInputBar
         let keyboardManager: KeyboardManager = KeyboardManager()
         var disposeBag: Set<AnyCancellable> = .init()
     }
 
     // MARK: - Getters
 
-    var inputContainerView: MessagesInputContainerView { state.inputContainerView }
     var keyboardManager: KeyboardManager { state.keyboardManager }
 
     var panGesture: UIPanGestureRecognizer? {
@@ -56,6 +56,15 @@ extension MessagesViewController {
 }
 
 public extension MessagesViewController {
+    /// Container holding `messageInputBar` view. To change type of input bar, set `inputBarType` to desired kind.
+    var inputContainerView: MessagesInputContainerView { state.inputContainerView }
+
+    /// Kind of `messageInputBar` to be added into `inputContainerView`
+    var inputBarType: MessageInputBarKind {
+        get { state.inputBarType }
+        set { state.inputBarType = newValue }
+    }
+
     /// A Boolean value that determines whether the `MessagesCollectionView`
     /// maintains it's current position when the height of the `MessageInputBar` changes.
     ///

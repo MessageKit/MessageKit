@@ -9,6 +9,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ### Added
 
 - New method in `MessagesLayoutDelegate` for setting message avatar size [ddfc814](https://github.com/MessageKit/MessageKit/commit/ddfc814d325ee5aa238484c90128d32e5a72a49b) by [@martinpucik](https://github.com/martinpucik)
+- `MessageInputBarKind` enum for customizing `messageInputBar` inside `inputContainerView` [#1707](https://github.com/MessageKit/MessageKit/pull/1707) by [@martinpucik](https://github.com/martinpucik)
 
 ### Changed
 

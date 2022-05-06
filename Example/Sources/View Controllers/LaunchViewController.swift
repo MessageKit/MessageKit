@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2019 MessageKit
+ Copyright (c) 2017-2022 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ import SwiftUI
 
 final internal class LaunchViewController: UITableViewController {
     private enum Row {
-        case basic, advanced, autocomplete, embedded, customLayout, subview, swiftUI
+        case basic, advanced, autocomplete, embedded, customLayout, subview, customInputBar, swiftUI
         case settings, sourceCode, contributors
 
         var title: String {
@@ -46,6 +46,8 @@ final internal class LaunchViewController: UITableViewController {
                 return "Custom Layout Example"
             case .subview:
                 return "Subview Example"
+            case .customInputBar:
+                return "Custom InputBar Example"
             case .swiftUI:
                 return "SwiftUI Example"
             case .settings:
@@ -64,7 +66,7 @@ final internal class LaunchViewController: UITableViewController {
     }
 
     private let sections: [Section] = [
-        .init(title: "Examples", rows: [.basic, .advanced, .autocomplete, .embedded, .customLayout, .subview, .swiftUI]),
+        .init(title: "Examples", rows: [.basic, .advanced, .autocomplete, .embedded, .customLayout, .subview, .customInputBar, .swiftUI]),
         .init(title: "Support", rows: [.settings, .sourceCode, .contributors])
     ]
 
@@ -125,6 +127,9 @@ final internal class LaunchViewController: UITableViewController {
             splitViewController?.showDetailViewController(MessageContainerController(), sender: self)
         case .customLayout:
             splitViewController?.showDetailViewController(CustomLayoutExampleViewController(), sender: self)
+        case .customInputBar:
+            let detailViewController = UINavigationController(rootViewController: CustomInputBarExampleViewController())
+            splitViewController?.showDetailViewController(detailViewController, sender: self)
         case .swiftUI:
             splitViewController?.showDetailViewController(UIHostingController(rootView: SwiftUIExampleView()), sender: self)
         case .subview:
@@ -145,6 +150,6 @@ final internal class LaunchViewController: UITableViewController {
     func openURL(_ url: URL) {
         let webViewController = SFSafariViewController(url: url)
         webViewController.preferredControlTintColor = .primaryColor
-        splitViewController?.showDetailViewController(webViewController, sender: self)
+        present(webViewController, animated: true)
     }
 }
