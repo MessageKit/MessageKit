@@ -32,9 +32,8 @@ final internal class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         let masterViewController = UINavigationController(rootViewController: LaunchViewController())
-        let detailViewController = UINavigationController()
         let splitViewController = UISplitViewController()
-        splitViewController.viewControllers = [masterViewController, detailViewController]
+        splitViewController.viewControllers = UIDevice.current.userInterfaceIdiom == .pad ? [masterViewController, UIViewController()] : [masterViewController]
         splitViewController.preferredDisplayMode = .allVisible
         
         window = UIWindow(frame: UIScreen.main.bounds)
