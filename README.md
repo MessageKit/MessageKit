@@ -41,10 +41,6 @@
 - Provide an awesome Open Source project for the iOS open source community.
 - Help others learn.
 
-## Vision
-
-See [VISION.md](https://github.com/MessageKit/MessageKit/blob/master/VISION.md) for Goals, Scope, & Technical Considerations.
-
 ## Installation
 
 ### [CocoaPods](https://cocoapods.org/) **Recommended**

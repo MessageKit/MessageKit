@@ -4,15 +4,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Future release
 
-### Fixed
-
-### Added
-
-- New method in `MessagesLayoutDelegate` for setting message avatar size [ddfc814](https://github.com/MessageKit/MessageKit/commit/ddfc814d325ee5aa238484c90128d32e5a72a49b) by [@martinpucik](https://github.com/martinpucik)
-- `MessageInputBarKind` enum for customizing `messageInputBar` inside `inputContainerView` [#1707](https://github.com/MessageKit/MessageKit/pull/1707) by [@martinpucik](https://github.com/martinpucik)
-
 ### Changed
-
+   
+- **Breaking change**: Dropped CocoaPods support
 - **Breaking change**: Dropped support for iOS 12 [2bd234b](https://github.com/MessageKit/MessageKit/commit/2bd234b1e878f392089f166d6868ce644d6c9e95) by [@martinpucik](https://github.com/martinpucik)
 - **Breaking change**: Moved messageInputBar from inputAccessoryView to a subview in MessagesViewController [#1704](https://github.com/MessageKit/MessageKit/pull/1704) by [@martinpucik](https://github.com/martinpucik)
 - **Deprecation**: Deprecated `maintainPositionOnKeyboardFrameChangedMoved` in favor of `maintainPositionOnInputBarHeightChanged` which better describes the intended use of this property [#1704](https://github.com/MessageKit/MessageKit/pull/1705) by [@martinpucik](https://github.com/martinpucik)
@@ -33,9 +27,18 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
     MessageSizeCalculator.messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize
     ```
 
+### Fixed
+
+### Added
+
+- New method in `MessagesLayoutDelegate` for setting message avatar size [ddfc814](https://github.com/MessageKit/MessageKit/commit/ddfc814d325ee5aa238484c90128d32e5a72a49b) by [@martinpucik](https://github.com/martinpucik)
+- `MessageInputBarKind` enum for customizing `messageInputBar` inside `inputContainerView` [#1707](https://github.com/MessageKit/MessageKit/pull/1707) by [@martinpucik](https://github.com/martinpucik)
+
 ### Removed
 
 - NSConstraintLayoutSet.swift [#1700](https://github.com/MessageKit/MessageKit/pull/1700) by [@martinpucik](https://github.com/martinpucik) 
+
+See [Documentation/MIGRATION_GUIDE.md](https://github.com/MessageKit/MessageKit/blob/main/Documentation/MIGRATION_GUIDE.md) for migration to the new V4.
 
 ## 3.8.0
 
