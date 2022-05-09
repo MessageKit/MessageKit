@@ -43,28 +43,7 @@
 
 ## Installation
 
-### [CocoaPods](https://cocoapods.org/) **Recommended**
-
-```ruby
-# Swift 5.5
-pod 'MessageKit'
-```
-
-> For Swift 5.0 use version 3.3.0
-
-```ruby
-# Swift 5.0
-pod 'MessageKit', '~> 3.3.0'
-```
-
-> For Swift 4.2 use version 3.0.0
-
-```ruby
-# Swift 4.2
-pod 'MessageKit', '~> 3.0.0'
-```
-
-### [Swift Package Manager](https://swift.org/package-manager/)
+### [Swift Package Manager](https://swift.org/package-manager/) **Recommended**
 
 Swift 5.3 in Xcode 12 [added support](https://github.com/apple/swift-evolution/blob/master/proposals/0271-package-manager-resources.md) for assets in Swift Packages.
 You can [just add](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app) MessageKit package to your project by entering it's repository URL
@@ -78,8 +57,10 @@ Older versions of Swift and Xcode don't support MessageKit via SPM.
 
 ## Requirements
 
-- **iOS 12** or later
+- **iOS 13** or later
 - **Swift 5.5** or later
+
+> For iOS 12 or CocoaPods please use version 3.8.0
 
 > For iOS 11 please use version 3.3.0
 
@@ -176,6 +157,7 @@ Interested in contributing to MessageKit? Click here to join our [Slack](https:/
 
 Add your app to the list of apps using this library and make a pull request.
 
+- [ClassDojo](https://www.classdojo.com)
 - [Ring4](https://www.ring4.com)
 - [Formacar](https://itunes.apple.com/ru/app/id1180117334)
 - [HopUp](https://itunes.apple.com/us/app/hopup-airsoft-community/id1128903141?mt=8)
