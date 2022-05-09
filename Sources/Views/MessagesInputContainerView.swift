@@ -1,18 +1,18 @@
 /*
  MIT License
- 
- Copyright (c) 2017-2019 MessageKit
- 
+
+ Copyright (c) 2017-2022 MessageKit
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,30 +22,7 @@
  SOFTWARE.
  */
 
+import Foundation
 import UIKit
 
-@UIApplicationMain
-final internal class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
-        let masterViewController = UINavigationController(rootViewController: LaunchViewController())
-        let splitViewController = UISplitViewController()
-        splitViewController.viewControllers = UIDevice.current.userInterfaceIdiom == .pad ? [masterViewController, UIViewController()] : [masterViewController]
-        splitViewController.preferredDisplayMode = .allVisible
-        
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = splitViewController
-        window?.makeKeyAndVisible()
-        
-        if UserDefaults.isFirstLaunch() {
-            // Enable Text Messages
-            UserDefaults.standard.set(true, forKey: "Text Messages")
-        }
-        
-        return true
-    }
-
-}
+public final class MessagesInputContainerView: UIView {}

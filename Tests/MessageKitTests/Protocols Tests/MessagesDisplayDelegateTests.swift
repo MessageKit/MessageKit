@@ -37,6 +37,7 @@ final class MessagesDisplayDelegateTests: XCTestCase {
         _ = sut.view
         sut.beginAppearanceTransition(true, animated: true)
         sut.endAppearanceTransition()
+        sut.viewDidLoad()
         sut.view.layoutIfNeeded()
     }
 
@@ -113,6 +114,7 @@ final class MessagesDisplayDelegateTests: XCTestCase {
 
     func testMessageHeaderView_isNotNil() {
         let indexPath = IndexPath(item: 0, section: 1)
+        XCTAssert(sut.dataProvider != nil)
         let headerView = sut.messageHeaderView(for: indexPath, in: sut.messagesCollectionView)
         XCTAssertNotNil(headerView)
     }
@@ -190,7 +192,7 @@ private class MockMessagesViewController: MessagesViewController, MessagesDispla
         messagesCollectionView.messagesDisplayDelegate = self
         messagesCollectionView.messagesDataSource = dataProvider
         messagesCollectionView.messagesLayoutDelegate = self
-
+        messagesCollectionView.reloadData()
     }
 
     fileprivate func makeDataSource() -> MockMessagesDataSource {

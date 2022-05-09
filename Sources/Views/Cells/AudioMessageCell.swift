@@ -48,7 +48,7 @@ open class AudioMessageCell: MessageContentCell {
     }()
 
     public lazy var activityIndicatorView: UIActivityIndicatorView = {
-        let activityIndicatorView = UIActivityIndicatorView(style: .gray)
+        let activityIndicatorView = UIActivityIndicatorView(style: .medium)
         activityIndicatorView.hidesWhenStopped = true
         activityIndicatorView.isHidden = true
         return activityIndicatorView

@@ -54,16 +54,17 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationItem.largeTitleDisplayMode = .never
+        navigationItem.title = "MessageKit"
+
         configureMessageCollectionView()
         configureMessageInputBar()
         loadFirstMessages()
-        title = "MessageKit"
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
             .onNewMessage { [weak self] message in
                 self?.insertMessage(message)
@@ -76,10 +77,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         audioController.stopAnyOngoingPlaying()
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
     func loadFirstMessages() {
         DispatchQueue.global(qos: .userInitiated).async {
             let count = UserDefaults.standard.mockMessagesCount()
@@ -87,7 +84,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
                 DispatchQueue.main.async {
                     self.messageList = messages
                     self.messagesCollectionView.reloadData()
-                    self.messagesCollectionView.scrollToLastItem()
+                    self.messagesCollectionView.scrollToLastItem(animated: false)
                 }
             }
         }
@@ -111,8 +108,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
         messagesCollectionView.messageCellDelegate = self
         
         scrollsToLastItemOnKeyboardBeginsEditing = true // default false
-        maintainPositionOnKeyboardFrameChanged = true // default false
-
+        maintainPositionOnInputBarHeightChanged = true // default false
         showMessageTimestampOnSwipeLeft = true // default false
         
         messagesCollectionView.refreshControl = refreshControl

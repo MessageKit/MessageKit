@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		032A15DD25965D9A00E00FE3 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032A15DC25965D9A00E00FE3 /* AlertService.swift */; };
 		032A15E225965E1100E00FE3 /* CameraInputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032A15E125965E1100E00FE3 /* CameraInputBarAccessoryView.swift */; };
+		138A04D428254AD300E2780F /* CustomInputBarExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A04D328254AD300E2780F /* CustomInputBarExampleViewController.swift */; };
 		13EFA5D727AC5631003002CC /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 13EFA5D627AC5631003002CC /* MessageKit */; };
 		13EFA5D927AC5634003002CC /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 13EFA5D827AC5634003002CC /* Kingfisher */; };
 		1C5433DD24C389C300A5383B /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5433DC24C389C300A5383B /* MessagesView.swift */; };
@@ -28,7 +29,6 @@
 		385C2942211FF38F0010B4BA /* AdvancedExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C293B211FF38E0010B4BA /* AdvancedExampleViewController.swift */; };
 		385C2943211FF38F0010B4BA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C293C211FF38E0010B4BA /* SettingsViewController.swift */; };
 		385C2944211FF38F0010B4BA /* MessageContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C293D211FF38F0010B4BA /* MessageContainerController.swift */; };
-		385C2945211FF38F0010B4BA /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C293E211FF38F0010B4BA /* NavigationController.swift */; };
 		385C2946211FF38F0010B4BA /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C293F211FF38F0010B4BA /* LaunchViewController.swift */; };
 		385C2947211FF38F0010B4BA /* BasicExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C2940211FF38F0010B4BA /* BasicExampleViewController.swift */; };
 		385C2948211FF38F0010B4BA /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C2941211FF38F0010B4BA /* ChatViewController.swift */; };
@@ -71,6 +71,7 @@
 /* Begin PBXFileReference section */
 		032A15DC25965D9A00E00FE3 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
 		032A15E125965E1100E00FE3 /* CameraInputBarAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraInputBarAccessoryView.swift; sourceTree = "<group>"; };
+		138A04D328254AD300E2780F /* CustomInputBarExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputBarExampleViewController.swift; sourceTree = "<group>"; };
 		13CCA04225793002005C19BB /* MessageKit */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MessageKit; sourceTree = "<group>"; };
 		13EFA5D027AC5368003002CC /* MessageKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MessageKit; path = ..; sourceTree = "<group>"; };
 		1C5433DC24C389C300A5383B /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
@@ -90,7 +91,6 @@
 		385C293B211FF38E0010B4BA /* AdvancedExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedExampleViewController.swift; sourceTree = "<group>"; };
 		385C293C211FF38E0010B4BA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		385C293D211FF38F0010B4BA /* MessageContainerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageContainerController.swift; sourceTree = "<group>"; };
-		385C293E211FF38F0010B4BA /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		385C293F211FF38F0010B4BA /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		385C2940211FF38F0010B4BA /* BasicExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicExampleViewController.swift; sourceTree = "<group>"; };
 		385C2941211FF38F0010B4BA /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -168,11 +168,11 @@
 			isa = PBXGroup;
 			children = (
 				1C5433E024C3A32400A5383B /* SwiftUI */,
-				385C2920211FF32E0010B4BA /* CustomCell.swift */,
-				385C2921211FF32E0010B4BA /* TableViewCells.swift */,
 				032A15E125965E1100E00FE3 /* CameraInputBarAccessoryView.swift */,
+				385C2920211FF32E0010B4BA /* CustomCell.swift */,
 				9B49D541263DA6F9008804B5 /* CustomMessageContentCell.swift */,
 				9B49D546263DAA29008804B5 /* CustomTextMessageContentCell.swift */,
+				385C2921211FF32E0010B4BA /* TableViewCells.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -180,11 +180,11 @@
 		385C2929211FF33D0010B4BA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9B49D539263D9606008804B5 /* CustomLayoutSizeCalculator.swift */,
+				9B49D52C263C3E1F008804B5 /* CustomTextLayoutSizeCalculator.swift */,
 				385C2926211FF33B0010B4BA /* MockMessage.swift */,
 				385C2925211FF33A0010B4BA /* MockSocket.swift */,
 				383B9EB22172A1C4008AB91A /* MockUser.swift */,
-				9B49D52C263C3E1F008804B5 /* CustomTextLayoutSizeCalculator.swift */,
-				9B49D539263D9606008804B5 /* CustomLayoutSizeCalculator.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -200,10 +200,10 @@
 		385C2933211FF3670010B4BA /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				032A15DC25965D9A00E00FE3 /* AlertService.swift */,
 				385C292A211FF3450010B4BA /* Settings+UserDefaults.swift */,
 				385C292F211FF3630010B4BA /* UIColor+Extensions.swift */,
 				385C2930211FF3630010B4BA /* UIViewController+Extensions.swift */,
-				032A15DC25965D9A00E00FE3 /* AlertService.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -224,13 +224,13 @@
 				38CCCC582258419300DD5482 /* AutocompleteExampleViewController.swift */,
 				385C2940211FF38F0010B4BA /* BasicExampleViewController.swift */,
 				385C2941211FF38F0010B4BA /* ChatViewController.swift */,
+				9B49D527263C31FC008804B5 /* CustomLayoutExampleViewController.swift */,
 				385C293F211FF38F0010B4BA /* LaunchViewController.swift */,
 				385C293D211FF38F0010B4BA /* MessageContainerController.swift */,
-				385C293E211FF38F0010B4BA /* NavigationController.swift */,
-				385C293C211FF38E0010B4BA /* SettingsViewController.swift */,
-				63ECDABD24182A470016C349 /* MessageSubviewViewController.swift */,
 				63ECDAC1241889630016C349 /* MessageSubviewContainerViewController.swift */,
-				9B49D527263C31FC008804B5 /* CustomLayoutExampleViewController.swift */,
+				63ECDABD24182A470016C349 /* MessageSubviewViewController.swift */,
+				385C293C211FF38E0010B4BA /* SettingsViewController.swift */,
+				138A04D328254AD300E2780F /* CustomInputBarExampleViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -503,8 +503,8 @@
 				385C2937211FF37B0010B4BA /* SampleData.swift in Sources */,
 				385C2931211FF3630010B4BA /* UIColor+Extensions.swift in Sources */,
 				385C2932211FF3630010B4BA /* UIViewController+Extensions.swift in Sources */,
+				138A04D428254AD300E2780F /* CustomInputBarExampleViewController.swift in Sources */,
 				385C292B211FF3450010B4BA /* Settings+UserDefaults.swift in Sources */,
-				385C2945211FF38F0010B4BA /* NavigationController.swift in Sources */,
 				9B49D547263DAA29008804B5 /* CustomTextMessageContentCell.swift in Sources */,
 				9B49D528263C31FC008804B5 /* CustomLayoutExampleViewController.swift in Sources */,
 				032A15DD25965D9A00E00FE3 /* AlertService.swift in Sources */,
@@ -623,7 +623,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -676,7 +676,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;

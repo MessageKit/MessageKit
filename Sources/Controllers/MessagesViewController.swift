@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017-2020 MessageKit
+ Copyright (c) 2017-2022 MessageKit
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,39 +24,18 @@
 
 import Foundation
 import UIKit
+import Combine
 import InputBarAccessoryView
 
 /// A subclass of `UIViewController` with a `MessagesCollectionView` object
 /// that is used to display conversation interfaces.
-open class MessagesViewController: UIViewController,
-UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecognizerDelegate {
+open class MessagesViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     /// The `MessagesCollectionView` managed by the messages view controller object.
     open var messagesCollectionView = MessagesCollectionView()
 
     /// The `InputBarAccessoryView` used as the `inputAccessoryView` in the view controller.
     open lazy var messageInputBar = InputBarAccessoryView()
-
-    /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
-    /// last item whenever the `InputTextView` begins editing.
-    ///
-    /// The default value of this property is `false`.
-    /// NOTE: This is related to `scrollToLastItem` whereas the below flag is related to `scrollToBottom` - check each function for differences
-    open var scrollsToLastItemOnKeyboardBeginsEditing: Bool = false
-
-    /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
-    /// bottom whenever the `InputTextView` begins editing.
-    ///
-    /// The default value of this property is `false`.
-    /// NOTE: This is related to `scrollToBottom` whereas the above flag is related to `scrollToLastItem` - check each function for differences
-    @available(*, deprecated, message: "Control scrolling to bottom on keyboardBeginEditing by using scrollsToLastItemOnKeyboardBeginsEditing instead", renamed: "scrollsToLastItemOnKeyboardBeginsEditing")
-    open var scrollsToBottomOnKeyboardBeginsEditing: Bool = false
-    
-    /// A Boolean value that determines whether the `MessagesCollectionView`
-    /// maintains it's current position when the height of the `MessageInputBar` changes.
-    ///
-    /// The default value of this property is `false`.
-    open var maintainPositionOnKeyboardFrameChanged: Bool = false
 
     /// Display the date of message by swiping left.
     /// The default value of this property is `false`.
@@ -71,154 +50,49 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
         }
     }
 
-    /// Pan gesture for display the date of message by swiping left.
-    private var panGesture: UIPanGestureRecognizer?
-
-    open override var canBecomeFirstResponder: Bool {
-        return true
-    }
-
-    open override var inputAccessoryView: UIView? {
-        return messageInputBar
-    }
-
-    open override var shouldAutorotate: Bool {
-        return false
-    }
-
     /// A CGFloat value that adds to (or, if negative, subtracts from) the automatically
     /// computed value of `messagesCollectionView.contentInset.bottom`. Meant to be used
     /// as a measure of last resort when the built-in algorithm does not produce the right
     /// value for your app. Please let us know when you end up having to use this property.
     open var additionalBottomInset: CGFloat = 0 {
         didSet {
-            let delta = additionalBottomInset - oldValue
-            messageCollectionViewBottomInset += delta
+            updateMessageCollectionViewBottomInset()
         }
-    }
-
-    public var isTypingIndicatorHidden: Bool {
-        return messagesCollectionView.isTypingIndicatorHidden
     }
 
     public var selectedIndexPathForMenu: IndexPath?
 
-    private var isFirstLayout: Bool = true
-    
-    internal var isMessagesControllerBeingDismissed: Bool = false
+    // MARK: - Internal properties
 
-    internal var messageCollectionViewBottomInset: CGFloat = 0 {
-        didSet {
-            messagesCollectionView.contentInset.bottom = messageCollectionViewBottomInset
-            messagesCollectionView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset
-        }
-    }
+    internal let state: State = .init()
 
-    // MARK: - View Life Cycle
+    // MARK: - Lifecycle
 
     open override func viewDidLoad() {
         super.viewDidLoad()
         setupDefaults()
         setupSubviews()
         setupConstraints()
+        setupInputBar(for: inputBarType)
         setupDelegates()
-        addMenuControllerObservers()
         addObservers()
+        addKeyboardObservers()
+        addMenuControllerObservers()
+        /// Layout input container view and update messagesCollectionViewInsets
+        view.layoutIfNeeded()
     }
     
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if !isFirstLayout {
-            addKeyboardObservers()
-        }
-    }
-    
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        isMessagesControllerBeingDismissed = false
-    }
-    
-    open override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        isMessagesControllerBeingDismissed = true
-        removeKeyboardObservers()
-    }
-    
-    open override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        isMessagesControllerBeingDismissed = false
-    }
-    
-    open override func viewDidLayoutSubviews() {
-        // Hack to prevent animation of the contentInset after viewDidAppear
-        if isFirstLayout {
-            defer { isFirstLayout = false }
-            addKeyboardObservers()
-            messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
-        }
-    }
-
     open override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
-        messageCollectionViewBottomInset = requiredInitialScrollViewBottomInset()
+        updateMessageCollectionViewBottomInset()
     }
-
-    // MARK: - Initializers
 
     deinit {
         removeMenuControllerObservers()
-        removeObservers()
         clearMemoryCache()
     }
 
-    // MARK: - Methods [Private]
-
-    /// Display time of message by swiping the cell
-    private func addPanGesture() {
-        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-        guard let panGesture = panGesture else {
-            return
-        }
-        panGesture.delegate = self
-        messagesCollectionView.addGestureRecognizer(panGesture)
-        messagesCollectionView.clipsToBounds = false
-    }
-
-    private func removePanGesture() {
-        guard let panGesture = panGesture else {
-            return
-        }
-        panGesture.delegate = nil
-        self.panGesture = nil
-        messagesCollectionView.removeGestureRecognizer(panGesture)
-        messagesCollectionView.clipsToBounds = true
-    }
-
-    @objc
-    private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
-        guard let parentView = gesture.view else {
-            return
-        }
-
-        switch gesture.state {
-        case .began, .changed:
-            messagesCollectionView.showsVerticalScrollIndicator = false
-            let translation = gesture.translation(in: view)
-            let minX = -(view.frame.size.width * 0.35)
-            let maxX: CGFloat = 0
-            var offsetValue = translation.x
-            offsetValue = max(offsetValue, minX)
-            offsetValue = min(offsetValue, maxX)
-            parentView.frame.origin.x = offsetValue
-        case .ended:
-            messagesCollectionView.showsVerticalScrollIndicator = true
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.8, options: .curveEaseOut, animations: {
-                parentView.frame.origin.x = 0
-            }, completion: nil)
-        default:
-            break
-        }
-    }
+    // MARK: - Private methods
 
     private func setupDefaults() {
         extendedLayoutIncludesOpaqueBars = true
@@ -226,9 +100,23 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
         messagesCollectionView.keyboardDismissMode = .interactive
         messagesCollectionView.alwaysBounceVertical = true
         messagesCollectionView.backgroundColor = .collectionViewBackground
-        if #available(iOS 13.0, *) {
-            messagesCollectionView.automaticallyAdjustsScrollIndicatorInsets = false
-        }
+    }
+
+    private func setupSubviews() {
+        view.addSubviews(messagesCollectionView, inputContainerView)
+    }
+
+    private func setupConstraints() {
+        messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        /// Constraints of inputContainerView are managed by keyboardManager
+        inputContainerView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            messagesCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            messagesCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
     }
 
     private func setupDelegates() {
@@ -236,72 +124,52 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
         messagesCollectionView.dataSource = self
     }
 
-    private func setupSubviews() {
-        view.addSubview(messagesCollectionView)
-    }
+    private func setupInputBar(for kind: MessageInputBarKind) {
+        inputContainerView.subviews.forEach { $0.removeFromSuperview() }
 
-    private func setupConstraints() {
-        messagesCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let top = messagesCollectionView.topAnchor.constraint(equalTo: view.topAnchor)
-        let bottom = messagesCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        let leading = messagesCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor)
-        let trailing = messagesCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-        NSLayoutConstraint.activate([top, bottom, trailing, leading])
-    }
+        func pinViewToInputContainer(_ view: UIView) {
+            view.translatesAutoresizingMaskIntoConstraints = false
+            inputContainerView.addSubviews(view)
 
-    // MARK: - Typing Indicator API
-
-    /// Sets the typing indicator sate by inserting/deleting the `TypingBubbleCell`
-    ///
-    /// - Parameters:
-    ///   - isHidden: A Boolean value that is to be the new state of the typing indicator
-    ///   - animated: A Boolean value determining if the insertion is to be animated
-    ///   - updates: A block of code that will be executed during `performBatchUpdates`
-    ///              when `animated` is `TRUE` or before the `completion` block executes
-    ///              when `animated` is `FALSE`
-    ///   - completion: A completion block to execute after the insertion/deletion
-    open func setTypingIndicatorViewHidden(_ isHidden: Bool, animated: Bool, whilePerforming updates: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
-
-        guard isTypingIndicatorHidden != isHidden else {
-            completion?(false)
-            return
+            NSLayoutConstraint.activate([
+                view.topAnchor.constraint(equalTo: inputContainerView.topAnchor),
+                view.bottomAnchor.constraint(equalTo: inputContainerView.bottomAnchor),
+                view.leadingAnchor.constraint(equalTo: inputContainerView.leadingAnchor),
+                view.trailingAnchor.constraint(equalTo: inputContainerView.trailingAnchor)
+            ])
         }
 
-        let section = messagesCollectionView.numberOfSections
-        messagesCollectionView.setTypingIndicatorViewHidden(isHidden)
-
-        if animated {
-            messagesCollectionView.performBatchUpdates({ [weak self] in
-                self?.performUpdatesForTypingIndicatorVisability(at: section)
-                updates?()
-                }, completion: completion)
-        } else {
-            performUpdatesForTypingIndicatorVisability(at: section)
-            updates?()
-            completion?(true)
+        switch kind {
+        case .messageInputBar:
+            pinViewToInputContainer(messageInputBar)
+        case .custom(let view):
+            pinViewToInputContainer(view)
         }
     }
 
-    /// Performs a delete or insert on the `MessagesCollectionView` on the provided section
-    ///
-    /// - Parameter section: The index to modify
-    private func performUpdatesForTypingIndicatorVisability(at section: Int) {
-        if isTypingIndicatorHidden {
-            messagesCollectionView.deleteSections([section - 1])
-        } else {
-            messagesCollectionView.insertSections([section])
-        }
+    private func addObservers() {
+        NotificationCenter.default
+            .publisher(for: UIApplication.didReceiveMemoryWarningNotification)
+            .subscribe(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.clearMemoryCache()
+            }
+            .store(in: &disposeBag)
+
+        state.$inputBarType
+            .subscribe(on: DispatchQueue.global())
+            .dropFirst()
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] newType in
+                self?.setupInputBar(for: newType)
+            })
+            .store(in: &disposeBag)
     }
 
-    /// A method that by default checks if the section is the last in the
-    /// `messagesCollectionView` and that `isTypingIndicatorViewHidden`
-    /// is FALSE
-    ///
-    /// - Parameter section
-    /// - Returns: A Boolean indicating if the TypingIndicator should be presented at the given section
-    public func isSectionReservedForTypingIndicator(_ section: Int) -> Bool {
-        return !messagesCollectionView.isTypingIndicatorHidden && section == self.numberOfSections(in: messagesCollectionView) - 1
+    private func clearMemoryCache() {
+        MessageStyle.bubbleImageCache.removeAllObjects()
     }
 
     // MARK: - UICollectionViewDataSource
@@ -499,53 +367,4 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UIGestureRecogni
             break
         }
     }
-
-    // MARK: - Helpers
-    
-    private func addObservers() {
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(clearMemoryCache), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
-    }
-    
-    private func removeObservers() {
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
-    }
-    
-    @objc private func clearMemoryCache() {
-        MessageStyle.bubbleImageCache.removeAllObjects()
-    }
-
-    // MARK: - UIGestureRecognizerDelegate
-           
-    /// Check Pan Gesture Direction:
-    open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer else {
-            return false
-        }
-        let velocity = panGesture.velocity(in: messagesCollectionView)
-        return abs(velocity.x) > abs(velocity.y)
-    }
-}
-
-        // MARK: - UIScrollViewDelegate
-
-extension MessagesViewController: UIScrollViewDelegate{
-    
-    open func scrollViewDidScroll(_ scrollView: UIScrollView) { }
-    
-    open func scrollViewWillBeginDragging(_ scrollView: UIScrollView){ }
-    
-    open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>){ }
-    
-    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool){ }
-    
-    open func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView){ }
-    
-    open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) { }
-    
-    open func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) { }
-    
-    open func scrollViewDidScrollToTop(_ scrollView: UIScrollView){ }
-    
-    open func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) { }
 }

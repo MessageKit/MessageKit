@@ -9,7 +9,6 @@
 import SwiftUI
 import MessageKit
 
-@available(iOS 13.0, *)
 struct SwiftUIExampleView: View {
     
     @State var messages: [MessageType] = SampleData.shared.getMessages(count: 20)
@@ -35,7 +34,6 @@ struct SwiftUIExampleView: View {
     
 }
 
-@available(iOS 13.0, *)
 struct SwiftUIExampleView_Previews: PreviewProvider {
     static var previews: some View {
         SwiftUIExampleView()
