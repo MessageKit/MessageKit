@@ -54,7 +54,7 @@ internal extension MessagesViewController {
             selectedIndexPathForMenu = nil
         }
 
-        currentMenuController.setMenuVisible(false, animated: false)
+        currentMenuController.hideMenu()
 
         guard let selectedCell = messagesCollectionView.cellForItem(at: selectedIndexPath) as? MessageContentCell else { return }
         let selectedCellMessageBubbleFrame = selectedCell.convert(selectedCell.messageContainerView.frame, to: view)
@@ -85,8 +85,7 @@ internal extension MessagesViewController {
             currentMenuController.arrowDirection = .up
         }
 
-        currentMenuController.setTargetRect(targetRect, in: view)
-        currentMenuController.setMenuVisible(true, animated: true)
+        currentMenuController.showMenu(from: view, rect: targetRect)
     }
 
     // MARK: - Helpers
