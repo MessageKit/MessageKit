@@ -37,7 +37,7 @@ class MockMessagesDataSource: MessagesDataSource {
         return senders[0]
     }
 
-    func currentSender() -> SenderType {
+    var currentSender: SenderType {
         return currentUser
     }
 
