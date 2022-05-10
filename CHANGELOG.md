@@ -6,6 +6,11 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 See [MIGRATION_GUIDE.md](https://github.com/MessageKit/MessageKit/blob/main/Documentation/MIGRATION_GUIDE.md) for migration to the new V4.
 
+### Added
+
+- New method in `MessagesLayoutDelegate` for setting message avatar size [ddfc814](https://github.com/MessageKit/MessageKit/commit/ddfc814d325ee5aa238484c90128d32e5a72a49b) by [@martinpucik](https://github.com/martinpucik)
+- `MessageInputBarKind` enum for customizing `messageInputBar` inside `inputContainerView` [#1707](https://github.com/MessageKit/MessageKit/pull/1707) by [@martinpucik](https://github.com/martinpucik)
+
 ### Changed
    
 - **Breaking change**: Dropped CocoaPods support
@@ -31,15 +36,12 @@ See [MIGRATION_GUIDE.md](https://github.com/MessageKit/MessageKit/blob/main/Docu
 
 ### Fixed
 
-### Added
-
-- New method in `MessagesLayoutDelegate` for setting message avatar size [ddfc814](https://github.com/MessageKit/MessageKit/commit/ddfc814d325ee5aa238484c90128d32e5a72a49b) by [@martinpucik](https://github.com/martinpucik)
-- `MessageInputBarKind` enum for customizing `messageInputBar` inside `inputContainerView` [#1707](https://github.com/MessageKit/MessageKit/pull/1707) by [@martinpucik](https://github.com/martinpucik)
-
 ### Removed
 
 - NSConstraintLayoutSet.swift [#1700](https://github.com/MessageKit/MessageKit/pull/1700) by [@martinpucik](https://github.com/martinpucik) 
-
+- Deprecated `Sender` struct. Clients should use `SenderType` protocol [#1713](https://github.com/MessageKit/MessageKit/pull/1713) by [@martinpucik](https://github.com/martinpucik)
+- Unavailable `MessageInputBar` and `MessageInputBarDelegate`. Clients should use `InputBarAccessoryView` and `InputBarAccessoryViewDelegate` [#1713](https://github.com/MessageKit/MessageKit/pull/1713) by [@martinpucik](https://github.com/martinpucik)
+- `func scrollToBottom(animated:)` on `MessagesCollectionView`. Clients should use `func scrollToLastItem(:)` [#1713](https://github.com/MessageKit/MessageKit/pull/1713) by [@martinpucik](https://github.com/martinpucik)
 
 ## 3.8.0
 
