@@ -47,7 +47,7 @@ end
 
 # Warn when there is a big PR
 if git.lines_of_code > 1000
-    warn("Big PR - you should create smaller!")
+     warn("Big Pull Request - Please consider splitting up your changes into smaller Pull Requests.")
 end
 
 swiftlint.config_file = '.swiftlint.yml'
