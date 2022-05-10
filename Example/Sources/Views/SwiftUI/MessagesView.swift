@@ -89,7 +89,7 @@ struct MessagesView: UIViewControllerRepresentable {
 }
 
 extension MessagesView.Coordinator: MessagesDataSource {
-    func currentSender() -> SenderType {
+    var currentSender: SenderType {
         return SampleData.shared.currentSender
     }
     

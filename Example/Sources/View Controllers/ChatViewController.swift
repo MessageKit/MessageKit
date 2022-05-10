@@ -152,7 +152,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
 
     // MARK: - MessagesDataSource
 
-    func currentSender() -> SenderType {
+    var currentSender: SenderType {
         return SampleData.shared.currentSender
     }
 
