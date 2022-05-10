@@ -467,7 +467,7 @@ extension AdvancedExampleViewController: CameraInputBarAccessoryViewDelegate {
     
     func sendImageMessage( photo  : UIImage)  {
        
-        let photoMessage = MockMessage(image: photo, user: self.currentSender() as! MockUser, messageId: UUID().uuidString, date: Date())
+        let photoMessage = MockMessage(image: photo, user: self.currentSender as! MockUser, messageId: UUID().uuidString, date: Date())
         self.insertMessage(photoMessage)
     }
     

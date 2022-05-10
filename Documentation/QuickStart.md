@@ -105,7 +105,7 @@ let messages: [MessageType] = []
 
 extension ChatViewController: MessagesDataSource {
 
-	func currentSender() -> SenderType {
+	var currentSender: SenderType {
 		return Sender(senderId: "any_unique_id", displayName: "Steven")
 	}
 
