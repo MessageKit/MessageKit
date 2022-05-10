@@ -1,1 +1,1 @@
-v0.46.2 https://github.com/realm/SwiftLint/releases/tag/0.46.2
+v0.47.1 https://github.com/realm/SwiftLint/releases/tag/0.47.1
