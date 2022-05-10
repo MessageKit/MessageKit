@@ -1,7 +1,7 @@
 #
 # MIT License
 # 
-# Copyright (c) 2017-2020 MessageKit
+# Copyright (c) 2017-2022 MessageKit
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,11 @@ if mergeable_state == "draft"
     warn("PR is marked as Draft")
 end
 
+# Make it more obvious that a PR is a work in progress and shouldn't be merged yet
+if github.pr_title.include? "[WIP]"
+    warn("PR is marked as Work in Progress")
+end
+
 # Mainly to encourage writing up some reasoning about the PR, rather than just leaving a title
 if github.pr_body.length < 5
     fail("Please provide a summary in the Pull Request description")
@@ -42,9 +47,9 @@ end
 
 # Warn when there is a big PR
 if git.lines_of_code > 1000
-    warn("Big Pull Request - Please consider splitting up your changes into smaller Pull Requests.")
+     warn("Big Pull Request - Please consider splitting up your changes into smaller Pull Requests.")
 end
 
 swiftlint.config_file = '.swiftlint.yml'
-swiftlint.binary_path = 'Example/Pods/SwiftLint/swiftlint'
+swiftlint.binary_path = 'bin/swiftlint'
 swiftlint.lint_files inline_mode:true, fail_on_error:true

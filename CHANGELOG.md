@@ -37,6 +37,8 @@ See [MIGRATION_GUIDE.md](https://github.com/MessageKit/MessageKit/blob/main/Docu
 
 ### Fixed
 
+- Fixed iOS 13 deprecation warnings [#1715](https://github.com/MessageKit/MessageKit/pull/1715) by [@kaspik](https://github.com/Kaspik)
+
 ### Removed
 
 - NSConstraintLayoutSet.swift [#1700](https://github.com/MessageKit/MessageKit/pull/1700) by [@martinpucik](https://github.com/martinpucik) 

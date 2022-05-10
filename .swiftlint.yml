@@ -1,0 +1,67 @@
+disabled_rules:
+  - trailing_whitespace
+  - file_length
+  - line_length
+  - type_body_length
+  - identifier_name
+  - function_parameter_count
+  - switch_case_alignment
+  - orphaned_doc_comment
+  - inclusive_language
+  - multiple_closures_with_trailing_closure
+
+opt_in_rules:
+  - force_unwrapping
+  - implicitly_unwrapped_optional
+  - conditional_returns_on_newline
+  - empty_count
+  - empty_string
+  - extension_access_modifier
+  - closure_spacing
+  - fatal_error_message
+  - first_where
+  - toggle_bool
+  - unused_declaration
+  - modifier_order
+  - contains_over_first_not_nil
+  - convenience_type
+  - fallthrough
+  - unused_import
+  - unavailable_function
+  - strict_fileprivate
+  - explicit_init
+  - anyobject_protocol
+  - switch_case_on_newline
+  - contains_over_range_nil_comparison
+  - contains_over_filter_count
+  - contains_over_filter_is_empty
+  - empty_collection_literal
+  - flatmap_over_map_reduce
+  - no_space_in_method_call
+
+excluded:
+  - Tests
+  - Vendor
+  - Scripts
+  - fastlane
+  - "DerivedData/**/*"
+  - "**/.build"
+  - "**/Package.swift"
+
+function_body_length: 120
+type_name:
+  min_length: 3
+  max_length: 60
+identifier_name:
+  min_length: 3
+  max_length: 60
+cyclomatic_complexity: 30
+large_tuple:
+  warning: 4
+  error: 5
+implicitly_unwrapped_optional:
+  mode: all_except_iboutlets
+
+colon:
+  flexible_right_spacing: false
+  apply_to_dictionaries: true
