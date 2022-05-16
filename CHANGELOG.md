@@ -34,6 +34,7 @@ See [MIGRATION_GUIDE.md](https://github.com/MessageKit/MessageKit/blob/main/Docu
     ```swift
     MessageSizeCalculator.messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize
     ```
+- Updated InputBarAccessoryView to v6.1.0 [#1716](https://github.com/MessageKit/MessageKit/pull/1716) by [@martinpucik](https://github.com/martinpucik)
 
 ### Fixed
 
