@@ -39,6 +39,7 @@ internal extension MessagesViewController {
         NotificationCenter.default
             .publisher(for: UITextView.textDidBeginEditingNotification)
             .subscribe(on: DispatchQueue.global())
+            .delay(for: .milliseconds(200), scheduler: DispatchQueue.main)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] notification in
                 self?.handleTextViewDidBeginEditing(notification)
