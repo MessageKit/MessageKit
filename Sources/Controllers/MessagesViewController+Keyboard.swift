@@ -75,6 +75,13 @@ internal extension MessagesViewController {
             self?.updateMessageCollectionViewBottomInset()
         })
         .store(in: &disposeBag)
+
+        /// Observe frame change of the input bar container to not cover collectioView with inputBar
+        inputContainerView.publisher(for: \.center)
+            .sink(receiveValue: { [weak self] _ in
+                self?.updateMessageCollectionViewBottomInset()
+            })
+            .store(in: &disposeBag)
     }
 
     // MARK: - Updating insets
