@@ -65,19 +65,10 @@ internal extension MessagesViewController {
             }
             .store(in: &disposeBag)
 
-        Publishers.MergeMany(
-            NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification),
-            NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
-        )
-        .subscribe(on: DispatchQueue.global())
-        .receive(on: DispatchQueue.main)
-        .sink(receiveValue: { [weak self] _ in
-            self?.updateMessageCollectionViewBottomInset()
-        })
-        .store(in: &disposeBag)
-
         /// Observe frame change of the input bar container to not cover collectioView with inputBar
         inputContainerView.publisher(for: \.center)
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates()
             .sink(receiveValue: { [weak self] _ in
                 self?.updateMessageCollectionViewBottomInset()
             })
@@ -88,7 +79,6 @@ internal extension MessagesViewController {
 
     /// Updates bottom messagesCollectionView inset based on the position of inputContainerView
     func updateMessageCollectionViewBottomInset() {
-        /// This is important to skip notifications from child modal controllers in iOS >= 13.0
         guard self.presentedViewController == nil else { return }
         let collectionViewHeight = messagesCollectionView.frame.height
         let newBottomInset = collectionViewHeight - (inputContainerView.frame.minY - additionalBottomInset) - automaticallyAddedBottomInset
