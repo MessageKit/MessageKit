@@ -39,6 +39,7 @@ See [MIGRATION_GUIDE.md](https://github.com/MessageKit/MessageKit/blob/main/Docu
 ### Fixed
 
 - Fixed iOS 13 deprecation warnings [#1715](https://github.com/MessageKit/MessageKit/pull/1715) by [@kaspik](https://github.com/Kaspik)
+- Updating bottom chat collectionView inset after InputBar container view frame change [#1725](https://github.com/MessageKit/MessageKit/pull/1725) by [@martinpucik](https://github.com/martinpucik)
 
 ### Removed
 

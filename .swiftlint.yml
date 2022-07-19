@@ -13,7 +13,6 @@ disabled_rules:
 opt_in_rules:
   - force_unwrapping
   - implicitly_unwrapped_optional
-  - conditional_returns_on_newline
   - empty_count
   - empty_string
   - extension_access_modifier
