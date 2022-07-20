@@ -35,6 +35,7 @@ See [MIGRATION_GUIDE.md](https://github.com/MessageKit/MessageKit/blob/main/Docu
     MessageSizeCalculator.messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize
     ```
 - Updated InputBarAccessoryView to v6.1.0 [#1716](https://github.com/MessageKit/MessageKit/pull/1716) by [@martinpucik](https://github.com/martinpucik)
+- Observe inputBar frame change to update collectionView bottom inset instead of keyboard show/hide notifications [#1726](https://github.com/MessageKit/MessageKit/pull/1726) by [@martinpucik](https://github.com/martinpucik)
 
 ### Fixed
 
