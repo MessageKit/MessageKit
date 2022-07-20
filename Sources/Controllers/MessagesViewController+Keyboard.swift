@@ -35,10 +35,11 @@ internal extension MessagesViewController {
         keyboardManager.bind(inputAccessoryView: inputContainerView)
         keyboardManager.bind(to: messagesCollectionView)
 
-        /// Observe didBeginEditing to scroll down the content
+        /// Observe didBeginEditing to scroll content to last item if necessary
         NotificationCenter.default
             .publisher(for: UITextView.textDidBeginEditingNotification)
             .subscribe(on: DispatchQueue.global())
+            /// Wait for inputBar frame change animation to end
             .delay(for: .milliseconds(200), scheduler: DispatchQueue.main)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] notification in
@@ -66,7 +67,7 @@ internal extension MessagesViewController {
             }
             .store(in: &disposeBag)
 
-        /// Observe frame change of the input bar container to not cover collectioView with inputBar
+        /// Observe frame change of the input bar container to update collectioView bottom inset
         inputContainerView.publisher(for: \.center)
             .receive(on: DispatchQueue.main)
             .removeDuplicates()
