@@ -20,25 +20,38 @@
  SOFTWARE.
  */
 
+import Foundation
 import PackagePlugin
 
 @main
-struct SwiftLintPlugin: BuildToolPlugin {
-    func createBuildCommands(context: PluginContext, target: Target) async throws -> [Command] {
-        [
-            .buildCommand(
-                displayName: "Linting \(target.name)",
-                executable: try context.tool(named: "swiftlint").path,
-                arguments: [
-                    "lint",
-                    "--in-process-sourcekit",
-                    "--path",
-                    target.directory.string,
-                    "--config",
-                    "\(context.package.directory.string)/.swiftlint.yml",
-                ],
-                environment: [:]
-            ),
+struct SwiftFormatPlugin: CommandPlugin {
+    func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
+        let process = Process()
+        process.launchPath = try context.tool(named: "swiftformat").path.string
+        process.arguments = [
+            ".",
+            "--swiftversion",
+            "5.6",
+            "--cache",
+            context.pluginWorkDirectory.string + "/swiftformat.cache",
         ]
+        try process.run()
+        process.waitUntilExit()
+
+        switch process.terminationStatus {
+        case EXIT_SUCCESS:
+            break
+        case EXIT_FAILURE:
+            throw CommandError.lintFailure
+        default:
+            throw CommandError.unknownError(exitCode: process.terminationStatus)
+        }
     }
+}
+
+// MARK: - CommandError
+
+enum CommandError: Error {
+    case lintFailure
+    case unknownError(exitCode: Int32)
 }

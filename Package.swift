@@ -30,20 +30,25 @@ let package = Package(
     products: [
         .library(name: "MessageKit", targets: ["MessageKit"]),
         .plugin(name: "SwiftLintPlugin", targets: ["SwiftLintPlugin"]),
+        .plugin(name: "SwiftFormatPlugin", targets: ["SwiftFormatPlugin"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/nathantannar4/InputBarAccessoryView", .upToNextMajor(from: "6.1.0"))
+        .package(url: "https://github.com/nathantannar4/InputBarAccessoryView", .upToNextMajor(from: "6.1.0")),
     ],
     targets: [
+        // MARK: - MessageKit
+
         .target(
             name: "MessageKit",
             dependencies: ["InputBarAccessoryView"],
             path: "Sources",
             exclude: ["Supporting/Info.plist", "Supporting/MessageKit.h"],
             swiftSettings: [SwiftSetting.define("IS_SPM")],
-            plugins: ["SwiftLintPlugin"]
+            plugins: ["SwiftLintPlugin", "SwiftFormatPlugin"]
         ),
         .testTarget(name: "MessageKitTests", dependencies: ["MessageKit"]),
+
+        // MARK: - Plugins
 
         .binaryTarget(
             name: "SwiftLintBinary",
@@ -54,6 +59,22 @@ let package = Package(
             name: "SwiftLintPlugin",
             capability: .buildTool(),
             dependencies: ["SwiftLintBinary"]
+        ),
+
+        .binaryTarget(
+            name: "swiftformat",
+            url: "https://github.com/nicklockwood/SwiftFormat/releases/download/0.49.13/swiftformat.artifactbundle.zip",
+            checksum: "5ce27780dceee8714b15d53141e6dce1a8d626e970eade3c511c9ef1a0c06f40"
+        ),
+        .plugin(
+            name: "SwiftFormatPlugin",
+            capability: .command(
+                intent: .sourceCodeFormatting(),
+                permissions: [
+                    .writeToPackageDirectory(reason: "Format Swift source files"),
+                ]
+            ),
+            dependencies: ["swiftformat"]
         ),
     ],
     swiftLanguageVersions: [.v5]
