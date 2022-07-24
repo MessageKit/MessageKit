@@ -71,7 +71,7 @@ open class LocationMessageCell: MessageContentCell {
         let snapshotOptions = MKMapSnapshotter.Options()
         snapshotOptions.region = MKCoordinateRegion(center: locationItem.location.coordinate, span: options.span)
         snapshotOptions.showsBuildings = options.showsBuildings
-        snapshotOptions.showsPointsOfInterest = options.showsPointsOfInterest
+        snapshotOptions.pointOfInterestFilter = options.showsPointsOfInterest ? .includingAll : .excludingAll
 
         let snapShotter = MKMapSnapshotter(options: snapshotOptions)
         self.snapShotter = snapShotter

@@ -37,7 +37,7 @@ extension MessagesViewController {
     ///              when `animated` is `TRUE` or before the `completion` block executes
     ///              when `animated` is `FALSE`
     ///   - completion: A completion block to execute after the insertion/deletion
-    open func setTypingIndicatorViewHidden(_ isHidden: Bool, animated: Bool, whilePerforming updates: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
+    @objc open func setTypingIndicatorViewHidden(_ isHidden: Bool, animated: Bool, whilePerforming updates: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
         guard isTypingIndicatorHidden != isHidden else {
             completion?(false)
             return
