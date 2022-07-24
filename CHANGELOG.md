@@ -4,7 +4,9 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Future release
 
-See [MIGRATION_GUIDE.md](https://github.com/MessageKit/MessageKit/blob/main/Documentation/MIGRATION_GUIDE.md) for migration to the new V4.
+## 4.0.0
+
+Version 4.0.0 comes with couple of breaking changes, please refer to [MIGRATION_GUIDE.md](https://github.com/MessageKit/MessageKit/blob/main/Documentation/MIGRATION_GUIDE.md) for easy transition from V3 to V4.
 
 ### Added
 

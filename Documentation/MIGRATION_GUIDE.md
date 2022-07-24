@@ -20,3 +20,7 @@ Version 4.0 contains some breaking changes if you want to upgrade from the previ
     ```swift
     MessageSizeCalculator.messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize
     ```
+- BREAKING CHANGE:
+   Renamed `func currentSender() -> SenderType` to `var currentSender: SenderType`
+- BREAKING CHANGE:
+   Deprecated `maintainPositionOnKeyboardFrameChangedMoved` in favor of `maintainPositionOnInputBarHeightChanged`.
