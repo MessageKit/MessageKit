@@ -4,6 +4,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Future release
 
+### Fixed
+
+- Fixed iOS 13 deprecation warnings [#1730](https://github.com/MessageKit/MessageKit/pull/1730) by [@kaspik](https://github.com/Kaspik)
+
 ## 4.0.0
 
 Version 4.0.0 comes with couple of breaking changes, please refer to [MIGRATION_GUIDE.md](https://github.com/MessageKit/MessageKit/blob/main/Documentation/MIGRATION_GUIDE.md) for easy transition from V3 to V4.
