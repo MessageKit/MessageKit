@@ -6,40 +6,57 @@
 //  Copyright © 2021 MessageKit. All rights reserved.
 //
 
-import UIKit
+import Kingfisher
 import MapKit
 import MessageKit
-import Kingfisher
+import UIKit
 
 class CustomLayoutExampleViewController: BasicExampleViewController {
-    
-    private lazy var textMessageSizeCalculator: CustomTextLayoutSizeCalculator = CustomTextLayoutSizeCalculator(layout: self.messagesCollectionView.messagesCollectionViewFlowLayout)
-    
-    override func configureMessageCollectionView() {
-        super.configureMessageCollectionView()
-        self.messagesCollectionView.register(CustomTextMessageContentCell.self)
-        messagesCollectionView.messagesDataSource = self
-        messagesCollectionView.messagesLayoutDelegate = self
-        messagesCollectionView.messagesDisplayDelegate = self
-    }
-    
-    // MARK: - MessagesLayoutDelegate
-    
-    override func textCellSizeCalculator(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator? {
-        return self.textMessageSizeCalculator
-    }
-    
-    // MARK: - MessagesDataSource
-    
-    override func textCell(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UICollectionViewCell? {
-        let cell = messagesCollectionView.dequeueReusableCell(CustomTextMessageContentCell.self,
-                                                              for: indexPath)
-        cell.configure(with: message,
-                       at: indexPath,
-                       in: messagesCollectionView,
-                       dataSource: self,
-                       and: self.textMessageSizeCalculator)
-        
-        return cell
-    }
+  // MARK: Internal
+
+  override func configureMessageCollectionView() {
+    super.configureMessageCollectionView()
+    messagesCollectionView.register(CustomTextMessageContentCell.self)
+    messagesCollectionView.messagesDataSource = self
+    messagesCollectionView.messagesLayoutDelegate = self
+    messagesCollectionView.messagesDisplayDelegate = self
+  }
+
+  // MARK: - MessagesLayoutDelegate
+
+  override func textCellSizeCalculator(
+    for _: MessageType,
+    at _: IndexPath,
+    in _: MessagesCollectionView)
+    -> CellSizeCalculator?
+  {
+    textMessageSizeCalculator
+  }
+
+  // MARK: - MessagesDataSource
+
+  override func textCell(
+    for message: MessageType,
+    at indexPath: IndexPath,
+    in messagesCollectionView: MessagesCollectionView)
+    -> UICollectionViewCell?
+  {
+    let cell = messagesCollectionView.dequeueReusableCell(
+      CustomTextMessageContentCell.self,
+      for: indexPath)
+    cell.configure(
+      with: message,
+      at: indexPath,
+      in: messagesCollectionView,
+      dataSource: self,
+      and: textMessageSizeCalculator)
+
+    return cell
+  }
+
+  // MARK: Private
+
+  private lazy var textMessageSizeCalculator = CustomTextLayoutSizeCalculator(
+    layout: self.messagesCollectionView
+      .messagesCollectionViewFlowLayout)
 }
