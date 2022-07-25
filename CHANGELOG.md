@@ -12,6 +12,7 @@ Version 4.0.0 comes with couple of breaking changes, please refer to [MIGRATION_
 
 - New method in `MessagesLayoutDelegate` for setting message avatar size [ddfc814](https://github.com/MessageKit/MessageKit/commit/ddfc814d325ee5aa238484c90128d32e5a72a49b) by [@martinpucik](https://github.com/martinpucik)
 - `MessageInputBarKind` enum for customizing `messageInputBar` inside `inputContainerView` [#1707](https://github.com/MessageKit/MessageKit/pull/1707) by [@martinpucik](https://github.com/martinpucik)
+- Swiftformat and Swiftlint SwiftPM plugins used for linting and formatting the codebase [#1729](https://github.com/MessageKit/MessageKit/pull/1729) by [@martinpucik](https://github.com/martinpucik)
 
 ### Changed
    
