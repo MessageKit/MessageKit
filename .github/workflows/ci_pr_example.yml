@@ -5,7 +5,9 @@ on: pull_request
 jobs:
   tests:
     name: Build Example app
-    runs-on: macOS-latest
+    runs-on: macos-12
+    env: 
+       DEVELOPER_DIR: /Applications/Xcode_13.4.1.app/Contents/Developer
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v2
