@@ -4,6 +4,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Future release
 
+### Added
+
+- Swiftformat and Swiftlint SwiftPM plugins used for linting and formatting the codebase [#1729](https://github.com/MessageKit/MessageKit/pull/1729) by [@martinpucik](https://github.com/martinpucik)
+
 ### Fixed
 
 - Fixed iOS 13 deprecation warnings [#1730](https://github.com/MessageKit/MessageKit/pull/1730) by [@kaspik](https://github.com/Kaspik)
