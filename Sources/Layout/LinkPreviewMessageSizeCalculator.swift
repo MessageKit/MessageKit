@@ -1,102 +1,120 @@
-/*
- MIT License
-
- Copyright (c) 2017-2019 MessageKit
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
- */
+// MIT License
+//
+// Copyright (c) 2017-2019 MessageKit
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 import Foundation
 import UIKit
 
+// MARK: - LinkPreviewMessageSizeCalculator
+
 open class LinkPreviewMessageSizeCalculator: TextMessageSizeCalculator {
+  // MARK: Lifecycle
 
-    static let imageViewSize: CGFloat = 60
-    static let imageViewMargin: CGFloat = 8
+  public override init(layout: MessagesCollectionViewFlowLayout?) {
+    let titleFont = UIFont.systemFont(ofSize: 13, weight: .semibold)
+    let titleFontMetrics = UIFontMetrics(forTextStyle: .footnote)
+    self.titleFont = titleFontMetrics.scaledFont(for: titleFont)
 
-    public var titleFont: UIFont
-    public var teaserFont: UIFont = .preferredFont(forTextStyle: .caption2)
-    public var domainFont: UIFont
+    let domainFont = UIFont.systemFont(ofSize: 12, weight: .semibold)
+    let domainFontMetrics = UIFontMetrics(forTextStyle: .caption1)
+    self.domainFont = domainFontMetrics.scaledFont(for: domainFont)
 
-    public override init(layout: MessagesCollectionViewFlowLayout?) {
-        let titleFont = UIFont.systemFont(ofSize: 13, weight: .semibold)
-        let titleFontMetrics = UIFontMetrics(forTextStyle: .footnote)
-        self.titleFont = titleFontMetrics.scaledFont(for: titleFont)
+    super.init(layout: layout)
+  }
 
-        let domainFont = UIFont.systemFont(ofSize: 12, weight: .semibold)
-        let domainFontMetrics = UIFontMetrics(forTextStyle: .caption1)
-        self.domainFont = domainFontMetrics.scaledFont(for: domainFont)
+  // MARK: Open
 
-        super.init(layout: layout)
+  open override func messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
+    switch message.kind {
+    case .linkPreview:
+      let maxWidth = super.messageContainerMaxWidth(for: message, at: indexPath)
+      return max(maxWidth, (layout?.collectionView?.bounds.width ?? 0) * 0.75)
+    default:
+      return super.messageContainerMaxWidth(for: message, at: indexPath)
+    }
+  }
+
+  open override func messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
+    guard case MessageKind.linkPreview(let linkItem) = message.kind else {
+      fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
     }
 
-    open override func messageContainerMaxWidth(for message: MessageType, at indexPath: IndexPath) -> CGFloat {
-        switch message.kind {
-        case .linkPreview:
-            let maxWidth = super.messageContainerMaxWidth(for: message, at: indexPath)
-            return max(maxWidth, (layout?.collectionView?.bounds.width ?? 0) * 0.75)
-        default:
-            return super.messageContainerMaxWidth(for: message, at: indexPath)
-        }
-    }
+    var containerSize = super.messageContainerSize(for: message, at: indexPath)
+    containerSize.width = max(containerSize.width, messageContainerMaxWidth(for: message, at: indexPath))
 
-    open override func messageContainerSize(for message: MessageType, at indexPath: IndexPath) -> CGSize {
-        guard case MessageKind.linkPreview(let linkItem) = message.kind else {
-            fatalError("messageContainerSize received unhandled MessageDataType: \(message.kind)")
-        }
+    let labelInsets: UIEdgeInsets = messageLabelInsets(for: message)
 
-        var containerSize = super.messageContainerSize(for: message, at: indexPath)
-        containerSize.width = max(containerSize.width, messageContainerMaxWidth(for: message, at: indexPath))
+    let minHeight = containerSize.height + LinkPreviewMessageSizeCalculator.imageViewSize
+    let previewMaxWidth = containerSize
+      .width -
+      (
+        LinkPreviewMessageSizeCalculator.imageViewSize + LinkPreviewMessageSizeCalculator.imageViewMargin + labelInsets
+          .horizontal)
 
-        let labelInsets: UIEdgeInsets = messageLabelInsets(for: message)
+    calculateContainerSize(
+      with: NSAttributedString(string: linkItem.title ?? "", attributes: [.font: titleFont]),
+      containerSize: &containerSize,
+      maxWidth: previewMaxWidth)
 
-        let minHeight = containerSize.height + LinkPreviewMessageSizeCalculator.imageViewSize
-        let previewMaxWidth = containerSize.width - (LinkPreviewMessageSizeCalculator.imageViewSize + LinkPreviewMessageSizeCalculator.imageViewMargin + labelInsets.horizontal)
+    calculateContainerSize(
+      with: NSAttributedString(string: linkItem.teaser, attributes: [.font: teaserFont]),
+      containerSize: &containerSize,
+      maxWidth: previewMaxWidth)
 
-        calculateContainerSize(with: NSAttributedString(string: linkItem.title ?? "", attributes: [.font: titleFont]),
-                               containerSize: &containerSize,
-                               maxWidth: previewMaxWidth)
+    calculateContainerSize(
+      with: NSAttributedString(string: linkItem.url.host ?? "", attributes: [.font: domainFont]),
+      containerSize: &containerSize,
+      maxWidth: previewMaxWidth)
 
-        calculateContainerSize(with: NSAttributedString(string: linkItem.teaser, attributes: [.font: teaserFont]),
-                               containerSize: &containerSize,
-                               maxWidth: previewMaxWidth)
+    containerSize.height = max(minHeight, containerSize.height) + labelInsets.vertical
 
-        calculateContainerSize(with: NSAttributedString(string: linkItem.url.host ?? "", attributes: [.font: domainFont]),
-                               containerSize: &containerSize,
-                               maxWidth: previewMaxWidth)
+    return containerSize
+  }
 
-        containerSize.height = max(minHeight, containerSize.height) + labelInsets.vertical
+  open override func configure(attributes: UICollectionViewLayoutAttributes) {
+    super.configure(attributes: attributes)
+    guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
+    attributes.linkPreviewFonts = LinkPreviewFonts(titleFont: titleFont, teaserFont: teaserFont, domainFont: domainFont)
+  }
 
-        return containerSize
-    }
+  // MARK: Public
 
-    open override func configure(attributes: UICollectionViewLayoutAttributes) {
-        super.configure(attributes: attributes)
-        guard let attributes = attributes as? MessagesCollectionViewLayoutAttributes else { return }
-        attributes.linkPreviewFonts = LinkPreviewFonts(titleFont: titleFont, teaserFont: teaserFont, domainFont: domainFont)
-    }
+  public var titleFont: UIFont
+  public var teaserFont: UIFont = .preferredFont(forTextStyle: .caption2)
+  public var domainFont: UIFont
+
+  // MARK: Internal
+
+  static let imageViewSize: CGFloat = 60
+  static let imageViewMargin: CGFloat = 8
 }
 
-private extension LinkPreviewMessageSizeCalculator {
-    private func calculateContainerSize(with attributedString: NSAttributedString, containerSize: inout CGSize, maxWidth: CGFloat) {
-        guard !attributedString.string.isEmpty else { return }
-        let size = labelSize(for: attributedString, considering: maxWidth)
-        containerSize.height += size.height
-    }
+extension LinkPreviewMessageSizeCalculator {
+  private func calculateContainerSize(
+    with attributedString: NSAttributedString,
+    containerSize: inout CGSize,
+    maxWidth: CGFloat)
+  {
+    guard !attributedString.string.isEmpty else { return }
+    let size = labelSize(for: attributedString, considering: maxWidth)
+    containerSize.height += size.height
+  }
 }

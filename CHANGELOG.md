@@ -4,6 +4,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ## Future release
 
+### Added
+
+- Swiftformat and Swiftlint SwiftPM plugins used for linting and formatting the codebase [#1729](https://github.com/MessageKit/MessageKit/pull/1729) by [@martinpucik](https://github.com/martinpucik)
+
 ## 4.0.0
 
 Version 4.0.0 comes with couple of breaking changes, please refer to [MIGRATION_GUIDE.md](https://github.com/MessageKit/MessageKit/blob/main/Documentation/MIGRATION_GUIDE.md) for easy transition from V3 to V4.
