@@ -18,6 +18,7 @@ excluded:
   - "**/Package.swift"
   - "**/.build"
   - "Tests"
+  - "Example"
 
 colon:
   apply_to_dictionaries: false
