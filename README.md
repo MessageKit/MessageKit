@@ -9,13 +9,7 @@
 [![Build example app](https://github.com/MessageKit/MessageKit/workflows/Build%20Example%20app/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22PR+Example+app%22)
 [![Danger](https://github.com/MessageKit/MessageKit/workflows/Danger/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22Danger%22)
 
-[![codecov](https://codecov.io/gh/MessageKit/MessageKit/branch/master/graph/badge.svg)](https://codecov.io/gh/MessageKit/MessageKit)
-<a href="https://swift.org">
-<img src="https://img.shields.io/badge/Swift-5-green.svg" alt="Swift" />
-</a>
-<a href="https://cocoapods.org/">
-<img src="https://cocoapod-badges.herokuapp.com/v/MessageKit/badge.png" alt="CocoaPods">
-</a>
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FMessageKit%2FMessageKit%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/MessageKit/MessageKit)
 <a href="https://developer.apple.com/xcode">
 <img src="https://img.shields.io/badge/Xcode-12-green.svg" alt="Xcode">
 </a>
