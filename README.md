@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo" width="400">
   
-  A community-driven replacement for JSQMessagesViewController https://messagekit.github.io
+  A community-driven replacement for JSQMessagesViewController
 </p>
 
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FMessageKit%2FMessageKit%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/MessageKit/MessageKit)
