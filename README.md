@@ -10,9 +10,7 @@
 [![Danger](https://github.com/MessageKit/MessageKit/workflows/Danger/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22Danger%22)
 
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FMessageKit%2FMessageKit%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/MessageKit/MessageKit)
-<a href="https://developer.apple.com/xcode">
-<img src="https://img.shields.io/badge/Xcode-12-green.svg" alt="Xcode">
-</a>
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FMessageKit%2FMessageKit%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/MessageKit/MessageKit)
 <a href="https://developer.apple.com/xcode">
 <img src="https://img.shields.io/badge/Xcode-13-blue.svg" alt="Xcode">
 </a>
