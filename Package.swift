@@ -42,7 +42,7 @@ let package = Package(
             path: "Sources",
             exclude: ["Supporting/Info.plist", "Supporting/MessageKit.h"],
             swiftSettings: [SwiftSetting.define("IS_SPM")],
-            plugins: ["SwiftLintPlugin", "SwiftFormatPlugin"]
+            plugins: ["SwiftLintPlugin"]
         ),
         .testTarget(name: "MessageKitTests", dependencies: ["MessageKit"]),
 
