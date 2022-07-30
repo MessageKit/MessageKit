@@ -31,6 +31,10 @@ framework:
 	@echo "Building MessageKit Framework."
 	@xcodebuild build -scheme MessageKit -destination "platform=iOS Simulator,name=iPhone 11" | xcpretty -c
 
+build_example:
+	@echo "Building & testing MessageKit Example app."
+	@cd Example && xcodebuild build analyze -scheme ChatExample -destination "platform=iOS Simulator,name=iPhone 11" CODE_SIGNING_REQUIRED=NO | xcpretty -c
+
 format:
 	@swift package --allow-writing-to-package-directory format-source-code --file .
 

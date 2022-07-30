@@ -14,4 +14,4 @@ jobs:
       with:
         fetch-depth: 10
     - name: Build and run example project
-      run: ./build.sh example
+      run: make build_example
