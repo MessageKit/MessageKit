@@ -58,6 +58,16 @@ let package = Package(
             capability: .buildTool(),
             dependencies: ["SwiftLintBinary"]
         ),
+        .plugin(
+            name: "SwiftLintCommandPlugin",
+            capability: .command(
+                intent: .custom(
+                    verb: "lint",
+                    description: "Lint Swift source files"
+                )
+            ),
+            dependencies: ["SwiftLintBinary"]
+        ),
 
         .binaryTarget(
             name: "swiftformat",
