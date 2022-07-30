@@ -51,5 +51,5 @@ if git.lines_of_code > 1000
 end
 
 swiftlint.config_file = '.swiftlint.yml'
-swiftlint.binary_path = 'bin/swiftlint'
+swiftlint.binary_path = '.build/artifacts/messagekit/SwiftLintBinary.artifactbundle/swiftlint-0.47.1-macos/bin/swiftlint'
 swiftlint.lint_files inline_mode:true, fail_on_error:true
