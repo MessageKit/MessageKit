@@ -11,6 +11,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ### Fixed
 
 - Fixed iOS 13 deprecation warnings [#1730](https://github.com/MessageKit/MessageKit/pull/1730) by [@kaspik](https://github.com/Kaspik)
+- SwiftPM plugins setup [#1732](https://github.com/MessageKit/MessageKit/pull/1732) by [@martinpucik](https://github.com/martinpucik)
 
 ## 4.0.0
 

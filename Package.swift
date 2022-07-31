@@ -42,7 +42,7 @@ let package = Package(
             path: "Sources",
             exclude: ["Supporting/Info.plist", "Supporting/MessageKit.h"],
             swiftSettings: [SwiftSetting.define("IS_SPM")],
-            plugins: ["SwiftLintPlugin", "SwiftFormatPlugin"]
+            plugins: ["SwiftLintPlugin"]
         ),
         .testTarget(name: "MessageKitTests", dependencies: ["MessageKit"]),
 
@@ -56,6 +56,16 @@ let package = Package(
         .plugin(
             name: "SwiftLintPlugin",
             capability: .buildTool(),
+            dependencies: ["SwiftLintBinary"]
+        ),
+        .plugin(
+            name: "SwiftLintCommandPlugin",
+            capability: .command(
+                intent: .custom(
+                    verb: "lint",
+                    description: "Lint Swift source files"
+                )
+            ),
             dependencies: ["SwiftLintBinary"]
         ),
 

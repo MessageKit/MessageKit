@@ -1,0 +1,6 @@
+#!/bin/sh
+
+git diff --diff-filter=d --staged --name-only | grep -e '\(.*\).swift$' | while read line; do
+	swift package --allow-writing-to-package-directory format-source-code --file "${line}";
+  git add "$line";
+done
