@@ -27,7 +27,7 @@ import UIKit
 
 /// A subclass of `UIViewController` with a `MessagesCollectionView` object
 /// that is used to display conversation interfaces.
-open class MessagesViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+open class MessagesViewControllers: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
   // MARK: Lifecycle
 
   deinit {

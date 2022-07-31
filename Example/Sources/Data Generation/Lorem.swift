@@ -24,7 +24,7 @@ import Foundation
 
 // MARK: - Lorem
 
-public class Lorem {
+public class Lorems {
   // MARK: Public
 
   /// Return a random word.
