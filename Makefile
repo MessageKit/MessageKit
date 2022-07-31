@@ -40,3 +40,9 @@ format:
 
 lint:
 	@swift package --disable-sandbox lint
+
+setup:
+	@mkdir -p .git/hooks
+	@rm -f .git/hooks/pre-commit
+	@cp ./Scripts/pre-commit ./.git/hooks
+	@chmod +x .git/hooks/pre-commit
