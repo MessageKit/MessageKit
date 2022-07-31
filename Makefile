@@ -25,7 +25,7 @@
 
 test:
 	@echo "Running MessageKit tests."
-	@xcodebuild test -scheme MessageKit -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 11" | xcpretty -c
+	@set -o pipefail && xcodebuild test -scheme MessageKit -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 11" | xcpretty -c
 
 framework:
 	@echo "Building MessageKit Framework."
