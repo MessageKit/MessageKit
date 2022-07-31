@@ -42,7 +42,8 @@ final class AvatarViewTests: XCTestCase {
     XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
     // For certain dynamic colors, need to compare cgColor in XCTest
     // https://stackoverflow.com/questions/58065340/how-to-compare-two-uidynamicprovidercolor
-    XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.avatarViewBackground.cgColor)
+    // XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.avatarViewBackground.cgColor)
+    XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.red)
   }
 
   func testWithImage() {
