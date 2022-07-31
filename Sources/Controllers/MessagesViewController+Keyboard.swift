@@ -34,9 +34,6 @@ extension MessagesViewController {
     keyboardManager.bind(inputAccessoryView: inputContainerView)
     keyboardManager.bind(to: messagesCollectionView)
 
-
-
-
     /// Observe didBeginEditing to scroll content to last item if necessary
     NotificationCenter.default
       .publisher(for: UITextView.textDidBeginEditingNotification)
@@ -45,9 +42,7 @@ extension MessagesViewController {
       .delay(for: .milliseconds(200), scheduler: DispatchQueue.main)
       .receive(on: DispatchQueue.main)
       .sink { [weak self] notification in
-          
-
-          self?.handleTextViewDidBeginEditing(notification)
+        self?.handleTextViewDidBeginEditing(notification)
       }
       .store(in: &disposeBag)
 

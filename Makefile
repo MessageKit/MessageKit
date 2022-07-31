@@ -29,7 +29,7 @@ test:
 
 framework:
 	@echo "Building MessageKit Framework."
-	@xset -o pipefail && codebuild build -scheme MessageKit -destination "platform=iOS Simulator,name=iPhone 11" | xcpretty -c
+	@set -o pipefail && xcodebuild build -scheme MessageKit -destination "platform=iOS Simulator,name=iPhone 11" | xcpretty -c
 
 build_example:
 	@echo "Building & testing MessageKit Example app."

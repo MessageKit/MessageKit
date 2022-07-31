@@ -21,32 +21,34 @@
 import Foundation
 import PackagePlugin
 
+// MARK: - SwiftLintCommandPlugin
+
 @main
 struct SwiftLintCommandPlugin: CommandPlugin {
-    func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
-        let swiftLintTool = try context.tool(named: "swiftlint")
-        let swiftLintPath = URL(fileURLWithPath: swiftLintTool.path.string)
+  func performCommand(context: PackagePlugin.PluginContext, arguments _: [String]) async throws {
+    let swiftLintTool = try context.tool(named: "swiftlint")
+    let swiftLintPath = URL(fileURLWithPath: swiftLintTool.path.string)
 
-        let swiftLintArgs = [
-            "lint",
-            "--path", context.package.directory.string,
-            "--config", context.package.directory.string + "/.swiftlint.yml",
-            "--strict"
-        ]
+    let swiftLintArgs = [
+      "lint",
+      "--path", context.package.directory.string,
+      "--config", context.package.directory.string + "/.swiftlint.yml",
+      "--strict",
+    ]
 
-        let task = try Process.run(swiftLintPath, arguments: swiftLintArgs)
-        task.waitUntilExit()
+    let task = try Process.run(swiftLintPath, arguments: swiftLintArgs)
+    task.waitUntilExit()
 
-        if task.terminationStatus == 0 || task.terminationStatus == 2 {
-            // no-op
-        } else {
-            throw CommandError.unknownError(exitCode: task.terminationStatus)
-        }
+    if task.terminationStatus == 0 || task.terminationStatus == 2 {
+      // no-op
+    } else {
+      throw CommandError.unknownError(exitCode: task.terminationStatus)
     }
+  }
 }
 
 // MARK: - CommandError
 
 enum CommandError: Error {
-    case unknownError(exitCode: Int32)
+  case unknownError(exitCode: Int32)
 }
