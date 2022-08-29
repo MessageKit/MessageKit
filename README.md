@@ -61,7 +61,7 @@ Older versions of Swift and Xcode don't support MessageKit via SPM.
 ## Getting Started
 
 Check out the full documentation here:<br>
-https://messagekit.github.io/documentation/messagekit
+https://messagekit.github.io/MessageKit/documentation/messagekit
 
 ### Cell Structure
 
