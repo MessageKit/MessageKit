@@ -4,17 +4,22 @@
   A community-driven replacement for JSQMessagesViewController
 </p>
 
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FMessageKit%2FMessageKit%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/MessageKit/MessageKit)
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FMessageKit%2FMessageKit%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/MessageKit/MessageKit)
-<a href="https://developer.apple.com/xcode">
-<img src="https://img.shields.io/badge/Xcode-13-blue.svg" alt="Xcode">
-</a>
-<a href="https://opensource.org/licenses/MIT">
-<img src="https://img.shields.io/badge/License-MIT-red.svg" alt="MIT">
-</a>
-<a href="https://github.com/MessageKit/MessageKit/issues">
-<img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="Contributions Welcome">
-</a>
+<p align="center">
+  <a href="https://swiftpackageindex.com/MessageKit/MessageKit">
+    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FMessageKit%2FMessageKit%2Fbadge%3Ftype%3Dswift-versions"/>
+  <a href="https://swiftpackageindex.com/MessageKit/MessageKit">
+    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FMessageKit%2FMessageKit%2Fbadge%3Ftype%3Dplatforms"/>
+  <br/>
+  <a href="https://developer.apple.com/xcode">
+  <img src="https://img.shields.io/badge/Xcode-13-blue.svg" alt="Xcode">
+  </a>
+  <a href="./LICENSE.md">
+  <img src="https://img.shields.io/github/license/MessageKit/MessageKit?color=red" alt="MIT">
+  </a>
+  <a href="https://github.com/MessageKit/MessageKit/issues">
+  <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="Contributions Welcome">
+  </a>
+</p>
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/TypingIndicator.png" title="MessageKit header" width="400">
@@ -54,6 +59,9 @@ Older versions of Swift and Xcode don't support MessageKit via SPM.
 > For iOS 9 and iOS 10 please use version 3.1.1
 
 ## Getting Started
+
+Check out the full documentation here:<br>
+https://messagekit.github.io/documentation/messagekit
 
 ### Cell Structure
 
