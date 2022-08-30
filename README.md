@@ -1,15 +1,14 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo" width="400">
-  
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo" width="270">
+</p>
+<p align="center">
   A community-driven replacement for JSQMessagesViewController
 </p>
-
 <p align="center">
   <a href="https://swiftpackageindex.com/MessageKit/MessageKit">
     <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FMessageKit%2FMessageKit%2Fbadge%3Ftype%3Dswift-versions"/>
   <a href="https://swiftpackageindex.com/MessageKit/MessageKit">
     <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FMessageKit%2FMessageKit%2Fbadge%3Ftype%3Dplatforms"/>
-  <br/>
   <a href="https://developer.apple.com/xcode">
   <img src="https://img.shields.io/badge/Xcode-13-blue.svg" alt="Xcode">
   </a>
@@ -20,7 +19,7 @@
   <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" alt="Contributions Welcome">
   </a>
 </p>
-
+<br>
 <p align="center">
   <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/TypingIndicator.png" title="MessageKit header" width="400">
 </p>
