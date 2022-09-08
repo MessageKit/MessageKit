@@ -346,7 +346,7 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     NotificationCenter.default.addObserver(
       self,
       selector: #selector(MessagesCollectionViewFlowLayout.handleOrientationChange(_:)),
-      name: UIApplication.didChangeStatusBarOrientationNotification,
+      name: UIDevice.orientationDidChangeNotification,
       object: nil)
   }
 
