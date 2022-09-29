@@ -171,6 +171,7 @@ final class AdvancedExampleViewController: ChatViewController {
     messageInputBar.inputTextView.layer.masksToBounds = true
     messageInputBar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
     configureInputBarItems()
+    inputBarType = .custom(messageInputBar)
   }
 
   // MARK: - Helpers
