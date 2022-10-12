@@ -41,8 +41,7 @@ let package = Package(
             dependencies: ["InputBarAccessoryView"],
             path: "Sources",
             exclude: ["Supporting/Info.plist", "Supporting/MessageKit.h"],
-            swiftSettings: [SwiftSetting.define("IS_SPM")],
-            plugins: ["SwiftLintPlugin"]
+            swiftSettings: [SwiftSetting.define("IS_SPM")]
         ),
         .testTarget(name: "MessageKitTests", dependencies: ["MessageKit"]),
 
