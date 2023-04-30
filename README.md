@@ -171,6 +171,7 @@ Add your app to the list of apps using this library and make a pull request.
 - [Girlfriend Plus](https://apps.apple.com/us/app/girlfriend-plus/id1011637655)
 - [Noon Happen](https://apps.apple.com/app/id1477310602)
 - [XPASS](https://apps.apple.com/cz/app/id1596773834)
+- [HeiaHeia](https://www.heiaheia.com)
 
 _Please provide attribution, it is greatly appreciated._
 
