@@ -7,6 +7,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ### Added
 
 ### Fixed
+
+- Fix Advanced example hiding indicator [#1792](https://github.com/MessageKit/MessageKit/pull/1792) by [@kaspik](https://github.com/Kaspik)
     
 ### Changed
 
