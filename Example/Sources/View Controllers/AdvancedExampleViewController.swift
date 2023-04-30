@@ -74,9 +74,9 @@ final class AdvancedExampleViewController: ChatViewController {
 
     MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu])
       .onTypingStatus { [weak self] in
-        self?.setTypingIndicatorViewHidden(false)
+        self?.setTypingIndicatorViewHidden(false, animated: true)
       }.onNewMessage { [weak self] message in
-        self?.setTypingIndicatorViewHidden(true, performUpdates: {
+        self?.setTypingIndicatorViewHidden(true, animated: false, performUpdates: {
           self?.insertMessage(message)
         })
       }
@@ -190,9 +190,9 @@ final class AdvancedExampleViewController: ChatViewController {
     return messageList[indexPath.section].user == messageList[indexPath.section + 1].user
   }
 
-  func setTypingIndicatorViewHidden(_ isHidden: Bool, performUpdates updates: (() -> Void)? = nil) {
+    func setTypingIndicatorViewHidden(_ isHidden: Bool, animated: Bool, performUpdates updates: (() -> Void)? = nil) {
     updateTitleView(title: "MessageKit", subtitle: isHidden ? "2 Online" : "Typing...")
-    setTypingIndicatorViewHidden(isHidden, animated: true, whilePerforming: updates) { [weak self] success in
+    setTypingIndicatorViewHidden(isHidden, animated: animated, whilePerforming: updates) { [weak self] success in
       if success, self?.isLastSectionVisible() == true {
         self?.messagesCollectionView.scrollToLastItem(animated: true)
       }
