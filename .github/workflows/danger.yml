@@ -3,16 +3,21 @@ name: Danger
 on: 
   pull_request_target:
     types: [opened, reopened, synchronize, ready_for_review]
+    
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
 
 jobs:
   danger:
     name: Run Danger    
     runs-on: macos-13
     env: 
-       DEVELOPER_DIR: /Applications/Xcode_13.4.1.app/Contents/Developer
+       DEVELOPER_DIR: /Applications/Xcode_14.3.1.app/Contents/Developer
     steps:
     - name: Checkout the Git repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         fetch-depth: 100
         token: ${{ secrets.GITHUB_TOKEN }}

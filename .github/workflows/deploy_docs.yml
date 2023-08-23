@@ -4,11 +4,18 @@ on:
   push:
     branches:
       - "main"
+      
 permissions:
   contents: write
+  
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+  
 jobs:
   build_docs:
-    runs-on: macos-12
+    runs-on: macos-latest
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
