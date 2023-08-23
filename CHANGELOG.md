@@ -7,6 +7,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ### Added
 
 ### Fixed
+
+### Updated
+
+- Update InputBarAccessoryView to fix some crashes and issues by [@kaspik](https://github.com/Kaspik)
     
 ### Changed
 
