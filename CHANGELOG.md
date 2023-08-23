@@ -7,10 +7,23 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ### Added
 
 ### Fixed
-
-- Fix Advanced example hiding indicator [#1792](https://github.com/MessageKit/MessageKit/pull/1792) by [@kaspik](https://github.com/Kaspik)
     
 ### Changed
+
+### Removed
+
+## 4.2.0
+
+### Added
+
+### Fixed
+
+- Fix Advanced example hiding indicator [#1792](https://github.com/MessageKit/MessageKit/pull/1792) by [@kaspik](https://github.com/Kaspik)
+- Fix hiding typing indicator crash [#1804](https://github.com/MessageKit/MessageKit/pull/1804) by [@Zandor300](https://github.com/Zandor300)
+    
+### Changed
+
+- Update Github Actions and bump dependencies by [@kaspik](https://github.com/Kaspik)
 
 ### Removed
 
