@@ -130,7 +130,7 @@ Great! Look over these things first.
 
 - Please read our [Code of Conduct](https://github.com/MessageKit/MessageKit/blob/master/CODE_OF_CONDUCT.md)
 - Check the [Contributing Guide Lines](https://github.com/MessageKit/MessageKit/blob/master/CONTRIBUTING.md).
-- Come join us on [Slack](https://join.slack.com/t/messagekit/shared_invite/MjI4NzIzNzMyMzU0LTE1MDMwODIzMDUtYzllYzIyNTU4MA) and 🗣 don't be a stranger.
+- Come join us on [Slack](https://join.slack.com/t/messagekit/shared_invite/zt-2484ymok0-O82~1EtnHALSngQvn6Xwyw) and 🗣 don't be a stranger.
 - Check out the [current issues](https://github.com/MessageKit/MessageKit/issues) and see if you can tackle any of those.
 - Download the project and check out the current code base. Suggest any improvements by opening a new issue.
 - Check out the [What's Next](#whats-next) section :point_down: to see where we are headed.
@@ -154,6 +154,7 @@ Interested in contributing to MessageKit? Click here to join our [Slack](https:/
 Add your app to the list of apps using this library and make a pull request.
 
 - [ClassDojo](https://www.classdojo.com)
+- [Coursicle](https://apps.apple.com/us/app/coursicle/id1187418307)
 - [Connect Messaging](https://apps.apple.com/app/id1607268774)
 - [Ring4](https://www.ring4.com)
 - [Formacar](https://itunes.apple.com/ru/app/id1180117334)
