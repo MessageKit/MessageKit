@@ -1,8 +1,6 @@
 name: Danger
 
-on: 
-  pull_request_target:
-    types: [opened, reopened, synchronize, ready_for_review]
+on: pull_request
     
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
@@ -13,8 +11,6 @@ jobs:
   danger:
     name: Run Danger    
     runs-on: macos-13
-    env: 
-       DEVELOPER_DIR: /Applications/Xcode_14.3.1.app/Contents/Developer
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v3
