@@ -385,7 +385,7 @@ extension MessagesDisplayDelegate {
       returnValue = String(format: "0:%.02d", Int(duration.rounded(.up)))
     } else if duration < 3600 {
       returnValue = String(format: "%.02d:%.02d", Int(duration / 60), Int(duration) % 60)
-    } else {
+    } else if duration.isFinite {
       let hours = Int(duration / 3600)
       let remainingMinutesInSeconds = Int(duration) - hours * 3600
       returnValue = String(

@@ -23,9 +23,20 @@ struct SwiftUIExampleView: View {
       self.cleanupSocket()
     }
     .navigationBarTitle("SwiftUI Example", displayMode: .inline)
+    .modifier(IgnoresSafeArea()) //fixes issue with IBAV placement when keyboard appears
   }
 
   // MARK: Private
+    
+  private struct IgnoresSafeArea: ViewModifier {
+      func body(content: Content) -> some View {
+          if #available(iOS 14.0, *) {
+              content.ignoresSafeArea(.keyboard, edges: .bottom)
+          } else {
+              content
+          }
+      }
+  }
 
   private func connectToMessageSocket() {
     MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu]).onNewMessage { message in
