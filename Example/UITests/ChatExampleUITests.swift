@@ -20,6 +20,11 @@ import XCTest
 @testable import ChatExample
 
 final class ChatExampleUITests: XCTestCase {
+
+  override func setUpWithError() throws {
+    continueAfterFailure = false
+  }
+
   override func setUp() {
     super.setUp()
 
