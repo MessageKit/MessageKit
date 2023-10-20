@@ -15,52 +15,46 @@ public protocol MessageType {
     var kind: MessageKind { get }
 }
 ```
-First, each `MessageType` is required to have a `Sender` which contains two properties, `id` and `displayName`:
+First, each `MessageType` is required to have a `SenderType` which contains two properties, `senderId` and `displayName`:
 ### Sender
 ```Swift
-public struct Sender {
+public protocol SenderType {
 
-    public let id: String
-
-    public let displayName: String
+    var senderId: String { get }
+    
+    var displayName: String { get }
 }
+
 ```
-**MessageKit** uses the `Sender` type to determine if a message was sent by the current user or to the current user.
+**MessageKit** uses the `SenderType` type to determine if a message was sent by the current user or to the current user.
 
 Second, each message must have its own `messageId` which is a unique `String` identifier for the message.
 
 Third, each message must have a `sentDate` which represents the `Date` that each message was sent.
 
 Fourth, each message must specify what kind of message it is through the `kind: MessageKind` property:
-### MessageKind
+### [MessageKind](https://github.com/MessageKit/MessageKit#default-cells)
 
-```Swift
-public enum MessageKind {
-    case text(String)
-    case attributedText(NSAttributedString)
-    case emoji(String)
-    case photo(MediaItem)
-    case video(MediaItem)
-    case location(LocationItem)
-    case custom(Any?)
-}
-```
-`MessageData` has 7 different cases representing the types of messages that **MessageKit** can display.
+`MessageKind` has 8 different cases representing the types of messages that **MessageKit** can display.
 
 - `text(String)` - Use this case if you just want to display a normal text message without any attributes.
-- **NOTE**: You must also specify the `UIFont` you want to use for this text by setting the `messageLabelFont` property of the `textMessageSizeCalculator` in `MessagesCollectionViewFlowLayout`.
-
-- `emoji(String)` - Use this case to display a message that only contains emoji.
-- **NOTE**: You must also specify the `UIFont` you want to use for this text by setting the `messageLabelFont` property of the `emojiMessageSizeCalculator` in `MessagesCollectionViewFlowLayout`.
+  - **NOTE**: You must also specify the `UIFont` you want to use for this text by setting the `messageLabelFont` property of the `textMessageSizeCalculator` in `MessagesCollectionViewFlowLayout`.
 
 - `attributedText(NSAttributedString)` - Use this case if you want to display a text message with attributes.
-- **NOTE**: It is recommended that you use `attributedText` for text messages.
+  - **NOTE**: It is recommended that you use `attributedText` for text messages.
+
+- `emoji(String)` - Use this case to display a message that only contains emoji.
+  - **NOTE**: You must also specify the `UIFont` you want to use for this text by setting the `messageLabelFont` property of the `emojiMessageSizeCalculator` in `MessagesCollectionViewFlowLayout`.
 
 - `photo(MediaItem)` - Use this case to display a photo message.
 
 - `video(MediaItem)` - Use this case to display a video message.
 
 - `location(LocationItem)` - Use this case to display a location message.
+
+- `audio(AudioItem)` - Use this case to display an audio message.
+
+- `contact(ContactItem)` - Use this case to display a contact message.
 
 # MessagesViewController
 
@@ -98,14 +92,21 @@ class ChatViewController: MessagesViewController {
 You must implement the following 3 methods to conform to `MessagesDataSource`:
 
 ```Swift
+
+public struct Sender: SenderType {
+    public let senderId: String
+
+    public let displayName: String
+}
+
 // Some global variables for the sake of the example. Using globals is not recommended!
-let sender = Sender(id: "any_unique_id", displayName: "Steven")
+let sender = Sender(senderId: "any_unique_id", displayName: "Steven")
 let messages: [MessageType] = []
 
 extension ChatViewController: MessagesDataSource {
 
-	func currentSender() -> Sender {
-		return Sender(id: "any_unique_id", displayName: "Steven")
+	var currentSender: SenderType {
+		return Sender(senderId: "any_unique_id", displayName: "Steven")
 	}
 
 	func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {

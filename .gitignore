@@ -6,6 +6,9 @@
 ## Build generated
 build/
 DerivedData
+.build/
+docs/
+docc/
 
 ## Various settings
 *.pbxuser
@@ -29,7 +32,12 @@ xcuserdata
 *.ipa
 
 # CocoaPods
-Pods/
+Example/Pods/*
+!Example/Pods/SwiftLint
 
 # Carthage
 Carthage
+
+# SPM
+.swiftpm
+Package.resolved

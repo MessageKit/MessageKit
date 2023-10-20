@@ -1,0 +1,18 @@
+name: Tests
+
+on: pull_request
+
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: Run Tests
+    runs-on: macos-13
+    steps:
+    - name: Checkout the Git repository
+      uses: actions/checkout@v3
+    - name: Build and run tests
+      run: make test
