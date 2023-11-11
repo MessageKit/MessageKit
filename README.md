@@ -174,6 +174,7 @@ Add your app to the list of apps using this library and make a pull request.
 - [XPASS](https://apps.apple.com/cz/app/id1596773834)
 - [HeiaHeia](https://www.heiaheia.com)
 - [Starstruck AI](https://apps.apple.com/au/app/starstruck-message-anyone/id6446234281)
+- [OutyPlay](https://apps.apple.com/app/id6450551793)
     
 _Please provide attribution, it is greatly appreciated._
 
