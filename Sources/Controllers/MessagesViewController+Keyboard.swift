@@ -67,13 +67,15 @@ extension MessagesViewController {
       .store(in: &disposeBag)
 
     /// Observe frame change of the input bar container to update collectioView bottom inset
-    inputContainerView.publisher(for: \.center)
+    /*
+      inputContainerView.publisher(for: \.center)
       .receive(on: DispatchQueue.main)
       .removeDuplicates()
       .sink(receiveValue: { [weak self] _ in
         self?.updateMessageCollectionViewBottomInset()
       })
       .store(in: &disposeBag)
+     */
   }
 
   // MARK: - Updating insets
