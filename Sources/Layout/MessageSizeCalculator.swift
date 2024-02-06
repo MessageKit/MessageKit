@@ -316,15 +316,33 @@ open class MessageSizeCalculator: CellSizeCalculator {
   }
 
   // MARK: Internal
+  internal lazy var textContainer: NSTextContainer = {
+    let textContainer = NSTextContainer()
+    textContainer.maximumNumberOfLines = 0
+    textContainer.lineFragmentPadding = 0
+    return textContainer
+  }()
+  internal lazy var layoutManager: NSLayoutManager = {
+    let layoutManager = NSLayoutManager()
+    layoutManager.addTextContainer(textContainer)
+    return layoutManager
+  }()
+  internal lazy var textStorage: NSTextStorage = {
+    let textStorage = NSTextStorage()
+    textStorage.addLayoutManager(layoutManager)
+    return textStorage
+  }()
 
   internal func labelSize(for attributedText: NSAttributedString, considering maxWidth: CGFloat) -> CGSize {
     let constraintBox = CGSize(width: maxWidth, height: .greatestFiniteMagnitude)
-    let rect = attributedText.boundingRect(
-      with: constraintBox,
-      options: [.usesLineFragmentOrigin, .usesFontLeading],
-      context: nil).integral
 
-    return rect.size
+    textContainer.size = constraintBox
+    textStorage.replaceCharacters(in: NSRange(location: 0, length: textStorage.length), with: attributedText)
+    layoutManager.ensureLayout(for: textContainer)
+
+    let size = layoutManager.usedRect(for: textContainer).size
+
+    return CGSize(width: size.width.rounded(.up), height: size.height.rounded(.up))
   }
 }
 
