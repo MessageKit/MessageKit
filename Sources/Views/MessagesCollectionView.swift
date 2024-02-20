@@ -80,7 +80,7 @@ open class MessagesCollectionView: UICollectionView {
   // MARK: Public
 
   // NOTE: It's possible for small content size this wouldn't work - https://github.com/MessageKit/MessageKit/issues/725
-  public func scrollToLastItem(at pos: UICollectionView.ScrollPosition = .bottom, animated: Bool) {
+  public func scrollToLastItem(at pos: UICollectionView.ScrollPosition = .bottom, animated: Bool = true) {
       guard let indexPath = indexPathForLastItem else { return }
 
       // Store the current content offset
