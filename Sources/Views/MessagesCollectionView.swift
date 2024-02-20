@@ -80,10 +80,25 @@ open class MessagesCollectionView: UICollectionView {
   // MARK: Public
 
   // NOTE: It's possible for small content size this wouldn't work - https://github.com/MessageKit/MessageKit/issues/725
-  public func scrollToLastItem(at pos: UICollectionView.ScrollPosition = .bottom, animated: Bool = true) {
-    guard let indexPath = indexPathForLastItem else { return }
+  public func scrollToLastItem(at pos: UICollectionView.ScrollPosition = .bottom, animated: Bool) {
+      guard let indexPath = indexPathForLastItem else { return }
 
-    scrollToItem(at: indexPath, at: pos, animated: animated)
+      // Store the current content offset
+      let originalOffset = collectionView.contentOffset
+
+      // Scroll to the item without animation to get the desired offset
+      collectionView.scrollToItem(at: indexPath, at: pos, animated: false)
+      let targetOffset = collectionView.contentOffset
+
+      // Immediately reset the content offset to the original, without animation
+      collectionView.setContentOffset(originalOffset, animated: false)
+
+      // Calculate the adjusted offset, considering the section insets
+      let sectionInsetBottom = (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset.bottom ?? 0
+      let adjustedOffset = CGPoint(x: targetOffset.x, y: targetOffset.y + sectionInsetBottom)
+
+      // Scroll to the adjusted offset, with or without animation based on the method parameter
+      collectionView.setContentOffset(adjustedOffset, animated: animated)
   }
 
   public func reloadDataAndKeepOffset() {
