@@ -84,22 +84,23 @@ open class MessagesCollectionView: UICollectionView {
       guard let indexPath = indexPathForLastItem else { return }
 
       // Store the current content offset
-      let originalOffset = collectionView.contentOffset
+      let originalOffset = self.contentOffset
 
       // Scroll to the item without animation to get the desired offset
-      collectionView.scrollToItem(at: indexPath, at: pos, animated: false)
-      let targetOffset = collectionView.contentOffset
+      self.scrollToItem(at: indexPath, at: pos, animated: false)
+      let targetOffset = self.contentOffset
 
       // Immediately reset the content offset to the original, without animation
-      collectionView.setContentOffset(originalOffset, animated: false)
+      self.setContentOffset(originalOffset, animated: false)
 
       // Calculate the adjusted offset, considering the section insets
-      let sectionInsetBottom = (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset.bottom ?? 0
+      let sectionInsetBottom = (self.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset.bottom ?? 0
       let adjustedOffset = CGPoint(x: targetOffset.x, y: targetOffset.y + sectionInsetBottom)
 
       // Scroll to the adjusted offset, with or without animation based on the method parameter
-      collectionView.setContentOffset(adjustedOffset, animated: animated)
+      self.setContentOffset(adjustedOffset, animated: animated)
   }
+
 
   public func reloadDataAndKeepOffset() {
     // stop scrolling
