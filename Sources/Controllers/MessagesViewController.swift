@@ -66,6 +66,11 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     }
   }
 
+  /// withAdditionalBottomSpace parameter for InputBarAccessoryView's KeyboardManager
+  open func inputBarAdditionalBottomSpace() -> CGFloat {
+    0
+  }
+
   open override func viewDidLoad() {
     super.viewDidLoad()
     setupDefaults()
