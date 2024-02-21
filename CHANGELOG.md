@@ -335,6 +335,11 @@ Version 4.0.0 comes with couple of breaking changes, please refer to [MIGRATION_
 
 ## [2.0.0-beta.1](https://github.com/MessageKit/MessageKit/releases/tag/2.0.0-beta.1)
 
+### Fixed
+
+- Fixed `boundingRect(with:options:)` miscalculation of `MessageLabel` by using `NSLayoutManager`, like text `Ꮚ˘̴͈́ꈊ˘̴͈̀Ꮚ⋆✩`、`Tomorrow is the day`.
+[#824](https://github.com/MessageKit/MessageKit/pull/824) by [@zhongwuzw](https://github.com/zhongwuzw).
+
 ### Changed
 
 - **Breaking Change** Updated codebase to Swift 4.2 [#883](https://github.com/MessageKit/MessageKit/pull/883) by [@nathantannar4](https://github.com/nathantannar4)
