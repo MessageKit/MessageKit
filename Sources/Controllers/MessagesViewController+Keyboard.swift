@@ -74,6 +74,7 @@ extension MessagesViewController {
       .subscribe(on: DispatchQueue.global())
       .receive(on: DispatchQueue.main)
       .removeDuplicates()
+      .delay(for: .milliseconds(50), scheduler: DispatchQueue.main) /// Wait for next runloop to lay out inputView properly
       .sink { [weak self] _ in
           self?.updateMessageCollectionViewBottomInset()
           
