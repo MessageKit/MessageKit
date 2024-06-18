@@ -40,14 +40,14 @@ final class MessageSubviewViewController: BasicExampleViewController {
     // Take into account the height of the bottom input bar
     additionalBottomInset = 88
     // Binding to the messagesCollectionView will enable interactive dismissal
-    keyboardManager.bind(to: messagesCollectionView)
+      keyboardManager.bind(to: messagesCollectionView)
   }
 
   override func didMove(toParent parent: UIViewController?) {
     super.didMove(toParent: parent)
     parent?.view.addSubview(subviewInputBar)
     // Binding the inputBar will set the needed callback actions to position the inputBar on top of the keyboard
-    keyboardManager.bind(inputAccessoryView: subviewInputBar)
+      keyboardManager.bind(inputAccessoryView: subviewInputBar)
   }
 
   override func inputBar(_: InputBarAccessoryView, didPressSendButtonWith _: String) {
@@ -55,8 +55,6 @@ final class MessageSubviewViewController: BasicExampleViewController {
   }
 
   // MARK: Private
-
-  private var keyboardManager = KeyboardManager()
 
   private let subviewInputBar = InputBarAccessoryView()
 }
