@@ -36,6 +36,7 @@ final internal class AppDelegate: UIResponder, UIApplicationDelegate {
       ]
       : [masterViewController]
     splitViewController.preferredDisplayMode = .allVisible
+      masterViewController.navigationItem.largeTitleDisplayMode = .never
 
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = splitViewController
