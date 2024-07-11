@@ -69,6 +69,21 @@ extension MessagesViewController {
       }
       .store(in: &disposeBag)
 
+    NotificationCenter.default
+      .publisher(for: UITextInputMode.currentInputModeDidChangeNotification)
+      .subscribe(on: DispatchQueue.global())
+      .receive(on: DispatchQueue.main)
+      .removeDuplicates()
+      .delay(for: .milliseconds(50), scheduler: DispatchQueue.main) /// Wait for next runloop to lay out inputView properly
+      .sink { [weak self] _ in
+          self?.updateMessageCollectionViewBottomInset()
+          
+          if !(self?.maintainPositionOnInputBarHeightChanged ?? false) {
+              self?.messagesCollectionView.scrollToLastItem()
+          }
+      }
+      .store(in: &disposeBag)
+
     /// Observe frame change of the input bar container to update collectioView bottom inset
     inputContainerView.publisher(for: \.center)
       .receive(on: DispatchQueue.main)
