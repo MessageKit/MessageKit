@@ -42,7 +42,6 @@ final internal class LaunchViewController: UITableViewController {
     super.viewDidLoad()
     title = "MessageKit"
     navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-    navigationController?.navigationBar.prefersLargeTitles = true
     navigationController?.navigationBar.tintColor = .primaryColor
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     tableView.tableFooterView = UIView()
