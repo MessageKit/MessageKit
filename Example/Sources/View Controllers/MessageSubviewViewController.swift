@@ -56,7 +56,5 @@ final class MessageSubviewViewController: BasicExampleViewController {
 
   // MARK: Private
 
-  private var keyboardManager = KeyboardManager()
-
   private let subviewInputBar = InputBarAccessoryView()
 }

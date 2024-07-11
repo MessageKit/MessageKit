@@ -40,7 +40,7 @@ extension MessagesViewController {
 
   // MARK: - Getters
 
-  var keyboardManager: KeyboardManager { state.keyboardManager }
+  public var keyboardManager: KeyboardManager { state.keyboardManager }
 
   var panGesture: UIPanGestureRecognizer? {
     get { state.panGesture }
