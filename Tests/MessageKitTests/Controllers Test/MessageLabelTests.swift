@@ -82,6 +82,21 @@ final class MessageLabelTests: XCTestCase {
     let invalidMatches = extractCustomDetectors(for: detector, with: messageLabel)
     XCTAssertEqual(invalidMatches.count, 0)
   }
+  
+  func testCustomDetectionOverlapping() {
+    let testText = "address MNtz8Zz1cPD1CZadoc38jT5qeqeFBS6Aif can match multiple regex's"
+    
+    let messageLabel = MessageLabel()
+    let attributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key(rawValue: "Custom"): "CustomDetected"]
+    let detectors = [
+      DetectorType.custom(try! NSRegularExpression(pattern: "(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}", options: .caseInsensitive)), 
+      DetectorType.custom(try! NSRegularExpression(pattern: #"([3ML][\w]{26,33})|ltc1[\w]+"#, options: .caseInsensitive)), 
+      DetectorType.custom(try! NSRegularExpression(pattern: "[qmN][a-km-zA-HJ-NP-Z1-9]{26,33}", options: .caseInsensitive))]
+    
+    set(text: testText, and: detectors, with: attributes, to: messageLabel)
+    let matches = detectors.map { extractCustomDetectors(for: $0, with: messageLabel) }.joined()
+    XCTAssertEqual(matches.count, 1)
+  }
 
   func testSyncBetweenAttributedAndText() {
     let messageLabel = MessageLabel()
