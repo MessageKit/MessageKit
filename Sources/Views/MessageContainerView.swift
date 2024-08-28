@@ -49,14 +49,14 @@ open class MessageContainerView: UIImageView {
     switch style {
     case .none, .custom:
       break
-    case .bubble, .bubbleTail, .bubbleOutline, .bubbleTailOutline:
+    case .bubble, .bubbleTail, .bubbleOutline, .bubbleTailOutline, .customImageTail:
       imageMask.frame = bounds
     }
   }
 
   private func applyMessageStyle() {
     switch style {
-    case .bubble, .bubbleTail:
+    case .bubble, .bubbleTail, .customImageTail:
       imageMask.image = style.image
       sizeMaskToView()
       mask = imageMask
