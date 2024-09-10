@@ -27,7 +27,7 @@ let package = Package(
     platforms: [.iOS(.v13)],
     products: [
         .library(name: "MessageKit", targets: ["MessageKit"]),
-        .plugin(name: "SwiftLintPlugin", targets: ["SwiftLintPlugin"]),
+        .plugin(name: "LintPlugin", targets: ["LintPlugin"]),
         .plugin(name: "SwiftFormatPlugin", targets: ["SwiftFormatPlugin"]),
     ],
     dependencies: [
@@ -48,24 +48,24 @@ let package = Package(
         // MARK: - Plugins
 
         .binaryTarget(
-            name: "SwiftLintBinary",
+            name: "LintBinary",
             url: "https://github.com/realm/SwiftLint/releases/download/0.47.1/SwiftLintBinary-macos.artifactbundle.zip",
             checksum: "82ef90b7d76b02e41edd73423687d9cedf0bb9849dcbedad8df3a461e5a7b555"
         ),
         .plugin(
-            name: "SwiftLintPlugin",
+            name: "LintPlugin",
             capability: .buildTool(),
-            dependencies: ["SwiftLintBinary"]
+            dependencies: ["LintBinary"]
         ),
         .plugin(
-            name: "SwiftLintCommandPlugin",
+            name: "LintCommandPlugin",
             capability: .command(
                 intent: .custom(
                     verb: "lint",
                     description: "Lint Swift source files"
                 )
             ),
-            dependencies: ["SwiftLintBinary"]
+            dependencies: ["LintBinary"]
         ),
 
         .binaryTarget(
