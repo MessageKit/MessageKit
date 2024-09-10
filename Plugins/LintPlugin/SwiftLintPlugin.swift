@@ -21,7 +21,7 @@
 import PackagePlugin
 
 @main
-struct SwiftLintPlugin: BuildToolPlugin {
+struct LintPlugin: BuildToolPlugin {
   func createBuildCommands(context: PluginContext, target: Target) async throws -> [Command] {
     [
       .buildCommand(
