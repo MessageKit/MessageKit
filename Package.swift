@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:5.10
 
 // MIT License
 //
@@ -31,7 +31,7 @@ let package = Package(
         .plugin(name: "SwiftFormatPlugin", targets: ["SwiftFormatPlugin"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/nathantannar4/InputBarAccessoryView", .upToNextMajor(from: "6.4.0")),
+        .package(url: "https://github.com/nathantannar4/InputBarAccessoryView", .upToNextMajor(from: "6.5.0")),
     ],
     targets: [
         // MARK: - MessageKit
