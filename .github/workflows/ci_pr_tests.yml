@@ -10,7 +10,7 @@ concurrency:
 jobs:
   tests:
     name: Run Tests
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v4
