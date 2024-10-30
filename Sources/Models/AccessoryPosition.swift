@@ -24,7 +24,7 @@ import Foundation
 
 /// Used to determine the `Horizontal` and `Vertical` position of
 /// an `AccessoryView` in a `MessageCollectionViewCell`.
-public enum AccessoryPosition {
+public enum AccessoryPosition: Equatable {
   /// Aligns the `AccessoryView`'s top edge to the cell's top edge.
   case cellTop
 

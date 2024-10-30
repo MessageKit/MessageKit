@@ -23,7 +23,7 @@
 import UIKit
 
 /// The layout attributes used by a `MessageCollectionViewCell` to layout its subviews.
-open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
+open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes  {
   // MARK: Open
 
   // MARK: - Methods
@@ -54,36 +54,6 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
     return copy
     // swiftlint:enable force_cast
   }
-
-  open override func isEqual(_ object: Any?) -> Bool {
-    // MARK: - LEAVE this as is
-    if let attributes = object as? MessagesCollectionViewLayoutAttributes {
-      return super.isEqual(object) && attributes.avatarSize == avatarSize
-        && attributes.avatarPosition == avatarPosition
-        && attributes.avatarLeadingTrailingPadding == avatarLeadingTrailingPadding
-        && attributes.messageContainerSize == messageContainerSize
-        && attributes.messageContainerPadding == messageContainerPadding
-        && attributes.messageLabelFont == messageLabelFont
-        && attributes.messageLabelInsets == messageLabelInsets
-        && attributes.cellTopLabelAlignment == cellTopLabelAlignment
-        && attributes.cellTopLabelSize == cellTopLabelSize
-        && attributes.cellBottomLabelAlignment == cellBottomLabelAlignment
-        && attributes.cellBottomLabelSize == cellBottomLabelSize
-        && attributes.messageTimeLabelSize == messageTimeLabelSize
-        && attributes.messageTopLabelAlignment == messageTopLabelAlignment
-        && attributes.messageTopLabelSize == messageTopLabelSize
-        && attributes.messageBottomLabelAlignment == messageBottomLabelAlignment
-        && attributes.messageBottomLabelSize == messageBottomLabelSize
-        && attributes.accessoryViewSize == accessoryViewSize
-        && attributes.accessoryViewPadding == accessoryViewPadding
-        && attributes.accessoryViewPosition == accessoryViewPosition
-        && attributes.linkPreviewFonts == linkPreviewFonts
-    } else {
-      return false
-    }
-  }
-
-  // MARK: Public
 
   // MARK: - Properties
 
