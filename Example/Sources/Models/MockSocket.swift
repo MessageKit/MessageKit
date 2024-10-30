@@ -23,6 +23,7 @@
 import MessageKit
 import UIKit
 
+@MainActor
 final class MockSocket {
   // MARK: Lifecycle
 

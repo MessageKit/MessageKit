@@ -31,8 +31,8 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
   // MARK: Lifecycle
 
   deinit {
-    removeMenuControllerObservers()
-    clearMemoryCache()
+      NotificationCenter.default.removeObserver(self, name: UIMenuController.willShowMenuNotification, object: nil)
+      MessageStyle.bubbleImageCache.removeAllObjects()
   }
 
   // MARK: Open

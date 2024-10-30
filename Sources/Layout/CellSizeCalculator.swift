@@ -24,6 +24,7 @@ import UIKit
 
 /// An object is responsible for
 /// sizing and configuring cells for given `IndexPath`s.
+@MainActor
 open class CellSizeCalculator {
   // MARK: Lifecycle
 

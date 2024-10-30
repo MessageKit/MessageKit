@@ -23,6 +23,7 @@
 import Foundation
 import UIKit
 
+@MainActor
 extension UIColor {
   // MARK: Internal
 

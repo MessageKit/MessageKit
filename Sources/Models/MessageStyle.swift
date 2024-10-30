@@ -111,13 +111,13 @@ public enum MessageStyle {
     return strechAndCache(image: image)
   }
 
-  // MARK: Internal
+    // MARK: Internal
 
-  internal static let bubbleImageCache: NSCache<NSString, UIImage> = {
-    let cache = NSCache<NSString, UIImage>()
-    cache.name = "com.messagekit.MessageKit.bubbleImageCache"
-    return cache
-  }()
+    nonisolated(unsafe) internal static let bubbleImageCache: NSCache<NSString, UIImage> = {
+        let cache = NSCache<NSString, UIImage>()
+        cache.name = "com.messagekit.MessageKit.bubbleImageCache"
+        return cache
+    }()
 
   // MARK: Private
 

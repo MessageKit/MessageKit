@@ -1,4 +1,4 @@
-// swift-tools-version:5.10
+// swift-tools-version:6.0
 
 // MIT License
 //
@@ -24,14 +24,12 @@ import PackageDescription
 
 let package = Package(
     name: "MessageKit",
-    platforms: [.iOS(.v13)],
+    platforms: [.iOS(.v14)],
     products: [
-        .library(name: "MessageKit", targets: ["MessageKit"]),
-        .plugin(name: "LintPlugin", targets: ["LintPlugin"]),
-        .plugin(name: "SwiftFormatPlugin", targets: ["SwiftFormatPlugin"]),
+        .library(name: "MessageKit", targets: ["MessageKit"])
     ],
     dependencies: [
-        .package(url: "https://github.com/nathantannar4/InputBarAccessoryView", .upToNextMajor(from: "6.5.0")),
+        .package(url: "https://github.com/nathantannar4/InputBarAccessoryView", .upToNextMajor(from: "7.0.0")),
     ],
     targets: [
         // MARK: - MessageKit
@@ -44,45 +42,6 @@ let package = Package(
             swiftSettings: [SwiftSetting.define("IS_SPM")]
         ),
         .testTarget(name: "MessageKitTests", dependencies: ["MessageKit"]),
-
-        // MARK: - Plugins
-
-        .binaryTarget(
-            name: "LintBinary",
-            url: "https://github.com/realm/SwiftLint/releases/download/0.47.1/SwiftLintBinary-macos.artifactbundle.zip",
-            checksum: "82ef90b7d76b02e41edd73423687d9cedf0bb9849dcbedad8df3a461e5a7b555"
-        ),
-        .plugin(
-            name: "LintPlugin",
-            capability: .buildTool(),
-            dependencies: ["LintBinary"]
-        ),
-        .plugin(
-            name: "LintCommandPlugin",
-            capability: .command(
-                intent: .custom(
-                    verb: "lint",
-                    description: "Lint Swift source files"
-                )
-            ),
-            dependencies: ["LintBinary"]
-        ),
-
-        .binaryTarget(
-            name: "swiftformat",
-            url: "https://github.com/nicklockwood/SwiftFormat/releases/download/0.49.13/swiftformat.artifactbundle.zip",
-            checksum: "5ce27780dceee8714b15d53141e6dce1a8d626e970eade3c511c9ef1a0c06f40"
-        ),
-        .plugin(
-            name: "SwiftFormatPlugin",
-            capability: .command(
-                intent: .sourceCodeFormatting(),
-                permissions: [
-                    .writeToPackageDirectory(reason: "Format Swift source files"),
-                ]
-            ),
-            dependencies: ["swiftformat"]
-        ),
     ],
-    swiftLanguageVersions: [.v5]
+    swiftLanguageModes: [.v6]
 )
