@@ -8,10 +8,10 @@ permissions:
   contents: write
 jobs:
   build_docs:
-    runs-on: macos-12
+    runs-on: macos-14
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Build DocC
         run: |

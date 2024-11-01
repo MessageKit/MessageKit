@@ -44,11 +44,6 @@ final class MessageContainerController: UIViewController {
     conversationViewController.canBecomeFirstResponder
   }
 
-  /// Required for the `MessageInputBar` to be visible
-  override var inputAccessoryView: UIView? {
-    conversationViewController.inputAccessoryView
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -60,18 +55,6 @@ final class MessageContainerController: UIViewController {
 
     view.addSubview(mapView)
     view.addSubview(bannerView)
-  }
-
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    navigationController?.navigationBar.isTranslucent = true
-    navigationController?.navigationBar.barTintColor = .clear
-  }
-
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    navigationController?.navigationBar.isTranslucent = false
-    navigationController?.navigationBar.barTintColor = .primaryColor
   }
 
   override func viewDidLayoutSubviews() {

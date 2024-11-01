@@ -130,7 +130,7 @@ open class MessageLabel: UILabel {
 
   open override func drawText(in rect: CGRect) {
     let insetRect = rect.inset(by: textInsets)
-    textContainer.size = CGSize(width: insetRect.width, height: rect.height)
+    textContainer.size = CGSize(width: insetRect.width, height: insetRect.height)
 
     let origin = insetRect.origin
     let range = layoutManager.glyphRange(for: textContainer)
@@ -363,7 +363,7 @@ open class MessageLabel: UILabel {
       .filter { $0.isCustom }
       .map { parseForMatches(with: $0, in: text, for: range) }
       .joined()
-    matches.append(contentsOf: regexs)
+    matches.append(contentsOf: removeOverlappingResults(Array(regexs)))
 
     // Get all Checking Types of detectors, except for .custom because they contain their own regex
     let detectorCheckingTypes = enabledDetectors
@@ -401,6 +401,28 @@ open class MessageLabel: UILabel {
     default:
       fatalError("You must pass a .custom DetectorType")
     }
+  }
+  
+  private func removeOverlappingResults(_ results: [NSTextCheckingResult]) -> [NSTextCheckingResult]
+  {
+    var filteredResults: [NSTextCheckingResult] = []
+    
+    for result in results {
+      let overlappingResults = results.filter { $0.range.intersection(result.range)?.length ?? 0 > 0 }
+      
+      if overlappingResults.count <= 1 {
+        filteredResults.append(result)
+        continue
+      }
+      
+      guard !filteredResults.contains(where: { $0.range == result.range }) else { continue }
+      let maxRangeResult = overlappingResults.max { $0.range.upperBound - $0.range.lowerBound < $1.range.upperBound - $1.range.lowerBound }
+      if let maxRangeResult {
+        filteredResults.append(maxRangeResult)
+      }
+    }
+    
+    return filteredResults
   }
 
   private func setRangesForDetectors(in checkingResults: [NSTextCheckingResult]) {

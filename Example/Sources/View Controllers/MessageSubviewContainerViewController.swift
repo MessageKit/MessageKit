@@ -39,16 +39,4 @@ final class MessageSubviewContainerViewController: UIViewController {
     view.addSubview(messageSubviewViewController.view)
     messageSubviewViewController.didMove(toParent: self)
   }
-
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    navigationController?.navigationBar.isTranslucent = true
-    navigationController?.navigationBar.barTintColor = .clear
-  }
-
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    navigationController?.navigationBar.isTranslucent = false
-    navigationController?.navigationBar.barTintColor = .primaryColor
-  }
 }
