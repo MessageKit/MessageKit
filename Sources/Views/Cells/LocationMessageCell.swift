@@ -72,6 +72,8 @@ open class LocationMessageCell: MessageContentCell {
       in: messagesCollectionView)
 
     guard case .location(let locationItem) = message.kind else { fatalError("Configuring LocationMessageCell with wrong") }
+      
+    guard CLLocationCoordinate2DIsValid(locationItem.location.coordinate) else { fatalError("Coordinate is not valid") }
 
     activityIndicator.startAnimating()
 
