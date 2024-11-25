@@ -71,7 +71,7 @@ open class LocationMessageCell: MessageContentCell {
       at: indexPath,
       in: messagesCollectionView)
 
-    guard case .location(let locationItem) = message.kind else { fatalError("Configuring LocationMessageCell with wrong") }
+    guard case .location(let locationItem) = message.kind else { fatalError("Configuring LocationMessageCell with wrong message kind") }
 
     activityIndicator.startAnimating()
 
