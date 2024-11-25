@@ -26,264 +26,264 @@ import XCTest
 
 // MARK: - MessagesViewControllerTests
 
+@MainActor
 final class MessagesViewControllerTests: XCTestCase {
-  // MARK: Internal
 
-  var sut: MessagesViewController!
+    // MARK: - Private helper API
 
-  // swiftlint:enable weak_delegate
+    private func makeSUT() -> MessagesViewController {
+        let sut = MessagesViewController()
+        sut.messagesCollectionView.messagesLayoutDelegate = layoutDelegate
+        sut.messagesCollectionView.messagesDisplayDelegate = layoutDelegate
+        _ = sut.view
+        sut.beginAppearanceTransition(true, animated: true)
+        sut.endAppearanceTransition()
+        sut.view.layoutIfNeeded()
 
-  // MARK: - Overridden Methods
+        return sut
+    }
 
-  override func setUp() {
-    super.setUp()
+    // MARK: - Test
 
-    sut = MessagesViewController()
-    sut.messagesCollectionView.messagesLayoutDelegate = layoutDelegate
-    sut.messagesCollectionView.messagesDisplayDelegate = layoutDelegate
-    _ = sut.view
-    sut.beginAppearanceTransition(true, animated: true)
-    sut.endAppearanceTransition()
-    sut.view.layoutIfNeeded()
-  }
+    func testNumberOfSectionWithoutData_isZero() {
+        let messagesDataSource = MockMessagesDataSource()
+        let sut = makeSUT()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
 
-  override func tearDown() {
-    sut = nil
+        XCTAssertEqual(sut.messagesCollectionView.numberOfSections, 0)
+    }
 
-    super.tearDown()
-  }
+    func testNumberOfSection_isNumberOfMessages() {
+        let messagesDataSource = MockMessagesDataSource()
+        let sut = makeSUT()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages = makeMessages(for: messagesDataSource.senders)
 
-  // MARK: - Test
+        sut.messagesCollectionView.reloadData()
 
-  func testNumberOfSectionWithoutData_isZero() {
-    let messagesDataSource = MockMessagesDataSource()
-    sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        let count = sut.messagesCollectionView.numberOfSections
+        let expectedCount = messagesDataSource.numberOfSections(in: sut.messagesCollectionView)
 
-    XCTAssertEqual(sut.messagesCollectionView.numberOfSections, 0)
-  }
+        XCTAssertEqual(count, expectedCount)
+    }
 
-  func testNumberOfSection_isNumberOfMessages() {
-    let messagesDataSource = MockMessagesDataSource()
-    sut.messagesCollectionView.messagesDataSource = messagesDataSource
-    messagesDataSource.messages = makeMessages(for: messagesDataSource.senders)
+    func testNumberOfItemInSection_isOne() {
+        let messagesDataSource = MockMessagesDataSource()
+        let sut = makeSUT()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages = makeMessages(for: messagesDataSource.senders)
 
-    sut.messagesCollectionView.reloadData()
+        sut.messagesCollectionView.reloadData()
 
-    let count = sut.messagesCollectionView.numberOfSections
-    let expectedCount = messagesDataSource.numberOfSections(in: sut.messagesCollectionView)
+        XCTAssertEqual(sut.messagesCollectionView.numberOfItems(inSection: 0), 1)
+        XCTAssertEqual(sut.messagesCollectionView.numberOfItems(inSection: 1), 1)
+    }
 
-    XCTAssertEqual(count, expectedCount)
-  }
+    func testCellForItemWithTextData_returnsTextMessageCell() {
+        let messagesDataSource = MockMessagesDataSource()
+        let sut = makeSUT()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(
+            text: "Test",
+            user: messagesDataSource.senders[0],
+            messageId: "test_id"))
 
-  func testNumberOfItemInSection_isOne() {
-    let messagesDataSource = MockMessagesDataSource()
-    sut.messagesCollectionView.messagesDataSource = messagesDataSource
-    messagesDataSource.messages = makeMessages(for: messagesDataSource.senders)
+        sut.messagesCollectionView.reloadData()
 
-    sut.messagesCollectionView.reloadData()
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(
+            sut.messagesCollectionView,
+            cellForItemAt: IndexPath(item: 0, section: 0))
 
-    XCTAssertEqual(sut.messagesCollectionView.numberOfItems(inSection: 0), 1)
-    XCTAssertEqual(sut.messagesCollectionView.numberOfItems(inSection: 1), 1)
-  }
+        XCTAssertNotNil(cell)
+        XCTAssertTrue(cell is TextMessageCell)
+    }
 
-  func testCellForItemWithTextData_returnsTextMessageCell() {
-    let messagesDataSource = MockMessagesDataSource()
-    sut.messagesCollectionView.messagesDataSource = messagesDataSource
-    messagesDataSource.messages.append(MockMessage(
-      text: "Test",
-      user: messagesDataSource.senders[0],
-      messageId: "test_id"))
+    func testCellForItemWithAttributedTextData_returnsTextMessageCell() {
+        let messagesDataSource = MockMessagesDataSource()
+        let sut = makeSUT()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.outgoingMessageLabel]
+        let attriutedString = NSAttributedString(string: "Test", attributes: attributes)
+        messagesDataSource.messages.append(MockMessage(
+            attributedText: attriutedString,
+            user: messagesDataSource.senders[0],
+            messageId: "test_id"))
 
-    sut.messagesCollectionView.reloadData()
+        sut.messagesCollectionView.reloadData()
 
-    let cell = sut.messagesCollectionView.dataSource?.collectionView(
-      sut.messagesCollectionView,
-      cellForItemAt: IndexPath(item: 0, section: 0))
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(
+            sut.messagesCollectionView,
+            cellForItemAt: IndexPath(item: 0, section: 0))
 
-    XCTAssertNotNil(cell)
-    XCTAssertTrue(cell is TextMessageCell)
-  }
+        XCTAssertNotNil(cell)
+        XCTAssertTrue(cell is TextMessageCell)
+    }
 
-  func testCellForItemWithAttributedTextData_returnsTextMessageCell() {
-    let messagesDataSource = MockMessagesDataSource()
-    sut.messagesCollectionView.messagesDataSource = messagesDataSource
-    let attributes = [NSAttributedString.Key.foregroundColor: UIColor.outgoingMessageLabel]
-    let attriutedString = NSAttributedString(string: "Test", attributes: attributes)
-    messagesDataSource.messages.append(MockMessage(
-      attributedText: attriutedString,
-      user: messagesDataSource.senders[0],
-      messageId: "test_id"))
+    func testCellForItemWithPhotoData_returnsMediaMessageCell() {
+        let messagesDataSource = MockMessagesDataSource()
+        let sut = makeSUT()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(
+            image: UIImage(),
+            user: messagesDataSource.senders[0],
+            messageId: "test_id"))
 
-    sut.messagesCollectionView.reloadData()
+        sut.messagesCollectionView.reloadData()
 
-    let cell = sut.messagesCollectionView.dataSource?.collectionView(
-      sut.messagesCollectionView,
-      cellForItemAt: IndexPath(item: 0, section: 0))
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(
+            sut.messagesCollectionView,
+            cellForItemAt: IndexPath(item: 0, section: 0))
 
-    XCTAssertNotNil(cell)
-    XCTAssertTrue(cell is TextMessageCell)
-  }
+        XCTAssertNotNil(cell)
+        XCTAssertTrue(cell is MediaMessageCell)
+    }
 
-  func testCellForItemWithPhotoData_returnsMediaMessageCell() {
-    let messagesDataSource = MockMessagesDataSource()
-    sut.messagesCollectionView.messagesDataSource = messagesDataSource
-    messagesDataSource.messages.append(MockMessage(
-      image: UIImage(),
-      user: messagesDataSource.senders[0],
-      messageId: "test_id"))
+    func testCellForItemWithVideoData_returnsMediaMessageCell() {
+        let messagesDataSource = MockMessagesDataSource()
+        let sut = makeSUT()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(
+            thumbnail: UIImage(),
+            user: messagesDataSource.senders[0],
+            messageId: "test_id"))
 
-    sut.messagesCollectionView.reloadData()
+        sut.messagesCollectionView.reloadData()
 
-    let cell = sut.messagesCollectionView.dataSource?.collectionView(
-      sut.messagesCollectionView,
-      cellForItemAt: IndexPath(item: 0, section: 0))
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(
+            sut.messagesCollectionView,
+            cellForItemAt: IndexPath(item: 0, section: 0))
 
-    XCTAssertNotNil(cell)
-    XCTAssertTrue(cell is MediaMessageCell)
-  }
+        XCTAssertNotNil(cell)
+        XCTAssertTrue(cell is MediaMessageCell)
+    }
 
-  func testCellForItemWithVideoData_returnsMediaMessageCell() {
-    let messagesDataSource = MockMessagesDataSource()
-    sut.messagesCollectionView.messagesDataSource = messagesDataSource
-    messagesDataSource.messages.append(MockMessage(
-      thumbnail: UIImage(),
-      user: messagesDataSource.senders[0],
-      messageId: "test_id"))
+    func testCellForItemWithLocationData_returnsLocationMessageCell() {
+        let messagesDataSource = MockMessagesDataSource()
+        let sut = makeSUT()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(
+            location: CLLocation(latitude: 60.0, longitude: 70.0),
+            user: messagesDataSource.senders[0],
+            messageId: "test_id"))
 
-    sut.messagesCollectionView.reloadData()
+        sut.messagesCollectionView.reloadData()
 
-    let cell = sut.messagesCollectionView.dataSource?.collectionView(
-      sut.messagesCollectionView,
-      cellForItemAt: IndexPath(item: 0, section: 0))
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(
+            sut.messagesCollectionView,
+            cellForItemAt: IndexPath(item: 0, section: 0))
 
-    XCTAssertNotNil(cell)
-    XCTAssertTrue(cell is MediaMessageCell)
-  }
+        XCTAssertNotNil(cell)
+        XCTAssertTrue(cell is LocationMessageCell)
+    }
 
-  func testCellForItemWithLocationData_returnsLocationMessageCell() {
-    let messagesDataSource = MockMessagesDataSource()
-    sut.messagesCollectionView.messagesDataSource = messagesDataSource
-    messagesDataSource.messages.append(MockMessage(
-      location: CLLocation(latitude: 60.0, longitude: 70.0),
-      user: messagesDataSource.senders[0],
-      messageId: "test_id"))
+    func testCellForItemWithAudioData_returnsAudioMessageCell() {
+        let messagesDataSource = MockMessagesDataSource()
+        let sut = makeSUT()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        messagesDataSource.messages.append(MockMessage(
+            audioURL: URL(fileURLWithPath: ""),
+            duration: 4.0,
+            user: messagesDataSource.senders[0],
+            messageId: "test_id"))
 
-    sut.messagesCollectionView.reloadData()
+        sut.messagesCollectionView.reloadData()
 
-    let cell = sut.messagesCollectionView.dataSource?.collectionView(
-      sut.messagesCollectionView,
-      cellForItemAt: IndexPath(item: 0, section: 0))
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(
+            sut.messagesCollectionView,
+            cellForItemAt: IndexPath(item: 0, section: 0))
 
-    XCTAssertNotNil(cell)
-    XCTAssertTrue(cell is LocationMessageCell)
-  }
+        XCTAssertNotNil(cell)
+        XCTAssertTrue(cell is AudioMessageCell)
+    }
 
-  func testCellForItemWithAudioData_returnsAudioMessageCell() {
-    let messagesDataSource = MockMessagesDataSource()
-    sut.messagesCollectionView.messagesDataSource = messagesDataSource
-    messagesDataSource.messages.append(MockMessage(
-      audioURL: URL(fileURLWithPath: ""),
-      duration: 4.0,
-      user: messagesDataSource.senders[0],
-      messageId: "test_id"))
+    func testCellForItemWithLinkPreviewData_returnsLinkPreviewMessageCell() {
+        let messagesDataSource = MockMessagesDataSource()
+        let sut = makeSUT()
+        sut.messagesCollectionView.messagesDataSource = messagesDataSource
 
-    sut.messagesCollectionView.reloadData()
+        let linkItem = MockLinkItem(
+            text: "https://link.test",
+            attributedText: nil,
+            url: URL(string: "https://github.com/MessageKit")!,
+            title: "Link Title",
+            teaser: "Link Teaser",
+            thumbnailImage: UIImage())
 
-    let cell = sut.messagesCollectionView.dataSource?.collectionView(
-      sut.messagesCollectionView,
-      cellForItemAt: IndexPath(item: 0, section: 0))
+        messagesDataSource.messages.append(MockMessage(
+            linkItem: linkItem,
+            user: messagesDataSource.senders[0],
+            messageId: "test_id"))
 
-    XCTAssertNotNil(cell)
-    XCTAssertTrue(cell is AudioMessageCell)
-  }
+        sut.messagesCollectionView.reloadData()
 
-  func testCellForItemWithLinkPreviewData_returnsLinkPreviewMessageCell() {
-    let messagesDataSource = MockMessagesDataSource()
-    sut.messagesCollectionView.messagesDataSource = messagesDataSource
+        let cell = sut.messagesCollectionView.dataSource?.collectionView(
+            sut.messagesCollectionView,
+            cellForItemAt: IndexPath(item: 0, section: 0))
 
-    let linkItem = MockLinkItem(
-      text: "https://link.test",
-      attributedText: nil,
-      url: URL(string: "https://github.com/MessageKit")!,
-      title: "Link Title",
-      teaser: "Link Teaser",
-      thumbnailImage: UIImage())
+        XCTAssertNotNil(cell)
+        XCTAssertTrue(cell is LinkPreviewMessageCell)
+    }
 
-    messagesDataSource.messages.append(MockMessage(
-      linkItem: linkItem,
-      user: messagesDataSource.senders[0],
-      messageId: "test_id"))
+    // MARK: - Setups
 
-    sut.messagesCollectionView.reloadData()
+    func testSubviewsSetup() {
+        let controller = MessagesViewController()
+        XCTAssertTrue(controller.view.subviews.contains(controller.messagesCollectionView))
+    }
 
-    let cell = sut.messagesCollectionView.dataSource?.collectionView(
-      sut.messagesCollectionView,
-      cellForItemAt: IndexPath(item: 0, section: 0))
+    func testDelegateAndDataSourceSetup() {
+        let controller = MessagesViewController()
+        controller.view.layoutIfNeeded()
+        XCTAssertTrue(controller.messagesCollectionView.delegate is MessagesViewController)
+        XCTAssertTrue(controller.messagesCollectionView.dataSource is MessagesViewController)
+    }
 
-    XCTAssertNotNil(cell)
-    XCTAssertTrue(cell is LinkPreviewMessageCell)
-  }
+    func testDefaultPropertyValues() {
+        let controller = MessagesViewController()
+        XCTAssertNotNil(controller.messagesCollectionView)
+        XCTAssertTrue(controller.messagesCollectionView.collectionViewLayout is MessagesCollectionViewFlowLayout)
 
-  // MARK: - Setups
+        controller.view.layoutIfNeeded()
+        XCTAssertTrue(controller.extendedLayoutIncludesOpaqueBars)
+        XCTAssertEqual(controller.view.backgroundColor, UIColor.collectionViewBackground)
+        XCTAssertEqual(controller.messagesCollectionView.keyboardDismissMode, UIScrollView.KeyboardDismissMode.interactive)
+        XCTAssertTrue(controller.messagesCollectionView.alwaysBounceVertical)
+    }
 
-  func testSubviewsSetup() {
-    let controller = MessagesViewController()
-    XCTAssertTrue(controller.view.subviews.contains(controller.messagesCollectionView))
-  }
+    // MARK: Private
 
-  func testDelegateAndDataSourceSetup() {
-    let controller = MessagesViewController()
-    controller.view.layoutIfNeeded()
-    XCTAssertTrue(controller.messagesCollectionView.delegate is MessagesViewController)
-    XCTAssertTrue(controller.messagesCollectionView.dataSource is MessagesViewController)
-  }
+    // swiftlint:disable:next weak_delegate
+    private var layoutDelegate = MockLayoutDelegate()
 
-  func testDefaultPropertyValues() {
-    let controller = MessagesViewController()
-    XCTAssertNotNil(controller.messagesCollectionView)
-    XCTAssertTrue(controller.messagesCollectionView.collectionViewLayout is MessagesCollectionViewFlowLayout)
+    // MARK: - Assistants
 
-    controller.view.layoutIfNeeded()
-    XCTAssertTrue(controller.extendedLayoutIncludesOpaqueBars)
-    XCTAssertEqual(controller.view.backgroundColor, UIColor.collectionViewBackground)
-    XCTAssertEqual(controller.messagesCollectionView.keyboardDismissMode, UIScrollView.KeyboardDismissMode.interactive)
-    XCTAssertTrue(controller.messagesCollectionView.alwaysBounceVertical)
-  }
-
-  // MARK: Private
-
-  // swiftlint:disable weak_delegate
-  private var layoutDelegate = MockLayoutDelegate()
-
-  // MARK: - Assistants
-
-  private func makeMessages(for senders: [MockUser]) -> [MessageType] {
-    [
-      MockMessage(text: "Text 1", user: senders[0], messageId: "test_id_1"),
-      MockMessage(text: "Text 2", user: senders[1], messageId: "test_id_2"),
-    ]
-  }
+    private func makeMessages(for senders: [MockUser]) -> [MessageType] {
+        [
+            MockMessage(text: "Text 1", user: senders[0], messageId: "test_id_1"),
+            MockMessage(text: "Text 2", user: senders[1], messageId: "test_id_2"),
+        ]
+    }
 }
 
 // MARK: - MockLayoutDelegate
 
 private class MockLayoutDelegate: MessagesLayoutDelegate, MessagesDisplayDelegate {
-  // MARK: - LocationMessageLayoutDelegate
+    // MARK: - LocationMessageLayoutDelegate
 
-  func heightForLocation(message _: MessageType, at _: IndexPath, with _: CGFloat, in _: MessagesCollectionView) -> CGFloat {
-    0.0
-  }
+    func heightForLocation(message _: MessageType, at _: IndexPath, with _: CGFloat, in _: MessagesCollectionView) -> CGFloat {
+        0.0
+    }
 
-  func heightForMedia(message _: MessageType, at _: IndexPath, with _: CGFloat, in _: MessagesCollectionView) -> CGFloat {
-    10.0
-  }
+    func heightForMedia(message _: MessageType, at _: IndexPath, with _: CGFloat, in _: MessagesCollectionView) -> CGFloat {
+        10.0
+    }
 
-  func snapshotOptionsForLocation(
-    message _: MessageType,
-    at _: IndexPath,
-    in _: MessagesCollectionView)
+    func snapshotOptionsForLocation(
+        message _: MessageType,
+        at _: IndexPath,
+        in _: MessagesCollectionView)
     -> LocationMessageSnapshotOptions
-  {
-    LocationMessageSnapshotOptions()
-  }
+    {
+        LocationMessageSnapshotOptions()
+    }
 }

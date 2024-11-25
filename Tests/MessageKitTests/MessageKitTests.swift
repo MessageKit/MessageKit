@@ -25,7 +25,7 @@ import XCTest
 @testable import MessageKit
 
 final class MessageKitTests: XCTestCase {
-  static var allTests = [
-    "",
-  ]
+    static let allTests = [
+        "",
+    ]
 }

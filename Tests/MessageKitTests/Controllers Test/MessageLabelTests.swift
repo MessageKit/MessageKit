@@ -26,6 +26,7 @@ import XCTest
 
 // MARK: - MessageLabelTests
 
+@MainActor
 final class MessageLabelTests: XCTestCase {
   // MARK: Internal
 
