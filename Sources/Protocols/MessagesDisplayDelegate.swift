@@ -27,6 +27,7 @@ import UIKit
 // MARK: - MessagesDisplayDelegate
 
 /// A protocol used by the `MessagesViewController` to customize the appearance of a `MessageContentCell`.
+@MainActor
 public protocol MessagesDisplayDelegate: AnyObject {
   // MARK: - All Messages
 

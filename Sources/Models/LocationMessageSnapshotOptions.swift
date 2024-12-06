@@ -23,6 +23,7 @@
 import MapKit
 
 /// An object grouping the settings used by the `MKMapSnapshotter` through the `LocationMessageDisplayDelegate`.
+@MainActor
 public struct LocationMessageSnapshotOptions {
   // MARK: Lifecycle
 

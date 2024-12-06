@@ -22,7 +22,7 @@
 
 import Foundation
 
-open class MessageKitDateFormatter {
+open class MessageKitDateFormatter: @unchecked Sendable {
   // MARK: Lifecycle
 
   // MARK: - Initializer

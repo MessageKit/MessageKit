@@ -26,6 +26,7 @@ import UIKit
 
 /// An object that adopts the `MessagesDataSource` protocol is responsible for providing
 /// the data required by a `MessagesCollectionView`.
+@MainActor
 public protocol MessagesDataSource: AnyObject {
   /// The `SenderType` of new messages in the `MessagesCollectionView`.
   var currentSender: SenderType { get }

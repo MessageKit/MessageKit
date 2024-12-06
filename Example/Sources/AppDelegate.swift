@@ -22,7 +22,7 @@
 
 import UIKit
 
-@UIApplicationMain
+@main
 final internal class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
@@ -35,7 +35,7 @@ final internal class AppDelegate: UIResponder, UIApplicationDelegate {
         UIViewController()
       ]
       : [masterViewController]
-    splitViewController.preferredDisplayMode = .allVisible
+      splitViewController.preferredDisplayMode = UISplitViewController.DisplayMode.oneBesideSecondary
       masterViewController.navigationItem.largeTitleDisplayMode = .never
 
     window = UIWindow(frame: UIScreen.main.bounds)
