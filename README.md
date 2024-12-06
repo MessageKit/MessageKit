@@ -50,7 +50,7 @@ Older versions of Swift and Xcode don't support MessageKit via SPM.
 
 - **iOS 14** or later
 - **Swift 6** or later
-- 
+
 > For iOS 13 or Swift 5.x please use version 4.3.0
 
 > For iOS 12 or CocoaPods please use version 3.8.0
