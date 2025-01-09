@@ -6,7 +6,7 @@ The driving force behind **MessageKit** is the `MessageType` protocol which prov
 ```Swift
 public protocol MessageType {
 
-    var sender: Sender { get }
+    var sender: SenderType { get }
 
     var messageId: String { get }
 
