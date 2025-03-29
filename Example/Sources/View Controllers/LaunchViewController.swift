@@ -43,6 +43,20 @@ final internal class LaunchViewController: UITableViewController {
     title = "MessageKit"
     navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     navigationController?.navigationBar.tintColor = .primaryColor
+    if let navigationBar = self.navigationController?.navigationBar {
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.backgroundEffect = nil
+            appearance.backgroundColor = .white
+            navigationBar.standardAppearance = appearance
+            navigationBar.scrollEdgeAppearance = appearance
+        } else {
+            navigationBar.setBackgroundImage(UIImage(), for: .default)
+            navigationBar.shadowImage = UIImage()
+            navigationBar.barTintColor = .white
+        }
+    }
+      
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     tableView.tableFooterView = UIView()
   }
