@@ -31,7 +31,7 @@ final class MessageSwiftUIVC: MessagesViewController {
     super.viewDidAppear(animated)
     // Because SwiftUI wont automatically make our controller the first responder, we need to do it on viewDidAppear
     becomeFirstResponder()
-    messagesCollectionView.scrollToLastItem(animated: true)
+    messagesCollectionView.scrollToBottom(animated: true)
   }
 }
 
@@ -89,7 +89,7 @@ struct MessagesView: UIViewControllerRepresentable {
   private func scrollToBottom(_ uiViewController: MessagesViewController) {
     DispatchQueue.main.async {
       // The initialized state variable allows us to start at the bottom with the initial messages without seeing the initial scroll flash by
-      uiViewController.messagesCollectionView.scrollToLastItem(animated: self.initialized)
+      uiViewController.messagesCollectionView.scrollToBottom(animated: self.initialized)
       self.initialized = true
     }
   }

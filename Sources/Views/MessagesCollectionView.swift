@@ -85,6 +85,48 @@ open class MessagesCollectionView: UICollectionView {
 
     scrollToItem(at: indexPath, at: pos, animated: animated)
   }
+    
+  public func scrollToBottom(animated: Bool = true) {
+    guard let indexPath = indexPathForLastItem else { return }
+        
+    // Store the current content offset
+    let originalOffset = contentOffset
+    // Scroll to the item to get the updated contentOffset
+    scrollToItem(at: indexPath, at: .bottom, animated: false)
+        
+    guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        
+    let targetOffset = contentOffset
+        
+    // Immediately reset the content offset to the original, without animation
+    setContentOffset(originalOffset, animated: false)
+        
+    // Get the bottom section inset
+    let sectionInsetBottom = layout.sectionInset.bottom
+        
+    // Get the height of the footer view
+    var footerHeight: CGFloat = 0
+        
+    // Try to get the footer view's height from the layout attributes
+    if let footerAttributes = layout.layoutAttributesForSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, at: indexPath) {
+        footerHeight = footerAttributes.frame.height
+    }
+    // If the layout attributes are not available, try to get the height from the delegate method
+    else if let delegate = self.delegate as? UICollectionViewDelegateFlowLayout {
+        footerHeight = delegate.collectionView?(self, layout: layout, referenceSizeForFooterInSection: indexPath.section).height ?? 0
+    }
+    // If neither method provides the height, fall back to the layout's default footer reference size
+    else {
+        footerHeight = layout.footerReferenceSize.height
+    }
+        
+    let totalBottomInset = sectionInsetBottom + footerHeight
+        
+    if totalBottomInset > 0 {
+        let adjustedOffset = CGPoint(x: targetOffset.x, y: targetOffset.y + totalBottomInset)
+        setContentOffset(adjustedOffset, animated: animated)
+    }
+ }
 
   public func reloadDataAndKeepOffset() {
     // stop scrolling

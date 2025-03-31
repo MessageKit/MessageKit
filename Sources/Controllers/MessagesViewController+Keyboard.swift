@@ -64,7 +64,7 @@ extension MessagesViewController {
         self?.updateMessageCollectionViewBottomInset()
 
         if !(self?.maintainPositionOnInputBarHeightChanged ?? false) {
-          self?.messagesCollectionView.scrollToLastItem()
+          self?.messagesCollectionView.scrollToBottom()
         }
       }
       .store(in: &disposeBag)
@@ -79,7 +79,7 @@ extension MessagesViewController {
           self?.updateMessageCollectionViewBottomInset()
           
           if !(self?.maintainPositionOnInputBarHeightChanged ?? false) {
-              self?.messagesCollectionView.scrollToLastItem()
+              self?.messagesCollectionView.scrollToBottom()
           }
       }
       .store(in: &disposeBag)
@@ -147,6 +147,6 @@ extension MessagesViewController {
     else {
       return
     }
-    messagesCollectionView.scrollToLastItem()
+    messagesCollectionView.scrollToBottom()
   }
 }

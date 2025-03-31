@@ -89,7 +89,7 @@ final class AdvancedExampleViewController: ChatViewController {
         DispatchQueue.main.async {
           self.messageList = messages
           self.messagesCollectionView.reloadData()
-          self.messagesCollectionView.scrollToLastItem()
+          self.messagesCollectionView.scrollToBottom()
         }
       }
     }
@@ -194,7 +194,7 @@ final class AdvancedExampleViewController: ChatViewController {
     updateTitleView(title: "MessageKit", subtitle: isHidden ? "2 Online" : "Typing...")
     setTypingIndicatorViewHidden(isHidden, animated: animated, whilePerforming: updates) { [weak self] success in
       if success, self?.isLastSectionVisible() == true {
-        self?.messagesCollectionView.scrollToLastItem(animated: true)
+        self?.messagesCollectionView.scrollToBottom(animated: true)
       }
     }
   }
