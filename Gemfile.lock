@@ -70,7 +70,7 @@ GEM
     public_suffix (5.0.1)
     rake (13.0.6)
     rchardet (1.8.0)
-    rexml (3.3.9)
+    rexml (3.4.2)
     ruby2_keywords (0.0.5)
     sawyer (0.9.2)
       addressable (>= 2.3.5)
