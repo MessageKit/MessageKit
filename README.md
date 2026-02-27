@@ -42,6 +42,7 @@ You can [just add](https://developer.apple.com/documentation/xcode/adding_packag
 ```
 https://github.com/MessageKit/MessageKit
 ```
+
 Older versions of Swift and Xcode don't support MessageKit via SPM.
 
 ### [Manual](https://github.com/MessageKit/MessageKit/blob/master/Documentation/MANUAL_INSTALLATION.md)
@@ -137,9 +138,8 @@ Great! Look over these things first.
 - Download the project and check out the current code base. Suggest any improvements by opening a new issue.
 - Check out the [What's Next](#whats-next) section :point_down: to see where we are headed.
 - Check [StackOverflow](https://stackoverflow.com/questions/tagged/messagekit)
-- Install [SwiftLint](https://github.com/realm/SwiftLint) to keep yourself in :neckbeard: style. 
-- Be kind and helpful.  
-
+- Install [SwiftLint](https://github.com/realm/SwiftLint) to keep yourself in :neckbeard: style.
+- Be kind and helpful.
 
 ## What's Next?
 
@@ -177,7 +177,8 @@ Add your app to the list of apps using this library and make a pull request.
 - [HeiaHeia](https://www.heiaheia.com)
 - [Starstruck AI](https://apps.apple.com/au/app/starstruck-message-anyone/id6446234281)
 - [OutyPlay](https://apps.apple.com/app/id6450551793)
-    
+- [SkateConnect](https://skateconnect.app)
+
 _Please provide attribution, it is greatly appreciated._
 
 ## Core Team
