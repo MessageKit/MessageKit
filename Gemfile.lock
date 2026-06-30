@@ -28,7 +28,7 @@ GEM
       danger
       rake (> 10)
       thor (~> 0.19)
-    faraday (1.10.5)
+    faraday (1.10.6)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
@@ -52,7 +52,7 @@ GEM
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
-    faraday-retry (1.0.3)
+    faraday-retry (1.0.4)
     git (1.13.1)
       addressable (~> 2.8)
       rchardet (~> 1.8)
