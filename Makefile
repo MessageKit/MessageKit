@@ -36,10 +36,13 @@ build_example:
 	@cd Example && set -o pipefail && xcodebuild build analyze -scheme ChatExample -destination "platform=iOS Simulator,name=iPhone 16" CODE_SIGNING_REQUIRED=NO | xcpretty -c
 
 format:
-	@swift package --allow-writing-to-package-directory format-source-code --file .
+	@echo "Formatting MessageKit."
+	@swiftformat .
 
 lint:
-	@swift package --disable-sandbox lint
+	@echo "Linting MessageKit."
+	@swiftformat --lint .
+	@swiftlint lint --quiet
 
 setup:
 	@mkdir -p .git/hooks

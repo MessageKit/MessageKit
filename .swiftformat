@@ -1,7 +1,7 @@
 # options
---swiftversion 5.6
+--swiftversion 6.0
 --self remove # redundantSelf
---importgrouping testable-bottom # sortedImports
+--importgrouping testable-bottom # sortImports
 --commas always # trailingCommas
 --trimwhitespace always # trailingSpace
 --indent 2 #indent
@@ -51,7 +51,7 @@
 --rules redundantGet
 --rules redundantFileprivate
 --rules redundantRawValues
---rules sortedImports
+--rules sortImports
 --rules sortDeclarations
 --rules strongifiedSelf
 --rules trailingCommas
