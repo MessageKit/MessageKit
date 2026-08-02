@@ -19,8 +19,14 @@ jobs:
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v4
+    # Homebrew requires third party taps to be trusted explicitly, and trusting
+    # danger-swift does not cover its danger-js dependency from the same tap
     - name: Install Danger Swift and SwiftLint
-      run: brew install danger/tap/danger-swift swiftlint
+      run: |
+        brew tap danger/tap
+        brew trust --formula danger/tap/danger-swift
+        brew trust --formula danger/tap/danger-js
+        brew install danger/tap/danger-swift swiftlint
     - name: Run Danger
       run: danger-swift ci --failOnErrors
       env:
