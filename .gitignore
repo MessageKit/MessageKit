@@ -41,3 +41,7 @@ Carthage
 # SPM
 .swiftpm
 Package.resolved
+
+# Danger installs danger-js from npm
+node_modules/
+package-lock.json
