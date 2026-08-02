@@ -2,10 +2,11 @@ name: Danger
 
 on: pull_request
 
-# Danger needs to post its report as a comment on the Pull Request
+# Danger posts its report as a comment and reports back as a commit status
 permissions:
   contents: read
   pull-requests: write
+  statuses: write
 
 # This allows a subsequently queued workflow run to interrupt previous runs
 concurrency:
