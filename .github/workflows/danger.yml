@@ -1,0 +1,27 @@
+name: Danger
+
+on: pull_request
+
+# Danger needs to post its report as a comment on the Pull Request
+permissions:
+  contents: read
+  pull-requests: write
+
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  danger:
+    name: Run Danger
+    runs-on: macos-latest
+    steps:
+    - name: Checkout the Git repository
+      uses: actions/checkout@v4
+    - name: Install Danger Swift and SwiftLint
+      run: brew install danger/tap/danger-swift swiftlint
+    - name: Run Danger
+      run: danger-swift ci --failOnErrors
+      env:
+        DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
