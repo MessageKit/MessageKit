@@ -8,6 +8,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
+- Fix `make format`, `make lint` and the pre-commit hook, which still called the removed SwiftPM plugins by [@martinpucik](https://github.com/martinpucik)
+
 ### Updated
 
 - Update InputBarAccessoryView to fix some crashes and issues by [@kaspik](https://github.com/Kaspik)
