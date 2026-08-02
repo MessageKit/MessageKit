@@ -1,0 +1,42 @@
+name: Danger
+
+# ready_for_review is not a default activity type, without it the draft
+# warning sticks around after a Pull Request leaves draft state
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+# Danger posts its report as a comment and reports back as a commit status
+permissions:
+  contents: read
+  pull-requests: write
+  statuses: write
+
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  danger:
+    name: Run Danger
+    runs-on: macos-latest
+    steps:
+    - name: Checkout the Git repository
+      uses: actions/checkout@v4
+    # Homebrew requires third party taps to be trusted explicitly, and trusting
+    # danger-swift does not cover its danger-js dependency from the same tap
+    - name: Install Danger Swift and SwiftLint
+      run: |
+        brew tap danger/tap
+        brew trust --formula danger/tap/danger-swift
+        brew trust --formula danger/tap/danger-js
+        brew install danger/tap/danger-swift swiftlint
+    # The tap ships danger-js as a pkg bundle whose embedded Node is too old to
+    # read the GitHub API responses, so use the npm build on the runner's Node
+    - name: Install Danger JS
+      run: npm install danger@13
+    - name: Run Danger
+      run: danger-swift ci --failOnErrors --danger-js-path ./node_modules/.bin/danger
+      env:
+        DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}

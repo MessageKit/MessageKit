@@ -14,6 +14,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
     
 ### Changed
 
+- Migrate Danger from Ruby to Danger Swift and drop the `Gemfile` by [@martinpucik](https://github.com/martinpucik)
+
 ### Removed
 
 ## 4.3.0
