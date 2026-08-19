@@ -148,8 +148,6 @@ final class AdvancedExampleViewController: ChatViewController {
   }
 
   override func configureMessageInputBar() {
-    // super.configureMessageInputBar()
-
     messageInputBar = CameraInputBarAccessoryView()
     messageInputBar.delegate = self
     messageInputBar.inputTextView.tintColor = .primaryColor
@@ -293,29 +291,6 @@ final class AdvancedExampleViewController: ChatViewController {
     messageInputBar.inputTextView.textContainerInset.bottom = 8
   }
 
-  private func makeButton(named: String) -> InputBarButtonItem {
-    InputBarButtonItem()
-      .configure {
-        $0.spacing = .fixed(10)
-        $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
-        $0.setSize(CGSize(width: 25, height: 25), animated: false)
-        $0.tintColor = UIColor(white: 0.8, alpha: 1)
-      }.onSelected {
-        $0.tintColor = .primaryColor
-      }.onDeselected {
-        $0.tintColor = UIColor(white: 0.8, alpha: 1)
-      }.onTouchUpInside {
-        print("Item Tapped")
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        actionSheet.addAction(action)
-        if let popoverPresentationController = actionSheet.popoverPresentationController {
-          popoverPresentationController.sourceView = $0
-          popoverPresentationController.sourceRect = $0.frame
-        }
-        self.navigationController?.present(actionSheet, animated: true, completion: nil)
-      }
-  }
 }
 
 // MARK: MessagesDisplayDelegate

@@ -24,6 +24,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Removed
 
+- Remove dead code and 13 unused image assets from the example app by [@martinpucik](https://github.com/martinpucik)
+
 ## 4.3.0
 - Fix for SwiftUI example IBAV position issues (example app) by @Janneman84 in https://github.com/MessageKit/MessageKit/pull/1807
 - Added Coursicle to the list of apps using MessageKit by @monstermac77 in https://github.com/MessageKit/MessageKit/pull/1809
