@@ -41,32 +41,6 @@ open class MessageLabel: UILabel {
 
   // MARK: Open
 
-  // MARK: - Public Properties
-
-  open weak var delegate: MessageLabelDelegate?
-
-  open internal(set) var addressAttributes: [NSAttributedString.Key: Any] = defaultAttributes
-
-  open internal(set) var dateAttributes: [NSAttributedString.Key: Any] = defaultAttributes
-
-  open internal(set) var phoneNumberAttributes: [NSAttributedString.Key: Any] = defaultAttributes
-
-  open internal(set) var urlAttributes: [NSAttributedString.Key: Any] = defaultAttributes
-
-  open internal(set) var transitInformationAttributes: [NSAttributedString.Key: Any] = defaultAttributes
-
-  open internal(set) var hashtagAttributes: [NSAttributedString.Key: Any] = defaultAttributes
-
-  open internal(set) var mentionAttributes: [NSAttributedString.Key: Any] = defaultAttributes
-
-  open internal(set) var customAttributes: [NSRegularExpression: [NSAttributedString.Key: Any]] = [:]
-
-  open var enabledDetectors: [DetectorType] = [] {
-    didSet {
-      setTextStorage(attributedText, shouldParse: true)
-    }
-  }
-
   open override var attributedText: NSAttributedString? {
     didSet {
       setTextStorage(attributedText, shouldParse: true)
@@ -113,17 +87,43 @@ open class MessageLabel: UILabel {
     }
   }
 
-  open var textInsets: UIEdgeInsets = .zero {
-    didSet {
-      if !isConfiguring { setNeedsDisplay() }
-    }
-  }
-
   open override var intrinsicContentSize: CGSize {
     var size = super.intrinsicContentSize
     size.width += textInsets.horizontal
     size.height += textInsets.vertical
     return size
+  }
+
+  // MARK: - Public Properties
+
+  open weak var delegate: MessageLabelDelegate?
+
+  open internal(set) var addressAttributes: [NSAttributedString.Key: Any] = defaultAttributes
+
+  open internal(set) var dateAttributes: [NSAttributedString.Key: Any] = defaultAttributes
+
+  open internal(set) var phoneNumberAttributes: [NSAttributedString.Key: Any] = defaultAttributes
+
+  open internal(set) var urlAttributes: [NSAttributedString.Key: Any] = defaultAttributes
+
+  open internal(set) var transitInformationAttributes: [NSAttributedString.Key: Any] = defaultAttributes
+
+  open internal(set) var hashtagAttributes: [NSAttributedString.Key: Any] = defaultAttributes
+
+  open internal(set) var mentionAttributes: [NSAttributedString.Key: Any] = defaultAttributes
+
+  open internal(set) var customAttributes: [NSRegularExpression: [NSAttributedString.Key: Any]] = [:]
+
+  open var enabledDetectors: [DetectorType] = [] {
+    didSet {
+      setTextStorage(attributedText, shouldParse: true)
+    }
+  }
+
+  open var textInsets: UIEdgeInsets = .zero {
+    didSet {
+      if !isConfiguring { setNeedsDisplay() }
+    }
   }
 
   // MARK: - Open Methods
@@ -155,13 +155,11 @@ open class MessageLabel: UILabel {
 
   // MARK: Public
 
-  public static var defaultAttributes: [NSAttributedString.Key: Any] = {
-    [
-      NSAttributedString.Key.foregroundColor: UIColor.darkText,
-      NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-      NSAttributedString.Key.underlineColor: UIColor.darkText,
-    ]
-  }()
+  public static var defaultAttributes: [NSAttributedString.Key: Any] = [
+    NSAttributedString.Key.foregroundColor: UIColor.darkText,
+    NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
+    NSAttributedString.Key.underlineColor: UIColor.darkText,
+  ]
 
   public func setAttributes(_ attributes: [NSAttributedString.Key: Any], detector: DetectorType) {
     switch detector {
@@ -393,7 +391,8 @@ open class MessageLabel: UILabel {
   private func parseForMatches(
     with detector: DetectorType,
     in text: NSAttributedString,
-    for range: NSRange) -> [NSTextCheckingResult]
+    for range: NSRange)
+    -> [NSTextCheckingResult]
   {
     switch detector {
     case .custom(let regex):
@@ -402,26 +401,26 @@ open class MessageLabel: UILabel {
       fatalError("You must pass a .custom DetectorType")
     }
   }
-  
-  private func removeOverlappingResults(_ results: [NSTextCheckingResult]) -> [NSTextCheckingResult]
-  {
+
+  private func removeOverlappingResults(_ results: [NSTextCheckingResult]) -> [NSTextCheckingResult] {
     var filteredResults: [NSTextCheckingResult] = []
-    
+
     for result in results {
       let overlappingResults = results.filter { $0.range.intersection(result.range)?.length ?? 0 > 0 }
-      
+
       if overlappingResults.count <= 1 {
         filteredResults.append(result)
         continue
       }
-      
+
       guard !filteredResults.contains(where: { $0.range == result.range }) else { continue }
-      let maxRangeResult = overlappingResults.max { $0.range.upperBound - $0.range.lowerBound < $1.range.upperBound - $1.range.lowerBound }
+      let maxRangeResult = overlappingResults
+        .max { $0.range.upperBound - $0.range.lowerBound < $1.range.upperBound - $1.range.lowerBound }
       if let maxRangeResult {
         filteredResults.append(maxRangeResult)
       }
     }
-    
+
     return filteredResults
   }
 

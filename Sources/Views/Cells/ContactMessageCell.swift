@@ -50,32 +50,6 @@ open class ContactMessageCell: MessageContentCell {
     initialsLabel.text = ""
   }
 
-  open func setupConstraints() {
-    initialsContainerView.constraint(equalTo: CGSize(width: 26, height: 26))
-    let initialsConstraints = initialsContainerView.addConstraints(
-      left: messageContainerView.leftAnchor,
-      centerY: messageContainerView.centerYAnchor,
-      leftConstant: 5)
-    initialsConstraints.first?.identifier = ConstraintsID.initialsContainerLeftConstraint.rawValue
-    initialsContainerView.layer.cornerRadius = 13
-    initialsLabel.fillSuperview()
-    disclosureImageView.constraint(equalTo: CGSize(width: 20, height: 20))
-    let disclosureConstraints = disclosureImageView.addConstraints(
-      right: messageContainerView.rightAnchor,
-      centerY: messageContainerView.centerYAnchor,
-      rightConstant: -10)
-    disclosureConstraints.first?.identifier = ConstraintsID.disclosureRightConstraint.rawValue
-    nameLabel.addConstraints(
-      messageContainerView.topAnchor,
-      left: initialsContainerView.rightAnchor,
-      bottom: messageContainerView.bottomAnchor,
-      right: disclosureImageView.leftAnchor,
-      topConstant: 0,
-      leftConstant: 10,
-      bottomConstant: 0,
-      rightConstant: 5)
-  }
-
   // MARK: - Configure Cell
   open override func configure(
     with message: MessageType,
@@ -111,6 +85,32 @@ open class ContactMessageCell: MessageContentCell {
     let textColor = displayDelegate.textColor(for: message, at: indexPath, in: messagesCollectionView)
     nameLabel.textColor = textColor
     disclosureImageView.tintColor = textColor
+  }
+
+  open func setupConstraints() {
+    initialsContainerView.constraint(equalTo: CGSize(width: 26, height: 26))
+    let initialsConstraints = initialsContainerView.addConstraints(
+      left: messageContainerView.leftAnchor,
+      centerY: messageContainerView.centerYAnchor,
+      leftConstant: 5)
+    initialsConstraints.first?.identifier = ConstraintsID.initialsContainerLeftConstraint.rawValue
+    initialsContainerView.layer.cornerRadius = 13
+    initialsLabel.fillSuperview()
+    disclosureImageView.constraint(equalTo: CGSize(width: 20, height: 20))
+    let disclosureConstraints = disclosureImageView.addConstraints(
+      right: messageContainerView.rightAnchor,
+      centerY: messageContainerView.centerYAnchor,
+      rightConstant: -10)
+    disclosureConstraints.first?.identifier = ConstraintsID.disclosureRightConstraint.rawValue
+    nameLabel.addConstraints(
+      messageContainerView.topAnchor,
+      left: initialsContainerView.rightAnchor,
+      bottom: messageContainerView.bottomAnchor,
+      right: disclosureImageView.leftAnchor,
+      topConstant: 0,
+      leftConstant: 10,
+      bottomConstant: 0,
+      rightConstant: 5)
   }
 
   // MARK: Public

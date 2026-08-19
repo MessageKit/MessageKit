@@ -71,16 +71,6 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
   lazy open var typingIndicatorSizeCalculator = TypingCellSizeCalculator(layout: self)
   lazy open var linkPreviewMessageSizeCalculator = LinkPreviewMessageSizeCalculator(layout: self)
 
-  /// A method that by default checks if the section is the last in the
-  /// `messagesCollectionView` and that `isTypingIndicatorViewHidden`
-  /// is FALSE
-  ///
-  /// - Parameter section
-  /// - Returns: A Boolean indicating if the TypingIndicator should be presented at the given section
-  open func isSectionReservedForTypingIndicator(_ section: Int) -> Bool {
-    !isTypingIndicatorViewHidden && section == messagesCollectionView.numberOfSections - 1
-  }
-
   // MARK: - Attributes
 
   open override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
@@ -117,6 +107,16 @@ open class MessagesCollectionViewFlowLayout: UICollectionViewFlowLayout {
     guard let flowLayoutContext = context as? UICollectionViewFlowLayoutInvalidationContext else { return context }
     flowLayoutContext.invalidateFlowLayoutDelegateMetrics = shouldInvalidateLayout(forBoundsChange: newBounds)
     return flowLayoutContext
+  }
+
+  /// A method that by default checks if the section is the last in the
+  /// `messagesCollectionView` and that `isTypingIndicatorViewHidden`
+  /// is FALSE
+  ///
+  /// - Parameter section
+  /// - Returns: A Boolean indicating if the TypingIndicator should be presented at the given section
+  open func isSectionReservedForTypingIndicator(_ section: Int) -> Bool {
+    !isTypingIndicatorViewHidden && section == messagesCollectionView.numberOfSections - 1
   }
 
   /// Note:

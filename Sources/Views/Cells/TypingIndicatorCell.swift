@@ -38,10 +38,6 @@ open class TypingIndicatorCell: MessageCollectionViewCell {
 
   // MARK: Open
 
-  open func setupSubviews() {
-    addSubview(typingBubble)
-  }
-
   open override func prepareForReuse() {
     super.prepareForReuse()
     if typingBubble.isAnimating {
@@ -52,6 +48,10 @@ open class TypingIndicatorCell: MessageCollectionViewCell {
   open override func layoutSubviews() {
     super.layoutSubviews()
     typingBubble.frame = bounds.inset(by: insets)
+  }
+
+  open func setupSubviews() {
+    addSubview(typingBubble)
   }
 
   // MARK: Public

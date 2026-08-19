@@ -20,6 +20,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
     
 ### Changed
 
+- Enforce `make lint` in CI and reformat the sources it flagged by [@martinpucik](https://github.com/martinpucik)
+
 - Migrate Danger from Ruby to Danger Swift and drop the `Gemfile` by [@martinpucik](https://github.com/martinpucik)
 
 ### Removed

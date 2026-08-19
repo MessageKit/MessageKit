@@ -18,9 +18,9 @@ struct SwiftUIExampleView: View {
 
   var body: some View {
     MessagesView(messages: $messages).onAppear {
-      self.connectToMessageSocket()
+      connectToMessageSocket()
     }.onDisappear {
-      self.cleanupSocket()
+      cleanupSocket()
     }
     .navigationBarTitle("SwiftUI Example", displayMode: .inline)
     // Fixes the InputBarAccessoryView placement when the keyboard appears
@@ -31,7 +31,7 @@ struct SwiftUIExampleView: View {
 
   private func connectToMessageSocket() {
     MockSocket.shared.connect(with: [SampleData.shared.nathan, SampleData.shared.wu]).onNewMessage { message in
-      self.messages.append(message)
+      messages.append(message)
     }
   }
 

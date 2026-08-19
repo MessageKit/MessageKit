@@ -26,67 +26,71 @@ import XCTest
 
 @MainActor
 final class AvatarViewTests: XCTestCase {
-    // MARK: - Private helper API
+  // MARK: Internal
 
-    private func makeAvatarView() -> AvatarView {
-        let avatarView = AvatarView()
-        avatarView.frame.size = CGSize(width: 30, height: 30)
-        return avatarView
-    }
+  func testNoParams() {
+    let avatarView = makeAvatarView()
 
-    func testNoParams() {
-        let avatarView = makeAvatarView()
+    XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
+    // For certain dynamic colors, need to compare cgColor in XCTest
+    // https://stackoverflow.com/questions/58065340/how-to-compare-two-uidynamicprovidercolor
+    XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.avatarViewBackground.cgColor)
+  }
 
-        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
-        // For certain dynamic colors, need to compare cgColor in XCTest
-        // https://stackoverflow.com/questions/58065340/how-to-compare-two-uidynamicprovidercolor
-        XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.avatarViewBackground.cgColor)
-    }
+  func testWithImage() {
+    let avatarView = makeAvatarView()
 
-    func testWithImage() {
-        let avatarView = makeAvatarView()
+    let avatar = Avatar(image: UIImage())
+    avatarView.set(avatar: avatar)
+    XCTAssertEqual(avatar.initials, "?")
+    XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
+    XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.avatarViewBackground.cgColor)
+  }
 
-        let avatar = Avatar(image: UIImage())
-        avatarView.set(avatar: avatar)
-        XCTAssertEqual(avatar.initials, "?")
-        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
-        XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.avatarViewBackground.cgColor)
-    }
+  func testInitialsOnly() {
+    let avatarView = makeAvatarView()
 
-    func testInitialsOnly() {
-        let avatarView = makeAvatarView()
+    let avatar = Avatar(initials: "DL")
+    avatarView.set(avatar: avatar)
+    XCTAssertEqual(avatarView.initials, avatar.initials)
+    XCTAssertEqual(avatar.initials, "DL")
+    XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
+    XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.avatarViewBackground.cgColor)
+  }
 
-        let avatar = Avatar(initials: "DL")
-        avatarView.set(avatar: avatar)
-        XCTAssertEqual(avatarView.initials, avatar.initials)
-        XCTAssertEqual(avatar.initials, "DL")
-        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
-        XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.avatarViewBackground.cgColor)
-    }
+  func testSetBackground() {
+    let avatarView = makeAvatarView()
+    XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.avatarViewBackground.cgColor)
+    avatarView.backgroundColor = UIColor.red
+    XCTAssertEqual(avatarView.backgroundColor!, UIColor.red)
+  }
 
-    func testSetBackground() {
-        let avatarView = makeAvatarView()
-        XCTAssertEqual(avatarView.backgroundColor!.cgColor, UIColor.avatarViewBackground.cgColor)
-        avatarView.backgroundColor = UIColor.red
-        XCTAssertEqual(avatarView.backgroundColor!, UIColor.red)
-    }
+  func testGetImage() {
+    let avatarView = makeAvatarView()
 
-    func testGetImage() {
-        let avatarView = makeAvatarView()
+    let image = UIImage()
+    let avatar = Avatar(image: image)
+    avatarView.set(avatar: avatar)
+    XCTAssertEqual(avatarView.image, image)
+  }
 
-        let image = UIImage()
-        let avatar = Avatar(image: image)
-        avatarView.set(avatar: avatar)
-        XCTAssertEqual(avatarView.image, image)
-    }
+  func testRoundedCorners() {
+    let avatarView = makeAvatarView()
 
-    func testRoundedCorners() {
-        let avatarView = makeAvatarView()
+    let avatar = Avatar(image: UIImage())
+    avatarView.set(avatar: avatar)
+    XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
+    avatarView.setCorner(radius: 2)
+    XCTAssertEqual(avatarView.layer.cornerRadius, 2.0)
+  }
 
-        let avatar = Avatar(image: UIImage())
-        avatarView.set(avatar: avatar)
-        XCTAssertEqual(avatarView.layer.cornerRadius, 15.0)
-        avatarView.setCorner(radius: 2)
-        XCTAssertEqual(avatarView.layer.cornerRadius, 2.0)
-    }
+  // MARK: Private
+
+  // MARK: - Private helper API
+
+  private func makeAvatarView() -> AvatarView {
+    let avatarView = AvatarView()
+    avatarView.frame.size = CGSize(width: 30, height: 30)
+    return avatarView
+  }
 }

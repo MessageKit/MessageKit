@@ -30,7 +30,7 @@ public enum MessageStyle {
   case bubbleOutline(UIColor)
   case bubbleTail(TailCorner, TailStyle)
   case bubbleTailOutline(UIColor, TailCorner, TailStyle)
-  case customImageTail(UIImage,TailCorner)
+  case customImageTail(UIImage, TailCorner)
   case custom((MessageContainerView) -> Void)
 
   // MARK: Public
@@ -44,12 +44,12 @@ public enum MessageStyle {
     case bottomRight
 
     internal var imageOrientation: UIImage.Orientation {
-        switch self {
-            case .bottomRight: return .up
-            case .bottomLeft: return .upMirrored
-            case .topLeft: return .down
-            case .topRight: return .downMirrored
-        }
+      switch self {
+      case .bottomRight: return .up
+      case .bottomLeft: return .upMirrored
+      case .topLeft: return .down
+      case .topRight: return .downMirrored
+      }
     }
   }
 
@@ -76,7 +76,7 @@ public enum MessageStyle {
     {
       return cachedImage
     }
-      
+
     func strechAndCache(image: UIImage) -> UIImage {
       let stretchedImage = stretch(image)
       if let imageCacheKey = imageCacheKey {
@@ -84,7 +84,7 @@ public enum MessageStyle {
       }
       return stretchedImage
     }
-      
+
     if case .customImageTail(let image, let corner) = self {
       guard let cgImage = image.cgImage else { return nil }
       let image = UIImage(cgImage: cgImage, scale: image.scale, orientation: corner.imageOrientation)
@@ -111,13 +111,13 @@ public enum MessageStyle {
     return strechAndCache(image: image)
   }
 
-    // MARK: Internal
+  // MARK: Internal
 
-    nonisolated(unsafe) internal static let bubbleImageCache: NSCache<NSString, UIImage> = {
-        let cache = NSCache<NSString, UIImage>()
-        cache.name = "com.messagekit.MessageKit.bubbleImageCache"
-        return cache
-    }()
+  nonisolated(unsafe) internal static let bubbleImageCache: NSCache<NSString, UIImage> = {
+    let cache = NSCache<NSString, UIImage>()
+    cache.name = "com.messagekit.MessageKit.bubbleImageCache"
+    return cache
+  }()
 
   // MARK: Private
 

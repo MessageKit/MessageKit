@@ -41,12 +41,6 @@ open class LocationMessageCell: MessageContentCell {
     setupConstraints()
   }
 
-  /// Responsible for setting up the constraints of the cell's subviews.
-  open func setupConstraints() {
-    imageView.fillSuperview()
-    activityIndicator.centerInSuperview()
-  }
-
   open override func prepareForReuse() {
     super.prepareForReuse()
     snapShotter?.cancel()
@@ -59,7 +53,8 @@ open class LocationMessageCell: MessageContentCell {
   {
     super.configure(with: message, at: indexPath, and: messagesCollectionView)
 
-    guard case .location(let locationItem) = message.kind else { fatalError("Configuring LocationMessageCell with wrong message kind") }
+    guard case .location(let locationItem) = message.kind
+    else { fatalError("Configuring LocationMessageCell with wrong message kind") }
     guard CLLocationCoordinate2DIsValid(locationItem.location.coordinate) else {
       return
     }
@@ -118,6 +113,12 @@ open class LocationMessageCell: MessageContentCell {
       self.imageView.image = composedImage
       animationBlock?(self.imageView)
     }
+  }
+
+  /// Responsible for setting up the constraints of the cell's subviews.
+  open func setupConstraints() {
+    imageView.fillSuperview()
+    activityIndicator.centerInSuperview()
   }
 
   // MARK: Private

@@ -38,8 +38,6 @@ final internal class SettingsViewController: UITableViewController {
 
   // MARK: Internal
 
-  // MARK: - Properties
-
   let cells = [
     "Mock messages count",
     "Text Messages",
@@ -60,19 +58,6 @@ final internal class SettingsViewController: UITableViewController {
   // MARK: - Toolbar
 
   var messagesToolbar = UIToolbar()
-
-  @objc
-  func onDoneWithPickerView() {
-    let selectedMessagesCount = messagesPicker.selectedRow(inComponent: 0)
-    UserDefaults.standard.setMockMessages(count: selectedMessagesCount)
-    view.endEditing(false)
-    tableView.reloadData()
-  }
-
-  @objc
-  func dismissPickerView() {
-    view.endEditing(false)
-  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -118,6 +103,19 @@ final internal class SettingsViewController: UITableViewController {
         $0.becomeFirstResponder()
       }
     }
+  }
+
+  @objc
+  func onDoneWithPickerView() {
+    let selectedMessagesCount = messagesPicker.selectedRow(inComponent: 0)
+    UserDefaults.standard.setMockMessages(count: selectedMessagesCount)
+    view.endEditing(false)
+    tableView.reloadData()
+  }
+
+  @objc
+  func dismissPickerView() {
+    view.endEditing(false)
   }
 
   @objc

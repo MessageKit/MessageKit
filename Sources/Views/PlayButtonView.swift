@@ -60,8 +60,6 @@ open class PlayButtonView: UIView {
 
   // MARK: Public
 
-  // MARK: - Properties
-
   public let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
   public let triangleView = UIView()
 

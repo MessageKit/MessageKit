@@ -25,21 +25,19 @@ import UIKit
 open class MessageContainerView: UIImageView {
   // MARK: Open
 
-  open var style: MessageStyle = .none {
-    didSet {
-      applyMessageStyle()
-    }
-  }
-
   open override var frame: CGRect {
     didSet {
       sizeMaskToView()
     }
   }
 
-  // MARK: Private
+  open var style: MessageStyle = .none {
+    didSet {
+      applyMessageStyle()
+    }
+  }
 
-  // MARK: - Properties
+  // MARK: Private
 
   private let imageMask = UIImageView()
 

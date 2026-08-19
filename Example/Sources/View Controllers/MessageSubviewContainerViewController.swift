@@ -25,11 +25,11 @@ import Foundation
 import UIKit
 
 final class MessageSubviewContainerViewController: UIViewController {
-  let messageSubviewViewController = MessageSubviewViewController()
-
   override var preferredStatusBarStyle: UIStatusBarStyle {
     .lightContent
   }
+
+  let messageSubviewViewController = MessageSubviewViewController()
 
   override func viewDidLoad() {
     super.viewDidLoad()

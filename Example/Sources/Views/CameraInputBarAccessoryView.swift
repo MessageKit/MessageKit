@@ -41,6 +41,16 @@ class CameraInputBarAccessoryView: InputBarAccessoryView {
     return manager
   }()
 
+  override func didSelectSendButton() {
+    if attachmentManager.attachments.count > 0 {
+      (delegate as? CameraInputBarAccessoryViewDelegate)?
+        .inputBar(self, didPressSendButtonWith: attachmentManager.attachments)
+    }
+    else {
+      delegate?.inputBar(self, didPressSendButtonWith: inputTextView.text)
+    }
+  }
+
   func configure() {
     let camera = makeCameraButton()
     camera.tintColor = .darkGray
@@ -50,16 +60,6 @@ class CameraInputBarAccessoryView: InputBarAccessoryView {
     setLeftStackViewWidthConstant(to: 35, animated: true)
     setStackViewItems([camera], forStack: .left, animated: false)
     inputPlugins = [attachmentManager]
-  }
-
-  override func didSelectSendButton() {
-    if attachmentManager.attachments.count > 0 {
-      (delegate as? CameraInputBarAccessoryViewDelegate)?
-        .inputBar(self, didPressSendButtonWith: attachmentManager.attachments)
-    }
-    else {
-      delegate?.inputBar(self, didPressSendButtonWith: inputTextView.text)
-    }
   }
 
   // MARK: Private

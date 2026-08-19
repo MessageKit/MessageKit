@@ -45,8 +45,6 @@ open class MessagesCollectionView: UICollectionView {
 
   // MARK: Open
 
-  // MARK: - Properties
-
   open weak var messagesDataSource: MessagesDataSource?
 
   open weak var messagesDisplayDelegate: MessagesDisplayDelegate?
@@ -85,18 +83,18 @@ open class MessagesCollectionView: UICollectionView {
 
     scrollToItem(at: indexPath, at: pos, animated: animated)
   }
-    
+
   public func scrollToBottom(animated: Bool = true) {
     guard let indexPath = indexPathForLastItem else { return }
-    
+
     // scroll to the item without animation to get the desired offset
     scrollToItem(at: indexPath, at: .bottom, animated: false)
     let targetOffset = contentOffset
-        
+
     // calculate the adjusted offset, considering the bottom section inset
     let sectionInsetBottom = (collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset.bottom ?? 0
     let adjustedOffset = CGPoint(x: targetOffset.x, y: targetOffset.y + sectionInsetBottom)
-        
+
     // set content offset to the adjusted offset
     setContentOffset(adjustedOffset, animated: animated)
   }

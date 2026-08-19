@@ -1,0 +1,20 @@
+name: Lint
+
+on: pull_request
+
+# This allows a subsequently queued workflow run to interrupt previous runs
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Run SwiftFormat and SwiftLint
+    runs-on: macos-15
+    steps:
+    - name: Checkout the Git repository
+      uses: actions/checkout@v4
+    - name: Install the linters
+      run: brew install swiftformat swiftlint
+    - name: Lint
+      run: make lint

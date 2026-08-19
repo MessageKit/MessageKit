@@ -25,13 +25,13 @@ import XCTest
 
 @MainActor
 class MessagesCollectionViewTests: XCTestCase {
-    let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
-    let layout = MessagesCollectionViewFlowLayout()
+  let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
+  let layout = MessagesCollectionViewFlowLayout()
 
-    func testInit() {
-        let messagesCollectionView = MessagesCollectionView(frame: rect, collectionViewLayout: layout)
-        XCTAssertEqual(messagesCollectionView.frame, rect)
-        XCTAssertEqual(messagesCollectionView.collectionViewLayout, layout)
-        XCTAssertEqual(messagesCollectionView.backgroundColor, UIColor.collectionViewBackground)
-    }
+  func testInit() {
+    let messagesCollectionView = MessagesCollectionView(frame: rect, collectionViewLayout: layout)
+    XCTAssertEqual(messagesCollectionView.frame, rect)
+    XCTAssertEqual(messagesCollectionView.collectionViewLayout, layout)
+    XCTAssertEqual(messagesCollectionView.backgroundColor, UIColor.collectionViewBackground)
+  }
 }

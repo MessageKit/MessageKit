@@ -100,18 +100,6 @@ open class MessageContentCell: MessageCollectionViewCell {
     messageTimestampLabel.attributedText = nil
   }
 
-  open func setupSubviews() {
-    contentView.addSubviews(
-      accessoryView,
-      cellTopLabel,
-      messageTopLabel,
-      messageBottomLabel,
-      cellBottomLabel,
-      messageContainerView,
-      avatarView,
-      messageTimestampLabel)
-  }
-
   // MARK: - Configuration
 
   open override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
@@ -126,6 +114,50 @@ open class MessageContentCell: MessageCollectionViewCell {
     layoutAvatarView(with: attributes)
     layoutAccessoryView(with: attributes)
     layoutTimeLabelView(with: attributes)
+  }
+
+  /// Handle tap gesture on contentView and its subviews.
+  open override func handleTapGesture(_ gesture: UIGestureRecognizer) {
+    let touchLocation = gesture.location(in: self)
+
+    switch true {
+    case messageContainerView.frame
+      .contains(touchLocation) && !cellContentView(canHandle: convert(touchLocation, to: messageContainerView)):
+      delegate?.didTapMessage(in: self)
+    case avatarView.frame.contains(touchLocation):
+      delegate?.didTapAvatar(in: self)
+    case cellTopLabel.frame.contains(touchLocation):
+      delegate?.didTapCellTopLabel(in: self)
+    case cellBottomLabel.frame.contains(touchLocation):
+      delegate?.didTapCellBottomLabel(in: self)
+    case messageTopLabel.frame.contains(touchLocation):
+      delegate?.didTapMessageTopLabel(in: self)
+    case messageBottomLabel.frame.contains(touchLocation):
+      delegate?.didTapMessageBottomLabel(in: self)
+    case accessoryView.frame.contains(touchLocation):
+      delegate?.didTapAccessoryView(in: self)
+    default:
+      delegate?.didTapBackground(in: self)
+    }
+  }
+
+  /// Handle long press gesture, return true when gestureRecognizer's touch point in `messageContainerView`'s frame
+  open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    let touchPoint = gestureRecognizer.location(in: self)
+    guard gestureRecognizer.isKind(of: UILongPressGestureRecognizer.self) else { return false }
+    return messageContainerView.frame.contains(touchPoint)
+  }
+
+  open func setupSubviews() {
+    contentView.addSubviews(
+      accessoryView,
+      cellTopLabel,
+      messageTopLabel,
+      messageBottomLabel,
+      cellBottomLabel,
+      messageContainerView,
+      avatarView,
+      messageTimestampLabel)
   }
 
   /// Used to configure the cell.
@@ -165,38 +197,6 @@ open class MessageContentCell: MessageCollectionViewCell {
     messageBottomLabel.attributedText = bottomMessageLabelText
     messageTimestampLabel.attributedText = messageTimestampLabelText
     messageTimestampLabel.isHidden = !messagesCollectionView.showMessageTimestampOnSwipeLeft
-  }
-
-  /// Handle tap gesture on contentView and its subviews.
-  open override func handleTapGesture(_ gesture: UIGestureRecognizer) {
-    let touchLocation = gesture.location(in: self)
-
-    switch true {
-    case messageContainerView.frame
-      .contains(touchLocation) && !cellContentView(canHandle: convert(touchLocation, to: messageContainerView)):
-      delegate?.didTapMessage(in: self)
-    case avatarView.frame.contains(touchLocation):
-      delegate?.didTapAvatar(in: self)
-    case cellTopLabel.frame.contains(touchLocation):
-      delegate?.didTapCellTopLabel(in: self)
-    case cellBottomLabel.frame.contains(touchLocation):
-      delegate?.didTapCellBottomLabel(in: self)
-    case messageTopLabel.frame.contains(touchLocation):
-      delegate?.didTapMessageTopLabel(in: self)
-    case messageBottomLabel.frame.contains(touchLocation):
-      delegate?.didTapMessageBottomLabel(in: self)
-    case accessoryView.frame.contains(touchLocation):
-      delegate?.didTapAccessoryView(in: self)
-    default:
-      delegate?.didTapBackground(in: self)
-    }
-  }
-
-  /// Handle long press gesture, return true when gestureRecognizer's touch point in `messageContainerView`'s frame
-  open override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-    let touchPoint = gestureRecognizer.location(in: self)
-    guard gestureRecognizer.isKind(of: UILongPressGestureRecognizer.self) else { return false }
-    return messageContainerView.frame.contains(touchPoint)
   }
 
   /// Handle `ContentView`'s tap gesture, return false when `ContentView` doesn't needs to handle gesture
@@ -365,8 +365,8 @@ open class MessageContentCell: MessageCollectionViewCell {
   open func layoutTimeLabelView(with attributes: MessagesCollectionViewLayoutAttributes) {
     let paddingLeft: CGFloat = 10
     let origin = CGPoint(
-        x: self.frame.maxX + paddingLeft,
-        y: messageContainerView.frame.minY + messageContainerView.frame.height * 0.5 - messageTimestampLabel.font.ascender * 0.5)
+      x: frame.maxX + paddingLeft,
+      y: messageContainerView.frame.minY + messageContainerView.frame.height * 0.5 - messageTimestampLabel.font.ascender * 0.5)
     let size = CGSize(width: attributes.messageTimeLabelSize.width, height: attributes.messageTimeLabelSize.height)
     messageTimestampLabel.frame = CGRect(origin: origin, size: size)
   }

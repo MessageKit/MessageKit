@@ -48,8 +48,6 @@ open class MessageKitDateFormatter: @unchecked Sendable {
 
   // MARK: Public
 
-  // MARK: - Properties
-
   public static let shared = MessageKitDateFormatter()
 
   // MARK: - Methods

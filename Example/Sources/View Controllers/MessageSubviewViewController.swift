@@ -30,7 +30,7 @@ final class MessageSubviewViewController: BasicExampleViewController {
 
   // In order to reach the subviewInputBar
   override var inputAccessoryView: UIView? {
-    self.subviewInputBar
+    subviewInputBar
   }
 
   override func viewDidLoad() {

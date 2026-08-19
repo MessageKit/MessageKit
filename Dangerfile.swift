@@ -26,29 +26,30 @@ let pullRequest = danger.github.pullRequest
 
 // Make it more obvious that a PR is a Draft
 if pullRequest.draft == true {
-    warn("PR is marked as Draft")
+  warn("PR is marked as Draft")
 }
 
 // Make it more obvious that a PR is a work in progress and shouldn't be merged yet
 if pullRequest.title.contains("[WIP]") {
-    warn("PR is marked as Work in Progress")
+  warn("PR is marked as Work in Progress")
 }
 
 // Mainly to encourage writing up some reasoning about the PR, rather than just leaving a title
 if (pullRequest.body ?? "").count < 5 {
-    fail("Please provide a summary in the Pull Request description")
+  fail("Please provide a summary in the Pull Request description")
 }
 
 let declaredTrivial = pullRequest.title.contains("#trivial")
 let hasChangelogEntry = danger.git.modifiedFiles.contains("CHANGELOG.md")
 if !hasChangelogEntry, !declaredTrivial {
-    fail("Please include a CHANGELOG entry. \nYou can find it at [CHANGELOG.md](https://github.com/MessageKit/MessageKit/blob/main/CHANGELOG.md).")
+  fail(
+    "Please include a CHANGELOG entry. \nYou can find it at [CHANGELOG.md](https://github.com/MessageKit/MessageKit/blob/main/CHANGELOG.md).")
 }
 
 // Warn when there is a big PR
 let linesOfCode = (pullRequest.additions ?? 0) + (pullRequest.deletions ?? 0)
 if linesOfCode > 1000 {
-    warn("Big Pull Request - Please consider splitting up your changes into smaller Pull Requests.")
+  warn("Big Pull Request - Please consider splitting up your changes into smaller Pull Requests.")
 }
 
 // SwiftLint ships inside Danger Swift, so it only needs the `swiftlint` binary on the PATH

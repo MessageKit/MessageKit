@@ -172,31 +172,6 @@ final class AdvancedExampleViewController: ChatViewController {
     inputBarType = .custom(messageInputBar)
   }
 
-  // MARK: - Helpers
-
-  func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
-    indexPath.section % 3 == 0 && !isPreviousMessageSameSender(at: indexPath)
-  }
-
-  func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
-    guard indexPath.section - 1 >= 0 else { return false }
-    return messageList[indexPath.section].user == messageList[indexPath.section - 1].user
-  }
-
-  func isNextMessageSameSender(at indexPath: IndexPath) -> Bool {
-    guard indexPath.section + 1 < messageList.count else { return false }
-    return messageList[indexPath.section].user == messageList[indexPath.section + 1].user
-  }
-
-    func setTypingIndicatorViewHidden(_ isHidden: Bool, animated: Bool, performUpdates updates: (() -> Void)? = nil) {
-    updateTitleView(title: "MessageKit", subtitle: isHidden ? "2 Online" : "Typing...")
-    setTypingIndicatorViewHidden(isHidden, animated: animated, whilePerforming: updates) { [weak self] success in
-      if success, self?.isLastSectionVisible() == true {
-        self?.messagesCollectionView.scrollToLastItem(animated: true)
-      }
-    }
-  }
-
   // MARK: - MessagesDataSource
 
   override func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
@@ -228,6 +203,31 @@ final class AdvancedExampleViewController: ChatViewController {
         attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
     }
     return nil
+  }
+
+  // MARK: - Helpers
+
+  func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
+    indexPath.section % 3 == 0 && !isPreviousMessageSameSender(at: indexPath)
+  }
+
+  func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
+    guard indexPath.section - 1 >= 0 else { return false }
+    return messageList[indexPath.section].user == messageList[indexPath.section - 1].user
+  }
+
+  func isNextMessageSameSender(at indexPath: IndexPath) -> Bool {
+    guard indexPath.section + 1 < messageList.count else { return false }
+    return messageList[indexPath.section].user == messageList[indexPath.section + 1].user
+  }
+
+  func setTypingIndicatorViewHidden(_ isHidden: Bool, animated: Bool, performUpdates updates: (() -> Void)? = nil) {
+    updateTitleView(title: "MessageKit", subtitle: isHidden ? "2 Online" : "Typing...")
+    setTypingIndicatorViewHidden(isHidden, animated: animated, whilePerforming: updates) { [weak self] success in
+      if success, self?.isLastSectionVisible() == true {
+        self?.messagesCollectionView.scrollToLastItem(animated: true)
+      }
+    }
   }
 
   // MARK: Private
@@ -290,7 +290,6 @@ final class AdvancedExampleViewController: ChatViewController {
     // or InputTextView padding
     messageInputBar.inputTextView.textContainerInset.bottom = 8
   }
-
 }
 
 // MARK: MessagesDisplayDelegate
@@ -305,7 +304,8 @@ extension AdvancedExampleViewController: MessagesDisplayDelegate {
   func detectorAttributes(
     for detector: DetectorType,
     and message: MessageType,
-    at _: IndexPath) -> [NSAttributedString.Key: Any]
+    at _: IndexPath)
+    -> [NSAttributedString.Key: Any]
   {
     switch detector {
     case .hashtag, .mention:
@@ -420,7 +420,8 @@ extension AdvancedExampleViewController: MessagesDisplayDelegate {
   func animationBlockForLocation(
     message _: MessageType,
     at _: IndexPath,
-    in _: MessagesCollectionView) -> ((UIImageView) -> Void)?
+    in _: MessagesCollectionView)
+    -> ((UIImageView) -> Void)?
   {
     { view in
       view.layer.transform = CATransform3DMakeScale(2, 2, 2)
@@ -492,7 +493,7 @@ extension AdvancedExampleViewController: CameraInputBarAccessoryViewDelegate {
   func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith attachments: [AttachmentManager.Attachment]) {
     for item in attachments {
       if case .image(let image) = item {
-        self.sendImageMessage(photo: image)
+        sendImageMessage(photo: image)
       }
     }
     inputBar.invalidatePlugins()
