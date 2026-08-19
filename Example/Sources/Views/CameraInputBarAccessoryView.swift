@@ -135,7 +135,7 @@ extension CameraInputBarAccessoryView: UIImagePickerControllerDelegate, UINaviga
   }
 
   func getRootViewController() -> UIViewController? {
-    (UIApplication.shared.delegate as? AppDelegate)?.window?.rootViewController
+    UIViewController.keyWindowRoot
   }
 }
 

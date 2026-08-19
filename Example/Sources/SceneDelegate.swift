@@ -22,22 +22,24 @@
 
 import UIKit
 
-@main
-final internal class AppDelegate: UIResponder, UIApplicationDelegate {
-  func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    if UserDefaults.isFirstLaunch() {
-      // Enable Text Messages
-      UserDefaults.standard.set(true, forKey: "Text Messages")
-    }
-    return true
-  }
+final internal class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+  var window: UIWindow?
 
-  func application(
-    _: UIApplication,
-    configurationForConnecting connectingSceneSession: UISceneSession,
-    options _: UIScene.ConnectionOptions)
-    -> UISceneConfiguration
-  {
-    UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+  func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
+    guard let windowScene = scene as? UIWindowScene else { return }
+
+    let masterViewController = UINavigationController(rootViewController: LaunchViewController())
+    masterViewController.navigationItem.largeTitleDisplayMode = .never
+
+    let splitViewController = UISplitViewController()
+    splitViewController.viewControllers = UIDevice.current.userInterfaceIdiom == .pad
+      ? [masterViewController, UIViewController()]
+      : [masterViewController]
+    splitViewController.preferredDisplayMode = .oneBesideSecondary
+
+    let window = UIWindow(windowScene: windowScene)
+    window.rootViewController = splitViewController
+    window.makeKeyAndVisible()
+    self.window = window
   }
 }

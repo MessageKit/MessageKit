@@ -18,3 +18,5 @@ jobs:
         fetch-depth: 10
     - name: Build and run example project
       run: make build_example
+    - name: Run example UI tests
+      run: make test_example

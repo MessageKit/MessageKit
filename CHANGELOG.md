@@ -9,6 +9,10 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ### Fixed
 
 - Fix `make format`, `make lint` and the pre-commit hook, which still called the removed SwiftPM plugins by [@martinpucik](https://github.com/martinpucik)
+- Adopt the scene lifecycle in the example app, which crashed on launch on iOS 26 and later by [@martinpucik](https://github.com/martinpucik)
+- Add the missing camera and photo library usage descriptions to the example app, which crashed when you opened the camera by [@martinpucik](https://github.com/martinpucik)
+- Stop the example app from crashing when you switch off every message type in Settings by [@martinpucik](https://github.com/martinpucik)
+- Repair the example app UI test, which looked for a row that does not exist, and run it in CI by [@martinpucik](https://github.com/martinpucik)
 
 ### Updated
 

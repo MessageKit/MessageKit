@@ -32,8 +32,12 @@ framework:
 	@set -o pipefail && xcodebuild build -scheme MessageKit -destination "platform=iOS Simulator,name=iPhone 16" | xcpretty -c
 
 build_example:
-	@echo "Building & testing MessageKit Example app."
+	@echo "Building & analyzing MessageKit Example app."
 	@cd Example && set -o pipefail && xcodebuild build analyze -scheme ChatExample -destination "platform=iOS Simulator,name=iPhone 16" CODE_SIGNING_REQUIRED=NO | xcpretty -c
+
+test_example:
+	@echo "Running MessageKit Example app UI tests."
+	@cd Example && set -o pipefail && xcodebuild test -scheme ChatExampleUITests -destination "platform=iOS Simulator,name=iPhone 16" CODE_SIGNING_REQUIRED=NO | xcpretty -c
 
 format:
 	@echo "Formatting MessageKit."

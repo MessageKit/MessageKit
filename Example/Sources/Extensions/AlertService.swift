@@ -22,6 +22,6 @@ class AlertService {
       alert.addAction(action)
     }
 
-    UIApplication.shared.delegate?.window??.rootViewController?.present(alert, animated: true, completion: completion)
+    UIViewController.keyWindowRoot?.present(alert, animated: true, completion: completion)
   }
 }

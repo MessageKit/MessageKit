@@ -23,6 +23,16 @@
 import UIKit
 
 extension UIViewController {
+  /// The root view controller of the app's foreground window, for code that has no
+  /// view controller of its own to present from.
+  static var keyWindowRoot: UIViewController? {
+    UIApplication.shared.connectedScenes
+      .compactMap { $0 as? UIWindowScene }
+      .first { $0.activationState == .foregroundActive }?
+      .keyWindow?
+      .rootViewController
+  }
+
   func updateTitleView(title: String, subtitle: String?) {
     let titleLabel = UILabel(frame: CGRect(x: 0, y: -2, width: 0, height: 0))
     titleLabel.backgroundColor = UIColor.clear
