@@ -68,9 +68,9 @@ extension BasicExampleViewController: MessagesDisplayDelegate {
   func messageStyle(for message: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> MessageStyle {
     let tail: MessageStyle.TailCorner = isFromCurrentSender(message: message) ? .bottomRight : .bottomLeft
     if let image = UIImage(named: "bobbly") {
-        return .customImageTail(image, tail)
+      return .customImageTail(image, tail)
     } else {
-        return .bubbleTail(tail, .curved)
+      return .bubbleTail(tail, .curved)
     }
   }
 
@@ -105,7 +105,8 @@ extension BasicExampleViewController: MessagesDisplayDelegate {
   func animationBlockForLocation(
     message _: MessageType,
     at _: IndexPath,
-    in _: MessagesCollectionView) -> ((UIImageView) -> Void)?
+    in _: MessagesCollectionView)
+    -> ((UIImageView) -> Void)?
   {
     { view in
       view.layer.transform = CATransform3DMakeScale(2, 2, 2)

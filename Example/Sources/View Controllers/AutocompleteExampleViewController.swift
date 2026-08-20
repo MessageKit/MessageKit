@@ -43,7 +43,7 @@ final class AutocompleteExampleViewController: ChatViewController {
 
   /// The object that manages autocomplete, from InputBarAccessoryView
   lazy var autocompleteManager: AutocompleteManager = { [unowned self] in
-    let manager = AutocompleteManager(for: self.messageInputBar.inputTextView)
+    let manager = AutocompleteManager(for: messageInputBar.inputTextView)
     manager.delegate = self
     manager.dataSource = self
     return manager
@@ -126,35 +126,6 @@ final class AutocompleteExampleViewController: ChatViewController {
     messageInputBar.setMiddleContentView(joinChatButton, animated: false)
   }
 
-  @objc
-  func joinChat() {
-    configureMessageInputBarForChat()
-  }
-
-  // MARK: - Helpers
-
-  func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
-    indexPath.section % 3 == 0 && !isPreviousMessageSameSender(at: indexPath)
-  }
-
-  func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
-    guard indexPath.section - 1 >= 0 else { return false }
-    return messageList[indexPath.section].user == messageList[indexPath.section - 1].user
-  }
-
-  func isNextMessageSameSender(at indexPath: IndexPath) -> Bool {
-    guard indexPath.section + 1 < messageList.count else { return false }
-    return messageList[indexPath.section].user == messageList[indexPath.section + 1].user
-  }
-
-  func setTypingIndicatorViewHidden(_ isHidden: Bool, performUpdates updates: (() -> Void)? = nil) {
-    setTypingIndicatorViewHidden(isHidden, animated: true, whilePerforming: updates) { [weak self] success in
-      if success, self?.isLastSectionVisible() == true {
-        self?.messagesCollectionView.scrollToLastItem(animated: true)
-      }
-    }
-  }
-
   // MARK: - MessagesDataSource
 
   override func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
@@ -186,6 +157,35 @@ final class AutocompleteExampleViewController: ChatViewController {
         attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .caption1)])
     }
     return nil
+  }
+
+  @objc
+  func joinChat() {
+    configureMessageInputBarForChat()
+  }
+
+  // MARK: - Helpers
+
+  func isTimeLabelVisible(at indexPath: IndexPath) -> Bool {
+    indexPath.section % 3 == 0 && !isPreviousMessageSameSender(at: indexPath)
+  }
+
+  func isPreviousMessageSameSender(at indexPath: IndexPath) -> Bool {
+    guard indexPath.section - 1 >= 0 else { return false }
+    return messageList[indexPath.section].user == messageList[indexPath.section - 1].user
+  }
+
+  func isNextMessageSameSender(at indexPath: IndexPath) -> Bool {
+    guard indexPath.section + 1 < messageList.count else { return false }
+    return messageList[indexPath.section].user == messageList[indexPath.section + 1].user
+  }
+
+  func setTypingIndicatorViewHidden(_ isHidden: Bool, performUpdates updates: (() -> Void)? = nil) {
+    setTypingIndicatorViewHidden(isHidden, animated: true, whilePerforming: updates) { [weak self] success in
+      if success, self?.isLastSectionVisible() == true {
+        self?.messagesCollectionView.scrollToLastItem(animated: true)
+      }
+    }
   }
 
   // Async autocomplete requires the manager to reload
@@ -340,7 +340,8 @@ extension AutocompleteExampleViewController: MessagesDisplayDelegate {
   func detectorAttributes(
     for detector: DetectorType,
     and message: MessageType,
-    at _: IndexPath) -> [NSAttributedString.Key: Any]
+    at _: IndexPath)
+    -> [NSAttributedString.Key: Any]
   {
     switch detector {
     case .hashtag, .mention:

@@ -1,4 +1,4 @@
-name: Build Example app
+name: Lint
 
 on: pull_request
 
@@ -8,15 +8,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  tests:
-    name: Build Example app
+  lint:
+    name: Run SwiftFormat and SwiftLint
     runs-on: macos-15
     steps:
     - name: Checkout the Git repository
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 10
-    - name: Build and run example project
-      run: make build_example
-    - name: Run example UI tests
-      run: make test_example
+    - name: Install the linters
+      run: brew install swiftformat swiftlint
+    - name: Lint
+      run: make lint

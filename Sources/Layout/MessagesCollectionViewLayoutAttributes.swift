@@ -23,7 +23,7 @@
 import UIKit
 
 /// The layout attributes used by a `MessageCollectionViewCell` to layout its subviews.
-open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes  {
+open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttributes {
   // MARK: Open
 
   // MARK: - Methods
@@ -55,7 +55,7 @@ open class MessagesCollectionViewLayoutAttributes: UICollectionViewLayoutAttribu
     // swiftlint:enable force_cast
   }
 
-  // MARK: - Properties
+  // MARK: Public
 
   public var avatarSize: CGSize = .zero
   public var avatarPosition = AvatarPosition(vertical: .cellBottom)

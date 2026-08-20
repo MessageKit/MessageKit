@@ -75,7 +75,8 @@ extension UIView {
     centerYConstant: CGFloat = 0,
     centerXConstant: CGFloat = 0,
     widthConstant: CGFloat = 0,
-    heightConstant: CGFloat = 0) -> [NSLayoutConstraint]
+    heightConstant: CGFloat = 0)
+    -> [NSLayoutConstraint]
   {
     if superview == nil {
       return []

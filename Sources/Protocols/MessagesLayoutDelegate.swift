@@ -91,7 +91,8 @@ public protocol MessagesLayoutDelegate: AnyObject {
   func cellBottomLabelHeight(
     for message: MessageType,
     at indexPath: IndexPath,
-    in messagesCollectionView: MessagesCollectionView) -> CGFloat
+    in messagesCollectionView: MessagesCollectionView)
+    -> CGFloat
 
   /// Specifies the height for the message bubble's top label.
   ///
@@ -105,7 +106,8 @@ public protocol MessagesLayoutDelegate: AnyObject {
   func messageTopLabelHeight(
     for message: MessageType,
     at indexPath: IndexPath,
-    in messagesCollectionView: MessagesCollectionView) -> CGFloat
+    in messagesCollectionView: MessagesCollectionView)
+    -> CGFloat
 
   /// Specifies the label alignment for the message bubble's top label.
   /// - Parameters:
@@ -117,7 +119,8 @@ public protocol MessagesLayoutDelegate: AnyObject {
   func messageTopLabelAlignment(
     for message: MessageType,
     at indexPath: IndexPath,
-    in messagesCollectionView: MessagesCollectionView) -> LabelAlignment?
+    in messagesCollectionView: MessagesCollectionView)
+    -> LabelAlignment?
 
   /// Specifies the height for the `MessageContentCell`'s bottom label.
   ///
@@ -131,7 +134,8 @@ public protocol MessagesLayoutDelegate: AnyObject {
   func messageBottomLabelHeight(
     for message: MessageType,
     at indexPath: IndexPath,
-    in messagesCollectionView: MessagesCollectionView) -> CGFloat
+    in messagesCollectionView: MessagesCollectionView)
+    -> CGFloat
 
   /// Specifies the label alignment for the message bubble's bottom label.
   /// - Parameters:
@@ -143,7 +147,8 @@ public protocol MessagesLayoutDelegate: AnyObject {
   func messageBottomLabelAlignment(
     for message: MessageType,
     at indexPath: IndexPath,
-    in messagesCollectionView: MessagesCollectionView) -> LabelAlignment?
+    in messagesCollectionView: MessagesCollectionView)
+    -> LabelAlignment?
 
   /// Specifies the size for the `MessageContentCell`'s avatar image view.
   /// - Parameters:
@@ -167,7 +172,8 @@ public protocol MessagesLayoutDelegate: AnyObject {
   func textCellSizeCalculator(
     for message: MessageType,
     at indexPath: IndexPath,
-    in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator?
+    in messagesCollectionView: MessagesCollectionView)
+    -> CellSizeCalculator?
 
   /// Attributed text cell size calculator for messages with MessageType.attributedText.
   ///
@@ -181,7 +187,8 @@ public protocol MessagesLayoutDelegate: AnyObject {
   func attributedTextCellSizeCalculator(
     for message: MessageType,
     at indexPath: IndexPath,
-    in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator?
+    in messagesCollectionView: MessagesCollectionView)
+    -> CellSizeCalculator?
 
   /// Emoji cell size calculator for messages with MessageType.emoji.
   ///
@@ -195,7 +202,8 @@ public protocol MessagesLayoutDelegate: AnyObject {
   func emojiCellSizeCalculator(
     for message: MessageType,
     at indexPath: IndexPath,
-    in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator?
+    in messagesCollectionView: MessagesCollectionView)
+    -> CellSizeCalculator?
 
   /// Photo cell size calculator for messages with MessageType.photo.
   ///
@@ -209,7 +217,8 @@ public protocol MessagesLayoutDelegate: AnyObject {
   func photoCellSizeCalculator(
     for message: MessageType,
     at indexPath: IndexPath,
-    in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator?
+    in messagesCollectionView: MessagesCollectionView)
+    -> CellSizeCalculator?
 
   /// Video cell size calculator for messages with MessageType.video.
   ///
@@ -223,7 +232,8 @@ public protocol MessagesLayoutDelegate: AnyObject {
   func videoCellSizeCalculator(
     for message: MessageType,
     at indexPath: IndexPath,
-    in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator?
+    in messagesCollectionView: MessagesCollectionView)
+    -> CellSizeCalculator?
 
   /// Location cell size calculator for messages with MessageType.location.
   ///
@@ -237,7 +247,8 @@ public protocol MessagesLayoutDelegate: AnyObject {
   func locationCellSizeCalculator(
     for message: MessageType,
     at indexPath: IndexPath,
-    in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator?
+    in messagesCollectionView: MessagesCollectionView)
+    -> CellSizeCalculator?
 
   /// Audio cell size calculator for messages with MessageType.audio.
   ///
@@ -251,7 +262,8 @@ public protocol MessagesLayoutDelegate: AnyObject {
   func audioCellSizeCalculator(
     for message: MessageType,
     at indexPath: IndexPath,
-    in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator?
+    in messagesCollectionView: MessagesCollectionView)
+    -> CellSizeCalculator?
 
   /// Contact cell size calculator for messages with MessageType.contact.
   ///
@@ -265,7 +277,8 @@ public protocol MessagesLayoutDelegate: AnyObject {
   func contactCellSizeCalculator(
     for message: MessageType,
     at indexPath: IndexPath,
-    in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator?
+    in messagesCollectionView: MessagesCollectionView)
+    -> CellSizeCalculator?
 
   /// Custom cell size calculator for messages with MessageType.custom.
   ///
@@ -279,7 +292,8 @@ public protocol MessagesLayoutDelegate: AnyObject {
   func customCellSizeCalculator(
     for message: MessageType,
     at indexPath: IndexPath,
-    in messagesCollectionView: MessagesCollectionView) -> CellSizeCalculator
+    in messagesCollectionView: MessagesCollectionView)
+    -> CellSizeCalculator
 }
 
 extension MessagesLayoutDelegate {

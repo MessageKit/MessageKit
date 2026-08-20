@@ -22,41 +22,24 @@
 
 import UIKit
 
-/// A subclass of `MessageCollectionViewCell` used to display the typing indicator.
-open class TypingIndicatorCell: MessageCollectionViewCell {
-  // MARK: Lifecycle
+final internal class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+  var window: UIWindow?
 
-  public override init(frame: CGRect) {
-    super.init(frame: frame)
-    setupSubviews()
+  func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
+    guard let windowScene = scene as? UIWindowScene else { return }
+
+    let masterViewController = UINavigationController(rootViewController: LaunchViewController())
+    masterViewController.navigationItem.largeTitleDisplayMode = .never
+
+    let splitViewController = UISplitViewController()
+    splitViewController.viewControllers = UIDevice.current.userInterfaceIdiom == .pad
+      ? [masterViewController, UIViewController()]
+      : [masterViewController]
+    splitViewController.preferredDisplayMode = .oneBesideSecondary
+
+    let window = UIWindow(windowScene: windowScene)
+    window.rootViewController = splitViewController
+    window.makeKeyAndVisible()
+    self.window = window
   }
-
-  required public init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-    setupSubviews()
-  }
-
-  // MARK: Open
-
-  open override func prepareForReuse() {
-    super.prepareForReuse()
-    if typingBubble.isAnimating {
-      typingBubble.stopAnimating()
-    }
-  }
-
-  open override func layoutSubviews() {
-    super.layoutSubviews()
-    typingBubble.frame = bounds.inset(by: insets)
-  }
-
-  open func setupSubviews() {
-    addSubview(typingBubble)
-  }
-
-  // MARK: Public
-
-  public var insets = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
-
-  public let typingBubble = TypingBubble()
 }

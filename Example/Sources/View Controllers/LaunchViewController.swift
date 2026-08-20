@@ -57,6 +57,10 @@ final internal class LaunchViewController: UITableViewController {
     sections[section].rows.count
   }
 
+  override func tableView(_: UITableView, titleForHeaderInSection section: Int) -> String? {
+    sections[section].title
+  }
+
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell()
     cell.textLabel?.text = sections[indexPath.section].rows[indexPath.row].title
@@ -66,44 +70,40 @@ final internal class LaunchViewController: UITableViewController {
 
   // MARK: - UITableViewDelegate
 
-  // swiftlint:disable cyclomatic_complexity
-  override func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let cell = sections[indexPath.section].rows[indexPath.row]
-    switch cell {
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+
+    switch sections[indexPath.section].rows[indexPath.row] {
     case .basic:
-      let viewController = BasicExampleViewController()
-      let detailViewController = UINavigationController(rootViewController: viewController)
-      splitViewController?.showDetailViewController(detailViewController, sender: self)
+      showDetail(BasicExampleViewController())
     case .advanced:
-      let viewController = AdvancedExampleViewController()
-      let detailViewController = UINavigationController(rootViewController: viewController)
-      splitViewController?.showDetailViewController(detailViewController, sender: self)
+      showDetail(AdvancedExampleViewController())
     case .autocomplete:
-      let viewController = AutocompleteExampleViewController()
-      let detailViewController = UINavigationController(rootViewController: viewController)
-      splitViewController?.showDetailViewController(detailViewController, sender: self)
+      showDetail(AutocompleteExampleViewController())
     case .embedded:
-      splitViewController?.showDetailViewController(MessageContainerController(), sender: self)
+      showDetail(MessageContainerController(), wrapInNavigationController: false)
     case .customLayout:
-      splitViewController?.showDetailViewController(CustomLayoutExampleViewController(), sender: self)
+      showDetail(CustomLayoutExampleViewController(), wrapInNavigationController: false)
     case .customInputBar:
-      let detailViewController = UINavigationController(rootViewController: CustomInputBarExampleViewController())
-      splitViewController?.showDetailViewController(detailViewController, sender: self)
+      showDetail(CustomInputBarExampleViewController())
     case .swiftUI:
-      splitViewController?.showDetailViewController(UIHostingController(rootView: SwiftUIExampleView()), sender: self)
+      showDetail(UIHostingController(rootView: SwiftUIExampleView()), wrapInNavigationController: false)
     case .subview:
-      let viewController = MessageSubviewContainerViewController()
-      let detailViewController = UINavigationController(rootViewController: viewController)
-      splitViewController?.showDetailViewController(detailViewController, sender: self)
+      showDetail(MessageSubviewContainerViewController())
     case .settings:
-      let viewController = SettingsViewController()
-      let detailViewController = UINavigationController(rootViewController: viewController)
-      splitViewController?.showDetailViewController(detailViewController, sender: self)
+      showDetail(SettingsViewController())
     case .sourceCode:
       openURL(URL(string: "https://github.com/MessageKit/MessageKit")!)
     case .contributors:
       openURL(URL(string: "https://github.com/MessageKit/MessageKit/graphs/contributors")!)
     }
+  }
+
+  func showDetail(_ viewController: UIViewController, wrapInNavigationController: Bool = true) {
+    let detailViewController = wrapInNavigationController
+      ? UINavigationController(rootViewController: viewController)
+      : viewController
+    splitViewController?.showDetailViewController(detailViewController, sender: self)
   }
 
   func openURL(_ url: URL) {

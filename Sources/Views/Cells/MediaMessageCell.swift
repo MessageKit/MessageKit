@@ -37,15 +37,6 @@ open class MediaMessageCell: MessageContentCell {
     return imageView
   }()
 
-  // MARK: - Methods
-
-  /// Responsible for setting up the constraints of the cell's subviews.
-  open func setupConstraints() {
-    imageView.fillSuperview()
-    playButtonView.centerInSuperview()
-    playButtonView.constraint(equalTo: CGSize(width: 35, height: 35))
-  }
-
   open override func setupSubviews() {
     super.setupSubviews()
     messageContainerView.addSubview(imageView)
@@ -92,5 +83,14 @@ open class MediaMessageCell: MessageContentCell {
       return
     }
     delegate?.didTapImage(in: self)
+  }
+
+  // MARK: - Methods
+
+  /// Responsible for setting up the constraints of the cell's subviews.
+  open func setupConstraints() {
+    imageView.fillSuperview()
+    playButtonView.centerInSuperview()
+    playButtonView.constraint(equalTo: CGSize(width: 35, height: 35))
   }
 }

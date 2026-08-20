@@ -36,7 +36,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
   /// The `BasicAudioController` control the AVAudioPlayer state (play, pause, stop) and update audio cell UI accordingly.
   lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
 
-  lazy var messageList: [MockMessage] = []
+  var messageList: [MockMessage] = []
 
   private(set) lazy var refreshControl: UIRefreshControl = {
     let control = UIRefreshControl()
@@ -329,7 +329,6 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     let attributedText = inputBar.inputTextView.attributedText!
     let range = NSRange(location: 0, length: attributedText.length)
     attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { _, range, _ in
-
       let substring = attributedText.attributedSubstring(from: range)
       let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
       print("Autocompleted: `", substring, "` with context: ", context ?? "-")

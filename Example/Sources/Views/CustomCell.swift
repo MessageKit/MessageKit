@@ -38,15 +38,15 @@ open class CustomCell: UICollectionViewCell {
 
   // MARK: Open
 
+  open override func layoutSubviews() {
+    super.layoutSubviews()
+    label.frame = contentView.bounds
+  }
+
   open func setupSubviews() {
     contentView.addSubview(label)
     label.textAlignment = .center
     label.font = UIFont.italicSystemFont(ofSize: 13)
-  }
-
-  open override func layoutSubviews() {
-    super.layoutSubviews()
-    label.frame = contentView.bounds
   }
 
   open func configure(with message: MessageType, at _: IndexPath, and _: MessagesCollectionView) {

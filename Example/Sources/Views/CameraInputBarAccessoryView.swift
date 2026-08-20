@@ -41,17 +41,6 @@ class CameraInputBarAccessoryView: InputBarAccessoryView {
     return manager
   }()
 
-  func configure() {
-    let camera = makeButton(named: "ic_camera")
-    camera.tintColor = .darkGray
-    camera.onTouchUpInside { [weak self] _ in
-      self?.showImagePickerControllerActionSheet()
-    }
-    setLeftStackViewWidthConstant(to: 35, animated: true)
-    setStackViewItems([camera], forStack: .left, animated: false)
-    inputPlugins = [attachmentManager]
-  }
-
   override func didSelectSendButton() {
     if attachmentManager.attachments.count > 0 {
       (delegate as? CameraInputBarAccessoryViewDelegate)?
@@ -62,9 +51,20 @@ class CameraInputBarAccessoryView: InputBarAccessoryView {
     }
   }
 
+  func configure() {
+    let camera = makeCameraButton()
+    camera.tintColor = .darkGray
+    camera.onTouchUpInside { [weak self] _ in
+      self?.showImagePickerControllerActionSheet()
+    }
+    setLeftStackViewWidthConstant(to: 35, animated: true)
+    setStackViewItems([camera], forStack: .left, animated: false)
+    inputPlugins = [attachmentManager]
+  }
+
   // MARK: Private
 
-  private func makeButton(named _: String) -> InputBarButtonItem {
+  private func makeCameraButton() -> InputBarButtonItem {
     InputBarButtonItem()
       .configure {
         $0.spacing = .fixed(10)
@@ -74,8 +74,6 @@ class CameraInputBarAccessoryView: InputBarAccessoryView {
         $0.tintColor = .systemBlue
       }.onDeselected {
         $0.tintColor = UIColor.lightGray
-      }.onTouchUpInside { _ in
-        print("Item Tapped")
       }
   }
 }
@@ -118,12 +116,10 @@ extension CameraInputBarAccessoryView: UIImagePickerControllerDelegate, UINaviga
     didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any])
   {
     if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-      // self.sendImageMessage(photo: editedImage)
       inputPlugins.forEach { _ = $0.handleInput(of: editedImage) }
     }
     else if let originImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
       inputPlugins.forEach { _ = $0.handleInput(of: originImage) }
-      // self.sendImageMessage(photo: originImage)
     }
     getRootViewController()?.dismiss(animated: true, completion: nil)
     inputAccessoryView?.isHidden = false
@@ -135,7 +131,7 @@ extension CameraInputBarAccessoryView: UIImagePickerControllerDelegate, UINaviga
   }
 
   func getRootViewController() -> UIViewController? {
-    (UIApplication.shared.delegate as? AppDelegate)?.window?.rootViewController
+    UIViewController.keyWindowRoot
   }
 }
 
@@ -167,7 +163,6 @@ extension CameraInputBarAccessoryView: AttachmentManagerDelegate {
   // MARK: - AttachmentManagerDelegate Helper
 
   func setAttachmentManager(active: Bool) {
-    let topStackView = topStackView
     if active, !topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
       topStackView.insertArrangedSubview(attachmentManager.attachmentView, at: topStackView.arrangedSubviews.count)
       topStackView.layoutIfNeeded()

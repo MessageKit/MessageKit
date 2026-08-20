@@ -87,24 +87,24 @@ open class TypingIndicator: UIView {
 
   /// Sets the state of the `TypingIndicator` to animating and applies animation layers
   open func startAnimating() {
-      defer { isAnimating = true }
-      guard !isAnimating else { return }
-      var delay: TimeInterval = 0
-      for dot in dots {
-          let currentDelay = delay
-          DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
-              guard let self = self else { return }
-              if self.isBounceEnabled {
-                  dot.layer.add(self.initialOffsetAnimationLayer, forKey: AnimationKeys.offset)
-                  let bounceLayer = self.bounceAnimationLayer
-                  bounceLayer.timeOffset = currentDelay + 0.33
-                  dot.layer.add(bounceLayer, forKey: AnimationKeys.bounce)
-              }
-              if self.isFadeEnabled {
-                  dot.layer.add(self.opacityAnimationLayer, forKey: AnimationKeys.opacity)
-              }
-          }
-          delay += 0.33
+    defer { isAnimating = true }
+    guard !isAnimating else { return }
+    var delay: TimeInterval = 0
+    for dot in dots {
+      let currentDelay = delay
+      DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+        guard let self = self else { return }
+        if isBounceEnabled {
+          dot.layer.add(initialOffsetAnimationLayer, forKey: AnimationKeys.offset)
+          let bounceLayer = bounceAnimationLayer
+          bounceLayer.timeOffset = currentDelay + 0.33
+          dot.layer.add(bounceLayer, forKey: AnimationKeys.bounce)
+        }
+        if isFadeEnabled {
+          dot.layer.add(opacityAnimationLayer, forKey: AnimationKeys.opacity)
+        }
+      }
+      delay += 0.33
     }
   }
 
@@ -136,9 +136,7 @@ open class TypingIndicator: UIView {
 
   public let stackView = UIStackView()
 
-  public let dots: [BubbleCircle] = {
-    [BubbleCircle(), BubbleCircle(), BubbleCircle()]
-  }()
+  public let dots: [BubbleCircle] = [BubbleCircle(), BubbleCircle(), BubbleCircle()]
 
   // MARK: Private
 

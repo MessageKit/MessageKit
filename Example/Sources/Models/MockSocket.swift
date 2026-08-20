@@ -31,7 +31,7 @@ final class MockSocket {
 
   // MARK: Internal
 
-  static var shared = MockSocket()
+  static let shared = MockSocket()
 
   @discardableResult
   func connect(with senders: [MockUser]) -> Self {

@@ -38,10 +38,6 @@ open class TypingBubble: UIView {
 
   // MARK: Open
 
-  // MARK: - Properties
-
-  open var isPulseEnabled = true
-
   open override var backgroundColor: UIColor? {
     set {
       [contentBubble, cornerBubble, tinyBubble].forEach { $0.backgroundColor = newValue }
@@ -50,6 +46,8 @@ open class TypingBubble: UIView {
       contentBubble.backgroundColor
     }
   }
+
+  open var isPulseEnabled = true
 
   // MARK: - Animation Layers
 
@@ -71,14 +69,6 @@ open class TypingBubble: UIView {
     animation.repeatCount = .infinity
     animation.autoreverses = true
     return animation
-  }
-
-  open func setupSubviews() {
-    addSubview(tinyBubble)
-    addSubview(cornerBubble)
-    addSubview(contentBubble)
-    contentBubble.addSubview(typingIndicator)
-    backgroundColor = .incomingMessageBackground
   }
 
   // MARK: - Layout
@@ -129,6 +119,14 @@ open class TypingBubble: UIView {
       bottom: offset,
       right: contentBubbleFrameCornerRadius / 1.25)
     typingIndicator.frame = contentBubble.bounds.inset(by: insets)
+  }
+
+  open func setupSubviews() {
+    addSubview(tinyBubble)
+    addSubview(cornerBubble)
+    addSubview(contentBubble)
+    contentBubble.addSubview(typingIndicator)
+    backgroundColor = .incomingMessageBackground
   }
 
   // MARK: - Animation API

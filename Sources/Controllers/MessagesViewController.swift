@@ -31,8 +31,8 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
   // MARK: Lifecycle
 
   deinit {
-      NotificationCenter.default.removeObserver(self, name: UIMenuController.willShowMenuNotification, object: nil)
-      MessageStyle.bubbleImageCache.removeAllObjects()
+    NotificationCenter.default.removeObserver(self, name: UIMenuController.willShowMenuNotification, object: nil)
+    MessageStyle.bubbleImageCache.removeAllObjects()
   }
 
   // MARK: Open
@@ -66,11 +66,6 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     }
   }
 
-  /// withAdditionalBottomSpace parameter for InputBarAccessoryView's KeyboardManager
-  open func inputBarAdditionalBottomSpace() -> CGFloat {
-    0
-  }
-
   open override func viewDidLoad() {
     super.viewDidLoad()
     setupDefaults()
@@ -88,6 +83,11 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
   open override func viewSafeAreaInsetsDidChange() {
     super.viewSafeAreaInsetsDidChange()
     updateMessageCollectionViewBottomInset()
+  }
+
+  /// withAdditionalBottomSpace parameter for InputBarAccessoryView's KeyboardManager
+  open func inputBarAdditionalBottomSpace() -> CGFloat {
+    0
   }
 
   // MARK: - UICollectionViewDataSource
@@ -287,7 +287,7 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     if isSectionReservedForTypingIndicator(indexPath.section) {
       return false
     }
-    return (action == NSSelectorFromString("copy:"))
+    return action == NSSelectorFromString("copy:")
   }
 
   open func collectionView(_: UICollectionView, performAction _: Selector, forItemAt indexPath: IndexPath, withSender _: Any?) {
@@ -314,8 +314,6 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
   public var selectedIndexPathForMenu: IndexPath?
 
   // MARK: Internal
-
-  // MARK: - Internal properties
 
   internal let state: State = .init()
 

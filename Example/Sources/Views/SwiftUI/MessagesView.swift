@@ -56,9 +56,12 @@ struct MessagesView: UIViewControllerRepresentable {
     }()
 
     var messages: Binding<[MessageType]>
+
+    /// Lets the first scroll happen without animation, so the initial messages do
+    /// not visibly flash past on the way to the bottom.
+    var hasScrolledToBottomOnce = false
   }
 
-  @State var initialized = false
   @Binding var messages: [MessageType]
 
   func makeUIViewController(context: Context) -> MessagesViewController {
@@ -75,9 +78,9 @@ struct MessagesView: UIViewControllerRepresentable {
     return messagesVC
   }
 
-  func updateUIViewController(_ uiViewController: MessagesViewController, context _: Context) {
+  func updateUIViewController(_ uiViewController: MessagesViewController, context: Context) {
     uiViewController.messagesCollectionView.reloadData()
-    scrollToBottom(uiViewController)
+    scrollToBottom(uiViewController, coordinator: context.coordinator)
   }
 
   func makeCoordinator() -> Coordinator {
@@ -86,11 +89,10 @@ struct MessagesView: UIViewControllerRepresentable {
 
   // MARK: Private
 
-  private func scrollToBottom(_ uiViewController: MessagesViewController) {
+  private func scrollToBottom(_ uiViewController: MessagesViewController, coordinator: Coordinator) {
     DispatchQueue.main.async {
-      // The initialized state variable allows us to start at the bottom with the initial messages without seeing the initial scroll flash by
-      uiViewController.messagesCollectionView.scrollToLastItem(animated: self.initialized)
-      self.initialized = true
+      uiViewController.messagesCollectionView.scrollToLastItem(animated: coordinator.hasScrolledToBottomOnce)
+      coordinator.hasScrolledToBottomOnce = true
     }
   }
 }

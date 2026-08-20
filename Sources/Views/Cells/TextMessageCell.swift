@@ -24,17 +24,15 @@ import UIKit
 
 /// A subclass of `MessageContentCell` used to display text messages.
 open class TextMessageCell: MessageContentCell {
-  /// The label used to display the message's text.
-  open var messageLabel = MessageLabel()
-
-  // MARK: - Properties
-
   /// The `MessageCellDelegate` for the cell.
   open override weak var delegate: MessageCellDelegate? {
     didSet {
       messageLabel.delegate = delegate
     }
   }
+
+  /// The label used to display the message's text.
+  open var messageLabel = MessageLabel()
 
   // MARK: - Methods
 
