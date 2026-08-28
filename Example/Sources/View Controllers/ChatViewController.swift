@@ -75,27 +75,24 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
   }
 
   func loadFirstMessages() {
-    DispatchQueue.global(qos: .userInitiated).async {
+    Task {
       let count = UserDefaults.standard.mockMessagesCount()
       SampleData.shared.getMessages(count: count) { messages in
-        DispatchQueue.main.async {
-          self.messageList = messages
-          self.messagesCollectionView.reloadData()
-          self.messagesCollectionView.scrollToLastItem(animated: false)
-        }
+        self.messageList = messages
+        self.messagesCollectionView.reloadData()
+        self.messagesCollectionView.scrollToLastItem(animated: false)
       }
     }
   }
 
   @objc
   func loadMoreMessages() {
-    DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
+    Task {
+      try? await Task.sleep(nanoseconds: NSEC_PER_SEC)
       SampleData.shared.getMessages(count: 20) { messages in
-        DispatchQueue.main.async {
-          self.messageList.insert(contentsOf: messages, at: 0)
-          self.messagesCollectionView.reloadDataAndKeepOffset()
-          self.refreshControl.endRefreshing()
-        }
+        self.messageList.insert(contentsOf: messages, at: 0)
+        self.messagesCollectionView.reloadDataAndKeepOffset()
+        self.refreshControl.endRefreshing()
       }
     }
   }
@@ -314,9 +311,9 @@ extension ChatViewController: MessageLabelDelegate {
   }
 }
 
-// MARK: InputBarAccessoryViewDelegate
+// MARK: @preconcurrency InputBarAccessoryViewDelegate
 
-extension ChatViewController: InputBarAccessoryViewDelegate {
+extension ChatViewController: @preconcurrency InputBarAccessoryViewDelegate {
   // MARK: Internal
 
   @objc
@@ -342,15 +339,13 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
     inputBar.inputTextView.placeholder = "Sending..."
     // Resign first responder for iPad split view
     inputBar.inputTextView.resignFirstResponder()
-    DispatchQueue.global(qos: .default).async {
+    Task { [weak self] in
       // fake send request task
-      sleep(1)
-      DispatchQueue.main.async { [weak self] in
-        inputBar.sendButton.stopAnimating()
-        inputBar.inputTextView.placeholder = "Aa"
-        self?.insertMessages(components)
-        self?.messagesCollectionView.scrollToLastItem(animated: true)
-      }
+      try? await Task.sleep(nanoseconds: NSEC_PER_SEC)
+      inputBar.sendButton.stopAnimating()
+      inputBar.inputTextView.placeholder = "Aa"
+      self?.insertMessages(components)
+      self?.messagesCollectionView.scrollToLastItem(animated: true)
     }
   }
 

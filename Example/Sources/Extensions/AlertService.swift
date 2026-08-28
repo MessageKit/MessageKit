@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+@MainActor
 class AlertService {
   static func showAlert(
     style: UIAlertController.Style,

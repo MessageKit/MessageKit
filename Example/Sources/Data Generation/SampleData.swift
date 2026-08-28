@@ -25,6 +25,7 @@ import CoreLocation
 import MessageKit
 import UIKit
 
+@MainActor
 final internal class SampleData {
   // MARK: Lifecycle
 

@@ -25,6 +25,7 @@ import Foundation
 // MARK: - MessageCellDelegate
 
 /// A protocol used by `MessageContentCell` subclasses to detect taps in the cell's subviews.
+@MainActor
 public protocol MessageCellDelegate: MessageLabelDelegate {
   /// Triggered when a tap occurs in the background of the cell.
   ///

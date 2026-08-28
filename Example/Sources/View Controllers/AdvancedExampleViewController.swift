@@ -83,26 +83,23 @@ final class AdvancedExampleViewController: ChatViewController {
   }
 
   override func loadFirstMessages() {
-    DispatchQueue.global(qos: .userInitiated).async {
+    Task {
       let count = UserDefaults.standard.mockMessagesCount()
       SampleData.shared.getAdvancedMessages(count: count) { messages in
-        DispatchQueue.main.async {
-          self.messageList = messages
-          self.messagesCollectionView.reloadData()
-          self.messagesCollectionView.scrollToLastItem()
-        }
+        self.messageList = messages
+        self.messagesCollectionView.reloadData()
+        self.messagesCollectionView.scrollToLastItem()
       }
     }
   }
 
   override func loadMoreMessages() {
-    DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + 1) {
+    Task {
+      try? await Task.sleep(nanoseconds: NSEC_PER_SEC)
       SampleData.shared.getAdvancedMessages(count: 20) { messages in
-        DispatchQueue.main.async {
-          self.messageList.insert(contentsOf: messages, at: 0)
-          self.messagesCollectionView.reloadDataAndKeepOffset()
-          self.refreshControl.endRefreshing()
-        }
+        self.messageList.insert(contentsOf: messages, at: 0)
+        self.messagesCollectionView.reloadDataAndKeepOffset()
+        self.refreshControl.endRefreshing()
       }
     }
   }

@@ -8,6 +8,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Fixed
 
+- **Breaking Change** Annotate `MessageCellDelegate` and `MessageLabelDelegate` with `@MainActor`. Their sibling delegate protocols `MessagesDataSource`, `MessagesLayoutDelegate` and `MessagesDisplayDelegate` already carried the annotation, so consumers building in the Swift 6 language mode had to work around these two with `@preconcurrency` by [@martinpucik](https://github.com/martinpucik)
 - Fix `make format`, `make lint` and the pre-commit hook, which still called the removed SwiftPM plugins by [@martinpucik](https://github.com/martinpucik)
 - Adopt the scene lifecycle in the example app, which crashed on launch on iOS 26 and later by [@martinpucik](https://github.com/martinpucik)
 - Add the missing camera and photo library usage descriptions to the example app, which crashed when you opened the camera by [@martinpucik](https://github.com/martinpucik)
@@ -23,6 +24,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 ### Changed
 
 - Enforce `make lint` in CI and reformat the sources it flagged by [@martinpucik](https://github.com/martinpucik)
+- Build the example app in the Swift 6 language mode, so that CI exercises the same strict concurrency checking as the library, and replace its `DispatchQueue` hops with structured concurrency by [@martinpucik](https://github.com/martinpucik)
 
 - Migrate Danger from Ruby to Danger Swift and drop the `Gemfile` by [@martinpucik](https://github.com/martinpucik)
 
