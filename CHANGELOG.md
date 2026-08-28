@@ -28,6 +28,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Removed
 
+- **Breaking Change** Remove the `MessagesLayoutDelegate` methods that only called `fatalError`. They were deprecation shims for the 1.0 migration, they were never protocol requirements, and nothing called them. Use `incomingAvatarSize` and `outgoingAvatarSize` on the message size calculators, or the `avatarSize(for:at:in:)` requirement that returns an optional, by [@martinpucik](https://github.com/martinpucik)
 - Remove dead code and 13 unused image assets from the example app by [@martinpucik](https://github.com/martinpucik)
 
 ## 4.3.0
