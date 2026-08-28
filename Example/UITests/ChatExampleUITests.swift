@@ -18,6 +18,7 @@
 
 import XCTest
 
+@MainActor
 final class ChatExampleUITests: XCTestCase {
   // MARK: Internal
 
