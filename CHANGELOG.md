@@ -31,6 +31,8 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - **Breaking Change** Remove the `MessagesLayoutDelegate` methods that only called `fatalError`. They were deprecation shims for the 1.0 migration, they were never protocol requirements, and nothing called them. Use `incomingAvatarSize` and `outgoingAvatarSize` on the message size calculators, or the `avatarSize(for:at:in:)` requirement that returns an optional, by [@martinpucik](https://github.com/martinpucik)
 - Remove dead code and 13 unused image assets from the example app by [@martinpucik](https://github.com/martinpucik)
 - Remove `Sources/Supporting/MessageKit.h` and `Sources/Supporting/Info.plist`, the umbrella header and framework `Info.plist` left over from the Xcode framework target, and drop the `exclude` list they needed in `Package.swift` by [@martinpucik](https://github.com/martinpucik)
+- Remove `Tests/LinuxMain.swift` and the empty `MessageKitTests.swift` placeholder, which belonged to no target and described a Linux test runner that a UIKit library cannot use, by [@martinpucik](https://github.com/martinpucik)
+- Remove the legacy `.github/issue_template.md`, whose guidance the `ISSUE_TEMPLATE` directory already covers, by [@martinpucik](https://github.com/martinpucik)
 
 ## 4.3.0
 - Fix for SwiftUI example IBAV position issues (example app) by @Janneman84 in https://github.com/MessageKit/MessageKit/pull/1807
