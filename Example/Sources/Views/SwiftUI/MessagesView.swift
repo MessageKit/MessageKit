@@ -137,9 +137,9 @@ extension MessagesView.Coordinator: MessagesDataSource {
   }
 }
 
-// MARK: - MessagesView.Coordinator + InputBarAccessoryViewDelegate
+// MARK: - MessagesView.Coordinator + @preconcurrency InputBarAccessoryViewDelegate
 
-extension MessagesView.Coordinator: InputBarAccessoryViewDelegate {
+extension MessagesView.Coordinator: @preconcurrency InputBarAccessoryViewDelegate {
   func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
     let message = MockMessage(text: text, user: SampleData.shared.currentSender, messageId: UUID().uuidString, date: Date())
     messages.wrappedValue.append(message)
