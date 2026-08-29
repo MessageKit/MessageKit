@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo" width="270">
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/main/Assets/mklogo.png" title="MessageKit logo" width="270">
 </p>
 <p align="center">
   A community-driven replacement for JSQMessagesViewController
@@ -10,7 +10,7 @@
   <a href="https://swiftpackageindex.com/MessageKit/MessageKit">
     <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FMessageKit%2FMessageKit%2Fbadge%3Ftype%3Dplatforms"/>
   <a href="https://developer.apple.com/xcode">
-  <img src="https://img.shields.io/badge/Xcode-13-blue.svg" alt="Xcode">
+  <img src="https://img.shields.io/badge/Xcode-16-blue.svg" alt="Xcode">
   </a>
   <a href="./LICENSE.md">
   <img src="https://img.shields.io/github/license/MessageKit/MessageKit?color=red" alt="MIT">
@@ -21,7 +21,7 @@
 </p>
 <br>
 <p align="center">
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/TypingIndicator.png" title="MessageKit header" width="400">
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/main/Assets/TypingIndicator.png" title="MessageKit header" width="400">
 </p>
 
 ## Goals
@@ -45,7 +45,7 @@ https://github.com/MessageKit/MessageKit
 
 Older versions of Swift and Xcode don't support MessageKit via SPM.
 
-### [Manual](https://github.com/MessageKit/MessageKit/blob/master/Documentation/MANUAL_INSTALLATION.md)
+### [Manual](https://github.com/MessageKit/MessageKit/blob/main/Documentation/MANUAL_INSTALLATION.md)
 
 ## Requirements
 
@@ -62,28 +62,28 @@ Older versions of Swift and Xcode don't support MessageKit via SPM.
 
 ## Getting Started
 
-Please have a look at the [Quick Start guide](https://github.com/MessageKit/MessageKit/blob/master/Documentation/QuickStart.md) and the [FAQs](https://github.com/MessageKit/MessageKit/blob/master/Documentation/FAQs.md).
+Please have a look at the [Quick Start guide](https://github.com/MessageKit/MessageKit/blob/main/Documentation/QuickStart.md) and the [FAQs](https://github.com/MessageKit/MessageKit/blob/main/Documentation/FAQs.md).
 
-We recommend you start by looking at the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project or write a question with the "messagekit" tag on [Stack Overflow](https://stackoverflow.com/questions/tagged/messagekit). You can also look at previous issues here on GitHub with the **"Question"** tag.
+We recommend you start by looking at the [Example](https://github.com/MessageKit/MessageKit/tree/main/Example) project or write a question with the "messagekit" tag on [Stack Overflow](https://stackoverflow.com/questions/tagged/messagekit). You can also look at previous issues here on GitHub with the **"Question"** tag.
 
-For more on how to use the MessageInputBar, see the dependency it is based on [InputBarAccessoryView](https://github.com/nathantannar4/InputBarAccessoryView). You can also see this [short guide]([https://github.com/MessageKit/MessageKit/blob/master/Documentation/MessageInputBar.md)
+For more on how to use the MessageInputBar, see the dependency it is based on [InputBarAccessoryView](https://github.com/nathantannar4/InputBarAccessoryView). You can also see this [short guide](https://github.com/MessageKit/MessageKit/blob/main/Documentation/MessageInputBar.md)
 
 Check out the full documentation [here](https://messagekit.github.io/MessageKit/documentation/messagekit).
 
 ### Cell Structure
 
 <p>
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/CellStructure.png" title="CellStructure">
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/main/Assets/CellStructure.png" title="CellStructure">
 </p>
 
-Each default cell is a subclass of [`MessageContentCell`](https://github.com/MessageKit/MessageKit/blob/master/Sources/Views/Cells/MessageContentCell.swift) which has 7 parts. From top down we have a: `cellTopLabel`, `messageTopLabel`, `messageContainerView`, `messageBottomLabel`, `cellBottomLabel` with the `avatarView` and `accessoryView` on either side respectively. Above we see the basic [`TextMessageCell`](https://github.com/MessageKit/MessageKit/blob/master/Sources/Views/Cells/TextMessageCell.swift) which uses a `MessageLabel` as its main content.
+Each default cell is a subclass of [`MessageContentCell`](https://github.com/MessageKit/MessageKit/blob/main/Sources/Views/Cells/MessageContentCell.swift) which has 7 parts. From top down we have a: `cellTopLabel`, `messageTopLabel`, `messageContainerView`, `messageBottomLabel`, `cellBottomLabel` with the `avatarView` and `accessoryView` on either side respectively. Above we see the basic [`TextMessageCell`](https://github.com/MessageKit/MessageKit/blob/main/Sources/Views/Cells/TextMessageCell.swift) which uses a `MessageLabel` as its main content.
 
-This structure will allow you to create a layout that suits your needs as you can customize the size, appearance and padding of each. If you need something more advanced you can implement a custom cell, which we show how to do in the [Example](https://github.com/MessageKit/MessageKit/tree/master/Example) project.
+This structure will allow you to create a layout that suits your needs as you can customize the size, appearance and padding of each. If you need something more advanced you can implement a custom cell, which we show how to do in the [Example](https://github.com/MessageKit/MessageKit/tree/main/Example) project.
 
 ### InputBarAccessoryView Structure
 
 <p>
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/InputBarAccessoryViewLayout.png" title="InputBarAccessoryViewLayout">
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/main/Assets/InputBarAccessoryViewLayout.png" title="InputBarAccessoryViewLayout">
 </p>
 
 The `InputBarAccessoryView`, 3rd party dependency from [InputBarAccessoryView](https://github.com/nathantannar4/InputBarAccessoryView) is a flexible and robust way of creating any kind of input layout you wish. Check the repo and examples there for more info.
@@ -91,8 +91,8 @@ The `InputBarAccessoryView`, 3rd party dependency from [InputBarAccessoryView](h
 ## Default Cells
 
 <p>
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/ExampleA.png" title="Example A" height=400>
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/ExampleB.png" title="Example B" height=400>
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/main/Assets/ExampleA.png" title="Example A" height=400>
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/main/Assets/ExampleB.png" title="Example B" height=400>
 </p>
 
 The type of cell rendered for a given message is based on the `MessageKind`
@@ -118,21 +118,21 @@ public enum MessageKind {
 ```
 
 If you choose to use the `.custom` kind you are responsible for all of the cells layout. Any `UICollectionViewCell` can be returned for custom cells which means any of the styling you provide from the `MessageDisplayDelegate` will not effect your custom cell. Even if you subclass your cell from `MessageContentCell`.
-[Read more about custom cells](https://github.com/MessageKit/MessageKit/blob/master/Documentation/CUSTOM_CELLS.md)
+[Read more about custom cells](https://github.com/MessageKit/MessageKit/blob/main/Documentation/CUSTOM_CELLS.md)
 
-[Read more about the cases on the Quick Start guide.](https://github.com/MessageKit/MessageKit/blob/master/Documentation/QuickStart.md#messagekind)
+[Read more about the cases on the Quick Start guide.](https://github.com/MessageKit/MessageKit/blob/main/Documentation/QuickStart.md#messagekind)
 
 ## Contributing
 
 [![Tests](https://github.com/MessageKit/MessageKit/workflows/Tests/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22Tests%22)
 [![Build framework](https://github.com/MessageKit/MessageKit/workflows/Build%20Framework/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22Build+Framework%22)
-[![Build example app](https://github.com/MessageKit/MessageKit/workflows/Build%20Example%20app/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22PR+Example+app%22)
+[![Build example app](https://github.com/MessageKit/MessageKit/workflows/Build%20Example%20app/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22Build+Example+app%22)
 [![Danger](https://github.com/MessageKit/MessageKit/workflows/Danger/badge.svg)](https://github.com/MessageKit/MessageKit/actions?query=workflow%3A%22Danger%22)
 
 Great! Look over these things first.
 
-- Please read our [Code of Conduct](https://github.com/MessageKit/MessageKit/blob/master/CODE_OF_CONDUCT.md)
-- Check the [Contributing Guide Lines](https://github.com/MessageKit/MessageKit/blob/master/CONTRIBUTING.md).
+- Please read our [Code of Conduct](https://github.com/MessageKit/MessageKit/blob/main/CODE_OF_CONDUCT.md)
+- Check the [Contributing Guide Lines](https://github.com/MessageKit/MessageKit/blob/main/CONTRIBUTING.md).
 - Come join us on [Slack](https://join.slack.com/t/messagekit/shared_invite/zt-2484ymok0-O82~1EtnHALSngQvn6Xwyw) and 🗣 don't be a stranger.
 - Check out the [current issues](https://github.com/MessageKit/MessageKit/issues) and see if you can tackle any of those.
 - Download the project and check out the current code base. Suggest any improvements by opening a new issue.
@@ -196,7 +196,7 @@ Many thanks to [**the contributors**](https://github.com/MessageKit/MessageKit/g
 
 ## License
 
-MessageKit is released under the [MIT License](https://github.com/MessageKit/MessageKit/blob/master/LICENSE.md).
+MessageKit is released under the [MIT License](https://github.com/MessageKit/MessageKit/blob/main/LICENSE.md).
 
 ## Inspiration
 

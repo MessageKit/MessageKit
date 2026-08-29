@@ -13,6 +13,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Add the missing camera and photo library usage descriptions to the example app, which crashed when you opened the camera by [@martinpucik](https://github.com/martinpucik)
 - Stop the example app from crashing when you switch off every message type in Settings by [@martinpucik](https://github.com/martinpucik)
 - Repair the example app UI test, which looked for a row that does not exist, and run it in CI by [@martinpucik](https://github.com/martinpucik)
+- Point the README and CONTRIBUTING links at the `main` branch, repair the malformed MessageInputBar guide link and the example app badge link, and refresh the Xcode badge by [@martinpucik](https://github.com/martinpucik)
 
 ### Updated
 
