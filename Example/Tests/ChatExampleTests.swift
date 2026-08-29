@@ -19,6 +19,7 @@
 import XCTest
 @testable import ChatExample
 
+@MainActor
 final class ChatExampleTests: XCTestCase {
   /// Settings lets every message type be switched off. `randomMessageType()` used to
   /// force unwrap the empty result, which crashed the app on the next message.
