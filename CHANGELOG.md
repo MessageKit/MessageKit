@@ -18,6 +18,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Repair the example app UI test, which looked for a row that does not exist, and run it in CI by [@martinpucik](https://github.com/martinpucik)
 - Point the README and CONTRIBUTING links at the `main` branch, repair the malformed MessageInputBar guide link and the example app badge link, and refresh the Xcode badge by [@martinpucik](https://github.com/martinpucik)
 - Rewrite the manual installation guide, which told you to run Carthage and drag a `MessageKit.xcodeproj` that no longer exists, as local Swift package steps by [@martinpucik](https://github.com/martinpucik)
+- Stop the `make` targets pinning the `iPhone 16` simulator, which broke whenever a machine or CI image shipped a different model. Builds now ask for the platform only, and the test targets resolve an installed iPhone by [@martinpucik](https://github.com/martinpucik)
 
 ### Updated
 
