@@ -37,6 +37,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Remove `Sources/Supporting/MessageKit.h` and `Sources/Supporting/Info.plist`, the umbrella header and framework `Info.plist` left over from the Xcode framework target, and drop the `exclude` list they needed in `Package.swift` by [@martinpucik](https://github.com/martinpucik)
 - Remove `Tests/LinuxMain.swift` and the empty `MessageKitTests.swift` placeholder, which belonged to no target and described a Linux test runner that a UIKit library cannot use, by [@martinpucik](https://github.com/martinpucik)
 - Remove the legacy `.github/issue_template.md`, whose guidance the `ISSUE_TEMPLATE` directory already covers, by [@martinpucik](https://github.com/martinpucik)
+- Remove `.github/stale.yml`, which configured the probot Stale app. That app was archived in May 2023 and no workflow replaced it, so the file has had no effect since by [@martinpucik](https://github.com/martinpucik)
 
 ## 4.3.0
 - Fix for SwiftUI example IBAV position issues (example app) by @Janneman84 in https://github.com/MessageKit/MessageKit/pull/1807
