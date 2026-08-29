@@ -135,9 +135,9 @@ extension CameraInputBarAccessoryView: UIImagePickerControllerDelegate, UINaviga
   }
 }
 
-// MARK: AttachmentManagerDelegate
+// MARK: @preconcurrency AttachmentManagerDelegate
 
-extension CameraInputBarAccessoryView: AttachmentManagerDelegate {
+extension CameraInputBarAccessoryView: @preconcurrency AttachmentManagerDelegate {
   // MARK: - AttachmentManagerDelegate
 
   func attachmentManager(_: AttachmentManager, shouldBecomeVisible: Bool) {

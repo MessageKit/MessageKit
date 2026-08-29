@@ -2,7 +2,7 @@
 
 ### Code of Conduct
 
-Please read our [Code of Conduct](https://github.com/MessageKit/MessageKit/blob/master/CODE_OF_CONDUCT.md). 
+Please read our [Code of Conduct](https://github.com/MessageKit/MessageKit/blob/main/CODE_OF_CONDUCT.md). 
 The MessageKit maintainers take this Code of Conduct very seriously. Intolerance, disrespect, harassment, and any form of negativity will not be tolerated.
 
 ### Ways to Contribute
@@ -21,7 +21,7 @@ If you're new to Open Source or Swift, the MessageKit community is a great place
 
 ### Opening a New Issue
 
-- Please check the [README](https://github.com/MessageKit/MessageKit/blob/master/README.md) to see if your question is answered there.
+- Please check the [README](https://github.com/MessageKit/MessageKit/blob/main/README.md) to see if your question is answered there.
 - Search [open issues](https://github.com/MessageKit/MessageKit/issues?q=is%3Aopen+is%3Aissue) and [closed issues](https://github.com/MessageKit/MessageKit/issues?q=is%3Aissue+is%3Aclosed) to avoid opening a duplicate issue.
 - Avoiding duplicate issues organizes all relevant information for project maintainers and other users.
 - If no issues represent your problem, please open a new issue with a good title and useful description.

@@ -192,17 +192,15 @@ final class AutocompleteExampleViewController: ChatViewController {
   func inputBar(_: InputBarAccessoryView, textViewTextDidChangeTo _: String) {
     guard autocompleteManager.currentSession != nil, autocompleteManager.currentSession?.prefix == "#" else { return }
     // Load some data asyncronously for the given session.prefix
-    DispatchQueue.global(qos: .default).async {
+    Task { [weak self] in
       // fake background loading task
       var array: [AutocompleteCompletion] = []
       for _ in 1 ... 10 {
         array.append(AutocompleteCompletion(text: Lorem.word()))
       }
-      sleep(1)
-      DispatchQueue.main.async { [weak self] in
-        self?.asyncCompletions = array
-        self?.autocompleteManager.reloadData()
-      }
+      try? await Task.sleep(nanoseconds: NSEC_PER_SEC)
+      self?.asyncCompletions = array
+      self?.autocompleteManager.reloadData()
     }
   }
 
@@ -245,9 +243,11 @@ final class AutocompleteExampleViewController: ChatViewController {
   }
 }
 
-// MARK: AutocompleteManagerDelegate, AutocompleteManagerDataSource
+// MARK: @preconcurrency AutocompleteManagerDelegate, @preconcurrency AutocompleteManagerDataSource
 
-extension AutocompleteExampleViewController: AutocompleteManagerDelegate, AutocompleteManagerDataSource {
+extension AutocompleteExampleViewController: @preconcurrency AutocompleteManagerDelegate,
+  @preconcurrency AutocompleteManagerDataSource
+{
   // MARK: - AutocompleteManagerDataSource
 
   func autocompleteManager(_: AutocompleteManager, autocompleteSourceFor prefix: String) -> [AutocompleteCompletion] {
