@@ -23,8 +23,14 @@ struct SwiftUIExampleView: View {
       cleanupSocket()
     }
     .navigationBarTitle("SwiftUI Example", displayMode: .inline)
-    // Fixes the InputBarAccessoryView placement when the keyboard appears
-    .ignoresSafeArea(.keyboard, edges: .bottom)
+    /// `MessagesViewController` pins its collection view and its input bar to
+    /// `view.bottomAnchor`, and the keyboard manager places the input bar a
+    /// whole keyboard height above that anchor. So the view has to reach the
+    /// bottom of the screen: leave the home indicator inset in place and the
+    /// bar settles that inset above the keyboard instead of on top of it.
+    /// Ignoring `.keyboard` alone is not enough, because that region covers
+    /// only the keyboard.
+    .ignoresSafeArea(edges: .bottom)
   }
 
   // MARK: Private
