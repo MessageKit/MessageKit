@@ -83,7 +83,7 @@ struct MockLinkItem: LinkItem {
 struct MockMessage: MessageType {
   // MARK: Lifecycle
 
-  private init(kind: MessageKind, user: MockUser, messageId: String) {
+  init(kind: MessageKind, user: MockUser, messageId: String) {
     self.kind = kind
     self.user = user
     self.messageId = messageId
