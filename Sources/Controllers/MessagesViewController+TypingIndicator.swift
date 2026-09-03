@@ -37,6 +37,11 @@ extension MessagesViewController {
   ///              when `animated` is `TRUE` or before the `completion` block executes
   ///              when `animated` is `FALSE`
   ///   - completion: A completion block to execute after the insertion/deletion
+  /// - Important:
+  ///   This reserves a section of its own for the indicator. Leave
+  ///   `MessagesDataSource.numberOfSections(in:)` returning the message count
+  ///   alone; adding one for the indicator there counts the section twice and
+  ///   crashes on the next reload.
   @objc
   open func setTypingIndicatorViewHidden(
     _ isHidden: Bool,

@@ -58,6 +58,20 @@ open class MyCustomMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     }
 }
 ```
+> **Note on the typing indicator**
+>
+> `setTypingIndicatorViewHidden(_:animated:)` reserves a section of its own for
+> the indicator. Keep `numberOfSections(in:)` returning the number of messages.
+> Adding one there for the indicator counts that section twice, and the next
+> reload asks the data source for a message that does not exist, which is the
+> `Index out of range` and `Invalid number of sections` pair reported in
+> [#1788](https://github.com/MessageKit/MessageKit/issues/1788),
+> [#1787](https://github.com/MessageKit/MessageKit/issues/1787) and
+> [#1387](https://github.com/MessageKit/MessageKit/issues/1387).
+>
+> The overrides below do need their `isSectionReservedForTypingIndicator` guard,
+> because the indicator section has no message behind it.
+
 - **4. Implementation**: We register our custom cell and reference our newly created `MyCustomMessagesFlowLayout.swift`
 **ConversationViewController.swift**
 ```swift
