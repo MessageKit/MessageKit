@@ -142,7 +142,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource {
     return messagesCollectionView.indexPathsForVisibleItems.contains(lastIndexPath)
   }
 
-  func numberOfSections(in _: MessagesCollectionView) -> Int {
+  func numberOfMessageSections(in _: MessagesCollectionView) -> Int {
     messageList.count
   }
 

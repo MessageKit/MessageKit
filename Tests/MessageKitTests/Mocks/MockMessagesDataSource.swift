@@ -39,7 +39,7 @@ class MockMessagesDataSource: MessagesDataSource {
     currentUser
   }
 
-  func numberOfSections(in _: MessagesCollectionView) -> Int {
+  func numberOfMessageSections(in _: MessagesCollectionView) -> Int {
     messages.count
   }
 

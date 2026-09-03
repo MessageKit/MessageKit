@@ -96,7 +96,7 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     guard let collectionView = collectionView as? MessagesCollectionView else {
       fatalError(MessageKitError.notMessagesCollectionView)
     }
-    let sections = collectionView.messagesDataSource?.numberOfSections(in: collectionView) ?? 0
+    let sections = collectionView.messagesDataSource?.numberOfMessageSections(in: collectionView) ?? 0
     return collectionView.isTypingIndicatorHidden ? sections : sections + 1
   }
 

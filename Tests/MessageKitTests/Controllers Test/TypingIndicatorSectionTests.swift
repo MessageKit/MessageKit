@@ -177,7 +177,7 @@ private final class SelfSourcingController: MessagesViewController, MessagesData
     MockUser(senderId: "sender_1", displayName: "Sender 1")
   }
 
-  func numberOfSections(in _: MessagesCollectionView) -> Int {
+  func numberOfMessageSections(in _: MessagesCollectionView) -> Int {
     messages.count
   }
 
