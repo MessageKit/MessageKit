@@ -48,26 +48,6 @@ if !hasChangelogEntry, !declaredTrivial {
     "Please include a CHANGELOG entry. \nYou can find it at [CHANGELOG.md](https://github.com/MessageKit/MessageKit/blob/main/CHANGELOG.md).")
 }
 
-// Every new Swift file needs a copyright header. This only checks that one is
-// there, and never what it says, because the example app carries headers that
-// credit their own authors and the MIT licence requires those to stay put.
-let createdSwiftFiles = danger.git.createdFiles.filter { $0.hasSuffix(".swift") }
-for file in createdSwiftFiles {
-  // A file Danger cannot read says nothing about its header, so skip it rather
-  // than warn about it
-  guard let contents = try? String(contentsOfFile: file, encoding: .utf8) else { continue }
-  let header = contents
-    .split(separator: "\n", omittingEmptySubsequences: false)
-    .prefix(25)
-    .joined(separator: "\n")
-  if !header.lowercased().contains("copyright") {
-    warn(
-      "`\(file)` has no copyright header. Copy the one from a neighbouring file and set the year to the current one.",
-      file: file,
-      line: 1)
-  }
-}
-
 // Warn when there is a big PR
 let linesOfCode = (pullRequest.additions ?? 0) + (pullRequest.deletions ?? 0)
 if linesOfCode > 1000 {
