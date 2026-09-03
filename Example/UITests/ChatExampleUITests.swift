@@ -1,3 +1,7 @@
+// swiftformat:disable fileHeader
+// This file keeps the copyright notice of the project MessageKit grew out
+// of. The MIT licence requires that notice to stay with the code, and the
+// fileHeader rule would otherwise replace it.
 //
 //  Created by Jesse Squires
 //  http://www.jessesquires.com
