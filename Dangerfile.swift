@@ -8,8 +8,10 @@
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
+//
 // The above copyright notice and this permission notice shall be included in all
 // copies or substantial portions of the Software.
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -44,6 +46,26 @@ let hasChangelogEntry = danger.git.modifiedFiles.contains("CHANGELOG.md")
 if !hasChangelogEntry, !declaredTrivial {
   fail(
     "Please include a CHANGELOG entry. \nYou can find it at [CHANGELOG.md](https://github.com/MessageKit/MessageKit/blob/main/CHANGELOG.md).")
+}
+
+// Every new Swift file needs a copyright header. This only checks that one is
+// there, and never what it says, because the example app carries headers that
+// credit their own authors and the MIT licence requires those to stay put.
+let createdSwiftFiles = danger.git.createdFiles.filter { $0.hasSuffix(".swift") }
+for file in createdSwiftFiles {
+  // A file Danger cannot read says nothing about its header, so skip it rather
+  // than warn about it
+  guard let contents = try? String(contentsOfFile: file, encoding: .utf8) else { continue }
+  let header = contents
+    .split(separator: "\n", omittingEmptySubsequences: false)
+    .prefix(25)
+    .joined(separator: "\n")
+  if !header.lowercased().contains("copyright") {
+    warn(
+      "`\(file)` has no copyright header. Copy the one from a neighbouring file and set the year to the current one.",
+      file: file,
+      line: 1)
+  }
 }
 
 // Warn when there is a big PR

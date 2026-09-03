@@ -10,6 +10,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Add tests for `TypingIndicator` and `TypingBubble`, which cover the dot layout and spacing, the animation state flags, the animation layers and the pulse layers, and had no tests before by [@martinpucik](https://github.com/martinpucik)
 ### Fixed
 
+- Set every `MessageKit` owned file to one copyright header, which had drifted across `2017`, `2017-2018`, `2017-2019`, `2017-2020`, `2017-2022` and `2017-2026`, and warn through Danger when a new Swift file arrives without a header. The example app files that credit their own authors keep their headers untouched by [@martinpucik](https://github.com/martinpucik)
 - **Breaking Change** Annotate `MessageCellDelegate` and `MessageLabelDelegate` with `@MainActor`. Their sibling delegate protocols `MessagesDataSource`, `MessagesLayoutDelegate` and `MessagesDisplayDelegate` already carried the annotation, so consumers building in the Swift 6 language mode had to work around these two with `@preconcurrency` by [@martinpucik](https://github.com/martinpucik)
 - Fix `make format`, `make lint` and the pre-commit hook, which still called the removed SwiftPM plugins by [@martinpucik](https://github.com/martinpucik)
 - Adopt the scene lifecycle in the example app, which crashed on launch on iOS 26 and later by [@martinpucik](https://github.com/martinpucik)
