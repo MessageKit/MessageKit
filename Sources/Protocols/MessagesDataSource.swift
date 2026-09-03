@@ -58,6 +58,17 @@ public protocol MessagesDataSource: AnyObject {
   ///   `messages.count + 1` while the indicator is visible reports one section
   ///   more than there are messages, and the next reload asks this data source
   ///   for a message that does not exist.
+  func numberOfMessageSections(in messagesCollectionView: MessagesCollectionView) -> Int
+
+  /// The number of sections that hold messages.
+  ///
+  /// - Parameters:
+  ///   - messagesCollectionView: The `MessagesCollectionView` in which the messages will be displayed.
+  @available(
+    *,
+    deprecated,
+    renamed: "numberOfMessageSections(in:)",
+    message: "Renamed to numberOfMessageSections(in:), which says what it counts. Return the message sections only: the typing indicator's section is reserved by MessagesViewController, so adding one for it here counts that section twice.")
   func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int
 
   /// The number of cells to be displayed in the `MessagesCollectionView`.
@@ -204,6 +215,29 @@ public protocol MessagesDataSource: AnyObject {
 extension MessagesDataSource {
   public func isFromCurrentSender(message: MessageType) -> Bool {
     message.sender.senderId == currentSender.senderId
+  }
+
+  /// Bridges a data source written before the rename, so one that implements
+  /// only `numberOfSections(in:)` keeps working untouched.
+  ///
+  /// - Note:
+  ///   Calling the deprecated name here warns while compiling MessageKit
+  ///   itself, and that warning is expected. Silencing it means deprecating
+  ///   this bridge, which makes every data source that has not migrated report
+  ///   a deprecated default implementation of `numberOfMessageSections(in:)`
+  ///   instead, pointing at the new name rather than the old one.
+  public func numberOfMessageSections(in messagesCollectionView: MessagesCollectionView) -> Int {
+    numberOfSections(in: messagesCollectionView)
+  }
+
+  /// - Note:
+  ///   This returns zero rather than calling `numberOfMessageSections(in:)`.
+  ///   Two defaults that called each other would recurse until the stack ran
+  ///   out for a data source that implements neither, and a chat with no
+  ///   sections beats a crash. The framework only ever calls
+  ///   `numberOfMessageSections(in:)`, so this stays a leaf.
+  public func numberOfSections(in _: MessagesCollectionView) -> Int {
+    0
   }
 
   public func numberOfItems(inSection _: Int, in _: MessagesCollectionView) -> Int {

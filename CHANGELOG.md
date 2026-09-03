@@ -6,6 +6,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 ### Added
 
+- Rename `MessagesDataSource.numberOfSections(in:)` to `numberOfMessageSections(in:)`, which says what it counts. The old name is deprecated but keeps working, so this is not a breaking change. See the [migration guide](https://github.com/MessageKit/MessageKit/blob/main/Documentation/MIGRATION_GUIDE.md) by [@martinpucik](https://github.com/martinpucik)
 - Add tests for `MessageSizeCalculator`, which covers the avatar position resolution, the sender specific avatar sizes and paddings, the container maximum width and the cell height, and had no tests before by [@martinpucik](https://github.com/martinpucik)
 - Add tests for `TypingIndicator` and `TypingBubble`, which cover the dot layout and spacing, the animation state flags, the animation layers and the pulse layers, and had no tests before by [@martinpucik](https://github.com/martinpucik)
 ### Fixed

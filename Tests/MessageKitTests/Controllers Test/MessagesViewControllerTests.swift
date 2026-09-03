@@ -49,7 +49,7 @@ final class MessagesViewControllerTests: XCTestCase {
     sut.messagesCollectionView.reloadData()
 
     let count = sut.messagesCollectionView.numberOfSections
-    let expectedCount = messagesDataSource.numberOfSections(in: sut.messagesCollectionView)
+    let expectedCount = messagesDataSource.numberOfMessageSections(in: sut.messagesCollectionView)
 
     XCTAssertEqual(count, expectedCount)
   }
