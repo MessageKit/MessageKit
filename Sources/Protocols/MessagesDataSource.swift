@@ -48,10 +48,16 @@ public protocol MessagesDataSource: AnyObject {
   ///   - messagesCollectionView: The `MessagesCollectionView` in which the message will be displayed.
   func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType
 
-  /// The number of sections to be displayed in the `MessagesCollectionView`.
+  /// The number of sections that hold messages.
   ///
   /// - Parameters:
   ///   - messagesCollectionView: The `MessagesCollectionView` in which the messages will be displayed.
+  /// - Important:
+  ///   Return the message sections only. Do not add one for the typing indicator.
+  ///   `MessagesViewController` reserves that section itself, so returning
+  ///   `messages.count + 1` while the indicator is visible reports one section
+  ///   more than there are messages, and the next reload asks this data source
+  ///   for a message that does not exist.
   func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int
 
   /// The number of cells to be displayed in the `MessagesCollectionView`.

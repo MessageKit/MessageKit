@@ -109,6 +109,8 @@ extension ChatViewController: MessagesDataSource {
 		return Sender(senderId: "any_unique_id", displayName: "Steven")
 	}
 
+	// Return the message sections only. If you show the typing indicator,
+	// MessageKit reserves its section itself, so do not add one here.
 	func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
 		return messages.count
 	}
