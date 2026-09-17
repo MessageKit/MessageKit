@@ -121,11 +121,14 @@ final class TextMessageSizeCalculatorTests: XCTestCase {
   func testAnEmojiIsMeasuredLikeText() {
     let sut = makeSUT()
     let emoji = MockMessage(emoji: "👍", user: MockMessagesDataSource.incomingSender, messageId: "emoji")
+    let text = MockMessage(text: "👍", user: MockMessagesDataSource.incomingSender, messageId: "text")
+    let indexPath = sut.harness.indexPath(forMessageAt: 1)
 
-    let size = sut.calculator.messageContainerSize(for: emoji, at: sut.harness.indexPath(forMessageAt: 1))
+    let emojiSize = sut.calculator.messageContainerSize(for: emoji, at: indexPath)
+    let textSize = sut.calculator.messageContainerSize(for: text, at: indexPath)
 
-    XCTAssertGreaterThan(size.width, 0)
-    XCTAssertGreaterThan(size.height, 0)
+    XCTAssertEqual(emojiSize.width, textSize.width, accuracy: 0.5)
+    XCTAssertEqual(emojiSize.height, textSize.height, accuracy: 0.5)
   }
 
   // MARK: - Attributes
