@@ -164,54 +164,33 @@ extension MessageSizeCalculatorTests {
 
   @MainActor
   fileprivate struct SUT {
-    let controller: MessagesViewController
-    let dataSource: MockMessagesDataSource
+    let harness: CalculatorHarness
     let layoutDelegate: StubLayoutDelegate
-    let layout: MessagesCollectionViewFlowLayout
     let calculator: MessageSizeCalculator
 
+    var layout: MessagesCollectionViewFlowLayout { harness.layout }
+
     /// `MockMessagesDataSource` treats `senders[0]` as the current sender.
-    var outgoingMessage: MessageType { dataSource.messages[0] }
-    var incomingMessage: MessageType { dataSource.messages[1] }
-    var outgoingIndexPath: IndexPath { IndexPath(item: 0, section: 0) }
-    var incomingIndexPath: IndexPath { IndexPath(item: 0, section: 1) }
+    var outgoingMessage: MessageType { harness.dataSource.messages[0] }
+    var incomingMessage: MessageType { harness.dataSource.messages[1] }
+    var outgoingIndexPath: IndexPath { harness.indexPath(forMessageAt: 0) }
+    var incomingIndexPath: IndexPath { harness.indexPath(forMessageAt: 1) }
   }
 
   // MARK: Private
 
   private func makeSUT() -> SUT {
-    let dataSource = MockMessagesDataSource()
-    dataSource.messages = [
-      MockMessage(text: "Outgoing", user: dataSource.senders[0], messageId: "001"),
-      MockMessage(text: "Incoming", user: dataSource.senders[1], messageId: "002"),
-    ]
-
     let layoutDelegate = StubLayoutDelegate()
-    let controller = MessagesViewController()
-    controller.messagesCollectionView.messagesDataSource = dataSource
-    controller.messagesCollectionView.messagesLayoutDelegate = layoutDelegate
-    controller.messagesCollectionView.messagesDisplayDelegate = layoutDelegate
-    _ = controller.view
-    controller.beginAppearanceTransition(true, animated: false)
-    controller.endAppearanceTransition()
-    controller.view.layoutIfNeeded()
+    let harness = CalculatorHarness(
+      messages: [
+        MockMessage(text: "Outgoing", user: MockMessagesDataSource.outgoingSender, messageId: "001"),
+        MockMessage(text: "Incoming", user: MockMessagesDataSource.incomingSender, messageId: "002"),
+      ],
+      layoutDelegate: layoutDelegate)
 
-    let layout = controller.messagesCollectionView.messagesCollectionViewFlowLayout
     return SUT(
-      controller: controller,
-      dataSource: dataSource,
+      harness: harness,
       layoutDelegate: layoutDelegate,
-      layout: layout,
-      calculator: MessageSizeCalculator(layout: layout))
-  }
-}
-
-// MARK: - StubLayoutDelegate
-
-final class StubLayoutDelegate: MessagesLayoutDelegate, MessagesDisplayDelegate {
-  var stubbedAvatarSize: CGSize?
-
-  func avatarSize(for _: MessageType, at _: IndexPath, in _: MessagesCollectionView) -> CGSize? {
-    stubbedAvatarSize
+      calculator: MessageSizeCalculator(layout: harness.layout))
   }
 }

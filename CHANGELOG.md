@@ -8,6 +8,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - Add tests for `MessageSizeCalculator`, which covers the avatar position resolution, the sender specific avatar sizes and paddings, the container maximum width and the cell height, and had no tests before by [@martinpucik](https://github.com/martinpucik)
 - Add tests for `TypingIndicator` and `TypingBubble`, which cover the dot layout and spacing, the animation state flags, the animation layers and the pulse layers, and had no tests before by [@martinpucik](https://github.com/martinpucik)
+- Add tests for the eight cell size calculators, which cover the text, media, audio, location, contact, link preview and typing indicator container sizes, the sender specific label insets and the layout attributes each one fills in, and had no tests before by [@martinpucik](https://github.com/martinpucik)
 ### Fixed
 
 - **Breaking Change** Annotate `MessageCellDelegate` and `MessageLabelDelegate` with `@MainActor`. Their sibling delegate protocols `MessagesDataSource`, `MessagesLayoutDelegate` and `MessagesDisplayDelegate` already carried the annotation, so consumers building in the Swift 6 language mode had to work around these two with `@preconcurrency` by [@martinpucik](https://github.com/martinpucik)
