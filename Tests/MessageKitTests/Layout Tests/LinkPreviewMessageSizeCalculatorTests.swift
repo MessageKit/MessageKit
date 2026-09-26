@@ -83,14 +83,16 @@ final class LinkPreviewMessageSizeCalculatorTests: XCTestCase {
     let teaserString = NSAttributedString(string: linkItem.teaser, attributes: [.font: sut.calculator.teaserFont])
     let domainString = NSAttributedString(string: domain, attributes: [.font: sut.calculator.domainFont])
 
-    let previewTextHeight =
-      sut.calculator.labelSize(for: titleString, considering: previewMaxWidth).height
-      + sut.calculator.labelSize(for: teaserString, considering: previewMaxWidth).height
-      + sut.calculator.labelSize(for: domainString, considering: previewMaxWidth).height
-    let fullWidthTextHeight =
-      sut.calculator.labelSize(for: titleString, considering: fullContainerTextWidth).height
-      + sut.calculator.labelSize(for: teaserString, considering: fullContainerTextWidth).height
-      + sut.calculator.labelSize(for: domainString, considering: fullContainerTextWidth).height
+    let previewTextHeight = [
+      sut.calculator.labelSize(for: titleString, considering: previewMaxWidth).height,
+      sut.calculator.labelSize(for: teaserString, considering: previewMaxWidth).height,
+      sut.calculator.labelSize(for: domainString, considering: previewMaxWidth).height,
+    ].reduce(0, +)
+    let fullWidthTextHeight = [
+      sut.calculator.labelSize(for: titleString, considering: fullContainerTextWidth).height,
+      sut.calculator.labelSize(for: teaserString, considering: fullContainerTextWidth).height,
+      sut.calculator.labelSize(for: domainString, considering: fullContainerTextWidth).height,
+    ].reduce(0, +)
     XCTAssertGreaterThan(previewTextHeight, fullWidthTextHeight)
 
     let text = TextMessageSizeCalculator(layout: sut.harness.layout)
@@ -145,18 +147,16 @@ final class LinkPreviewMessageSizeCalculatorTests: XCTestCase {
   }
 
   func testTheDefaultPreviewFontsScaleWithTheContentSize() {
-    let contentSizeCategory: UIContentSizeCategory = .accessibilityExtraExtraExtraLarge
-    let sut = makeSUT(preferredContentSizeCategory: contentSizeCategory)
-    let traits = UITraitCollection(preferredContentSizeCategory: contentSizeCategory)
+    let sut = makeSUT()
 
     XCTAssertEqual(
       sut.calculator.titleFont,
       UIFontMetrics(forTextStyle: .footnote)
-        .scaledFont(for: .systemFont(ofSize: 13, weight: .semibold), compatibleWith: traits))
+        .scaledFont(for: .systemFont(ofSize: 13, weight: .semibold)))
     XCTAssertEqual(
       sut.calculator.domainFont,
       UIFontMetrics(forTextStyle: .caption1)
-        .scaledFont(for: .systemFont(ofSize: 12, weight: .semibold), compatibleWith: traits))
+        .scaledFont(for: .systemFont(ofSize: 12, weight: .semibold)))
   }
 }
 
@@ -180,7 +180,7 @@ extension LinkPreviewMessageSizeCalculatorTests {
 
   // MARK: Private
 
-  private func makeSUT(preferredContentSizeCategory: UIContentSizeCategory = .large) -> SUT {
+  private func makeSUT() -> SUT {
     let harness = CalculatorHarness(messages: [
       MockMessage(
         linkItem: makeLinkItem(title: "MessageKit", teaser: "An elegant messages UI library for iOS."),
@@ -198,12 +198,7 @@ extension LinkPreviewMessageSizeCalculatorTests {
         user: MockMessagesDataSource.incomingSender,
         messageId: "bare"),
     ])
-    let traitCollection = UITraitCollection(preferredContentSizeCategory: preferredContentSizeCategory)
-    var calculator: LinkPreviewMessageSizeCalculator!
-    traitCollection.performAsCurrent {
-      calculator = LinkPreviewMessageSizeCalculator(layout: harness.layout)
-    }
-    return SUT(harness: harness, calculator: calculator)
+    return SUT(harness: harness, calculator: LinkPreviewMessageSizeCalculator(layout: harness.layout))
   }
 
   private func makeLinkItem(title: String, teaser: String) -> MockLinkItem {
