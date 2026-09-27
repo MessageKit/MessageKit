@@ -61,7 +61,7 @@ open class MyCustomMessagesFlowLayout: MessagesCollectionViewFlowLayout {
 > **Note on the typing indicator**
 >
 > `setTypingIndicatorViewHidden(_:animated:)` reserves a section of its own for
-> the indicator. Keep `numberOfSections(in:)` returning the number of messages.
+> the indicator. Keep `numberOfMessageSections(in:)` returning the number of messages.
 > Adding one there for the indicator counts that section twice, and the next
 > reload asks the data source for a message that does not exist, which is the
 > `Index out of range` and `Invalid number of sections` pair reported in
