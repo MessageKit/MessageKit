@@ -100,9 +100,8 @@ final class LinkPreviewMessageSizeCalculatorTests: XCTestCase {
     text.outgoingMessageLabelInsets = sut.calculator.outgoingMessageLabelInsets
     text.messageLabelFont = sut.calculator.messageLabelFont
     let baseHeight = text.messageContainerSize(for: message, at: indexPath).height
-    let expectedHeight =
-      max(baseHeight + LinkPreviewMessageSizeCalculator.imageViewSize, baseHeight + previewTextHeight)
-      + insets.vertical
+    let previewHeight = max(LinkPreviewMessageSizeCalculator.imageViewSize, previewTextHeight)
+    let expectedHeight = baseHeight + previewHeight + insets.vertical
 
     XCTAssertEqual(size.height, expectedHeight, accuracy: 0.5)
   }
