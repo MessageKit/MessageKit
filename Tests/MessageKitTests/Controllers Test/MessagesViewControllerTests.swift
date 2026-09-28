@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2020 MessageKit
+// Copyright (c) 2017-2026 MessageKit
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -49,7 +49,7 @@ final class MessagesViewControllerTests: XCTestCase {
     sut.messagesCollectionView.reloadData()
 
     let count = sut.messagesCollectionView.numberOfSections
-    let expectedCount = messagesDataSource.numberOfSections(in: sut.messagesCollectionView)
+    let expectedCount = messagesDataSource.numberOfMessageSections(in: sut.messagesCollectionView)
 
     XCTAssertEqual(count, expectedCount)
   }

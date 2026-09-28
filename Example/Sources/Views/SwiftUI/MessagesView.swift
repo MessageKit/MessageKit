@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2020 MessageKit
+// Copyright (c) 2017-2026 MessageKit
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -108,7 +108,7 @@ extension MessagesView.Coordinator: MessagesDataSource {
     messages.wrappedValue[indexPath.section]
   }
 
-  func numberOfSections(in _: MessagesCollectionView) -> Int {
+  func numberOfMessageSections(in _: MessagesCollectionView) -> Int {
     messages.wrappedValue.count
   }
 

@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2022 MessageKit
+// Copyright (c) 2017-2026 MessageKit
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -96,7 +96,7 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     guard let collectionView = collectionView as? MessagesCollectionView else {
       fatalError(MessageKitError.notMessagesCollectionView)
     }
-    let sections = collectionView.messagesDataSource?.numberOfSections(in: collectionView) ?? 0
+    let sections = collectionView.messagesDataSource?.numberOfMessageSections(in: collectionView) ?? 0
     return collectionView.isTypingIndicatorHidden ? sections : sections + 1
   }
 

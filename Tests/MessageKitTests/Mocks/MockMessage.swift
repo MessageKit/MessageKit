@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2020 MessageKit
+// Copyright (c) 2017-2026 MessageKit
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -83,7 +83,7 @@ struct MockLinkItem: LinkItem {
 struct MockMessage: MessageType {
   // MARK: Lifecycle
 
-  private init(kind: MessageKind, user: MockUser, messageId: String) {
+  init(kind: MessageKind, user: MockUser, messageId: String) {
     self.kind = kind
     self.user = user
     self.messageId = messageId
