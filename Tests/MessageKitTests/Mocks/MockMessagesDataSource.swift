@@ -25,11 +25,13 @@ import Foundation
 
 @MainActor
 class MockMessagesDataSource: MessagesDataSource {
+  /// The current sender, so a message built from it counts as outgoing.
+  nonisolated static let outgoingSender = MockUser(senderId: "sender_1", displayName: "Sender 1")
+  /// Any other sender, so a message built from it counts as incoming.
+  nonisolated static let incomingSender = MockUser(senderId: "sender_2", displayName: "Sender 2")
+
   var messages: [MessageType] = []
-  let senders: [MockUser] = [
-    MockUser(senderId: "sender_1", displayName: "Sender 1"),
-    MockUser(senderId: "sender_2", displayName: "Sender 2"),
-  ]
+  let senders: [MockUser] = [outgoingSender, incomingSender]
 
   var currentUser: MockUser {
     senders[0]

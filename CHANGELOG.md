@@ -8,6 +8,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 
 - Add tests for `MessageSizeCalculator`, which covers the avatar position resolution, the sender specific avatar sizes and paddings, the container maximum width and the cell height, and had no tests before by [@martinpucik](https://github.com/martinpucik)
 - Add tests for `TypingIndicator` and `TypingBubble`, which cover the dot layout and spacing, the animation state flags, the animation layers and the pulse layers, and had no tests before by [@martinpucik](https://github.com/martinpucik)
+- Add tests for the eight cell size calculators, which cover the text, media, audio, location, contact, link preview and typing indicator container sizes, the sender specific label insets and the layout attributes each one fills in, and had no tests before by [@martinpucik](https://github.com/martinpucik)
 ### Fixed
 
 - Fix the input bar in the SwiftUI example sitting a home indicator inset above the keyboard rather than on top of it. `ignoresSafeArea(.keyboard, edges: .bottom)` left the bottom container inset in place, which stopped the view short of the screen edge, and the keyboard manager positions the bar a whole keyboard height above that edge by [@martinpucik](https://github.com/martinpucik)
