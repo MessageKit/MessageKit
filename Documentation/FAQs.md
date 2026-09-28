@@ -7,6 +7,7 @@
 - [How can I get a reference to the `MessageType` in the `MessageCellDelegate` methods?](#how-can-i-get-a-reference-to-the-messagetype-in-the-messagecelldelegate-methods)
 - [Animations are laggy/Scrolling is not smooth/General poor performance](#animations-are-laggyscrolling-is-not-smoothgeneral-poor-performance)
 - [How can I use MessageKit with SwiftUI](#how-can-i-use-messagekit-with-swiftui)
+- [How can I change the zoom level of a location message?](#how-can-i-change-the-zoom-level-of-a-location-message)
 
 ## Why doesn't the `MessageInputBar` appear in my controller?
 
@@ -114,3 +115,27 @@ In general, if you're experiencing performance issues, you should look through t
 ## How can I use MessageKit with SwiftUI?
 
 MessageKit support of SwiftUI is experimental at best and there is no active work being done on adding more support
+
+## How can I change the zoom level of a location message?
+
+The map image of a location message comes from an `MKMapSnapshotter`. The region it shows is centered on the
+message's coordinate and sized by the `span` of the `LocationMessageSnapshotOptions` that your
+`MessagesDisplayDelegate` returns from `snapshotOptionsForLocation(message:at:in:)`. A smaller span zooms in and
+a larger span zooms out.
+
+```Swift
+func snapshotOptionsForLocation(message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> LocationMessageSnapshotOptions {
+  // Roughly 1 km across, a street level view
+  LocationMessageSnapshotOptions(span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+}
+```
+
+To size the region in meters instead of degrees, take the span from an `MKCoordinateRegion`.
+
+```Swift
+let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+return LocationMessageSnapshotOptions(span: region.span)
+```
+
+The same options also control `showsBuildings`, `showsPointsOfInterest` and the `scale` of the snapshot. The
+`AdvancedExampleViewController` in the example app shows a complete implementation.
