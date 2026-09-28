@@ -1,6 +1,6 @@
 // MIT License
 //
-// Copyright (c) 2017-2022 MessageKit
+// Copyright (c) 2017-2026 MessageKit
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ extension MessagesViewController {
   ///   - completion: A completion block to execute after the insertion/deletion
   /// - Important:
   ///   This reserves a section of its own for the indicator. Leave
-  ///   `MessagesDataSource.numberOfSections(in:)` returning the message count
+  ///   `MessagesDataSource.numberOfMessageSections(in:)` returning the message count
   ///   alone; adding one for the indicator there counts the section twice and
   ///   crashes on the next reload.
   @objc
