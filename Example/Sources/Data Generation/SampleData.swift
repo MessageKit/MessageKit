@@ -70,10 +70,10 @@ final internal class SampleData {
 
   let messageImages: [UIImage] = [#imageLiteral(resourceName: "img1"), #imageLiteral(resourceName: "img2")]
   let messageImageURLs: [URL] = [
-    URL(string: "https://placekitten.com/g/200/300")!,
-    URL(string: "https://placekitten.com/g/300/300")!,
-    URL(string: "https://placekitten.com/g/300/400")!,
-    URL(string: "https://placekitten.com/g/400/400")!,
+    URL(string: "https://picsum.photos/seed/messagekit1/200/300")!,
+    URL(string: "https://picsum.photos/seed/messagekit2/300/300")!,
+    URL(string: "https://picsum.photos/seed/messagekit3/300/400")!,
+    URL(string: "https://picsum.photos/seed/messagekit4/400/400")!,
   ]
 
   let emojis = [
