@@ -34,4 +34,17 @@ class MessagesCollectionViewTests: XCTestCase {
     XCTAssertEqual(messagesCollectionView.collectionViewLayout, layout)
     XCTAssertEqual(messagesCollectionView.backgroundColor, UIColor.collectionViewBackground)
   }
+
+  func testMessageTapGestureRecognizerIsNamedAndExposed() throws {
+    let messagesCollectionView = MessagesCollectionView(frame: rect, collectionViewLayout: layout)
+    let recognizer = try XCTUnwrap(messagesCollectionView.messageTapGestureRecognizer)
+    XCTAssertEqual(recognizer.name, MessagesCollectionView.messageTapGestureRecognizerName)
+    XCTAssertTrue(recognizer.delaysTouchesBegan)
+
+    let named = messagesCollectionView.gestureRecognizers?.filter {
+      $0.name == MessagesCollectionView.messageTapGestureRecognizerName
+    }
+    XCTAssertEqual(named?.count, 1)
+    XCTAssertTrue(named?.first === recognizer)
+  }
 }
