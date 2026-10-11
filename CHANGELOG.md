@@ -22,6 +22,7 @@ The changelog for `MessageKit`. Also see the [releases](https://github.com/Messa
 - Add the missing camera and photo library usage descriptions to the example app, which crashed when you opened the camera by [@martinpucik](https://github.com/martinpucik)
 - Stop the example app from crashing when you switch off every message type in Settings by [@martinpucik](https://github.com/martinpucik)
 - Repair the example app UI test, which looked for a row that does not exist, and run it in CI by [@martinpucik](https://github.com/martinpucik)
+- Load the example app's "Photo from URL" messages from `picsum.photos`. `placekitten.com` has shut down, so those messages only ever showed the placeholder image and never demonstrated `configureMediaMessageImageView(_:for:at:in:)` loading a remote image by [@martinpucik](https://github.com/martinpucik)
 - Point the README and CONTRIBUTING links at the `main` branch, repair the malformed MessageInputBar guide link and the example app badge link, and refresh the Xcode badge by [@martinpucik](https://github.com/martinpucik)
 - Rewrite the manual installation guide, which told you to run Carthage and drag a `MessageKit.xcodeproj` that no longer exists, as local Swift package steps by [@martinpucik](https://github.com/martinpucik)
 - Stop the `make` targets pinning the `iPhone 16` simulator, which broke whenever a machine or CI image shipped a different model. Builds now ask for the platform only, and the test targets resolve an installed iPhone by [@martinpucik](https://github.com/martinpucik)
