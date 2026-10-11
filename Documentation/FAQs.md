@@ -8,6 +8,7 @@
 - [Animations are laggy/Scrolling is not smooth/General poor performance](#animations-are-laggyscrolling-is-not-smoothgeneral-poor-performance)
 - [How can I use MessageKit with SwiftUI](#how-can-i-use-messagekit-with-swiftui)
 - [How can I change the zoom level of a location message?](#how-can-i-change-the-zoom-level-of-a-location-message)
+- [Why are the buttons in my custom cell slow to highlight?](#why-are-the-buttons-in-my-custom-cell-slow-to-highlight)
 
 ## Why doesn't the `MessageInputBar` appear in my controller?
 
@@ -139,3 +140,22 @@ return LocationMessageSnapshotOptions(span: region.span)
 
 The same options also control `showsBuildings`, `showsPointsOfInterest` and the `scale` of the snapshot. The
 `AdvancedExampleViewController` in the example app shows a complete implementation.
+
+## Why are the buttons in my custom cell slow to highlight?
+
+`MessagesCollectionView` adds a tap gesture recognizer that forwards taps to its cells, which then call your
+`MessageCellDelegate`. That recognizer sets `delaysTouchesBegan` to `true`, so a `UIButton` or other control in
+a custom cell only sees the touch once the recognizer has failed, which shows up as a delayed highlight.
+
+The recognizer is exposed as `messageTapGestureRecognizer`, and it carries the
+`MessagesCollectionView.messageTapGestureRecognizerName` name, so you can change it or remove it.
+
+```Swift
+override func viewDidLoad() {
+  super.viewDidLoad()
+  messagesCollectionView.messageTapGestureRecognizer?.delaysTouchesBegan = false
+}
+```
+
+If you remove it, the `MessageCellDelegate` tap methods such as `didTapMessage(in:)` and `didTapAvatar(in:)` are no
+longer called.

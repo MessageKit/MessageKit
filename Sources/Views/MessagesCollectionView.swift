@@ -77,6 +77,19 @@ open class MessagesCollectionView: UICollectionView {
 
   // MARK: Public
 
+  /// The `name` of the tap gesture recognizer that `MessagesCollectionView` adds to forward taps to its cells.
+  ///
+  /// Use it to find the recognizer among `gestureRecognizers`, for example from a subclass or a view controller.
+  public static let messageTapGestureRecognizerName = "com.messagekit.MessageKit.messageTapGestureRecognizer"
+
+  /// The tap gesture recognizer that `MessagesCollectionView` adds to forward taps to its cells,
+  /// which then call the `MessageCellDelegate` methods.
+  ///
+  /// It sets `delaysTouchesBegan` to `true`, which delays the highlighted state of controls such as a
+  /// `UIButton` inside a custom cell. Set it to `false`, or remove the recognizer, to change that.
+  /// It is `nil` for a collection view created through `init(coder:)`, which does not add the recognizer.
+  public private(set) var messageTapGestureRecognizer: UITapGestureRecognizer?
+
   // NOTE: It's possible for small content size this wouldn't work - https://github.com/MessageKit/MessageKit/issues/725
   public func scrollToLastItem(at pos: UICollectionView.ScrollPosition = .bottom, animated: Bool = true) {
     guard let indexPath = indexPathForLastItem else { return }
@@ -232,7 +245,9 @@ open class MessagesCollectionView: UICollectionView {
 
   private func setupGestureRecognizers() {
     let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+    tapGesture.name = MessagesCollectionView.messageTapGestureRecognizerName
     tapGesture.delaysTouchesBegan = true
     addGestureRecognizer(tapGesture)
+    messageTapGestureRecognizer = tapGesture
   }
 }
