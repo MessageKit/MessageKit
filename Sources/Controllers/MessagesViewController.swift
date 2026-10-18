@@ -303,7 +303,10 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     case .attributedText(let attributedText):
       pasteBoard.string = attributedText.string
     case .photo(let mediaItem):
-      pasteBoard.image = mediaItem.image ?? mediaItem.placeholderImage
+      // A photo loaded from `mediaItem.url` in `configureMediaMessageImageView(_:for:at:in:)`
+      // only lives in the cell's image view, so prefer it over the placeholder.
+      let displayedImage = (messagesCollectionView.cellForItem(at: indexPath) as? MediaMessageCell)?.imageView.image
+      pasteBoard.image = mediaItem.image ?? displayedImage ?? mediaItem.placeholderImage
     default:
       break
     }
