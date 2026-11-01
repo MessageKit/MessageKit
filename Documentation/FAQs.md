@@ -9,6 +9,7 @@
 - [How can I use MessageKit with SwiftUI](#how-can-i-use-messagekit-with-swiftui)
 - [How can I change the zoom level of a location message?](#how-can-i-change-the-zoom-level-of-a-location-message)
 - [Why are the buttons in my custom cell slow to highlight?](#why-are-the-buttons-in-my-custom-cell-slow-to-highlight)
+- [How can I scroll to the newest message?](#how-can-i-scroll-to-the-newest-message)
 
 ## Why doesn't the `MessageInputBar` appear in my controller?
 
@@ -181,3 +182,30 @@ override func viewDidLoad() {
 
 If you remove it, the `MessageCellDelegate` tap methods such as `didTapMessage(in:)` and `didTapAvatar(in:)` are no
 longer called.
+
+## How can I scroll to the newest message?
+
+`MessagesCollectionView` has two methods for it, which differ in where they stop.
+
+- `scrollToLastItem(at:animated:)` scrolls the last cell into view. With the default `.bottom` position the bottom
+  of that cell lines up with the bottom of the visible area, so the `sectionInset.bottom` of the layout stays below
+  it, out of view.
+- `scrollToBottom(animated:)` scrolls to the very end of the content, past that section inset, so no gap is left
+  below the newest message.
+
+```Swift
+func insertMessage(_ message: MockMessage) {
+  messages.append(message)
+  messagesCollectionView.reloadData()
+  messagesCollectionView.scrollToBottom(animated: true)
+}
+```
+
+Call either one after the collection view knows about the new message, for example after `reloadData()` or in the
+completion of `performBatchUpdates(_:completion:)`. To show the newest message when the conversation opens, call it
+without animation once the first messages have loaded, as `loadFirstMessages()` in the `ChatViewController` of the
+example app does.
+
+`MessagesViewController` calls `scrollToLastItem(at:animated:)` itself when the height of the input bar changes,
+unless `maintainPositionOnInputBarHeightChanged` is `true`, and when the text view begins editing, if
+`scrollsToLastItemOnKeyboardBeginsEditing` is `true`.

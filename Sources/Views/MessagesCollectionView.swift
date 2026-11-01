@@ -90,13 +90,33 @@ open class MessagesCollectionView: UICollectionView {
   /// It is `nil` for a collection view created through `init(coder:)`, which does not add the recognizer.
   public private(set) var messageTapGestureRecognizer: UITapGestureRecognizer?
 
-  // NOTE: It's possible for small content size this wouldn't work - https://github.com/MessageKit/MessageKit/issues/725
+  /// Scrolls the last item, usually the newest message, into view.
+  ///
+  /// It calls `scrollToItem(at:at:animated:)` for the last item of the last section that has one, so with the
+  /// default `.bottom` position the bottom edge of that cell lines up with the bottom of the visible area and
+  /// the `sectionInset.bottom` of the layout stays out of view. Use `scrollToBottom(animated:)` to scroll past it
+  /// to the very end of the content. It does nothing when the collection view has no items.
+  ///
+  /// `MessagesViewController` calls it when the height of the input bar changes, unless
+  /// `maintainPositionOnInputBarHeightChanged` is `true`, and when the text view begins editing, if
+  /// `scrollsToLastItemOnKeyboardBeginsEditing` is `true`.
+  ///
+  /// - Parameters:
+  ///   - pos: Where the last item ends up in the visible area. The default is `.bottom`.
+  ///   - animated: Whether the scroll is animated. The default is `true`.
   public func scrollToLastItem(at pos: UICollectionView.ScrollPosition = .bottom, animated: Bool = true) {
     guard let indexPath = indexPathForLastItem else { return }
 
     scrollToItem(at: indexPath, at: pos, animated: animated)
   }
 
+  /// Scrolls to the very bottom of the messages, below the last item.
+  ///
+  /// Unlike `scrollToLastItem(at:animated:)`, which stops with the bottom of the last cell at the bottom of the
+  /// visible area, it also scrolls past the `sectionInset.bottom` of the layout, so no gap is left below the
+  /// newest message. It does nothing when the collection view has no items.
+  ///
+  /// - Parameter animated: Whether the scroll is animated. The default is `true`.
   public func scrollToBottom(animated: Bool = true) {
     guard let indexPath = indexPathForLastItem else { return }
 
@@ -112,6 +132,11 @@ open class MessagesCollectionView: UICollectionView {
     setContentOffset(adjustedOffset, animated: animated)
   }
 
+  /// Reloads the data and keeps the messages that are on screen in place.
+  ///
+  /// It stops any scrolling in progress, calls `reloadData()` and then moves the content offset by the change in
+  /// content size, so content inserted above the visible area, such as older messages loaded when the user
+  /// scrolls to the top, does not push the visible messages down.
   public func reloadDataAndKeepOffset() {
     // stop scrolling
     setContentOffset(contentOffset, animated: false)
