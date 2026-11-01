@@ -43,6 +43,12 @@ public protocol MessageCellDelegate: MessageLabelDelegate {
   /// - Parameters:
   ///   - cell: The cell where the tap occurred.
   ///
+  /// Some cells hand a tap inside the `MessageContainerView` to a more specific method instead:
+  /// - A tap on the image of a photo or video message calls `didTapImage(in:)`.
+  /// - A tap on, or just around, the play button of an audio message calls `didTapPlayButton(in:)`.
+  /// - A tap on a detected URL, phone number, date, address, mention, hashtag or custom pattern in a text
+  ///   message calls the matching `MessageLabelDelegate` method, such as `didSelectURL(_:)`.
+  ///
   /// - Note:
   /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
   /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
@@ -109,10 +115,12 @@ public protocol MessageCellDelegate: MessageLabelDelegate {
   /// method `messageForItem(at:indexPath:messagesCollectionView)`.
   func didTapAccessoryView(in cell: MessageCollectionViewCell)
 
-  /// Triggered when a tap occurs on the image.
+  /// Triggered when a tap occurs on the image of a photo or video message.
+  ///
+  /// A tap on the image calls this method instead of `didTapMessage(in:)`.
   ///
   /// - Parameters:
-  ///   - cell: The image where the touch occurred.
+  ///   - cell: The cell where the tap occurred.
   ///
   /// You can get a reference to the `MessageType` for the cell by using `UICollectionView`'s
   /// `indexPath(for: cell)` method. Then using the returned `IndexPath` with the `MessagesDataSource`
