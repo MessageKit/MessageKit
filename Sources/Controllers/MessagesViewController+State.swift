@@ -95,8 +95,10 @@ extension MessagesViewController {
   /// A Boolean value that determines whether the `MessagesCollectionView` scrolls to the
   /// last item whenever the `InputTextView` begins editing.
   ///
+  /// It calls `MessagesCollectionView.scrollToLastItem(at:animated:)`, which keeps the bottom section inset of
+  /// the layout out of view. See `MessagesCollectionView.scrollToBottom(animated:)` for the difference.
+  ///
   /// The default value of this property is `false`.
-  /// NOTE: This is related to `scrollToLastItem` whereas the below flag is related to `scrollToBottom` - check each function for differences
   public var scrollsToLastItemOnKeyboardBeginsEditing: Bool {
     get { state.scrollsToLastItemOnKeyboardBeginsEditing }
     set { state.scrollsToLastItemOnKeyboardBeginsEditing = newValue }
