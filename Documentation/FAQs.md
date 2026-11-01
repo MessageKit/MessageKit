@@ -110,6 +110,28 @@ func didTapMessage(in cell: MessageCollectionViewCell) {
 }
 ```
 
+## Why is `didTapMessage(in:)` not called when I tap a photo or video message?
+
+`MessageCellDelegate.didTapMessage(in:)` is called for a tap inside the message bubble that no more specific
+method handles. Some cells handle part of the bubble themselves:
+
+- A tap on the image of a photo or video message calls `didTapImage(in:)`.
+- A tap on, or just around, the play button of an audio message calls `didTapPlayButton(in:)`.
+- A tap on a detected URL, phone number, date, address, mention, hashtag or custom pattern in a text message calls
+  the matching `MessageLabelDelegate` method, such as `didSelectURL(_:)`.
+
+Implement `didTapImage(in:)` to respond to taps on photo and video messages, for example to show the image full
+screen or play the video.
+
+```Swift
+func didTapImage(in cell: MessageCollectionViewCell) {
+    guard let indexPath = messagesCollectionView.indexPath(for: cell) else { return }
+    let message = messageForItem(at: indexPath, in: messagesCollectionView)
+    guard case .photo(let mediaItem) = message.kind else { return }
+    // Present mediaItem.image or load mediaItem.url
+}
+```
+
 ## Animations are laggy/Scrolling is not smooth/General poor performance
 
 In general, if you're experiencing performance issues, you should look through the implementation of your MessageKit delegate methods like `var currentSender`, etc to find any expensive/blocking method calls or operations. Some delegate methods are called many times per message rendered and thus if their implementations are not efficient then performance can significantly degrade. Avoid doing blocking activities like synchronous database lookups, keychain access, networking, etc. in your MessageKit delegate methods. You should instead cache what you need.
