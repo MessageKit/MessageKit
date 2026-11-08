@@ -10,6 +10,7 @@
 - [How can I change the zoom level of a location message?](#how-can-i-change-the-zoom-level-of-a-location-message)
 - [Why are the buttons in my custom cell slow to highlight?](#why-are-the-buttons-in-my-custom-cell-slow-to-highlight)
 - [How can I scroll to the newest message?](#how-can-i-scroll-to-the-newest-message)
+- [How can I change the alignment of the message top and bottom labels?](#how-can-i-change-the-alignment-of-the-message-top-and-bottom-labels)
 
 ## Why doesn't the `MessageInputBar` appear in my controller?
 
@@ -209,3 +210,58 @@ example app does.
 `MessagesViewController` calls `scrollToLastItem(at:animated:)` itself when the height of the input bar changes,
 unless `maintainPositionOnInputBarHeightChanged` is `true`, and when the text view begins editing, if
 `scrollsToLastItemOnKeyboardBeginsEditing` is `true`.
+
+## How can I change the alignment of the message top and bottom labels?
+
+The `messageTopLabel` and `messageBottomLabel` of a `MessageContentCell` span the whole width of the cell, not just
+the width of the message bubble. Where their text appears is set by a `LabelAlignment`, which pairs an
+`NSTextAlignment` with `textInsets` that are applied inside the label. By default incoming messages use `.left` with
+a left inset of `42`, and outgoing messages use `.right` with a right inset of `42`.
+
+To change the alignment for every message of one sender type, use the setters of `MessagesCollectionViewFlowLayout`,
+which update all of its size calculators:
+
+```Swift
+if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
+  layout.setMessageIncomingMessageTopLabelAlignment(
+    LabelAlignment(textAlignment: .left, textInsets: UIEdgeInsets(top: 0, left: 50, bottom: 0, right: 0)))
+  layout.setMessageOutgoingMessageBottomLabelAlignment(
+    LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 16)))
+}
+```
+
+There are matching setters for the cell top and bottom labels, such as `setMessageIncomingCellTopLabelAlignment(_:)`.
+
+To choose the alignment per message, implement `messageTopLabelAlignment(for:at:in:)` or
+`messageBottomLabelAlignment(for:at:in:)` of `MessagesLayoutDelegate`. Returning `nil` falls back to the alignment
+set on the size calculator. Because the label spans the cell, lining its text up with an edge of the bubble means
+computing insets from the bubble's frame. For example, this places the bottom label of incoming messages under the
+right edge of the bubble:
+
+```Swift
+func messageBottomLabelAlignment(
+  for message: MessageType,
+  at indexPath: IndexPath,
+  in messagesCollectionView: MessagesCollectionView)
+  -> LabelAlignment?
+{
+  let layout = messagesCollectionView.messagesCollectionViewFlowLayout
+  guard
+    !isFromCurrentSender(message: message),
+    let calculator = layout.cellSizeCalculatorForItem(at: indexPath) as? MessageSizeCalculator
+  else { return nil }
+
+  let bubbleMinX = calculator.avatarSize(for: message, at: indexPath).width
+    + calculator.avatarLeadingTrailingPadding
+    + calculator.messageContainerPadding(for: message).left
+  let bubbleWidth = calculator.messageContainerSize(for: message, at: indexPath).width
+  let trailingInset = max(layout.itemWidth - bubbleMinX - bubbleWidth, 0)
+
+  return LabelAlignment(
+    textAlignment: .right,
+    textInsets: UIEdgeInsets(top: 0, left: bubbleMinX, bottom: 0, right: trailingInset))
+}
+```
+
+This assumes the avatar sits at its default `.cellLeading` horizontal position for incoming messages. See
+[#826](https://github.com/MessageKit/MessageKit/issues/826).
