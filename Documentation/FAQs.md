@@ -5,12 +5,14 @@
 - [How can I move the `AvatarView` to prevent it from overlapping text in the `MessageBottomLabel` or `CellTopLabel`?](#how-can-i-move-the-avatarview-to-prevent-it-from-overlapping-text-in-the-messagebottomlabel-or-celltoplabel)
 - [How can I dismiss the keyboard?](#how-can-i-dismiss-the-keyboard)
 - [How can I get a reference to the `MessageType` in the `MessageCellDelegate` methods?](#how-can-i-get-a-reference-to-the-messagetype-in-the-messagecelldelegate-methods)
+- [Why is `didTapMessage(in:)` not called when I tap a photo or video message?](#why-is-didtapmessagein-not-called-when-i-tap-a-photo-or-video-message)
 - [Animations are laggy/Scrolling is not smooth/General poor performance](#animations-are-laggyscrolling-is-not-smoothgeneral-poor-performance)
 - [How can I use MessageKit with SwiftUI](#how-can-i-use-messagekit-with-swiftui)
 - [How can I change the zoom level of a location message?](#how-can-i-change-the-zoom-level-of-a-location-message)
 - [Why are the buttons in my custom cell slow to highlight?](#why-are-the-buttons-in-my-custom-cell-slow-to-highlight)
 - [How can I scroll to the newest message?](#how-can-i-scroll-to-the-newest-message)
 - [How can I change the alignment of the message top and bottom labels?](#how-can-i-change-the-alignment-of-the-message-top-and-bottom-labels)
+- [How can I change the padding inside a text message bubble?](#how-can-i-change-the-padding-inside-a-text-message-bubble)
 
 ## Why doesn't the `MessageInputBar` appear in my controller?
 
@@ -265,3 +267,58 @@ func messageBottomLabelAlignment(
 
 This assumes the avatar sits at its default `.cellLeading` horizontal position for incoming messages. See
 [#826](https://github.com/MessageKit/MessageKit/issues/826).
+
+## How can I change the padding inside a text message bubble?
+
+The space between the text and the edge of the bubble is set by the `incomingMessageLabelInsets` and
+`outgoingMessageLabelInsets` of `TextMessageSizeCalculator`. By default they are
+`UIEdgeInsets(top: 7, left: 18, bottom: 7, right: 14)` for incoming messages and
+`UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 18)` for outgoing messages, where the larger inset leaves room for
+the tail of the bubble. The calculator adds them to the size of the text, so a larger inset makes the bubble taller
+or wider, and passes them to `TextMessageCell`, which applies them to its `messageLabel`.
+
+`MessagesCollectionViewFlowLayout` has a separate calculator for each text message kind, so set the insets on each
+one you use, for example in `viewDidLoad()`:
+
+```Swift
+let layout = messagesCollectionView.messagesCollectionViewFlowLayout
+let calculators = [
+  layout.textMessageSizeCalculator,
+  layout.attributedTextMessageSizeCalculator,
+  layout.emojiMessageSizeCalculator,
+]
+for calculator in calculators {
+  calculator.incomingMessageLabelInsets = UIEdgeInsets(top: 15, left: 18, bottom: 15, right: 14)
+  calculator.outgoingMessageLabelInsets = UIEdgeInsets(top: 15, left: 14, bottom: 15, right: 18)
+}
+```
+
+The `messageContainerPadding` set through `setMessageIncomingMessagePadding(_:)` and
+`setMessageOutgoingMessagePadding(_:)` is different: it is the space around the outside of the bubble.
+
+To use different insets for some messages only, return your own `TextMessageSizeCalculator` from
+`textCellSizeCalculator(for:at:in:)` of `MessagesLayoutDelegate`, or from `attributedTextCellSizeCalculator(for:at:in:)`
+or `emojiCellSizeCalculator(for:at:in:)`. Create it once and keep a reference to it, rather than creating one on
+every call, and do not change the `itemSize` of the layout there, because the layout sizes each cell from the
+calculator, not from `itemSize`:
+
+```Swift
+lazy var spaciousTextCalculator: TextMessageSizeCalculator = {
+  let calculator = TextMessageSizeCalculator(layout: messagesCollectionView.messagesCollectionViewFlowLayout)
+  calculator.incomingMessageLabelInsets = UIEdgeInsets(top: 15, left: 18, bottom: 15, right: 14)
+  calculator.outgoingMessageLabelInsets = UIEdgeInsets(top: 15, left: 14, bottom: 15, right: 18)
+  return calculator
+}()
+
+func textCellSizeCalculator(
+  for message: MessageType,
+  at _: IndexPath,
+  in _: MessagesCollectionView)
+  -> CellSizeCalculator?
+{
+  message.messageId.hasPrefix("announcement") ? spaciousTextCalculator : nil
+}
+```
+
+Returning `nil` falls back to the calculator of the layout. See
+[#1811](https://github.com/MessageKit/MessageKit/issues/1811).
