@@ -13,6 +13,7 @@
 - [How can I scroll to the newest message?](#how-can-i-scroll-to-the-newest-message)
 - [How can I change the alignment of the message top and bottom labels?](#how-can-i-change-the-alignment-of-the-message-top-and-bottom-labels)
 - [How can I change the padding inside a text message bubble?](#how-can-i-change-the-padding-inside-a-text-message-bubble)
+- [How can I add space between the keyboard and the input bar?](#how-can-i-add-space-between-the-keyboard-and-the-input-bar)
 
 ## Why doesn't the `MessageInputBar` appear in my controller?
 
@@ -322,3 +323,36 @@ func textCellSizeCalculator(
 
 Returning `nil` falls back to the calculator of the layout. See
 [#1811](https://github.com/MessageKit/MessageKit/issues/1811).
+
+## How can I add space between the keyboard and the input bar?
+
+`MessagesViewController` keeps the input bar on top of the keyboard through the `keyboardManager` of
+InputBarAccessoryView, so changing a constraint or the `padding` of the input bar yourself does not move it away
+from the keyboard. Override `inputBarAdditionalBottomSpace()` instead. The keyboard manager calls it each time the
+keyboard shows or changes its frame, and leaves the value it returns between the top of the keyboard and the bottom
+of the input bar:
+
+```Swift
+final class ChatViewController: MessagesViewController {
+  override func inputBarAdditionalBottomSpace() -> CGFloat {
+    20
+  }
+}
+```
+
+The space only applies while the keyboard is shown. When it hides, the input bar goes back to the bottom of the
+screen, so it has no gap in the closed state. The bottom inset of `messagesCollectionView` follows the input bar,
+so the newest message stays visible above it.
+
+While you drag the messages down to dismiss the keyboard, the input bar follows the keyboard without the space. Set
+`shouldApplyAdditionBottomSpaceToInteractiveDismissal` of the `keyboardManager` to `true` to keep it during the drag:
+
+```Swift
+override func viewDidLoad() {
+  super.viewDidLoad()
+  keyboardManager.shouldApplyAdditionBottomSpaceToInteractiveDismissal = true
+}
+```
+
+`additionalBottomInset` is different: it changes the bottom content inset of `messagesCollectionView` and does not
+move the input bar. See [#1780](https://github.com/MessageKit/MessageKit/issues/1780).
