@@ -85,7 +85,14 @@ open class MessagesViewController: UIViewController, UICollectionViewDelegateFlo
     updateMessageCollectionViewBottomInset()
   }
 
-  /// withAdditionalBottomSpace parameter for InputBarAccessoryView's KeyboardManager
+  /// The space between the top of the keyboard and the bottom of the input bar while the keyboard is shown.
+  ///
+  /// It is the `withAdditionalBottomSpace` parameter of InputBarAccessoryView's `KeyboardManager`, which calls it
+  /// each time the keyboard shows or changes its frame. The space does not apply while the keyboard is hidden, or
+  /// during an interactive dismissal unless `shouldApplyAdditionBottomSpaceToInteractiveDismissal` of
+  /// `keyboardManager` is `true`. The default is `0`.
+  ///
+  /// - Returns: The space in points. Override it to return a different value.
   open func inputBarAdditionalBottomSpace() -> CGFloat {
     0
   }
